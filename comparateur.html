@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparateur d'outils IA | Albexia</title>
+  <meta name="description" content="Comparez les meilleurs outils IA côte à côte — prix, essai gratuit, support français, API. Faites le bon choix en quelques secondes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+   <div class="logo">
+      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+  <style>
+    /* Animation de construction pour les polygones */
+    .poly-part {
+      animation: buildIn 1.2s ease-out forwards;
+      opacity: 0;
+    }
+
+    /* Animation d'apparition pour le texte */
+    .logo-text {
+      animation: fadeIn 1s ease-out 0.8s forwards; /* Démarre après 0.8s */
+      opacity: 0;
+    }
+
+    @keyframes buildIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Délais spécifiques pour chaque pièce pour un effet "construction" */
+    .part-1 { animation-delay: 0.1s; }
+    .part-2 { animation-delay: 0.3s; }
+    .part-3 { animation-delay: 0.5s; }
+  </style>
+
+  <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+  
+  <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+  
+  <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+
+  <text class="logo-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">
+  Albe<tspan fill="#ff6b9d">x</tspan>ia
+</text>
+      </svg>
+   </div>
+     
+    <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='../index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='../index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='../index.html#blog'">Blog</button>
+    </div>
+
+  <!-- ═══════════════════════════════════════════════════
+     NOUVEAU MENU KEBAB — Albexia
+     Remplace l'ancien kebab-wrap dans toutes les pages.
+     Top 3 des incontournables + lien vers le Hub complet.
+     ═══════════════════════════════════════════════════ -->
+
+<div class="kebab-wrap" id="kebab-wrap">
+  <button class="kebab-btn" id="kebab-btn" aria-label="Plus de pages" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="kebab-menu" id="kebab-menu" role="menu">
+
+    <!-- Top 3 des pages incontournables -->
+    <div class="kebab-label">Incontournables</div>
+
+    <a href="/glossaire.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">📖</span>
+      <div>
+        <div class="kebab-item-name">Glossaire IA</div>
+        <div class="kebab-item-sub">Tous les termes en français</div>
+      </div>
+    </a>
+
+    <a href="/comparateur.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">⚖️</span>
+      <div>
+        <div class="kebab-item-name">Comparateur</div>
+        <div class="kebab-item-sub">Comparer les outils côte à côte</div>
+      </div>
+    </a>
+
+    <a href="/deals.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">🔥</span>
+      <div>
+        <div class="kebab-item-name">Deals &amp; Promos</div>
+        <div class="kebab-item-sub">Essais gratuits · Offres exclusives</div>
+      </div>
+    </a>
+
+    <!-- Séparateur -->
+    <div class="kebab-divider"></div>
+
+    <!-- Lien Hub complet -->
+    <a href="/hub.html" class="kebab-item kebab-hub-link" role="menuitem">
+      <span class="kebab-ico">📂</span>
+      <div>
+        <div class="kebab-item-name">Voir toutes les sections</div>
+        <div class="kebab-item-sub">Carte complète d'Albexia →</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+</nav>
+
+<section class="comp-hero">
+  <div class="comp-badge">⚖️ Comparez les outils IA</div>
+  <h1>Trouvez <span class="grad">le meilleur outil</span><br>pour vous</h1>
+  <p>Sélectionnez 2 ou 3 outils et comparez-les côte à côte en quelques secondes.</p>
+</section>
+
+<div class="comp-selection">
+  <div class="comp-search">
+    <span class="comp-search-icon">🔍</span>
+    <input type="text" id="comp-search-input" placeholder="Rechercher un outil… (ex: Jasper, Canva, Runway)">
+  </div>
+  <div class="comp-cat-filters" id="comp-cats"></div>
+  <div class="tools-picker" id="tools-picker"></div>
+</div>
+
+<div class="selected-bar">
+  <div class="selected-bar-inner">
+    <div class="selected-chips" id="selected-chips">
+      <span class="selected-hint" id="selected-hint">Sélectionnez 2 ou 3 outils ci-dessus</span>
+    </div>
+    <button class="comp-btn" id="comp-btn" disabled onclick="afficherComparaison()">Comparer →</button>
+  </div>
+</div>
+
+<div class="comp-result" id="comp-result">
+  <div class="comp-result-title" id="comp-result-title"></div>
+  <div class="comp-table-wrap">
+    <table class="comp-table" id="comp-table"></table>
+  </div>
+  <div class="comp-cta-row" id="comp-cta-row"></div>
+  <span class="comp-reset" onclick="resetComparaison()">← Nouvelle comparaison</span>
+</div>
+
+<div class="paires-section">
+  <div class="paires-title">Comparaisons populaires</div>
+  <div class="paires-grid" id="paires-grid"></div>
+</div>
+  
+<footer><div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">&copy; 2025-2026 <a href="../index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> — <a href="../mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> · <a href="../politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> · <a href="../contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a></div></footer>
+  
+<script>
+const TOOLS_DATA = [{"id": 1, "name": "ChatGPT", "emoji": "💬", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=chat.openai.com", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": true, "api": true, "mobile": true, "ideal_pour": "Tous publics", "note": 5.0, "lien_affilie": "https://chat.openai.com"}, {"id": 2, "name": "Midjourney", "emoji": "🎨", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=midjourney.com", "category": "Image", "price": "paid", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": true, "api": true, "mobile": true, "ideal_pour": "Rédaction longue", "note": 4.8, "lien_affilie": "https://claude.ai"}, {"id": 3, "name": "Claude", "emoji": "🤖", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=claude.ai", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": true, "api": true, "mobile": true, "ideal_pour": "Recherche Google", "note": 4.7, "lien_affilie": "https://gemini.google.com"}, {"id": 4, "name": "Stable Diffusion", "emoji": "🖼️", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=stability.ai", "category": "Image", "price": "free", "essai_gratuit": true, "duree_essai": "Illimité (local)", "langue_fr": false, "api": true, "mobile": false, "ideal_pour": "Utilisateurs avancés", "note": 4.5, "lien_affilie": "https://stability.ai"}, {"id": 9, "name": "ElevenLabs", "emoji": "🎙️", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=elevenlabs.io", "category": "Audio", "price": "freemium", "essai_gratuit": true, "duree_essai": "10 000 chars offerts", "langue_fr": true, "api": true, "mobile": false, "ideal_pour": "Voix & podcasts", "note": 4.7, "lien_affilie": "https://elevenlabs.io"}, {"id": 10, "name": "DALL·E 3", "emoji": "✨", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=openai.com", "category": "Image", "price": "freemium", "essai_gratuit": false, "duree_essai": null, "langue_fr": true, "api": true, "mobile": false, "ideal_pour": "Intégré ChatGPT", "note": 4.6, "lien_affilie": "https://openai.com/dall-e-3"}, {"id": 11, "name": "Notion AI", "emoji": "📝", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=notion.so", "category": "Productivité", "price": "paid", "essai_gratuit": true, "duree_essai": "Illimité (freemium)", "langue_fr": true, "api": false, "mobile": true, "ideal_pour": "Gestion de projets", "note": 4.6, "lien_affilie": "https://notion.so"}, {"id": 12, "name": "Kling AI", "emoji": "🎥", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=klingai.com", "category": "Vidéo", "price": "freemium", "essai_gratuit": true, "duree_essai": "Crédits offerts", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Vidéo cinématique", "note": 4.5, "lien_affilie": "https://klingai.com"}, {"id": 13, "name": "Gemini", "emoji": "🌟", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": true, "api": true, "mobile": true, "ideal_pour": "Recherche Google", "note": 4.7, "lien_affilie": "https://gemini.google.com"}, {"id": 14, "name": "Grok", "emoji": "🤖", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=grok.x.ai", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": false, "api": false, "mobile": false, "ideal_pour": "Utilisateurs X/Twitter", "note": 4.2, "lien_affilie": "https://grok.x.ai"}, {"id": 15, "name": "Copilot Microsoft", "emoji": "🪟", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=copilot.microsoft.com", "category": "Productivité", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": true, "api": false, "mobile": true, "ideal_pour": "Utilisateurs Microsoft", "note": 4.3, "lien_affilie": "https://copilot.microsoft.com"}, {"id": 16, "name": "Mistral AI", "emoji": "🌪️", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=mistral.ai", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": true, "api": true, "mobile": false, "ideal_pour": "Développeurs EU", "note": 4.4, "lien_affilie": "https://mistral.ai"}, {"id": 17, "name": "Leonardo AI", "emoji": "🖼️", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=leonardo.ai", "category": "Image", "price": "freemium", "essai_gratuit": true, "duree_essai": "150 crédits/mois", "langue_fr": false, "api": true, "mobile": true, "ideal_pour": "Créateurs visuels", "note": 4.5, "lien_affilie": "https://leonardo.ai"}, {"id": 18, "name": "Adobe Firefly", "emoji": "🔥", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=firefly.adobe.com", "category": "Image", "price": "freemium", "essai_gratuit": true, "duree_essai": "25 crédits offerts", "langue_fr": false, "api": true, "mobile": false, "ideal_pour": "Utilisateurs Adobe", "note": 4.3, "lien_affilie": "https://firefly.adobe.com"}, {"id": 19, "name": "Canva AI", "emoji": "🎨", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=canva.com", "category": "Design", "price": "freemium", "essai_gratuit": true, "duree_essai": "30 jours Pro", "langue_fr": true, "api": false, "mobile": true, "ideal_pour": "Non-designers", "note": 4.7, "lien_affilie": "https://canva.com"}, {"id": 22, "name": "Pika Labs", "emoji": "⚡", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=pika.art", "category": "Vidéo", "price": "freemium", "essai_gratuit": true, "duree_essai": "Crédits offerts", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Vidéo courte", "note": 4.3, "lien_affilie": "https://pika.art"}, {"id": 28, "name": "Otter.ai", "emoji": "🦦", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=otter.ai", "category": "Productivité", "price": "freemium", "essai_gratuit": true, "duree_essai": "600 min/mois", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Transcription réunions", "note": 4.3, "lien_affilie": "https://otter.ai"}, {"id": 29, "name": "Fireflies.ai", "emoji": "🔥", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=fireflies.ai", "category": "Productivité", "price": "freemium", "essai_gratuit": true, "duree_essai": "800 min/mois", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Résumés automatiques", "note": 4.4, "lien_affilie": "https://fireflies.ai"}, {"id": 30, "name": "Grammarly", "emoji": "✍️", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=grammarly.com", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (freemium)", "langue_fr": true, "api": true, "mobile": true, "ideal_pour": "Correction rédaction", "note": 4.5, "lien_affilie": "https://grammarly.com"}, {"id": 32, "name": "Copy.ai", "emoji": "📋", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=copy.ai", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "2000 mots/mois", "langue_fr": true, "api": true, "mobile": false, "ideal_pour": "Copywriting", "note": 4.2, "lien_affilie": "https://copy.ai"}, {"id": 33, "name": "Writesonic", "emoji": "🖊️", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=writesonic.com", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (freemium)", "langue_fr": true, "api": true, "mobile": false, "ideal_pour": "Blog & SEO", "note": 4.4, "lien_affilie": "https://writesonic.com"}, {"id": 34, "name": "Surfer SEO", "emoji": "🏄", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=surferseo.com", "category": "SEO", "price": "paid", "essai_gratuit": false, "duree_essai": "7 jours", "langue_fr": false, "api": false, "mobile": false, "ideal_pour": "SEO avancé", "note": 4.5, "lien_affilie": "https://surferseo.com"}, {"id": 44, "name": "Pi AI", "emoji": "🥧", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=pi.ai", "category": "Texte", "price": "free", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": true, "api": false, "mobile": true, "ideal_pour": "Conversation bien-être", "note": 4.1, "lien_affilie": "https://pi.ai"}, {"id": 45, "name": "You.com", "emoji": "🔎", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=you.com", "category": "Recherche", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Recherche web IA", "note": 4.0, "lien_affilie": "https://you.com"}, {"id": 49, "name": "Poe", "emoji": "🦅", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=poe.com", "category": "Texte", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (gratuit)", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Accès multi-modèles", "note": 4.0, "lien_affilie": "https://poe.com"}, {"id": 57, "name": "Ideogram", "emoji": "💡", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=ideogram.ai", "category": "Image", "price": "freemium", "essai_gratuit": true, "duree_essai": "25 générations/mois", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Texte dans les images", "note": 4.4, "lien_affilie": "https://ideogram.ai"}, {"id": 58, "name": "Flux AI", "emoji": "🌊", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=fal.ai", "category": "Image", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (open)", "langue_fr": false, "api": true, "mobile": false, "ideal_pour": "Qualité maximale", "note": 4.6, "lien_affilie": "https://blackforestlabs.ai"}, {"id": 75, "name": "Gamma", "emoji": "γ", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=gamma.app", "category": "Présentation", "price": "freemium", "essai_gratuit": true, "duree_essai": "5 présentations", "langue_fr": true, "api": false, "mobile": false, "ideal_pour": "Présentations rapides", "note": 4.5, "lien_affilie": "https://gamma.app"}, {"id": 76, "name": "Loom AI", "emoji": "📹", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=loom.com", "category": "Vidéo", "price": "freemium", "essai_gratuit": true, "duree_essai": "5 vidéos/mois", "langue_fr": false, "api": false, "mobile": false, "ideal_pour": "Tutoriels vidéo", "note": 4.2, "lien_affilie": "https://loom.com"}, {"id": 89, "name": "Mem AI", "emoji": "🧠", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=mem.ai", "category": "Productivité", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (beta)", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Notes intelligentes", "note": 4.0, "lien_affilie": "https://mem.ai"}, {"id": 92, "name": "Taskade AI", "emoji": "✅", "favicon": "https://www.google.com/s2/favicons?sz=64&domain=taskade.com", "category": "Productivité", "price": "freemium", "essai_gratuit": true, "duree_essai": "Illimité (freemium)", "langue_fr": false, "api": false, "mobile": true, "ideal_pour": "Équipes en remote", "note": 4.1, "lien_affilie": "https://taskade.com"}];
+
+const PAIRES = [
+  {file:"midjourney-vs-chatgpt.html",       label:"Midjourney vs ChatGPT",        favA:"https://www.google.com/s2/favicons?sz=32&domain=midjourney.com",    favB:"https://www.google.com/s2/favicons?sz=32&domain=chat.openai.com"},
+  {file:"chatgpt-vs-gemini.html",           label:"ChatGPT vs Gemini",            favA:"https://www.google.com/s2/favicons?sz=32&domain=chat.openai.com",   favB:"https://www.google.com/s2/favicons?sz=32&domain=gemini.google.com"},
+  {file:"writesonic-vs-copyai.html",        label:"Writesonic vs Copy.ai",        favA:"https://www.google.com/s2/favicons?sz=32&domain=writesonic.com",    favB:"https://www.google.com/s2/favicons?sz=32&domain=copy.ai"},
+  {file:"dalle-3-vs-stable-diffusion.html", label:"DALL·E 3 vs Stable Diffusion", favA:"https://www.google.com/s2/favicons?sz=32&domain=openai.com",        favB:"https://www.google.com/s2/favicons?sz=32&domain=stability.ai"},
+  {file:"canva-ai-vs-adobe-firefly.html",   label:"Canva AI vs Adobe Firefly",    favA:"https://www.google.com/s2/favicons?sz=32&domain=canva.com",         favB:"https://www.google.com/s2/favicons?sz=32&domain=firefly.adobe.com"},
+  {file:"notion-ai-vs-gamma.html",          label:"Notion AI vs Gamma",           favA:"https://www.google.com/s2/favicons?sz=32&domain=notion.so",         favB:"https://www.google.com/s2/favicons?sz=32&domain=gamma.app"},
+  {file:"elevenlabs-vs-otterai.html",       label:"ElevenLabs vs Otter.ai",       favA:"https://www.google.com/s2/favicons?sz=32&domain=elevenlabs.io",     favB:"https://www.google.com/s2/favicons?sz=32&domain=otter.ai"},
+  {file:"leonardo-ai-vs-ideogram.html",     label:"Leonardo AI vs Ideogram",      favA:"https://www.google.com/s2/favicons?sz=32&domain=leonardo.ai",       favB:"https://www.google.com/s2/favicons?sz=32&domain=ideogram.ai"},
+  {file:"copilot-microsoft-vs-grok.html",   label:"Copilot Microsoft vs Grok",    favA:"https://www.google.com/s2/favicons?sz=32&domain=copilot.microsoft.com", favB:"https://www.google.com/s2/favicons?sz=32&domain=grok.x.ai"},
+  {file:"kling-ai-vs-pika-labs.html",       label:"Kling AI vs Pika Labs",        favA:"https://www.google.com/s2/favicons?sz=32&domain=klingai.com",       favB:"https://www.google.com/s2/favicons?sz=32&domain=pika.art"}
+];
+
+let selected = [], filteredTools = [...TOOLS_DATA], activeCategory = 'Tous';
+
+function normaliser(s){ return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim(); }
+
+function logoHTML(t, cls){
+  if(t.favicon) return `<img src="${t.favicon}" alt="${t.name}" class="${cls}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="${cls}-fallback" style="display:none">${t.emoji}</span>`;
+  return `<span class="${cls}-fallback">${t.emoji}</span>`;
+}
+
+function initCats(){
+  const cats = ['Tous', ...new Set(TOOLS_DATA.map(t=>t.category).filter(Boolean))];
+  const el = document.getElementById('comp-cats');
+  el.innerHTML = cats.map(c=>`<button class="comp-cat-btn${c==='Tous'?' active':''}" data-cat="${c}">${c}</button>`).join('');
+  el.querySelectorAll('.comp-cat-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      activeCategory=btn.dataset.cat;
+      el.querySelectorAll('.comp-cat-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilters();
+    });
+  });
+}
+
+function applyFilters(){
+  const q=normaliser(document.getElementById('comp-search-input').value);
+  filteredTools=TOOLS_DATA.filter(t=>{
+    const matchCat=activeCategory==='Tous'||t.category===activeCategory;
+    const matchQ=!q||normaliser(t.name).includes(q)||normaliser(t.category).includes(q);
+    return matchCat&&matchQ;
+  });
+  renderPicker();
+}
+
+function renderPicker(){
+  document.getElementById('tools-picker').innerHTML=filteredTools.map(t=>{
+    const isSel=selected.includes(t.id), isDisabled=!isSel&&selected.length>=3;
+    const logo = t.favicon
+      ? `<img src="${t.favicon}" alt="${t.name}" class="picker-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="picker-logo-fallback" style="display:none">${t.emoji}</span>`
+      : `<span class="picker-logo-fallback">${t.emoji}</span>`;
+    return `<div class="picker-card${isSel?' selected':''}${isDisabled?' disabled':''}" onclick="toggleTool(${t.id})">
+      ${logo}<span class="picker-name">${t.name}</span><span class="picker-check">✓</span>
+    </div>`;
+  }).join('');
+}
+
+function toggleTool(id){
+  const idx=selected.indexOf(id);
+  if(idx>-1){ selected.splice(idx,1); } else if(selected.length<3){ selected.push(id); }
+  renderPicker(); renderChips();
+}
+
+function renderChips(){
+  const hint=document.getElementById('selected-hint');
+  const chips=document.getElementById('selected-chips');
+  const btn=document.getElementById('comp-btn');
+  chips.querySelectorAll('.selected-chip').forEach(e=>e.remove());
+  if(selected.length===0){ hint.style.display='inline'; }
+  else {
+    hint.style.display='none';
+    selected.forEach(id=>{
+      const t=TOOLS_DATA.find(x=>x.id===id); if(!t) return;
+      const chip=document.createElement('div'); chip.className='selected-chip';
+      const logoEl = t.favicon ? `<img src="${t.favicon}" alt="" style="width:14px;height:14px;border-radius:3px;object-fit:contain" onerror="this.style.display='none'">` : t.emoji;
+      chip.innerHTML=`${logoEl} ${t.name} <span class="chip-remove" onclick="toggleTool(${id})">×</span>`;
+      chips.appendChild(chip);
+    });
+  }
+  btn.disabled=selected.length<2;
+}
+
+function afficherComparaison(){
+  const outils=selected.map(id=>TOOLS_DATA.find(t=>t.id===id)).filter(Boolean);
+  if(outils.length<2) return;
+  const result=document.getElementById('comp-result');
+  document.getElementById('comp-result-title').textContent=outils.map(t=>t.name).join(' vs ');
+  const criteres=[
+    ['Prix de base',       t=>t.price||'—',                    false],
+    ['Essai gratuit',      t=>t.essai_gratuit,                 true],
+    ["Durée d'essai",      t=>t.duree_essai||'—',              false],
+    ['Support français',   t=>t.langue_fr,                     true],
+    ['API disponible',     t=>t.api,                           true],
+    ['App mobile',         t=>t.mobile,                        true],
+    ['Idéal pour',         t=>t.ideal_pour||'—',               false],
+    ['Note Albexia',       t=>t.note?t.note+'/5':'—',          false],
+  ];
+  let thead='<thead><tr><th>Critère</th>';
+  outils.forEach(t=>{
+    const logoEl = t.favicon
+      ? `<img src="${t.favicon}" alt="${t.name}" class="th-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="th-logo-fallback" style="display:none">${t.emoji}</span>`
+      : `<span class="th-logo-fallback">${t.emoji}</span>`;
+    thead+=`<th class="tool-col">${logoEl}${t.name}</th>`;
+  });
+  thead+='</tr></thead>';
+  let tbody='<tbody>';
+  criteres.forEach(([label,fn,isBool])=>{
+    tbody+=`<tr><td class="crit-col">${label}</td>`;
+    outils.forEach(t=>{
+      const val=fn(t);
+      if(isBool){ tbody+=val===true?'<td><span class="yes">✓</span></td>':val===false?'<td><span class="no">✗</span></td>':'<td><span style="color:var(--text-dim)">—</span></td>'; }
+      else { tbody+=`<td>${val}</td>`; }
+    });
+    tbody+='</tr>';
+  });
+  tbody+='</tbody>';
+  document.getElementById('comp-table').innerHTML=thead+tbody;
+  document.getElementById('comp-cta-row').innerHTML=outils.map(t=>{
+    const logoEl = t.favicon ? `<img src="${t.favicon}" alt="">` : '';
+    return `<a href="${t.lien_affilie}" target="_blank" rel="noopener" class="comp-cta-btn">${logoEl} Essayer ${t.name} →</a>`;
+  }).join('');
+  result.classList.add('show');
+  result.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetComparaison(){
+  selected=[]; renderPicker(); renderChips();
+  document.getElementById('comp-result').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function initPaires(){
+  document.getElementById('paires-grid').innerHTML=PAIRES.map(p=>`
+    <a href="comparer/${p.file}" class="paire-link">
+      <div class="paire-logos">
+        <img src="${p.favA}" alt="" onerror="this.style.display='none'">
+        <span class="paire-vs">VS</span>
+        <img src="${p.favB}" alt="" onerror="this.style.display='none'">
+      </div>
+      <span style="flex:1;font-size:12px">${p.label}</span>
+      <span style="color:var(--text-dim);font-size:11px">→</span>
+    </a>`).join('');
+}
+
+document.getElementById('comp-search-input').addEventListener('input',applyFilters);
+initCats(); applyFilters(); initPaires();
+</script>
+</body>
+</html>

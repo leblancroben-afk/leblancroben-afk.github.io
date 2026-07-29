@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midjourney — Guide complet, Tarifs & Tutoriels 2026 | Albexia</title>
+  <meta name="description" content="Guide complet Midjourney : fonctionnalités, tarifs détaillés, tutoriels vidéo, avis complet. Le générateur d'images IA de référence pour les créatifs.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;--border:rgba(255,255,255,0.07);--border-hover:rgba(255,255,255,0.15);--text:#f0f0f5;--text-muted:#7a7a9a;--text-dim:#4a4a6a;--accent:#6c63ff;--accent2:#ff6b9d;--accent3:#00d4aa;--accent-amber:#f5a623}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4}
+    h1,h2,h3{font-family:'Syne',sans-serif;letter-spacing:-0.03em}
+    .container{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+    nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 32px}
+    .logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-right:40px;white-space:nowrap;text-decoration:none;color:var(--text)}
+    .logo .dot{color:var(--accent2)}
+    .nav-links{display:flex;gap:4px;flex:1}
+    .nav-link{padding:7px 16px;font-size:13px;font-weight:500;background:transparent;color:var(--text-muted);border-radius:8px;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+    .nav-cta{padding:7px 18px;font-size:13px;font-weight:500;border:1px solid rgba(108,99,255,0.4);background:rgba(108,99,255,0.1);color:#a8a3ff;border-radius:8px;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+    .nav-cta:hover{background:rgba(108,99,255,0.2)}
+    .tool-breadcrumb{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 0;font-size:12px;color:var(--text-dim);position:relative;z-index:1}
+    .tool-breadcrumb .container{display:flex;align-items:center;gap:8px}
+    .tool-breadcrumb a{color:var(--text-dim);text-decoration:none}
+    .tool-breadcrumb a:hover{color:var(--accent2)}
+    .tool-hero{padding:48px 0 40px;border-bottom:1px solid rgba(255,107,157,0.15);margin-bottom:40px;position:relative;overflow:hidden}
+    .hero-glow{position:absolute;top:-100px;right:-100px;width:500px;height:400px;background:radial-gradient(ellipse,rgba(255,107,157,0.1) 0%,transparent 65%);pointer-events:none}
+    .tool-hero-left{display:flex;gap:28px;align-items:flex-start;position:relative;z-index:1}
+    .tool-logo-wrap{width:96px;height:96px;border-radius:20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,107,157,0.2);box-shadow:0 0 24px rgba(255,107,157,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+    .tool-logo-img{width:64px;height:64px;object-fit:contain}
+    .tool-hero-info{flex:1}
+    .tool-hero-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+    .tool-badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:0.03em}
+    .badge-cat{background:rgba(108,99,255,0.15);color:#a8a3ff;border:1px solid rgba(108,99,255,0.3)}
+    .badge-freemium{background:rgba(0,212,170,0.12);color:#00d4aa;border:1px solid rgba(0,212,170,0.3)}
+    .badge-hot{background:rgba(245,166,35,0.12);color:#f5a623;border:1px solid rgba(245,166,35,0.3)}
+    .tool-hero-title{font-family:'Syne',sans-serif;font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:6px}
+    .tool-hero-maker{font-size:13px;color:var(--text-dim);margin-bottom:12px}
+    .tool-hero-maker strong{color:var(--text-muted)}
+    .tool-hero-stars{display:flex;align-items:center;gap:4px;margin-bottom:14px}
+    .star{color:var(--text-dim);font-size:18px}
+    .star.on{color:#f5a623}
+    .star-label{font-size:12px;color:var(--text-dim);margin-left:6px}
+    .tool-hero-desc{font-size:16px;color:var(--text-muted);line-height:1.75;font-weight:300;max-width:640px;margin-bottom:22px}
+    .tool-hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn-try{display:inline-block;padding:11px 24px;background:var(--accent2);color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:background .2s,transform .2s,box-shadow .2s;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px rgba(255,107,157,0.3)}
+    .btn-try:hover{background:#ff4d8b;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,157,0.4)}
+    .btn-pricing{display:inline-block;padding:11px 24px;background:transparent;color:var(--text-muted);border:1px solid var(--border-hover);border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif}
+    .btn-pricing:hover{border-color:var(--accent2);color:var(--accent2)}
+    .tool-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:40px}
+    .tool-stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+    .tool-stat:first-child{border-color:rgba(255,107,157,0.2);background:rgba(255,107,157,0.04)}
+    .ts-n{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent2);margin-bottom:4px;letter-spacing:-0.5px}
+    .ts-l{font-size:12px;color:var(--text-dim)}
+    .tool-content{display:grid;grid-template-columns:1fr 300px;gap:32px;margin-bottom:60px}
+    .tool-main{min-width:0}
+    .tool-section{margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+    .tool-section:last-child{border-bottom:none}
+    .tool-section h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:16px;color:var(--text);letter-spacing:-0.3px}
+    .tool-section p{font-size:15px;color:var(--text-muted);line-height:1.85;margin-bottom:14px;font-weight:300}
+    .screenshot-wrap{border-radius:14px;overflow:hidden;border:1px solid rgba(255,107,157,0.15);background:var(--bg3);margin-top:8px;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+    .screenshot-wrap img{width:100%;display:block;transition:transform .4s ease}
+    .screenshot-wrap:hover img{transform:scale(1.02)}
+    .screenshot-label{position:absolute;bottom:12px;left:12px;background:rgba(10,10,15,0.85);backdrop-filter:blur(10px);font-size:11px;color:var(--text-muted);padding:5px 12px;border-radius:8px;border:1px solid var(--border)}
+    .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:8px}
+    .feature-item{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,transform .2s}
+    .feature-item:hover{border-color:rgba(255,107,157,0.2);transform:translateY(-2px)}
+    .fi-icon{font-size:24px;margin-bottom:8px}
+    .fi-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;font-family:'Syne',sans-serif}
+    .fi-desc{font-size:12px;color:var(--text-muted);line-height:1.6}
+    .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+    .pricing-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative}
+    .pricing-card-featured{border:2px solid var(--accent2);background:linear-gradient(160deg,rgba(255,107,157,0.06) 0%,var(--bg2) 60%)}
+    .pc-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent2);color:#fff;font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;white-space:nowrap;letter-spacing:0.05em}
+    .pc-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
+    .pc-price{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--accent2);margin-bottom:16px;letter-spacing:-1px}
+    .pc-price span{font-size:14px;font-weight:400;color:var(--text-dim)}
+    .pc-features{list-style:none;margin-bottom:20px}
+    .pc-features li{font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid var(--border)}
+    .pc-features li:last-child{border-bottom:none}
+    .pc-btn{display:block;text-align:center;padding:10px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif}
+    .pc-btn-main{background:var(--accent2);color:#fff}
+    .pc-btn-main:hover{background:#ff4d8b}
+    .pc-btn-outline{background:transparent;color:var(--text-muted);border:1px solid var(--border-hover)}
+    .pc-btn-outline:hover{border-color:var(--accent2);color:var(--accent2)}
+    .usecase-list{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+    .usecase-item{display:flex;gap:14px;align-items:flex-start;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s}
+    .usecase-item:hover{border-color:var(--border-hover)}
+    .uc-emoji{font-size:24px;flex-shrink:0}
+    .usecase-item div{font-size:14px;color:var(--text-muted);line-height:1.6}
+    .usecase-item strong{color:var(--text);font-weight:500}
+    .pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+    .pros{background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:12px;padding:18px}
+    .cons{background:rgba(255,107,157,0.05);border:1px solid rgba(255,107,157,0.12);border-radius:12px;padding:18px}
+    .pc-title{font-size:14px;font-weight:700;margin-bottom:12px;font-family:'Syne',sans-serif}
+    .pros .pc-title{color:#00d4aa}
+    .cons .pc-title{color:#ff6b9d}
+    .pros ul,.cons ul{list-style:none}
+    .pros li,.cons li{font-size:13px;color:var(--text-muted);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.5}
+    .pros li:last-child,.cons li:last-child{border-bottom:none}
+    .tutorials-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .tutorial-item{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s}
+    .tutorial-item.open{border-color:rgba(255,107,157,0.25)}
+    .tutorial-header{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;user-select:none;transition:background .2s}
+    .tutorial-header:hover{background:rgba(255,255,255,0.02)}
+    .tutorial-thumb{width:64px;height:42px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--bg3);border:1px solid var(--border);position:relative}
+    .tutorial-thumb img{width:100%;height:100%;object-fit:cover}
+    .tutorial-thumb-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.4)}
+    .tutorial-thumb-play svg{width:18px;height:18px;fill:#fff;opacity:0.9}
+    .tutorial-meta{flex:1;min-width:0}
+    .tutorial-title{font-size:14px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .tutorial-duration{font-size:11px;color:var(--text-dim)}
+    .tutorial-toggle{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:var(--text-dim);transition:transform .25s,background .2s,color .2s}
+    .tutorial-item.open .tutorial-toggle{transform:rotate(180deg);background:rgba(255,107,157,0.12);color:#ff6b9d;border-color:rgba(255,107,157,0.3)}
+    .tutorial-video{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(0.4,0,0.2,1)}
+    .tutorial-item.open .tutorial-video{max-height:400px}
+    .tutorial-video-inner{padding:0 18px 18px}
+    .video-frame{position:relative;padding-bottom:56.25%;height:0;border-radius:10px;overflow:hidden;background:var(--bg3)}
+    .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+    .related-articles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+    .related-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;text-decoration:none;transition:border-color .2s,transform .25s}
+    .related-card:hover{border-color:rgba(255,107,157,0.25);transform:translateY(-3px)}
+    .related-cover{width:100%;height:110px;overflow:hidden;background:var(--bg3)}
+    .related-cover img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .related-card:hover .related-cover img{transform:scale(1.05)}
+    .related-body{padding:12px 14px}
+    .related-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:5px;font-family:'Syne',sans-serif}
+    .related-sub{font-size:11px;color:var(--text-dim);line-height:1.5}
+    .related-arrow{font-size:11px;color:var(--accent2);margin-top:8px;display:block;font-weight:500}
+    .faq-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+    .faq-item{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+    .faq-q{padding:14px 16px;font-size:14px;font-weight:500;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;width:100%;background:none;border:none;font-family:'DM Sans',sans-serif;text-align:left}
+    .faq-q:hover{color:var(--accent2)}
+    .faq-q::after{content:'+';font-size:20px;color:var(--text-dim);transition:transform .2s}
+    .faq-item.open .faq-q::after{transform:rotate(45deg);color:var(--accent2)}
+    .faq-a{display:none;padding:12px 16px 14px;font-size:13px;color:var(--text-muted);line-height:1.7;border-top:1px solid var(--border)}
+    .faq-item.open .faq-a{display:block}
+    .tool-verdict{background:rgba(255,107,157,0.06);border:1px solid rgba(255,107,157,0.2);border-radius:14px;padding:24px;display:flex;gap:18px;align-items:flex-start;margin-top:8px}
+    .verdict-icon{font-size:32px;flex-shrink:0}
+    .verdict-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#ff6b9d;margin-bottom:8px}
+    .tool-verdict p{font-size:14px;color:var(--text-muted);line-height:1.75}
+    .tool-sidebar{display:flex;flex-direction:column;gap:16px}
+    .sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;position:sticky;top:80px}
+    .sidebar-card-featured-highlight{border-color:rgba(255,107,157,0.25);background:linear-gradient(160deg,rgba(255,107,157,0.05) 0%,var(--bg2) 60%)}
+    .sc-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .sc-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+    .sc-row:last-child{border-bottom:none}
+    .sc-label{color:var(--text-dim)}
+    .sc-val{color:var(--text);font-weight:500}
+    .sc-val-green{color:#00d4aa;font-weight:600}
+    .sc-val-red{color:#ff6b9d;font-weight:600}
+    .alt-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:opacity .15s}
+    .alt-item:hover{opacity:0.75}
+    .alt-item:last-of-type{border-bottom:none}
+    .alt-item img{width:28px;height:28px;border-radius:6px}
+    .alt-name{font-size:13px;font-weight:500;color:var(--text)}
+    .alt-desc{font-size:11px;color:var(--text-dim);margin-top:1px}
+    .alt-more{display:block;text-align:center;margin-top:10px;font-size:12px;color:var(--accent2);text-decoration:none;padding:8px;border-radius:8px;background:rgba(255,107,157,0.08);transition:background .2s}
+    .alt-more:hover{background:rgba(255,107,157,0.15)}
+    .sidebar-card-cta{background:rgba(255,107,157,0.06);border-color:rgba(255,107,157,0.2)}
+    .sidebar-card-cta .sc-title{border-color:rgba(255,107,157,0.2);color:#ff6b9d}
+    .sidebar-card-cta p{font-size:13px;color:var(--text-muted);margin-bottom:14px;line-height:1.6}
+    .btn-try-full{display:block;text-align:center;padding:11px;background:var(--accent2);color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px rgba(255,107,157,0.25)}
+    .btn-try-full:hover{background:#ff4d8b;box-shadow:0 6px 20px rgba(255,107,157,0.35)}
+    .article-link-card{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:opacity .2s}
+    .article-link-card:hover{opacity:0.75}
+    .article-link-card:last-of-type{border-bottom:none}
+    .article-link-thumb{width:48px;height:48px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);overflow:hidden;flex-shrink:0}
+    .article-link-thumb img{width:100%;height:100%;object-fit:cover}
+    .article-link-title{font-size:12px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:3px}
+    .article-link-sub{font-size:11px;color:var(--text-dim);line-height:1.4}
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:13px;color:var(--text-dim);position:relative;z-index:1}
+    footer a{color:#a8a3ff;text-decoration:none}
+    @media(max-width:900px){.tool-content{grid-template-columns:1fr}.tool-stats{grid-template-columns:repeat(2,1fr)}.pricing-grid{grid-template-columns:1fr}.pros-cons{grid-template-columns:1fr}.related-articles{grid-template-columns:1fr}}
+    @media(max-width:600px){.tool-hero-left{flex-direction:column}.feature-grid{grid-template-columns:1fr}.container{padding:0 16px}.related-articles{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../../index.html" class="logo">Albe<span class="dot">x</span>ia</a>
+    <div class="nav-links">
+      <a class="nav-link" href="../../index.html">Accueil</a>
+      <a class="nav-link" href="../../index.html">Outils</a>
+      <a class="nav-link" href="../../blog/index.html">Blog</a>
+    </div>
+    <a class="nav-cta" href="../../index.html">← Retour</a>
+  </nav>
+
+  <div class="tool-breadcrumb">
+    <div class="container">
+      <a href="../../index.html">Albexia</a><span>›</span>
+      <a href="../../index.html">Outils IA</a><span>›</span>
+      <span>Midjourney</span>
+    </div>
+  </div>
+
+  <main><div class="container">
+
+    <!-- HERO -->
+    <div class="tool-hero">
+      <div class="hero-glow"></div>
+      <div class="tool-hero-left">
+        <div class="tool-logo-wrap">
+          <img src="https://www.google.com/s2/favicons?sz=128&domain=midjourney.com" alt="Midjourney logo" class="tool-logo-img">
+        </div>
+        <div class="tool-hero-info">
+          <div class="tool-hero-badges">
+            <span class="tool-badge badge-cat">Génération d'images</span>
+            <span class="tool-badge badge-hot">🎨 Qualité artistique</span>
+            <span class="tool-badge badge-freemium">Payant</span>
+          </div>
+          <h1 class="tool-hero-title">Midjourney</h1>
+          <p class="tool-hero-maker">par <strong>Midjourney Inc.</strong></p>
+          <div class="tool-hero-stars">
+            <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span>
+            <span class="star-label">4.9/5 · Note Albexia</span>
+          </div>
+          <p class="tool-hero-desc">Le générateur d'images IA qui produit les résultats visuels les plus époustouflants du marché. Midjourney est le choix de référence des artistes, designers et créatifs professionnels pour la qualité esthétique incomparable de ses sorties.</p>
+          <div class="tool-hero-actions">
+            <a href="https://midjourney.com" target="_blank" rel="noopener" class="btn-try">Essayer →</a>
+            <a href="https://www.midjourney.com/account" target="_blank" rel="noopener" class="btn-pricing">Voir les tarifs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="tool-stats">
+      <div class="tool-stat"><div class="ts-n">2022</div><div class="ts-l">Lancé en</div></div>
+      <div class="tool-stat"><div class="ts-n">20M+</div><div class="ts-l">Utilisateurs</div></div>
+      <div class="tool-stat"><div class="ts-n">V7</div><div class="ts-l">Version actuelle</div></div>
+      <div class="tool-stat"><div class="ts-n">$10</div><div class="ts-l">Prix de départ</div></div>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-main">
+
+        <section class="tool-section">
+          <h2>Qu'est-ce que Midjourney ?</h2>
+          <p>Midjourney est un générateur d'images par intelligence artificielle, accessible depuis un navigateur web ou via Discord. Depuis son lancement en 2022, il s'est imposé comme la référence absolue en matière de qualité esthétique : ses images sont régulièrement décrites comme les plus belles et les plus cohérentes produites par une IA.</p>
+          <p>Contrairement à Stable Diffusion qui mise sur la personnalisation technique, Midjourney fait le choix de l'accessibilité et du résultat visuel immédiat. Une description textuelle simple produit des images d'une qualité qui rivalise avec le travail de designers professionnels. En 2024, Midjourney a lancé son interface web propre, abandonnant partiellement Discord comme canal unique d'accès.</p>
+        </section>
+
+        <section class="tool-section">
+          <h2>Interface de l'outil</h2>
+          <div class="screenshot-wrap">
+            <img src="https://images.unsplash.com/photo-1679528071741-cd5a7cb3bcf0?w=900&q=80" alt="Interface Midjourney">
+            <div class="screenshot-label">Interface web Midjourney — Galerie et génération 2026</div>
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>Fonctionnalités clés</h2>
+          <div class="feature-grid">
+            <div class="feature-item"><div class="fi-icon">🎨</div><div class="fi-title">Qualité esthétique</div><div class="fi-desc">Résultats visuels considérés comme les meilleurs du marché — cohérence, style, détail.</div></div>
+            <div class="feature-item"><div class="fi-icon">⚡</div><div class="fi-title">Génération rapide</div><div class="fi-desc">Images en 30 à 60 secondes selon le plan. Mode Turbo disponible pour la vitesse maximale.</div></div>
+            <div class="feature-item"><div class="fi-icon">🎭</div><div class="fi-title">Styles multiples</div><div class="fi-desc">Photoréalisme, illustration, concept art, anime, peinture — maîtrise de tous les registres visuels.</div></div>
+            <div class="feature-item"><div class="fi-icon">🔄</div><div class="fi-title">Variations & upscale</div><div class="fi-desc">Générez des variantes d'une image ou augmentez sa résolution en un clic.</div></div>
+            <div class="feature-item"><div class="fi-icon">📐</div><div class="fi-title">Formats personnalisés</div><div class="fi-desc">Ratios d'aspect libres — portrait, paysage, carré, bannière — selon vos besoins.</div></div>
+            <div class="feature-item"><div class="fi-icon">🖼️</div><div class="fi-title">Image to Image</div><div class="fi-desc">Utilisez une image de référence pour guider le style ou la composition de vos générations.</div></div>
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>Tarifs détaillés 2026</h2>
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <div class="pc-name">Basic</div>
+              <div class="pc-price">$10<span>/mois</span></div>
+              <ul class="pc-features">
+                <li>✓ 200 générations/mois</li>
+                <li>✓ Accès à l'interface web</li>
+                <li>✓ Accès Discord inclus</li>
+                <li>✓ Galerie personnelle</li>
+                <li>✗ Mode Turbo non inclus</li>
+                <li>✗ Usage commercial limité</li>
+              </ul>
+              <a href="https://www.midjourney.com/account" target="_blank" class="pc-btn pc-btn-outline">Choisir Basic</a>
+            </div>
+            <div class="pricing-card pricing-card-featured">
+              <div class="pc-badge">Recommandé</div>
+              <div class="pc-name">Standard</div>
+              <div class="pc-price">$30<span>/mois</span></div>
+              <ul class="pc-features">
+                <li>✓ Générations illimitées (mode Relax)</li>
+                <li>✓ 15h GPU en mode Fast</li>
+                <li>✓ Mode Turbo disponible</li>
+                <li>✓ Usage commercial inclus</li>
+                <li>✓ Génération privée</li>
+                <li>✓ Accès toutes les fonctions</li>
+              </ul>
+              <a href="https://www.midjourney.com/account" target="_blank" class="pc-btn pc-btn-main">Choisir Standard</a>
+            </div>
+            <div class="pricing-card">
+              <div class="pc-name">Pro</div>
+              <div class="pc-price">$60<span>/mois</span></div>
+              <ul class="pc-features">
+                <li>✓ 30h GPU en mode Fast</li>
+                <li>✓ Mode Turbo illimité</li>
+                <li>✓ Mode Stealth (images privées)</li>
+                <li>✓ Usage commercial complet</li>
+                <li>✓ Jusqu'à 12 générations simultanées</li>
+                <li>✓ Priorité serveur</li>
+              </ul>
+              <a href="https://www.midjourney.com/account" target="_blank" class="pc-btn pc-btn-outline">Choisir Pro</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>À qui s'adresse cet outil ?</h2>
+          <div class="usecase-list">
+            <div class="usecase-item"><span class="uc-emoji">🎨</span><div><strong>Artistes & illustrateurs</strong> — Explorez des concepts visuels rapidement, générez des références et prototypes créatifs.</div></div>
+            <div class="usecase-item"><span class="uc-emoji">📱</span><div><strong>Créateurs de contenu</strong> — Visuels uniques pour réseaux sociaux, miniatures YouTube, couvertures d'articles.</div></div>
+            <div class="usecase-item"><span class="uc-emoji">🏢</span><div><strong>Agences & marketeurs</strong> — Moodboards, visuels publicitaires, identité visuelle de marque à faible coût.</div></div>
+            <div class="usecase-item"><span class="uc-emoji">🎮</span><div><strong>Développeurs de jeux</strong> — Concept art, textures, personnages et environnements pour la production de jeux vidéo.</div></div>
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>Points forts & points faibles</h2>
+          <div class="pros-cons">
+            <div class="pros">
+              <div class="pc-title">✅ Points forts</div>
+              <ul>
+                <li>✅ Qualité visuelle inégalée sur le marché</li>
+                <li>✅ Interface web simple et intuitive</li>
+                <li>✅ Résultats impressionnants dès le premier prompt</li>
+                <li>✅ Communauté énorme — inspiration et apprentissage</li>
+                <li>✅ Mises à jour régulières du modèle</li>
+                <li>✅ Usage commercial inclus dès le plan Standard</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <div class="pc-title">⚠️ Points faibles</div>
+              <ul>
+                <li>⚠️ Aucune version gratuite disponible</li>
+                <li>⚠️ Paiement obligatoire en dollars</li>
+                <li>⚠️ Moins de contrôle technique que Stable Diffusion</li>
+                <li>⚠️ Images publiques par défaut sur Basic</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>Tutoriels vidéo</h2>
+          <div class="tutorials-list">
+
+            <div class="tutorial-item" id="tuto-1">
+              <div class="tutorial-header" onclick="toggleTutorial('tuto-1')">
+                <div class="tutorial-thumb">
+                  <img src="https://img.youtube.com/vi/yJpinaIaEkA/mqdefault.jpg" alt="Midjourney débutant">
+                  <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+                <div class="tutorial-meta">
+                  <div class="tutorial-title">Débuter avec Midjourney — Guide complet pour débutants</div>
+                  <div class="tutorial-duration">⏱ 20 min · Niveau débutant</div>
+                </div>
+                <div class="tutorial-toggle">▾</div>
+              </div>
+              <div class="tutorial-video">
+                <div class="tutorial-video-inner">
+                  <div class="video-frame">
+                    <iframe data-src="https://www.youtube.com/embed/yJpinaIaEkA" title="Midjourney débutant" allowfullscreen loading="lazy"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tutorial-item" id="tuto-2">
+              <div class="tutorial-header" onclick="toggleTutorial('tuto-2')">
+                <div class="tutorial-thumb">
+                  <img src="https://img.youtube.com/vi/y5nXqjpCUuc/mqdefault.jpg" alt="Prompts Midjourney avancés">
+                  <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+                <div class="tutorial-meta">
+                  <div class="tutorial-title">Maîtriser les prompts Midjourney — Techniques avancées</div>
+                  <div class="tutorial-duration">⏱ 25 min · Niveau intermédiaire</div>
+                </div>
+                <div class="tutorial-toggle">▾</div>
+              </div>
+              <div class="tutorial-video">
+                <div class="tutorial-video-inner">
+                  <div class="video-frame">
+                    <iframe data-src="https://www.youtube.com/embed/y5nXqjpCUuc" title="Prompts Midjourney avancés" allowfullscreen loading="lazy"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tutorial-item" id="tuto-3">
+              <div class="tutorial-header" onclick="toggleTutorial('tuto-3')">
+                <div class="tutorial-thumb">
+                  <img src="https://img.youtube.com/vi/ZPLBgFBnaEY/mqdefault.jpg" alt="Midjourney pour le business">
+                  <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+                <div class="tutorial-meta">
+                  <div class="tutorial-title">Midjourney V7 — Toutes les nouvelles fonctionnalités</div>
+                  <div class="tutorial-duration">⏱ 30 min · Niveau avancé</div>
+                </div>
+                <div class="tutorial-toggle">▾</div>
+              </div>
+              <div class="tutorial-video">
+                <div class="tutorial-video-inner">
+                  <div class="video-frame">
+                    <iframe data-src="https://www.youtube.com/embed/ZPLBgFBnaEY" title="Midjourney V7" allowfullscreen loading="lazy"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>Articles liés</h2>
+          <div class="related-articles" id="articles-featured-grid">
+            <!-- Injecté depuis articles.json -->
+          </div>
+        </section>
+
+        <section class="tool-section">
+          <h2>Questions fréquentes</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-q">Midjourney est-il accessible sans carte bancaire internationale ?</button>
+              <div class="faq-a">Midjourney exige un abonnement payant en dollars. Un paiement via Visa, Mastercard ou PayPal est nécessaire. Pour les utilisateurs sans carte bancaire internationale (Afrique, Haïti), les plateformes de crypto comme Binance permettent parfois de contourner cette limite via des cartes virtuelles.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">Faut-il encore passer par Discord ?</button>
+              <div class="faq-a">Non. Midjourney dispose désormais d'une interface web complète sur midjourney.com. Discord reste une option pour les habitués, mais n'est plus obligatoire pour générer des images.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">Puis-je utiliser les images générées commercialement ?</button>
+              <div class="faq-a">Oui, dès le plan Standard à 30 $/mois. Le plan Basic inclut un usage commercial limité. Les abonnés Pro bénéficient de droits commerciaux complets et du mode Stealth pour garder leurs images privées.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">Quelle est la différence avec DALL-E 3 ou Stable Diffusion ?</button>
+              <div class="faq-a">Midjourney produit les images les plus esthétiques du marché mais sans personnalisation technique avancée. DALL-E 3 est intégré à ChatGPT, pratique mais moins précis artistiquement. Stable Diffusion est gratuit, open source et très personnalisable, mais demande une configuration initiale.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">Midjourney comprend-il les prompts en français ?</button>
+              <div class="faq-a">Midjourney comprend le français mais donne de meilleurs résultats avec des prompts en anglais. La communauté recommande généralement de rédiger ses descriptions en anglais pour obtenir les images les plus précises.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="tool-verdict">
+          <div class="verdict-icon">🏆</div>
+          <div>
+            <div class="verdict-title">Verdict Albexia</div>
+            <p>Midjourney est sans conteste le meilleur générateur d'images IA pour la qualité visuelle brute en 2026. Si vous cherchez des résultats époustouflants sans courbe d'apprentissage technique, c'est le choix évident. Son principal frein pour les francophones d'Afrique et des Caraïbes reste l'absence de version gratuite et le paiement obligatoire en dollars.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="tool-sidebar">
+        <div class="sidebar-card sidebar-card-featured-highlight">
+          <div class="sc-title">Infos rapides</div>
+          <div class="sc-row"><span class="sc-label">Développeur</span><span class="sc-val">Midjourney Inc.</span></div>
+          <div class="sc-row"><span class="sc-label">Catégorie</span><span class="sc-val">Génération d'images</span></div>
+          <div class="sc-row"><span class="sc-label">Prix de départ</span><span class="sc-val">$10/mois</span></div>
+          <div class="sc-row"><span class="sc-label">Plateformes</span><span class="sc-val">Web, Discord</span></div>
+          <div class="sc-row"><span class="sc-label">API disponible</span><span class="sc-val">En beta</span></div>
+          <div class="sc-row"><span class="sc-label">Sans CB</span><span class="sc-val-red sc-val">✗ Non</span></div>
+          <div class="sc-row"><span class="sc-label">Prompts FR</span><span class="sc-val">Partiel</span></div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sc-title">Articles liés</div>
+          <div id="articles-sidebar-all">
+            <!-- Injecté depuis articles.json -->
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sc-title">Alternatives</div>
+          <a href="#" class="alt-item">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=stability.ai" alt="Stable Diffusion">
+            <div><div class="alt-name">Stable Diffusion</div><div class="alt-desc">IA image open source gratuite</div></div>
+          </a>
+          <a href="#" class="alt-item">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=openai.com" alt="DALL-E 3">
+            <div><div class="alt-name">DALL-E 3</div><div class="alt-desc">IA image OpenAI via ChatGPT</div></div>
+          </a>
+          <a href="#" class="alt-item">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=adobe.com" alt="Adobe Firefly">
+            <div><div class="alt-name">Adobe Firefly</div><div class="alt-desc">IA image Creative Cloud</div></div>
+          </a>
+          <a href="../../index.html" class="alt-more">Voir tous les outils →</a>
+        </div>
+
+        <div class="sidebar-card sidebar-card-cta">
+          <div class="sc-title">Essayer Midjourney</div>
+          <p>Abonnement à partir de 10 $/mois. Résultats immédiats.</p>
+          <a href="https://midjourney.com" target="_blank" rel="noopener" class="btn-try-full">Aller sur Midjourney →</a>
+        </div>
+      </aside>
+    </div>
+
+  </div></main>
+
+  <footer>© 2025-2026 <a href="../../index.html">Albexia</a> · <a href="#" style="color:var(--text-dim)">Mentions légales</a> · <a href="#" style="color:var(--text-dim)">Confidentialité</a></footer>
+
+  <script src="../../js/articles-loader.js" data-outil="midjourney" data-plan="featured"></script>
+  <script>
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+    function toggleTutorial(id) {
+      const item = document.getElementById(id);
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.tutorial-item.open').forEach(el => {
+        if (el.id !== id) { el.classList.remove('open'); const iframe = el.querySelector('iframe'); if (iframe) iframe.src = ''; }
+      });
+      if (isOpen) { item.classList.remove('open'); const iframe = item.querySelector('iframe'); if (iframe) iframe.src = ''; }
+      else { item.classList.add('open'); const iframe = item.querySelector('iframe[data-src]'); if (iframe && !iframe.src) iframe.src = iframe.dataset.src; }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité — Albexia</title>
+  <meta name="description" content="Politique de confidentialité et protection des données personnelles d'Albexia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/article.css">
+</head>
+<body>
+
+  <!-- NAV -->
+<nav>
+   <div class="logo">
+      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+  <style>
+    /* Animation de construction pour les polygones */
+    .poly-part {
+      animation: buildIn 1.2s ease-out forwards;
+      opacity: 0;
+    }
+
+    /* Animation d'apparition pour le texte */
+    .logo-text {
+      animation: fadeIn 1s ease-out 0.8s forwards; /* Démarre après 0.8s */
+      opacity: 0;
+    }
+
+    @keyframes buildIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Délais spécifiques pour chaque pièce pour un effet "construction" */
+    .part-1 { animation-delay: 0.1s; }
+    .part-2 { animation-delay: 0.3s; }
+    .part-3 { animation-delay: 0.5s; }
+  </style>
+
+  <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+  
+  <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+  
+  <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+
+  <text class="logo-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">
+  Albe<tspan fill="#ff6b9d">x</tspan>ia
+</text>
+      </svg>
+   </div>
+     
+    <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='../index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='../index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='../index.html#blog'">Blog</button>
+    </div>
+
+  <!-- ═══════════════════════════════════════════════════
+     NOUVEAU MENU KEBAB — Albexia
+     Remplace l'ancien kebab-wrap dans toutes les pages.
+     Top 3 des incontournables + lien vers le Hub complet.
+     ═══════════════════════════════════════════════════ -->
+
+<div class="kebab-wrap" id="kebab-wrap">
+  <button class="kebab-btn" id="kebab-btn" aria-label="Plus de pages" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="kebab-menu" id="kebab-menu" role="menu">
+
+    <!-- Top 3 des pages incontournables -->
+    <div class="kebab-label">Incontournables</div>
+
+    <a href="glossaire.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">📖</span>
+      <div>
+        <div class="kebab-item-name">Glossaire IA</div>
+        <div class="kebab-item-sub">Tous les termes en français</div>
+      </div>
+    </a>
+
+    <a href="comparateur.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">⚖️</span>
+      <div>
+        <div class="kebab-item-name">Comparateur</div>
+        <div class="kebab-item-sub">Comparer les outils côte à côte</div>
+      </div>
+    </a>
+
+    <a href="pages/deals.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">🔥</span>
+      <div>
+        <div class="kebab-item-name">Deals &amp; Promos</div>
+        <div class="kebab-item-sub">Essais gratuits · Offres exclusives</div>
+      </div>
+    </a>
+
+    <!-- Séparateur -->
+    <div class="kebab-divider"></div>
+
+    <!-- Lien Hub complet -->
+    <a href="hub.html" class="kebab-item kebab-hub-link" role="menuitem">
+      <span class="kebab-ico">📂</span>
+      <div>
+        <div class="kebab-item-name">Voir toutes les sections</div>
+        <div class="kebab-item-sub">Carte complète d'Albexia →</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+</nav>
+
+
+  <main class="article-main">
+    <div class="article-container">
+
+      <header class="article-header">
+        <div class="article-meta-top">
+          <span class="article-cat" style="background:rgba(255,255,255,0.08);color:#888">Légal</span>
+          <span class="article-read-time">Dernière mise à jour : mars 2025</span>
+        </div>
+        <h1 class="article-title">Politique de confidentialité</h1>
+        <p class="article-intro">Albexia accorde une grande importance à la protection de votre vie privée. Cette page vous explique quelles données nous collectons, pourquoi, et comment nous les utilisons.</p>
+      </header>
+
+      <div class="article-body">
+
+        <h2>1. Données collectées</h2>
+        <p>Albexia collecte un minimum de données personnelles, uniquement lorsque vous effectuez une action volontaire :</p>
+        <ul>
+          <li><strong>Inscription à la newsletter :</strong> votre adresse email est transmise à Formspree (formspree.io), service tiers de gestion de formulaires, pour vous envoyer la newsletter hebdomadaire. Nous ne partageons cette adresse avec aucun autre tiers.</li>
+          <li><strong>Soumission d'un outil :</strong> les informations que vous renseignez (nom de l'outil, URL, description, email optionnel) sont reçues par email via Formspree et utilisées uniquement pour examiner votre soumission.</li>
+          <li><strong>Favoris :</strong> vos outils favoris sont stockés localement sur votre appareil via <code>localStorage</code>. Ces données ne quittent jamais votre appareil et ne sont pas accessibles par nos serveurs.</li>
+        </ul>
+
+        <h2>2. Finalité des données</h2>
+        <ul>
+          <li>Envoi de la newsletter hebdomadaire (email)</li>
+          <li>Traitement des soumissions d'outils (email + informations soumises)</li>
+          <li>Amélioration du service (pas de tracking individuel)</li>
+        </ul>
+
+        <h2>3. Base légale du traitement</h2>
+        <p>Le traitement de vos données est basé sur votre <strong>consentement explicite</strong> : vous nous fournissez vos données volontairement en remplissant un formulaire. Vous pouvez retirer ce consentement à tout moment.</p>
+
+        <h2>4. Conservation des données</h2>
+        <p>Vos données d'inscription à la newsletter sont conservées tant que vous êtes abonné. Un lien de désabonnement est inclus dans chaque email. Après désabonnement, vos données sont supprimées dans un délai de 30 jours.</p>
+
+        <h2>5. Vos droits (RGPD)</h2>
+        <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez des droits suivants :</p>
+        <ul>
+          <li><strong>Droit d'accès :</strong> obtenir une copie des données vous concernant</li>
+          <li><strong>Droit de rectification :</strong> corriger des données inexactes</li>
+          <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données</li>
+          <li><strong>Droit d'opposition :</strong> vous opposer au traitement de vos données</li>
+          <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format lisible</li>
+        </ul>
+        <p>Pour exercer ces droits, contactez-nous à : <strong>albexia.hello@gmail.com</strong></p>
+
+        <h2>6. Cookies et stockage local</h2>
+        <p>Albexia n'utilise <strong>aucun cookie de tracking ou publicitaire</strong>. Le seul stockage utilisé est <code>localStorage</code> pour sauvegarder vos favoris localement sur votre appareil. Vous pouvez effacer ces données depuis les paramètres de votre navigateur.</p>
+
+        <h2>7. Services tiers</h2>
+        <ul>
+          <li><strong>Formspree (formspree.io) :</strong> traitement des formulaires. <a href="https://formspree.io/legal/privacy-policy" style="color:#a8a3ff" target="_blank">Politique de confidentialité Formspree</a></li>
+          <li><strong>Google Fonts :</strong> chargement des polices de caractères. Peut impliquer le transfert de votre adresse IP à Google.</li>
+          <li><strong>GitHub Pages :</strong> hébergement du site. <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-privacy-statement" style="color:#a8a3ff" target="_blank">Politique de confidentialité GitHub</a></li>
+          <li><strong>Unsplash / SoundHelix :</strong> contenus médias. Ces services peuvent collecter des données d'utilisation.</li>
+        </ul>
+
+        <h2>8. Sécurité</h2>
+        <p>Le site utilise le protocole HTTPS pour sécuriser toutes les communications. Aucune donnée de paiement n'est collectée ou stockée sur ce site.</p>
+
+        <h2>9. Modifications</h2>
+        <p>Cette politique de confidentialité peut être mise à jour. La date de dernière modification est indiquée en haut de cette page. Nous vous encourageons à la consulter régulièrement.</p>
+
+        <h2>10. Contact</h2>
+        <p>Pour toute question relative à cette politique ou pour exercer vos droits : <strong>albexia.hello@gmail.com</strong></p>
+
+        <div class="article-tags">
+          <a href="mentions-legales.html" class="article-tag" style="text-decoration:none">Mentions légales →</a>
+          <a href="contact.html" class="article-tag" style="text-decoration:none">Contact →</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+      &copy; 2025-2026 <a href="index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+      <a href="mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+      <a href="politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+      <a href="contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+    </div>
+  </footer>
+  
+  <script>
+const kb=document.getElementById('kebab-btn'),km=document.getElementById('kebab-menu');
+if(kb&&km){kb.addEventListener('click',e=>{e.stopPropagation();const o=km.classList.toggle('open');kb.setAttribute('aria-expanded',o)});document.addEventListener('click',()=>{km.classList.remove('open');kb.setAttribute('aria-expanded','false')});km.addEventListener('click',e=>e.stopPropagation())}
+</script>
+
+</body>
+</html>

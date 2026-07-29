@@ -1,0 +1,368 @@
+{
+  "stable-diffusion": {
+    "articles": [
+      {
+        "id": "sd-001",
+        "titre": "Débuter avec Stable Diffusion en 2026 : installation complète",
+        "soustitre": "Guide pas-à-pas pour installer et configurer Stable Diffusion sur Windows et Mac",
+        "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
+        "lien": "blog/debuter-stable-diffusion-2026.html",
+        "featured": true
+      },
+      {
+        "id": "sd-002",
+        "titre": "LoRAs expliqués simplement : personnaliser vos générations",
+        "soustitre": "Qu'est-ce qu'un LoRA, comment l'installer et l'utiliser pour des résultats sur mesure",
+        "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",
+        "lien": "blog/loras-stable-diffusion-guide.html",
+        "featured": true
+      },
+      {
+        "id": "sd-003",
+        "titre": "Stable Diffusion vs Midjourney : lequel choisir en 2026 ?",
+        "soustitre": "Comparatif complet — qualité, prix, facilité d'utilisation, cas d'usage",
+        "image": "https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=600&q=80",
+        "lien": "blog/stable-diffusion-vs-midjourney-2026.html",
+        "featured": true
+      },
+      {
+        "id": "sd-004",
+        "titre": "ComfyUI : créer des workflows d'images IA professionnels",
+        "soustitre": "Prise en main de ComfyUI — l'interface node-based pour les utilisateurs avancés",
+        "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        "lien": "blog/comfyui-workflows-guide.html",
+        "featured": false
+      },
+      {
+        "id": "sd-005",
+        "titre": "Les 10 meilleurs modèles Stable Diffusion sur Civitai",
+        "soustitre": "Sélection des modèles communautaires les plus populaires pour 2026",
+        "image": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=600&q=80",
+        "lien": "blog/meilleurs-modeles-civitai-2026.html",
+        "featured": false
+      },
+      {
+        "id": "sd-006",
+        "titre": "ControlNet : contrôler la composition de vos images IA",
+        "soustitre": "Poses, profondeur, contours — maîtrisez ControlNet pour des résultats précis",
+        "image": "https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80",
+        "lien": "blog/controlnet-guide-complet.html",
+        "featured": false
+      },
+      {
+        "id": "sd-007",
+        "titre": "Inpainting avec Stable Diffusion : modifier vos photos en détail",
+        "soustitre": "Retoucher, effacer, remplacer des éléments d'une image avec l'inpainting IA",
+        "image": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&q=80",
+        "lien": "blog/inpainting-stable-diffusion.html",
+        "featured": false
+      }
+    ]
+  },
+
+  "chatgpt": {
+    "articles": [
+      {
+        "id": "cgpt-001",
+        "titre": "ChatGPT en 2026 : tout ce qui a changé depuis le lancement",
+        "soustitre": "GPT-4o, mémoire, plugins, canvas — l'évolution complète de ChatGPT expliquée",
+        "image": "https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80",
+        "lien": "blog/chatgpt-evolution-2026.html",
+        "featured": true
+      },
+      {
+        "id": "cgpt-002",
+        "titre": "20 prompts ChatGPT indispensables pour les entrepreneurs",
+        "soustitre": "Des formules prêtes à l'emploi pour rédiger, analyser et décider plus vite",
+        "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
+        "lien": "blog/prompts-chatgpt-entrepreneurs.html",
+        "featured": true
+      },
+      {
+        "id": "cgpt-003",
+        "titre": "ChatGPT Free vs Plus vs Team : quelle formule choisir ?",
+        "soustitre": "Comparatif détaillé des plans ChatGPT — fonctionnalités, limites et prix",
+        "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",
+        "lien": "blog/chatgpt-free-vs-plus-vs-team.html",
+        "featured": true
+      },
+      {
+        "id": "cgpt-004",
+        "titre": "Comment utiliser les GPTs personnalisés de ChatGPT",
+        "soustitre": "Créer et utiliser des assistants IA sur mesure dans ChatGPT — guide pratique",
+        "image": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=600&q=80",
+        "lien": "blog/gpts-personnalises-chatgpt-guide.html",
+        "featured": false
+      },
+      {
+        "id": "cgpt-005",
+        "titre": "ChatGPT pour l'éducation : 15 usages concrets pour les enseignants",
+        "soustitre": "Préparer des cours, créer des exercices, corriger — l'IA au service de la pédagogie",
+        "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        "lien": "blog/chatgpt-education-enseignants.html",
+        "featured": false
+      },
+      {
+        "id": "cgpt-006",
+        "titre": "L'API ChatGPT pour les développeurs : premiers pas",
+        "soustitre": "Intégrer ChatGPT dans vos applications — clés API, endpoints, exemples de code",
+        "image": "https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=600&q=80",
+        "lien": "blog/api-chatgpt-developpeurs.html",
+        "featured": false
+      },
+      {
+        "id": "cgpt-007",
+        "titre": "ChatGPT vs Claude vs Gemini : le grand comparatif 2026",
+        "soustitre": "Quel assistant IA choisir selon votre profil et vos besoins ? Analyse objective",
+        "image": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&q=80",
+        "lien": "blog/chatgpt-vs-claude-vs-gemini-2026.html",
+        "featured": false
+      }
+    ]
+  },
+
+    "notebooklm": {
+    "articles": [
+      {
+        "id": "ntbk-001",
+        "titre": "Débuter avec NotebookLM : créez votre second cerveau IA",
+        "soustitre": "Guide complet pour importer vos sources, documents et générer des synthèses intelligentes",
+        "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
+        "lien": "blog/debuter-notebooklm-second-cerveau.html",
+        "featured": true
+      },
+      {
+        "id": "ntbk-002",
+        "titre": "NotebookLM Pro vs Gratuit : quelles fonctionnalités choisir ?",
+        "soustitre": "Analyse des limites de stockage, des modèles disponibles et des options avancées",
+        "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",
+        "lien": "blog/notebooklm-pro-vs-gratuit-comparatif.html",
+        "featured": true
+      },
+      {
+        "id": "ntbk-003",
+        "titre": "Comment générer des podcasts audio bluffants avec NotebookLM",
+        "soustitre": "Maîtrisez la fonctionnalité Audio Overview pour transformer vos notes en discussions animées",
+        "image": "https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=600&q=80",
+        "lien": "blog/generer-podcast-audio-notebooklm.html",
+        "featured": true
+      },
+      {
+        "id": "ntbk-004",
+        "titre": "NotebookLM pour les étudiants : optimiser vos révisions",
+        "soustitre": "Fiches de lecture, quiz automatiques et résumés de cours — boostez votre productivité",
+        "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        "lien": "blog/notebooklm-etudiants-revisions-ia.html",
+        "featured": false
+      },
+      {
+        "id": "ntbk-005",
+        "titre": "Sécurité des données et NotebookLM : vos documents sont-ils privés ?",
+        "soustitre": "Le point complet sur la confidentialité, l'entraînement des modèles et l'usage professionnel",
+        "image": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=600&q=80",
+        "lien": "blog/securite-confidentialite-donnees-notebooklm.html",
+        "featured": false
+      },
+      {
+        "id": "ntbk-006",
+        "titre": "10 cas d'usage de NotebookLM pour booster votre entreprise",
+        "soustitre": "Analyses de marché, onboarding de collaborateurs et gestion des bases de connaissances",
+        "image": "https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80",
+        "lien": "blog/cas-dusage-notebooklm-entreprise.html",
+        "featured": false
+      },
+      {
+        "id": "ntbk-007",
+        "titre": "NotebookLM vs ChatGPT My Spaces : le match de la gestion des connaissances",
+        "soustitre": "Comparatif approfondi pour choisir le meilleur outil d'organisation de vos informations",
+        "image": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&q=80",
+        "lien": "blog/notebooklm-vs-chatgpt-spaces-comparatif.html",
+        "featured": false
+      }
+    ]
+    },
+      
+
+  "claude": {
+    "articles": [
+      {
+        "id": "cld-001",
+        "titre": "Claude par Anthropic : pourquoi il se distingue des autres IA",
+        "soustitre": "Sécurité, longueur de contexte, raisonnement — ce qui rend Claude unique en 2026",
+        "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
+        "lien": "blog/claude-anthropic-pourquoi-unique.html",
+        "featured": true
+      },
+      {
+        "id": "cld-002",
+        "titre": "Claude pour la rédaction longue : le meilleur outil du marché ?",
+        "soustitre": "Rédiger des rapports, livres blancs et articles longs avec Claude — test complet",
+        "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",
+        "lien": "blog/claude-redaction-longue-forme.html",
+        "featured": true
+      },
+      {
+        "id": "cld-003",
+        "titre": "Claude vs ChatGPT : comparatif complet pour les professionnels",
+        "soustitre": "Analyse point par point — quel assistant IA pour quels usages professionnels",
+        "image": "https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=600&q=80",
+        "lien": "blog/claude-vs-chatgpt-professionnels.html",
+        "featured": true
+      },
+      {
+        "id": "cld-004",
+        "titre": "Utiliser Claude pour analyser des documents longs",
+        "soustitre": "Charger des PDF, contrats et rapports dans Claude — méthodes et astuces",
+        "image": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=600&q=80",
+        "lien": "blog/claude-analyser-documents-longs.html",
+        "featured": false
+      },
+      {
+        "id": "cld-005",
+        "titre": "Les meilleurs prompts pour coder avec Claude",
+        "soustitre": "Déboguer, refactorer, documenter votre code — 15 prompts testés et approuvés",
+        "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        "lien": "blog/prompts-coder-claude.html",
+        "featured": false
+      },
+      {
+        "id": "cld-006",
+        "titre": "Claude Pro vaut-il 20 $ par mois ? Notre avis honnête",
+        "soustitre": "Accès prioritaire, fenêtre de contexte étendue, projets — ce que vous obtenez vraiment",
+        "image": "https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80",
+        "lien": "blog/claude-pro-vaut-il-20-dollars.html",
+        "featured": false
+      },
+      {
+        "id": "cld-007",
+        "titre": "L'API Claude pour les développeurs francophones",
+        "soustitre": "Intégrer Claude dans vos projets — guide d'installation, exemples et tarifs API",
+        "image": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&q=80",
+        "lien": "blog/api-claude-developpeurs-francophones.html",
+        "featured": false
+      }
+    ]
+  },
+
+  "midjourney": {
+    "articles": [
+      {
+        "id": "mj-001",
+        "titre": "Midjourney V7 : tout ce qui change pour les créateurs",
+        "soustitre": "Nouvelles commandes, qualité améliorée, personnalisation — guide de la dernière version",
+        "image": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&q=80",
+        "lien": "blog/midjourney-v7-nouveautes.html",
+        "featured": true
+      },
+      {
+        "id": "mj-002",
+        "titre": "Les paramètres Midjourney que tout le monde ignore",
+        "soustitre": "--ar, --stylize, --chaos, --weird — maîtriser les paramètres avancés de Midjourney",
+        "image": "https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=600&q=80",
+        "lien": "blog/parametres-avances-midjourney.html",
+        "featured": true
+      },
+      {
+        "id": "mj-003",
+        "titre": "Créer un style cohérent avec Midjourney pour votre marque",
+        "soustitre": "Identité visuelle, charte graphique IA, cohérence de style — méthode complète",
+        "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
+        "lien": "blog/style-coherent-midjourney-marque.html",
+        "featured": true
+      },
+      {
+        "id": "mj-004",
+        "titre": "Midjourney pour les graphistes : comment l'intégrer à votre workflow",
+        "soustitre": "De Midjourney à Photoshop, Figma et Illustrator — un flux de travail optimisé",
+        "image": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=600&q=80",
+        "lien": "blog/midjourney-workflow-graphistes.html",
+        "featured": false
+      },
+      {
+        "id": "mj-005",
+        "titre": "Prompts Midjourney pour la photographie de portrait réaliste",
+        "soustitre": "50 formules testées pour générer des portraits photoréalistes impressionnants",
+        "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",
+        "lien": "blog/prompts-midjourney-portrait-realiste.html",
+        "featured": false
+      },
+      {
+        "id": "mj-006",
+        "titre": "Midjourney Basic vs Standard vs Pro : quel plan choisir ?",
+        "soustitre": "Comparatif des abonnements Midjourney — minutes GPU, modes Fast et Relax, prix",
+        "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        "lien": "blog/midjourney-basic-standard-pro-comparatif.html",
+        "featured": false
+      },
+      {
+        "id": "mj-007",
+        "titre": "Droits d'auteur et Midjourney : ce que vous devez savoir",
+        "soustitre": "Propriété des images générées, usage commercial, licence — le point juridique en 2026",
+        "image": "https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80",
+        "lien": "blog/droits-auteur-midjourney-juridique.html",
+        "featured": false
+      }
+    ]
+  },
+
+  "perplexity": {
+    "articles": [
+      {
+        "id": "pplx-001",
+        "titre": "Perplexity AI : le moteur de recherche qui remplace Google ?",
+        "soustitre": "Sources citées, réponses synthétisées, espaces — pourquoi Perplexity change la recherche",
+        "image": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=600&q=80",
+        "lien": "blog/perplexity-remplace-google.html",
+        "featured": true
+      },
+      {
+        "id": "pplx-002",
+        "titre": "Perplexity Pro vaut-il 20 $ ? Test complet et avis honnête",
+        "soustitre": "Fonctionnalités Pro, modèles avancés, uploads de fichiers — ce que vous obtenez vraiment",
+        "image": "https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=600&q=80",
+        "lien": "blog/perplexity-pro-avis-test.html",
+        "featured": true
+      },
+      {
+        "id": "pplx-003",
+        "titre": "Comment utiliser Perplexity pour la recherche académique",
+        "soustitre": "Sources fiables, focus scholar, citations automatiques — le guide pour les chercheurs",
+        "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        "lien": "blog/perplexity-recherche-academique.html",
+        "featured": true
+      },
+      {
+        "id": "pplx-004",
+        "titre": "Perplexity vs ChatGPT vs Claude : lequel pour la recherche ?",
+        "soustitre": "Chaque outil a ses forces — comparatif pour trouver le bon assistant selon votre usage",
+        "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
+        "lien": "blog/perplexity-vs-chatgpt-vs-claude-recherche.html",
+        "featured": false
+      },
+      {
+        "id": "pplx-005",
+        "titre": "Les Espaces Perplexity : créer votre base de connaissances IA",
+        "soustitre": "Organiser vos recherches, partager avec une équipe — guide complet des Spaces",
+        "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80",
+        "lien": "blog/perplexity-espaces-base-connaissances.html",
+        "featured": false
+      },
+      {
+        "id": "pplx-006",
+        "titre": "Perplexity pour les journalistes et fact-checkers",
+        "soustitre": "Vérifier des informations rapidement avec des sources citées — méthode professionnelle",
+        "image": "https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80",
+        "lien": "blog/perplexity-journalistes-fact-checking.html",
+        "featured": false
+      },
+      {
+        "id": "pplx-007",
+        "titre": "L'API Perplexity : intégrer la recherche IA dans vos projets",
+        "soustitre": "Endpoints, modèles disponibles, exemples de code — démarrer avec l'API Perplexity",
+        "image": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=600&q=80",
+        "lien": "blog/api-perplexity-guide-developpeurs.html",
+        "featured": false
+      }
+    ]
+  }
+}

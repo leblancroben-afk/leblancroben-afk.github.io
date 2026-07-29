@@ -1,0 +1,803 @@
+{
+  "meta": {
+    "titre": "Vidéothèque IA",
+    "description": "Tutoriels vidéo sélectionnés pour maîtriser les meilleurs outils d'IA",
+    "totalOutils": 12,
+    "totalVideos": 61
+  },
+  "outils": [
+    {
+      "id": "chatgpt",
+      "nom": "ChatGPT",
+      "logo": "🤖",
+      "couleur": "#10a37f",
+      "note": 4.9,
+      "avis": 1240,
+      "categorie": "Assistant IA",
+      "descriptionCourte": "Le modèle de langage d'OpenAI qui a révolutionné l'accès à l'IA générative pour le grand public.",
+      "descriptionLongue": "ChatGPT est l'assistant conversationnel le plus populaire au monde, développé par OpenAI. Il repose sur des modèles GPT-4o capables de rédiger, analyser, coder, traduire, résumer et raisonner sur presque n'importe quel sujet. Son interface intuitive permet à des millions d'utilisateurs — du lycéen au PDG — d'accéder à une intelligence artificielle de pointe sans aucune compétence technique. La version gratuite offre déjà un accès aux fonctionnalités essentielles, tandis que ChatGPT Plus déverrouille GPT-4o, la génération d'images via DALL·E, l'analyse de fichiers et la navigation web en temps réel.",
+      "tags": [
+        "Rédaction",
+        "Code",
+        "Analyse",
+        "Traduction"
+      ],
+      "lien": "https://chat.openai.com",
+      "videos": [
+        {
+          "id": "v1_chatgpt_1",
+          "youtubeId": "JTxsNm9IdYU",
+          "titre": "ChatGPT : Guide complet pour débutants 2024",
+          "duree": "18:42",
+          "dureeSecondes": 1122,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v1_chatgpt_17",
+          "youtubeId": "MxvWGMPJnfQ",
+          "titre": "Comment utiliser ChatGPT (TUTO Complet)",
+          "duree": "6:29",
+          "dureeSecondes": 389,
+          "type": "video",
+          "langue": "fr",
+          "canal": "Labo Des Réseaux"
+        },
+        {
+          "id": "v1_chatgpt_3",
+          "youtubeId": "qbIk7-JPB2c",
+          "titre": "Automatiser votre travail avec GPT-4o",
+          "duree": "34:15",
+          "dureeSecondes": 2055,
+          "type": "video",
+          "langue": "fr",
+          "canal": "AIProductivité"
+        },
+        {
+          "id": "v1_chatgpt_4",
+          "youtubeId": "Yd_JyOlS7NQ",
+          "titre": "ChatGPT vs Claude : Quel est le meilleur en 2024 ?",
+          "duree": "22:07",
+          "dureeSecondes": 1327,
+          "type": "video",
+          "langue": "fr",
+          "canal": "TechFrancophone"
+        },
+        {
+          "id": "v1_chatgpt_6",
+          "youtubeId": "WxYHHDmBKQE",
+          "titre": "ChatGPT pour rédiger des emails professionnels",
+          "duree": "12:30",
+          "dureeSecondes": 750,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v1_chatgpt_7",
+          "youtubeId": "oc_PBVILzOs",
+          "titre": "Créer un business plan avec ChatGPT",
+          "duree": "28:44",
+          "dureeSecondes": 1724,
+          "type": "video",
+          "langue": "fr",
+          "canal": "EntrepreneurIA"
+        },
+        {
+          "id": "v1_chatgpt_9",
+          "youtubeId": "PIKNYkOiHSk",
+          "titre": "GPT-4o Vision : analyser des images avec l'IA",
+          "duree": "19:22",
+          "dureeSecondes": 1162,
+          "type": "video",
+          "langue": "fr",
+          "canal": "TechFrancophone"
+        },
+        {
+          "id": "v1_chatgpt_10",
+          "youtubeId": "aywZrzNaKjs",
+          "titre": "Maîtriser les GPT personnalisés",
+          "duree": "35:10",
+          "dureeSecondes": 2110,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v1_chatgpt_12",
+          "youtubeId": "XMmVMNdXZSw",
+          "titre": "Coder une application complète avec ChatGPT",
+          "duree": "52:08",
+          "dureeSecondes": 3128,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DevIA"
+        },
+        {
+          "id": "v1_chatgpt_13",
+          "youtubeId": "9Gdk5WKQNVI",
+          "titre": "ChatGPT pour apprendre une nouvelle langue",
+          "duree": "16:45",
+          "dureeSecondes": 1005,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v1_chatgpt_15",
+          "youtubeId": "7xTGNNLPyMI",
+          "titre": "ChatGPT pour la veille concurrentielle",
+          "duree": "24:33",
+          "dureeSecondes": 1473,
+          "type": "video",
+          "langue": "fr",
+          "canal": "EntrepreneurIA"
+        }
+      ]
+    },
+    {
+      "id": "midjourney",
+      "nom": "Midjourney",
+      "logo": "🎨",
+      "couleur": "#7c3aed",
+      "note": 4.8,
+      "avis": 987,
+      "categorie": "Génération d'images",
+      "descriptionCourte": "Le générateur d'images IA le plus créatif du marché, utilisé par des artistes du monde entier.",
+      "descriptionLongue": "Midjourney est le générateur d'images par intelligence artificielle qui a redéfini les standards de la création visuelle. Accessible via Discord ou son interface web, il transforme vos descriptions textuelles en visuels d'une qualité et d'une cohérence esthétique remarquables. La version 6 introduit des améliorations majeures : réalisme photographique accru, meilleure gestion des textes dans les images et cohérence stylistique sur plusieurs générations. Midjourney est devenu l'outil de référence pour les directeurs artistiques, illustrateurs, designers et créatifs de tous horizons. Sa force réside dans sa capacité à capturer des ambiances, des émotions et des styles artistiques avec une précision saisissante.",
+      "tags": [
+        "Illustrations",
+        "Photographie",
+        "Art conceptuel",
+        "Design"
+      ],
+      "lien": "https://www.midjourney.com",
+      "videos": [
+        {
+          "id": "v2_mj_1",
+          "youtubeId": "J4c5hAH6r5k",
+          "titre": "Midjourney V6 : Tutoriel complet pour débutants",
+          "duree": "28:33",
+          "dureeSecondes": 1713,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ArtIA Studio"
+        },
+        {
+          "id": "v2_mj_3",
+          "youtubeId": "YrHCibgIcO0",
+          "titre": "Créer une identité visuelle avec Midjourney",
+          "duree": "45:20",
+          "dureeSecondes": 2720,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DesignAcadémie"
+        },
+        {
+          "id": "v2_mj_4",
+          "youtubeId": "l4Qqmb5BFBY",
+          "titre": "Paramètres avancés Midjourney expliqués",
+          "duree": "19:48",
+          "dureeSecondes": 1188,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ArtIA Studio"
+        },
+        {
+          "id": "v2_mj_6",
+          "youtubeId": "HBjPl1xXUHs",
+          "titre": "Midjourney : créer des logos professionnels",
+          "duree": "22:15",
+          "dureeSecondes": 1335,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DesignAcadémie"
+        },
+        {
+          "id": "v2_mj_8",
+          "youtubeId": "9g9q6gO3QFE",
+          "titre": "Midjourney pour illustrer un livre",
+          "duree": "41:20",
+          "dureeSecondes": 2480,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ArtIA Studio"
+        },
+        {
+          "id": "v2_mj_9",
+          "youtubeId": "bHNBQn-2-Hs",
+          "titre": "Créer des personnages cohérents avec Midjourney",
+          "duree": "29:44",
+          "dureeSecondes": 1784,
+          "type": "video",
+          "langue": "fr",
+          "canal": "VisuelIA"
+        },
+        {
+          "id": "v2_mj_10",
+          "youtubeId": "IgvPJxuCPRs",
+          "titre": "Midjourney + Canva : le combo parfait",
+          "duree": "18:30",
+          "dureeSecondes": 1110,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DesignAcadémie"
+        },
+        {
+          "id": "v2_mj_12",
+          "youtubeId": "9k9Qy0NRNCU",
+          "titre": "Midjourney pour l'architecture intérieure",
+          "duree": "33:55",
+          "dureeSecondes": 2035,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ArtIA Studio"
+        },
+        {
+          "id": "v2_mj_13",
+          "youtubeId": "1IVqof3YZWQ",
+          "titre": "Générer des illustrations pour un blog",
+          "duree": "14:28",
+          "dureeSecondes": 868,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DesignAcadémie"
+        },
+        {
+          "id": "v2_mj_15",
+          "youtubeId": "dWvhKBbJaGo",
+          "titre": "Masterclass Midjourney V6 complète",
+          "duree": "1:12:44",
+          "dureeSecondes": 4364,
+          "type": "video",
+          "langue": "fr",
+          "canal": "VisuelIA"
+        }
+      ]
+    },
+    {
+      "id": "claude",
+      "nom": "Claude",
+      "logo": "✦",
+      "couleur": "#d97706",
+      "note": 4.8,
+      "avis": 756,
+      "categorie": "Assistant IA",
+      "descriptionCourte": "L'assistant IA d'Anthropic, réputé pour ses analyses profondes et sa fiabilité en rédaction longue.",
+      "descriptionLongue": "Claude est le modèle de langage développé par Anthropic, une société fondée par d'anciens chercheurs d'OpenAI. Il se distingue par sa capacité à traiter des documents longs (jusqu'à 200 000 tokens), sa rigueur factuelle et son ton naturellement fluide. Claude excelle dans les tâches nécessitant une compréhension nuancée : analyse juridique, rédaction académique, résumé de rapports complexes, débogage de code et brainstorming créatif. Sa philosophie de sécurité Constitutional AI en fait un outil particulièrement fiable pour les usages professionnels où la précision est critique.",
+      "tags": [
+        "Analyse",
+        "Rédaction longue",
+        "Code",
+        "Résumé"
+      ],
+      "lien": "https://claude.ai",
+      "videos": [
+        {
+          "id": "v3_cl_1",
+          "youtubeId": "VBwqexqLGnA",
+          "titre": "Claude vs ChatGPT : Comparatif complet 2024",
+          "duree": "25:10",
+          "dureeSecondes": 1510,
+          "type": "video",
+          "langue": "fr",
+          "canal": "TechFrancophone"
+        },
+        {
+          "id": "v3_cl_3",
+          "youtubeId": "wU_mKznfy9I",
+          "titre": "Maîtriser Claude pour la rédaction professionnelle",
+          "duree": "31:44",
+          "dureeSecondes": 1904,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v3_cl_4",
+          "youtubeId": "3y2S6BLdmOQ",
+          "titre": "5 cas d'usage Claude pour les entrepreneurs",
+          "duree": "14:22",
+          "dureeSecondes": 862,
+          "type": "video",
+          "langue": "fr",
+          "canal": "EntrepreneurIA"
+        },
+        {
+          "id": "v3_cl_6",
+          "youtubeId": "AIKpOEpFhAo",
+          "titre": "Claude pour rédiger des articles de blog",
+          "duree": "21:10",
+          "dureeSecondes": 1270,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v3_cl_8",
+          "youtubeId": "GXzRMpHrMMo",
+          "titre": "Claude Projects : organiser son travail IA",
+          "duree": "27:33",
+          "dureeSecondes": 1653,
+          "type": "video",
+          "langue": "fr",
+          "canal": "AIProductivité"
+        },
+        {
+          "id": "v3_cl_9",
+          "youtubeId": "VbTcMI7BPOM",
+          "titre": "Claude pour déboguer du code Python",
+          "duree": "38:22",
+          "dureeSecondes": 2302,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DevIA"
+        },
+        {
+          "id": "v3_cl_11",
+          "youtubeId": "ZdLfhpTgXlo",
+          "titre": "Claude vs Gemini : lequel choisir en 2024 ?",
+          "duree": "23:17",
+          "dureeSecondes": 1397,
+          "type": "video",
+          "langue": "fr",
+          "canal": "TechFrancophone"
+        },
+        {
+          "id": "v3_cl_12",
+          "youtubeId": "kPHMT4rMhkM",
+          "titre": "Créer un chatbot avec Claude API",
+          "duree": "45:08",
+          "dureeSecondes": 2708,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DevIA"
+        },
+        {
+          "id": "v3_cl_13",
+          "youtubeId": "Yd9q2GVdNfA",
+          "titre": "Claude pour la recherche académique",
+          "duree": "17:44",
+          "dureeSecondes": 1064,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v3_cl_15",
+          "youtubeId": "PaJCjlFSuAk",
+          "titre": "Automatiser sa veille avec Claude",
+          "duree": "31:05",
+          "dureeSecondes": 1865,
+          "type": "video",
+          "langue": "fr",
+          "canal": "EntrepreneurIA"
+        }
+      ]
+    },
+    {
+      "id": "make",
+      "nom": "Make (Integromat)",
+      "logo": "⚙️",
+      "couleur": "#6366f1",
+      "note": 4.7,
+      "avis": 643,
+      "categorie": "Automatisation",
+      "descriptionCourte": "La plateforme d'automatisation no-code qui connecte vos applications et automatise vos workflows complexes.",
+      "descriptionLongue": "Make, anciennement Integromat, est la plateforme d'automatisation visuelle qui permet de créer des scénarios complexes sans écrire une seule ligne de code. Son interface en drag-and-drop représente visuellement chaque étape du flux de données, offrant une transparence totale sur la logique d'automatisation. Contrairement à Zapier, Make permet une manipulation granulaire des données — filtres avancés, itérateurs, agrégateurs et routeurs conditionnels. Il s'intègre avec plus de 1000 applications : Google Workspace, Slack, Airtable, Notion, CRM, boutiques e-commerce et bien plus. Pour les freelances, agences et PME, Make est devenu l'outil indispensable pour multiplier la productivité sans multiplier les effectifs.",
+      "tags": [
+        "Automatisation",
+        "No-code",
+        "Intégrations",
+        "Workflow"
+      ],
+      "lien": "https://www.make.com",
+      "videos": [
+        {
+          "id": "v4_mk_1",
+          "youtubeId": "F1WgvTkW1KI",
+          "titre": "Make (Integromat) : Tutoriel complet débutant",
+          "duree": "52:18",
+          "dureeSecondes": 3138,
+          "type": "video",
+          "langue": "fr",
+          "canal": "AutomationFR"
+        },
+        {
+          "id": "v4_mk_3",
+          "youtubeId": "dqpbHmCMVBo",
+          "titre": "Make + ChatGPT : Le duo parfait",
+          "duree": "38:05",
+          "dureeSecondes": 2285,
+          "type": "video",
+          "langue": "fr",
+          "canal": "AutomationFR"
+        },
+        {
+          "id": "v4_mk_4",
+          "youtubeId": "9wkjCp7lbLg",
+          "titre": "Scénario Make pour automatiser sa veille",
+          "duree": "27:33",
+          "dureeSecondes": 1653,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ProductivitéPro"
+        },
+        {
+          "id": "v4_mk_6",
+          "youtubeId": "X2tWTjuovSg",
+          "titre": "Make + Notion : synchroniser ses données",
+          "duree": "26:44",
+          "dureeSecondes": 1604,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ProductivitéPro"
+        },
+        {
+          "id": "v4_mk_8",
+          "youtubeId": "6cFVZRkfKzs",
+          "titre": "Make vs Zapier : comparatif complet 2024",
+          "duree": "32:18",
+          "dureeSecondes": 1938,
+          "type": "video",
+          "langue": "fr",
+          "canal": "AutomationFR"
+        },
+        {
+          "id": "v4_mk_9",
+          "youtubeId": "nwKUzTXsMSA",
+          "titre": "Automatiser sa facturation avec Make",
+          "duree": "44:55",
+          "dureeSecondes": 2695,
+          "type": "video",
+          "langue": "fr",
+          "canal": "EntrepreneurIA"
+        },
+        {
+          "id": "v4_mk_11",
+          "youtubeId": "hPGUMJ0NQBY",
+          "titre": "Créer un CRM automatisé avec Make",
+          "duree": "58:20",
+          "dureeSecondes": 3500,
+          "type": "video",
+          "langue": "fr",
+          "canal": "AutomationFR"
+        },
+        {
+          "id": "v4_mk_12",
+          "youtubeId": "L9vRGolqkAs",
+          "titre": "Make pour les agences marketing",
+          "duree": "35:10",
+          "dureeSecondes": 2110,
+          "type": "video",
+          "langue": "fr",
+          "canal": "MarketingIA"
+        },
+        {
+          "id": "v4_mk_14",
+          "youtubeId": "YJGY5AaFHdo",
+          "titre": "Make + Google Sheets : reporting automatique",
+          "duree": "22:33",
+          "dureeSecondes": 1353,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ProductivitéPro"
+        },
+        {
+          "id": "v4_mk_15",
+          "youtubeId": "lf1-M1QnAN4",
+          "titre": "Scénario Make de A à Z pour e-commerce",
+          "duree": "1:05:12",
+          "dureeSecondes": 3912,
+          "type": "video",
+          "langue": "fr",
+          "canal": "AutomationFR"
+        }
+      ]
+    },
+    {
+      "id": "perplexity",
+      "nom": "Perplexity AI",
+      "logo": "🔍",
+      "couleur": "#0ea5e9",
+      "note": 4.7,
+      "avis": 534,
+      "categorie": "Recherche IA",
+      "descriptionCourte": "Le moteur de recherche augmenté par l'IA qui cite ses sources et répond en temps réel.",
+      "descriptionLongue": "Perplexity AI réinvente la recherche en ligne en combinant la puissance des grands modèles de langage avec l'indexation web en temps réel. Contrairement à ChatGPT, chaque réponse de Perplexity est accompagnée de citations vérifiables, permettant de remonter directement aux sources. Son interface épurée transforme n'importe quelle question complexe en synthèse structurée, enrichie de références académiques, d'actualités récentes et de contenus spécialisés. La fonctionnalité Spaces permet de créer des espaces de recherche thématiques collaboratifs, idéaux pour la veille concurrentielle, la recherche académique ou la préparation d'articles de fond.",
+      "tags": [
+        "Recherche",
+        "Citations",
+        "Veille",
+        "Actualités"
+      ],
+      "lien": "https://www.perplexity.ai",
+      "videos": [
+        {
+          "id": "v5_px_1",
+          "youtubeId": "KU9zUSomFe0",
+          "titre": "Perplexity AI : Le Google du futur ?",
+          "duree": "16:28",
+          "dureeSecondes": 988,
+          "type": "video",
+          "langue": "fr",
+          "canal": "TechFrancophone"
+        },
+        {
+          "id": "v5_px_3",
+          "youtubeId": "T9aRN5JkmL8",
+          "titre": "Faire sa veille avec Perplexity en 2024",
+          "duree": "21:55",
+          "dureeSecondes": 1315,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v5_px_4",
+          "youtubeId": "mTBfJkDuDiU",
+          "titre": "Perplexity Spaces : fonctionnalité cachée",
+          "duree": "12:40",
+          "dureeSecondes": 760,
+          "type": "video",
+          "langue": "fr",
+          "canal": "AIProductivité"
+        },
+        {
+          "id": "v5_px_6",
+          "youtubeId": "9q4uDVFXgIs",
+          "titre": "Perplexity pour la recherche académique",
+          "duree": "18:44",
+          "dureeSecondes": 1124,
+          "type": "video",
+          "langue": "fr",
+          "canal": "FormationIA"
+        },
+        {
+          "id": "v5_px_8",
+          "youtubeId": "bx7Tyj84YB4",
+          "titre": "Remplacer Google par Perplexity en 2024",
+          "duree": "14:22",
+          "dureeSecondes": 862,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DigitalActu"
+        },
+        {
+          "id": "v5_px_9",
+          "youtubeId": "HBuqkFhB2Zk",
+          "titre": "Perplexity pour créer des rapports de marché",
+          "duree": "29:10",
+          "dureeSecondes": 1750,
+          "type": "video",
+          "langue": "fr",
+          "canal": "EntrepreneurIA"
+        },
+        {
+          "id": "v5_px_11",
+          "youtubeId": "MVIAZm5GPNQ",
+          "titre": "Perplexity + Notion : prises de notes IA",
+          "duree": "24:08",
+          "dureeSecondes": 1448,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ProductivitéPro"
+        },
+        {
+          "id": "v5_px_12",
+          "youtubeId": "3nFUkKZFpBc",
+          "titre": "Recherche d'images avec Perplexity",
+          "duree": "11:30",
+          "dureeSecondes": 690,
+          "type": "video",
+          "langue": "fr",
+          "canal": "TechFrancophone"
+        },
+        {
+          "id": "v5_px_14",
+          "youtubeId": "YlgA0fg4pBQ",
+          "titre": "Veille sectorielle automatique avec Perplexity",
+          "duree": "20:05",
+          "dureeSecondes": 1205,
+          "type": "video",
+          "langue": "fr",
+          "canal": "EntrepreneurIA"
+        },
+        {
+          "id": "v5_px_15",
+          "youtubeId": "bJl1RgdXHaE",
+          "titre": "Perplexity API : intégrer dans ses outils",
+          "duree": "37:44",
+          "dureeSecondes": 2264,
+          "type": "video",
+          "langue": "fr",
+          "canal": "DevIA"
+        }
+      ]
+    },
+    {
+      "id": "runway",
+      "nom": "Runway ML",
+      "logo": "🎬",
+      "couleur": "#ec4899",
+      "note": 4.6,
+      "avis": 421,
+      "categorie": "Vidéo IA",
+      "descriptionCourte": "La suite créative IA qui génère, édite et transforme des vidéos à partir de simples prompts textuels.",
+      "descriptionLongue": "Runway ML est la référence mondiale de la génération vidéo par intelligence artificielle. Son modèle Gen-2 permet de transformer du texte en clips vidéo cohérents, d'animer des images fixes ou d'appliquer des styles artistiques à des vidéos existantes. Les fonctionnalités avancées incluent l'inpainting vidéo (effacement d'éléments), le chroma key IA (remplacement de fond sans fond vert), la suppression du bruit et la gestion des mouvements de caméra. Runway est adopté par les studios hollywoodiens, les agences créatives et les YouTubeurs pour accélérer la post-production. Avec l'arrivée de Gen-3, la qualité cinématographique et la cohérence temporelle atteignent un niveau inédit.",
+      "tags": [
+        "Vidéo générative",
+        "Post-production",
+        "Effets visuels",
+        "Animation"
+      ],
+      "lien": "https://runwayml.com",
+      "videos": [
+        {
+          "id": "v6_rw_1",
+          "youtubeId": "hPGUMJ0NQBY",
+          "titre": "Runway Gen-2 : Créer des vidéos IA époustouflantes",
+          "duree": "24:17",
+          "dureeSecondes": 1457,
+          "type": "video",
+          "langue": "fr",
+          "canal": "VideoIA"
+        },
+        {
+          "id": "v6_rw_3",
+          "youtubeId": "gYGHpFCXObo",
+          "titre": "Runway pour les créateurs YouTube : cas pratiques",
+          "duree": "41:08",
+          "dureeSecondes": 2468,
+          "type": "video",
+          "langue": "fr",
+          "canal": "VideoIA"
+        },
+        {
+          "id": "v6_rw_4",
+          "youtubeId": "B7ULm9nBNNE",
+          "titre": "Animer une photo avec Runway",
+          "duree": "11:34",
+          "dureeSecondes": 694,
+          "type": "video",
+          "langue": "fr",
+          "canal": "ArtIA Studio"
+        },
+        {
+          "id": "v6_rw_6",
+          "youtubeId": "JIKnJkWZnN4",
+          "titre": "Runway pour créer des publicités vidéo IA",
+          "duree": "26:18",
+          "dureeSecondes": 1578,
+          "type": "video",
+          "langue": "fr",
+          "canal": "MarketingIA"
+        },
+        {
+          "id": "v6_rw_8",
+          "youtubeId": "Hj0qqmkj5xE",
+          "titre": "Runway Gen-3 : comparatif avec Sora",
+          "duree": "22:44",
+          "dureeSecondes": 1364,
+          "type": "video",
+          "langue": "fr",
+          "canal": "TechFrancophone"
+        },
+        {
+          "id": "v6_rw_9",
+          "youtubeId": "SKe1MLNsmbc",
+          "titre": "Créer un clip musical avec Runway",
+          "duree": "48:10",
+          "dureeSecondes": 2890,
+          "type": "video",
+          "langue": "fr",
+          "canal": "VideoIA"
+        },
+        {
+          "id": "v6_rw_11",
+          "youtubeId": "c1Ql-Q6LHPE",
+          "titre": "Runway pour les YouTubeurs débutants",
+          "duree": "31:22",
+          "dureeSecondes": 1882,
+          "type": "video",
+          "langue": "fr",
+          "canal": "VideoIA"
+        },
+        {
+          "id": "v6_rw_12",
+          "youtubeId": "JYlMHhz3mxc",
+          "titre": "Effets visuels avancés avec Runway",
+          "duree": "55:08",
+          "dureeSecondes": 3308,
+          "type": "video",
+          "langue": "fr",
+          "canal": "CreatifIA"
+        },
+        {
+          "id": "v6_rw_14",
+          "youtubeId": "jKbz19E2X_0",
+          "titre": "Workflow Runway + CapCut pour créateurs",
+          "duree": "19:55",
+          "dureeSecondes": 1195,
+          "type": "video",
+          "langue": "fr",
+          "canal": "MarketingIA"
+        },
+        {
+          "id": "v6_rw_15",
+          "youtubeId": "f3nHCWMqfok",
+          "titre": "Runway : tout ce qui est possible en 2024",
+          "duree": "1:08:30",
+          "dureeSecondes": 4110,
+          "type": "video",
+          "langue": "fr",
+          "canal": "VideoIA"
+        }
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Est-il légal de visionner ces vidéos sur votre site ?",
+      "reponse": "Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur."
+    },
+    {
+      "question": "Comment sont sélectionnées les vidéos pour chaque outil ?",
+      "reponse": "Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire."
+    },
+    {
+      "question": "Pourquoi filtrer par durée ?",
+      "reponse": "Tout le monde n'a pas le même besoin ni le même temps disponible. Si vous voulez juste un aperçu, une vidéo de 5 minutes suffit. Si vous souhaitez configurer l'outil pour votre entreprise, vous aurez besoin d'une formation de 30 à 40 minutes. Le filtre vous permet de trouver exactement le contenu adapté à votre situation."
+    },
+    {
+      "question": "Je suis YouTubeur, pourquoi soumettre ma vidéo ?",
+      "reponse": "Soumettre votre vidéo vous permet d'apparaître devant une audience ultra-ciblée. Un utilisateur qui consulte la fiche d'une IA est déjà convaincu d'utiliser cet outil — c'est l'endroit idéal pour gagner des abonnés qualifiés et renforcer votre autorité dans le domaine de l'IA francophone."
+    },
+    {
+      "question": "Que se passe-t-il si un outil change d'interface ?",
+      "reponse": "C'est l'avantage de notre système communautaire. Si une vidéo devient obsolète suite à une mise à jour, la communauté peut en signaler de plus récentes. Nous actualisons régulièrement les tutoriels pour qu'ils correspondent aux versions actuelles des logiciels."
+    },
+    {
+      "question": "Est-ce gratuit d'utiliser l'annuaire et de regarder les vidéos ?",
+      "reponse": "Oui, l'accès à notre plateforme et le visionnage des vidéos sont entièrement gratuits. Nous nous finançons par des partenariats affiliés avec les outils référencés pour garantir que l'apprentissage de l'IA reste accessible à tous, en particulier dans les pays francophones."
+    }
+  ],
+  "filtresDuree": [
+    {
+      "label": "Tout",
+      "min": 0,
+      "max": 999999
+    },
+    {
+      "label": "< 10 min",
+      "min": 0,
+      "max": 600
+    },
+    {
+      "label": "10 – 20 min",
+      "min": 600,
+      "max": 1200
+    },
+    {
+      "label": "20 – 30 min",
+      "min": 1200,
+      "max": 1800
+    },
+    {
+      "label": "30 – 45 min",
+      "min": 1800,
+      "max": 2700
+    },
+    {
+      "label": "45 min – 1h",
+      "min": 2700,
+      "max": 3600
+    },
+    {
+      "label": "1h+",
+      "min": 3600,
+      "max": 999999
+    }
+  ]
+}

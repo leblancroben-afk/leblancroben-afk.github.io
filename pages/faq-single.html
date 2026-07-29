@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ═══ PERSONNALISER PAR PAGE ═══════════════════════════
+    - <title>
+    - <meta name="description">
+    - og:title, og:description, og:url
+    - Schema.org : name + text de l'Answer
+    - hreflang href
+  ════════════════════════════════════════════════════════ -->
+  <title><!-- QUESTION --> — FAQ Albexia</title>
+  <meta name="description" content="<!-- DESCRIPTION -->" />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="<!-- QUESTION --> — FAQ Albexia" />
+  <meta property="og:description" content="<!-- DESCRIPTION -->" />
+  <meta property="og:type"        content="article" />
+  <meta property="og:url"         content="https://albexia.com/faq/<!-- ID -->/" />
+  <meta property="og:image"       content="/assets/preview.jpg" />
+
+  <!-- hreflang -->
+  <link rel="alternate" hreflang="fr" href="https://albexia.com/faq/<!-- ID -->/" />
+
+  <!-- Schema.org FAQPage individuelle -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "<!-- QUESTION -->",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<!-- RÉPONSE RAPIDE EN TEXTE BRUT (sans HTML) -->"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/css/faq.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="logo">Albexia<span class="dot">.</span></a>
+    <div class="nav-links">
+      <a href="/outils/"  class="nav-link">Outils</a>
+      <a href="/blog/"    class="nav-link">Blog</a>
+      <a href="/galerie/" class="nav-link">Galerie</a>
+      <a href="/faq/"     class="nav-link active">FAQ</a>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- Fil d'Ariane -->
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <a href="/">Accueil</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="/faq/">FAQ</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current"><!-- QUESTION --></span>
+    </nav>
+
+    <!-- En-tête -->
+    <header class="faq-page-header">
+      <h1><!-- QUESTION --></h1>
+    </header>
+
+    <!-- Réponse rapide -->
+    <div class="faq-answer-box" role="note" aria-label="Réponse rapide">
+      <div class="faq-answer-label">Réponse rapide</div>
+      <p>
+        <!-- RÉPONSE DIRECTE EN 2-3 LIGNES AVEC <strong> SUR LES MOTS CLÉS -->
+      </p>
+    </div>
+
+    <!-- Contenu développé -->
+    <article class="faq-content">
+
+      <h2><!-- TITRE SECTION 1 --></h2>
+      <p><!-- PARAGRAPHE --></p>
+      <ul>
+        <li><strong>Point 1 :</strong> détail</li>
+        <li><strong>Point 2 :</strong> détail</li>
+        <li><strong>Point 3 :</strong> détail</li>
+      </ul>
+
+      <h2><!-- TITRE SECTION 2 --></h2>
+      <p><!-- PARAGRAPHE --></p>
+
+      <!-- TABLEAU COMPARATIF (optionnel — supprimer si non pertinent) -->
+      <div class="faq-table-wrap">
+        <table class="faq-table">
+          <thead>
+            <tr>
+              <th><!-- COL 1 --></th>
+              <th><!-- COL 2 --></th>
+              <th><!-- COL 3 --></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><!-- Ligne 1 --></td>
+              <td><!-- Valeur --></td>
+              <td><strong><!-- Valeur --></strong></td>
+            </tr>
+            <tr>
+              <td><!-- Ligne 2 --></td>
+              <td><!-- Valeur --></td>
+              <td><strong><!-- Valeur --></strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2><!-- TITRE SECTION 3 --></h2>
+      <p><!-- PARAGRAPHE --></p>
+
+    </article>
+
+    <!-- Questions liées (3 à 4 liens max) -->
+    <nav class="faq-related" aria-label="Questions liées">
+      <p class="faq-related-title">Questions liées</p>
+      <ul class="faq-related-list">
+        <li><a href="/faq/<!-- ID-1 -->/"><!-- Question liée 1 --></a></li>
+        <li><a href="/faq/<!-- ID-2 -->/"><!-- Question liée 2 --></a></li>
+        <li><a href="/faq/<!-- ID-3 -->/"><!-- Question liée 3 --></a></li>
+        <li><a href="/faq/<!-- ID-4 -->/"><!-- Question liée 4 --></a></li>
+      </ul>
+    </nav>
+
+    <!-- CTA -->
+    <div class="faq-cta-block">
+      <div class="faq-cta-text">
+        <h3><!-- TITRE CTA --></h3>
+        <p><!-- SOUS-TITRE CTA --></p>
+      </div>
+      <a href="<!-- URL CTA -->" class="btn-main"><!-- TEXTE BOUTON --></a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Albexia · <a href="/mentions-legales.html">Mentions légales</a> · <a href="/confidentialite.html">Confidentialité</a></p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="">
+
+  <!-- ── SEO dynamique (mis à jour par JS) ── -->
+  <title>Vidéothèque complète | Albexia</title>
+  <meta name="description" content="Tous les tutoriels vidéo pour maîtriser cet outil IA. Filtrables par type et durée. Gratuit, en français.">
+  <link rel="canonical" href="https://albexia.com/tutoriel-outil.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Albexia">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Vidéothèque IA – Albexia",
+    "publisher": { "@type": "Organization", "name": "Albexia", "url": "https://albexia.com" }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- ════════════════════════
+     NAVIGATION
+     ════════════════════════ -->
+<nav>
+  <a href="index.html" class="logo" style="text-decoration:none;color:inherit;">
+    <div class="logo">
+      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+        <style>
+          .poly-part {
+            animation: buildIn 1.2s ease-out forwards;
+            opacity: 0;
+          }
+          .logo-text {
+            animation: fadeIn 1s ease-out 0.8s forwards;
+            opacity: 0;
+          }
+          @keyframes buildIn {
+            0%   { opacity: 0; transform: translateY(10px) scale(0.8); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          @keyframes fadeIn {
+            0%   { opacity: 0; transform: translateX(-5px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          .part-1 { animation-delay: 0.1s; }
+          .part-2 { animation-delay: 0.3s; }
+          .part-3 { animation-delay: 0.5s; }
+        </style>
+        <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+        <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+        <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+        <text class="logo-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">
+          Albe<tspan fill="#ff6b9d">x</tspan>ia
+        </text>
+      </svg>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html"       class="nav-link" style="text-decoration:none;">Outils</a>
+    <a href="blog.html"        class="nav-link" style="text-decoration:none;">Blog</a>
+    <a href="galerie.html"     class="nav-link" style="text-decoration:none;">Galerie</a>
+    <a href="tutoriels.html"   class="nav-link active" style="text-decoration:none;">Tutoriels</a>
+    <a href="comparateur.html" class="nav-link" style="text-decoration:none;">Comparateur</a>
+    <a href="ressources.html"  class="nav-link" style="text-decoration:none;">Ressources</a>
+  </div>
+  <button class="nav-cta" id="btn-soumettre-header">
+    ↑ Soumettre un tutoriel
+  </button>
+</nav>
+
+<!-- ════════════════════════
+     BREADCRUMB
+     ════════════════════════ -->
+<div class="outil-breadcrumb">
+  <a href="index.html">Accueil</a>
+  <span class="bc-sep">›</span>
+  <a href="tutoriels.html">Tutoriels</a>
+  <span class="bc-sep">›</span>
+  <span id="bc-outil">Chargement…</span>
+</div>
+
+<!-- ════════════════════════
+     IDENTITÉ DE L'OUTIL
+     ════════════════════════ -->
+<section class="outil-hero">
+
+  <!-- Lien retour -->
+  <a href="tutoriels.html" id="lien-retour" class="outil-retour">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Retour aux tutoriels
+  </a>
+
+  <div class="outil-hero-inner">
+    <!-- Logo grand format -->
+    <div class="outil-logo-wrap">
+      <div id="outil-logo" class="outil-logo-grand">…</div>
+    </div>
+
+    <!-- Infos -->
+    <div class="outil-hero-infos">
+      <div class="outil-hero-top">
+        <span id="outil-cat" class="outil-cat-badge">Catégorie</span>
+        <span id="outil-count" class="outil-count-badge">… tutoriels</span>
+      </div>
+      <h1 id="outil-h1" class="outil-h1">Maîtrisez l'outil : La vidéothèque complète</h1>
+      <p id="outil-sous-titre" class="outil-sous-titre">Chargement…</p>
+      <!-- Zone note : vide au départ, peuplée par le script module si avis réels existent -->
+      <div id="outil-note" class="outil-note"></div>
+      <div id="outil-tags" class="tuto-card-tags" style="margin-top:14px;padding:0;"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ════════════════════════
+     BARRE DE FILTRES
+     ════════════════════════ -->
+<div class="outil-filtres-wrap">
+  <div class="outil-filtres-bar">
+
+    <!-- Groupe type -->
+    <div class="filtres-groupe">
+      <button id="filtre-tout"  class="filtre-btn actif">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Tout
+      </button>
+      <button id="filtre-video" class="filtre-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        Vidéos
+      </button>
+    </div>
+
+    <!-- Dropdown durée (visible seulement quand filtre = Vidéos) -->
+    <div id="wrap-duree" class="filtres-duree-wrap" style="display:none;">
+      <div class="duree-container">
+        <button id="btn-duree-dropdown" class="filtre-btn filtre-btn-duree">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="btn-duree-label">Durée</span>
+          <svg class="duree-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="duree-dropdown" class="duree-dropdown">
+          <!-- Peuplé par JS depuis filtresDuree dans le JSON -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Compteur résultats -->
+    <span id="outil-video-count" class="filtres-count">… résultats</span>
+
+    <!-- Bouton soumettre côté droit -->
+    <button class="tuto-btn-soumettre filtre-soumettre"
+            onclick="ouvrirModalSoumission(OUTIL?.outil?.id||'', OUTIL?.outil?.nom||'')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Soumettre une vidéo
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     GRILLE VIDÉOS
+     ════════════════════════ -->
+<div class="outil-grille-wrap">
+  <div id="outil-video-grille" class="outil-video-grille">
+    <!-- Cartes injectées par tutoriel-outil.js -->
+    <div class="outil-skeleton"></div>
+    <div class="outil-skeleton"></div>
+    <div class="outil-skeleton"></div>
+    <div class="outil-skeleton"></div>
+    <div class="outil-skeleton"></div>
+    <div class="outil-skeleton"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     CTA SOUMISSION BAS DE PAGE
+     ════════════════════════ -->
+<section class="outil-cta-section">
+  <div class="outil-cta-inner">
+    <div class="outil-cta-ico">🎬</div>
+    <h2 class="outil-cta-titre">Vous connaissez un excellent tutoriel&nbsp;?</h2>
+    <p class="outil-cta-sub">Enrichissez la bibliothèque de la communauté francophone. Soumettez une vidéo et atteignez une audience ultra-ciblée.</p>
+    <button class="btn-main" onclick="ouvrirModalSoumission(OUTIL?.outil?.id||'', OUTIL?.outil?.nom||'')">
+      Soumettre un tutoriel →
+    </button>
+  </div>
+</section>
+
+<!-- ════════════════════════
+     MODAL PLAYER YOUTUBE
+     ════════════════════════ -->
+<div id="tuto-player-modal" class="tuto-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="tuto-player-inner">
+    <div class="tuto-player-top">
+      <p id="tuto-player-titre" class="tuto-player-titre"></p>
+      <button class="tuto-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="tuto-player-frame">
+      <iframe id="tuto-player-iframe"
+        src=""
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="Tutoriel vidéo">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     MODAL SOUMISSION
+     ════════════════════════ -->
+<div id="tuto-modal-soumission" class="tuto-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="tuto-modal-inner">
+    <button class="tuto-modal-close" id="soumission-fermer" aria-label="Fermer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <div class="tuto-modal-ico">🎬</div>
+    <h2 class="tuto-modal-titre">Soumettre un tutoriel</h2>
+    <p class="tuto-modal-sub">
+      Proposez une vidéo pour <strong id="soumission-outil-nom">cet outil</strong>. Notre équipe éditoriale l'examinera sous 48h.
+    </p>
+
+    <form id="form-soumission" novalidate>
+      <input type="hidden" id="soumission-outil-id" name="outil_id" value="">
+
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="tuto-form-input" type="url" id="s-url" name="url"
+               placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-outil">Outil concerné</label>
+        <select class="tuto-form-select" id="s-outil" name="outil">
+          <!-- Peuplé par JS -->
+        </select>
+      </div>
+
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="tuto-form-input" type="text" id="s-nom" name="nom"
+               placeholder="Jean-Michel ou @MonCanal">
+      </div>
+
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="tuto-form-input" type="email" id="s-email" name="email"
+               placeholder="vous@exemple.com">
+      </div>
+
+      <button type="submit" class="tuto-form-submit" id="soumission-submit">
+        Soumettre la vidéo →
+      </button>
+      <p class="tuto-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+    </form>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     FOOTER
+     ════════════════════════ -->
+<footer style="border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-dim);font-size:12px;margin-top:auto;">
+  <p style="margin-bottom:8px;">
+    <a href="index.html"                style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Outils</a>
+    <a href="blog.html"                 style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Blog</a>
+    <a href="tutoriels.html"            style="color:var(--accent2);text-decoration:none;margin:0 10px;">Tutoriels</a>
+    <a href="mentions-legales.html"     style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Mentions légales</a>
+    <a href="politique-confidentialite.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Confidentialité</a>
+  </p>
+  <p>© 2024 Albexia · L'annuaire IA francophone de référence</p>
+</footer>
+
+<!-- ════════════════════════
+     SCRIPT MODULE — Note Firestore + Auth pour save vidéo
+     Chargé EN PREMIER pour que les fonctions soient
+     disponibles quand tutoriel-outil.js s'initialise
+     ════════════════════════ -->
+<script type="module">
+  import { getRatingSummary } from './js/reviews.js';
+  import { auth }             from './js/firebase-config.js';
+  import { saveVideo, unsaveVideo, getSavedVideos } from './js/firestore.js';
+  import { onAuthStateChanged } from './js/firebase-config.js';
+
+  /* ── État utilisateur courant ── */
+  let _currentUser     = null;
+  let _savedVideoIds   = new Set();
+
+  onAuthStateChanged(auth, async (user) => {
+    _currentUser = user;
+    if (user) {
+      const saved = await getSavedVideos(user.uid);
+      _savedVideoIds = new Set(saved.map(v => v.videoId));
+    } else {
+      _savedVideoIds = new Set();
+    }
+    /* Rafraîchir l'état des boutons save si la grille est déjà rendue */
+    window._refreshSaveBtns?.();
+  });
+
+  /* ── Note réelle depuis Firestore ──
+     Appelée par tutoriel-outil.js via window._chargerNoteReelle()
+     après renderIdentite() */
+  window._chargerNoteReelle = async function(toolSlug) {
+    try {
+      const { ratingAverage, ratingCount } = await getRatingSummary(toolSlug);
+      const noteEl = document.getElementById('outil-note');
+      if (!noteEl) return;
+      if (!ratingCount || ratingCount === 0) {
+        /* Aucun avis → on n'affiche rien */
+        noteEl.innerHTML = '';
+        return;
+      }
+      const plein = Math.floor(ratingAverage);
+      const demi  = (ratingAverage % 1) >= 0.5 ? 1 : 0;
+      const vide  = 5 - plein - demi;
+      const etoiles = '★'.repeat(plein) + (demi ? '½' : '') + '☆'.repeat(vide);
+      noteEl.innerHTML = `${etoiles} <strong>${ratingAverage}</strong> <span>(${ratingCount} avis)</span>`;
+    } catch (e) {
+      /* En cas d'erreur Firestore, on masque silencieusement */
+      const noteEl = document.getElementById('outil-note');
+      if (noteEl) noteEl.innerHTML = '';
+    }
+  };
+
+  /* ── Toggle save vidéo ──
+     Appelé depuis chaque bouton 🔖 dans carteVideoHTML() */
+  window._toggleSaveVideo = async function(btn, videoData) {
+    if (!_currentUser) {
+      /* Rediriger vers profil pour connexion */
+      window.location.href = 'profil.html';
+      return;
+    }
+    const uid     = _currentUser.uid;
+    const videoId = videoData.videoId;
+    const saving  = !_savedVideoIds.has(videoId);
+
+    btn.disabled = true;
+    try {
+      if (saving) {
+        await saveVideo(uid, videoData);
+        _savedVideoIds.add(videoId);
+        btn.classList.add('saved');
+        btn.title = 'Retirer des vidéos sauvegardées';
+        btn.setAttribute('aria-label', 'Retirer des vidéos sauvegardées');
+      } else {
+        await unsaveVideo(uid, videoId);
+        _savedVideoIds.delete(videoId);
+        btn.classList.remove('saved');
+        btn.title = 'Sauvegarder cette vidéo';
+        btn.setAttribute('aria-label', 'Sauvegarder cette vidéo');
+      }
+    } catch (e) {
+      console.error('[Albexia] Erreur save vidéo :', e);
+    }
+    btn.disabled = false;
+  };
+
+  /* ── Rafraîchir l'état saved de tous les boutons ──
+     Utile quand la grille est rendue avant que onAuthStateChanged réponde */
+  window._refreshSaveBtns = function() {
+    document.querySelectorAll('.btn-save-video[data-video-id]').forEach(btn => {
+      const isSaved = _savedVideoIds.has(btn.dataset.videoId);
+      btn.classList.toggle('saved', isSaved);
+      btn.title = isSaved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
+    });
+  };
+
+  /* ── Exposer l'état user pour tutoriel-outil.js ──
+     Permet de savoir si l'user est connecté au moment du render */
+  window._getAuthState = function() {
+    return { user: _currentUser, savedIds: _savedVideoIds };
+  };
+</script>
+
+<!-- Script principal (classic — chargé après le module) -->
+<script src="js/tutoriel-outil.js"></script>
+
+</body>
+</html>

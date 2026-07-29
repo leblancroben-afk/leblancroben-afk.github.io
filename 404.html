@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Albexia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --pink:    #ff6b9d;
+      --dark:    #0a0a0f;
+      --off:     #f0f0f5;
+      --muted:   #6b6b7a;
+      --glass:   rgba(240,240,245,0.04);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--dark);
+      color: var(--off);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-bar {
+      position: fixed;
+      top: 1.5rem; right: 1.5rem;
+      display: flex; gap: .5rem;
+      z-index: 100;
+    }
+    .lang-btn {
+      background: var(--glass);
+      border: 1px solid rgba(255,107,157,.2);
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .12em;
+      padding: .35rem .7rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .lang-btn:hover, .lang-btn.active {
+      border-color: var(--pink);
+      color: var(--pink);
+      background: rgba(255,107,157,.08);
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .container {
+      max-width: 720px;
+      width: 100%;
+    }
+
+    /* ── 404 GIANT ── */
+    .giant {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.5rem, 18vw, 10rem);
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,107,157,.25);
+      letter-spacing: -.04em;
+      user-select: none;
+      animation: flicker 6s ease-in-out infinite;
+      margin-bottom: -.5rem;
+    }
+
+    @keyframes flicker {
+      0%,100% { -webkit-text-stroke-color: rgba(255,107,157,.25); }
+      48%      { -webkit-text-stroke-color: rgba(255,107,157,.25); }
+      50%      { -webkit-text-stroke-color: rgba(255,107,157,.7);  }
+      52%      { -webkit-text-stroke-color: rgba(255,107,157,.25); }
+      80%      { -webkit-text-stroke-color: rgba(255,107,157,.25); }
+      81%      { -webkit-text-stroke-color: rgba(255,107,157,.55); }
+      82%      { -webkit-text-stroke-color: rgba(255,107,157,.25); }
+    }
+
+    /* ── HEADLINE ── */
+    .headline {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      line-height: 1.15;
+      margin-bottom: 1.6rem;
+      animation: rise .7s ease both;
+    }
+
+    .headline .brand  { color: var(--pink); }
+    .headline .word-h { 
+      position: relative;
+      display: inline-block;
+    }
+    .headline .word-h::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 0; right: 0;
+      height: 2px;
+      background: var(--pink);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: underline-in .5s .8s ease forwards;
+    }
+
+    @keyframes underline-in { to { transform: scaleX(1); } }
+
+    /* ── BODY TEXT ── */
+    .body-text {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(240,240,245,.65);
+      margin-bottom: 2.5rem;
+      max-width: 560px;
+      animation: rise .7s .15s ease both;
+    }
+
+    .body-text .em {
+      color: var(--off);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 3rem;
+      height: 1px;
+      background: linear-gradient(90deg, var(--pink), transparent);
+      margin-bottom: 2rem;
+      animation: rise .7s .2s ease both;
+    }
+
+    /* ── LINKS ── */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      animation: rise .7s .3s ease both;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--off);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      font-weight: 300;
+      padding: .9rem 1.2rem;
+      border: 1px solid rgba(255,107,157,.1);
+      border-radius: .5rem;
+      background: var(--glass);
+      transition: all .25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--pink);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform .25s ease;
+    }
+
+    .link-item:hover {
+      border-color: rgba(255,107,157,.35);
+      background: rgba(255,107,157,.06);
+      transform: translateX(4px);
+    }
+
+    .link-item:hover::before { transform: scaleY(1); }
+
+    .link-arrow {
+      font-family: 'Space Mono', monospace;
+      font-size: .75rem;
+      color: var(--pink);
+      margin-left: auto;
+      transition: transform .25s;
+    }
+    .link-item:hover .link-arrow { transform: translateX(4px); }
+
+    .link-label {
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .link-main {
+      display: block;
+      font-size: .95rem;
+    }
+
+    /* ── FOOTER NOTE ── */
+    .foot {
+      margin-top: 3rem;
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .08em;
+      color: var(--muted);
+      animation: rise .7s .45s ease both;
+    }
+    .foot span { color: var(--pink); }
+
+    /* ── ANIM ── */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HIDDEN LANG BLOCKS ── */
+    .lang-block { display: none; }
+    .lang-block.active { display: block; }
+
+    /* ── RESPONSIVE MOBILE ── */
+    @media (max-width: 600px) {
+      .lang-bar {
+        position: relative;
+        top: auto; right: auto;
+        justify-content: center;
+        padding: 1.2rem 1rem .2rem;
+        background: transparent;
+      }
+      .page {
+        padding: 0 1.2rem 3rem;
+        place-items: start;
+        align-items: flex-start;
+      }
+      .container { width: 100%; }
+      .giant { overflow: hidden; width: 100%; }
+      .body-text { font-size: .88rem; }
+      .headline { font-size: clamp(1.2rem, 5.5vw, 1.6rem); }
+      .link-main { font-size: .85rem; }
+      .foot { font-size: .55rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sélecteur de langue -->
+  <div class="lang-bar">
+    <button class="lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
+    <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+    <button class="lang-btn" onclick="setLang('es')">🇪🇸 ES</button>
+  </div>
+
+  <div class="page">
+    <div class="container">
+
+      <div class="giant">404</div>
+
+      <!-- ══ FRANÇAIS ══ -->
+      <div class="lang-block active" id="block-fr">
+        <h1 class="headline">
+          <span class="brand">Albexia</span> 
+          <span class="word-h">hallucine</span> grave.
+        </h1>
+        <p class="body-text">
+          Félicitations — vous venez de découvrir une fonctionnalité 
+          <span class="em">qui n'existe pas</span>. 
+          Soit Albexia a pris un café de trop, soit vous avez tapé l'URL 
+          les yeux fermés.
+          <br><br>
+          Pas de panique. Nos robots sont en train de chercher le coupable. 
+          En attendant qu'on le <span class="em">licencie</span>, vous pouvez :
+        </p>
+        <div class="divider"></div>
+        <div class="links">
+          <a href="https://ia-directory.github.io/annuaire-ia/index.html#tools" class="link-item">
+            <div>
+              <span class="link-label">Catalogue</span>
+              <span class="link-main">Découvrir les derniers outils IA ajoutés — qui fonctionnent, eux</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://ia-directory.github.io/annuaire-ia/glossaire.html" class="link-item">
+            <div>
+              <span class="link-label">Glossaire Albexia</span>
+              <span class="link-main">Apprendre le jargon dans le Glossaire Albexia</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="https://ia-directory.github.io/annuaire-ia/index.html" class="link-item">
+            <div>
+              <span class="link-label">Accueil</span>
+              <span class="link-main">Repartir à zéro sur la Page d'accueil</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+        </div>
+        <p class="foot">ERREUR <span>#404</span> · ALBEXIA · ANNUAIRE IA FRANCOPHONE</p>
+      </div>
+
+      <!-- ══ ENGLISH ══ -->
+      <div class="lang-block" id="block-en">
+        <h1 class="headline">
+          <span class="brand">Albexia</span> 
+          <span class="word-h">Hallucination</span> Detected.
+        </h1>
+        <p class="body-text">
+          Congratulations — you've just navigated to a page that 
+          <span class="em">doesn't exist</span>. 
+          Either Albexia lost its mind, or your fingers slipped on the keyboard.
+          <br><br>
+          Don't worry. Our autonomous agents are tracking down the bug. 
+          While we <span class="em">update their weights</span>, here's what you can do:
+        </p>
+        <div class="divider"></div>
+        <div class="links">
+          <a href="index.html#tools" class="link-item">
+            <div>
+              <span class="link-label">Catalog</span>
+              <span class="link-main">Check out the newly added AI tools — the working ones</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="glossaire.html" class="link-item">
+            <div>
+              <span class="link-label">Albexia Glossary</span>
+              <span class="link-main">Learn the jargon in the Albexia Glossary</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="index.html" class="link-item">
+            <div>
+              <span class="link-label">Home</span>
+              <span class="link-main">Start fresh on the Home Page</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+        </div>
+        <p class="foot">ERROR <span>#404</span> · ALBEXIA · FRANCOPHONE AI DIRECTORY</p>
+      </div>
+
+      <!-- ══ ESPAÑOL ══ -->
+      <div class="lang-block" id="block-es">
+        <h1 class="headline">
+          <span class="brand">Albexia</span> 
+          se fue de <span class="word-h">fiesta</span>.
+        </h1>
+        <p class="body-text">
+          ¡Felicidades! Acabas de encontrar una página que 
+          <span class="em">no existe</span>. 
+          O Albexia está alucinando por completo, o has inventado una nueva URL.
+          <br><br>
+          Que no cunda el pánico. Nuestros bots ya están investigando. 
+          Mientras los <span class="em">reiniciamos</span>, puedes:
+        </p>
+        <div class="divider"></div>
+        <div class="links">
+          <a href="index.html#tools" class="link-item">
+            <div>
+              <span class="link-label">Catálogo</span>
+              <span class="link-main">Descubrir las nuevas herramientas IA — que sí funcionan</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="glossaire.html" class="link-item">
+            <div>
+              <span class="link-label">Glosario Albexia</span>
+              <span class="link-main">Aprender el vocabulario en el Glosario Albexia</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+          <a href="index.html" class="link-item">
+            <div>
+              <span class="link-label">Inicio</span>
+              <span class="link-main">Volver a empezar en la Página de inicio</span>
+            </div>
+            <span class="link-arrow">→</span>
+          </a>
+        </div>
+        <p class="foot">ERROR <span>#404</span> · ALBEXIA · DIRECTORIO IA FRANCÓFONO</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Détection automatique au chargement
+    (function () {
+      const nav = (navigator.language || navigator.userLanguage || 'fr').toLowerCase();
+      if (nav.startsWith('es')) setLang('es');
+      else if (nav.startsWith('en')) setLang('en');
+      else setLang('fr');
+    })();
+
+    function setLang(code) {
+      // Blocs de contenu
+      document.querySelectorAll('.lang-block').forEach(b => b.classList.remove('active'));
+      const block = document.getElementById('block-' + code);
+      if (block) block.classList.add('active');
+
+      // Boutons
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        if (b.textContent.toLowerCase().includes(code)) b.classList.add('active');
+      });
+
+      // HTML lang attribute
+      document.documentElement.lang = code;
+    }
+  </script>
+</body>
+</html>

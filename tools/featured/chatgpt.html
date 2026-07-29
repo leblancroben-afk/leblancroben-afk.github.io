@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT — Guide complet, Tarifs & Tutoriels 2026 | Albexia</title>
+  <meta name="description" content="Guide complet ChatGPT : fonctionnalités, tarifs détaillés, tutoriels vidéo, avis complet. Tout ce qu'il faut savoir sur l'assistant IA d'OpenAI.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css" />
+  
+  <style>
+    :root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;--border:rgba(255,255,255,0.07);--border-hover:rgba(255,255,255,0.15);--text:#f0f0f5;--text-muted:#7a7a9a;--text-dim:#4a4a6a;--accent:#6c63ff;--accent2:#ff6b9d;--accent3:#00d4aa;--accent-amber:#f5a623}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4}
+    h1,h2,h3{font-family:'Syne',sans-serif;letter-spacing:-0.03em}
+    .container{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+    nav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 32px}
+    .logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-right:40px;white-space:nowrap;text-decoration:none;color:var(--text)}
+    .logo .dot{color:var(--accent2)}
+    .nav-links{display:flex;gap:4px;flex:1}
+    .nav-link{padding:7px 16px;font-size:13px;font-weight:500;background:transparent;color:var(--text-muted);border-radius:8px;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+    .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+    .nav-cta{padding:7px 18px;font-size:13px;font-weight:500;border:1px solid rgba(108,99,255,0.4);background:rgba(108,99,255,0.1);color:#a8a3ff;border-radius:8px;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+    .nav-cta:hover{background:rgba(108,99,255,0.2)}
+    .tool-breadcrumb{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 0;font-size:12px;color:var(--text-dim);position:relative;z-index:1}
+    .tool-breadcrumb .container{display:flex;align-items:center;gap:8px}
+    .tool-breadcrumb a{color:var(--text-dim);text-decoration:none}
+    .tool-breadcrumb a:hover{color:var(--accent2)}
+    .tool-hero{padding:48px 0 40px;border-bottom:1px solid rgba(255,107,157,0.15);margin-bottom:40px;position:relative;overflow:hidden}
+    .hero-glow{position:absolute;top:-100px;right:-100px;width:500px;height:400px;background:radial-gradient(ellipse,rgba(255,107,157,0.1) 0%,transparent 65%);pointer-events:none}
+    .tool-hero-left{display:flex;gap:28px;align-items:flex-start;position:relative;z-index:1}
+    .tool-logo-wrap{width:96px;height:96px;border-radius:20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,107,157,0.2);box-shadow:0 0 24px rgba(255,107,157,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+    .tool-logo-img{width:64px;height:64px;object-fit:contain}
+    .tool-hero-info{flex:1}
+    .tool-hero-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+    .tool-badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:0.03em}
+    .badge-cat{background:rgba(108,99,255,0.15);color:#a8a3ff;border:1px solid rgba(108,99,255,0.3)}
+    .badge-freemium{background:rgba(0,212,170,0.12);color:#00d4aa;border:1px solid rgba(0,212,170,0.3)}
+    .badge-hot{background:rgba(245,166,35,0.12);color:#f5a623;border:1px solid rgba(245,166,35,0.3)}
+    .tool-hero-title{font-family:'Syne',sans-serif;font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:6px}
+    .tool-hero-maker{font-size:13px;color:var(--text-dim);margin-bottom:12px}
+    .tool-hero-maker strong{color:var(--text-muted)}
+    .tool-hero-stars{display:flex;align-items:center;gap:4px;margin-bottom:14px}
+    .star{color:var(--text-dim);font-size:18px}
+    .star.on{color:#f5a623}
+    .star-label{font-size:12px;color:var(--text-dim);margin-left:6px}
+    .tool-hero-desc{font-size:16px;color:var(--text-muted);line-height:1.75;font-weight:300;max-width:640px;margin-bottom:22px}
+    .tool-hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn-try{display:inline-block;padding:11px 24px;background:var(--accent2);color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:background .2s,transform .2s,box-shadow .2s;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px rgba(255,107,157,0.3)}
+    .btn-try:hover{background:#ff4d8b;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,157,0.4)}
+    .btn-pricing{display:inline-block;padding:11px 24px;background:transparent;color:var(--text-muted);border:1px solid var(--border-hover);border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif}
+    .btn-pricing:hover{border-color:var(--accent2);color:var(--accent2)}
+    .tool-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:40px}
+    .tool-stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+    .tool-stat:first-child{border-color:rgba(255,107,157,0.2);background:rgba(255,107,157,0.04)}
+    .ts-n{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent2);margin-bottom:4px;letter-spacing:-0.5px}
+    .ts-l{font-size:12px;color:var(--text-dim)}
+    .tool-content{display:grid;grid-template-columns:1fr 300px;gap:32px;margin-bottom:60px}
+    .tool-main{min-width:0}
+    .tool-section{margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+    .tool-section:last-child{border-bottom:none}
+    .tool-section h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:16px;color:var(--text);letter-spacing:-0.3px}
+    .tool-section p{font-size:15px;color:var(--text-muted);line-height:1.85;margin-bottom:14px;font-weight:300}
+    .screenshot-wrap{border-radius:14px;overflow:hidden;border:1px solid rgba(255,107,157,0.15);background:var(--bg3);margin-top:8px;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+    .screenshot-wrap img{width:100%;display:block;transition:transform .4s ease}
+    .screenshot-wrap:hover img{transform:scale(1.02)}
+    .screenshot-label{position:absolute;bottom:12px;left:12px;background:rgba(10,10,15,0.85);backdrop-filter:blur(10px);font-size:11px;color:var(--text-muted);padding:5px 12px;border-radius:8px;border:1px solid var(--border)}
+    .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:8px}
+    .feature-item{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;transition:border-color .2s,transform .2s}
+    .feature-item:hover{border-color:rgba(255,107,157,0.2);transform:translateY(-2px)}
+    .fi-icon{font-size:24px;margin-bottom:8px}
+    .fi-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;font-family:'Syne',sans-serif}
+    .fi-desc{font-size:12px;color:var(--text-muted);line-height:1.6}
+    .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+    .pricing-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;position:relative}
+    .pricing-card-featured{border:2px solid var(--accent2);background:linear-gradient(160deg,rgba(255,107,157,0.06) 0%,var(--bg2) 60%)}
+    .pc-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent2);color:#fff;font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;white-space:nowrap;letter-spacing:0.05em}
+    .pc-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
+    .pc-price{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--accent2);margin-bottom:16px;letter-spacing:-1px}
+    .pc-price span{font-size:14px;font-weight:400;color:var(--text-dim)}
+    .pc-features{list-style:none;margin-bottom:20px}
+    .pc-features li{font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid var(--border)}
+    .pc-features li:last-child{border-bottom:none}
+    .pc-btn{display:block;text-align:center;padding:10px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif}
+    .pc-btn-main{background:var(--accent2);color:#fff}
+    .pc-btn-main:hover{background:#ff4d8b}
+    .pc-btn-outline{background:transparent;color:var(--text-muted);border:1px solid var(--border-hover)}
+    .pc-btn-outline:hover{border-color:var(--accent2);color:var(--accent2)}
+    .usecase-list{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+    .usecase-item{display:flex;gap:14px;align-items:flex-start;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s}
+    .usecase-item:hover{border-color:var(--border-hover)}
+    .uc-emoji{font-size:24px;flex-shrink:0}
+    .usecase-item div{font-size:14px;color:var(--text-muted);line-height:1.6}
+    .usecase-item strong{color:var(--text);font-weight:500}
+    .pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+    .pros{background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:12px;padding:18px}
+    .cons{background:rgba(255,107,157,0.05);border:1px solid rgba(255,107,157,0.12);border-radius:12px;padding:18px}
+    .pc-title{font-size:14px;font-weight:700;margin-bottom:12px;font-family:'Syne',sans-serif}
+    .pros .pc-title{color:#00d4aa}
+    .cons .pc-title{color:#ff6b9d}
+    .pros ul,.cons ul{list-style:none}
+    .pros li,.cons li{font-size:13px;color:var(--text-muted);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.5}
+    .pros li:last-child,.cons li:last-child{border-bottom:none}
+    .tutorials-list{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+    .tutorial-item{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s}
+    .tutorial-item.open{border-color:rgba(255,107,157,0.25)}
+    .tutorial-header{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;user-select:none;transition:background .2s}
+    .tutorial-header:hover{background:rgba(255,255,255,0.02)}
+    .tutorial-thumb{width:64px;height:42px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--bg3);border:1px solid var(--border);position:relative}
+    .tutorial-thumb img{width:100%;height:100%;object-fit:cover}
+    .tutorial-thumb-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.4)}
+    .tutorial-thumb-play svg{width:18px;height:18px;fill:#fff;opacity:0.9}
+    .tutorial-meta{flex:1;min-width:0}
+    .tutorial-title{font-size:14px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .tutorial-duration{font-size:11px;color:var(--text-dim)}
+    .tutorial-toggle{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:var(--text-dim);transition:transform .25s,background .2s,color .2s}
+    .tutorial-item.open .tutorial-toggle{transform:rotate(180deg);background:rgba(255,107,157,0.12);color:#ff6b9d;border-color:rgba(255,107,157,0.3)}
+    .tutorial-video{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(0.4,0,0.2,1)}
+    .tutorial-item.open .tutorial-video{max-height:400px}
+    .tutorial-video-inner{padding:0 18px 18px}
+    .video-frame{position:relative;padding-bottom:56.25%;height:0;border-radius:10px;overflow:hidden;background:var(--bg3)}
+    .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+    .related-articles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+    .related-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;text-decoration:none;transition:border-color .2s,transform .25s}
+    .related-card:hover{border-color:rgba(255,107,157,0.25);transform:translateY(-3px)}
+    .related-cover{width:100%;height:110px;overflow:hidden;background:var(--bg3)}
+    .related-cover img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .related-card:hover .related-cover img{transform:scale(1.05)}
+    .related-body{padding:12px 14px}
+    .related-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:5px;font-family:'Syne',sans-serif}
+    .related-sub{font-size:11px;color:var(--text-dim);line-height:1.5}
+    .related-arrow{font-size:11px;color:var(--accent2);margin-top:8px;display:block;font-weight:500}
+    .faq-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+    .faq-item{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+    .faq-q{padding:14px 16px;font-size:14px;font-weight:500;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;width:100%;background:none;border:none;font-family:'DM Sans',sans-serif;text-align:left}
+    .faq-q:hover{color:var(--accent2)}
+    .faq-q::after{content:'+';font-size:20px;color:var(--text-dim);transition:transform .2s}
+    .faq-item.open .faq-q::after{transform:rotate(45deg);color:var(--accent2)}
+    .faq-a{display:none;padding:12px 16px 14px;font-size:13px;color:var(--text-muted);line-height:1.7;border-top:1px solid var(--border)}
+    .faq-item.open .faq-a{display:block}
+    .tool-verdict{background:rgba(255,107,157,0.06);border:1px solid rgba(255,107,157,0.2);border-radius:14px;padding:24px;display:flex;gap:18px;align-items:flex-start;margin-top:8px}
+    .verdict-icon{font-size:32px;flex-shrink:0}
+    .verdict-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#ff6b9d;margin-bottom:8px}
+    .tool-verdict p{font-size:14px;color:var(--text-muted);line-height:1.75}
+    .tool-sidebar{display:flex;flex-direction:column;gap:16px}
+    .sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;position:sticky;top:80px}
+    .sidebar-card-featured-highlight{border-color:rgba(255,107,157,0.25);background:linear-gradient(160deg,rgba(255,107,157,0.05) 0%,var(--bg2) 60%)}
+    .sc-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .sc-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+    .sc-row:last-child{border-bottom:none}
+    .sc-label{color:var(--text-dim)}
+    .sc-val{color:var(--text);font-weight:500}
+    .sc-val-green{color:#00d4aa;font-weight:600}
+    .alt-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:opacity .15s}
+    .alt-item:hover{opacity:0.75}
+    .alt-item:last-of-type{border-bottom:none}
+    .alt-item img{width:28px;height:28px;border-radius:6px}
+    .alt-name{font-size:13px;font-weight:500;color:var(--text)}
+    .alt-desc{font-size:11px;color:var(--text-dim);margin-top:1px}
+    .alt-more{display:block;text-align:center;margin-top:10px;font-size:12px;color:var(--accent2);text-decoration:none;padding:8px;border-radius:8px;background:rgba(255,107,157,0.08);transition:background .2s}
+    .alt-more:hover{background:rgba(255,107,157,0.15)}
+    .sidebar-card-cta{background:rgba(255,107,157,0.06);border-color:rgba(255,107,157,0.2)}
+    .sidebar-card-cta .sc-title{border-color:rgba(255,107,157,0.2);color:#ff6b9d}
+    .sidebar-card-cta p{font-size:13px;color:var(--text-muted);margin-bottom:14px;line-height:1.6}
+    .btn-try-full{display:block;text-align:center;padding:11px;background:var(--accent2);color:#fff;border-radius:10px;font-size:14px;font-weight:500;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;box-shadow:0 4px 16px rgba(255,107,157,0.25)}
+    .btn-try-full:hover{background:#ff4d8b;box-shadow:0 6px 20px rgba(255,107,157,0.35)}
+    .article-link-card{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:opacity .2s}
+    .article-link-card:hover{opacity:0.75}
+    .article-link-card:last-of-type{border-bottom:none}
+    .article-link-thumb{width:48px;height:48px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);overflow:hidden;flex-shrink:0}
+    .article-link-thumb img{width:100%;height:100%;object-fit:cover}
+    .article-link-title{font-size:12px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:3px}
+    .article-link-sub{font-size:11px;color:var(--text-dim);line-height:1.4}
+    footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:13px;color:var(--text-dim);position:relative;z-index:1}
+    footer a{color:#a8a3ff;text-decoration:none}
+    @media(max-width:900px){.tool-content{grid-template-columns:1fr}.tool-stats{grid-template-columns:repeat(2,1fr)}.pricing-grid{grid-template-columns:1fr}.pros-cons{grid-template-columns:1fr}.related-articles{grid-template-columns:1fr}}
+    @media(max-width:600px){.tool-hero-left{flex-direction:column}.feature-grid{grid-template-columns:1fr}.container{padding:0 16px}.related-articles{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+
+  <nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='../../index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='../../index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='../../index.html#blog'">Blog</button>
+  </div>
+  <div class="kebab-wrap" id="kebab-wrap">
+    <button class="kebab-btn" id="kebab-btn" aria-label="Plus de pages" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="kebab-menu" id="kebab-menu" role="menu">
+      <div class="kebab-label">Incontournables</div>
+      <a href="../../glossaire.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div><div class="kebab-item-sub">Tous les termes en français</div></div></a>
+      <a href="../comparateur.html" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div><div class="kebab-item-sub">Comparer les outils côte à côte</div></div></a>
+      <a href="../../pages/deals.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div><div class="kebab-item-sub">Essais gratuits · Offres exclusives</div></div></a>
+      <div class="kebab-divider"></div>
+      <a href="../../hub.html" class="kebab-item kebab-hub-link" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Voir toutes les sections</div><div class="kebab-item-sub">Carte complète d'Albexia →</div></div></a>
+    </div>
+  </div>
+</nav>
+
+  <main><div class="container">
+
+    <!-- HERO -->
+    <div class="tool-hero">
+      <div class="hero-glow"></div>
+      <div class="tool-hero-left">
+        <div class="tool-logo-wrap">
+          <img src="https://www.google.com/s2/favicons?sz=128&domain=chatgpt.com" alt="ChatGPT logo" class="tool-logo-img">
+        </div>
+        <div class="tool-hero-info">
+          <div class="tool-hero-badges">
+            <span class="tool-badge badge-cat">Assistant IA</span>
+            <span class="tool-badge badge-freemium">Freemium</span>
+            <span class="tool-badge badge-hot">🌍 Interface en français</span>
+          </div>
+          <h1 class="tool-hero-title">ChatGPT</h1>
+          <p class="tool-hero-maker">par <strong>OpenAI</strong></p>
+          <div class="tool-hero-stars">
+            <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span>
+            <span class="star-label">4.8/5 · Note Albexia</span>
+          </div>
+          <p class="tool-hero-desc">L'assistant conversationnel le plus utilisé au monde. ChatGPT répond à vos questions, rédige du contenu, génère du code, analyse des documents et automatise des tâches — en français, en quelques secondes.</p>
+          <div class="tool-hero-actions">
+            <a href="https://chatgpt.com" target="_blank" rel="noopener" class="btn-try">Essayer →</a>
+            <a href="https://openai.com/chatgpt/pricing" target="_blank" rel="noopener" class="btn-pricing">Voir les tarifs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="tool-stats">
+      <div class="tool-stat"><div class="ts-n">2022</div><div class="ts-l">Lancé en</div></div>
+      <div class="tool-stat"><div class="ts-n">300M+</div><div class="ts-l">Utilisateurs</div></div>
+      <div class="tool-stat"><div class="ts-n">GPT-4o</div><div class="ts-l">Modèle actuel</div></div>
+      <div class="tool-stat"><div class="ts-n">Gratuit</div><div class="ts-l">Version de base</div></div>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-main">
+
+        <!-- PRÉSENTATION -->
+        <section class="tool-section">
+          <h2>Qu'est-ce que ChatGPT ?</h2>
+          <p>ChatGPT est un assistant conversationnel développé par OpenAI, lancé en novembre 2022. Il repose sur les modèles GPT (Generative Pre-trained Transformer) et permet d'interagir en langage naturel pour accomplir une très large variété de tâches : rédaction, traduction, analyse, programmation, résumé de documents, brainstorming ou recherche d'information.</p>
+          <p>Sa version gratuite (GPT-4o mini) est accessible sans carte bancaire depuis n'importe quel navigateur ou application mobile. ChatGPT est aujourd'hui disponible en français avec une qualité de compréhension et de réponse excellente, ce qui en fait l'un des outils IA les plus pertinents pour les francophones.</p>
+        </section>
+
+        <!-- SCREENSHOT -->
+        <section class="tool-section">
+          <h2>Interface de l'outil</h2>
+          <div class="screenshot-wrap">
+            <img src="../../medias/images/Interface-de-chatgpt.png" alt="Interface ChatGPT">
+            <div class="screenshot-label">Interface ChatGPT — Version web 2026</div>
+          </div>
+        </section>
+
+        <!-- FONCTIONNALITÉS -->
+        <section class="tool-section">
+          <h2>Fonctionnalités clés</h2>
+          <div class="feature-grid">
+            <div class="feature-item"><div class="fi-icon">💬</div><div class="fi-title">Conversation naturelle</div><div class="fi-desc">Dialogue fluide en français avec mémoire du contexte sur toute la conversation.</div></div>
+            <div class="feature-item"><div class="fi-icon">✍️</div><div class="fi-title">Rédaction & contenu</div><div class="fi-desc">Articles, emails, scripts, fiches produits — génération de texte professionnel en quelques secondes.</div></div>
+            <div class="feature-item"><div class="fi-icon">💻</div><div class="fi-title">Génération de code</div><div class="fi-desc">Python, JavaScript, HTML, SQL — débogage et explication de code inclus.</div></div>
+            <div class="feature-item"><div class="fi-icon">📄</div><div class="fi-title">Analyse de documents</div><div class="fi-desc">Résumé et analyse de PDF, images, tableaux (versions payantes).</div></div>
+            <div class="feature-item"><div class="fi-icon">🔍</div><div class="fi-title">Recherche web</div><div class="fi-desc">Accès à des informations en temps réel via la navigation intégrée (ChatGPT Plus).</div></div>
+            <div class="feature-item"><div class="fi-icon">🖼️</div><div class="fi-title">Génération d'images</div><div class="fi-desc">Création visuelle via DALL-E 3 intégré, disponible depuis l'interface de chat.</div></div>
+          </div>
+        </section>
+
+        <!-- TARIFS -->
+        <section class="tool-section">
+          <h2>Tarifs détaillés 2026</h2>
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <div class="pc-name">Gratuit</div>
+              <div class="pc-price">$0<span>/mois</span></div>
+              <ul class="pc-features">
+                <li>✓ Accès GPT-4o mini</li>
+                <li>✓ Conversation illimitée</li>
+                <li>✓ Interface web & mobile</li>
+                <li>✓ Sans carte bancaire</li>
+                <li>✗ GPT-4o complet limité</li>
+                <li>✗ Pas de navigation web</li>
+              </ul>
+              <a href="https://chatgpt.com" target="_blank" class="pc-btn pc-btn-outline">Commencer gratuitement</a>
+            </div>
+            <div class="pricing-card pricing-card-featured">
+              <div class="pc-badge">Recommandé</div>
+              <div class="pc-name">ChatGPT Plus</div>
+              <div class="pc-price">$20<span>/mois</span></div>
+              <ul class="pc-features">
+                <li>✓ GPT-4o complet sans limite</li>
+                <li>✓ Navigation web en temps réel</li>
+                <li>✓ Génération d'images DALL-E 3</li>
+                <li>✓ Analyse de fichiers & PDF</li>
+                <li>✓ Accès prioritaire aux nouveautés</li>
+                <li>✓ GPTs personnalisés</li>
+              </ul>
+              <a href="https://openai.com/chatgpt/pricing" target="_blank" class="pc-btn pc-btn-main">S'abonner à Plus</a>
+            </div>
+            <div class="pricing-card">
+              <div class="pc-name">ChatGPT Team</div>
+              <div class="pc-price">$25<span>/mois</span></div>
+              <ul class="pc-features">
+                <li>✓ Tout ChatGPT Plus inclus</li>
+                <li>✓ Espace de travail partagé</li>
+                <li>✓ Données non utilisées pour l'entraînement</li>
+                <li>✓ Console d'administration</li>
+                <li>✓ Minimum 2 utilisateurs</li>
+                <li>✓ Support prioritaire</li>
+              </ul>
+              <a href="https://openai.com/chatgpt/pricing" target="_blank" class="pc-btn pc-btn-outline">Voir l'offre Team</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- À QUI S'ADRESSE -->
+        <section class="tool-section">
+          <h2>À qui s'adresse cet outil ?</h2>
+          <div class="usecase-list">
+            <div class="usecase-item"><span class="uc-emoji">✍️</span><div><strong>Rédacteurs & créateurs</strong> — Générez et améliorez du contenu en français à grande vitesse.</div></div>
+            <div class="usecase-item"><span class="uc-emoji">👨‍💻</span><div><strong>Développeurs</strong> — Déboguez, expliquez et générez du code dans tous les langages courants.</div></div>
+            <div class="usecase-item"><span class="uc-emoji">🎓</span><div><strong>Étudiants</strong> — Recherche, synthèse de cours, aide à la compréhension de concepts complexes.</div></div>
+            <div class="usecase-item"><span class="uc-emoji">🏢</span><div><strong>Entrepreneurs</strong> — Rédaction d'emails, plans d'affaires, analyses de marché et automatisation de tâches répétitives.</div></div>
+          </div>
+        </section>
+
+        <!-- AVANTAGES / INCONVÉNIENTS -->
+        <section class="tool-section">
+          <h2>Points forts & points faibles</h2>
+          <div class="pros-cons">
+            <div class="pros">
+              <div class="pc-title">✅ Points forts</div>
+              <ul>
+                <li>✅ Interface française excellente</li>
+                <li>✅ Version gratuite très généreuse</li>
+                <li>✅ Polyvalence inégalée — texte, code, image</li>
+                <li>✅ Application mobile iOS & Android</li>
+                <li>✅ Mises à jour continues du modèle</li>
+                <li>✅ Intégrations tierces nombreuses</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <div class="pc-title">⚠️ Points faibles</div>
+              <ul>
+                <li>⚠️ Hallucinations possibles sur les faits récents</li>
+                <li>⚠️ Version gratuite limitée en heures de pointe</li>
+                <li>⚠️ Paiement en dollars — conversion pour francophones</li>
+                <li>⚠️ Données envoyées vers les serveurs OpenAI</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- TUTORIELS VIDÉO -->
+        <section class="tool-section">
+          <h2>Tutoriels vidéo</h2>
+          <div class="tutorials-list">
+
+            <div class="tutorial-item" id="tuto-1">
+              <div class="tutorial-header" onclick="toggleTutorial('tuto-1')">
+                <div class="tutorial-thumb">
+                  <img src="https://img.youtube.com/vi/JTxsNm9IdYU/mqdefault.jpg" alt="Tutoriel ChatGPT débutant">
+                  <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+                <div class="tutorial-meta">
+                  <div class="tutorial-title">ChatGPT pour débutants — Prise en main complète</div>
+                  <div class="tutorial-duration">⏱ 15 min · Niveau débutant</div>
+                </div>
+                <div class="tutorial-toggle">▾</div>
+              </div>
+              <div class="tutorial-video">
+                <div class="tutorial-video-inner">
+                  <div class="video-frame">
+                    <iframe data-src="https://www.youtube.com/embed/JTxsNm9IdYU" title="ChatGPT débutant" allowfullscreen loading="lazy"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tutorial-item" id="tuto-2">
+              <div class="tutorial-header" onclick="toggleTutorial('tuto-2')">
+                <div class="tutorial-thumb">
+                  <img src="https://img.youtube.com/vi/sTeoEFzVNSc/mqdefault.jpg" alt="Prompts ChatGPT avancés">
+                  <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+                <div class="tutorial-meta">
+                  <div class="tutorial-title">Maîtriser les prompts — Techniques avancées</div>
+                  <div class="tutorial-duration">⏱ 22 min · Niveau intermédiaire</div>
+                </div>
+                <div class="tutorial-toggle">▾</div>
+              </div>
+              <div class="tutorial-video">
+                <div class="tutorial-video-inner">
+                  <div class="video-frame">
+                    <iframe data-src="https://www.youtube.com/embed/sTeoEFzVNSc" title="Prompts avancés ChatGPT" allowfullscreen loading="lazy"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tutorial-item" id="tuto-3">
+              <div class="tutorial-header" onclick="toggleTutorial('tuto-3')">
+                <div class="tutorial-thumb">
+                  <img src="https://img.youtube.com/vi/7xTGNNLPyMI/mqdefault.jpg" alt="ChatGPT pour le business">
+                  <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+                <div class="tutorial-meta">
+                  <div class="tutorial-title">Utiliser ChatGPT pour son business — Guide pratique</div>
+                  <div class="tutorial-duration">⏱ 28 min · Niveau avancé</div>
+                </div>
+                <div class="tutorial-toggle">▾</div>
+              </div>
+              <div class="tutorial-video">
+                <div class="tutorial-video-inner">
+                  <div class="video-frame">
+                    <iframe data-src="https://www.youtube.com/embed/7xTGNNLPyMI" title="ChatGPT business" allowfullscreen loading="lazy"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ARTICLES LIÉS -->
+        <section class="tool-section">
+          <h2>Articles liés</h2>
+          <div class="related-articles" id="articles-featured-grid">
+            <!-- Injecté depuis articles.json -->
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="tool-section">
+          <h2>Questions fréquentes</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-q">ChatGPT est-il disponible sans carte bancaire ?</button>
+              <div class="faq-a">Oui. La version gratuite de ChatGPT est accessible uniquement avec une adresse email — aucune carte bancaire n'est requise. Elle donne accès à GPT-4o mini avec un usage quotidien généreux.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">Fonctionne-t-il bien en français ?</button>
+              <div class="faq-a">Excellent niveau. ChatGPT comprend et génère du français avec une qualité très élevée, incluant les nuances culturelles. C'est l'un des meilleurs assistants IA pour les francophones.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">Quelle est la différence entre GPT-4o mini et GPT-4o ?</button>
+              <div class="faq-a">GPT-4o mini est plus rapide et disponible gratuitement, avec des capacités légèrement réduites. GPT-4o (complet) est plus précis sur les tâches complexes, l'analyse de fichiers et le raisonnement avancé — disponible avec ChatGPT Plus.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">ChatGPT garde-t-il mes conversations ?</button>
+              <div class="faq-a">Par défaut, OpenAI conserve l'historique des conversations. Vous pouvez désactiver cette option dans les paramètres, ou utiliser le mode temporaire qui n'enregistre rien. Les abonnés Team bénéficient d'une politique de données renforcée.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q">Y a-t-il une application mobile ?</button>
+              <div class="faq-a">Oui, ChatGPT est disponible sur iOS et Android. L'application inclut la saisie vocale, la prise de photos pour analyse, et toutes les fonctionnalités de la version web.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VERDICT -->
+        <div class="tool-verdict">
+          <div class="verdict-icon">🏆</div>
+          <div>
+            <div class="verdict-title">Verdict Albexia</div>
+            <p>ChatGPT reste la référence incontournable des assistants IA en 2026. Sa version gratuite est l'une des plus généreuses du marché, son support du français est excellent, et sa polyvalence — texte, code, image, analyse — en fait l'outil de départ idéal pour tout utilisateur francophone qui découvre l'IA.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="tool-sidebar">
+        <div class="sidebar-card sidebar-card-featured-highlight">
+          <div class="sc-title">Infos rapides</div>
+          <div class="sc-row"><span class="sc-label">Développeur</span><span class="sc-val">OpenAI</span></div>
+          <div class="sc-row"><span class="sc-label">Catégorie</span><span class="sc-val">Assistant IA</span></div>
+          <div class="sc-row"><span class="sc-label">Prix de départ</span><span class="sc-val-green sc-val">Gratuit</span></div>
+          <div class="sc-row"><span class="sc-label">Plateformes</span><span class="sc-val">Web, iOS, Android</span></div>
+          <div class="sc-row"><span class="sc-label">API disponible</span><span class="sc-val-green sc-val">✓ Oui</span></div>
+          <div class="sc-row"><span class="sc-label">Interface FR</span><span class="sc-val-green sc-val">✓ Oui</span></div>
+          <div class="sc-row"><span class="sc-label">Sans CB</span><span class="sc-val-green sc-val">✓ Version gratuite</span></div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sc-title">Articles liés</div>
+          <div id="articles-sidebar-all">
+            <!-- Injecté depuis articles.json -->
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="sc-title">Alternatives</div>
+          <a href="claude.html" class="alt-item">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=claude.ai" alt="Claude">
+            <div><div class="alt-name">Claude</div><div class="alt-desc">Assistant IA Anthropic</div></div>
+          </a>
+          <a href="#" class="alt-item">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=gemini.google.com" alt="Gemini">
+            <div><div class="alt-name">Gemini</div><div class="alt-desc">Assistant IA Google</div></div>
+          </a>
+          <a href="#" class="alt-item">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=mistral.ai" alt="Mistral">
+            <div><div class="alt-name">Mistral Le Chat</div><div class="alt-desc">Assistant IA français</div></div>
+          </a>
+          <a href="../../index.html" class="alt-more">Voir tous les outils →</a>
+        </div>
+
+        <div class="sidebar-card sidebar-card-cta">
+          <div class="sc-title">Essayer ChatGPT</div>
+          <p>Commencez gratuitement — aucune carte bancaire requise.</p>
+          <a href="https://chatgpt.com" target="_blank" rel="noopener" class="btn-try-full">Aller sur ChatGPT →</a>
+        </div>
+      </aside>
+    </div>
+
+  </div></main>
+
+  <footer>
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="../../index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="../../mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="../../politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="../../contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+
+
+  <script src="../../js/articles-loader.js" data-outil="chatgpt" data-plan="featured"></script>
+  <script>
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+    function toggleTutorial(id) {
+      const item = document.getElementById(id);
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.tutorial-item.open').forEach(el => {
+        if (el.id !== id) { el.classList.remove('open'); const iframe = el.querySelector('iframe'); if (iframe) iframe.src = ''; }
+      });
+      if (isOpen) { item.classList.remove('open'); const iframe = item.querySelector('iframe'); if (iframe) iframe.src = ''; }
+      else { item.classList.add('open'); const iframe = item.querySelector('iframe[data-src]'); if (iframe && !iframe.src) iframe.src = iframe.dataset.src; }
+    }
+
+    const kb=document.getElementById('kebab-btn'),km=document.getElementById('kebab-menu');
+if(kb&&km){kb.addEventListener('click',e=>{e.stopPropagation();const o=km.classList.toggle('open');kb.setAttribute('aria-expanded',o)});document.addEventListener('click',()=>{km.classList.remove('open');kb.setAttribute('aria-expanded','false')});km.addEventListener('click',e=>e.stopPropagation())}
+    
+  </script>
+</body>
+</html>

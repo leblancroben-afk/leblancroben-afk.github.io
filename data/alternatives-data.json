@@ -1,0 +1,102 @@
+{
+  "categories": [
+    {
+      "id": "texte",
+      "emoji": "📝",
+      "numero": "01",
+      "titre": "Texte, Rédaction & Cognition",
+      "focus": "LLM & AGENTS",
+      "guide": {
+        "outil": "ChatGPT",
+        "logo": "https://www.google.com/s2/favicons?domain=chat.openai.com&sz=64",
+        "titre": "Trouver une alternative gratuite à ChatGPT",
+        "description": "Analyse complète de Claude 3.5, Gemini Pro et DeepSeek-V3. Performance logique équivalente à 98% pour $0/mois.",
+        "economie": "$240/an",
+        "metrique": "98% de parité technique pour $0/mois",
+        "url": "../articles/alternative-gratuite-chatgpt.html"
+      },
+      "alternatives": [
+        { "outil": "Claude AI", "description": "Maîtriser le code et la rédaction sans limites de messages", "tag": "Open-Source dispos", "url": "../alternatives/claude-ai.html" },
+        { "outil": "Notion AI", "description": "Centraliser vos bases de connaissances à coût zéro", "tag": "100% Gratuit", "url": "../alternatives/notion-ai.html" },
+        { "outil": "Perplexity AI", "description": "Les moteurs de recherche IA en temps réel pour l'analyse de données", "tag": "Freemium", "url": "../alternatives/perplexity-ai.html" },
+        { "outil": "Jasper AI", "description": "Automatiser votre copywriting et votre SEO sans abonnement SaaS", "tag": "API Hacks", "url": "../alternatives/jasper-ai.html" }
+      ]
+    },
+    {
+      "id": "image",
+      "emoji": "🎨",
+      "numero": "02",
+      "titre": "Image, Design & Génération Graphique",
+      "focus": "DIFFUSION & RENDU",
+      "guide": {
+        "outil": "Midjourney",
+        "logo": "https://www.google.com/s2/favicons?domain=midjourney.com&sz=64",
+        "titre": "Remplacer Midjourney — Flux.1 en local, zéro abonnement",
+        "description": "Le protocole pour installer et faire tourner Flux.1 sur votre machine. Génération de texte parfaite, rendu équivalent à Midjourney v6.",
+        "economie": "$360/an",
+        "metrique": "Rendu v6 équivalent, zéro censure, zéro abonnement",
+        "url": "../articles/alternative-gratuite-midjourney.html"
+      },
+      "alternatives": [
+        { "outil": "Canva AI", "description": "Génération de bannières et de designs marketing automatisés", "tag": "Économie : $15/mois", "url": "../alternatives/canva-ai.html" },
+        { "outil": "Photoshop GenFill", "description": "Édition d'image et détourage IA sans passer par Adobe", "tag": "Web Tools", "url": "../alternatives/photoshop-genfill.html" },
+        { "outil": "DALL-E 3", "description": "Générateurs d'images par invites (prompts) ultra-précis", "tag": "Accès Libres", "url": "../alternatives/dalle-3.html" },
+        { "outil": "Stable Diffusion", "description": "Les meilleures interfaces cloud gratuites pour générer à l'infini", "tag": "No-Code", "url": "../alternatives/stable-diffusion.html" }
+      ]
+    },
+    {
+      "id": "video",
+      "emoji": "🎬",
+      "numero": "03",
+      "titre": "Vidéo, Audio & Clones Vocaux",
+      "focus": "MULTIMODAL SYNTHÈSE",
+      "guide": {
+        "outil": "Runway",
+        "logo": "https://www.google.com/s2/favicons?domain=runway.ml&sz=64",
+        "titre": "Générer des vidéos cinématographiques sans abonnement",
+        "description": "Les nouveaux modèles vidéo qui font tomber les barrières du coût. Génération de scènes complexes de 10s en moins de 30 secondes.",
+        "economie": "$420/an",
+        "metrique": "Scènes complexes de 10s générées en moins de 30 secondes",
+        "url": "../articles/alternative-gratuite-runway.html"
+      },
+      "alternatives": [
+        { "outil": "HeyGen", "description": "Créer des avatars vidéo parlants ultra-réalistes", "tag": "Pour Créateurs", "url": "../alternatives/heygen.html" },
+        { "outil": "ElevenLabs", "description": "Clonage de voix et voix-off professionnelles pour quelques centimes", "tag": "Pay-As-You-Go", "url": "../alternatives/elevenlabs.html" },
+        { "outil": "Suno", "description": "Générer des pistes audio et compositions musicales libres de droits", "tag": "Gratuit", "url": "../alternatives/suno.html" },
+        { "outil": "Klap", "description": "Diviser des vidéos longues en Shorts/TikToks via IA autonome", "tag": "Growth Hacks", "url": "../alternatives/klap.html" }
+      ]
+    },
+    {
+      "id": "code",
+      "emoji": "💻",
+      "numero": "04",
+      "titre": "Code, Développement & Automatisation",
+      "focus": "ASSISTANTS IDE & WORKFLOWS",
+      "guide": {
+        "outil": "GitHub Copilot",
+        "logo": "https://www.google.com/s2/favicons?domain=github.com&sz=64",
+        "titre": "L'ère des éditeurs IA autonomes — après GitHub Copilot",
+        "description": "Pourquoi la communauté de développeurs migre massivement sur Cursor et Bolt. Vitesse d'exécution augmentée de 40%, indexation locale complète de votre codebase.",
+        "economie": "$120/an",
+        "metrique": "Vitesse d'exécution +40%, indexation locale complète",
+        "url": "../articles/alternative-gratuite-github-copilot.html"
+      },
+      "alternatives": [
+        { "outil": "Bolt", "description": "Générer des apps web complètes (HTML/CSS/React) via prompt", "tag": "🔥 Tendance", "url": "../alternatives/bolt.html" },
+        { "outil": "Make", "description": "Connecter et automatiser vos outils business sans payer de quotas", "tag": "Self-Hosted", "url": "../alternatives/make.html" }
+      ]
+    }
+  ],
+  "estimateur": [
+    { "id": "chatgpt",   "nom": "ChatGPT Plus",      "logo": "https://www.google.com/s2/favicons?domain=chat.openai.com&sz=64",   "prix": 20 },
+    { "id": "midjourney","nom": "Midjourney Pro",     "logo": "https://www.google.com/s2/favicons?domain=midjourney.com&sz=64",    "prix": 30 },
+    { "id": "elevenlabs","nom": "ElevenLabs",         "logo": "https://www.google.com/s2/favicons?domain=elevenlabs.io&sz=64",     "prix": 22 },
+    { "id": "copilot",   "nom": "GitHub Copilot",     "logo": "https://www.google.com/s2/favicons?domain=github.com&sz=64",        "prix": 10 },
+    { "id": "canva",     "nom": "Canva Pro",           "logo": "https://www.google.com/s2/favicons?domain=canva.com&sz=64",         "prix": 15 },
+    { "id": "jasper",    "nom": "Jasper AI",           "logo": "https://www.google.com/s2/favicons?domain=jasper.ai&sz=64",         "prix": 49 },
+    { "id": "runway",    "nom": "Runway Gen-3",        "logo": "https://www.google.com/s2/favicons?domain=runway.ml&sz=64",         "prix": 35 },
+    { "id": "notion",    "nom": "Notion AI",           "logo": "https://www.google.com/s2/favicons?domain=notion.so&sz=64",         "prix": 10 },
+    { "id": "perplexity","nom": "Perplexity Pro",      "logo": "https://www.google.com/s2/favicons?domain=perplexity.ai&sz=64",    "prix": 20 },
+    { "id": "adobe",     "nom": "Adobe Firefly",       "logo": "https://www.google.com/s2/favicons?domain=adobe.com&sz=64",         "prix": 55 }
+  ]
+}

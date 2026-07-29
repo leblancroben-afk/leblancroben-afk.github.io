@@ -1,0 +1,77 @@
+[
+  {
+    "categorie": "definitions",
+    "label": "Définitions & Concepts",
+    "emoji": "🧠",
+    "questions": [
+      { "id": "cest-quoi-ia-generative",          "question": "C'est quoi l'IA générative ?" },
+      { "id": "pourquoi-ia-invente-fausses-infos", "question": "Pourquoi l'IA invente-t-elle de fausses informations ?" },
+      { "id": "cest-quoi-un-prompt",               "question": "C'est quoi un prompt ?" },
+      { "id": "cest-quoi-un-modele-de-langage",    "question": "Qu'est-ce qu'un modèle de langage ?" },
+      { "id": "cest-quoi-un-llm",                  "question": "C'est quoi un LLM ?" },
+      { "id": "difference-inpainting-outpainting", "question": "Quelle est la différence entre inpainting et outpainting ?" },
+      { "id": "cest-quoi-un-token-ia",             "question": "C'est quoi un token en IA ?" },
+      { "id": "cest-quoi-une-ia-multimodale",      "question": "Qu'est-ce qu'une IA multimodale ?" }
+    ]
+  },
+  {
+    "categorie": "images",
+    "label": "Génération d'images & Design",
+    "emoji": "🎨",
+    "questions": [
+      { "id": "meilleur-generateur-images-ia",      "question": "Quel est le meilleur générateur d'images IA ?" },
+      { "id": "meme-personnage-midjourney",          "question": "Comment garder le même personnage d'une image à l'autre avec Midjourney ?" },
+      { "id": "midjourney-est-il-payant",            "question": "Midjourney est-il payant ?" },
+      { "id": "pourquoi-ia-dessine-mal-mains",       "question": "Pourquoi l'IA dessine-t-elle mal les mains ?" },
+      { "id": "quelle-ia-pour-creer-logo",           "question": "Quelle IA pour créer un logo ?" },
+      { "id": "supprimer-objet-image-ia",            "question": "Comment supprimer un objet sur une image générée par IA ?" },
+      { "id": "peut-on-vendre-images-ia",            "question": "Peut-on vendre des images créées par IA ?" },
+      { "id": "agrandir-image-sans-perdre-qualite",  "question": "Comment agrandir une image sans perdre en qualité ?" }
+    ]
+  },
+  {
+    "categorie": "video",
+    "label": "Vidéo, Animation & Audio",
+    "emoji": "🎬",
+    "questions": [
+      { "id": "creer-video-avec-ia",         "question": "Comment créer une vidéo avec l'IA ?" },
+      { "id": "quelle-ia-pour-animer-photo", "question": "Quelle IA pour animer une photo ?" },
+      { "id": "quelle-ia-cloner-voix",       "question": "Quelle IA pour cloner sa voix ?" },
+      { "id": "faire-lip-sync-ia",           "question": "Comment faire du lip sync avec l'IA ?" },
+      { "id": "suno-ai-est-il-gratuit",      "question": "Suno AI est-il gratuit ?" },
+      { "id": "traduire-video-changer-voix", "question": "Comment traduire une vidéo en changeant la voix ?" },
+      { "id": "faire-chanter-ia",            "question": "Comment faire chanter une IA ?" },
+      { "id": "generer-video-longue-ia",     "question": "Peut-on générer une vidéo longue avec l'IA ?" }
+    ]
+  },
+  {
+    "categorie": "texte",
+    "label": "Texte, Rédaction & Code",
+    "emoji": "✍️",
+    "questions": [
+      { "id": "quelle-ia-pour-coder",              "question": "Quelle IA pour coder ?" },
+      { "id": "rendre-texte-ia-indetectable",      "question": "Comment rendre un texte généré par IA indétectable ?" },
+      { "id": "chatgpt-est-il-gratuit",            "question": "ChatGPT est-il gratuit ?" },
+      { "id": "google-penalise-contenu-ia",        "question": "Est-ce que Google pénalise le contenu généré par IA ?" },
+      { "id": "utiliser-chatgpt-sans-compte",      "question": "Peut-on utiliser ChatGPT sans créer de compte ?" },
+      { "id": "analyser-pdf-avec-ia",              "question": "Comment analyser un PDF avec l'IA ?" },
+      { "id": "quelle-ia-pour-traduire",           "question": "Quelle IA pour traduire un texte ?" },
+      { "id": "rediger-fiches-produits-ia",        "question": "Comment rédiger des fiches produits avec l'IA ?" }
+    ]
+  },
+  {
+    "categorie": "comparatifs",
+    "label": "Comparatifs, Tarifs & Confidentialité",
+    "emoji": "⚖️",
+    "questions": [
+      { "id": "chatgpt-ou-gemini-lequel-choisir",  "question": "ChatGPT ou Gemini : lequel choisir ?" },
+      { "id": "difference-gratuit-payant-chatgpt", "question": "Quelle est la différence entre la version gratuite et payante de ChatGPT ?" },
+      { "id": "claude-ou-chatgpt-lequel-meilleur", "question": "Claude ou ChatGPT : lequel est le meilleur ?" },
+      { "id": "donnees-confidentielles-outils-ia", "question": "Mes données sont-elles confidentielles avec les outils IA ?" },
+      { "id": "un-seul-outil-ia-peut-il-tout",     "question": "Un seul outil IA peut-il tout faire ?" },
+      { "id": "instructions-permanentes-chatgpt",  "question": "Comment donner des instructions permanentes à ChatGPT ?" },
+      { "id": "ou-sont-stockees-donnees-ia",        "question": "Où sont stockées mes données par les IA ?" },
+      { "id": "automatiser-taches-avec-ia",         "question": "Comment automatiser ses tâches avec l'IA ?" }
+    ]
+  }
+]

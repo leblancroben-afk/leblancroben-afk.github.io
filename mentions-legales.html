@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentions légales — Albexia</title>
+  <meta name="description" content="Mentions légales, conditions d'utilisation et politique de cookies d'Albexia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/article.css">
+</head>
+<body>
+<!-- NAV -->
+<nav>
+   <div class="logo">
+      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+  <style>
+    /* Animation de construction pour les polygones */
+    .poly-part {
+      animation: buildIn 1.2s ease-out forwards;
+      opacity: 0;
+    }
+
+    /* Animation d'apparition pour le texte */
+    .logo-text {
+      animation: fadeIn 1s ease-out 0.8s forwards; /* Démarre après 0.8s */
+      opacity: 0;
+    }
+
+    @keyframes buildIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Délais spécifiques pour chaque pièce pour un effet "construction" */
+    .part-1 { animation-delay: 0.1s; }
+    .part-2 { animation-delay: 0.3s; }
+    .part-3 { animation-delay: 0.5s; }
+  </style>
+
+  <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+  
+  <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+  
+  <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+
+  <text class="logo-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">
+  Albe<tspan fill="#ff6b9d">x</tspan>ia
+</text>
+      </svg>
+   </div>
+     
+    <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='../index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='../index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='../index.html#blog'">Blog</button>
+    </div>
+
+  <!-- ═══════════════════════════════════════════════════
+     NOUVEAU MENU KEBAB — Albexia
+     Remplace l'ancien kebab-wrap dans toutes les pages.
+     Top 3 des incontournables + lien vers le Hub complet.
+     ═══════════════════════════════════════════════════ -->
+
+<div class="kebab-wrap" id="kebab-wrap">
+  <button class="kebab-btn" id="kebab-btn" aria-label="Plus de pages" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="kebab-menu" id="kebab-menu" role="menu">
+
+    <!-- Top 3 des pages incontournables -->
+    <div class="kebab-label">Incontournables</div>
+
+    <a href="glossaire.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">📖</span>
+      <div>
+        <div class="kebab-item-name">Glossaire IA</div>
+        <div class="kebab-item-sub">Tous les termes en français</div>
+      </div>
+    </a>
+
+    <a href="comparateur.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">⚖️</span>
+      <div>
+        <div class="kebab-item-name">Comparateur</div>
+        <div class="kebab-item-sub">Comparer les outils côte à côte</div>
+      </div>
+    </a>
+
+    <a href="pages/deals.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">🔥</span>
+      <div>
+        <div class="kebab-item-name">Deals &amp; Promos</div>
+        <div class="kebab-item-sub">Essais gratuits · Offres exclusives</div>
+      </div>
+    </a>
+
+    <!-- Séparateur -->
+    <div class="kebab-divider"></div>
+
+    <!-- Lien Hub complet -->
+    <a href="hub.html" class="kebab-item kebab-hub-link" role="menuitem">
+      <span class="kebab-ico">📂</span>
+      <div>
+        <div class="kebab-item-name">Voir toutes les sections</div>
+        <div class="kebab-item-sub">Carte complète d'Albexia →</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+</nav>
+
+
+  <main class="article-main">
+    <div class="article-container">
+
+      <header class="article-header">
+        <div class="article-meta-top">
+          <span class="article-cat" style="background:rgba(255,255,255,0.08);color:#888">Légal</span>
+          <span class="article-read-time">Dernière mise à jour : mars 2025</span>
+        </div>
+        <h1 class="article-title">Mentions légales</h1>
+        <p class="article-intro">Conformément aux dispositions légales en vigueur, voici les informations légales relatives au site Albexia.</p>
+      </header>
+
+      <div class="article-body">
+
+        <h2>1. Éditeur du site</h2>
+        <p><strong>Nom du site :</strong> Albexia<br>
+        <strong>URL :</strong> https://ia-directory.github.io/annuaire-ia<br>
+        <strong>Email de contact :</strong> albexia.hello@gmail.com<br>
+        <strong>Statut :</strong> Site personnel / projet indépendant</p>
+
+        <h2>2. Hébergement</h2>
+        <p>Ce site est hébergé par :<br>
+        <strong>GitHub Pages</strong> — GitHub, Inc.<br>
+        88 Colin P Kelly Jr St, San Francisco, CA 94107, États-Unis<br>
+        Site : <a href="https://pages.github.com" style="color:#a8a3ff">pages.github.com</a></p>
+
+        <h2 id="cgu">3. Conditions générales d'utilisation</h2>
+        <p>L'utilisation du site Albexia implique l'acceptation pleine et entière des conditions générales d'utilisation décrites ci-après. Ces conditions peuvent être modifiées ou complétées à tout moment.</p>
+
+        <h3>Accès au site</h3>
+        <p>Le site est accessible gratuitement depuis n'importe quel endroit, à tout utilisateur disposant d'un accès à Internet. Tous les frais nécessaires pour l'accès aux services (matériel informatique, connexion Internet…) sont à la charge de l'utilisateur.</p>
+
+        <h3>Propriété intellectuelle</h3>
+        <p>Tout le contenu présent sur Albexia (textes, images, logos, structure) est protégé par le droit d'auteur. Toute reproduction, même partielle, est interdite sans autorisation préalable écrite de l'éditeur. Les marques et logos des outils référencés appartiennent à leurs propriétaires respectifs.</p>
+
+        <h3>Limitation de responsabilité</h3>
+        <p>Albexia s'efforce de fournir des informations aussi précises que possible. Cependant, il ne pourra être tenu responsable des omissions, des inexactitudes et des carences dans la mise à jour des informations, qu'elles soient de son fait ou du fait des tiers partenaires qui lui fournissent ces informations.</p>
+
+        <p>Les liens hypertextes mis en place dans le cadre du site Albexia en direction d'autres ressources présentes sur le réseau Internet ne sauraient engager la responsabilité de l'éditeur.</p>
+
+        <h2 id="cookies">4. Politique de gestion des cookies</h2>
+        <p>Albexia utilise uniquement des cookies techniques strictement nécessaires au fonctionnement du site :</p>
+        <ul>
+          <li><strong>Favoris localStorage :</strong> stockage local de vos outils favoris sur votre appareil. Ces données ne sont jamais transmises à des tiers.</li>
+          <li>Aucun cookie publicitaire ou de tracking tiers n'est utilisé.</li>
+          <li>Aucune donnée personnelle n'est collectée via des cookies.</li>
+        </ul>
+        <p>Vous pouvez supprimer ces données à tout moment depuis les paramètres de votre navigateur (Paramètres → Confidentialité → Effacer les données de navigation).</p>
+
+        <h2>5. Droit applicable</h2>
+        <p>Les présentes conditions sont régies par le droit français. En cas de litige, les tribunaux français seront seuls compétents.</p>
+
+        <div class="article-tags">
+          <a href="politique-confidentialite.html" class="article-tag" style="text-decoration:none">Politique de confidentialité →</a>
+          <a href="contact.html" class="article-tag" style="text-decoration:none">Contact →</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+      &copy; 2025-2026 <a href="index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+      <a href="mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+      <a href="politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+      <a href="contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+    </div>
+  </footer>
+  
+  <script>
+const kb=document.getElementById('kebab-btn'),km=document.getElementById('kebab-menu');
+if(kb&&km){kb.addEventListener('click',e=>{e.stopPropagation();const o=km.classList.toggle('open');kb.setAttribute('aria-expanded',o)});document.addEventListener('click',()=>{km.classList.remove('open');kb.setAttribute('aria-expanded','false')});km.addEventListener('click',e=>e.stopPropagation())}
+</script>
+
+</body>
+</html>

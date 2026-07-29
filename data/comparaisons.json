@@ -1,0 +1,1345 @@
+[
+  {
+    "slug": "chatgpt-vs-gemini",
+    "meta": {
+      "title": "ChatGPT vs Gemini — Comparaison complète | Albexia",
+      "description": "ChatGPT ou Gemini ? Comparaison détaillée : prix, fonctionnalités, support français, API. Notre verdict Albexia."
+    },
+    "outils": [
+      {
+        "nom": "ChatGPT",
+        "emoji": "💬",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=chat.openai.com",
+        "categorie": "Assistant IA",
+        "note": 5.0,
+        "lien": "https://chat.openai.com",
+        "winner": true
+      },
+      {
+        "nom": "Gemini",
+        "emoji": "🌟",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com",
+        "categorie": "Assistant IA",
+        "note": 4.7,
+        "lien": "https://gemini.google.com",
+        "winner": false
+      }
+    ],
+    "resume": "ChatGPT et Gemini sont les deux assistants IA les plus utilisés au monde. Tous deux gratuits, tous deux multilingues — mais leurs forces divergent. ChatGPT excelle en rédaction et raisonnement, Gemini s'intègre nativement à l'écosystème Google.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Freemium",
+        "b": "Freemium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Support français",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "API disponible",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Génération d'images",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Intégration Google",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Plugins / GPTs",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Note Albexia",
+        "a": "5.0 / 5",
+        "b": "4.7 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Le plus polyvalent du marché",
+        "Écosystème GPTs très riche",
+        "Excellent en rédaction et code",
+        "Mémoire des conversations"
+      ],
+      "b": [
+        "Intégration native Google Docs, Drive, Gmail",
+        "Recherche web en temps réel très précise",
+        "Gratuit sans limitation de messages",
+        "Multimodal avancé"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Version gratuite limitée en messages GPT-4",
+        "Pas intégré aux outils Google",
+        "Hallucinations encore présentes"
+      ],
+      "b": [
+        "Moins performant en rédaction créative",
+        "GPTs et plugins absents",
+        "Moins précis sur le code complexe"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez ChatGPT si vous cherchez un assistant polyvalent pour la rédaction, le code et l'analyse de données. Idéal pour les créateurs de contenu, développeurs et entrepreneurs.",
+      "choisir_b": "Choisissez Gemini si vous utilisez déjà Gmail, Google Docs ou Drive au quotidien. Son intégration native à l'écosystème Google en fait un copilote parfait."
+    },
+    "faq": [
+      {
+        "question": "Peut-on utiliser ChatGPT et Gemini ensemble ?",
+        "reponse": "Oui — beaucoup d'utilisateurs utilisent les deux. ChatGPT pour la rédaction et le code, Gemini pour la recherche et la synthèse de documents Google. Ils sont complémentaires."
+      },
+      {
+        "question": "Lequel est le mieux pour écrire en français ?",
+        "reponse": "ChatGPT est légèrement supérieur en nuance stylistique. Gemini produit un français correct mais parfois moins naturel."
+      },
+      {
+        "question": "Y a-t-il une limite d'utilisation gratuite ?",
+        "reponse": "ChatGPT limite les messages GPT-4 sur le plan gratuit. Gemini propose un accès plus généreux sur sa version gratuite."
+      },
+      {
+        "question": "Lequel est le plus rapide ?",
+        "reponse": "Gemini est généralement plus rapide en génération de texte. ChatGPT peut être plus lent en heure de pointe sur la version gratuite."
+      }
+    ],
+    "verdict": {
+      "gagnant": "ChatGPT",
+      "texte": "ChatGPT reste la référence absolue en matière d'assistant IA généraliste. Sa polyvalence, la qualité de sa rédaction en français et l'écosystème GPTs en font le choix numéro un. Gemini tire son épingle du jeu uniquement si vous êtes déjà ancré dans l'écosystème Google."
+    }
+  },
+  {
+    "slug": "midjourney-vs-chatgpt",
+    "meta": {
+      "title": "Midjourney vs ChatGPT — Comparaison complète | Albexia",
+      "description": "Midjourney ou ChatGPT ? Deux outils, deux usages différents. Notre analyse complète."
+    },
+    "outils": [
+      {
+        "nom": "Midjourney",
+        "emoji": "🎨",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=midjourney.com",
+        "categorie": "Génération d'images",
+        "note": 4.8,
+        "lien": "https://midjourney.com",
+        "winner": false
+      },
+      {
+        "nom": "ChatGPT",
+        "emoji": "💬",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=chat.openai.com",
+        "categorie": "Assistant IA",
+        "note": 5.0,
+        "lien": "https://chat.openai.com",
+        "winner": true
+      }
+    ],
+    "resume": "Comparer Midjourney et ChatGPT revient à comparer un pinceau et un stylo — deux outils IA d'excellence conçus pour des usages radicalement différents. Midjourney génère des images, ChatGPT génère du texte.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "$10/mois",
+        "b": "Freemium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Génération d'images",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Génération de texte",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Support français",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "API disponible",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Qualité artistique",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.8 / 5",
+        "b": "5.0 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Qualité artistique inégalée en génération d'images",
+        "Styles visuels très variés",
+        "Communauté active et inspirante",
+        "Résultats professionnels sans compétence graphique"
+      ],
+      "b": [
+        "Polyvalent — texte, code, analyse, images",
+        "Gratuit pour commencer",
+        "Support français excellent",
+        "Accessible depuis n'importe quel navigateur"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Pas de plan gratuit",
+        "Interface via Discord uniquement",
+        "Aucune capacité de texte ou d'analyse"
+      ],
+      "b": [
+        "Images moins artistiques que Midjourney",
+        "Génération d'images limitée sur le plan gratuit",
+        "Moins spécialisé"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez Midjourney si votre priorité est la création visuelle — illustrations, concepts artistiques, visuels pour réseaux sociaux. C'est l'outil numéro un pour les images de qualité professionnelle.",
+      "choisir_b": "Choisissez ChatGPT si vous avez besoin d'un assistant polyvalent pour rédiger, analyser et coder. La majorité des utilisateurs y trouveront leur compte sans payer."
+    },
+    "faq": [
+      {
+        "question": "Peut-on utiliser Midjourney et ChatGPT ensemble ?",
+        "reponse": "Absolument — c'est même recommandé. Utilisez ChatGPT pour rédiger vos prompts Midjourney. Les deux se complètent parfaitement dans un workflow créatif."
+      },
+      {
+        "question": "ChatGPT peut-il remplacer Midjourney ?",
+        "reponse": "Non. ChatGPT génère des images via DALL-E, mais la qualité artistique reste inférieure à Midjourney pour des visuels professionnels."
+      },
+      {
+        "question": "Midjourney est-il accessible en français ?",
+        "reponse": "Midjourney fonctionne principalement en anglais. Les prompts en français fonctionnent mais donnent souvent de meilleurs résultats en anglais."
+      }
+    ],
+    "verdict": {
+      "gagnant": "ChatGPT",
+      "texte": "ChatGPT obtient la note globale la plus haute grâce à sa polyvalence et son accessibilité. Mais Midjourney est le grand gagnant dans sa catégorie — si vous cherchez un générateur d'images, aucun outil ne l'égale. Ce sont deux champions dans des disciplines différentes."
+    }
+  },
+  {
+    "slug": "writesonic-vs-copyai",
+    "meta": {
+      "title": "Writesonic vs Copy.ai — Comparaison complète | Albexia",
+      "description": "Writesonic ou Copy.ai pour votre rédaction IA ? Fonctionnalités, prix, qualité — notre comparaison complète en français."
+    },
+    "outils": [
+      {
+        "nom": "Writesonic",
+        "emoji": "⚡",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=writesonic.com",
+        "categorie": "Rédaction IA",
+        "note": 4.4,
+        "lien": "https://writesonic.com",
+        "winner": true
+      },
+      {
+        "nom": "Copy.ai",
+        "emoji": "💬",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=copy.ai",
+        "categorie": "Rédaction IA",
+        "note": 4.2,
+        "lien": "https://copy.ai",
+        "winner": false
+      }
+    ],
+    "resume": "Writesonic et Copy.ai sont deux des outils de rédaction IA les plus populaires chez les francophones. Tous deux proposent des plans gratuits et des templates variés. La différence tient dans les détails — qualité SEO, limites du gratuit et cas d'usage prioritaires.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Freemium",
+        "b": "Freemium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Limite gratuite",
+        "a": "Illimité (limité)",
+        "b": "2 000 mots/mois",
+        "bool": false
+      },
+      {
+        "label": "Support français",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "SEO intégré",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "API disponible",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": false,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Templates",
+        "a": "100+",
+        "b": "90+",
+        "bool": false
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.4 / 5",
+        "b": "4.2 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Optimisation SEO intégrée",
+        "Génération d'articles longs efficace",
+        "Interface intuitive pour débutants",
+        "Chatsonic avec accès internet en temps réel"
+      ],
+      "b": [
+        "Plan gratuit généreux en fonctionnalités",
+        "Excellent pour le copywriting court",
+        "Workflows automatisés puissants",
+        "Intégration HubSpot et Salesforce"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Qualité variable selon les templates",
+        "Limite peu claire sur le plan gratuit",
+        "Prix élevé pour les fonctionnalités avancées"
+      ],
+      "b": [
+        "2 000 mots/mois très limités",
+        "Moins performant pour les articles longs",
+        "SEO peu développé nativement"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez Writesonic si vous produisez des articles de blog régulièrement et souhaitez une optimisation SEO intégrée. C'est l'outil idéal pour les blogueurs et rédacteurs web.",
+      "choisir_b": "Choisissez Copy.ai si vous avez besoin principalement de copywriting court — emails, publicités, descriptions produits. Ses workflows conviennent parfaitement aux équipes commerciales."
+    },
+    "faq": [
+      {
+        "question": "Lequel produit le meilleur français ?",
+        "reponse": "Les deux produisent un français correct. Writesonic est légèrement plus fluide sur les textes longs. Pour du copywriting court, les deux sont équivalents."
+      },
+      {
+        "question": "Peut-on générer des articles complets ?",
+        "reponse": "Writesonic est clairement supérieur pour les articles longs. Copy.ai est plus adapté aux formats courts et aux séquences d'emails."
+      },
+      {
+        "question": "Le plan gratuit suffit-il pour tester ?",
+        "reponse": "Writesonic offre plus de latitude. Copy.ai limite à 2 000 mots/mois, ce qui peut être insuffisant pour un test approfondi."
+      }
+    ],
+    "verdict": {
+      "gagnant": "Writesonic",
+      "texte": "Writesonic prend l'avantage grâce à son intégration SEO et sa meilleure gestion des articles longs. Copy.ai reste excellent pour le copywriting court. Pour un usage blog et SEO en français, Writesonic est notre recommandation."
+    }
+  },
+  {
+    "slug": "dalle-3-vs-stable-diffusion",
+    "meta": {
+      "title": "DALL·E 3 vs Stable Diffusion — Comparaison complète | Albexia",
+      "description": "DALL·E 3 ou Stable Diffusion ? Facilité d'utilisation vs liberté totale. Notre comparaison complète."
+    },
+    "outils": [
+      {
+        "nom": "DALL·E 3",
+        "emoji": "🎨",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=openai.com",
+        "categorie": "Génération d'images",
+        "note": 4.6,
+        "lien": "https://openai.com/dall-e-3",
+        "winner": false
+      },
+      {
+        "nom": "Stable Diffusion",
+        "emoji": "🖼️",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=stability.ai",
+        "categorie": "Génération d'images",
+        "note": 4.5,
+        "lien": "https://stability.ai",
+        "winner": true
+      }
+    ],
+    "resume": "DALL·E 3 et Stable Diffusion représentent deux philosophies opposées. DALL·E 3 mise sur la simplicité et l'accessibilité, Stable Diffusion sur la liberté totale et la personnalisation. L'un est une porte d'entrée, l'autre est un laboratoire.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Via ChatGPT Plus",
+        "b": "Gratuit (local)",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Open source",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Installation requise",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Support français",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "API disponible",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Personnalisation",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Utilisation hors ligne",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.6 / 5",
+        "b": "4.5 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Aucune installation — accessible depuis ChatGPT",
+        "Compréhension des prompts complexes excellente",
+        "Qualité constante et prévisible",
+        "Intégration directe à ChatGPT Plus"
+      ],
+      "b": [
+        "100% gratuit en local",
+        "Open source — aucune censure",
+        "Personnalisation illimitée via LoRA",
+        "Utilisation hors ligne possible",
+        "Milliers de modèles communautaires"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Nécessite ChatGPT Plus ($20/mois)",
+        "Modération stricte des contenus",
+        "Moins de contrôle sur le style"
+      ],
+      "b": [
+        "Nécessite un PC puissant (GPU recommandé)",
+        "Courbe d'apprentissage importante",
+        "Installation technique pour débutants"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez DALL·E 3 si vous voulez générer des images immédiatement sans configuration technique. C'est le choix idéal pour les non-techniciens et créateurs de contenu.",
+      "choisir_b": "Choisissez Stable Diffusion si vous êtes à l'aise avec la technique et souhaitez une liberté totale. C'est l'outil des artistes IA avancés."
+    },
+    "faq": [
+      {
+        "question": "Faut-il un ordinateur puissant pour Stable Diffusion ?",
+        "reponse": "Un GPU NVIDIA avec au moins 6 Go de VRAM est recommandé. Sans GPU dédié, vous pouvez utiliser Google Colab gratuitement."
+      },
+      {
+        "question": "DALL·E 3 est-il vraiment payant ?",
+        "reponse": "DALL·E 3 est inclus dans ChatGPT Plus ($20/mois). Il existe quelques crédits gratuits via Bing Image Creator."
+      },
+      {
+        "question": "Lequel produit les meilleures images artistiques ?",
+        "reponse": "Stable Diffusion avec les bons modèles surpasse DALL·E 3 en qualité artistique, mais cela demande de la configuration."
+      }
+    ],
+    "verdict": {
+      "gagnant": "Stable Diffusion",
+      "texte": "Stable Diffusion gagne sur la liberté, la personnalisation et le coût zéro à long terme. Mais DALL·E 3 est le meilleur choix pour 90% des utilisateurs qui veulent des résultats immédiats. Commencez par DALL·E 3, passez à Stable Diffusion quand vous voulez aller plus loin."
+    }
+  },
+  {
+    "slug": "canva-ai-vs-adobe-firefly",
+    "meta": {
+      "title": "Canva AI vs Adobe Firefly — Comparaison complète | Albexia",
+      "description": "Canva AI ou Adobe Firefly pour vos créations visuelles ? Notre comparaison détaillée."
+    },
+    "outils": [
+      {
+        "nom": "Canva AI",
+        "emoji": "🎨",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=canva.com",
+        "categorie": "Design IA",
+        "note": 4.7,
+        "lien": "https://canva.com",
+        "winner": true
+      },
+      {
+        "nom": "Adobe Firefly",
+        "emoji": "🔥",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=firefly.adobe.com",
+        "categorie": "Design IA",
+        "note": 4.5,
+        "lien": "https://firefly.adobe.com",
+        "winner": false
+      }
+    ],
+    "resume": "Canva AI et Adobe Firefly transforment tous deux la création visuelle grâce à l'IA. Canva cible les non-designers avec une interface ultra-accessible, Adobe Firefly s'adresse aux créatifs déjà ancrés dans l'écosystème Adobe.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Freemium",
+        "b": "Freemium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Support français",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Intégration Adobe",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Templates disponibles",
+        "a": "500 000+",
+        "b": "Limité",
+        "bool": false
+      },
+      {
+        "label": "Génération d'images",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Édition vectorielle",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Contenu commercial",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.7 / 5",
+        "b": "4.5 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Plus de 500 000 templates",
+        "Interface la plus simple du marché",
+        "Application mobile complète",
+        "Suppression de fond, redimensionnement IA"
+      ],
+      "b": [
+        "Intégration native Photoshop, Illustrator",
+        "Qualité artistique supérieure",
+        "Entraîné sur Adobe Stock — 100% légal",
+        "Génération de vecteurs SVG"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Fonctionnalités IA avancées réservées au Pro ($13/mois)",
+        "Moins adapté aux professionnels Adobe",
+        "Moins précis pour l'illustration technique"
+      ],
+      "b": [
+        "Pas d'app mobile dédiée",
+        "Interface moins intuitive pour débutants",
+        "Nécessite souvent Creative Cloud"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez Canva AI si vous n'êtes pas designer de formation et voulez créer rapidement des visuels professionnels. Parfait pour les entrepreneurs et créateurs de contenu.",
+      "choisir_b": "Choisissez Adobe Firefly si vous êtes déjà abonné à Creative Cloud et souhaitez intégrer l'IA dans Photoshop ou Illustrator."
+    },
+    "faq": [
+      {
+        "question": "Peut-on utiliser les créations commercialement ?",
+        "reponse": "Oui pour les deux. Canva Pro inclut une licence commerciale. Adobe Firefly est spécifiquement conçu pour un usage commercial sans risque de droits."
+      },
+      {
+        "question": "Lequel est le mieux pour les réseaux sociaux ?",
+        "reponse": "Canva domine avec ses formats pré-définis pour chaque plateforme et ses millions de templates."
+      },
+      {
+        "question": "Adobe Firefly fonctionne-t-il sans abonnement Adobe ?",
+        "reponse": "Oui — firefly.adobe.com est accessible gratuitement avec un compte Adobe. Vous obtenez 25 crédits/mois."
+      }
+    ],
+    "verdict": {
+      "gagnant": "Canva AI",
+      "texte": "Canva AI remporte cette comparaison grâce à son accessibilité et son catalogue de templates. Adobe Firefly est le choix des professionnels Adobe. Pour la grande majorité des utilisateurs francophones, Canva est le point de départ évident."
+    }
+  },
+  {
+    "slug": "notion-ai-vs-gamma",
+    "meta": {
+      "title": "Notion AI vs Gamma — Comparaison complète | Albexia",
+      "description": "Notion AI ou Gamma pour votre productivité ? Notes intelligentes vs présentations automatiques."
+    },
+    "outils": [
+      {
+        "nom": "Notion AI",
+        "emoji": "📝",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=notion.so",
+        "categorie": "Productivité",
+        "note": 4.6,
+        "lien": "https://notion.so",
+        "winner": true
+      },
+      {
+        "nom": "Gamma",
+        "emoji": "⚡",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=gamma.app",
+        "categorie": "Présentations IA",
+        "note": 4.5,
+        "lien": "https://gamma.app",
+        "winner": false
+      }
+    ],
+    "resume": "Notion AI et Gamma partagent la même ambition — augmenter votre productivité grâce à l'IA — mais sur des terrains très différents. Notion est un espace de travail complet enrichi d'IA, Gamma est un générateur de présentations révolutionnaire.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Freemium + $10 IA",
+        "b": "Freemium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Support français",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Génération de slides",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Base de données",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Collaboration équipe",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Export PowerPoint",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Résumé de documents",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.6 / 5",
+        "b": "4.5 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Espace de travail tout-en-un",
+        "IA qui résume, rédige et améliore vos notes",
+        "Bases de données relationnelles puissantes",
+        "Application mobile complète"
+      ],
+      "b": [
+        "Génère une présentation complète en 30 secondes",
+        "Design automatique de qualité professionnelle",
+        "Export PowerPoint et PDF",
+        "Partage web instantané avec lien"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "IA en add-on payant ($10/mois)",
+        "Courbe d'apprentissage pour les débutants",
+        "Pas de génération de slides natives"
+      ],
+      "b": [
+        "Usage limité aux présentations",
+        "Pas d'app mobile",
+        "Moins adapté à la gestion de projets"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez Notion AI si vous gérez des projets et prenez des notes régulièrement. Idéal pour les équipes, freelances et étudiants qui ont besoin d'organiser leur travail.",
+      "choisir_b": "Choisissez Gamma si vous faites régulièrement des présentations et perdez du temps sur PowerPoint. En 30 secondes, Gamma produit des slides professionnelles."
+    },
+    "faq": [
+      {
+        "question": "Peut-on créer des présentations avec Notion ?",
+        "reponse": "Notion permet de créer des pages partageables mais pas des slides. Pour des présentations visuelles, Gamma est clairement supérieur."
+      },
+      {
+        "question": "Gamma peut-il remplacer PowerPoint ?",
+        "reponse": "Pour la majorité des usages courants, oui. Gamma exporte en PowerPoint et produit des designs plus modernes."
+      },
+      {
+        "question": "L'IA de Notion vaut-elle le surcoût de $10/mois ?",
+        "reponse": "Si vous utilisez Notion quotidiennement, oui. La fonctionnalité de résumé automatique fait gagner un temps considérable."
+      }
+    ],
+    "verdict": {
+      "gagnant": "Notion AI",
+      "texte": "Notion AI remporte cette comparaison grâce à sa polyvalence. Mais si votre besoin principal est de créer des présentations rapidement, Gamma est tout simplement imbattable. Les deux peuvent coexister sans se marcher dessus."
+    }
+  },
+  {
+    "slug": "elevenlabs-vs-otterai",
+    "meta": {
+      "title": "ElevenLabs vs Otter.ai — Comparaison complète | Albexia",
+      "description": "ElevenLabs ou Otter.ai pour l'audio IA ? Génération de voix vs transcription automatique."
+    },
+    "outils": [
+      {
+        "nom": "ElevenLabs",
+        "emoji": "🎙️",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=elevenlabs.io",
+        "categorie": "Voix IA",
+        "note": 4.7,
+        "lien": "https://elevenlabs.io",
+        "winner": true
+      },
+      {
+        "nom": "Otter.ai",
+        "emoji": "🦦",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=otter.ai",
+        "categorie": "Transcription IA",
+        "note": 4.3,
+        "lien": "https://otter.ai",
+        "winner": false
+      }
+    ],
+    "resume": "ElevenLabs crée des voix, Otter.ai transcrit des voix — deux faces opposées de l'audio IA. ElevenLabs transforme du texte en parole naturelle, Otter.ai transforme des réunions en notes structurées.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Freemium",
+        "b": "Freemium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Génération de voix",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Transcription audio",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Clonage de voix",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Résumé de réunion",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "API disponible",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Support français",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.7 / 5",
+        "b": "4.3 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Voix synthétiques quasi indiscernables",
+        "Clonage de voix en 30 secondes",
+        "29 langues dont le français",
+        "API puissante pour développeurs"
+      ],
+      "b": [
+        "Transcription en temps réel des réunions",
+        "Résumé automatique avec points clés",
+        "Intégration Zoom, Google Meet, Teams",
+        "600 minutes gratuites par mois"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Pas de transcription",
+        "10 000 caractères/mois sur le plan gratuit",
+        "Pas d'app mobile dédiée"
+      ],
+      "b": [
+        "Transcription principalement en anglais",
+        "Résultats moyens en français",
+        "Pas de génération de voix"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez ElevenLabs si vous créez des podcasts, des vidéos YouTube ou du contenu e-learning. C'est aussi l'outil idéal pour les développeurs qui intègrent de la synthèse vocale.",
+      "choisir_b": "Choisissez Otter.ai si vous participez à de nombreuses réunions et souhaitez les transcrire automatiquement. Parfait pour les équipes en télétravail."
+    },
+    "faq": [
+      {
+        "question": "ElevenLabs peut-il cloner ma voix ?",
+        "reponse": "Oui — avec seulement 30 secondes d'audio. Cette fonctionnalité est disponible dès le plan Starter ($5/mois)."
+      },
+      {
+        "question": "Otter.ai fonctionne-t-il en français ?",
+        "reponse": "Otter.ai est principalement optimisé pour l'anglais. La transcription française est disponible mais moins précise."
+      },
+      {
+        "question": "Peut-on combiner les deux outils ?",
+        "reponse": "Absolument — créez une voix avec ElevenLabs pour vos vidéos, puis utilisez Otter.ai pour transcrire vos réunions. Les deux répondent à des besoins complémentaires."
+      }
+    ],
+    "verdict": {
+      "gagnant": "ElevenLabs",
+      "texte": "ElevenLabs remporte cette comparaison grâce à sa technologie vocale sans égale et son support du français. Otter.ai est excellent pour la transcription mais limité pour les francophones. Si vous travaillez en français, ElevenLabs est le choix évident dans la catégorie audio IA."
+    }
+  },
+  {
+    "slug": "leonardo-ai-vs-ideogram",
+    "meta": {
+      "title": "Leonardo AI vs Ideogram — Comparaison complète | Albexia",
+      "description": "Leonardo AI ou Ideogram pour générer vos images IA ? Notre comparaison détaillée."
+    },
+    "outils": [
+      {
+        "nom": "Leonardo AI",
+        "emoji": "🦁",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=leonardo.ai",
+        "categorie": "Génération d'images",
+        "note": 4.5,
+        "lien": "https://leonardo.ai",
+        "winner": true
+      },
+      {
+        "nom": "Ideogram",
+        "emoji": "🔤",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=ideogram.ai",
+        "categorie": "Génération d'images",
+        "note": 4.4,
+        "lien": "https://ideogram.ai",
+        "winner": false
+      }
+    ],
+    "resume": "Leonardo AI et Ideogram sont deux générateurs d'images IA avec des spécialités distinctes. Leonardo excelle dans les illustrations et personnages. Ideogram se démarque par sa capacité unique à intégrer du texte lisible dans les images.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Freemium",
+        "b": "Freemium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Crédits gratuits/mois",
+        "a": "150 tokens",
+        "b": "25 générations",
+        "bool": false
+      },
+      {
+        "label": "Texte dans les images",
+        "a": false,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Modèles personnalisés",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "API disponible",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Styles artistiques",
+        "a": "100+",
+        "b": "Limité",
+        "bool": false
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.5 / 5",
+        "b": "4.4 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Plus de 100 styles artistiques",
+        "Entraînement de modèles personnalisés",
+        "API pour développeurs",
+        "Génération de personnages cohérents"
+      ],
+      "b": [
+        "Le meilleur pour intégrer du texte lisible dans les images",
+        "Interface ultra-simple",
+        "Résultats cohérents et prévisibles",
+        "Gratuit sans carte de crédit"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Interface complexe pour débutants",
+        "Texte dans les images peu fiable",
+        "150 tokens/mois consommés rapidement"
+      ],
+      "b": [
+        "Peu de contrôle sur les styles artistiques",
+        "Pas d'API publique",
+        "Moins adapté aux illustrations complexes"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez Leonardo AI si vous créez des illustrations, des personnages pour des jeux ou de l'art numérique complexe.",
+      "choisir_b": "Choisissez Ideogram si vous avez besoin de visuels avec du texte intégré — affiches, logos, miniatures YouTube, couvertures de livres."
+    },
+    "faq": [
+      {
+        "question": "Pourquoi l'IA a-t-elle du mal avec le texte dans les images ?",
+        "reponse": "Les modèles de diffusion génèrent des images pixel par pixel sans compréhension linguistique. Ideogram résout ce problème avec une architecture spécifique."
+      },
+      {
+        "question": "Leonardo AI est-il bon pour les logos ?",
+        "reponse": "Leonardo peut générer des concepts visuels mais reste peu fiable pour les logos avec du texte précis. Ideogram est plus adapté."
+      },
+      {
+        "question": "Les deux outils sont-ils utilisables commercialement ?",
+        "reponse": "Oui sur les plans payants. Vérifiez les conditions de licence avant utilisation commerciale intensive."
+      }
+    ],
+    "verdict": {
+      "gagnant": "Leonardo AI",
+      "texte": "Leonardo AI prend l'avantage par sa polyvalence artistique. Mais Ideogram est imbattable sur sa niche — l'intégration de texte. Utilisez Leonardo pour vos créations artistiques générales, et Ideogram dès que vous avez besoin de texte lisible dans vos visuels."
+    }
+  },
+  {
+    "slug": "copilot-microsoft-vs-grok",
+    "meta": {
+      "title": "Copilot Microsoft vs Grok — Comparaison complète | Albexia",
+      "description": "Copilot Microsoft ou Grok ? L'assistant IA de Microsoft vs l'IA de xAI. Notre comparaison complète."
+    },
+    "outils": [
+      {
+        "nom": "Copilot Microsoft",
+        "emoji": "🪟",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=copilot.microsoft.com",
+        "categorie": "Assistant IA",
+        "note": 4.3,
+        "lien": "https://copilot.microsoft.com",
+        "winner": true
+      },
+      {
+        "nom": "Grok",
+        "emoji": "🤖",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=grok.x.ai",
+        "categorie": "Assistant IA",
+        "note": 4.2,
+        "lien": "https://grok.x.ai",
+        "winner": false
+      }
+    ],
+    "resume": "Copilot de Microsoft et Grok de xAI représentent deux visions différentes de l'assistant IA. Copilot s'intègre dans l'écosystème Microsoft 365, Grok est natif à la plateforme X et se distingue par son accès aux données en temps réel.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Gratuit",
+        "b": "Via X Premium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Support français",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Intégration Office",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Accès temps réel",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Génération d'images",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "API disponible",
+        "a": false,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.3 / 5",
+        "b": "4.2 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Intégration native Word, Excel, PowerPoint",
+        "Gratuit avec un compte Microsoft",
+        "Excellent support du français",
+        "Basé sur GPT-4"
+      ],
+      "b": [
+        "Accès aux données X en temps réel",
+        "Ton décalé et moins censuré",
+        "Très performant sur l'actualité",
+        "Intégré directement dans l'app X"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Meilleur avec Microsoft 365 (payant)",
+        "Moins pertinent pour l'actualité sociale",
+        "Pas d'API publique"
+      ],
+      "b": [
+        "Nécessite X Premium ($8-16/mois)",
+        "Interface uniquement via X",
+        "Moins bon en français"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez Copilot si vous utilisez déjà la suite Microsoft 365 au travail. Son intégration dans Word, Excel et PowerPoint en fait un assistant professionnel très efficace.",
+      "choisir_b": "Choisissez Grok si vous êtes actif sur X et souhaitez un assistant connecté à l'actualité en temps réel. Particulièrement utile pour les journalistes et veilleurs."
+    },
+    "faq": [
+      {
+        "question": "Copilot est-il vraiment gratuit ?",
+        "reponse": "Copilot.microsoft.com est gratuit. Les fonctionnalités intégrées à Word et Excel nécessitent Microsoft 365 Copilot ($30/mois)."
+      },
+      {
+        "question": "Grok est-il meilleur que ChatGPT ?",
+        "reponse": "Sur l'actualité en temps réel, oui. Sur la polyvalence générale, non. Grok excelle là où ChatGPT est limité."
+      },
+      {
+        "question": "Lequel choisir pour travailler en français ?",
+        "reponse": "Copilot est nettement supérieur en français. Grok produit un français acceptable mais reste optimisé pour l'anglais."
+      }
+    ],
+    "verdict": {
+      "gagnant": "Copilot Microsoft",
+      "texte": "Copilot Microsoft s'impose par son intégration à la suite Office, son support du français et sa gratuité de base. Grok reste un outil de niche pour les utilisateurs de X. Pour la grande majorité des francophones, Copilot est le choix plus pratique au quotidien."
+    }
+  },
+  {
+    "slug": "kling-ai-vs-pika-labs",
+    "meta": {
+      "title": "Kling AI vs Pika Labs — Comparaison complète | Albexia",
+      "description": "Kling AI ou Pika Labs pour générer vos vidéos IA ? Notre comparaison complète."
+    },
+    "outils": [
+      {
+        "nom": "Kling AI",
+        "emoji": "🎬",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=klingai.com",
+        "categorie": "Génération vidéo",
+        "note": 4.5,
+        "lien": "https://klingai.com",
+        "winner": true
+      },
+      {
+        "nom": "Pika Labs",
+        "emoji": "⚡",
+        "favicon": "https://www.google.com/s2/favicons?sz=64&domain=pika.art",
+        "categorie": "Génération vidéo",
+        "note": 4.3,
+        "lien": "https://pika.art",
+        "winner": false
+      }
+    ],
+    "resume": "Kling AI et Pika Labs sont deux des générateurs vidéo IA les plus accessibles. Les deux transforment du texte ou des images en vidéos courtes. Kling impressionne par la fluidité cinématique, Pika par sa rapidité et son interface simple.",
+    "criteres": [
+      {
+        "label": "Prix de base",
+        "a": "Freemium",
+        "b": "Freemium",
+        "bool": false
+      },
+      {
+        "label": "Essai gratuit",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Durée max vidéo",
+        "a": "3 minutes",
+        "b": "15 secondes",
+        "bool": false
+      },
+      {
+        "label": "Résolution max",
+        "a": "1080p",
+        "b": "1080p",
+        "bool": false
+      },
+      {
+        "label": "Image vers vidéo",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "Texte vers vidéo",
+        "a": true,
+        "b": true,
+        "bool": true
+      },
+      {
+        "label": "App mobile",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Qualité cinématique",
+        "a": true,
+        "b": false,
+        "bool": true
+      },
+      {
+        "label": "Note Albexia",
+        "a": "4.5 / 5",
+        "b": "4.3 / 5",
+        "bool": false
+      }
+    ],
+    "avantages": {
+      "a": [
+        "Vidéos jusqu'à 3 minutes — le meilleur du marché",
+        "Qualité cinématique avec mouvements de caméra fluides",
+        "Application mobile disponible",
+        "Personnages cohérents entre les scènes"
+      ],
+      "b": [
+        "Génération très rapide (30-60 secondes)",
+        "Interface simple pour débutants",
+        "Bon pour les vidéos courtes et virales",
+        "Nombreux effets et styles disponibles"
+      ]
+    },
+    "inconvenients": {
+      "a": [
+        "Génération plus lente que Pika",
+        "Interface en anglais principalement",
+        "Crédits gratuits consommés rapidement"
+      ],
+      "b": [
+        "Limité à 15 secondes par vidéo",
+        "Qualité cinématique inférieure",
+        "Mouvements parfois saccadés"
+      ]
+    },
+    "cas_usage": {
+      "choisir_a": "Choisissez Kling AI si vous créez des vidéos pour des projets créatifs ou des publicités. Sa durée de 3 minutes et sa qualité cinématique en font le meilleur choix professionnel.",
+      "choisir_b": "Choisissez Pika Labs si vous souhaitez créer rapidement des vidéos courtes pour les réseaux sociaux. Sa simplicité en fait l'outil idéal pour les créateurs de contenu social."
+    },
+    "faq": [
+      {
+        "question": "Peut-on générer des vidéos en français ?",
+        "reponse": "Les deux comprennent les prompts en français mais produisent de meilleurs résultats avec des descriptions en anglais."
+      },
+      {
+        "question": "Combien de temps faut-il pour générer une vidéo ?",
+        "reponse": "Pika génère en 30-60 secondes. Kling prend 2-5 minutes selon la durée et la qualité demandée."
+      },
+      {
+        "question": "Ces vidéos sont-elles utilisables commercialement ?",
+        "reponse": "Oui sur les plans payants. Vérifiez les conditions de licence avant tout usage commercial."
+      }
+    ],
+    "verdict": {
+      "gagnant": "Kling AI",
+      "texte": "Kling AI remporte cette comparaison grâce à sa durée de vidéo sans égale et sa qualité cinématique supérieure. Pour les projets sérieux, c'est le choix numéro un. Pika Labs reste l'option la plus rapide pour du contenu vidéo court destiné aux réseaux sociaux."
+    }
+  }
+]

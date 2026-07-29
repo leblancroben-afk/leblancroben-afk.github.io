@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub – Toutes les sections | Albexia</title>
+  <meta name="description" content="Explorez toutes les sections d'Albexia : outils IA, comparateur, glossaire, niches métier et ressources pour maîtriser l'intelligence artificielle en français.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Hub – Toutes les sections | Albexia">
+  <meta property="og:description" content="Votre carte d'orientation complète pour naviguer dans l'univers Albexia.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://albexia.com/hub.html">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS site + hub -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hub.css">
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+   <div class="logo">
+      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+  <style>
+    /* Animation de construction pour les polygones */
+    .poly-part {
+      animation: buildIn 1.2s ease-out forwards;
+      opacity: 0;
+    }
+
+    /* Animation d'apparition pour le texte */
+    .logo-text {
+      animation: fadeIn 1s ease-out 0.8s forwards; /* Démarre après 0.8s */
+      opacity: 0;
+    }
+
+    @keyframes buildIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-5px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Délais spécifiques pour chaque pièce pour un effet "construction" */
+    .part-1 { animation-delay: 0.1s; }
+    .part-2 { animation-delay: 0.3s; }
+    .part-3 { animation-delay: 0.5s; }
+  </style>
+
+  <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+  
+  <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+  
+  <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+
+  <text class="logo-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">
+  Albe<tspan fill="#ff6b9d">x</tspan>ia
+</text>
+      </svg>
+   </div>
+     
+    <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='index.html#blog'">Blog</button>
+    <button class="nav-link" onclick="location.href='index.html#gallery'">Galerie</button>
+    <button class="nav-link" onclick="location.href='index.html#favorites'">Favoris</button>    
+    <button class="nav-link active">Hub</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+     NOUVEAU MENU KEBAB — Albexia
+     Remplace l'ancien kebab-wrap dans toutes les pages.
+     Top 3 des incontournables + lien vers le Hub complet.
+     ═══════════════════════════════════════════════════ -->
+
+<div class="kebab-wrap" id="kebab-wrap">
+  <button class="kebab-btn" id="kebab-btn" aria-label="Plus de pages" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="kebab-menu" id="kebab-menu" role="menu">
+
+    <!-- Top 3 des pages incontournables -->
+    <div class="kebab-label">Incontournables</div>
+
+    <a href="glossaire.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">📖</span>
+      <div>
+        <div class="kebab-item-name">Glossaire IA</div>
+        <div class="kebab-item-sub">Tous les termes en français</div>
+      </div>
+    </a>
+
+    <a href="comparateur.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">⚖️</span>
+      <div>
+        <div class="kebab-item-name">Comparateur</div>
+        <div class="kebab-item-sub">Comparer les outils côte à côte</div>
+      </div>
+    </a>
+
+    <a href="deals.html" class="kebab-item" role="menuitem">
+      <span class="kebab-ico">🔥</span>
+      <div>
+        <div class="kebab-item-name">Deals &amp; Promos</div>
+        <div class="kebab-item-sub">Essais gratuits · Offres exclusives</div>
+      </div>
+    </a>
+
+    <!-- Séparateur -->
+    <div class="kebab-divider"></div>
+
+    <!-- Lien Hub complet -->
+    <a href="hub.html" class="kebab-item kebab-hub-link" role="menuitem">
+      <span class="kebab-ico">📂</span>
+      <div>
+        <div class="kebab-item-name">Voir toutes les sections</div>
+        <div class="kebab-item-sub">Carte complète d'Albexia →</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+</nav>
+
+<!-- ─── HERO HUB ─── -->
+<header class="hub-hero">
+  <div class="hub-hero-glow"></div>
+  <div class="hub-hero-inner container">
+    <span class="hub-hero-badge">
+      <span class="pulse"></span>
+      Carte complète
+    </span>
+    <h1>Votre <span class="grad">Hub Central</span></h1>
+    <p>Toutes les sections d'Albexia organisées pour vous. Trouvez en un clic l'outil, le guide ou la niche qui transformera votre façon de travailler avec l'IA.</p>
+  </div>
+</header>
+
+<!-- ─── CARTE OUTIL VEDETTE ─── -->
+<div class="hub-spotlight-wrap container" id="hub-spotlight">
+  <!-- Injecté par hub.js -->
+</div>
+
+<!-- ════════════════════════════════
+     ZONE 1 — La Boîte à Outils
+     ════════════════════════════════ -->
+<section class="hub-zone container">
+  <div class="hub-zone-header">
+    <span class="hub-zone-icon">🛠️</span>
+    <div>
+      <h2 class="hub-zone-title">La Boîte à Outils Fondamentale</h2>
+      <p class="hub-zone-desc">Tout ce qu'il vous faut pour comprendre, comparer et économiser sur les meilleures solutions IA du marché.</p>
+    </div>
+  </div>
+  <div class="hub-cards-grid hub-cards-3">
+
+    <a href="glossaire.html" class="hub-card hub-card--teal">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">📖</div>
+      <h3 class="hub-card-title">Glossaire IA</h3>
+      <p class="hub-card-desc">Parlez couramment l'intelligence artificielle. Tous les termes techniques expliqués simplement.</p>
+      <div class="hub-card-cta">Explorer <span>→</span></div>
+    </a>
+
+    <a href="comparateur.html" class="hub-card hub-card--purple">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">⚖️</div>
+      <h3 class="hub-card-title">Le Comparateur</h3>
+      <p class="hub-card-desc">Ne choisissez plus au hasard. Comparez les prix et les fonctionnalités pour trouver l'IA idéale.</p>
+      <div class="hub-card-cta">Comparer <span>→</span></div>
+    </a>
+
+    <a href="deals.html" class="hub-card hub-card--amber">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">🔥</div>
+      <h3 class="hub-card-title">Deals &amp; Promos</h3>
+      <p class="hub-card-desc">Maximisez votre budget. Accédez aux codes promos et offres exclusives du moment.</p>
+      <div class="hub-card-cta">Voir les offres <span>→</span></div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     ZONE 2 — Niches Métier
+     ════════════════════════════════ -->
+<section class="hub-zone container">
+  <div class="hub-zone-header">
+    <span class="hub-zone-icon">🚀</span>
+    <div>
+      <h2 class="hub-zone-title">IA Appliquée à votre Métier</h2>
+      <p class="hub-zone-desc">Des guides profonds et des sélections d'outils triés sur le volet pour transformer votre flux de travail quotidien.</p>
+    </div>
+  </div>
+  <div class="hub-cards-grid hub-cards-2-3">
+
+    <a href="niches/redaction-seo.html" class="hub-card hub-card--pink">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">✍️</div>
+      <h3 class="hub-card-title">Rédaction &amp; SEO</h3>
+      <p class="hub-card-desc">Dominez Google. Les outils pour écrire plus vite et mieux sans perdre votre touche humaine.</p>
+      <div class="hub-card-cta">Découvrir <span>→</span></div>
+    </a>
+
+    <a href="niches/youtube-video.html" class="hub-card hub-card--red">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">🎬</div>
+      <h3 class="hub-card-title">YouTube &amp; Vidéo IA</h3>
+      <p class="hub-card-desc">Devenez créateur sans caméra. De la génération de script au montage automatique.</p>
+      <div class="hub-card-cta">Découvrir <span>→</span></div>
+    </a>
+
+    <a href="niches/ecommerce-marketing.html" class="hub-card hub-card--green">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">🛒</div>
+      <h3 class="hub-card-title">E-commerce &amp; Marketing</h3>
+      <p class="hub-card-desc">Vendez en automatique. Optimisez vos fiches produits et vos campagnes publicitaires.</p>
+      <div class="hub-card-cta">Découvrir <span>→</span></div>
+    </a>
+
+    <a href="niches/automatisation.html" class="hub-card hub-card--blue">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">⚙️</div>
+      <h3 class="hub-card-title">Automatisation &amp; Productivité</h3>
+      <p class="hub-card-desc">Gagnez des heures chaque jour. Connectez vos outils et déléguez les tâches répétitives.</p>
+      <div class="hub-card-cta">Découvrir <span>→</span></div>
+    </a>
+
+    <a href="niches/micro-saas-nocode.html" class="hub-card hub-card--purple">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">🧩</div>
+      <h3 class="hub-card-title">Micro-SaaS &amp; No-Code</h3>
+      <p class="hub-card-desc">Créez des produits sans coder. Lancez votre SaaS en quelques jours avec l'IA.</p>
+      <div class="hub-card-cta">Découvrir <span>→</span></div>
+    </a>
+
+    <!-- Carte Fantôme -->
+    <div class="hub-card hub-card--ghost">
+      <div class="hub-card-ico">✨</div>
+      <h3 class="hub-card-title">Nouvelle niche</h3>
+      <p class="hub-card-desc">Une nouvelle niche est en cours de préparation. Revenez bientôt !</p>
+      <div class="hub-card-badge">Bientôt disponible</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     ZONE 3 — Académie & Action
+     ════════════════════════════════ -->
+<section class="hub-zone container">
+  <div class="hub-zone-header">
+    <span class="hub-zone-icon">🎓</span>
+    <div>
+      <h2 class="hub-zone-title">Apprendre &amp; Contribuer</h2>
+      <p class="hub-zone-desc">Passez de la théorie à la pratique avec nos ressources interactives et participez à l'évolution de l'annuaire.</p>
+    </div>
+  </div>
+  <div class="hub-cards-grid hub-cards-3">
+
+    <a href="tutoriels.html" class="hub-card hub-card--pink">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">🎥</div>
+      <h3 class="hub-card-title">Vidéothèque IA</h3>
+      <p class="hub-card-desc">Apprenez par l'image. Des tutoriels filtrés par durée pour maîtriser chaque outil.</p>
+      <div class="hub-card-cta">Voir les tutos <span>→</span></div>
+    </a>
+
+    <a href="tutoriels.html#soumettre" class="hub-card hub-card--teal">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">📤</div>
+      <h3 class="hub-card-title">Soumettre un Tuto</h3>
+      <p class="hub-card-desc">Devenez une référence. Partagez votre expertise avec la communauté et boostez votre chaîne.</p>
+      <div class="hub-card-cta">Contribuer <span>→</span></div>
+    </a>
+
+    <a href="ressources.html" class="hub-card hub-card--purple">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">📄</div>
+      <h3 class="hub-card-title">Guides &amp; Checklists</h3>
+      <p class="hub-card-desc">Passez à l'action. Des PDF prêts à l'emploi pour ne rater aucune étape de votre transformation IA.</p>
+      <div class="hub-card-cta">Télécharger <span>→</span></div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     ZONE 4 — Communauté & Ressources
+     ════════════════════════════════ -->
+<section class="hub-zone container">
+  <div class="hub-zone-header">
+    <span class="hub-zone-icon">🤝</span>
+    <div>
+      <h2 class="hub-zone-title">Communauté &amp; Ressources</h2>
+      <p class="hub-zone-desc">Posez vos questions, trouvez des alternatives gratuites et contribuez à l'annuaire en soumettant vos outils favoris.</p>
+    </div>
+  </div>
+  <div class="hub-cards-grid hub-cards-3">
+
+    <a href="pages/faq.html" class="hub-card hub-card--teal">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">💬</div>
+      <h3 class="hub-card-title">Centre d'aide &amp; FAQ</h3>
+      <p class="hub-card-desc">40 questions claires sur l'IA générative, les tarifs et les outils. Réponses pensées pour les francophones.</p>
+      <div class="hub-card-cta">Consulter <span>→</span></div>
+    </a>
+
+    <a href="pages/alternatives.html" class="hub-card hub-card--green">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">🆓</div>
+      <h3 class="hub-card-title">Alternatives gratuites</h3>
+      <p class="hub-card-desc">19 guides pour remplacer ChatGPT, Midjourney et GitHub Copilot par des solutions open-source ou gratuites.</p>
+      <div class="hub-card-cta">Explorer <span>→</span></div>
+    </a>
+
+    <a href="pages/soumettre.html" class="hub-card hub-card--pink">
+      <div class="hub-card-glow"></div>
+      <div class="hub-card-ico">📤</div>
+      <h3 class="hub-card-title">Soumettre un outil IA</h3>
+      <p class="hub-card-desc">Listing premium gratuit pendant la phase de lancement. Faites référencer votre outil devant toute la communauté francophone.</p>
+      <div class="hub-card-cta">Soumettre <span>→</span></div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ─── CTA FINAL ─── -->
+<div class="hub-cta-banner container">
+  <div class="hub-cta-inner">
+    <div class="hub-cta-glow"></div>
+    <span class="hub-cta-ico">🌍</span>
+    <h2>Albexia — L'IA en français pour tous.</h2>
+    <p>Le premier annuaire IA pensé pour l'Afrique, les Caraïbes, la France et le Québec.</p>
+    <a href="index.html" class="btn-main">Explorer les outils →</a>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+ <footer><div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">&copy; 2025-2026 <a href="../index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> — <a href="../mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> · <a href="../politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> · <a href="../contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a></div></footer>
+  
+
+<script src="js/hub.js"></script>
+<script>
+  // Kebab toggle
+  const kebabBtn = document.getElementById('kebab-btn');
+  const kebabMenu = document.getElementById('kebab-menu');
+  if (kebabBtn && kebabMenu) {
+    kebabBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = kebabMenu.classList.toggle('open');
+      kebabBtn.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', () => {
+      kebabMenu.classList.remove('open');
+      kebabBtn.setAttribute('aria-expanded', 'false');
+    });
+    kebabMenu.addEventListener('click', e => e.stopPropagation());
+  }
+</script>
+</body>
+</html>

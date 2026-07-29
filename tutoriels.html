@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="">
+
+  <!-- ── SEO ── -->
+  <title>Tutoriels IA en vidéo – Apprenez à maîtriser les meilleurs outils | Albexia</title>
+  <meta name="description" content="Plus de 500 tutoriels vidéo sélectionnés pour apprendre à utiliser ChatGPT, Midjourney, Claude, Make et tous les meilleurs outils IA. Gratuit, en français.">
+  <meta name="keywords" content="tutoriels IA, apprendre intelligence artificielle, formation IA gratuite, ChatGPT tutoriel, Midjourney tutoriel, outils IA francophone">
+  <link rel="canonical" href="https://albexia.com/tutoriels.html">
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:title" content="Tutoriels IA en vidéo – Albexia">
+  <meta property="og:description" content="La vidéothèque francophone de référence pour maîtriser tous les outils d'IA. Tutoriels sélectionnés, classés et filtrables.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://albexia.com/tutoriels.html">
+  <meta property="og:image" content="https://albexia.com/assets/og-tutoriels.jpg">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tutoriels IA en vidéo – Albexia">
+  <meta name="twitter:description" content="La vidéothèque francophone de référence pour maîtriser les outils IA.">
+  <meta name="twitter:image" content="https://albexia.com/assets/og-tutoriels.jpg">
+
+  <!-- ── Schema.org ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Tutoriels IA en vidéo – Albexia",
+    "description": "Vidéothèque francophone de tutoriels pour maîtriser les meilleurs outils d'intelligence artificielle.",
+    "url": "https://albexia.com/tutoriels.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Albexia",
+      "url": "https://albexia.com"
+    }
+  }
+  </script>
+
+  <!-- ── Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- ── CSS ── -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- ════════════════════════════
+     NAVIGATION (identique au site)
+     ════════════════════════════ -->
+<nav>
+  <a href="index.html" class="logo" style="text-decoration:none;color:inherit;">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>
+        .tl-poly { animation: tlBuild 1.2s ease-out forwards; opacity:0; }
+        .tl-text { animation: tlFade  1s ease-out 0.8s forwards; opacity:0; }
+        @keyframes tlBuild { 0%{opacity:0;transform:translateY(10px) scale(.8)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+        @keyframes tlFade  { 0%{opacity:0;transform:translateX(-5px)} 100%{opacity:1;transform:translateX(0)} }
+        .tl-p1{animation-delay:.1s} .tl-p2{animation-delay:.3s} .tl-p3{animation-delay:.5s}
+      </style>
+      <polygon class="tl-poly tl-p1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="tl-poly tl-p2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="tl-poly tl-p3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="tl-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link" style="text-decoration:none;">Outils</a>
+    <a href="blog.html" class="nav-link" style="text-decoration:none;">Blog</a>
+    <a href="galerie.html" class="nav-link" style="text-decoration:none;">Galerie</a>
+    <a href="tutoriels.html" class="nav-link active" style="text-decoration:none;">Tutoriels</a>
+    <a href="comparateur.html" class="nav-link" style="text-decoration:none;">Comparateur</a>
+    <a href="ressources.html" class="nav-link" style="text-decoration:none;">Ressources</a>
+  </div>
+  <button class="nav-cta" onclick="ouvrirModalSoumission('','')">
+    ↑ Soumettre un tutoriel
+  </button>
+</nav>
+
+<!-- ════════════════════════════
+     HERO
+     ════════════════════════════ -->
+<section class="tuto-hero">
+  <div class="tuto-badge">
+    <span class="pulse"></span>
+    Vidéothèque francophone
+  </div>
+
+  <h1>
+    Explorez le futur de l'IA<br>
+    avec nos <span class="grad-pink">tutoriels experts</span>
+  </h1>
+
+  <p>Plus de 500 outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
+
+  <div class="tuto-hero-actions">
+    <button class="btn-main" onclick="document.getElementById('tuto-grille').scrollIntoView({behavior:'smooth'})">
+      Explorer les tutoriels
+    </button>
+    <button class="tuto-btn-hero-soumettre" id="btn-soumettre-hero">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Soumettre un tutoriel
+    </button>
+  </div>
+
+  <div id="tuto-hero-stats" class="tuto-hero-stats">
+    <!-- Injecté par JS -->
+    <div class="tuto-stat"><span class="tuto-stat-n">…</span><span class="tuto-stat-l">Outils référencés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">…</span><span class="tuto-stat-l">Tutoriels sélectionnés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">100%</span><span class="tuto-stat-l">Accès gratuit</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     GRILLE DE CARTES
+     ════════════════════════════ -->
+<div class="tuto-grille-wrap">
+  <div id="tuto-grille" class="tuto-grille">
+    <!-- Cartes injectées par tutoriels.js -->
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     BLOC ÉDITORIAL
+     ════════════════════════════ -->
+<section class="tuto-editorial-wrap">
+  <div class="tuto-editorial-head">
+    <h2>Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA en 2024&nbsp;?</h2>
+    <p>Un article de fond pour comprendre notre approche éditoriale.</p>
+  </div>
+
+  <div class="tuto-editorial-body">
+
+    <h3>La vidéo : le support ultime de l'apprentissage technologique</h3>
+    <p>Pourquoi avoir choisi de placer la vidéo au cœur de notre annuaire ? Parce que dans le domaine de l'IA, une image vaut réellement mille mots. Lire une documentation technique sur un nouveau modèle de génération d'images comme Midjourney ou un outil d'automatisation comme Make peut s'avérer fastidieux. À l'inverse, regarder un expert manipuler l'interface, ajuster ses prompts et montrer les erreurs à éviter offre une courbe d'apprentissage fulgurante.</p>
+    <p>La vidéo permet de capturer la subtilité du "flux de travail" (workflow). Elle montre le temps de rendu réel, la réactivité de l'interface et, surtout, le résultat concret. En intégrant des tutoriels YouTube directement sous nos fiches outils, nous créons un écosystème d'apprentissage immédiat. Que vous soyez un professionnel pressé cherchant une solution d'automatisation ou un créatif explorant de nouveaux horizons, vous avez accès à une bibliothèque visuelle classée et filtrée. Cette approche permet de démystifier l'IA. Ce qui semblait complexe à travers un manuel devient simple et accessible dès lors qu'on le voit réalisé sous nos yeux.</p>
+
+    <h3>Une diversité de formats pour tous les besoins</h3>
+    <p>Nous avons structuré notre vidéothèque pour répondre à la diversité des usages modernes. Le format "Shorts" est idéal pour ceux qui veulent une réponse instantanée. En moins de 60 secondes, vous découvrez une astuce précise, une mise à jour majeure ou une démonstration "waouh". C'est le format de la curiosité et de l'inspiration rapide.</p>
+    <p>À l'autre bout du spectre, nos filtres de durée vous permettent d'accéder à de véritables formations gratuites. Une vidéo de 40 ou 50 minutes n'est pas qu'une simple démo ; c'est un cours magistral où le créateur prend le temps de creuser les paramètres avancés, d'expliquer la logique derrière chaque action et de partager des années d'expérience. En permettant de filtrer les vidéos par durée (10, 20, 30 minutes ou plus d'une heure), nous vous redonnons le contrôle sur votre temps de formation. Vous apprenez à votre rythme, selon votre disponibilité.</p>
+
+    <h3>Le soutien aux créateurs : une relation gagnant-gagnant</h3>
+    <p>Notre plateforme repose sur un principe éthique fondamental : le respect du droit d'auteur et le soutien aux créateurs de contenu. En utilisant l'intégration officielle via le lecteur YouTube, nous garantissons que chaque vue générée sur notre annuaire compte pour le créateur original. C'est une relation de symbiose. L'annuaire bénéficie de l'expertise des meilleurs YouTubeurs tech, et en retour, ces créateurs voient leur audience augmenter, leur monétisation préservée et leur autorité renforcée auprès d'un public qualifié.</p>
+    <p>Nous croyons en une communauté où le partage de connaissances est récompensé. C'est pourquoi nous encourageons les auteurs de vidéos à soumettre eux-mêmes leurs contenus. En obtenant le badge "Auteur Vérifié", ils signalent aux utilisateurs que le tutoriel provient directement de la source la plus fiable. Cela crée un climat de confiance indispensable dans un secteur où les informations circulent vite, mais ne sont pas toujours vérifiées.</p>
+
+    <h3>L'IA, une technologie humaine avant tout</h3>
+    <p>Malgré la sophistication des algorithmes, l'IA reste un outil au service de l'humain. Sans le talent de celui qui rédige le prompt ou l'ingéniosité de celui qui connecte deux outils entre eux, la machine reste inerte. Notre section éditoriale et nos tutoriels mettent en lumière cette intelligence humaine. Chaque vidéo est le témoignage d'un utilisateur qui a testé, échoué, puis réussi à dompter l'outil pour en extraire de la valeur.</p>
+    <p>En explorant nos cartes d'outils extensibles, vous ne découvrez pas seulement des logiciels — vous rejoignez une aventure collective. Vous apprenez comment un entrepreneur a divisé son temps de rédaction par dix, comment un graphiste a révolutionné son processus créatif, ou comment un développeur a automatisé les tâches les plus rébarbatives de son quotidien. C'est cela, la véritable promesse de l'IA : non pas remplacer l'humain, mais lui donner des super-pouvoirs.</p>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     FAQ
+     ════════════════════════════ -->
+<section class="tuto-faq-wrap">
+  <div class="tuto-faq-head">
+    <h2>Questions fréquentes</h2>
+  </div>
+  <div id="tuto-faq-list">
+    <!-- Injectée par tutoriels.js -->
+  </div>
+</section>
+
+<!-- ════════════════════════════
+     MODAL PLAYER YOUTUBE
+     ════════════════════════════ -->
+<div id="tuto-player-modal" class="tuto-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="tuto-player-inner">
+    <div class="tuto-player-top">
+      <p id="tuto-player-titre" class="tuto-player-titre"></p>
+      <button class="tuto-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="tuto-player-frame">
+      <iframe id="tuto-player-iframe"
+        src=""
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="Tutoriel vidéo">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     MODAL SOUMISSION
+     ════════════════════════════ -->
+<div id="tuto-modal-soumission" class="tuto-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="tuto-modal-inner">
+    <button class="tuto-modal-close" id="soumission-fermer" aria-label="Fermer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <div class="tuto-modal-ico">🎬</div>
+    <h2 class="tuto-modal-titre">Soumettre un tutoriel</h2>
+    <p class="tuto-modal-sub">
+      Proposez une vidéo pour <strong id="soumission-outil-nom">nos outils IA</strong>. Notre équipe éditoriale l'examinera sous 48h.
+    </p>
+
+    <form id="form-soumission" novalidate>
+      <input type="hidden" id="soumission-outil-id" name="outil_id" value="">
+
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="tuto-form-input" type="url" id="s-url" name="url"
+               placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-outil">Outil concerné</label>
+        <select class="tuto-form-select" id="s-outil" name="outil">
+          <option value="">Sélectionner un outil…</option>
+          <option value="chatgpt">ChatGPT</option>
+          <option value="midjourney">Midjourney</option>
+          <option value="claude">Claude</option>
+          <option value="make">Make (Integromat)</option>
+          <option value="perplexity">Perplexity AI</option>
+          <option value="runway">Runway ML</option>
+          <option value="autre">Autre outil IA</option>
+        </select>
+      </div>
+
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="tuto-form-input" type="text" id="s-nom" name="nom"
+               placeholder="Jean-Michel ou @MonCanal">
+      </div>
+
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="tuto-form-input" type="email" id="s-email" name="email"
+               placeholder="vous@exemple.com">
+      </div>
+
+      <button type="submit" class="tuto-form-submit" id="soumission-submit">
+        Soumettre la vidéo →
+      </button>
+      <p class="tuto-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+    </form>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     FOOTER (identique au site)
+     ════════════════════════════ -->
+<footer style="border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-dim);font-size:12px;margin-top:auto;">
+  <p style="margin-bottom:8px;">
+    <a href="index.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Outils</a>
+    <a href="blog.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Blog</a>
+    <a href="tutoriels.html" style="color:var(--accent2);text-decoration:none;margin:0 10px;">Tutoriels</a>
+    <a href="mentions-legales.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Mentions légales</a>
+    <a href="politique-confidentialite.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Confidentialité</a>
+  </p>
+  <p>© 2024 Albexia · L'annuaire IA francophone de référence</p>
+</footer>
+
+<!-- ════════════════════════════
+     SCRIPTS
+     ════════════════════════════ -->
+<!-- ════════════════════════════
+     SCRIPT MODULE — Firestore note réelle + auth save vidéo
+     ════════════════════════════ -->
+<script type="module">
+  import { getRatingSummary } from './js/reviews.js';
+  import { auth }             from './js/firebase-config.js';
+  import { saveVideo, unsaveVideo, getSavedVideos } from './js/firestore.js';
+  import { onAuthStateChanged } from './js/firebase-config.js';
+
+  let _currentUser   = null;
+  let _savedVideoIds = new Set();
+
+  onAuthStateChanged(auth, async (user) => {
+    _currentUser = user;
+    if (user) {
+      const saved = await getSavedVideos(user.uid);
+      _savedVideoIds = new Set(saved.map(v => v.videoId));
+    } else {
+      _savedVideoIds = new Set();
+    }
+    window._refreshSaveBtnsTuto?.();
+  });
+
+  /* Charger la note réelle pour un outil — appelé depuis tutoriels.js */
+  window._chargerNoteOutil = async function(outilId, noteEl, avisEl) {
+    try {
+      const { ratingAverage, ratingCount } = await getRatingSummary(outilId);
+      if (!ratingCount) {
+        /* Pas d'avis réels → masquer les deux éléments */
+        if (noteEl) noteEl.style.display = 'none';
+        if (avisEl) avisEl.style.display = 'none';
+        return;
+      }
+      const plein   = Math.floor(ratingAverage);
+      const demi    = (ratingAverage % 1) >= 0.5 ? 1 : 0;
+      const vide    = 5 - plein - demi;
+      const etoiles = '★'.repeat(plein) + (demi ? '½' : '') + '☆'.repeat(vide);
+      if (noteEl) noteEl.innerHTML = `${etoiles} <span>${ratingAverage}</span>`;
+      if (avisEl) avisEl.textContent = `${ratingCount} avis`;
+    } catch {
+      if (noteEl) noteEl.style.display = 'none';
+      if (avisEl) avisEl.style.display = 'none';
+    }
+  };
+
+  /* Toggle save vidéo */
+  window._toggleSaveVideo = async function(btn, videoData) {
+    if (!_currentUser) { window.location.href = 'profil.html'; return; }
+    const uid     = _currentUser.uid;
+    const videoId = videoData.videoId;
+    const saving  = !_savedVideoIds.has(videoId);
+    btn.disabled  = true;
+    try {
+      if (saving) {
+        await saveVideo(uid, videoData);
+        _savedVideoIds.add(videoId);
+        btn.classList.add('saved');
+        btn.title = 'Retirer des vidéos sauvegardées';
+      } else {
+        await unsaveVideo(uid, videoId);
+        _savedVideoIds.delete(videoId);
+        btn.classList.remove('saved');
+        btn.title = 'Sauvegarder cette vidéo';
+      }
+    } catch(e) { console.error('[Albexia] save vidéo :', e); }
+    btn.disabled = false;
+  };
+
+  window._refreshSaveBtnsTuto = function() {
+    document.querySelectorAll('.btn-save-video[data-video-id]').forEach(btn => {
+      const saved = _savedVideoIds.has(btn.dataset.videoId);
+      btn.classList.toggle('saved', saved);
+      btn.title = saved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
+    });
+  };
+
+  window._getAuthStateTuto = () => ({ user: _currentUser, savedIds: _savedVideoIds });
+</script>
+
+<script src="js/tutoriels.js"></script>
+
+</body>
+</html>

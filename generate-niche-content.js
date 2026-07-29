@@ -1,0 +1,235 @@
+#!/usr/bin/env node
+/* ═══════════════════════════════════════════════════════
+   generate-niche-content.js — Génération IA du contenu des
+   micro-niches (intro / conseils / FAQ) via Google Gemini API.
+
+   Usage (avec un fichier local — recommandé pour un usage manuel) :
+     GEMINI_API_KEY=xxx FIREBASE_SERVICE_ACCOUNT_PATH=./service-account.json node generate-niche-content.js
+
+   Usage (avec le JSON en ligne — pratique pour CI/scripts) :
+     GEMINI_API_KEY=xxx FIREBASE_SERVICE_ACCOUNT='{...}' node generate-niche-content.js
+
+   Options :
+     --force   Régénère même les niches qui ont déjà un intro_ia
+                (par défaut, seules les niches vides sont traitées)
+     --slug=x  Ne traite qu'une seule niche (par son slug), utile pour tester
+
+   Ce script est INDÉPENDANT de gen-fiches.js — il ne génère aucun
+   fichier HTML, il se contente d'écrire le contenu texte dans les
+   documents Firestore "niches", avec le statut laissé tel quel
+   (donc "brouillon" reste "brouillon" — à toi de relire et publier
+   manuellement dans l'admin une fois le contenu généré).
+
+   Prérequis : chaque niche doit déjà avoir ses outils_slugs remplis
+   (via l'admin, matching auto + ajustement manuel) AVANT de lancer
+   ce script — le brief envoyé à l'IA s'appuie sur les vrais outils
+   déjà sélectionnés, pas sur une liste générique.
+
+   Clé API Gemini gratuite (sans carte bancaire) :
+     https://aistudio.google.com/apikey
+   ═══════════════════════════════════════════════════════ */
+
+const fs = require('fs');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore }        = require('firebase-admin/firestore');
+
+// ── Config ──────────────────────────────────────────────
+// gemini-3.5-flash est le modèle actuel recommandé par Google (juillet 2026),
+// avec accès gratuit confirmé. gemini-2.0-flash (utilisé précédemment) a été
+// arrêté le 1er juin 2026 — c'est la cause réelle des erreurs 429 rencontrées,
+// pas un dépassement de quota. Si Google renomme ou déprécie ce modèle à son
+// tour, vérifie le nom exact sur https://ai.google.dev/gemini-api/docs/pricing
+// avant de relancer.
+const GEMINI_MODEL = 'gemini-3.5-flash';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const DELAI_ENTRE_APPELS_MS = 4500; // reste sous les limites RPM du tier gratuit
+
+if (!GEMINI_API_KEY) {
+  console.error('❌ GEMINI_API_KEY manquant. Génère une clé gratuite sur https://aistudio.google.com/apikey');
+  process.exit(1);
+}
+
+// Accepte soit un chemin vers un fichier .json local (FIREBASE_SERVICE_ACCOUNT_PATH,
+// pratique pour un lancement manuel — pas besoin de coller du JSON dans le terminal),
+// soit le JSON directement en variable d'environnement (FIREBASE_SERVICE_ACCOUNT,
+// utilisé par GitHub Actions où c'est un secret déjà géré proprement).
+let serviceAccount;
+if (process.env.FIREBASE_SERVICE_ACCOUNT_PATH) {
+  const raw = fs.readFileSync(process.env.FIREBASE_SERVICE_ACCOUNT_PATH, 'utf8');
+  serviceAccount = JSON.parse(raw);
+} else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+  console.error('❌ Ni FIREBASE_SERVICE_ACCOUNT_PATH ni FIREBASE_SERVICE_ACCOUNT ne sont définis.');
+  console.error('   Le plus simple : télécharge ta clé de service Firebase et utilise FIREBASE_SERVICE_ACCOUNT_PATH=./ton-fichier.json');
+  process.exit(1);
+}
+initializeApp({ credential: cert(serviceAccount) });
+const db = getFirestore();
+
+// ── Arguments CLI ───────────────────────────────────────
+const args = process.argv.slice(2);
+const FORCE = args.includes('--force');
+const SLUG_FILTER = args.find(a => a.startsWith('--slug='))?.split('=')[1];
+
+// ── Appel Gemini API (fetch natif, aucune dépendance npm) ──
+async function appellerGemini(prompt) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  const body = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.7,
+      responseMimeType: 'application/json',
+    },
+  };
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Gemini API ${res.status} : ${errText.slice(0, 300)}`);
+  }
+
+  const data = await res.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error('Réponse Gemini vide ou inattendue : ' + JSON.stringify(data).slice(0, 300));
+
+  return JSON.parse(text);
+}
+
+// Enrobe appellerGemini avec des nouvelles tentatives automatiques —
+// utile pour deux cas rencontrés en pratique : une erreur JSON (le modèle
+// n'est pas déterministe, une 2e génération est souvent valide même si la
+// 1ère ne l'était pas) et une erreur API transitoire (503 "high demand",
+// 429 quota momentané). N'insiste pas indéfiniment : 2 tentatives
+// supplémentaires max, avec un court délai entre chacune.
+async function appellerGeminiAvecRetry(prompt, maxTentatives = 3) {
+  let derniereErreur;
+  for (let tentative = 1; tentative <= maxTentatives; tentative++) {
+    try {
+      return await appellerGemini(prompt);
+    } catch (err) {
+      derniereErreur = err;
+      if (tentative < maxTentatives) {
+        await new Promise(r => setTimeout(r, 3000 * tentative));
+      }
+    }
+  }
+  throw derniereErreur;
+}
+
+// ── Construction du brief envoyé à l'IA ────────────────────
+function construireBrief(niche, outilsResolus) {
+  const listeOutils = outilsResolus.length
+    ? outilsResolus.map(t => `- ${t.name} (${t.category || 'catégorie non précisée'}) : ${t.description || 'pas de description'}`).join('\n')
+    : '(aucun outil sélectionné pour l\'instant — reste générique)';
+
+  return `Tu écris pour Albexia, un annuaire francophone d'outils IA (France, Québec, Afrique francophone, Caraïbes). Ton style : confiant, concret, jamais condescendant, pas de superlatifs creux ("révolutionnaire", "incontournable").
+
+Métier ciblé : ${niche.metier}
+Catégorie : ${niche.super_categorie}
+
+Outils déjà sélectionnés pour cette page (ne pas en inventer d'autres, ne pas les décrire un par un dans l'intro) :
+${listeOutils}
+
+Génère un contenu au format JSON strict avec exactement ces clés :
+{
+  "intro": "Un paragraphe de 150 à 220 mots expliquant concrètement pourquoi l'IA est utile pour ce métier précis — des cas d'usage réels de ce métier, pas des généralités sur l'IA. Écrit en français, ton direct.",
+  "conseils": "Un paragraphe de 100 à 150 mots donnant un conseil concret pour choisir entre les outils listés selon les besoins spécifiques de ce métier (budget, confidentialité, langue, intégration...).",
+  "faq": [
+    {"question": "Une question que se poserait vraiment un professionnel de ce métier", "reponse": "Réponse concrète de 40 à 80 mots"},
+    {"question": "...", "reponse": "..."},
+    {"question": "...", "reponse": "..."},
+    {"question": "...", "reponse": "..."}
+  ]
+}
+
+Génère exactement 4 questions de FAQ, pertinentes et spécifiques à ce métier (pas des questions génériques sur l'IA en général).
+
+RÈGLE STRICTE DE FORMAT : n'utilise JAMAIS de guillemets doubles ( " ) à l'intérieur des textes générés (intro, conseils, questions, réponses) — même pour citer un exemple ou un terme. Reformule plutôt sans guillemets (ex: écris "le mot-clé chaussures femme" au lieu de 'le mot-clé "chaussures femme"'). Des guillemets non échappés dans le texte cassent le JSON. Réponds UNIQUEMENT avec le JSON, sans texte avant ou après, sans balises markdown.`;
+}
+
+// ── Main ──────────────────────────────────────────────────
+async function main() {
+  console.log(`📥 Lecture de Firestore (niches, outils)...`);
+  const [nichesSnap, outilsSnap] = await Promise.all([
+    db.collection('niches').get(),
+    db.collection('outils').get(),
+  ]);
+  const niches = nichesSnap.docs.map(d => d.data());
+  const outils = outilsSnap.docs.map(d => d.data());
+  console.log(`✓ ${niches.length} niche(s), ${outils.length} outil(s) trouvés\n`);
+
+  const slugify = (str) => (str || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+  let aTraiter = niches.filter(n => {
+    if (SLUG_FILTER) return n.slug === SLUG_FILTER;
+    return FORCE || !n.intro_ia || !n.intro_ia.trim();
+  });
+
+  // Cas distinct et fréquent en pratique : le slug tapé dans le workflow ne
+  // correspond à AUCUNE niche (faute de frappe, singulier/pluriel, etc.).
+  // Sans ce contrôle, le script se terminait "avec succès" en silence sans
+  // rien avoir généré — trompeur, difficile à diagnostiquer depuis les logs.
+  if (SLUG_FILTER && !aTraiter.length) {
+    console.log(`❌ Aucune niche trouvée avec le slug "${SLUG_FILTER}".`);
+    console.log(`   Slugs disponibles : ${niches.map(n => n.slug).filter(Boolean).join(', ') || '(aucune niche en base)'}`);
+    console.log(`   Vérifie l'orthographe exacte (singulier/pluriel, tirets) dans l'admin, onglet Niches.`);
+    process.exit(1);
+  }
+
+  if (!aTraiter.length) {
+    console.log('✅ Rien à générer — toutes les niches ont déjà un contenu (utilise --force pour régénérer).');
+    return;
+  }
+
+  console.log(`🎯 ${aTraiter.length} niche(s) à traiter.\n`);
+
+  let succes = 0, echecs = 0;
+
+  for (const [i, niche] of aTraiter.entries()) {
+    process.stdout.write(`[${i+1}/${aTraiter.length}] ${niche.metier}... `);
+    try {
+      const outilsResolus = (niche.outils_slugs || [])
+        .map(s => outils.find(t => slugify(t.name) === s))
+        .filter(Boolean);
+
+      const prompt = construireBrief(niche, outilsResolus);
+      const contenu = await appellerGeminiAvecRetry(prompt);
+
+      if (!contenu.intro || !contenu.faq || !Array.isArray(contenu.faq)) {
+        throw new Error('Format de réponse inattendu (intro ou faq manquant)');
+      }
+
+      await db.collection('niches').doc(String(niche.id || niche.slug)).update({
+        intro_ia: contenu.intro,
+        conseils_ia: contenu.conseils || '',
+        faq: contenu.faq,
+      });
+
+      console.log('✓');
+      succes++;
+    } catch (err) {
+      console.log(`✗ (${err.message})`);
+      echecs++;
+    }
+
+    // Respecte le quota RPM du tier gratuit — pas de rafale.
+    if (i < aTraiter.length - 1) {
+      await new Promise(r => setTimeout(r, DELAI_ENTRE_APPELS_MS));
+    }
+  }
+
+  console.log(`\n✅ Terminé — ${succes} niche(s) générée(s), ${echecs} échec(s).`);
+  if (succes > 0) {
+    console.log(`   Le statut reste "brouillon" — relis et publie chaque niche dans l'admin avant qu'elle apparaisse sur le site.`);
+  }
+}
+
+main().catch(err => { console.error('❌ Erreur fatale :', err); process.exit(1); });

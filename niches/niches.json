@@ -1,0 +1,203 @@
+[
+  {
+    "id": "redaction-seo",
+    "titre": "Rédaction & SEO",
+    "emoji": "✍️",
+    "badge": "Sélection des 20 meilleurs outils",
+    "limite": 20,
+    "accroche": "Écrire plus vite, ranker plus haut",
+    "sous_titre": "Les meilleurs outils IA pour rédiger, optimiser et publier du contenu qui se positionne sur Google.",
+    "accent": "#6c63ff",
+    "accent_bg": "rgba(108,99,255,0.1)",
+    "accent_border": "rgba(108,99,255,0.3)",
+    "tags_filtres": ["rédaction", "seo", "copywriting", "blog", "texte", "contenu", "écriture"],
+    "categories_filtres": ["Texte"],
+    "guide": {
+      "titre": "Guide complet : Rédaction & SEO avec l'IA",
+      "intro": "Produire du contenu écrit était jusqu'ici une tâche lente, coûteuse, et souvent épuisante. Un article de blog bien optimisé pouvait prendre une demi-journée à rédiger, corriger et structurer — sans garantie de résultats sur Google. L'IA ne remplace pas votre expertise, mais elle agit comme un assistant de rédaction disponible 24h/24, capable de produire un premier jet en quelques minutes. Pour les créateurs francophones qui publient régulièrement, c'est un changement de fond.",
+      "workflow": {
+        "titre": "Comment ça marche : le workflow IA pour le contenu",
+        "etapes": [
+          "Recherche de mots-clés avec un outil IA (Semrush, Surfer SEO)",
+          "Génération d'un plan d'article structuré (ChatGPT, Claude)",
+          "Rédaction du premier jet (Writesonic, Jasper, ou GPT-4)",
+          "Optimisation SEO on-page (Surfer SEO, NeuronWriter)",
+          "Relecture et personnalisation humaine",
+          "Publication et suivi des positions"
+        ]
+      },
+      "rentabilite": {
+        "titre": "Ce que ça change concrètement",
+        "texte": "Un rédacteur freelance qui produit 2 articles par semaine manuellement peut en produire 6 à 8 avec l'IA — sans sacrifier la qualité finale, à condition de bien relire et personnaliser. Les agences de contenu qui ont intégré l'IA dans leur process rapportent des gains de productivité de 40 à 60%. Les coûts d'abonnement aux outils (entre 20 et 100 $/mois selon les outils) sont généralement amortis dès le premier mois pour un usage professionnel. Pour un blog monétisé par l'affiliation ou la publicité, augmenter le volume de contenu indexé accélère directement la croissance du trafic organique.",
+        "avertissement": "Ces gains dépendent fortement de votre capacité à briefer l'IA correctement et à relire les sorties. Un contenu 100% généré sans supervision se voit — et Google le pénalise."
+      },
+      "conseil_expert": {
+        "titre": "L'astuce que peu de créateurs appliquent",
+        "texte": "Ne demandez pas à l'IA d'écrire votre article. Demandez-lui de jouer le rôle d'un expert SEO senior et de critiquer votre plan avant de commencer à rédiger. Cette étape de validation en amont évite de produire un contenu bien rédigé mais mal structuré pour le référencement. Ensuite, rédigez section par section en injectant vos propres exemples et angles — c'est ce qui différencie un article qui ranke d'un article qui reste invisible."
+      }
+    },
+    "articles_lies": [
+      { "titre": "Marketing d'affiliation IA", "url": "../articles/marketing-affiliation-ia.html" },
+      { "titre": "Écrire un livre avec l'IA", "url": "../articles/ecrire-livre-ia.html" }
+    ]
+  },
+  {
+    "id": "ecommerce-marketing",
+    "titre": "E-commerce & Marketing",
+    "emoji": "🛒",
+    "badge": "Sélection des 20 meilleurs outils",
+    "limite": 20,
+    "accroche": "Vendre plus, convertir mieux",
+    "sous_titre": "Les outils IA pour optimiser vos campagnes, vos fiches produits et votre tunnel de vente.",
+    "accent": "#ff6b9d",
+    "accent_bg": "rgba(255,107,157,0.1)",
+    "accent_border": "rgba(255,107,157,0.3)",
+    "tags_filtres": ["e-commerce", "marketing", "publicité", "conversion", "email", "ads", "vente"],
+    "categories_filtres": ["Texte", "Productivité"],
+    "guide": {
+      "titre": "Guide complet : E-commerce & Marketing de performance avec l'IA",
+      "intro": "Le marketing digital est devenu un jeu de volume et de vélocité. Les marques qui gagnent publient plus, testent plus, optimisent plus vite. L'IA compresse radicalement le temps entre l'idée et l'exécution : une fiche produit qui prenait 2 heures à rédiger en prend 15 minutes. Une campagne d'emails qui nécessitait un copywriter senior peut être esquissée en quelques prompts. Pour les e-commerçants francophones, c'est une opportunité de compétitivité réelle face aux grandes marques.",
+      "workflow": {
+        "titre": "Le workflow e-commerce augmenté par l'IA",
+        "etapes": [
+          "Analyse concurrentielle et positionnement (Semrush, Perplexity)",
+          "Rédaction des fiches produits optimisées SEO (ChatGPT, Jasper)",
+          "Création des visuels produits et publicités (Midjourney, Canva IA)",
+          "Copywriting des campagnes emails et SMS (Writesonic, Copy.ai)",
+          "A/B testing des accroches et CTA (outils natifs + IA)",
+          "Analyse des performances et ajustements (outils analytics + IA)"
+        ]
+      },
+      "rentabilite": {
+        "titre": "ROI concret pour un e-commerçant",
+        "texte": "Une boutique Shopify qui intègre l'IA dans sa production de contenu peut multiplier par 3 à 5 le nombre de fiches produits publiées mensuellement. Les campagnes emails générées et optimisées par IA affichent des taux d'ouverture comparables aux copies humaines — à condition de personnaliser le ton et d'adapter au contexte francophone. L'économie principale n'est pas sur les abonnements (50 à 200 $/mois pour un stack complet) mais sur le temps freelance ou agence économisé. Pour une TPE dépensant 1 000 $/mois en production de contenu, l'IA peut ramener ce coût à 200-300 $.",
+        "avertissement": "L'IA excelle dans la production de volume mais pas dans la compréhension fine de votre client. Votre connaissance terrain reste irremplaçable pour affiner le ton et les angles."
+      },
+      "conseil_expert": {
+        "titre": "La technique des personas IA",
+        "texte": "Avant de générer le moindre texte marketing, créez un persona client détaillé et injectez-le dans chaque prompt. Non pas \"femme, 35 ans, intéressée par le fitness\", mais un persona en 10 lignes : ses peurs, ses frustrations, son vocabulaire, ses objections habituelles. Les copies générées avec ce contexte sont structurellement plus persuasives que celles générées sans. C'est la différence entre un texte générique et un texte qui résonne."
+      }
+    },
+    "articles_lies": [
+      { "titre": "Marketing d'affiliation IA", "url": "../articles/marketing-affiliation-ia.html" }
+    ]
+  },
+  {
+    "id": "automatisation",
+    "titre": "Automatisation & Productivité",
+    "emoji": "⚙️",
+    "accroche": "Déléguer les tâches répétitives à l'IA",
+    "sous_titre": "Les outils IA pour automatiser vos workflows, gagner du temps et travailler sur ce qui compte vraiment.",
+    "accent": "#00d4aa",
+    "accent_bg": "rgba(0,212,170,0.1)",
+    "accent_border": "rgba(0,212,170,0.3)",
+    "tags_filtres": ["automatisation", "productivité", "workflow", "no-code", "zapier", "make", "assistant"],
+    "categories_filtres": ["Productivité"],
+    "guide": {
+      "titre": "Guide complet : Automatisation & Productivité avec l'IA",
+      "intro": "La vraie promesse de l'IA pour les entrepreneurs et travailleurs indépendants n'est pas de remplacer leur travail — c'est de supprimer les tâches qui n'ont jamais mérité leur temps. Répondre aux emails répétitifs, reformater des documents, déplacer des données d'un outil à l'autre, générer des rapports hebdomadaires : tout cela peut être automatisé aujourd'hui sans une seule ligne de code. Ce qui prenait autrefois des budgets de PME est désormais accessible à un freelance depuis son téléphone.",
+      "workflow": {
+        "titre": "Construire son premier workflow automatisé",
+        "etapes": [
+          "Identifier les tâches répétitives qui prennent plus de 30 min/semaine",
+          "Cartographier le déclencheur, les étapes et la sortie attendue",
+          "Choisir l'outil d'orchestration (Make, Zapier, n8n)",
+          "Connecter les applications sources et destinations",
+          "Intégrer un nœud IA (GPT, Claude) pour les étapes qui demandent du jugement",
+          "Tester sur 5 cas réels avant de déployer"
+        ]
+      },
+      "rentabilite": {
+        "titre": "Ce que l'automatisation rapporte vraiment",
+        "texte": "Un consultant qui automatise la génération de ses comptes-rendus de réunion récupère en moyenne 3 à 5 heures par semaine. Un e-commerçant qui automatise les réponses aux questions fréquentes réduit son temps de support de 60 à 70%. Les outils d'automatisation coûtent entre 10 et 100 $/mois selon le volume. La règle pratique : si une tâche dure plus de 20 minutes et se répète plus d'une fois par semaine, elle mérite d'être automatisée. Le ROI est presque toujours positif en moins d'un mois.",
+        "avertissement": "L'automatisation amplifie vos processus existants — bons ou mauvais. Automatiser un process défaillant revient à faire les mêmes erreurs plus vite."
+      },
+      "conseil_expert": {
+        "titre": "Commencer petit, pas parfait",
+        "texte": "La principale erreur des débutants en automatisation est de vouloir tout automatiser d'un coup. Commencez par une seule tâche, la plus douloureuse, et construisez un workflow simple qui fonctionne à 80%. Un workflow imparfait qui tourne depuis 6 mois vaut infiniment mieux qu'un workflow parfait jamais terminé. Make (ex-Integromat) offre un plan gratuit suffisant pour tester vos premiers scénarios sans engagement."
+      }
+    },
+    "articles_lies": [
+      { "titre": "Carrières à l'épreuve de l'IA", "url": "../articles/metiers-avenir-ia.html" }
+    ]
+  },
+  {
+    "id": "micro-saas-nocode",
+    "titre": "Micro-SaaS & No-Code",
+    "emoji": "🧩",
+    "accroche": "Créer des produits numériques sans coder",
+    "sous_titre": "Les outils IA et no-code pour lancer un micro-produit, un SaaS simple ou un outil interne en quelques jours.",
+    "accent": "#f5a623",
+    "accent_bg": "rgba(245,166,35,0.1)",
+    "accent_border": "rgba(245,166,35,0.3)",
+    "tags_filtres": ["no-code", "saas", "développement", "application", "bubble", "webflow", "automatisation", "code"],
+    "categories_filtres": ["Code", "Productivité"],
+    "guide": {
+      "titre": "Guide complet : Micro-SaaS & No-Code avec l'IA",
+      "intro": "Lancer un produit numérique nécessitait autrefois des mois de développement et une équipe technique. Aujourd'hui, un entrepreneur seul peut prototyper une idée en un week-end, la mettre en ligne le lundi et avoir ses premiers clients le vendredi — sans écrire une seule ligne de code. La combinaison no-code + IA générative est probablement l'une des opportunités les moins exploitées par les francophones, alors que l'écosystème est déjà mature.",
+      "workflow": {
+        "titre": "Du concept au produit en ligne : les étapes",
+        "etapes": [
+          "Valider l'idée en 48h (forum, Reddit, réseau personnel)",
+          "Définir le MVP : 1 problème, 1 solution, 1 action utilisateur",
+          "Choisir la stack no-code adaptée (Bubble, Glide, Softr, Webflow)",
+          "Utiliser l'IA pour générer le contenu, les textes et la logique métier",
+          "Connecter les paiements (Stripe via intégration native)",
+          "Lancer en beta fermée à 10-20 utilisateurs avant de scaler"
+        ]
+      },
+      "rentabilite": {
+        "titre": "Les modèles économiques qui fonctionnent",
+        "texte": "Un micro-SaaS bien positionné sur une niche peut générer entre 500 et 5 000 $/mois avec une base de 20 à 200 clients payants à 25-50 $/mois. Les coûts d'infrastructure no-code restent faibles en phase de démarrage (50 à 200 $/mois). La clé n'est pas le volume : c'est la spécificité. Un outil généraliste sera toujours écrasé par les grandes plateformes. Un outil qui résout un problème très précis pour une niche très définie peut dominer son marché avec peu de ressources.",
+        "avertissement": "Le no-code accélère le développement mais crée des dépendances aux plateformes. Assurez-vous que votre outil critique peut être migré si la plateforme change ses conditions."
+      },
+      "conseil_expert": {
+        "titre": "Le vrai avantage compétitif en 2026",
+        "texte": "Ce n'est pas la technique — c'est la distribution. Des milliers de micro-SaaS sont lancés chaque mois et meurent faute d'audience. Avant de construire, demandez-vous : où se trouvent vos futurs clients, et comment les atteindre ? Un produit moyen avec une distribution solide surpasse toujours un produit excellent sans audience. Construisez votre audience en parallèle du produit — pas après."
+      }
+    },
+    "articles_lies": [
+      { "titre": "Carrières à l'épreuve de l'IA", "url": "../articles/metiers-avenir-ia.html" },
+      { "titre": "Marketing d'affiliation IA", "url": "../articles/marketing-affiliation-ia.html" }
+    ]
+  },
+  {
+    "id": "youtube-video",
+    "titre": "YouTube & Vidéo IA",
+    "emoji": "🎬",
+    "accroche": "Créer des vidéos sans apparaître à l'écran",
+    "sous_titre": "Les meilleurs outils IA pour scripter, narrer, monter et publier des vidéos YouTube en faceless.",
+    "accent": "#ff6b9d",
+    "accent_bg": "rgba(255,107,157,0.1)",
+    "accent_border": "rgba(255,107,157,0.3)",
+    "tags_filtres": ["vidéo", "youtube", "voix", "montage", "script", "avatar", "narration"],
+    "categories_filtres": ["Vidéo", "Audio"],
+    "guide": {
+      "titre": "Guide complet : YouTube & Vidéo IA (chaîne faceless)",
+      "intro": "90% des personnes qui veulent créer une chaîne YouTube abandonnent avant de publier leur première vidéo — la peur de la caméra, le manque de matériel, le temps de montage. Les chaînes dites \"faceless\" contournent tous ces obstacles : aucun visage à l'écran, voix synthétique ou off, visuels générés ou sourcés légalement, montage assisté par IA. Ce format existe depuis des années en anglais et commence à émerger sérieusement dans l'espace francophone — avec beaucoup moins de concurrence.",
+      "workflow": {
+        "titre": "Le pipeline de production d'une vidéo faceless",
+        "etapes": [
+          "Recherche de sujet et angle avec l'IA (ChatGPT + analyse YouTube)",
+          "Rédaction du script optimisé pour la rétention (structure en 3 actes)",
+          "Génération de la voix off (ElevenLabs, Murf, ou Suno pour la musique)",
+          "Création ou sourcing des visuels (Midjourney, Pexels, archives libres)",
+          "Montage assisté IA (Pictory, Descript, CapCut IA)",
+          "Génération des métadonnées SEO YouTube (titre, description, tags)"
+        ]
+      },
+      "rentabilite": {
+        "titre": "Combien peut rapporter une chaîne faceless francophone ?",
+        "texte": "Une chaîne francophone monétisée AdSense génère entre 2 et 8 € pour 1 000 vues selon la niche (finance et business étant les mieux rémunérées). Une chaîne atteignant 100 000 vues par mois peut espérer 200 à 800 € de revenus publicitaires. Ajoutez l'affiliation et les placements : les créateurs sérieux déclarent multiplier ces revenus par 3 à 5. Le coût d'un stack IA complet pour la production vidéo tourne entre 50 et 150 $/mois. La rentabilité dépend du volume de vidéos publiées et de la constance sur 6 à 12 mois minimum.",
+        "avertissement": "YouTube détecte et peut démonétiser les chaînes dont le contenu est perçu comme entièrement automatisé et sans valeur ajoutée. Personnalisez toujours le script et apportez un point de vue original."
+      },
+      "conseil_expert": {
+        "titre": "Ne pas se faire bannir par l'algorithme",
+        "texte": "YouTube distingue les voix IA de qualité des voix robotiques bas de gamme. ElevenLabs et les voix premium de Murf passent généralement sans problème — les voix gratuites et génériques sont identifiées comme contenu automatisé. Plus important : injectez systématiquement une opinion, une anecdote ou un angle personnel dans votre script, même factuel. Ce signal humain est ce qui différencie une chaîne durable d'une chaîne éphémère."
+      }
+    },
+    "articles_lies": [
+      { "titre": "Midjourney vs DALL·E 3", "url": "../articles/midjourney-vs-dalle3-comparatif.html" }
+    ]
+  }
+]

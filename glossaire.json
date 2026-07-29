@@ -1,0 +1,412 @@
+[
+  {
+    "terme": "Agent IA",
+    "lettre": "A",
+    "slug": "agent-ia",
+    "niveau": "intermediaire",
+    "definition": "Système d'intelligence artificielle capable d'exécuter des tâches de manière autonome, de prendre des décisions et d'interagir avec son environnement sans intervention humaine constante.",
+    "exemple": "AutoGPT est un agent IA qui peut naviguer sur internet, écrire du code et exécuter des tâches enchaînées automatiquement.",
+    "outils": ["AutoGPT", "ChatGPT"],
+    "tags": ["autonomie", "automatisation"]
+  },
+  {
+    "terme": "API",
+    "lettre": "A",
+    "slug": "api",
+    "niveau": "debutant",
+    "definition": "Interface de Programmation d'Application. Protocole permettant à deux logiciels de communiquer entre eux. Les APIs IA permettent d'intégrer des capacités d'intelligence artificielle dans n'importe quelle application.",
+    "exemple": "L'API d'OpenAI permet aux développeurs d'intégrer ChatGPT dans leurs propres applications.",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["développement", "intégration"]
+  },
+  {
+    "terme": "Apprentissage automatique",
+    "lettre": "A",
+    "slug": "apprentissage-automatique",
+    "niveau": "debutant",
+    "definition": "Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient précis.",
+    "exemple": "Un filtre anti-spam apprend à reconnaître les emails indésirables en analysant des milliers d'exemples.",
+    "outils": [],
+    "tags": ["machine learning", "données"]
+  },
+  {
+    "terme": "Apprentissage profond",
+    "lettre": "A",
+    "slug": "apprentissage-profond",
+    "niveau": "intermediaire",
+    "definition": "Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les images, le son ou le texte.",
+    "exemple": "Midjourney utilise le deep learning pour générer des images à partir de descriptions textuelles.",
+    "outils": ["Midjourney", "Runway ML"],
+    "tags": ["deep learning", "réseaux de neurones"]
+  },
+  {
+    "terme": "Chatbot",
+    "lettre": "C",
+    "slug": "chatbot",
+    "niveau": "debutant",
+    "definition": "Programme informatique simulant une conversation humaine. Les chatbots modernes utilisent l'IA pour comprendre le langage naturel et répondre de manière contextuelle.",
+    "exemple": "ChatGPT et Claude sont des chatbots avancés capables de rédiger, analyser et expliquer des concepts complexes.",
+    "outils": ["ChatGPT", "Claude", "Gemini"],
+    "tags": ["conversation", "assistant"]
+  },
+  {
+    "terme": "Contexte",
+    "lettre": "C",
+    "slug": "contexte",
+    "niveau": "debutant",
+    "definition": "Ensemble des informations fournies à un modèle IA pour qu'il comprenne la situation et génère une réponse pertinente. Plus le contexte est riche, plus la réponse sera précise.",
+    "exemple": "Expliquer à ChatGPT que vous êtes développeur junior modifie la façon dont il explique un concept technique.",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["prompt", "qualité"]
+  },
+  {
+    "terme": "Context window",
+    "lettre": "C",
+    "slug": "context-window",
+    "niveau": "intermediaire",
+    "definition": "Quantité maximale de texte qu'un modèle IA peut traiter en une seule fois, incluant votre message et sa réponse. Exprimée en tokens.",
+    "exemple": "Claude possède une fenêtre de contexte de 200 000 tokens, permettant d'analyser des documents très longs.",
+    "outils": ["Claude", "ChatGPT"],
+    "tags": ["tokens", "mémoire", "limite"]
+  },
+  {
+    "terme": "Diffusion",
+    "lettre": "D",
+    "slug": "diffusion",
+    "niveau": "avance",
+    "definition": "Technique de génération d'images par IA qui part d'un bruit aléatoire et le raffine progressivement jusqu'à obtenir une image cohérente. La plupart des générateurs d'images modernes l'utilisent.",
+    "exemple": "Stable Diffusion, Midjourney et DALL-E reposent tous sur des modèles de diffusion.",
+    "outils": ["Midjourney", "Stable Diffusion"],
+    "tags": ["image", "génération"]
+  },
+  {
+    "terme": "Embeddings",
+    "lettre": "E",
+    "slug": "embeddings",
+    "niveau": "avance",
+    "definition": "Représentation mathématique (vecteurs numériques) de mots, phrases ou images permettant à l'IA de mesurer leur similarité sémantique. Fondamentaux pour la recherche et la mémoire des LLMs.",
+    "exemple": "Les embeddings permettent à un moteur de recherche IA de trouver des documents similaires même sans mots-clés exacts.",
+    "outils": [],
+    "tags": ["vecteurs", "sémantique", "recherche"]
+  },
+  {
+    "terme": "Few-shot",
+    "lettre": "F",
+    "slug": "few-shot",
+    "niveau": "intermediaire",
+    "definition": "Technique de prompting où l'on fournit quelques exemples au modèle pour lui montrer le format ou le style de réponse attendu.",
+    "exemple": "Donner 3 exemples d'emails professionnels avant de demander d'en rédiger un nouveau.",
+    "outils": ["ChatGPT", "Claude", "Jasper"],
+    "tags": ["prompt", "exemples"]
+  },
+  {
+    "terme": "Fine-tuning",
+    "lettre": "F",
+    "slug": "fine-tuning",
+    "niveau": "avance",
+    "definition": "Processus d'entraînement supplémentaire d'un modèle IA pré-existant sur des données spécifiques pour le spécialiser dans un domaine précis.",
+    "exemple": "Un cabinet juridique peut fine-tuner un LLM sur des milliers de contrats pour créer un assistant juridique spécialisé.",
+    "outils": [],
+    "tags": ["entraînement", "spécialisation"]
+  },
+  {
+    "terme": "Génération augmentée par récupération",
+    "lettre": "G",
+    "slug": "rag",
+    "niveau": "avance",
+    "definition": "Technique combinant un LLM avec une base de données externe. Le modèle récupère des informations pertinentes avant de générer sa réponse, réduisant les hallucinations.",
+    "exemple": "Un chatbot d'entreprise utilisant RAG peut répondre à partir des documents internes de la société.",
+    "outils": [],
+    "tags": ["RAG", "mémoire", "précision"]
+  },
+  {
+    "terme": "GPT",
+    "lettre": "G",
+    "slug": "gpt",
+    "niveau": "debutant",
+    "definition": "Generative Pre-trained Transformer. Architecture de modèle de langage développée par OpenAI, entraînée sur d'immenses quantités de texte pour générer du langage naturel.",
+    "exemple": "GPT-4 est le modèle derrière ChatGPT Plus. GPT-3.5 est disponible gratuitement.",
+    "outils": ["ChatGPT"],
+    "tags": ["OpenAI", "modèle", "langage"]
+  },
+  {
+    "terme": "Hallucination",
+    "lettre": "H",
+    "slug": "hallucination",
+    "niveau": "debutant",
+    "definition": "Phénomène où un modèle IA génère des informations fausses, inventées ou incorrectes avec une apparente confiance. Un des défis majeurs des LLMs actuels.",
+    "exemple": "Demander à ChatGPT de citer des sources peut mener à des URLs inexistantes inventées de toutes pièces.",
+    "outils": ["ChatGPT", "Gemini"],
+    "tags": ["erreur", "fiabilité", "biais"]
+  },
+  {
+    "terme": "IA générative",
+    "lettre": "I",
+    "slug": "ia-generative",
+    "niveau": "debutant",
+    "definition": "Branche de l'intelligence artificielle capable de créer du nouveau contenu — texte, images, musique, vidéo, code — à partir d'une requête en langage naturel.",
+    "exemple": "Jasper génère des articles, Midjourney crée des images, Suno compose de la musique — tous sont de l'IA générative.",
+    "outils": ["ChatGPT", "Midjourney", "Jasper"],
+    "tags": ["création", "contenu", "génération"]
+  },
+  {
+    "terme": "Inférence",
+    "lettre": "I",
+    "slug": "inference",
+    "niveau": "avance",
+    "definition": "Phase d'utilisation d'un modèle IA déjà entraîné pour produire des résultats à partir de nouvelles données. Opposé à la phase d'entraînement.",
+    "exemple": "Quand vous posez une question à ChatGPT, le serveur effectue une inférence pour générer la réponse.",
+    "outils": [],
+    "tags": ["production", "calcul"]
+  },
+  {
+    "terme": "Invite système",
+    "lettre": "I",
+    "slug": "invite-systeme",
+    "niveau": "intermediaire",
+    "definition": "Instructions cachées fournies à un LLM avant toute conversation pour définir son rôle, son ton et ses limites. Invisible pour l'utilisateur final.",
+    "exemple": "\"Tu es un assistant juridique spécialisé en droit français. Réponds toujours en langage simple.\"",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["prompt", "configuration", "système"]
+  },
+  {
+    "terme": "LLM",
+    "lettre": "L",
+    "slug": "llm",
+    "niveau": "debutant",
+    "definition": "Large Language Model (Grand Modèle de Langage). Modèle d'IA entraîné sur d'immenses corpus de texte pour comprendre et générer du langage naturel.",
+    "exemple": "GPT-4, Claude, Gemini et Llama sont tous des LLMs. Ils sont le moteur derrière la plupart des chatbots modernes.",
+    "outils": ["ChatGPT", "Claude", "Gemini"],
+    "tags": ["modèle", "langage", "fondamental"]
+  },
+  {
+    "terme": "Latence",
+    "lettre": "L",
+    "slug": "latence",
+    "niveau": "debutant",
+    "definition": "Temps de réponse d'un système IA entre l'envoi d'une requête et la réception de la réponse. Importante pour les applications en temps réel.",
+    "exemple": "Une latence élevée rend un chatbot IA lent et frustrant à utiliser sur une connexion instable.",
+    "outils": [],
+    "tags": ["performance", "vitesse"]
+  },
+  {
+    "terme": "Midjourney",
+    "lettre": "M",
+    "slug": "midjourney",
+    "niveau": "debutant",
+    "definition": "Outil de génération d'images par IA accessible via Discord. Connu pour la qualité artistique exceptionnelle de ses rendus.",
+    "exemple": "Taper /imagine a futuristic city at sunset, cinematic lighting dans Discord génère 4 images en quelques secondes.",
+    "outils": ["Midjourney"],
+    "tags": ["image", "art", "génération"]
+  },
+  {
+    "terme": "Modèle de fondation",
+    "lettre": "M",
+    "slug": "modele-fondation",
+    "niveau": "intermediaire",
+    "definition": "Grand modèle IA pré-entraîné sur des données massives et polyvalentes, pouvant être adapté à diverses tâches spécifiques via fine-tuning ou prompting.",
+    "exemple": "GPT-4 est un modèle de fondation utilisé pour créer des dizaines d'applications spécialisées.",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["entraînement", "polyvalence"]
+  },
+  {
+    "terme": "Multimodal",
+    "lettre": "M",
+    "slug": "multimodal",
+    "niveau": "intermediaire",
+    "definition": "Qualifie un modèle IA capable de traiter et générer plusieurs types de données simultanément : texte, images, audio, vidéo.",
+    "exemple": "GPT-4V peut analyser une photo et répondre à des questions sur son contenu. Claude peut lire des PDFs et des images.",
+    "outils": ["ChatGPT", "Claude", "Gemini"],
+    "tags": ["image", "texte", "vision"]
+  },
+  {
+    "terme": "NLP",
+    "lettre": "N",
+    "slug": "nlp",
+    "niveau": "intermediaire",
+    "definition": "Natural Language Processing (Traitement du Langage Naturel). Branche de l'IA permettant aux machines de comprendre, interpréter et générer le langage humain.",
+    "exemple": "La traduction automatique, l'analyse de sentiment et les chatbots sont toutes des applications du NLP.",
+    "outils": ["ChatGPT", "Grammarly"],
+    "tags": ["langage", "traitement", "texte"]
+  },
+  {
+    "terme": "Open source",
+    "lettre": "O",
+    "slug": "open-source",
+    "niveau": "debutant",
+    "definition": "Logiciel ou modèle IA dont le code source est publiquement accessible, permettant à quiconque de l'utiliser, modifier et distribuer.",
+    "exemple": "Llama (Meta) et Mistral sont des LLMs open source que vous pouvez héberger sur votre propre serveur.",
+    "outils": [],
+    "tags": ["gratuit", "code", "communauté"]
+  },
+  {
+    "terme": "Paramètres",
+    "lettre": "P",
+    "slug": "parametres",
+    "niveau": "intermediaire",
+    "definition": "Valeurs numériques internes d'un modèle IA ajustées pendant l'entraînement. Plus un modèle a de paramètres, plus il est généralement puissant — et coûteux.",
+    "exemple": "GPT-4 possède environ 1 000 milliards de paramètres. Llama 3 existe en versions 8B et 70B (milliards).",
+    "outils": [],
+    "tags": ["taille", "puissance", "entraînement"]
+  },
+  {
+    "terme": "Prompt",
+    "lettre": "P",
+    "slug": "prompt",
+    "niveau": "debutant",
+    "definition": "Instruction ou question envoyée à un modèle IA pour obtenir une réponse. La qualité du prompt détermine directement la qualité de la réponse.",
+    "exemple": "\"Écris un email de relance client professionnel en 5 lignes\" est un prompt bien formulé.",
+    "outils": ["ChatGPT", "Claude", "Jasper"],
+    "tags": ["fondamental", "instruction", "qualité"]
+  },
+  {
+    "terme": "Prompt engineering",
+    "lettre": "P",
+    "slug": "prompt-engineering",
+    "niveau": "intermediaire",
+    "definition": "Art et science de formuler des instructions optimales pour obtenir les meilleurs résultats d'un modèle IA. Compétence très demandée sur le marché du travail.",
+    "exemple": "Ajouter \"Pense étape par étape\" à un prompt améliore significativement les réponses de raisonnement complexe.",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["compétence", "optimisation", "instruction"]
+  },
+  {
+    "terme": "Quantization",
+    "lettre": "Q",
+    "slug": "quantization",
+    "niveau": "avance",
+    "definition": "Technique de compression d'un modèle IA réduisant la précision de ses paramètres pour diminuer sa taille et accélérer son exécution, avec une légère perte de qualité.",
+    "exemple": "Un modèle de 70B paramètres peut être quantisé pour tourner sur un ordinateur grand public.",
+    "outils": [],
+    "tags": ["compression", "performance", "local"]
+  },
+  {
+    "terme": "RAG",
+    "lettre": "R",
+    "slug": "rag-retrieval",
+    "niveau": "avance",
+    "definition": "Retrieval-Augmented Generation. Technique couplant un LLM à une base de connaissances externe pour produire des réponses plus précises et factuelles.",
+    "exemple": "Un assistant IA d'entreprise utilisant RAG peut répondre à partir des documents internes sans halluciner.",
+    "outils": [],
+    "tags": ["précision", "mémoire", "base de données"]
+  },
+  {
+    "terme": "Réseau de neurones",
+    "lettre": "R",
+    "slug": "reseau-de-neurones",
+    "niveau": "intermediaire",
+    "definition": "Architecture informatique inspirée du cerveau humain, composée de couches de nœuds interconnectés traitant et transmettant des informations pour apprendre des patterns.",
+    "exemple": "Les réseaux de neurones convolutifs (CNN) sont utilisés pour reconnaître des visages sur les photos.",
+    "outils": [],
+    "tags": ["architecture", "apprentissage", "cerveau"]
+  },
+  {
+    "terme": "RLHF",
+    "lettre": "R",
+    "slug": "rlhf",
+    "niveau": "avance",
+    "definition": "Reinforcement Learning from Human Feedback. Technique d'entraînement où des humains évaluent les réponses du modèle pour l'aligner sur les préférences humaines.",
+    "exemple": "ChatGPT a été entraîné avec RLHF pour être plus utile, inoffensif et honnête.",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["entraînement", "alignement", "humain"]
+  },
+  {
+    "terme": "Stable Diffusion",
+    "lettre": "S",
+    "slug": "stable-diffusion",
+    "niveau": "intermediaire",
+    "definition": "Modèle de génération d'images open source développé par Stability AI. Peut être exécuté localement sur un ordinateur compatible.",
+    "exemple": "Contrairement à Midjourney, Stable Diffusion peut être installé sur votre propre machine pour une utilisation gratuite et illimitée.",
+    "outils": ["Stable Diffusion"],
+    "tags": ["image", "open source", "local"]
+  },
+  {
+    "terme": "Système de recommandation",
+    "lettre": "S",
+    "slug": "systeme-recommandation",
+    "niveau": "debutant",
+    "definition": "Algorithme IA analysant vos comportements pour suggérer des contenus, produits ou services susceptibles de vous intéresser.",
+    "exemple": "Netflix, Spotify et YouTube utilisent des systèmes de recommandation pour personnaliser votre expérience.",
+    "outils": [],
+    "tags": ["personnalisation", "algorithme"]
+  },
+  {
+    "terme": "Temperature",
+    "lettre": "T",
+    "slug": "temperature",
+    "niveau": "intermediaire",
+    "definition": "Paramètre contrôlant le niveau de créativité et d'aléatoire d'un modèle IA. Une température basse rend les réponses prévisibles, une haute les rend plus créatives.",
+    "exemple": "Pour du code, une temperature de 0 est préférable. Pour de la poésie, une temperature élevée donne de meilleurs résultats.",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["paramètre", "créativité", "configuration"]
+  },
+  {
+    "terme": "Text-to-image",
+    "lettre": "T",
+    "slug": "text-to-image",
+    "niveau": "debutant",
+    "definition": "Capacité d'un modèle IA à générer des images à partir d'une description textuelle (prompt).",
+    "exemple": "\"Un chat astronaute sur la lune, style peinture à l'huile\" génère une image correspondante avec Midjourney.",
+    "outils": ["Midjourney", "DALL-E", "Stable Diffusion"],
+    "tags": ["image", "génération", "créativité"]
+  },
+  {
+    "terme": "Text-to-speech",
+    "lettre": "T",
+    "slug": "text-to-speech",
+    "niveau": "debutant",
+    "definition": "Technologie convertissant du texte écrit en parole synthétisée par IA. Les voix modernes sont quasi indiscernables de voix humaines réelles.",
+    "exemple": "ElevenLabs peut cloner une voix à partir de 30 secondes d'audio et la faire parler n'importe quel texte.",
+    "outils": ["ElevenLabs"],
+    "tags": ["voix", "audio", "synthèse"]
+  },
+  {
+    "terme": "Text-to-video",
+    "lettre": "T",
+    "slug": "text-to-video",
+    "niveau": "intermediaire",
+    "definition": "Technologie permettant de générer des vidéos entières à partir d'une simple description textuelle.",
+    "exemple": "Sora d'OpenAI peut générer une vidéo d'une minute de haute qualité à partir d'un prompt textuel.",
+    "outils": ["Runway ML", "Sora"],
+    "tags": ["vidéo", "génération", "cinématique"]
+  },
+  {
+    "terme": "Token",
+    "lettre": "T",
+    "slug": "token",
+    "niveau": "debutant",
+    "definition": "Unité de base du traitement du langage par les LLMs. Correspond approximativement à ¾ d'un mot en anglais ou à un caractère en certaines langues. La facturation des APIs IA se fait en tokens.",
+    "exemple": "\"Bonjour, comment allez-vous ?\" représente environ 8 tokens. 1 000 tokens ≈ 750 mots.",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["unité", "coût", "mesure"]
+  },
+  {
+    "terme": "Transformer",
+    "lettre": "T",
+    "slug": "transformer",
+    "niveau": "avance",
+    "definition": "Architecture de réseau de neurones introduite en 2017 qui a révolutionné le NLP. Fondement de pratiquement tous les LLMs modernes grâce au mécanisme d'attention.",
+    "exemple": "Le \"T\" dans GPT signifie Transformer. Cette architecture permet au modèle de comprendre les relations entre tous les mots d'un texte.",
+    "outils": [],
+    "tags": ["architecture", "attention", "fondamental"]
+  },
+  {
+    "terme": "Vision par ordinateur",
+    "lettre": "V",
+    "slug": "vision-ordinateur",
+    "niveau": "intermediaire",
+    "definition": "Branche de l'IA permettant aux machines d'interpréter et comprendre le contenu d'images et de vidéos.",
+    "exemple": "La reconnaissance faciale, la détection d'objets et la lecture de documents scannés sont des applications de la vision par ordinateur.",
+    "outils": ["Runway ML"],
+    "tags": ["image", "analyse", "détection"]
+  },
+  {
+    "terme": "Zero-shot",
+    "lettre": "Z",
+    "slug": "zero-shot",
+    "niveau": "intermediaire",
+    "definition": "Capacité d'un modèle IA à accomplir une tâche sans avoir reçu d'exemples préalables, uniquement à partir d'une description de la tâche.",
+    "exemple": "Demander à ChatGPT d'analyser un contrat en haïtien créole sans lui fournir d'exemples.",
+    "outils": ["ChatGPT", "Claude"],
+    "tags": ["généralisation", "prompt"]
+  }
+]

@@ -13,44 +13,44 @@
     "nom": "Midjourney",
     "lien": "https://www.midjourney.com",
     "nbVideos": 10,
-    "firestoreId": null,
-    "confiance": "aucune",
-    "raison": "aucune correspondance automatique — à mapper à la main"
+    "firestoreId": 19,
+    "confiance": "haute",
+    "raison": "nom identique"
   },
   {
     "jsonId": "claude",
     "nom": "Claude",
     "lien": "https://claude.ai",
     "nbVideos": 10,
-    "firestoreId": null,
-    "confiance": "aucune",
-    "raison": "aucune correspondance automatique — à mapper à la main"
+    "firestoreId": 18,
+    "confiance": "haute",
+    "raison": "nom identique"
   },
   {
     "jsonId": "make",
     "nom": "Make (Integromat)",
     "lien": "https://www.make.com",
     "nbVideos": 10,
-    "firestoreId": null,
-    "confiance": "aucune",
-    "raison": "aucune correspondance automatique — à mapper à la main"
+    "firestoreId": 20,
+    "confiance": "haute",
+    "raison": "domaine identique"
   },
   {
     "jsonId": "perplexity",
     "nom": "Perplexity AI",
     "lien": "https://www.perplexity.ai",
     "nbVideos": 10,
-    "firestoreId": null,
-    "confiance": "aucune",
-    "raison": "aucune correspondance automatique — à mapper à la main"
+    "firestoreId": 21,
+    "confiance": "haute",
+    "raison": "nom identique"
   },
   {
     "jsonId": "runway",
     "nom": "Runway ML",
     "lien": "https://runwayml.com",
     "nbVideos": 10,
-    "firestoreId": null,
-    "confiance": "aucune",
-    "raison": "aucune correspondance automatique — à mapper à la main"
+    "firestoreId": 22,
+    "confiance": "haute",
+    "raison": "domaine identique"
   }
 ]

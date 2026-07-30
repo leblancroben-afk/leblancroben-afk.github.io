@@ -67,6 +67,12 @@
 </nav>
 
 <div class="container">
+  <nav class="vt-breadcrumb" aria-label="Fil d'ariane">
+    <a href="/index.html">Accueil</a> <span class="vt-bc-sep">›</span>
+    <a href="/tutoriels/index.html">Tutoriels</a> <span class="vt-bc-sep">›</span>
+    <span>Midjourney</span>
+  </nav>
+
   <a href="/tools/featured/fr/midjourney/" class="vt-back">← Voir la fiche complète de Midjourney</a>
 
   <section class="vt-hero">
@@ -75,222 +81,174 @@
       <span class="vt-hero-badge">🎬 Vidéothèque</span>
       <h1>Tutoriels vidéo Midjourney</h1>
       <p>10 tutoriels sélectionnés pour apprendre et maîtriser Midjourney, gratuit et en français.</p>
+      <div class="vt-card-note" data-note-outil="19" style="margin-top:8px;"></div>
     </div>
   </section>
 
   <div class="vt-filtres-wrap">
     <div class="vt-filtres" id="vt-filtres"></div>
     <span class="vt-compteur" id="vt-compteur">10 tutoriels</span>
+    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre une vidéo</button>
   </div>
 
   <div class="vt-grid">
-<div class="tutorial-item vt-video-item" id="vt-video-0" data-secondes="1713">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-0')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/J4c5hAH6r5k/mqdefault.jpg" alt="Midjourney V6 : Tutoriel complet pour débutants" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Midjourney V6 : Tutoriel complet pour débutants</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">ArtIA Studio</span>
-        <span class="tutorial-duration">28:33</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1713">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('J4c5hAH6r5k','Midjourney V6 : Tutoriel complet pour débutants')">
+    <img src="https://img.youtube.com/vi/J4c5hAH6r5k/mqdefault.jpg" alt="Midjourney V6 : Tutoriel complet pour débutants" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">28:33</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/J4c5hAH6r5k" title="Midjourney V6 : Tutoriel complet pour débutants — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('J4c5hAH6r5k','Midjourney V6 : Tutoriel complet pour débutants')">Midjourney V6 : Tutoriel complet pour débutants</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">ArtIA Studio</span>
+      <button class="btn-save-video" data-video-id="J4c5hAH6r5k" data-video-data="{&quot;videoId&quot;:&quot;J4c5hAH6r5k&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Midjourney V6 : Tutoriel complet pour débutants&quot;,&quot;canal&quot;:&quot;ArtIA Studio&quot;,&quot;duree&quot;:&quot;28:33&quot;,&quot;youtubeId&quot;:&quot;J4c5hAH6r5k&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-1" data-secondes="2720">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-1')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/YrHCibgIcO0/mqdefault.jpg" alt="Créer une identité visuelle avec Midjourney" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Créer une identité visuelle avec Midjourney</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">DesignAcadémie</span>
-        <span class="tutorial-duration">45:20</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="2720">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('YrHCibgIcO0','Créer une identité visuelle avec Midjourney')">
+    <img src="https://img.youtube.com/vi/YrHCibgIcO0/mqdefault.jpg" alt="Créer une identité visuelle avec Midjourney" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">45:20</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/YrHCibgIcO0" title="Créer une identité visuelle avec Midjourney — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('YrHCibgIcO0','Créer une identité visuelle avec Midjourney')">Créer une identité visuelle avec Midjourney</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">DesignAcadémie</span>
+      <button class="btn-save-video" data-video-id="YrHCibgIcO0" data-video-data="{&quot;videoId&quot;:&quot;YrHCibgIcO0&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Créer une identité visuelle avec Midjourney&quot;,&quot;canal&quot;:&quot;DesignAcadémie&quot;,&quot;duree&quot;:&quot;45:20&quot;,&quot;youtubeId&quot;:&quot;YrHCibgIcO0&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-2" data-secondes="1188">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-2')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/l4Qqmb5BFBY/mqdefault.jpg" alt="Paramètres avancés Midjourney expliqués" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Paramètres avancés Midjourney expliqués</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">ArtIA Studio</span>
-        <span class="tutorial-duration">19:48</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1188">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('l4Qqmb5BFBY','Paramètres avancés Midjourney expliqués')">
+    <img src="https://img.youtube.com/vi/l4Qqmb5BFBY/mqdefault.jpg" alt="Paramètres avancés Midjourney expliqués" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">19:48</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/l4Qqmb5BFBY" title="Paramètres avancés Midjourney expliqués — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('l4Qqmb5BFBY','Paramètres avancés Midjourney expliqués')">Paramètres avancés Midjourney expliqués</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">ArtIA Studio</span>
+      <button class="btn-save-video" data-video-id="l4Qqmb5BFBY" data-video-data="{&quot;videoId&quot;:&quot;l4Qqmb5BFBY&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Paramètres avancés Midjourney expliqués&quot;,&quot;canal&quot;:&quot;ArtIA Studio&quot;,&quot;duree&quot;:&quot;19:48&quot;,&quot;youtubeId&quot;:&quot;l4Qqmb5BFBY&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-3" data-secondes="1335">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-3')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/HBjPl1xXUHs/mqdefault.jpg" alt="Midjourney : créer des logos professionnels" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Midjourney : créer des logos professionnels</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">DesignAcadémie</span>
-        <span class="tutorial-duration">22:15</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1335">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('HBjPl1xXUHs','Midjourney : créer des logos professionnels')">
+    <img src="https://img.youtube.com/vi/HBjPl1xXUHs/mqdefault.jpg" alt="Midjourney : créer des logos professionnels" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">22:15</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/HBjPl1xXUHs" title="Midjourney : créer des logos professionnels — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('HBjPl1xXUHs','Midjourney : créer des logos professionnels')">Midjourney : créer des logos professionnels</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">DesignAcadémie</span>
+      <button class="btn-save-video" data-video-id="HBjPl1xXUHs" data-video-data="{&quot;videoId&quot;:&quot;HBjPl1xXUHs&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Midjourney : créer des logos professionnels&quot;,&quot;canal&quot;:&quot;DesignAcadémie&quot;,&quot;duree&quot;:&quot;22:15&quot;,&quot;youtubeId&quot;:&quot;HBjPl1xXUHs&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-4" data-secondes="2480">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-4')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/9g9q6gO3QFE/mqdefault.jpg" alt="Midjourney pour illustrer un livre" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Midjourney pour illustrer un livre</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">ArtIA Studio</span>
-        <span class="tutorial-duration">41:20</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="2480">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('9g9q6gO3QFE','Midjourney pour illustrer un livre')">
+    <img src="https://img.youtube.com/vi/9g9q6gO3QFE/mqdefault.jpg" alt="Midjourney pour illustrer un livre" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">41:20</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/9g9q6gO3QFE" title="Midjourney pour illustrer un livre — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('9g9q6gO3QFE','Midjourney pour illustrer un livre')">Midjourney pour illustrer un livre</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">ArtIA Studio</span>
+      <button class="btn-save-video" data-video-id="9g9q6gO3QFE" data-video-data="{&quot;videoId&quot;:&quot;9g9q6gO3QFE&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Midjourney pour illustrer un livre&quot;,&quot;canal&quot;:&quot;ArtIA Studio&quot;,&quot;duree&quot;:&quot;41:20&quot;,&quot;youtubeId&quot;:&quot;9g9q6gO3QFE&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-5" data-secondes="1784">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-5')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/bHNBQn-2-Hs/mqdefault.jpg" alt="Créer des personnages cohérents avec Midjourney" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Créer des personnages cohérents avec Midjourney</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">VisuelIA</span>
-        <span class="tutorial-duration">29:44</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1784">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('bHNBQn-2-Hs','Créer des personnages cohérents avec Midjourney')">
+    <img src="https://img.youtube.com/vi/bHNBQn-2-Hs/mqdefault.jpg" alt="Créer des personnages cohérents avec Midjourney" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">29:44</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/bHNBQn-2-Hs" title="Créer des personnages cohérents avec Midjourney — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('bHNBQn-2-Hs','Créer des personnages cohérents avec Midjourney')">Créer des personnages cohérents avec Midjourney</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">VisuelIA</span>
+      <button class="btn-save-video" data-video-id="bHNBQn-2-Hs" data-video-data="{&quot;videoId&quot;:&quot;bHNBQn-2-Hs&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Créer des personnages cohérents avec Midjourney&quot;,&quot;canal&quot;:&quot;VisuelIA&quot;,&quot;duree&quot;:&quot;29:44&quot;,&quot;youtubeId&quot;:&quot;bHNBQn-2-Hs&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-6" data-secondes="1110">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-6')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/IgvPJxuCPRs/mqdefault.jpg" alt="Midjourney + Canva : le combo parfait" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Midjourney + Canva : le combo parfait</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">DesignAcadémie</span>
-        <span class="tutorial-duration">18:30</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1110">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('IgvPJxuCPRs','Midjourney + Canva : le combo parfait')">
+    <img src="https://img.youtube.com/vi/IgvPJxuCPRs/mqdefault.jpg" alt="Midjourney + Canva : le combo parfait" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">18:30</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/IgvPJxuCPRs" title="Midjourney + Canva : le combo parfait — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('IgvPJxuCPRs','Midjourney + Canva : le combo parfait')">Midjourney + Canva : le combo parfait</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">DesignAcadémie</span>
+      <button class="btn-save-video" data-video-id="IgvPJxuCPRs" data-video-data="{&quot;videoId&quot;:&quot;IgvPJxuCPRs&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Midjourney + Canva : le combo parfait&quot;,&quot;canal&quot;:&quot;DesignAcadémie&quot;,&quot;duree&quot;:&quot;18:30&quot;,&quot;youtubeId&quot;:&quot;IgvPJxuCPRs&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-7" data-secondes="2035">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-7')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/9k9Qy0NRNCU/mqdefault.jpg" alt="Midjourney pour l'architecture intérieure" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Midjourney pour l'architecture intérieure</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">ArtIA Studio</span>
-        <span class="tutorial-duration">33:55</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="2035">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('9k9Qy0NRNCU','Midjourney pour l&#39;architecture intérieure')">
+    <img src="https://img.youtube.com/vi/9k9Qy0NRNCU/mqdefault.jpg" alt="Midjourney pour l'architecture intérieure" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">33:55</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/9k9Qy0NRNCU" title="Midjourney pour l'architecture intérieure — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('9k9Qy0NRNCU','Midjourney pour l&#39;architecture intérieure')">Midjourney pour l'architecture intérieure</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">ArtIA Studio</span>
+      <button class="btn-save-video" data-video-id="9k9Qy0NRNCU" data-video-data="{&quot;videoId&quot;:&quot;9k9Qy0NRNCU&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Midjourney pour l'architecture intérieure&quot;,&quot;canal&quot;:&quot;ArtIA Studio&quot;,&quot;duree&quot;:&quot;33:55&quot;,&quot;youtubeId&quot;:&quot;9k9Qy0NRNCU&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-8" data-secondes="868">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-8')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/1IVqof3YZWQ/mqdefault.jpg" alt="Générer des illustrations pour un blog" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Générer des illustrations pour un blog</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">DesignAcadémie</span>
-        <span class="tutorial-duration">14:28</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="868">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('1IVqof3YZWQ','Générer des illustrations pour un blog')">
+    <img src="https://img.youtube.com/vi/1IVqof3YZWQ/mqdefault.jpg" alt="Générer des illustrations pour un blog" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">14:28</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/1IVqof3YZWQ" title="Générer des illustrations pour un blog — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('1IVqof3YZWQ','Générer des illustrations pour un blog')">Générer des illustrations pour un blog</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">DesignAcadémie</span>
+      <button class="btn-save-video" data-video-id="1IVqof3YZWQ" data-video-data="{&quot;videoId&quot;:&quot;1IVqof3YZWQ&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Générer des illustrations pour un blog&quot;,&quot;canal&quot;:&quot;DesignAcadémie&quot;,&quot;duree&quot;:&quot;14:28&quot;,&quot;youtubeId&quot;:&quot;1IVqof3YZWQ&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-9" data-secondes="4364">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-9')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/dWvhKBbJaGo/mqdefault.jpg" alt="Masterclass Midjourney V6 complète" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Masterclass Midjourney V6 complète</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">VisuelIA</span>
-        <span class="tutorial-duration">1:12:44</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="4364">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('dWvhKBbJaGo','Masterclass Midjourney V6 complète')">
+    <img src="https://img.youtube.com/vi/dWvhKBbJaGo/mqdefault.jpg" alt="Masterclass Midjourney V6 complète" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">1:12:44</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/dWvhKBbJaGo" title="Masterclass Midjourney V6 complète — Midjourney" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('dWvhKBbJaGo','Masterclass Midjourney V6 complète')">Masterclass Midjourney V6 complète</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">VisuelIA</span>
+      <button class="btn-save-video" data-video-id="dWvhKBbJaGo" data-video-data="{&quot;videoId&quot;:&quot;dWvhKBbJaGo&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Masterclass Midjourney V6 complète&quot;,&quot;canal&quot;:&quot;VisuelIA&quot;,&quot;duree&quot;:&quot;1:12:44&quot;,&quot;youtubeId&quot;:&quot;dWvhKBbJaGo&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -298,6 +256,46 @@
 
   <div class="vt-cta-wrap">
     <a href="/tutoriels/index.html" class="vt-cta-btn">🎬 Explorer toute la vidéothèque Albexia →</a>
+  </div>
+</div>
+
+<div id="vt-player-modal" class="vt-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="vt-player-inner">
+    <div class="vt-player-top">
+      <p id="vt-player-titre" class="vt-player-titre"></p>
+      <button class="vt-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">✕</button>
+    </div>
+    <div class="vt-player-frame">
+      <iframe id="vt-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
+    </div>
+  </div>
+</div>
+<div id="vt-modal-soumission" class="vt-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="vt-modal-inner">
+    <button class="vt-modal-close" onclick="fermerModalSoumission()" aria-label="Fermer">✕</button>
+    <div class="vt-modal-ico">🎬</div>
+    <h2 class="vt-modal-titre">Soumettre un tutoriel</h2>
+    <p class="vt-modal-sub">Proposez une vidéo YouTube pour enrichir notre vidéothèque. Notre équipe éditoriale l'examinera sous 48h.</p>
+    <form id="form-vt-soumission" novalidate>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="vt-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-outil">Outil concerné</label>
+        <input class="vt-form-input" type="text" id="s-outil" name="outil" placeholder="ex : ChatGPT, Midjourney..." value="Midjourney">
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="vt-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="vt-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+      </div>
+      <button type="submit" class="vt-form-submit" id="vt-soumission-submit">Soumettre la vidéo →</button>
+      <p class="vt-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+    </form>
   </div>
 </div>
 
@@ -315,17 +313,6 @@
     kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
     document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
     km.addEventListener('click', e => e.stopPropagation());
-  }
-</script>
-<script>
-  function toggleTutorial(id) {
-    const item = document.getElementById(id);
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.tutorial-item.open').forEach(el => {
-      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
-    });
-    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
-    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
   }
 </script>
 <script>
@@ -362,5 +349,7 @@
     });
   })();
 </script>
+<script>window.__VT = {"mode":"tool","outilId":"19","outilNom":"Midjourney","outilPage":"/tools/featured/fr/midjourney/tutoriels/"};</script>
+<script type="module" src="/js/videotheque-shared.js"></script>
 </body>
 </html>

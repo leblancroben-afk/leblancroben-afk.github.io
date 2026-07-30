@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutoriels vidéo IA : apprendre ChatGPT, Midjourney et plus | Albexia</title>
+  <meta name="description" content="Toute la vidéothèque Albexia : des tutoriels vidéo gratuits, en français, pour apprendre à utiliser les meilleurs outils IA." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://albexia.com/tutoriels/index.html" />
+  <meta property="og:title"       content="Tutoriels vidéo IA : apprendre ChatGPT, Midjourney et plus | Albexia" />
+  <meta property="og:description" content="Toute la vidéothèque Albexia : des tutoriels vidéo gratuits, en français, pour apprendre à utiliser les meilleurs outils IA." />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://albexia.com/tutoriels/index.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Tutoriels IA en vidéo – Albexia",
+    "url": "https://albexia.com/tutoriels/index.html",
+    "publisher": { "@type": "Organization", "name": "Albexia", "url": "https://albexia.com" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/videotheque.css" />
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+  </div>
+  <div class="kebab-wrap" id="kebab-wrap">
+    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="kebab-menu" id="kebab-menu" role="menu">
+      <a href="/glossaire.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
+      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
+      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
+      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <div class="kebab-divider"></div>
+      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+    </div>
+  </div>
+</nav>
+
+<section class="vt-hub-hero">
+  <span class="vt-hero-badge">🎬 Vidéothèque francophone</span>
+  <h1>Explorez le futur de l'IA avec nos tutoriels vidéo</h1>
+  <p>6 outils référencés, 61 tutoriels sélectionnés. Gratuit, en français, pour tous les niveaux.</p>
+  <div class="vt-hub-hero-actions">
+    <button class="btn-main" onclick="document.getElementById('vt-hub-grid').scrollIntoView({behavior:'smooth'})">Explorer les tutoriels</button>
+    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre un tutoriel</button>
+  </div>
+</section>
+
+<div class="container">
+  <div class="vt-hub-grid" id="vt-hub-grid">
+<a href="/tools/featured/fr/chatgpt/tutoriels/" class="vt-card" id="carte-chatgpt" data-tool-slug="chatgpt">
+  <div class="vt-card-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com" alt="ChatGPT" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
+    <div>
+      <div class="vt-card-name">ChatGPT</div>
+      <div class="vt-card-cat">Contenu</div>
+    </div>
+  </div>
+  <p class="vt-card-desc">L'assistant IA pionnier d'OpenAI pour rédiger des textes, programmer, analyser des données et automatiser vos …</p>
+  <div class="vt-card-note" data-note-outil="17"></div>
+  <span class="vt-card-count">🎬 11 tutoriels</span>
+</a>
+<a href="/tools/featured/fr/claude/tutoriels/" class="vt-card" id="carte-claude" data-tool-slug="claude">
+  <div class="vt-card-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=claude.ai" alt="Claude" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
+    <div>
+      <div class="vt-card-name">Claude</div>
+      <div class="vt-card-cat">Code</div>
+    </div>
+  </div>
+  <p class="vt-card-desc">L'assistant IA d'Anthropic réputé pour sa plume naturelle, ses capacités d'analyse de documents volumineux et …</p>
+  <div class="vt-card-note" data-note-outil="18"></div>
+  <span class="vt-card-count">🎬 10 tutoriels</span>
+</a>
+<a href="/tools/featured/fr/midjourney/tutoriels/" class="vt-card" id="carte-midjourney" data-tool-slug="midjourney">
+  <div class="vt-card-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=midjourney.com" alt="Midjourney" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
+    <div>
+      <div class="vt-card-name">Midjourney</div>
+      <div class="vt-card-cat">Design 3D</div>
+    </div>
+  </div>
+  <p class="vt-card-desc">Le leader incontesté de la génération d'images par IA. Créez des visuels ultra-réalistes, des illustrations ar…</p>
+  <div class="vt-card-note" data-note-outil="19"></div>
+  <span class="vt-card-count">🎬 10 tutoriels</span>
+</a>
+<a href="/tools/featured/fr/make/tutoriels/" class="vt-card" id="carte-make" data-tool-slug="make">
+  <div class="vt-card-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=make.com" alt="Make" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
+    <div>
+      <div class="vt-card-name">Make</div>
+      <div class="vt-card-cat">Automatisation</div>
+    </div>
+  </div>
+  <p class="vt-card-desc">La plateforme d'automatisation no-code visuelle par excellence. Connectez vos applications préférées, manipule…</p>
+  <div class="vt-card-note" data-note-outil="20"></div>
+  <span class="vt-card-count">🎬 10 tutoriels</span>
+</a>
+<a href="/tools/standard/fr/perplexity-ai/tutoriels/" class="vt-card" id="carte-perplexity-ai" data-tool-slug="perplexity-ai">
+  <div class="vt-card-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=perplexity.ai" alt="perplexity.ai" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
+    <div>
+      <div class="vt-card-name">perplexity.ai</div>
+      <div class="vt-card-cat">Recherche</div>
+    </div>
+  </div>
+  <p class="vt-card-desc">Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des …</p>
+  <div class="vt-card-note" data-note-outil="21"></div>
+  <span class="vt-card-count">🎬 10 tutoriels</span>
+</a>
+<a href="/tools/standard/fr/runway/tutoriels/" class="vt-card" id="carte-runway" data-tool-slug="runway">
+  <div class="vt-card-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=runwayml.com" alt="Runway" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
+    <div>
+      <div class="vt-card-name">Runway</div>
+      <div class="vt-card-cat">Vidéo</div>
+    </div>
+  </div>
+  <p class="vt-card-desc">La suite créative leader pour la génération et l'édition de vidéos par IA. Donnez vie à vos textes et images a…</p>
+  <div class="vt-card-note" data-note-outil="22"></div>
+  <span class="vt-card-count">🎬 10 tutoriels</span>
+</a>
+  </div>
+</div>
+
+<section class="vt-editorial-wrap">
+  <div class="vt-editorial-head">
+    <h2>Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
+  </div>
+  <div class="vt-editorial-body">
+<h3>La vidéo : le support ultime de l'apprentissage technologique</h3>
+<p>Pourquoi avoir choisi de placer la vidéo au cœur de notre annuaire ? Parce que dans le domaine de l'IA, une image vaut réellement mille mots. Lire une documentation technique sur un nouveau modèle de génération d'images comme Midjourney ou un outil d'automatisation comme Make peut s'avérer fastidieux. À l'inverse, regarder un expert manipuler l'interface, ajuster ses prompts et montrer les erreurs à éviter offre une courbe d'apprentissage fulgurante.</p>
+<p>La vidéo permet de capturer la subtilité du « flux de travail » (workflow). Elle montre le temps de rendu réel, la réactivité de l'interface et, surtout, le résultat concret. En intégrant des tutoriels YouTube directement sous nos fiches outils, nous créons un écosystème d'apprentissage immédiat.</p>
+<h3>Une diversité de formats pour tous les besoins</h3>
+<p>Nous avons structuré notre vidéothèque pour répondre à la diversité des usages modernes. Nos filtres de durée vous permettent d'accéder à de véritables formations gratuites : une vidéo de 40 ou 50 minutes n'est pas qu'une simple démo, c'est un cours magistral où le créateur prend le temps de creuser les paramètres avancés. En filtrant les vidéos par durée, nous vous redonnons le contrôle sur votre temps de formation.</p>
+<h3>Le soutien aux créateurs : une relation gagnant-gagnant</h3>
+<p>Notre plateforme repose sur un principe éthique fondamental : le respect du droit d'auteur et le soutien aux créateurs de contenu. En utilisant l'intégration officielle via le lecteur YouTube, nous garantissons que chaque vue générée sur notre annuaire compte pour le créateur original. Nous encourageons les auteurs de vidéos à soumettre eux-mêmes leurs contenus pour renforcer leur autorité auprès d'un public qualifié.</p></div>
+</section>
+
+<section class="vt-faq-wrap vt-faq">
+  <div class="vt-faq-head"><h2>Questions fréquentes</h2></div>
+  <div class="faq-list"><div class="faq-item">
+      <button class="faq-q">Est-il légal de visionner ces vidéos sur votre site ?</button>
+      <div class="faq-a">Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur.</div>
+    </div>
+<div class="faq-item">
+      <button class="faq-q">Comment sont sélectionnées les vidéos pour chaque outil ?</button>
+      <div class="faq-a">Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire.</div>
+    </div>
+<div class="faq-item">
+      <button class="faq-q">Pourquoi filtrer par durée ?</button>
+      <div class="faq-a">Tout le monde n'a pas le même besoin ni le même temps disponible. Si vous voulez juste un aperçu, une vidéo de 5 minutes suffit. Si vous souhaitez configurer l'outil pour votre entreprise, vous aurez besoin d'une formation de 30 à 40 minutes. Le filtre vous permet de trouver exactement le contenu adapté à votre situation.</div>
+    </div>
+<div class="faq-item">
+      <button class="faq-q">Je suis YouTubeur, pourquoi soumettre ma vidéo ?</button>
+      <div class="faq-a">Soumettre votre vidéo vous permet d'apparaître devant une audience ultra-ciblée. Un utilisateur qui consulte la fiche d'une IA est déjà convaincu d'utiliser cet outil — c'est l'endroit idéal pour gagner des abonnés qualifiés et renforcer votre autorité dans le domaine de l'IA francophone.</div>
+    </div>
+<div class="faq-item">
+      <button class="faq-q">Que se passe-t-il si un outil change d'interface ?</button>
+      <div class="faq-a">C'est l'avantage de notre système communautaire. Si une vidéo devient obsolète suite à une mise à jour, la communauté peut en signaler de plus récentes. Nous actualisons régulièrement les tutoriels pour qu'ils correspondent aux versions actuelles des logiciels.</div>
+    </div>
+<div class="faq-item">
+      <button class="faq-q">Est-ce gratuit d'utiliser l'annuaire et de regarder les vidéos ?</button>
+      <div class="faq-a">Oui, l'accès à notre plateforme et le visionnage des vidéos sont entièrement gratuits. Nous nous finançons par des partenariats affiliés avec les outils référencés pour garantir que l'apprentissage de l'IA reste accessible à tous, en particulier dans les pays francophones.</div>
+    </div></div>
+</section>
+
+<div id="vt-player-modal" class="vt-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="vt-player-inner">
+    <div class="vt-player-top">
+      <p id="vt-player-titre" class="vt-player-titre"></p>
+      <button class="vt-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">✕</button>
+    </div>
+    <div class="vt-player-frame">
+      <iframe id="vt-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
+    </div>
+  </div>
+</div>
+<div id="vt-modal-soumission" class="vt-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="vt-modal-inner">
+    <button class="vt-modal-close" onclick="fermerModalSoumission()" aria-label="Fermer">✕</button>
+    <div class="vt-modal-ico">🎬</div>
+    <h2 class="vt-modal-titre">Soumettre un tutoriel</h2>
+    <p class="vt-modal-sub">Proposez une vidéo YouTube pour enrichir notre vidéothèque. Notre équipe éditoriale l'examinera sous 48h.</p>
+    <form id="form-vt-soumission" novalidate>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="vt-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-outil">Outil concerné</label>
+        <input class="vt-form-input" type="text" id="s-outil" name="outil" placeholder="ex : ChatGPT, Midjourney...">
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="vt-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="vt-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+      </div>
+      <button type="submit" class="vt-form-submit" id="vt-soumission-submit">Soumettre la vidéo →</button>
+      <p class="vt-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script>
+  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
+  if (kb && km) {
+    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
+    km.addEventListener('click', e => e.stopPropagation());
+  }
+</script>
+<script>window.__VT = {"mode":"hub"};</script>
+<script type="module" src="/js/videotheque-shared.js"></script>
+</body>
+</html>

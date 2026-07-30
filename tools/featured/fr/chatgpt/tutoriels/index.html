@@ -68,6 +68,12 @@
 </nav>
 
 <div class="container">
+  <nav class="vt-breadcrumb" aria-label="Fil d'ariane">
+    <a href="/index.html">Accueil</a> <span class="vt-bc-sep">›</span>
+    <a href="/tutoriels/index.html">Tutoriels</a> <span class="vt-bc-sep">›</span>
+    <span>ChatGPT</span>
+  </nav>
+
   <a href="/tools/featured/fr/chatgpt/" class="vt-back">← Voir la fiche complète de ChatGPT</a>
 
   <section class="vt-hero">
@@ -76,243 +82,190 @@
       <span class="vt-hero-badge">🎬 Vidéothèque</span>
       <h1>Tutoriels vidéo ChatGPT</h1>
       <p>11 tutoriels sélectionnés pour apprendre et maîtriser ChatGPT, gratuit et en français.</p>
+      <div class="vt-card-note" data-note-outil="17" style="margin-top:8px;"></div>
     </div>
   </section>
 
   <div class="vt-filtres-wrap">
     <div class="vt-filtres" id="vt-filtres"></div>
     <span class="vt-compteur" id="vt-compteur">11 tutoriels</span>
+    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre une vidéo</button>
   </div>
 
   <div class="vt-grid">
-<div class="tutorial-item vt-video-item" id="vt-video-0" data-secondes="1122">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-0')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/JTxsNm9IdYU/mqdefault.jpg" alt="ChatGPT : Guide complet pour débutants 2024" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">ChatGPT : Guide complet pour débutants 2024</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">FormationIA</span>
-        <span class="tutorial-duration">18:42</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1122">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('JTxsNm9IdYU','ChatGPT : Guide complet pour débutants 2024')">
+    <img src="https://img.youtube.com/vi/JTxsNm9IdYU/mqdefault.jpg" alt="ChatGPT : Guide complet pour débutants 2024" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">18:42</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/JTxsNm9IdYU" title="ChatGPT : Guide complet pour débutants 2024 — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('JTxsNm9IdYU','ChatGPT : Guide complet pour débutants 2024')">ChatGPT : Guide complet pour débutants 2024</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">FormationIA</span>
+      <button class="btn-save-video" data-video-id="JTxsNm9IdYU" data-video-data="{&quot;videoId&quot;:&quot;JTxsNm9IdYU&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;ChatGPT : Guide complet pour débutants 2024&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;18:42&quot;,&quot;youtubeId&quot;:&quot;JTxsNm9IdYU&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-1" data-secondes="389">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-1')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/MxvWGMPJnfQ/mqdefault.jpg" alt="Comment utiliser ChatGPT (TUTO Complet)" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Comment utiliser ChatGPT (TUTO Complet)</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">Labo Des Réseaux</span>
-        <span class="tutorial-duration">6:29</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="389">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('MxvWGMPJnfQ','Comment utiliser ChatGPT (TUTO Complet)')">
+    <img src="https://img.youtube.com/vi/MxvWGMPJnfQ/mqdefault.jpg" alt="Comment utiliser ChatGPT (TUTO Complet)" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">6:29</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/MxvWGMPJnfQ" title="Comment utiliser ChatGPT (TUTO Complet) — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('MxvWGMPJnfQ','Comment utiliser ChatGPT (TUTO Complet)')">Comment utiliser ChatGPT (TUTO Complet)</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">Labo Des Réseaux</span>
+      <button class="btn-save-video" data-video-id="MxvWGMPJnfQ" data-video-data="{&quot;videoId&quot;:&quot;MxvWGMPJnfQ&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;Comment utiliser ChatGPT (TUTO Complet)&quot;,&quot;canal&quot;:&quot;Labo Des Réseaux&quot;,&quot;duree&quot;:&quot;6:29&quot;,&quot;youtubeId&quot;:&quot;MxvWGMPJnfQ&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-2" data-secondes="2055">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-2')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/qbIk7-JPB2c/mqdefault.jpg" alt="Automatiser votre travail avec GPT-4o" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Automatiser votre travail avec GPT-4o</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">AIProductivité</span>
-        <span class="tutorial-duration">34:15</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="2055">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('qbIk7-JPB2c','Automatiser votre travail avec GPT-4o')">
+    <img src="https://img.youtube.com/vi/qbIk7-JPB2c/mqdefault.jpg" alt="Automatiser votre travail avec GPT-4o" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">34:15</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/qbIk7-JPB2c" title="Automatiser votre travail avec GPT-4o — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('qbIk7-JPB2c','Automatiser votre travail avec GPT-4o')">Automatiser votre travail avec GPT-4o</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">AIProductivité</span>
+      <button class="btn-save-video" data-video-id="qbIk7-JPB2c" data-video-data="{&quot;videoId&quot;:&quot;qbIk7-JPB2c&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;Automatiser votre travail avec GPT-4o&quot;,&quot;canal&quot;:&quot;AIProductivité&quot;,&quot;duree&quot;:&quot;34:15&quot;,&quot;youtubeId&quot;:&quot;qbIk7-JPB2c&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-3" data-secondes="1327">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-3')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/Yd_JyOlS7NQ/mqdefault.jpg" alt="ChatGPT vs Claude : Quel est le meilleur en 2024 ?" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">ChatGPT vs Claude : Quel est le meilleur en 2024 ?</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">TechFrancophone</span>
-        <span class="tutorial-duration">22:07</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1327">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('Yd_JyOlS7NQ','ChatGPT vs Claude : Quel est le meilleur en 2024 ?')">
+    <img src="https://img.youtube.com/vi/Yd_JyOlS7NQ/mqdefault.jpg" alt="ChatGPT vs Claude : Quel est le meilleur en 2024 ?" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">22:07</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/Yd_JyOlS7NQ" title="ChatGPT vs Claude : Quel est le meilleur en 2024 ? — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('Yd_JyOlS7NQ','ChatGPT vs Claude : Quel est le meilleur en 2024 ?')">ChatGPT vs Claude : Quel est le meilleur en 2024 ?</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">TechFrancophone</span>
+      <button class="btn-save-video" data-video-id="Yd_JyOlS7NQ" data-video-data="{&quot;videoId&quot;:&quot;Yd_JyOlS7NQ&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;ChatGPT vs Claude : Quel est le meilleur en 2024 ?&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;22:07&quot;,&quot;youtubeId&quot;:&quot;Yd_JyOlS7NQ&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-4" data-secondes="750">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-4')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/WxYHHDmBKQE/mqdefault.jpg" alt="ChatGPT pour rédiger des emails professionnels" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">ChatGPT pour rédiger des emails professionnels</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">FormationIA</span>
-        <span class="tutorial-duration">12:30</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="750">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('WxYHHDmBKQE','ChatGPT pour rédiger des emails professionnels')">
+    <img src="https://img.youtube.com/vi/WxYHHDmBKQE/mqdefault.jpg" alt="ChatGPT pour rédiger des emails professionnels" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">12:30</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/WxYHHDmBKQE" title="ChatGPT pour rédiger des emails professionnels — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('WxYHHDmBKQE','ChatGPT pour rédiger des emails professionnels')">ChatGPT pour rédiger des emails professionnels</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">FormationIA</span>
+      <button class="btn-save-video" data-video-id="WxYHHDmBKQE" data-video-data="{&quot;videoId&quot;:&quot;WxYHHDmBKQE&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;ChatGPT pour rédiger des emails professionnels&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;12:30&quot;,&quot;youtubeId&quot;:&quot;WxYHHDmBKQE&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-5" data-secondes="1724">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-5')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/oc_PBVILzOs/mqdefault.jpg" alt="Créer un business plan avec ChatGPT" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Créer un business plan avec ChatGPT</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">EntrepreneurIA</span>
-        <span class="tutorial-duration">28:44</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1724">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('oc_PBVILzOs','Créer un business plan avec ChatGPT')">
+    <img src="https://img.youtube.com/vi/oc_PBVILzOs/mqdefault.jpg" alt="Créer un business plan avec ChatGPT" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">28:44</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/oc_PBVILzOs" title="Créer un business plan avec ChatGPT — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('oc_PBVILzOs','Créer un business plan avec ChatGPT')">Créer un business plan avec ChatGPT</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">EntrepreneurIA</span>
+      <button class="btn-save-video" data-video-id="oc_PBVILzOs" data-video-data="{&quot;videoId&quot;:&quot;oc_PBVILzOs&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;Créer un business plan avec ChatGPT&quot;,&quot;canal&quot;:&quot;EntrepreneurIA&quot;,&quot;duree&quot;:&quot;28:44&quot;,&quot;youtubeId&quot;:&quot;oc_PBVILzOs&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-6" data-secondes="1162">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-6')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/PIKNYkOiHSk/mqdefault.jpg" alt="GPT-4o Vision : analyser des images avec l'IA" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">GPT-4o Vision : analyser des images avec l'IA</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">TechFrancophone</span>
-        <span class="tutorial-duration">19:22</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1162">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('PIKNYkOiHSk','GPT-4o Vision : analyser des images avec l&#39;IA')">
+    <img src="https://img.youtube.com/vi/PIKNYkOiHSk/mqdefault.jpg" alt="GPT-4o Vision : analyser des images avec l'IA" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">19:22</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/PIKNYkOiHSk" title="GPT-4o Vision : analyser des images avec l'IA — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('PIKNYkOiHSk','GPT-4o Vision : analyser des images avec l&#39;IA')">GPT-4o Vision : analyser des images avec l'IA</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">TechFrancophone</span>
+      <button class="btn-save-video" data-video-id="PIKNYkOiHSk" data-video-data="{&quot;videoId&quot;:&quot;PIKNYkOiHSk&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;GPT-4o Vision : analyser des images avec l'IA&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;19:22&quot;,&quot;youtubeId&quot;:&quot;PIKNYkOiHSk&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-7" data-secondes="2110">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-7')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/aywZrzNaKjs/mqdefault.jpg" alt="Maîtriser les GPT personnalisés" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Maîtriser les GPT personnalisés</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">FormationIA</span>
-        <span class="tutorial-duration">35:10</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="2110">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('aywZrzNaKjs','Maîtriser les GPT personnalisés')">
+    <img src="https://img.youtube.com/vi/aywZrzNaKjs/mqdefault.jpg" alt="Maîtriser les GPT personnalisés" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">35:10</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/aywZrzNaKjs" title="Maîtriser les GPT personnalisés — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('aywZrzNaKjs','Maîtriser les GPT personnalisés')">Maîtriser les GPT personnalisés</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">FormationIA</span>
+      <button class="btn-save-video" data-video-id="aywZrzNaKjs" data-video-data="{&quot;videoId&quot;:&quot;aywZrzNaKjs&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;Maîtriser les GPT personnalisés&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;35:10&quot;,&quot;youtubeId&quot;:&quot;aywZrzNaKjs&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-8" data-secondes="3128">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-8')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/XMmVMNdXZSw/mqdefault.jpg" alt="Coder une application complète avec ChatGPT" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">Coder une application complète avec ChatGPT</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">DevIA</span>
-        <span class="tutorial-duration">52:08</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="3128">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('XMmVMNdXZSw','Coder une application complète avec ChatGPT')">
+    <img src="https://img.youtube.com/vi/XMmVMNdXZSw/mqdefault.jpg" alt="Coder une application complète avec ChatGPT" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">52:08</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/XMmVMNdXZSw" title="Coder une application complète avec ChatGPT — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('XMmVMNdXZSw','Coder une application complète avec ChatGPT')">Coder une application complète avec ChatGPT</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">DevIA</span>
+      <button class="btn-save-video" data-video-id="XMmVMNdXZSw" data-video-data="{&quot;videoId&quot;:&quot;XMmVMNdXZSw&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;Coder une application complète avec ChatGPT&quot;,&quot;canal&quot;:&quot;DevIA&quot;,&quot;duree&quot;:&quot;52:08&quot;,&quot;youtubeId&quot;:&quot;XMmVMNdXZSw&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-9" data-secondes="1005">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-9')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/9Gdk5WKQNVI/mqdefault.jpg" alt="ChatGPT pour apprendre une nouvelle langue" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">ChatGPT pour apprendre une nouvelle langue</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">FormationIA</span>
-        <span class="tutorial-duration">16:45</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1005">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('9Gdk5WKQNVI','ChatGPT pour apprendre une nouvelle langue')">
+    <img src="https://img.youtube.com/vi/9Gdk5WKQNVI/mqdefault.jpg" alt="ChatGPT pour apprendre une nouvelle langue" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">16:45</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/9Gdk5WKQNVI" title="ChatGPT pour apprendre une nouvelle langue — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('9Gdk5WKQNVI','ChatGPT pour apprendre une nouvelle langue')">ChatGPT pour apprendre une nouvelle langue</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">FormationIA</span>
+      <button class="btn-save-video" data-video-id="9Gdk5WKQNVI" data-video-data="{&quot;videoId&quot;:&quot;9Gdk5WKQNVI&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;ChatGPT pour apprendre une nouvelle langue&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;16:45&quot;,&quot;youtubeId&quot;:&quot;9Gdk5WKQNVI&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
-<div class="tutorial-item vt-video-item" id="vt-video-10" data-secondes="1473">
-  <div class="tutorial-header" onclick="toggleTutorial('vt-video-10')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/7xTGNNLPyMI/mqdefault.jpg" alt="ChatGPT pour la veille concurrentielle" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">ChatGPT pour la veille concurrentielle</div>
-      <div class="vt-video-sub">
-        <span class="vt-video-canal">EntrepreneurIA</span>
-        <span class="tutorial-duration">24:33</span>
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+<div class="vt-video-item" data-secondes="1473">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('7xTGNNLPyMI','ChatGPT pour la veille concurrentielle')">
+    <img src="https://img.youtube.com/vi/7xTGNNLPyMI/mqdefault.jpg" alt="ChatGPT pour la veille concurrentielle" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    <span class="vt-video-duree-badge">24:33</span>
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/7xTGNNLPyMI" title="ChatGPT pour la veille concurrentielle — ChatGPT" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('7xTGNNLPyMI','ChatGPT pour la veille concurrentielle')">ChatGPT pour la veille concurrentielle</p>
+    <div class="vt-video-footer">
+      <span class="vt-video-canal">EntrepreneurIA</span>
+      <button class="btn-save-video" data-video-id="7xTGNNLPyMI" data-video-data="{&quot;videoId&quot;:&quot;7xTGNNLPyMI&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;ChatGPT pour la veille concurrentielle&quot;,&quot;canal&quot;:&quot;EntrepreneurIA&quot;,&quot;duree&quot;:&quot;24:33&quot;,&quot;youtubeId&quot;:&quot;7xTGNNLPyMI&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -320,6 +273,46 @@
 
   <div class="vt-cta-wrap">
     <a href="/tutoriels/index.html" class="vt-cta-btn">🎬 Explorer toute la vidéothèque Albexia →</a>
+  </div>
+</div>
+
+<div id="vt-player-modal" class="vt-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="vt-player-inner">
+    <div class="vt-player-top">
+      <p id="vt-player-titre" class="vt-player-titre"></p>
+      <button class="vt-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">✕</button>
+    </div>
+    <div class="vt-player-frame">
+      <iframe id="vt-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
+    </div>
+  </div>
+</div>
+<div id="vt-modal-soumission" class="vt-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="vt-modal-inner">
+    <button class="vt-modal-close" onclick="fermerModalSoumission()" aria-label="Fermer">✕</button>
+    <div class="vt-modal-ico">🎬</div>
+    <h2 class="vt-modal-titre">Soumettre un tutoriel</h2>
+    <p class="vt-modal-sub">Proposez une vidéo YouTube pour enrichir notre vidéothèque. Notre équipe éditoriale l'examinera sous 48h.</p>
+    <form id="form-vt-soumission" novalidate>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="vt-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-outil">Outil concerné</label>
+        <input class="vt-form-input" type="text" id="s-outil" name="outil" placeholder="ex : ChatGPT, Midjourney..." value="ChatGPT">
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="vt-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="vt-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+      </div>
+      <button type="submit" class="vt-form-submit" id="vt-soumission-submit">Soumettre la vidéo →</button>
+      <p class="vt-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+    </form>
   </div>
 </div>
 
@@ -337,17 +330,6 @@
     kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
     document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
     km.addEventListener('click', e => e.stopPropagation());
-  }
-</script>
-<script>
-  function toggleTutorial(id) {
-    const item = document.getElementById(id);
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.tutorial-item.open').forEach(el => {
-      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
-    });
-    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
-    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
   }
 </script>
 <script>
@@ -384,5 +366,7 @@
     });
   })();
 </script>
+<script>window.__VT = {"mode":"tool","outilId":"17","outilNom":"ChatGPT","outilPage":"/tools/featured/fr/chatgpt/tutoriels/"};</script>
+<script type="module" src="/js/videotheque-shared.js"></script>
 </body>
 </html>

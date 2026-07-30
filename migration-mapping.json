@@ -4,9 +4,9 @@
     "nom": "ChatGPT",
     "lien": "https://chat.openai.com",
     "nbVideos": 11,
-    "firestoreId": null,
-    "confiance": "aucune",
-    "raison": "aucune correspondance automatique — à mapper à la main"
+    "firestoreId": 17,
+    "confiance": "haute",
+    "raison": "nom identique"
   },
   {
     "jsonId": "midjourney",

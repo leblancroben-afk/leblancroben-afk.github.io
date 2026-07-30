@@ -1720,6 +1720,26 @@ ${sharedJS()}
 // Aucun lien fiche → vidéothèque (voir décision produit) ; seul le lien
 // inverse (vidéothèque → fiche) existe, pour le maillage interne.
 
+// Contenu éditorial fixe (repris de l'ancienne tutoriels.html) — générique,
+// pas besoin d'admin, donc codé en dur ici plutôt qu'en Firestore.
+const VIDEOTHEQUE_FAQ = [
+  { q: "Est-il légal de visionner ces vidéos sur votre site ?", a: "Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur." },
+  { q: "Comment sont sélectionnées les vidéos pour chaque outil ?", a: "Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire." },
+  { q: "Pourquoi filtrer par durée ?", a: "Tout le monde n'a pas le même besoin ni le même temps disponible. Si vous voulez juste un aperçu, une vidéo de 5 minutes suffit. Si vous souhaitez configurer l'outil pour votre entreprise, vous aurez besoin d'une formation de 30 à 40 minutes. Le filtre vous permet de trouver exactement le contenu adapté à votre situation." },
+  { q: "Je suis YouTubeur, pourquoi soumettre ma vidéo ?", a: "Soumettre votre vidéo vous permet d'apparaître devant une audience ultra-ciblée. Un utilisateur qui consulte la fiche d'une IA est déjà convaincu d'utiliser cet outil — c'est l'endroit idéal pour gagner des abonnés qualifiés et renforcer votre autorité dans le domaine de l'IA francophone." },
+  { q: "Que se passe-t-il si un outil change d'interface ?", a: "C'est l'avantage de notre système communautaire. Si une vidéo devient obsolète suite à une mise à jour, la communauté peut en signaler de plus récentes. Nous actualisons régulièrement les tutoriels pour qu'ils correspondent aux versions actuelles des logiciels." },
+  { q: "Est-ce gratuit d'utiliser l'annuaire et de regarder les vidéos ?", a: "Oui, l'accès à notre plateforme et le visionnage des vidéos sont entièrement gratuits. Nous nous finançons par des partenariats affiliés avec les outils référencés pour garantir que l'apprentissage de l'IA reste accessible à tous, en particulier dans les pays francophones." },
+];
+
+const VIDEOTHEQUE_EDITORIAL = `
+<h3>La vidéo : le support ultime de l'apprentissage technologique</h3>
+<p>Pourquoi avoir choisi de placer la vidéo au cœur de notre annuaire ? Parce que dans le domaine de l'IA, une image vaut réellement mille mots. Lire une documentation technique sur un nouveau modèle de génération d'images comme Midjourney ou un outil d'automatisation comme Make peut s'avérer fastidieux. À l'inverse, regarder un expert manipuler l'interface, ajuster ses prompts et montrer les erreurs à éviter offre une courbe d'apprentissage fulgurante.</p>
+<p>La vidéo permet de capturer la subtilité du « flux de travail » (workflow). Elle montre le temps de rendu réel, la réactivité de l'interface et, surtout, le résultat concret. En intégrant des tutoriels YouTube directement sous nos fiches outils, nous créons un écosystème d'apprentissage immédiat.</p>
+<h3>Une diversité de formats pour tous les besoins</h3>
+<p>Nous avons structuré notre vidéothèque pour répondre à la diversité des usages modernes. Nos filtres de durée vous permettent d'accéder à de véritables formations gratuites : une vidéo de 40 ou 50 minutes n'est pas qu'une simple démo, c'est un cours magistral où le créateur prend le temps de creuser les paramètres avancés. En filtrant les vidéos par durée, nous vous redonnons le contrôle sur votre temps de formation.</p>
+<h3>Le soutien aux créateurs : une relation gagnant-gagnant</h3>
+<p>Notre plateforme repose sur un principe éthique fondamental : le respect du droit d'auteur et le soutien aux créateurs de contenu. En utilisant l'intégration officielle via le lecteur YouTube, nous garantissons que chaque vue générée sur notre annuaire compte pour le créateur original. Nous encourageons les auteurs de vidéos à soumettre eux-mêmes leurs contenus pour renforcer leur autorité auprès d'un public qualifié.</p>`;
+
 // "12:34" ou "1:08:30" → secondes (pour le filtre durée côté client)
 function dureeVersSecondes(duree) {
   if (!duree) return 0;
@@ -1737,6 +1757,78 @@ function toolVideothequeFolder(tool) {
   return { plan, langue, slug, folder: path.join('tools', plan, langue, slug, 'tutoriels') };
 }
 
+// ── Modal lecteur YouTube plein écran (partagée hub + page outil) ──
+function playerModalHTML() {
+  return `<div id="vt-player-modal" class="vt-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="vt-player-inner">
+    <div class="vt-player-top">
+      <p id="vt-player-titre" class="vt-player-titre"></p>
+      <button class="vt-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">✕</button>
+    </div>
+    <div class="vt-player-frame">
+      <iframe id="vt-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
+    </div>
+  </div>
+</div>`;
+}
+
+// ── Modal soumission d'une vidéo (→ Formspree, pas de Firestore) ──
+function soumissionModalHTML(outilNomDefault) {
+  return `<div id="vt-modal-soumission" class="vt-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="vt-modal-inner">
+    <button class="vt-modal-close" onclick="fermerModalSoumission()" aria-label="Fermer">✕</button>
+    <div class="vt-modal-ico">🎬</div>
+    <h2 class="vt-modal-titre">Soumettre un tutoriel</h2>
+    <p class="vt-modal-sub">Proposez une vidéo YouTube pour enrichir notre vidéothèque. Notre équipe éditoriale l'examinera sous 48h.</p>
+    <form id="form-vt-soumission" novalidate>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="vt-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-outil">Outil concerné</label>
+        <input class="vt-form-input" type="text" id="s-outil" name="outil" placeholder="ex : ChatGPT, Midjourney..."${outilNomDefault ? ` value="${outilNomDefault}"` : ''}>
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="vt-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+      </div>
+      <div class="vt-form-field">
+        <label class="vt-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="vt-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+      </div>
+      <button type="submit" class="vt-form-submit" id="vt-soumission-submit">Soumettre la vidéo →</button>
+      <p class="vt-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+    </form>
+  </div>
+</div>`;
+}
+
+// ── Bloc éditorial + FAQ (identique hub, contenu générique) ──
+function editorialEtFaqHTML() {
+  const faqHTML = VIDEOTHEQUE_FAQ.map(f => `<div class="faq-item">
+      <button class="faq-q">${f.q}</button>
+      <div class="faq-a">${f.a}</div>
+    </div>`).join('\n');
+  return `<section class="vt-editorial-wrap">
+  <div class="vt-editorial-head">
+    <h2>Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
+  </div>
+  <div class="vt-editorial-body">${VIDEOTHEQUE_EDITORIAL}</div>
+</section>
+
+<section class="vt-faq-wrap vt-faq">
+  <div class="vt-faq-head"><h2>Questions fréquentes</h2></div>
+  <div class="faq-list">${faqHTML}</div>
+</section>`;
+}
+
+// ── Injection de config + chargement du module JS partagé ──
+function videothequeSharedScript(config) {
+  return `<script>window.__VT = ${JSON.stringify(config)};</script>
+<script type="module" src="${R}js/videotheque-shared.js"></script>`;
+}
+
 // ── Carte outil pour la page vitrine ──────────────────────
 function videothequeCardHTML(tool) {
   const fav   = `https://www.google.com/s2/favicons?sz=64&domain=${(tool.url||'').replace(/^https?:\/\//,'').split('/')[0]}`;
@@ -1744,7 +1836,8 @@ function videothequeCardHTML(tool) {
   if (!info) return '';
   const nbVideos = (tool.videotheque || []).length;
   const href = `${R}tools/${info.plan}/${info.langue}/${info.slug}/tutoriels/`;
-  return `<a href="${href}" class="vt-card">
+  const toolId = String(tool.id || info.slug);
+  return `<a href="${href}" class="vt-card" id="carte-${info.slug}" data-tool-slug="${info.slug}">
   <div class="vt-card-top">
     <img src="${fav}" alt="${tool.name}" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <span class="vt-card-logo-fallback" style="display:none">${tool.emoji||'🤖'}</span>
@@ -1754,32 +1847,33 @@ function videothequeCardHTML(tool) {
     </div>
   </div>
   <p class="vt-card-desc">${(tool.description||'').slice(0,110)}${(tool.description||'').length>110?'…':''}</p>
+  <div class="vt-card-note" data-note-outil="${toolId}"></div>
   <span class="vt-card-count">🎬 ${nbVideos} tutoriel${nbVideos>1?'s':''}</span>
 </a>`;
 }
 
-// ── Item vidéo (accordéon, réutilise tutorialJS()) ────────
-function videoItemHTML(v, i, toolName) {
-  const id = `vt-video-${i}`;
+// ── Carte vidéo (grille, ouvre le lecteur en modal plein écran) ──
+function videoCardHTML(v, i, tool) {
   const secondes = dureeVersSecondes(v.duree);
-  return `<div class="tutorial-item vt-video-item" id="${id}" data-secondes="${secondes}">
-  <div class="tutorial-header" onclick="toggleTutorial('${id}')">
-    <div class="tutorial-thumb">
-      <img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="${v.titre}" loading="lazy">
-      <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    </div>
-    <div class="tutorial-meta">
-      <div class="tutorial-title">${v.titre}</div>
-      <div class="vt-video-sub">
-        ${v.canal ? `<span class="vt-video-canal">${v.canal}</span>` : ''}
-        ${v.duree ? `<span class="tutorial-duration">${v.duree}</span>` : ''}
-      </div>
-    </div>
-    <button class="tutorial-toggle">▾</button>
+  const titreEsc = v.titre.replace(/'/g, "&#39;");
+  const videoData = JSON.stringify({
+    videoId: v.youtube_id, outilId: String(tool.id||''), outilNom: tool.name,
+    outilPage: `${R}${toolVideothequeFolder(tool).folder}/`.replace(/\\/g,'/'),
+    titre: v.titre, canal: v.canal||'', duree: v.duree||'', youtubeId: v.youtube_id,
+  }).replace(/"/g, '&quot;');
+  return `<div class="vt-video-item" data-secondes="${secondes}">
+  <div class="vt-video-thumb" onclick="ouvrirPlayer('${v.youtube_id}','${titreEsc}')">
+    <img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="${v.titre}" loading="lazy">
+    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    ${v.duree ? `<span class="vt-video-duree-badge">${v.duree}</span>` : ''}
   </div>
-  <div class="tutorial-video">
-    <div class="tutorial-video-inner">
-      <iframe data-src="https://www.youtube.com/embed/${v.youtube_id}" title="${v.titre} — ${toolName}" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+  <div class="vt-video-info">
+    <p class="vt-video-titre" onclick="ouvrirPlayer('${v.youtube_id}','${titreEsc}')">${v.titre}</p>
+    <div class="vt-video-footer">
+      ${v.canal ? `<span class="vt-video-canal">${v.canal}</span>` : '<span></span>'}
+      <button class="btn-save-video" data-video-id="${v.youtube_id}" data-video-data="${videoData}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
   </div>
 </div>`;
@@ -1831,13 +1925,14 @@ function generateVideothequePage(tool, allTools) {
   if (!videos.length) return null;
 
   const { plan, langue, slug } = info;
+  const toolId = String(tool.id || slug);
   const ficheUrl = `${R}tools/${plan}/${langue}/${slug}/`;
   const canonicalUrl = `${SITE_ORIGIN}/tools/${plan}/${langue}/${slug}/tutoriels/`;
   const titleTag = `Tutoriels vidéo ${tool.name} : le guide complet | Albexia`;
   const metaDesc = `${videos.length} tutoriels vidéo pour apprendre et maîtriser ${tool.name}, sélectionnés et classés par durée. Gratuit, en français.`;
   const fav = `https://www.google.com/s2/favicons?sz=64&domain=${(tool.url||'').replace(/^https?:\/\//,'').split('/')[0]}`;
 
-  const videosHTML = videos.map((v, i) => videoItemHTML(v, i, tool.name)).join('\n');
+  const videosHTML = videos.map((v, i) => videoCardHTML(v, i, tool)).join('\n');
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -1873,6 +1968,12 @@ ${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "nam
 ${navHTML(langue)}
 
 <div class="container">
+  <nav class="vt-breadcrumb" aria-label="Fil d'ariane">
+    <a href="${R}index.html">Accueil</a> <span class="vt-bc-sep">›</span>
+    <a href="${R}tutoriels/index.html">Tutoriels</a> <span class="vt-bc-sep">›</span>
+    <span>${tool.name}</span>
+  </nav>
+
   <a href="${ficheUrl}" class="vt-back">← Voir la fiche complète de ${tool.name}</a>
 
   <section class="vt-hero">
@@ -1881,12 +1982,14 @@ ${navHTML(langue)}
       <span class="vt-hero-badge">🎬 Vidéothèque</span>
       <h1>Tutoriels vidéo ${tool.name}</h1>
       <p>${videos.length} tutoriels sélectionnés pour apprendre et maîtriser ${tool.name}, gratuit et en français.</p>
+      <div class="vt-card-note" data-note-outil="${toolId}" style="margin-top:8px;"></div>
     </div>
   </section>
 
   <div class="vt-filtres-wrap">
     <div class="vt-filtres" id="vt-filtres"></div>
     <span class="vt-compteur" id="vt-compteur">${videos.length} tutoriel${videos.length>1?'s':''}</span>
+    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre une vidéo</button>
   </div>
 
   <div class="vt-grid">
@@ -1898,10 +2001,13 @@ ${videosHTML}
   </div>
 </div>
 
+${playerModalHTML()}
+${soumissionModalHTML(tool.name)}
+
 ${footerHTML()}
 ${sharedJS()}
-${tutorialJS()}
 ${videothequeFiltreJS()}
+${videothequeSharedScript({ mode: 'tool', outilId: toolId, outilNom: tool.name, outilPage: `${R}${info.folder}/`.replace(/\\/g,'/') })}
 </body>
 </html>`;
 }
@@ -1928,6 +2034,15 @@ function generateVideothequeHub(toolsAvecVideos) {
   <meta property="og:description" content="${metaDesc}" />
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="${canonicalUrl}" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Tutoriels IA en vidéo – Albexia",
+    "url": "${canonicalUrl}",
+    "publisher": { "@type": "Organization", "name": "Albexia", "url": "${SITE_ORIGIN}" }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
@@ -1942,16 +2057,26 @@ ${navHTML('fr')}
   <span class="vt-hero-badge">🎬 Vidéothèque francophone</span>
   <h1>Explorez le futur de l'IA avec nos tutoriels vidéo</h1>
   <p>${toolsAvecVideos.length} outils référencés, ${totalVideos} tutoriels sélectionnés. Gratuit, en français, pour tous les niveaux.</p>
+  <div class="vt-hub-hero-actions">
+    <button class="btn-main" onclick="document.getElementById('vt-hub-grid').scrollIntoView({behavior:'smooth'})">Explorer les tutoriels</button>
+    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre un tutoriel</button>
+  </div>
 </section>
 
 <div class="container">
-  <div class="vt-hub-grid">
+  <div class="vt-hub-grid" id="vt-hub-grid">
 ${cartesHTML}
   </div>
 </div>
 
+${editorialEtFaqHTML()}
+
+${playerModalHTML()}
+${soumissionModalHTML('')}
+
 ${footerHTML()}
 ${sharedJS()}
+${videothequeSharedScript({ mode: 'hub' })}
 </body>
 </html>`;
 }

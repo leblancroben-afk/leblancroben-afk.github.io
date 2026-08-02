@@ -12,148 +12,907 @@
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://albexia.com/tutoriels/index.html" />
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Tutoriels IA en vidéo – Albexia",
-    "url": "https://albexia.com/tutoriels/index.html",
-    "publisher": { "@type": "Organization", "name": "Albexia", "url": "https://albexia.com" }
-  }
+  { "@context": "https://schema.org", "@type": "CollectionPage", "name": "Tutoriels IA en vidéo – Albexia", "publisher": { "@type": "Organization", "name": "Albexia", "url": "https://albexia.com" } }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/videotheque.css" />
 </head>
 <body>
 
 <nav>
-  <div class="logo">
+  <a href="/index.html" class="logo" style="text-decoration:none;color:inherit;">
     <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
-      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
-      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
-      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+      <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
     </svg>
-  </div>
+  </a>
   <div class="nav-links">
-    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
-    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
-    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+    <a href="/index.html#tools" class="nav-link" style="text-decoration:none;">Outils</a>
+    <a href="/index.html#blog" class="nav-link" style="text-decoration:none;">Blog</a>
+    <a href="/index.html#gallery" class="nav-link" style="text-decoration:none;">Galerie</a>
+    <a href="/tutoriels/index.html" class="nav-link active" style="text-decoration:none;">Tutoriels</a>
+    <a href="/comparateur/" class="nav-link" style="text-decoration:none;">Comparateur</a>
+    <a href="/ressources.html" class="nav-link" style="text-decoration:none;">Ressources</a>
   </div>
-  <div class="kebab-wrap" id="kebab-wrap">
-    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="/glossaire.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
-      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
-      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
-      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
-      <div class="kebab-divider"></div>
-      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
-    </div>
-  </div>
+  <button class="nav-cta" onclick="ouvrirModalSoumission('','')">↑ Soumettre un tutoriel</button>
 </nav>
 
-<section class="vt-hub-hero">
-  <span class="vt-hero-badge">🎬 Vidéothèque francophone</span>
-  <h1>Explorez le futur de l'IA avec nos tutoriels vidéo</h1>
-  <p>6 outils référencés, 61 tutoriels sélectionnés. Gratuit, en français, pour tous les niveaux.</p>
-  <div class="vt-hub-hero-actions">
-    <button class="btn-main" onclick="document.getElementById('vt-hub-grid').scrollIntoView({behavior:'smooth'})">Explorer les tutoriels</button>
-    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre un tutoriel</button>
+<section class="tuto-hero">
+  <div class="tuto-badge"><span class="pulse"></span>Vidéothèque francophone</div>
+  <h1>Explorez le futur de l'IA<br>avec nos <span class="grad-pink">tutoriels experts</span></h1>
+  <p>Plus de 6 outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
+  <div class="tuto-hero-actions">
+    <button class="btn-main" onclick="document.getElementById('tuto-grille').scrollIntoView({behavior:'smooth'})">Explorer les tutoriels</button>
+    <button class="tuto-btn-hero-soumettre" onclick="ouvrirModalSoumission('','')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Soumettre un tutoriel
+    </button>
+  </div>
+  <div id="tuto-hero-stats" class="tuto-hero-stats">
+    <div class="tuto-stat"><span class="tuto-stat-n">6</span><span class="tuto-stat-l">Outils référencés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">61</span><span class="tuto-stat-l">Tutoriels sélectionnés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">100%</span><span class="tuto-stat-l">Accès gratuit</span></div>
   </div>
 </section>
 
-<div class="container">
-  <div class="vt-hub-grid" id="vt-hub-grid">
-<a href="/tools/featured/fr/chatgpt/tutoriels/" class="vt-card" id="carte-chatgpt" data-tool-slug="chatgpt">
-  <div class="vt-card-top">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com" alt="ChatGPT" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
-    <div>
-      <div class="vt-card-name">ChatGPT</div>
-      <div class="vt-card-cat">Contenu</div>
+<div class="tuto-grille-wrap">
+  <div id="tuto-grille" class="tuto-grille">
+<article class="tuto-card" id="carte-chatgpt" data-id="chatgpt">
+    <div class="tuto-card-header">
+      <div class="tuto-card-identity">
+        <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
+          <img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com" alt="ChatGPT" width="24" height="24" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'🤖'}))">
+        </div>
+        <div>
+          <h3 class="tuto-card-nom">ChatGPT</h3>
+          <span class="tuto-card-cat">Contenu</span>
+        </div>
+      </div>
+      <div class="tuto-card-meta">
+        <div class="tuto-card-note" id="note-chatgpt"></div>
+        <span class="tuto-card-avis" id="avis-chatgpt"></span>
+        <span class="tuto-card-badge-count">11 vidéos</span>
+      </div>
     </div>
-  </div>
-  <p class="vt-card-desc">L'assistant IA pionnier d'OpenAI pour rédiger des textes, programmer, analyser des données et automatiser vos …</p>
-  <div class="vt-card-note" data-note-outil="17"></div>
-  <span class="vt-card-count">🎬 11 tutoriels</span>
-</a>
-<a href="/tools/featured/fr/claude/tutoriels/" class="vt-card" id="carte-claude" data-tool-slug="claude">
-  <div class="vt-card-top">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=claude.ai" alt="Claude" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
-    <div>
-      <div class="vt-card-name">Claude</div>
-      <div class="vt-card-cat">Code</div>
+
+    <p class="tuto-card-desc-courte">L'assistant IA pionnier d'OpenAI pour rédiger des textes, programmer, analyser des données et automatiser vos tâches quotidiennes via une interface de discussion intuitive.</p>
+
+    <div class="tuto-card-tags"><span class="tuto-tag">rédaction</span><span class="tuto-tag">code</span><span class="tuto-tag">analyse</span><span class="tuto-tag">productivité</span></div>
+
+    <div class="tuto-card-actions">
+      <button class="tuto-card-btn tuto-btn-voir" data-id="chatgpt" onclick="toggleCarte('chatgpt')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Voir les tutoriels
+      </button>
+      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('17','ChatGPT')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Soumettre
+      </button>
     </div>
-  </div>
-  <p class="vt-card-desc">L'assistant IA d'Anthropic réputé pour sa plume naturelle, ses capacités d'analyse de documents volumineux et …</p>
-  <div class="vt-card-note" data-note-outil="18"></div>
-  <span class="vt-card-count">🎬 10 tutoriels</span>
-</a>
-<a href="/tools/featured/fr/midjourney/tutoriels/" class="vt-card" id="carte-midjourney" data-tool-slug="midjourney">
-  <div class="vt-card-top">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=midjourney.com" alt="Midjourney" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
-    <div>
-      <div class="vt-card-name">Midjourney</div>
-      <div class="vt-card-cat">Design 3D</div>
+
+    <div class="tuto-card-expand" id="expand-chatgpt">
+      <div class="tuto-expand-inner">
+        <p class="tuto-desc-longue">ChatGPT est l'agent conversationnel développé par OpenAI qui a démocratisé l'intelligence artificielle générative. Conçu pour comprendre et générer du langage naturel, il s'adapte à une infinité de cas d'usage professionnels et personnels.
+
+Que vous ayez besoin de rédiger un e-mail professionnel, de déboguer un script de programmation, de synthétiser un long rapport ou de brainstormer des idées marketing, l'outil s'exécute en quelques secondes. Il intègre désormais les modèles de raisonnement avancés (série o) pour résoudre des problèmes logiques complexes.
+
+En plus du texte, ChatGPT est multimodal : il entend votre voix, analyse vos images et génère des visuels uniques grâce à l'intégration de DALL-E. Son interface épurée cache un outil de productivité redoutable qui s'intègre dans le quotidien de millions de professionnels.</p>
+        <div class="tuto-section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Tutoriels vidéo pour comprendre et utiliser ChatGPT
+        </div>
+        <div class="tuto-video-grid"><div class="tuto-thumb" title="ChatGPT : Guide complet pour débutants 2024">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('JTxsNm9IdYU','ChatGPT : Guide complet pour débutants 2024')">
+      <img src="https://img.youtube.com/vi/JTxsNm9IdYU/mqdefault.jpg" alt="ChatGPT : Guide complet pour débutants 2024" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">18:42</span>
     </div>
-  </div>
-  <p class="vt-card-desc">Le leader incontesté de la génération d'images par IA. Créez des visuels ultra-réalistes, des illustrations ar…</p>
-  <div class="vt-card-note" data-note-outil="19"></div>
-  <span class="vt-card-count">🎬 10 tutoriels</span>
-</a>
-<a href="/tools/featured/fr/make/tutoriels/" class="vt-card" id="carte-make" data-tool-slug="make">
-  <div class="vt-card-top">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=make.com" alt="Make" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
-    <div>
-      <div class="vt-card-name">Make</div>
-      <div class="vt-card-cat">Automatisation</div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('JTxsNm9IdYU','ChatGPT : Guide complet pour débutants 2024')">
+        <p class="thumb-titre">ChatGPT : Guide complet pour débutants 2024</p>
+        <p class="thumb-canal">FormationIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="JTxsNm9IdYU" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;JTxsNm9IdYU&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;ChatGPT : Guide complet pour débutants 2024&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;18:42&quot;,&quot;youtubeId&quot;:&quot;JTxsNm9IdYU&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
-  </div>
-  <p class="vt-card-desc">La plateforme d'automatisation no-code visuelle par excellence. Connectez vos applications préférées, manipule…</p>
-  <div class="vt-card-note" data-note-outil="20"></div>
-  <span class="vt-card-count">🎬 10 tutoriels</span>
-</a>
-<a href="/tools/standard/fr/perplexity-ai/tutoriels/" class="vt-card" id="carte-perplexity-ai" data-tool-slug="perplexity-ai">
-  <div class="vt-card-top">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=perplexity.ai" alt="perplexity.ai" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
-    <div>
-      <div class="vt-card-name">perplexity.ai</div>
-      <div class="vt-card-cat">Recherche</div>
+  </div><div class="tuto-thumb" title="Comment utiliser ChatGPT (TUTO Complet)">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('MxvWGMPJnfQ','Comment utiliser ChatGPT (TUTO Complet)')">
+      <img src="https://img.youtube.com/vi/MxvWGMPJnfQ/mqdefault.jpg" alt="Comment utiliser ChatGPT (TUTO Complet)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">6:29</span>
     </div>
-  </div>
-  <p class="vt-card-desc">Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des …</p>
-  <div class="vt-card-note" data-note-outil="21"></div>
-  <span class="vt-card-count">🎬 10 tutoriels</span>
-</a>
-<a href="/tools/standard/fr/runway/tutoriels/" class="vt-card" id="carte-runway" data-tool-slug="runway">
-  <div class="vt-card-top">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=runwayml.com" alt="Runway" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="vt-card-logo-fallback" style="display:none">🤖</span>
-    <div>
-      <div class="vt-card-name">Runway</div>
-      <div class="vt-card-cat">Vidéo</div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('MxvWGMPJnfQ','Comment utiliser ChatGPT (TUTO Complet)')">
+        <p class="thumb-titre">Comment utiliser ChatGPT (TUTO Complet)</p>
+        <p class="thumb-canal">Labo Des Réseaux</p>
+      </div>
+      <button class="btn-save-video" data-video-id="MxvWGMPJnfQ" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;MxvWGMPJnfQ&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;Comment utiliser ChatGPT (TUTO Complet)&quot;,&quot;canal&quot;:&quot;Labo Des Réseaux&quot;,&quot;duree&quot;:&quot;6:29&quot;,&quot;youtubeId&quot;:&quot;MxvWGMPJnfQ&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
     </div>
-  </div>
-  <p class="vt-card-desc">La suite créative leader pour la génération et l'édition de vidéos par IA. Donnez vie à vos textes et images a…</p>
-  <div class="vt-card-note" data-note-outil="22"></div>
-  <span class="vt-card-count">🎬 10 tutoriels</span>
-</a>
+  </div><div class="tuto-thumb" title="Automatiser votre travail avec GPT-4o">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('qbIk7-JPB2c','Automatiser votre travail avec GPT-4o')">
+      <img src="https://img.youtube.com/vi/qbIk7-JPB2c/mqdefault.jpg" alt="Automatiser votre travail avec GPT-4o" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">34:15</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('qbIk7-JPB2c','Automatiser votre travail avec GPT-4o')">
+        <p class="thumb-titre">Automatiser votre travail avec GPT-4o</p>
+        <p class="thumb-canal">AIProductivité</p>
+      </div>
+      <button class="btn-save-video" data-video-id="qbIk7-JPB2c" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;qbIk7-JPB2c&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;Automatiser votre travail avec GPT-4o&quot;,&quot;canal&quot;:&quot;AIProductivité&quot;,&quot;duree&quot;:&quot;34:15&quot;,&quot;youtubeId&quot;:&quot;qbIk7-JPB2c&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="ChatGPT vs Claude : Quel est le meilleur en 2024 ?">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('Yd_JyOlS7NQ','ChatGPT vs Claude : Quel est le meilleur en 2024 ?')">
+      <img src="https://img.youtube.com/vi/Yd_JyOlS7NQ/mqdefault.jpg" alt="ChatGPT vs Claude : Quel est le meilleur en 2024 ?" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">22:07</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('Yd_JyOlS7NQ','ChatGPT vs Claude : Quel est le meilleur en 2024 ?')">
+        <p class="thumb-titre">ChatGPT vs Claude : Quel est le meilleur en 2024 ?</p>
+        <p class="thumb-canal">TechFrancophone</p>
+      </div>
+      <button class="btn-save-video" data-video-id="Yd_JyOlS7NQ" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;Yd_JyOlS7NQ&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;ChatGPT vs Claude : Quel est le meilleur en 2024 ?&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;22:07&quot;,&quot;youtubeId&quot;:&quot;Yd_JyOlS7NQ&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="ChatGPT pour rédiger des emails professionnels">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('WxYHHDmBKQE','ChatGPT pour rédiger des emails professionnels')">
+      <img src="https://img.youtube.com/vi/WxYHHDmBKQE/mqdefault.jpg" alt="ChatGPT pour rédiger des emails professionnels" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">12:30</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('WxYHHDmBKQE','ChatGPT pour rédiger des emails professionnels')">
+        <p class="thumb-titre">ChatGPT pour rédiger des emails professionnels</p>
+        <p class="thumb-canal">FormationIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="WxYHHDmBKQE" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;WxYHHDmBKQE&quot;,&quot;outilId&quot;:&quot;17&quot;,&quot;outilNom&quot;:&quot;ChatGPT&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/chatgpt/tutoriels/&quot;,&quot;titre&quot;:&quot;ChatGPT pour rédiger des emails professionnels&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;12:30&quot;,&quot;youtubeId&quot;:&quot;WxYHHDmBKQE&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div></div>
+        <a href="/tools/featured/fr/chatgpt/tutoriels/" class="tuto-voir-tout">
+          Voir tous les tutoriels pour ChatGPT
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </article>
+<article class="tuto-card" id="carte-claude" data-id="claude">
+    <div class="tuto-card-header">
+      <div class="tuto-card-identity">
+        <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
+          <img src="https://www.google.com/s2/favicons?sz=64&domain=claude.ai" alt="Claude" width="24" height="24" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'🤖'}))">
+        </div>
+        <div>
+          <h3 class="tuto-card-nom">Claude</h3>
+          <span class="tuto-card-cat">Code</span>
+        </div>
+      </div>
+      <div class="tuto-card-meta">
+        <div class="tuto-card-note" id="note-claude"></div>
+        <span class="tuto-card-avis" id="avis-claude"></span>
+        <span class="tuto-card-badge-count">10 vidéos</span>
+      </div>
+    </div>
+
+    <p class="tuto-card-desc-courte">L'assistant IA d'Anthropic réputé pour sa plume naturelle, ses capacités d'analyse de documents volumineux et sa fonctionnalité révolutionnaire Artifacts pour prévisualiser du code.</p>
+
+    <div class="tuto-card-tags"><span class="tuto-tag">rédaction</span><span class="tuto-tag">code</span><span class="tuto-tag">analyse</span><span class="tuto-tag">productivité</span></div>
+
+    <div class="tuto-card-actions">
+      <button class="tuto-card-btn tuto-btn-voir" data-id="claude" onclick="toggleCarte('claude')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Voir les tutoriels
+      </button>
+      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('18','Claude')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Soumettre
+      </button>
+    </div>
+
+    <div class="tuto-card-expand" id="expand-claude">
+      <div class="tuto-expand-inner">
+        <p class="tuto-desc-longue">Développé par Anthropic, Claude s'est imposé comme le principal rival de ChatGPT en misant sur une IA éthique, sécurisée et profondément performante. La famille de modèles Claude 3 et 3.5 brille particulièrement par ses capacités de raisonnement supérieures.
+
+L'un des plus grands atouts de Claude réside dans sa maîtrise du langage. Ses textes sont plus nuancés, moins stéréotypés et s'adaptent parfaitement aux chartes éditoriales complexes. Pour les développeurs, ses compétences en programmation rivalisent avec les meilleurs outils du marché.
+
+L'interface se distingue par l'introduction des "Artifacts", qui transforment le simple chat en un environnement de co-création. Vous pouvez voir un site web ou un mini-jeu se construire sous vos yeux et interagir avec le résultat en temps réel, sans quitter l'application.</p>
+        <div class="tuto-section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Tutoriels vidéo pour comprendre et utiliser Claude
+        </div>
+        <div class="tuto-video-grid"><div class="tuto-thumb" title="Claude vs ChatGPT : Comparatif complet 2024">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('VBwqexqLGnA','Claude vs ChatGPT : Comparatif complet 2024')">
+      <img src="https://img.youtube.com/vi/VBwqexqLGnA/mqdefault.jpg" alt="Claude vs ChatGPT : Comparatif complet 2024" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">25:10</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('VBwqexqLGnA','Claude vs ChatGPT : Comparatif complet 2024')">
+        <p class="thumb-titre">Claude vs ChatGPT : Comparatif complet 2024</p>
+        <p class="thumb-canal">TechFrancophone</p>
+      </div>
+      <button class="btn-save-video" data-video-id="VBwqexqLGnA" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;VBwqexqLGnA&quot;,&quot;outilId&quot;:&quot;18&quot;,&quot;outilNom&quot;:&quot;Claude&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/claude/tutoriels/&quot;,&quot;titre&quot;:&quot;Claude vs ChatGPT : Comparatif complet 2024&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;25:10&quot;,&quot;youtubeId&quot;:&quot;VBwqexqLGnA&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Maîtriser Claude pour la rédaction professionnelle">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('wU_mKznfy9I','Maîtriser Claude pour la rédaction professionnelle')">
+      <img src="https://img.youtube.com/vi/wU_mKznfy9I/mqdefault.jpg" alt="Maîtriser Claude pour la rédaction professionnelle" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">31:44</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('wU_mKznfy9I','Maîtriser Claude pour la rédaction professionnelle')">
+        <p class="thumb-titre">Maîtriser Claude pour la rédaction professionnelle</p>
+        <p class="thumb-canal">FormationIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="wU_mKznfy9I" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;wU_mKznfy9I&quot;,&quot;outilId&quot;:&quot;18&quot;,&quot;outilNom&quot;:&quot;Claude&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/claude/tutoriels/&quot;,&quot;titre&quot;:&quot;Maîtriser Claude pour la rédaction professionnelle&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;31:44&quot;,&quot;youtubeId&quot;:&quot;wU_mKznfy9I&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="5 cas d'usage Claude pour les entrepreneurs">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('3y2S6BLdmOQ','5 cas d&#39;usage Claude pour les entrepreneurs')">
+      <img src="https://img.youtube.com/vi/3y2S6BLdmOQ/mqdefault.jpg" alt="5 cas d'usage Claude pour les entrepreneurs" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">14:22</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('3y2S6BLdmOQ','5 cas d&#39;usage Claude pour les entrepreneurs')">
+        <p class="thumb-titre">5 cas d'usage Claude pour les entrepreneurs</p>
+        <p class="thumb-canal">EntrepreneurIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="3y2S6BLdmOQ" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;3y2S6BLdmOQ&quot;,&quot;outilId&quot;:&quot;18&quot;,&quot;outilNom&quot;:&quot;Claude&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/claude/tutoriels/&quot;,&quot;titre&quot;:&quot;5 cas d'usage Claude pour les entrepreneurs&quot;,&quot;canal&quot;:&quot;EntrepreneurIA&quot;,&quot;duree&quot;:&quot;14:22&quot;,&quot;youtubeId&quot;:&quot;3y2S6BLdmOQ&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Claude pour rédiger des articles de blog">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('AIKpOEpFhAo','Claude pour rédiger des articles de blog')">
+      <img src="https://img.youtube.com/vi/AIKpOEpFhAo/mqdefault.jpg" alt="Claude pour rédiger des articles de blog" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">21:10</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('AIKpOEpFhAo','Claude pour rédiger des articles de blog')">
+        <p class="thumb-titre">Claude pour rédiger des articles de blog</p>
+        <p class="thumb-canal">FormationIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="AIKpOEpFhAo" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;AIKpOEpFhAo&quot;,&quot;outilId&quot;:&quot;18&quot;,&quot;outilNom&quot;:&quot;Claude&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/claude/tutoriels/&quot;,&quot;titre&quot;:&quot;Claude pour rédiger des articles de blog&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;21:10&quot;,&quot;youtubeId&quot;:&quot;AIKpOEpFhAo&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Claude Projects : organiser son travail IA">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('GXzRMpHrMMo','Claude Projects : organiser son travail IA')">
+      <img src="https://img.youtube.com/vi/GXzRMpHrMMo/mqdefault.jpg" alt="Claude Projects : organiser son travail IA" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">27:33</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('GXzRMpHrMMo','Claude Projects : organiser son travail IA')">
+        <p class="thumb-titre">Claude Projects : organiser son travail IA</p>
+        <p class="thumb-canal">AIProductivité</p>
+      </div>
+      <button class="btn-save-video" data-video-id="GXzRMpHrMMo" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;GXzRMpHrMMo&quot;,&quot;outilId&quot;:&quot;18&quot;,&quot;outilNom&quot;:&quot;Claude&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/claude/tutoriels/&quot;,&quot;titre&quot;:&quot;Claude Projects : organiser son travail IA&quot;,&quot;canal&quot;:&quot;AIProductivité&quot;,&quot;duree&quot;:&quot;27:33&quot;,&quot;youtubeId&quot;:&quot;GXzRMpHrMMo&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div></div>
+        <a href="/tools/featured/fr/claude/tutoriels/" class="tuto-voir-tout">
+          Voir tous les tutoriels pour Claude
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </article>
+<article class="tuto-card" id="carte-midjourney" data-id="midjourney">
+    <div class="tuto-card-header">
+      <div class="tuto-card-identity">
+        <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
+          <img src="https://www.google.com/s2/favicons?sz=64&domain=midjourney.com" alt="Midjourney" width="24" height="24" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'🤖'}))">
+        </div>
+        <div>
+          <h3 class="tuto-card-nom">Midjourney</h3>
+          <span class="tuto-card-cat">Design 3D</span>
+        </div>
+      </div>
+      <div class="tuto-card-meta">
+        <div class="tuto-card-note" id="note-midjourney"></div>
+        <span class="tuto-card-avis" id="avis-midjourney"></span>
+        <span class="tuto-card-badge-count">10 vidéos</span>
+      </div>
+    </div>
+
+    <p class="tuto-card-desc-courte">Le leader incontesté de la génération d'images par IA. Créez des visuels ultra-réalistes, des illustrations artistiques et des designs professionnels à partir de simples descriptions textuelles.</p>
+
+    <div class="tuto-card-tags"><span class="tuto-tag">art</span><span class="tuto-tag">design</span><span class="tuto-tag">images</span><span class="tuto-tag">marketing</span></div>
+
+    <div class="tuto-card-actions">
+      <button class="tuto-card-btn tuto-btn-voir" data-id="midjourney" onclick="toggleCarte('midjourney')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Voir les tutoriels
+      </button>
+      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('19','Midjourney')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Soumettre
+      </button>
+    </div>
+
+    <div class="tuto-card-expand" id="expand-midjourney">
+      <div class="tuto-expand-inner">
+        <p class="tuto-desc-longue">Midjourney est le laboratoire de recherche indépendant qui a révolutionné le monde du graphisme. Réputé pour son sens artistique unique, cet outil transforme vos idées textuelles en œuvres d'art visuelles, en maquettes d'applications, en logos ou en photographies d'un réalisme bluffant.
+
+Initialement accessible uniquement via l'application Discord, Midjourney propose désormais une plateforme web dédiée claire et ergonomique. Cette mise à jour facilite grandement l'exploration des créations de la communauté et la gestion de vos propres projets.
+
+L'outil offre des fonctionnalités avancées pour les professionnels de l'image : cohérence des personnages d'une image à l'autre (--cref), uniformité des styles visuels (--sref) et contrôle total du format d'image (--ar). C'est l'outil indispensable pour le prototypage visuel et le marketing de contenu.</p>
+        <div class="tuto-section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Tutoriels vidéo pour comprendre et utiliser Midjourney
+        </div>
+        <div class="tuto-video-grid"><div class="tuto-thumb" title="Midjourney V6 : Tutoriel complet pour débutants">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('J4c5hAH6r5k','Midjourney V6 : Tutoriel complet pour débutants')">
+      <img src="https://img.youtube.com/vi/J4c5hAH6r5k/mqdefault.jpg" alt="Midjourney V6 : Tutoriel complet pour débutants" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">28:33</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('J4c5hAH6r5k','Midjourney V6 : Tutoriel complet pour débutants')">
+        <p class="thumb-titre">Midjourney V6 : Tutoriel complet pour débutants</p>
+        <p class="thumb-canal">ArtIA Studio</p>
+      </div>
+      <button class="btn-save-video" data-video-id="J4c5hAH6r5k" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;J4c5hAH6r5k&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Midjourney V6 : Tutoriel complet pour débutants&quot;,&quot;canal&quot;:&quot;ArtIA Studio&quot;,&quot;duree&quot;:&quot;28:33&quot;,&quot;youtubeId&quot;:&quot;J4c5hAH6r5k&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Créer une identité visuelle avec Midjourney">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('YrHCibgIcO0','Créer une identité visuelle avec Midjourney')">
+      <img src="https://img.youtube.com/vi/YrHCibgIcO0/mqdefault.jpg" alt="Créer une identité visuelle avec Midjourney" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">45:20</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('YrHCibgIcO0','Créer une identité visuelle avec Midjourney')">
+        <p class="thumb-titre">Créer une identité visuelle avec Midjourney</p>
+        <p class="thumb-canal">DesignAcadémie</p>
+      </div>
+      <button class="btn-save-video" data-video-id="YrHCibgIcO0" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;YrHCibgIcO0&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Créer une identité visuelle avec Midjourney&quot;,&quot;canal&quot;:&quot;DesignAcadémie&quot;,&quot;duree&quot;:&quot;45:20&quot;,&quot;youtubeId&quot;:&quot;YrHCibgIcO0&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Paramètres avancés Midjourney expliqués">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('l4Qqmb5BFBY','Paramètres avancés Midjourney expliqués')">
+      <img src="https://img.youtube.com/vi/l4Qqmb5BFBY/mqdefault.jpg" alt="Paramètres avancés Midjourney expliqués" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">19:48</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('l4Qqmb5BFBY','Paramètres avancés Midjourney expliqués')">
+        <p class="thumb-titre">Paramètres avancés Midjourney expliqués</p>
+        <p class="thumb-canal">ArtIA Studio</p>
+      </div>
+      <button class="btn-save-video" data-video-id="l4Qqmb5BFBY" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;l4Qqmb5BFBY&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Paramètres avancés Midjourney expliqués&quot;,&quot;canal&quot;:&quot;ArtIA Studio&quot;,&quot;duree&quot;:&quot;19:48&quot;,&quot;youtubeId&quot;:&quot;l4Qqmb5BFBY&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Midjourney : créer des logos professionnels">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('HBjPl1xXUHs','Midjourney : créer des logos professionnels')">
+      <img src="https://img.youtube.com/vi/HBjPl1xXUHs/mqdefault.jpg" alt="Midjourney : créer des logos professionnels" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">22:15</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('HBjPl1xXUHs','Midjourney : créer des logos professionnels')">
+        <p class="thumb-titre">Midjourney : créer des logos professionnels</p>
+        <p class="thumb-canal">DesignAcadémie</p>
+      </div>
+      <button class="btn-save-video" data-video-id="HBjPl1xXUHs" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;HBjPl1xXUHs&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Midjourney : créer des logos professionnels&quot;,&quot;canal&quot;:&quot;DesignAcadémie&quot;,&quot;duree&quot;:&quot;22:15&quot;,&quot;youtubeId&quot;:&quot;HBjPl1xXUHs&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Midjourney pour illustrer un livre">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('9g9q6gO3QFE','Midjourney pour illustrer un livre')">
+      <img src="https://img.youtube.com/vi/9g9q6gO3QFE/mqdefault.jpg" alt="Midjourney pour illustrer un livre" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">41:20</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('9g9q6gO3QFE','Midjourney pour illustrer un livre')">
+        <p class="thumb-titre">Midjourney pour illustrer un livre</p>
+        <p class="thumb-canal">ArtIA Studio</p>
+      </div>
+      <button class="btn-save-video" data-video-id="9g9q6gO3QFE" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;9g9q6gO3QFE&quot;,&quot;outilId&quot;:&quot;19&quot;,&quot;outilNom&quot;:&quot;Midjourney&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/midjourney/tutoriels/&quot;,&quot;titre&quot;:&quot;Midjourney pour illustrer un livre&quot;,&quot;canal&quot;:&quot;ArtIA Studio&quot;,&quot;duree&quot;:&quot;41:20&quot;,&quot;youtubeId&quot;:&quot;9g9q6gO3QFE&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div></div>
+        <a href="/tools/featured/fr/midjourney/tutoriels/" class="tuto-voir-tout">
+          Voir tous les tutoriels pour Midjourney
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </article>
+<article class="tuto-card" id="carte-make" data-id="make">
+    <div class="tuto-card-header">
+      <div class="tuto-card-identity">
+        <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
+          <img src="https://www.google.com/s2/favicons?sz=64&domain=make.com" alt="Make" width="24" height="24" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'🤖'}))">
+        </div>
+        <div>
+          <h3 class="tuto-card-nom">Make</h3>
+          <span class="tuto-card-cat">Automatisation</span>
+        </div>
+      </div>
+      <div class="tuto-card-meta">
+        <div class="tuto-card-note" id="note-make"></div>
+        <span class="tuto-card-avis" id="avis-make"></span>
+        <span class="tuto-card-badge-count">10 vidéos</span>
+      </div>
+    </div>
+
+    <p class="tuto-card-desc-courte">La plateforme d'automatisation no-code visuelle par excellence. Connectez vos applications préférées, manipulez des données et intégrez l'IA pour créer des workflows puissants.</p>
+
+    <div class="tuto-card-tags"><span class="tuto-tag">automatisation</span><span class="tuto-tag">productivité</span><span class="tuto-tag">no-code</span><span class="tuto-tag">api</span></div>
+
+    <div class="tuto-card-actions">
+      <button class="tuto-card-btn tuto-btn-voir" data-id="make" onclick="toggleCarte('make')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Voir les tutoriels
+      </button>
+      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('20','Make')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Soumettre
+      </button>
+    </div>
+
+    <div class="tuto-card-expand" id="expand-make">
+      <div class="tuto-expand-inner">
+        <p class="tuto-desc-longue">Anciennement connu sous le nom d'Integromat, Make est devenu le standard de l'automatisation de processus sans code (No-Code). Son interface visuelle unique permet de concevoir, de construire et d'automatiser des flux de travail en liant des applications entre elles comme des briques de Lego.
+
+Contrairement aux solutions linéaires basiques, Make excelle dans la complexité. Vous pouvez créer des embranchements infinis, itérer sur des listes d'éléments, transformer des formats de texte ou de date à la volée et configurer des systèmes de secours en cas d'erreur de réseau.
+
+Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des agents autonomes. Vous pouvez par exemple écouter l'arrivée d'un nouvel avis client, demander à ChatGPT d'en analyser le sentiment, puis rédiger et envoyer une réponse personnalisée automatiquement par e-mail ou Slack.</p>
+        <div class="tuto-section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Tutoriels vidéo pour comprendre et utiliser Make
+        </div>
+        <div class="tuto-video-grid"><div class="tuto-thumb" title="Make (Integromat) : Tutoriel complet débutant">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('F1WgvTkW1KI','Make (Integromat) : Tutoriel complet débutant')">
+      <img src="https://img.youtube.com/vi/F1WgvTkW1KI/mqdefault.jpg" alt="Make (Integromat) : Tutoriel complet débutant" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">52:18</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('F1WgvTkW1KI','Make (Integromat) : Tutoriel complet débutant')">
+        <p class="thumb-titre">Make (Integromat) : Tutoriel complet débutant</p>
+        <p class="thumb-canal">AutomationFR</p>
+      </div>
+      <button class="btn-save-video" data-video-id="F1WgvTkW1KI" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;F1WgvTkW1KI&quot;,&quot;outilId&quot;:&quot;20&quot;,&quot;outilNom&quot;:&quot;Make&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/make/tutoriels/&quot;,&quot;titre&quot;:&quot;Make (Integromat) : Tutoriel complet débutant&quot;,&quot;canal&quot;:&quot;AutomationFR&quot;,&quot;duree&quot;:&quot;52:18&quot;,&quot;youtubeId&quot;:&quot;F1WgvTkW1KI&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Make + ChatGPT : Le duo parfait">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('dqpbHmCMVBo','Make + ChatGPT : Le duo parfait')">
+      <img src="https://img.youtube.com/vi/dqpbHmCMVBo/mqdefault.jpg" alt="Make + ChatGPT : Le duo parfait" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">38:05</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('dqpbHmCMVBo','Make + ChatGPT : Le duo parfait')">
+        <p class="thumb-titre">Make + ChatGPT : Le duo parfait</p>
+        <p class="thumb-canal">AutomationFR</p>
+      </div>
+      <button class="btn-save-video" data-video-id="dqpbHmCMVBo" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;dqpbHmCMVBo&quot;,&quot;outilId&quot;:&quot;20&quot;,&quot;outilNom&quot;:&quot;Make&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/make/tutoriels/&quot;,&quot;titre&quot;:&quot;Make + ChatGPT : Le duo parfait&quot;,&quot;canal&quot;:&quot;AutomationFR&quot;,&quot;duree&quot;:&quot;38:05&quot;,&quot;youtubeId&quot;:&quot;dqpbHmCMVBo&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Scénario Make pour automatiser sa veille">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('9wkjCp7lbLg','Scénario Make pour automatiser sa veille')">
+      <img src="https://img.youtube.com/vi/9wkjCp7lbLg/mqdefault.jpg" alt="Scénario Make pour automatiser sa veille" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">27:33</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('9wkjCp7lbLg','Scénario Make pour automatiser sa veille')">
+        <p class="thumb-titre">Scénario Make pour automatiser sa veille</p>
+        <p class="thumb-canal">ProductivitéPro</p>
+      </div>
+      <button class="btn-save-video" data-video-id="9wkjCp7lbLg" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;9wkjCp7lbLg&quot;,&quot;outilId&quot;:&quot;20&quot;,&quot;outilNom&quot;:&quot;Make&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/make/tutoriels/&quot;,&quot;titre&quot;:&quot;Scénario Make pour automatiser sa veille&quot;,&quot;canal&quot;:&quot;ProductivitéPro&quot;,&quot;duree&quot;:&quot;27:33&quot;,&quot;youtubeId&quot;:&quot;9wkjCp7lbLg&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Make + Notion : synchroniser ses données">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('X2tWTjuovSg','Make + Notion : synchroniser ses données')">
+      <img src="https://img.youtube.com/vi/X2tWTjuovSg/mqdefault.jpg" alt="Make + Notion : synchroniser ses données" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">26:44</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('X2tWTjuovSg','Make + Notion : synchroniser ses données')">
+        <p class="thumb-titre">Make + Notion : synchroniser ses données</p>
+        <p class="thumb-canal">ProductivitéPro</p>
+      </div>
+      <button class="btn-save-video" data-video-id="X2tWTjuovSg" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;X2tWTjuovSg&quot;,&quot;outilId&quot;:&quot;20&quot;,&quot;outilNom&quot;:&quot;Make&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/make/tutoriels/&quot;,&quot;titre&quot;:&quot;Make + Notion : synchroniser ses données&quot;,&quot;canal&quot;:&quot;ProductivitéPro&quot;,&quot;duree&quot;:&quot;26:44&quot;,&quot;youtubeId&quot;:&quot;X2tWTjuovSg&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Make vs Zapier : comparatif complet 2024">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('6cFVZRkfKzs','Make vs Zapier : comparatif complet 2024')">
+      <img src="https://img.youtube.com/vi/6cFVZRkfKzs/mqdefault.jpg" alt="Make vs Zapier : comparatif complet 2024" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">32:18</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('6cFVZRkfKzs','Make vs Zapier : comparatif complet 2024')">
+        <p class="thumb-titre">Make vs Zapier : comparatif complet 2024</p>
+        <p class="thumb-canal">AutomationFR</p>
+      </div>
+      <button class="btn-save-video" data-video-id="6cFVZRkfKzs" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;6cFVZRkfKzs&quot;,&quot;outilId&quot;:&quot;20&quot;,&quot;outilNom&quot;:&quot;Make&quot;,&quot;outilPage&quot;:&quot;/tools/featured/fr/make/tutoriels/&quot;,&quot;titre&quot;:&quot;Make vs Zapier : comparatif complet 2024&quot;,&quot;canal&quot;:&quot;AutomationFR&quot;,&quot;duree&quot;:&quot;32:18&quot;,&quot;youtubeId&quot;:&quot;6cFVZRkfKzs&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div></div>
+        <a href="/tools/featured/fr/make/tutoriels/" class="tuto-voir-tout">
+          Voir tous les tutoriels pour Make
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </article>
+<article class="tuto-card" id="carte-perplexity-ai" data-id="perplexity-ai">
+    <div class="tuto-card-header">
+      <div class="tuto-card-identity">
+        <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
+          <img src="https://www.google.com/s2/favicons?sz=64&domain=perplexity.ai" alt="perplexity.ai" width="24" height="24" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'🤖'}))">
+        </div>
+        <div>
+          <h3 class="tuto-card-nom">perplexity.ai</h3>
+          <span class="tuto-card-cat">Recherche</span>
+        </div>
+      </div>
+      <div class="tuto-card-meta">
+        <div class="tuto-card-note" id="note-perplexity-ai"></div>
+        <span class="tuto-card-avis" id="avis-perplexity-ai"></span>
+        <span class="tuto-card-badge-count">10 vidéos</span>
+      </div>
+    </div>
+
+    <p class="tuto-card-desc-courte">Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.</p>
+
+    <div class="tuto-card-tags"><span class="tuto-tag">recherche</span><span class="tuto-tag">analyse</span><span class="tuto-tag">veille</span><span class="tuto-tag">productivité</span></div>
+
+    <div class="tuto-card-actions">
+      <button class="tuto-card-btn tuto-btn-voir" data-id="perplexity-ai" onclick="toggleCarte('perplexity-ai')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Voir les tutoriels
+      </button>
+      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('21','perplexity.ai')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Soumettre
+      </button>
+    </div>
+
+    <div class="tuto-card-expand" id="expand-perplexity-ai">
+      <div class="tuto-expand-inner">
+        <p class="tuto-desc-longue">Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.</p>
+        <div class="tuto-section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Tutoriels vidéo pour comprendre et utiliser perplexity.ai
+        </div>
+        <div class="tuto-video-grid"><div class="tuto-thumb" title="Perplexity AI : Le Google du futur ?">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('KU9zUSomFe0','Perplexity AI : Le Google du futur ?')">
+      <img src="https://img.youtube.com/vi/KU9zUSomFe0/mqdefault.jpg" alt="Perplexity AI : Le Google du futur ?" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">16:28</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('KU9zUSomFe0','Perplexity AI : Le Google du futur ?')">
+        <p class="thumb-titre">Perplexity AI : Le Google du futur ?</p>
+        <p class="thumb-canal">TechFrancophone</p>
+      </div>
+      <button class="btn-save-video" data-video-id="KU9zUSomFe0" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;KU9zUSomFe0&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity AI : Le Google du futur ?&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;16:28&quot;,&quot;youtubeId&quot;:&quot;KU9zUSomFe0&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Faire sa veille avec Perplexity en 2024">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('T9aRN5JkmL8','Faire sa veille avec Perplexity en 2024')">
+      <img src="https://img.youtube.com/vi/T9aRN5JkmL8/mqdefault.jpg" alt="Faire sa veille avec Perplexity en 2024" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">21:55</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('T9aRN5JkmL8','Faire sa veille avec Perplexity en 2024')">
+        <p class="thumb-titre">Faire sa veille avec Perplexity en 2024</p>
+        <p class="thumb-canal">FormationIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="T9aRN5JkmL8" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;T9aRN5JkmL8&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Faire sa veille avec Perplexity en 2024&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;21:55&quot;,&quot;youtubeId&quot;:&quot;T9aRN5JkmL8&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Perplexity Spaces : fonctionnalité cachée">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('mTBfJkDuDiU','Perplexity Spaces : fonctionnalité cachée')">
+      <img src="https://img.youtube.com/vi/mTBfJkDuDiU/mqdefault.jpg" alt="Perplexity Spaces : fonctionnalité cachée" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">12:40</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('mTBfJkDuDiU','Perplexity Spaces : fonctionnalité cachée')">
+        <p class="thumb-titre">Perplexity Spaces : fonctionnalité cachée</p>
+        <p class="thumb-canal">AIProductivité</p>
+      </div>
+      <button class="btn-save-video" data-video-id="mTBfJkDuDiU" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;mTBfJkDuDiU&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity Spaces : fonctionnalité cachée&quot;,&quot;canal&quot;:&quot;AIProductivité&quot;,&quot;duree&quot;:&quot;12:40&quot;,&quot;youtubeId&quot;:&quot;mTBfJkDuDiU&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Perplexity pour la recherche académique">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('9q4uDVFXgIs','Perplexity pour la recherche académique')">
+      <img src="https://img.youtube.com/vi/9q4uDVFXgIs/mqdefault.jpg" alt="Perplexity pour la recherche académique" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">18:44</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('9q4uDVFXgIs','Perplexity pour la recherche académique')">
+        <p class="thumb-titre">Perplexity pour la recherche académique</p>
+        <p class="thumb-canal">FormationIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="9q4uDVFXgIs" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;9q4uDVFXgIs&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity pour la recherche académique&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;18:44&quot;,&quot;youtubeId&quot;:&quot;9q4uDVFXgIs&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Remplacer Google par Perplexity en 2024">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('bx7Tyj84YB4','Remplacer Google par Perplexity en 2024')">
+      <img src="https://img.youtube.com/vi/bx7Tyj84YB4/mqdefault.jpg" alt="Remplacer Google par Perplexity en 2024" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">14:22</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('bx7Tyj84YB4','Remplacer Google par Perplexity en 2024')">
+        <p class="thumb-titre">Remplacer Google par Perplexity en 2024</p>
+        <p class="thumb-canal">DigitalActu</p>
+      </div>
+      <button class="btn-save-video" data-video-id="bx7Tyj84YB4" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;bx7Tyj84YB4&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Remplacer Google par Perplexity en 2024&quot;,&quot;canal&quot;:&quot;DigitalActu&quot;,&quot;duree&quot;:&quot;14:22&quot;,&quot;youtubeId&quot;:&quot;bx7Tyj84YB4&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div></div>
+        <a href="/tools/standard/fr/perplexity-ai/tutoriels/" class="tuto-voir-tout">
+          Voir tous les tutoriels pour perplexity.ai
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </article>
+<article class="tuto-card" id="carte-runway" data-id="runway">
+    <div class="tuto-card-header">
+      <div class="tuto-card-identity">
+        <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
+          <img src="https://www.google.com/s2/favicons?sz=64&domain=runwayml.com" alt="Runway" width="24" height="24" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'🤖'}))">
+        </div>
+        <div>
+          <h3 class="tuto-card-nom">Runway</h3>
+          <span class="tuto-card-cat">Vidéo</span>
+        </div>
+      </div>
+      <div class="tuto-card-meta">
+        <div class="tuto-card-note" id="note-runway"></div>
+        <span class="tuto-card-avis" id="avis-runway"></span>
+        <span class="tuto-card-badge-count">10 vidéos</span>
+      </div>
+    </div>
+
+    <p class="tuto-card-desc-courte">La suite créative leader pour la génération et l'édition de vidéos par IA. Donnez vie à vos textes et images avec les modèles cinématiques Gen-2 et Gen-3 Alpha.</p>
+
+    <div class="tuto-card-tags"><span class="tuto-tag">vidéo</span><span class="tuto-tag">cinéma</span><span class="tuto-tag">animation</span><span class="tuto-tag">effets-spéciaux</span></div>
+
+    <div class="tuto-card-actions">
+      <button class="tuto-card-btn tuto-btn-voir" data-id="runway" onclick="toggleCarte('runway')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Voir les tutoriels
+      </button>
+      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('22','Runway')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Soumettre
+      </button>
+    </div>
+
+    <div class="tuto-card-expand" id="expand-runway">
+      <div class="tuto-expand-inner">
+        <p class="tuto-desc-longue">La suite créative leader pour la génération et l'édition de vidéos par IA. Donnez vie à vos textes et images avec les modèles cinématiques Gen-2 et Gen-3 Alpha.</p>
+        <div class="tuto-section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Tutoriels vidéo pour comprendre et utiliser Runway
+        </div>
+        <div class="tuto-video-grid"><div class="tuto-thumb" title="Runway Gen-2 : Créer des vidéos IA époustouflantes">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('hPGUMJ0NQBY','Runway Gen-2 : Créer des vidéos IA époustouflantes')">
+      <img src="https://img.youtube.com/vi/hPGUMJ0NQBY/mqdefault.jpg" alt="Runway Gen-2 : Créer des vidéos IA époustouflantes" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">24:17</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('hPGUMJ0NQBY','Runway Gen-2 : Créer des vidéos IA époustouflantes')">
+        <p class="thumb-titre">Runway Gen-2 : Créer des vidéos IA époustouflantes</p>
+        <p class="thumb-canal">VideoIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="hPGUMJ0NQBY" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;hPGUMJ0NQBY&quot;,&quot;outilId&quot;:&quot;22&quot;,&quot;outilNom&quot;:&quot;Runway&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/runway/tutoriels/&quot;,&quot;titre&quot;:&quot;Runway Gen-2 : Créer des vidéos IA époustouflantes&quot;,&quot;canal&quot;:&quot;VideoIA&quot;,&quot;duree&quot;:&quot;24:17&quot;,&quot;youtubeId&quot;:&quot;hPGUMJ0NQBY&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Runway pour les créateurs YouTube : cas pratiques">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('gYGHpFCXObo','Runway pour les créateurs YouTube : cas pratiques')">
+      <img src="https://img.youtube.com/vi/gYGHpFCXObo/mqdefault.jpg" alt="Runway pour les créateurs YouTube : cas pratiques" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">41:08</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('gYGHpFCXObo','Runway pour les créateurs YouTube : cas pratiques')">
+        <p class="thumb-titre">Runway pour les créateurs YouTube : cas pratiques</p>
+        <p class="thumb-canal">VideoIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="gYGHpFCXObo" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;gYGHpFCXObo&quot;,&quot;outilId&quot;:&quot;22&quot;,&quot;outilNom&quot;:&quot;Runway&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/runway/tutoriels/&quot;,&quot;titre&quot;:&quot;Runway pour les créateurs YouTube : cas pratiques&quot;,&quot;canal&quot;:&quot;VideoIA&quot;,&quot;duree&quot;:&quot;41:08&quot;,&quot;youtubeId&quot;:&quot;gYGHpFCXObo&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Animer une photo avec Runway">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('B7ULm9nBNNE','Animer une photo avec Runway')">
+      <img src="https://img.youtube.com/vi/B7ULm9nBNNE/mqdefault.jpg" alt="Animer une photo avec Runway" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">11:34</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('B7ULm9nBNNE','Animer une photo avec Runway')">
+        <p class="thumb-titre">Animer une photo avec Runway</p>
+        <p class="thumb-canal">ArtIA Studio</p>
+      </div>
+      <button class="btn-save-video" data-video-id="B7ULm9nBNNE" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;B7ULm9nBNNE&quot;,&quot;outilId&quot;:&quot;22&quot;,&quot;outilNom&quot;:&quot;Runway&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/runway/tutoriels/&quot;,&quot;titre&quot;:&quot;Animer une photo avec Runway&quot;,&quot;canal&quot;:&quot;ArtIA Studio&quot;,&quot;duree&quot;:&quot;11:34&quot;,&quot;youtubeId&quot;:&quot;B7ULm9nBNNE&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Runway pour créer des publicités vidéo IA">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('JIKnJkWZnN4','Runway pour créer des publicités vidéo IA')">
+      <img src="https://img.youtube.com/vi/JIKnJkWZnN4/mqdefault.jpg" alt="Runway pour créer des publicités vidéo IA" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">26:18</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('JIKnJkWZnN4','Runway pour créer des publicités vidéo IA')">
+        <p class="thumb-titre">Runway pour créer des publicités vidéo IA</p>
+        <p class="thumb-canal">MarketingIA</p>
+      </div>
+      <button class="btn-save-video" data-video-id="JIKnJkWZnN4" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;JIKnJkWZnN4&quot;,&quot;outilId&quot;:&quot;22&quot;,&quot;outilNom&quot;:&quot;Runway&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/runway/tutoriels/&quot;,&quot;titre&quot;:&quot;Runway pour créer des publicités vidéo IA&quot;,&quot;canal&quot;:&quot;MarketingIA&quot;,&quot;duree&quot;:&quot;26:18&quot;,&quot;youtubeId&quot;:&quot;JIKnJkWZnN4&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div><div class="tuto-thumb" title="Runway Gen-3 : comparatif avec Sora">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('Hj0qqmkj5xE','Runway Gen-3 : comparatif avec Sora')">
+      <img src="https://img.youtube.com/vi/Hj0qqmkj5xE/mqdefault.jpg" alt="Runway Gen-3 : comparatif avec Sora" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">22:44</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('Hj0qqmkj5xE','Runway Gen-3 : comparatif avec Sora')">
+        <p class="thumb-titre">Runway Gen-3 : comparatif avec Sora</p>
+        <p class="thumb-canal">TechFrancophone</p>
+      </div>
+      <button class="btn-save-video" data-video-id="Hj0qqmkj5xE" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="{&quot;videoId&quot;:&quot;Hj0qqmkj5xE&quot;,&quot;outilId&quot;:&quot;22&quot;,&quot;outilNom&quot;:&quot;Runway&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/runway/tutoriels/&quot;,&quot;titre&quot;:&quot;Runway Gen-3 : comparatif avec Sora&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;22:44&quot;,&quot;youtubeId&quot;:&quot;Hj0qqmkj5xE&quot;}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+    </div>
+  </div></div>
+        <a href="/tools/standard/fr/runway/tutoriels/" class="tuto-voir-tout">
+          Voir tous les tutoriels pour Runway
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </article>
   </div>
 </div>
 
-<section class="vt-editorial-wrap">
-  <div class="vt-editorial-head">
+<section class="tuto-editorial-wrap">
+  <div class="tuto-editorial-head">
     <h2>Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
   </div>
-  <div class="vt-editorial-body">
+  <div class="tuto-editorial-body">
 <h3>La vidéo : le support ultime de l'apprentissage technologique</h3>
 <p>Pourquoi avoir choisi de placer la vidéo au cœur de notre annuaire ? Parce que dans le domaine de l'IA, une image vaut réellement mille mots. Lire une documentation technique sur un nouveau modèle de génération d'images comme Midjourney ou un outil d'automatisation comme Make peut s'avérer fastidieux. À l'inverse, regarder un expert manipuler l'interface, ajuster ses prompts et montrer les erreurs à éviter offre une courbe d'apprentissage fulgurante.</p>
 <p>La vidéo permet de capturer la subtilité du « flux de travail » (workflow). Elle montre le temps de rendu réel, la réactivité de l'interface et, surtout, le résultat concret. En intégrant des tutoriels YouTube directement sous nos fiches outils, nous créons un écosystème d'apprentissage immédiat.</p>
@@ -162,82 +921,126 @@
 <h3>Le soutien aux créateurs : une relation gagnant-gagnant</h3>
 <p>Notre plateforme repose sur un principe éthique fondamental : le respect du droit d'auteur et le soutien aux créateurs de contenu. En utilisant l'intégration officielle via le lecteur YouTube, nous garantissons que chaque vue générée sur notre annuaire compte pour le créateur original. Nous encourageons les auteurs de vidéos à soumettre eux-mêmes leurs contenus pour renforcer leur autorité auprès d'un public qualifié.</p></div>
 </section>
-
-<section class="vt-faq-wrap vt-faq">
-  <div class="vt-faq-head"><h2>Questions fréquentes</h2></div>
-  <div class="faq-list"><div class="faq-item">
-      <button class="faq-q">Est-il légal de visionner ces vidéos sur votre site ?</button>
-      <div class="faq-a">Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur.</div>
+<section class="tuto-faq-wrap">
+  <div class="tuto-faq-head"><h2>Questions fréquentes</h2></div>
+  <div class="faq-list" id="tuto-faq-list"><div class="faq-item" id="faq-0">
+      <button class="faq-question" onclick="toggleFAQ(0)" aria-expanded="false">
+        <span>Est-il légal de visionner ces vidéos sur votre site ?</span>
+        <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-reponse" id="faq-rep-0">
+        <p>Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur.</p>
+      </div>
     </div>
-<div class="faq-item">
-      <button class="faq-q">Comment sont sélectionnées les vidéos pour chaque outil ?</button>
-      <div class="faq-a">Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire.</div>
+<div class="faq-item" id="faq-1">
+      <button class="faq-question" onclick="toggleFAQ(1)" aria-expanded="false">
+        <span>Comment sont sélectionnées les vidéos pour chaque outil ?</span>
+        <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-reponse" id="faq-rep-1">
+        <p>Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire.</p>
+      </div>
     </div>
-<div class="faq-item">
-      <button class="faq-q">Pourquoi filtrer par durée ?</button>
-      <div class="faq-a">Tout le monde n'a pas le même besoin ni le même temps disponible. Si vous voulez juste un aperçu, une vidéo de 5 minutes suffit. Si vous souhaitez configurer l'outil pour votre entreprise, vous aurez besoin d'une formation de 30 à 40 minutes. Le filtre vous permet de trouver exactement le contenu adapté à votre situation.</div>
+<div class="faq-item" id="faq-2">
+      <button class="faq-question" onclick="toggleFAQ(2)" aria-expanded="false">
+        <span>Pourquoi filtrer par durée ?</span>
+        <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-reponse" id="faq-rep-2">
+        <p>Tout le monde n'a pas le même besoin ni le même temps disponible. Si vous voulez juste un aperçu, une vidéo de 5 minutes suffit. Si vous souhaitez configurer l'outil pour votre entreprise, vous aurez besoin d'une formation de 30 à 40 minutes. Le filtre vous permet de trouver exactement le contenu adapté à votre situation.</p>
+      </div>
     </div>
-<div class="faq-item">
-      <button class="faq-q">Je suis YouTubeur, pourquoi soumettre ma vidéo ?</button>
-      <div class="faq-a">Soumettre votre vidéo vous permet d'apparaître devant une audience ultra-ciblée. Un utilisateur qui consulte la fiche d'une IA est déjà convaincu d'utiliser cet outil — c'est l'endroit idéal pour gagner des abonnés qualifiés et renforcer votre autorité dans le domaine de l'IA francophone.</div>
+<div class="faq-item" id="faq-3">
+      <button class="faq-question" onclick="toggleFAQ(3)" aria-expanded="false">
+        <span>Je suis YouTubeur, pourquoi soumettre ma vidéo ?</span>
+        <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-reponse" id="faq-rep-3">
+        <p>Soumettre votre vidéo vous permet d'apparaître devant une audience ultra-ciblée. Un utilisateur qui consulte la fiche d'une IA est déjà convaincu d'utiliser cet outil — c'est l'endroit idéal pour gagner des abonnés qualifiés et renforcer votre autorité dans le domaine de l'IA francophone.</p>
+      </div>
     </div>
-<div class="faq-item">
-      <button class="faq-q">Que se passe-t-il si un outil change d'interface ?</button>
-      <div class="faq-a">C'est l'avantage de notre système communautaire. Si une vidéo devient obsolète suite à une mise à jour, la communauté peut en signaler de plus récentes. Nous actualisons régulièrement les tutoriels pour qu'ils correspondent aux versions actuelles des logiciels.</div>
+<div class="faq-item" id="faq-4">
+      <button class="faq-question" onclick="toggleFAQ(4)" aria-expanded="false">
+        <span>Que se passe-t-il si un outil change d'interface ?</span>
+        <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-reponse" id="faq-rep-4">
+        <p>C'est l'avantage de notre système communautaire. Si une vidéo devient obsolète suite à une mise à jour, la communauté peut en signaler de plus récentes. Nous actualisons régulièrement les tutoriels pour qu'ils correspondent aux versions actuelles des logiciels.</p>
+      </div>
     </div>
-<div class="faq-item">
-      <button class="faq-q">Est-ce gratuit d'utiliser l'annuaire et de regarder les vidéos ?</button>
-      <div class="faq-a">Oui, l'accès à notre plateforme et le visionnage des vidéos sont entièrement gratuits. Nous nous finançons par des partenariats affiliés avec les outils référencés pour garantir que l'apprentissage de l'IA reste accessible à tous, en particulier dans les pays francophones.</div>
+<div class="faq-item" id="faq-5">
+      <button class="faq-question" onclick="toggleFAQ(5)" aria-expanded="false">
+        <span>Est-ce gratuit d'utiliser l'annuaire et de regarder les vidéos ?</span>
+        <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-reponse" id="faq-rep-5">
+        <p>Oui, l'accès à notre plateforme et le visionnage des vidéos sont entièrement gratuits. Nous nous finançons par des partenariats affiliés avec les outils référencés pour garantir que l'apprentissage de l'IA reste accessible à tous, en particulier dans les pays francophones.</p>
+      </div>
     </div></div>
 </section>
-
-<div id="vt-player-modal" class="vt-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
-  <div class="vt-player-inner">
-    <div class="vt-player-top">
-      <p id="vt-player-titre" class="vt-player-titre"></p>
-      <button class="vt-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">✕</button>
+<div id="tuto-player-modal" class="tuto-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="tuto-player-inner">
+    <div class="tuto-player-top">
+      <p id="tuto-player-titre" class="tuto-player-titre"></p>
+      <button class="tuto-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <div class="vt-player-frame">
-      <iframe id="vt-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
+    <div class="tuto-player-frame">
+      <iframe id="tuto-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
     </div>
   </div>
 </div>
-<div id="vt-modal-soumission" class="vt-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
-  <div class="vt-modal-inner">
-    <button class="vt-modal-close" onclick="fermerModalSoumission()" aria-label="Fermer">✕</button>
-    <div class="vt-modal-ico">🎬</div>
-    <h2 class="vt-modal-titre">Soumettre un tutoriel</h2>
-    <p class="vt-modal-sub">Proposez une vidéo YouTube pour enrichir notre vidéothèque. Notre équipe éditoriale l'examinera sous 48h.</p>
-    <form id="form-vt-soumission" novalidate>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-url">URL de la vidéo YouTube *</label>
-        <input class="vt-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+<div id="tuto-modal-soumission" class="tuto-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="tuto-modal-inner">
+    <button class="tuto-modal-close" id="soumission-fermer" aria-label="Fermer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="tuto-modal-ico">🎬</div>
+    <h2 class="tuto-modal-titre">Soumettre un tutoriel</h2>
+    <p class="tuto-modal-sub">Proposez une vidéo pour <strong id="soumission-outil-nom">cet outil</strong>. Notre équipe éditoriale l'examinera sous 48h.</p>
+    <form id="form-soumission" novalidate>
+      <input type="hidden" id="soumission-outil-id" name="outil_id" value="">
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="tuto-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-outil">Outil concerné</label>
-        <input class="vt-form-input" type="text" id="s-outil" name="outil" placeholder="ex : ChatGPT, Midjourney...">
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-outil">Outil concerné</label>
+        <select class="tuto-form-select" id="s-outil" name="outil">
+          <option value="">Sélectionner un outil…</option>
+          <option value="17">ChatGPT</option>
+          <option value="18">Claude</option>
+          <option value="19">Midjourney</option>
+          <option value="20">Make</option>
+          <option value="21">perplexity.ai</option>
+          <option value="22">Runway</option>
+          <option value="autre">Autre outil IA</option>
+        </select>
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
-        <input class="vt-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="tuto-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-email">Votre email (pour notification)</label>
-        <input class="vt-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="tuto-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
       </div>
-      <button type="submit" class="vt-form-submit" id="vt-soumission-submit">Soumettre la vidéo →</button>
-      <p class="vt-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+      <button type="submit" class="tuto-form-submit" id="soumission-submit">Soumettre la vidéo →</button>
+      <p class="tuto-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
     </form>
   </div>
 </div>
 
-<footer>
-  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
-    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
-  </div>
+<footer style="border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-dim);font-size:12px;margin-top:auto;">
+  <p style="margin-bottom:8px;">
+    <a href="/index.html#tools" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Outils</a>
+    <a href="/index.html#blog" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Blog</a>
+    <a href="/tutoriels/index.html" style="color:var(--accent2);text-decoration:none;margin:0 10px;">Tutoriels</a>
+    <a href="/mentions-legales.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Mentions légales</a>
+    <a href="/politique-confidentialite.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Confidentialité</a>
+  </p>
+  <p>© 2025-2026 Albexia · L'annuaire IA francophone de référence</p>
 </footer>
 <script>
   const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
@@ -247,7 +1050,60 @@
     km.addEventListener('click', e => e.stopPropagation());
   }
 </script>
-<script>window.__VT = {"mode":"hub"};</script>
-<script type="module" src="/js/videotheque-shared.js"></script>
+<script type="module">
+  import { getRatingSummary } from '/js/reviews.js';
+  import { auth } from '/js/firebase-config.js';
+  import { saveVideo, unsaveVideo, getSavedVideos } from '/js/firestore.js';
+  import { onAuthStateChanged } from '/js/firebase-config.js';
+
+  let _currentUser = null;
+  let _savedVideoIds = new Set();
+
+  onAuthStateChanged(auth, async (user) => {
+    _currentUser = user;
+    if (user) {
+      const saved = await getSavedVideos(user.uid);
+      _savedVideoIds = new Set(saved.map(v => v.videoId));
+    } else { _savedVideoIds = new Set(); }
+    window._refreshSaveBtns?.(); window._refreshSaveBtnsTuto?.();
+  });
+
+  /* Charger la note réelle pour un outil — appelée pour chaque carte de la vitrine */
+  window._chargerNoteOutil = async function(outilId, noteEl, avisEl) {
+    try {
+      const { ratingAverage, ratingCount } = await getRatingSummary(outilId);
+      if (!ratingCount) { if (noteEl) noteEl.style.display='none'; if (avisEl) avisEl.style.display='none'; return; }
+      const plein = Math.floor(ratingAverage), demi = (ratingAverage % 1) >= 0.5 ? 1 : 0, vide = 5 - plein - demi;
+      const etoiles = '★'.repeat(plein) + (demi?'½':'') + '☆'.repeat(vide);
+      if (noteEl) noteEl.innerHTML = `${etoiles} <span>${ratingAverage}</span>`;
+      if (avisEl) avisEl.textContent = `${ratingCount} avis`;
+    } catch { if (noteEl) noteEl.style.display='none'; if (avisEl) avisEl.style.display='none'; }
+  };
+  document.querySelectorAll('[id^="carte-"]').forEach(carte => {
+    const slug = carte.id.replace('carte-','');
+    window._chargerNoteOutil(slug, document.getElementById('note-'+slug), document.getElementById('avis-'+slug));
+  });
+
+  window._toggleSaveVideo = async function(btn, videoData) {
+    if (!_currentUser) { window.location.href = '/profil.html'; return; }
+    const uid = _currentUser.uid, videoId = videoData.videoId;
+    const saving = !_savedVideoIds.has(videoId);
+    btn.disabled = true;
+    try {
+      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title='Retirer des vidéos sauvegardées'; }
+      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title='Sauvegarder cette vidéo'; }
+    } catch (e) { console.error('[Albexia] save vidéo :', e); }
+    btn.disabled = false;
+  };
+
+  window._refreshSaveBtns = window._refreshSaveBtnsTuto = function() {
+    document.querySelectorAll('.btn-save-video[data-video-id]').forEach(btn => {
+      const saved = _savedVideoIds.has(btn.dataset.videoId);
+      btn.classList.toggle('saved', saved);
+      btn.title = saved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
+    });
+  };
+</script>
+<script src="/js/tutoriels.js"></script>
 </body>
 </html>

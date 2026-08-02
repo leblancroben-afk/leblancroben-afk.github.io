@@ -1714,14 +1714,16 @@ ${sharedJS()}
 // ════════════════════════════════════════════════════════════
 // VIDÉOTHÈQUE (tutoriels vidéo par outil)
 // ════════════════════════════════════════════════════════════
-// Indépendante des fiches et des plans (Standard/Starter/Featured) —
-// champ Firestore `videotheque` sur le doc outil, structure :
-// { youtube_id, titre, duree, canal }
-// Aucun lien fiche → vidéothèque (voir décision produit) ; seul le lien
-// inverse (vidéothèque → fiche) existe, pour le maillage interne.
+// Reproduit EXACTEMENT la structure et le CSS de tutoriels.html /
+// tutoriel-outil.html (déjà présents dans style.css : .tuto-*, .outil-*,
+// .filtre-*, .duree-*, .faq-*, .btn-save-video...). Seule différence :
+// les données viennent de Firestore (`outils/{id}.videotheque[]`) et
+// sont injectées au moment de la génération plutôt que fetchées en
+// runtime depuis tutoriels.json. js/tutoriels.js et js/tutoriel-outil.js
+// ne gèrent donc plus que l'interaction (accordéon, filtres, modals),
+// plus aucune logique de fetch/render — ils sont 100% génériques et
+// partagés par toutes les pages générées.
 
-// Contenu éditorial fixe (repris de l'ancienne tutoriels.html) — générique,
-// pas besoin d'admin, donc codé en dur ici plutôt qu'en Firestore.
 const VIDEOTHEQUE_FAQ = [
   { q: "Est-il légal de visionner ces vidéos sur votre site ?", a: "Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur." },
   { q: "Comment sont sélectionnées les vidéos pour chaque outil ?", a: "Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire." },
@@ -1757,182 +1759,339 @@ function toolVideothequeFolder(tool) {
   return { plan, langue, slug, folder: path.join('tools', plan, langue, slug, 'tutoriels') };
 }
 
-// ── Modal lecteur YouTube plein écran (partagée hub + page outil) ──
-function playerModalHTML() {
-  return `<div id="vt-player-modal" class="vt-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
-  <div class="vt-player-inner">
-    <div class="vt-player-top">
-      <p id="vt-player-titre" class="vt-player-titre"></p>
-      <button class="vt-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">✕</button>
+// ── Nav classique (identique à tutoriels.html/tutoriel-outil.html, PAS la navHTML() du reste du site) ──
+// Adaptation : les hrefs Blog/Galerie pointent vers les ancres actuelles de
+// index.html (blog.html/galerie.html n'existent plus en fichiers séparés
+// aujourd'hui) ; tout le reste (markup, classes) est repris à l'identique.
+function tutoNavHTML(outilId, outilNom) {
+  const onclickSoumettre = `ouvrirModalSoumission('${outilId||''}','${(outilNom||'').replace(/'/g,"&#39;")}')`;
+  return `<nav>
+  <a href="${R}index.html" class="logo" style="text-decoration:none;color:inherit;">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a href="${R}index.html#tools" class="nav-link" style="text-decoration:none;">Outils</a>
+    <a href="${R}index.html#blog" class="nav-link" style="text-decoration:none;">Blog</a>
+    <a href="${R}index.html#gallery" class="nav-link" style="text-decoration:none;">Galerie</a>
+    <a href="${R}tutoriels/index.html" class="nav-link active" style="text-decoration:none;">Tutoriels</a>
+    <a href="${R}comparateur/" class="nav-link" style="text-decoration:none;">Comparateur</a>
+    <a href="${R}ressources.html" class="nav-link" style="text-decoration:none;">Ressources</a>
+  </div>
+  <button class="nav-cta" onclick="${onclickSoumettre}">↑ Soumettre un tutoriel</button>
+</nav>`;
+}
+
+// ── Footer propre à ces deux pages (identique à l'original, pas footerHTML() du reste du site) ──
+function tutoFooterHTML() {
+  return `<footer style="border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-dim);font-size:12px;margin-top:auto;">
+  <p style="margin-bottom:8px;">
+    <a href="${R}index.html#tools" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Outils</a>
+    <a href="${R}index.html#blog" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Blog</a>
+    <a href="${R}tutoriels/index.html" style="color:var(--accent2);text-decoration:none;margin:0 10px;">Tutoriels</a>
+    <a href="${R}mentions-legales.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Mentions légales</a>
+    <a href="${R}politique-confidentialite.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Confidentialité</a>
+  </p>
+  <p>© 2025-2026 Albexia · L'annuaire IA francophone de référence</p>
+</footer>`;
+}
+
+// ── Modal lecteur YouTube plein écran (identique à l'original) ──
+function tutoPlayerModalHTML() {
+  return `<div id="tuto-player-modal" class="tuto-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="tuto-player-inner">
+    <div class="tuto-player-top">
+      <p id="tuto-player-titre" class="tuto-player-titre"></p>
+      <button class="tuto-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <div class="vt-player-frame">
-      <iframe id="vt-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
+    <div class="tuto-player-frame">
+      <iframe id="tuto-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
     </div>
   </div>
 </div>`;
 }
 
-// ── Modal soumission d'une vidéo (→ Formspree, pas de Firestore) ──
-function soumissionModalHTML(outilNomDefault) {
-  return `<div id="vt-modal-soumission" class="vt-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
-  <div class="vt-modal-inner">
-    <button class="vt-modal-close" onclick="fermerModalSoumission()" aria-label="Fermer">✕</button>
-    <div class="vt-modal-ico">🎬</div>
-    <h2 class="vt-modal-titre">Soumettre un tutoriel</h2>
-    <p class="vt-modal-sub">Proposez une vidéo YouTube pour enrichir notre vidéothèque. Notre équipe éditoriale l'examinera sous 48h.</p>
-    <form id="form-vt-soumission" novalidate>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-url">URL de la vidéo YouTube *</label>
-        <input class="vt-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+// ── Modal soumission d'une vidéo (identique à l'original, select peuplé au build) ──
+function tutoSoumissionModalHTML(toolsAvecVideo) {
+  const options = toolsAvecVideo.map(t =>
+    `<option value="${String(t.id||slugify(t.name))}">${t.name}</option>`
+  ).join('\n          ');
+  return `<div id="tuto-modal-soumission" class="tuto-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="tuto-modal-inner">
+    <button class="tuto-modal-close" id="soumission-fermer" aria-label="Fermer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="tuto-modal-ico">🎬</div>
+    <h2 class="tuto-modal-titre">Soumettre un tutoriel</h2>
+    <p class="tuto-modal-sub">Proposez une vidéo pour <strong id="soumission-outil-nom">cet outil</strong>. Notre équipe éditoriale l'examinera sous 48h.</p>
+    <form id="form-soumission" novalidate>
+      <input type="hidden" id="soumission-outil-id" name="outil_id" value="">
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="tuto-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-outil">Outil concerné</label>
-        <input class="vt-form-input" type="text" id="s-outil" name="outil" placeholder="ex : ChatGPT, Midjourney..."${outilNomDefault ? ` value="${outilNomDefault}"` : ''}>
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-outil">Outil concerné</label>
+        <select class="tuto-form-select" id="s-outil" name="outil">
+          <option value="">Sélectionner un outil…</option>
+          ${options}
+          <option value="autre">Autre outil IA</option>
+        </select>
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
-        <input class="vt-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="tuto-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-email">Votre email (pour notification)</label>
-        <input class="vt-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="tuto-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
       </div>
-      <button type="submit" class="vt-form-submit" id="vt-soumission-submit">Soumettre la vidéo →</button>
-      <p class="vt-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+      <button type="submit" class="tuto-form-submit" id="soumission-submit">Soumettre la vidéo →</button>
+      <p class="tuto-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
     </form>
   </div>
 </div>`;
 }
 
-// ── Bloc éditorial + FAQ (identique hub, contenu générique) ──
-function editorialEtFaqHTML() {
-  const faqHTML = VIDEOTHEQUE_FAQ.map(f => `<div class="faq-item">
-      <button class="faq-q">${f.q}</button>
-      <div class="faq-a">${f.a}</div>
+// ── FAQ (classes .faq-item/.faq-question/.faq-icone/.faq-reponse — identique à renderFAQ()) ──
+function tutoFaqHTML() {
+  const items = VIDEOTHEQUE_FAQ.map((f, i) => `<div class="faq-item" id="faq-${i}">
+      <button class="faq-question" onclick="toggleFAQ(${i})" aria-expanded="false">
+        <span>${f.q}</span>
+        <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-reponse" id="faq-rep-${i}">
+        <p>${f.a}</p>
+      </div>
     </div>`).join('\n');
-  return `<section class="vt-editorial-wrap">
-  <div class="vt-editorial-head">
-    <h2>Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
-  </div>
-  <div class="vt-editorial-body">${VIDEOTHEQUE_EDITORIAL}</div>
-</section>
-
-<section class="vt-faq-wrap vt-faq">
-  <div class="vt-faq-head"><h2>Questions fréquentes</h2></div>
-  <div class="faq-list">${faqHTML}</div>
+  return `<section class="tuto-faq-wrap">
+  <div class="tuto-faq-head"><h2>Questions fréquentes</h2></div>
+  <div class="faq-list" id="tuto-faq-list">${items}</div>
 </section>`;
 }
 
-// ── Injection de config + chargement du module JS partagé ──
-function videothequeSharedScript(config) {
-  return `<script>window.__VT = ${JSON.stringify(config)};</script>
-<script type="module" src="${R}js/videotheque-shared.js"></script>`;
-}
-
-// ── Carte outil pour la page vitrine ──────────────────────
-function videothequeCardHTML(tool) {
-  const fav   = `https://www.google.com/s2/favicons?sz=64&domain=${(tool.url||'').replace(/^https?:\/\//,'').split('/')[0]}`;
-  const info  = toolVideothequeFolder(tool);
-  if (!info) return '';
-  const nbVideos = (tool.videotheque || []).length;
-  const href = `${R}tools/${info.plan}/${info.langue}/${info.slug}/tutoriels/`;
-  const toolId = String(tool.id || info.slug);
-  return `<a href="${href}" class="vt-card" id="carte-${info.slug}" data-tool-slug="${info.slug}">
-  <div class="vt-card-top">
-    <img src="${fav}" alt="${tool.name}" class="vt-card-logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="vt-card-logo-fallback" style="display:none">${tool.emoji||'🤖'}</span>
-    <div>
-      <div class="vt-card-name">${tool.name}</div>
-      <div class="vt-card-cat">${tool.category||''}</div>
-    </div>
+function tutoEditorialHTML() {
+  return `<section class="tuto-editorial-wrap">
+  <div class="tuto-editorial-head">
+    <h2>Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
   </div>
-  <p class="vt-card-desc">${(tool.description||'').slice(0,110)}${(tool.description||'').length>110?'…':''}</p>
-  <div class="vt-card-note" data-note-outil="${toolId}"></div>
-  <span class="vt-card-count">🎬 ${nbVideos} tutoriel${nbVideos>1?'s':''}</span>
-</a>`;
+  <div class="tuto-editorial-body">${VIDEOTHEQUE_EDITORIAL}</div>
+</section>`;
 }
 
-// ── Carte vidéo (grille, ouvre le lecteur en modal plein écran) ──
-function videoCardHTML(v, i, tool) {
-  const secondes = dureeVersSecondes(v.duree);
-  const titreEsc = v.titre.replace(/'/g, "&#39;");
+// ── Miniature vidéo dans l'aperçu accordéon d'une carte (page vitrine) — identique à miniatureHTML() ──
+function miniatureHTML(v, tool) {
+  const outilId = String(tool.id || slugify(tool.name));
   const videoData = JSON.stringify({
-    videoId: v.youtube_id, outilId: String(tool.id||''), outilNom: tool.name,
+    videoId: v.youtube_id, outilId, outilNom: tool.name,
     outilPage: `${R}${toolVideothequeFolder(tool).folder}/`.replace(/\\/g,'/'),
     titre: v.titre, canal: v.canal||'', duree: v.duree||'', youtubeId: v.youtube_id,
   }).replace(/"/g, '&quot;');
-  return `<div class="vt-video-item" data-secondes="${secondes}">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('${v.youtube_id}','${titreEsc}')">
-    <img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="${v.titre}" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    ${v.duree ? `<span class="vt-video-duree-badge">${v.duree}</span>` : ''}
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('${v.youtube_id}','${titreEsc}')">${v.titre}</p>
-    <div class="vt-video-footer">
-      ${v.canal ? `<span class="vt-video-canal">${v.canal}</span>` : '<span></span>'}
-      <button class="btn-save-video" data-video-id="${v.youtube_id}" data-video-data="${videoData}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+  const titreEsc = v.titre.replace(/'/g, "&#39;");
+  return `<div class="tuto-thumb" title="${v.titre}">
+    <div class="tuto-thumb-img" onclick="ouvrirPlayer('${v.youtube_id}','${titreEsc}')">
+      <img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="${v.titre}" loading="lazy" onerror="this.src='${R}assets/placeholder-video.svg'">
+      <div class="thumb-play"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">${v.duree||''}</span>
+    </div>
+    <div class="tuto-thumb-footer">
+      <div onclick="ouvrirPlayer('${v.youtube_id}','${titreEsc}')">
+        <p class="thumb-titre">${v.titre}</p>
+        <p class="thumb-canal">${v.canal||''}</p>
+      </div>
+      <button class="btn-save-video" data-video-id="${v.youtube_id}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+        data-video-data="${videoData}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
       </button>
     </div>
-  </div>
-</div>`;
+  </div>`;
 }
 
-// ── Script du filtre durée (vanilla JS, pas de dépendance) ─
-function videothequeFiltreJS() {
-  return `<script>
-  (function() {
-    const filtres = [
-      { label: 'Tout',        min: 0,    max: 999999 },
-      { label: '< 10 min',    min: 0,    max: 600 },
-      { label: '10 – 20 min', min: 600,  max: 1200 },
-      { label: '20 – 30 min', min: 1200, max: 1800 },
-      { label: '30 – 45 min', min: 1800, max: 2700 },
-      { label: '45 min – 1h', min: 2700, max: 3600 },
-      { label: '1h+',         min: 3600, max: 999999 },
-    ];
-    const wrap = document.getElementById('vt-filtres');
-    if (!wrap) return;
-    wrap.innerHTML = filtres.map((f, i) =>
-      \`<button class="vt-filtre-btn\${i===0?' actif':''}" data-min="\${f.min}" data-max="\${f.max}">\${f.label}</button>\`
-    ).join('');
-    wrap.addEventListener('click', e => {
-      const btn = e.target.closest('.vt-filtre-btn');
-      if (!btn) return;
-      wrap.querySelectorAll('.vt-filtre-btn').forEach(b => b.classList.remove('actif'));
-      btn.classList.add('actif');
-      const min = Number(btn.dataset.min), max = Number(btn.dataset.max);
-      let visibles = 0;
-      document.querySelectorAll('.vt-video-item').forEach(item => {
-        const s = Number(item.dataset.secondes);
-        const ok = s >= min && s <= max;
-        item.style.display = ok ? '' : 'none';
-        if (ok) visibles++;
-      });
-      const compteur = document.getElementById('vt-compteur');
-      if (compteur) compteur.textContent = visibles + ' tutoriel' + (visibles > 1 ? 's' : '');
+// ── Carte outil (page vitrine) — identique à carteHTML() de l'ancien tutoriels.js ──
+// Compromis assumé : le doc Firestore `outils` n'a pas de champ `couleur` par
+// outil (existait dans tutoriels.json). Le logo utilise donc un fond neutre
+// + l'emoji de l'outil au lieu de la couleur de marque individuelle.
+function tutoCardHTML(tool, allTools) {
+  const info = toolVideothequeFolder(tool);
+  if (!info) return '';
+  const outilId = String(tool.id || info.slug);
+  const videos = tool.videotheque || [];
+  const pageUrl = `${R}tools/${info.plan}/${info.langue}/${info.slug}/tutoriels/`;
+  const apercu = videos.slice(0, 5).map(v => miniatureHTML(v, tool)).join('');
+  const tags = (tool.tags||[]).map(t => `<span class="tuto-tag">${t}</span>`).join('');
+
+  return `<article class="tuto-card" id="carte-${info.slug}" data-id="${info.slug}">
+    <div class="tuto-card-header">
+      <div class="tuto-card-identity">
+        <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text)">${tool.emoji||'🤖'}</div>
+        <div>
+          <h3 class="tuto-card-nom">${tool.name}</h3>
+          <span class="tuto-card-cat">${tool.category||''}</span>
+        </div>
+      </div>
+      <div class="tuto-card-meta">
+        <div class="tuto-card-note" id="note-${info.slug}"></div>
+        <span class="tuto-card-avis" id="avis-${info.slug}"></span>
+        <span class="tuto-card-badge-count">${videos.length} vidéo${videos.length>1?'s':''}</span>
+      </div>
+    </div>
+
+    <p class="tuto-card-desc-courte">${tool.description||''}</p>
+
+    <div class="tuto-card-tags">${tags}</div>
+
+    <div class="tuto-card-actions">
+      <button class="tuto-card-btn tuto-btn-voir" data-id="${info.slug}" onclick="toggleCarte('${info.slug}')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Voir les tutoriels
+      </button>
+      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('${outilId}','${tool.name.replace(/'/g,"&#39;")}')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Soumettre
+      </button>
+    </div>
+
+    <div class="tuto-card-expand" id="expand-${info.slug}">
+      <div class="tuto-expand-inner">
+        <p class="tuto-desc-longue">${tool.presentation||tool.description||''}</p>
+        <div class="tuto-section-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Tutoriels vidéo pour comprendre et utiliser ${tool.name}
+        </div>
+        <div class="tuto-video-grid">${apercu}</div>
+        <a href="${pageUrl}" class="tuto-voir-tout">
+          Voir tous les tutoriels pour ${tool.name}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </article>`;
+}
+
+// ── Carte vidéo (grille complète, page par outil) — identique à carteVideoHTML() ──
+function carteVideoHTML(v, tool) {
+  const outilId = String(tool.id || slugify(tool.name));
+  const secondes = dureeVersSecondes(v.duree);
+  const titreEsc = v.titre.replace(/'/g, "&#39;");
+  const videoData = JSON.stringify({
+    videoId: v.youtube_id, outilId, outilNom: tool.name,
+    outilPage: `${R}${toolVideothequeFolder(tool).folder}/`.replace(/\\/g,'/'),
+    titre: v.titre, canal: v.canal||'', duree: v.duree||'', youtubeId: v.youtube_id,
+  }).replace(/"/g, '&quot;');
+  return `<div class="outil-video-card" title="${v.titre}" data-secondes="${secondes}">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('${v.youtube_id}','${titreEsc}')">
+      <img src="https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg" alt="${v.titre}" loading="lazy" onerror="this.src='${R}assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">${v.duree||''}</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('${v.youtube_id}','${titreEsc}')">${v.titre}</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          ${v.canal||''}
+        </p>
+        <button class="btn-save-video" data-video-id="${v.youtube_id}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="${videoData}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Module Firestore inline (note réelle + save vidéo) — identique à l'original, juste des chemins absolus ──
+function tutoFirestoreModuleHTML(mode) {
+  const noteFn = mode === 'hub' ? `
+  /* Charger la note réelle pour un outil — appelée pour chaque carte de la vitrine */
+  window._chargerNoteOutil = async function(outilId, noteEl, avisEl) {
+    try {
+      const { ratingAverage, ratingCount } = await getRatingSummary(outilId);
+      if (!ratingCount) { if (noteEl) noteEl.style.display='none'; if (avisEl) avisEl.style.display='none'; return; }
+      const plein = Math.floor(ratingAverage), demi = (ratingAverage % 1) >= 0.5 ? 1 : 0, vide = 5 - plein - demi;
+      const etoiles = '★'.repeat(plein) + (demi?'½':'') + '☆'.repeat(vide);
+      if (noteEl) noteEl.innerHTML = \`\${etoiles} <span>\${ratingAverage}</span>\`;
+      if (avisEl) avisEl.textContent = \`\${ratingCount} avis\`;
+    } catch { if (noteEl) noteEl.style.display='none'; if (avisEl) avisEl.style.display='none'; }
+  };
+  document.querySelectorAll('[id^="carte-"]').forEach(carte => {
+    const slug = carte.id.replace('carte-','');
+    window._chargerNoteOutil(slug, document.getElementById('note-'+slug), document.getElementById('avis-'+slug));
+  });` : `
+  /* Note réelle pour la page d'un seul outil */
+  window._chargerNoteReelle = async function(toolSlug) {
+    const noteEl = document.getElementById('outil-note');
+    try {
+      const { ratingAverage, ratingCount } = await getRatingSummary(toolSlug);
+      if (!noteEl) return;
+      if (!ratingCount) { noteEl.innerHTML = ''; return; }
+      const plein = Math.floor(ratingAverage), demi = (ratingAverage % 1) >= 0.5 ? 1 : 0, vide = 5 - plein - demi;
+      const etoiles = '★'.repeat(plein) + (demi?'½':'') + '☆'.repeat(vide);
+      noteEl.innerHTML = \`\${etoiles} <strong>\${ratingAverage}</strong> <span>(\${ratingCount} avis)</span>\`;
+    } catch { if (noteEl) noteEl.innerHTML = ''; }
+  };
+  window._chargerNoteReelle('__OUTIL_ID__');`;
+
+  return `<script type="module">
+  import { getRatingSummary } from '${R}js/reviews.js';
+  import { auth } from '${R}js/firebase-config.js';
+  import { saveVideo, unsaveVideo, getSavedVideos } from '${R}js/firestore.js';
+  import { onAuthStateChanged } from '${R}js/firebase-config.js';
+
+  let _currentUser = null;
+  let _savedVideoIds = new Set();
+
+  onAuthStateChanged(auth, async (user) => {
+    _currentUser = user;
+    if (user) {
+      const saved = await getSavedVideos(user.uid);
+      _savedVideoIds = new Set(saved.map(v => v.videoId));
+    } else { _savedVideoIds = new Set(); }
+    window._refreshSaveBtns?.(); window._refreshSaveBtnsTuto?.();
+  });
+${noteFn}
+
+  window._toggleSaveVideo = async function(btn, videoData) {
+    if (!_currentUser) { window.location.href = '${R}profil.html'; return; }
+    const uid = _currentUser.uid, videoId = videoData.videoId;
+    const saving = !_savedVideoIds.has(videoId);
+    btn.disabled = true;
+    try {
+      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title='Retirer des vidéos sauvegardées'; }
+      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title='Sauvegarder cette vidéo'; }
+    } catch (e) { console.error('[Albexia] save vidéo :', e); }
+    btn.disabled = false;
+  };
+
+  window._refreshSaveBtns = window._refreshSaveBtnsTuto = function() {
+    document.querySelectorAll('.btn-save-video[data-video-id]').forEach(btn => {
+      const saved = _savedVideoIds.has(btn.dataset.videoId);
+      btn.classList.toggle('saved', saved);
+      btn.title = saved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
     });
-  })();
+  };
 </script>`;
 }
 
-// ── Page dédiée : vidéothèque d'un outil ──────────────────
-function generateVideothequePage(tool, allTools) {
-  const info = toolVideothequeFolder(tool);
-  if (!info) return null;
-  const videos = tool.videotheque || [];
-  if (!videos.length) return null;
-
-  const { plan, langue, slug } = info;
-  const toolId = String(tool.id || slug);
-  const ficheUrl = `${R}tools/${plan}/${langue}/${slug}/`;
-  const canonicalUrl = `${SITE_ORIGIN}/tools/${plan}/${langue}/${slug}/tutoriels/`;
-  const titleTag = `Tutoriels vidéo ${tool.name} : le guide complet | Albexia`;
-  const metaDesc = `${videos.length} tutoriels vidéo pour apprendre et maîtriser ${tool.name}, sélectionnés et classés par durée. Gratuit, en français.`;
-  const fav = `https://www.google.com/s2/favicons?sz=64&domain=${(tool.url||'').replace(/^https?:\/\//,'').split('/')[0]}`;
-
-  const videosHTML = videos.map((v, i) => videoCardHTML(v, i, tool)).join('\n');
+// ── Page vitrine : tutoriels/index.html (structure identique à l'ancien tutoriels.html) ──
+function generateVideothequeHub(toolsAvecVideos) {
+  const canonicalUrl = `${SITE_ORIGIN}/tutoriels/index.html`;
+  const titleTag = `Tutoriels vidéo IA : apprendre ChatGPT, Midjourney et plus | Albexia`;
+  const metaDesc = `Toute la vidéothèque Albexia : des tutoriels vidéo gratuits, en français, pour apprendre à utiliser les meilleurs outils IA.`;
+  const totalVideos = toolsAvecVideos.reduce((s, t) => s + (t.videotheque||[]).length, 0);
+  const cartesHTML = toolsAvecVideos.map(t => tutoCardHTML(t, toolsAvecVideos)).join('\n');
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -1947,6 +2106,88 @@ function generateVideothequePage(tool, allTools) {
   <meta property="og:description" content="${metaDesc}" />
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="${canonicalUrl}" />
+  <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "CollectionPage", "name": "Tutoriels IA en vidéo – Albexia", "publisher": { "@type": "Organization", "name": "Albexia", "url": "${SITE_ORIGIN}" } }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="${R}css/style.css" />
+</head>
+<body>
+
+${tutoNavHTML("","")}
+
+<section class="tuto-hero">
+  <div class="tuto-badge"><span class="pulse"></span>Vidéothèque francophone</div>
+  <h1>Explorez le futur de l'IA<br>avec nos <span class="grad-pink">tutoriels experts</span></h1>
+  <p>Plus de ${toolsAvecVideos.length} outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
+  <div class="tuto-hero-actions">
+    <button class="btn-main" onclick="document.getElementById('tuto-grille').scrollIntoView({behavior:'smooth'})">Explorer les tutoriels</button>
+    <button class="tuto-btn-hero-soumettre" onclick="ouvrirModalSoumission('','')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Soumettre un tutoriel
+    </button>
+  </div>
+  <div id="tuto-hero-stats" class="tuto-hero-stats">
+    <div class="tuto-stat"><span class="tuto-stat-n">${toolsAvecVideos.length}</span><span class="tuto-stat-l">Outils référencés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">${totalVideos}</span><span class="tuto-stat-l">Tutoriels sélectionnés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">100%</span><span class="tuto-stat-l">Accès gratuit</span></div>
+  </div>
+</section>
+
+<div class="tuto-grille-wrap">
+  <div id="tuto-grille" class="tuto-grille">
+${cartesHTML}
+  </div>
+</div>
+
+${tutoEditorialHTML()}
+${tutoFaqHTML()}
+${tutoPlayerModalHTML()}
+${tutoSoumissionModalHTML(toolsAvecVideos)}
+
+${tutoFooterHTML()}
+${sharedJS()}
+${tutoFirestoreModuleHTML('hub')}
+<script src="${R}js/tutoriels.js"></script>
+</body>
+</html>`;
+}
+
+// ── Page dédiée : vidéothèque d'un outil (structure identique à tutoriel-outil.html) ──
+function generateVideothequePage(tool, allToolsAvecVideo) {
+  const info = toolVideothequeFolder(tool);
+  if (!info) return null;
+  const videos = tool.videotheque || [];
+  if (!videos.length) return null;
+
+  const { plan, langue, slug } = info;
+  const toolId = String(tool.id || slug);
+  const ficheUrl = `${R}tools/${plan}/${langue}/${slug}/`;
+  const canonicalUrl = `${SITE_ORIGIN}/tools/${plan}/${langue}/${slug}/tutoriels/`;
+  const titleTag = `Maîtrisez ${tool.name} : La vidéothèque complète | Albexia`;
+  const metaDesc = `Tous les tutoriels vidéo pour apprendre et maîtriser ${tool.name}. ${videos.length} vidéos sélectionnées, filtrables par durée. Gratuit, en français.`;
+  const videosHTML = videos.map(v => carteVideoHTML(v, tool)).join('');
+  const tagsHTML = (tool.tags||[]).map(t => `<span class="tuto-tag">${t}</span>`).join('');
+
+  // Module Firestore : injecte l'id réel de l'outil dans _chargerNoteReelle()
+  const firestoreModule = tutoFirestoreModuleHTML('tool').replace('__OUTIL_ID__', toolId);
+
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${titleTag}</title>
+  <meta name="description" content="${metaDesc}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Albexia" />
+  <meta property="og:title" content="${titleTag}" />
+  <meta property="og:description" content="${metaDesc}" />
+  <meta property="og:url" content="${canonicalUrl}" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1959,124 +2200,103 @@ ${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "nam
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
-  <link rel="stylesheet" href="${R}css/videotheque.css" />
 </head>
 <body>
 
-${navHTML(langue)}
+${tutoNavHTML(toolId, tool.name)}
 
-<div class="container">
-  <nav class="vt-breadcrumb" aria-label="Fil d'ariane">
-    <a href="${R}index.html">Accueil</a> <span class="vt-bc-sep">›</span>
-    <a href="${R}tutoriels/index.html">Tutoriels</a> <span class="vt-bc-sep">›</span>
-    <span>${tool.name}</span>
-  </nav>
-
-  <a href="${ficheUrl}" class="vt-back">← Voir la fiche complète de ${tool.name}</a>
-
-  <section class="vt-hero">
-    <img src="${fav}" alt="${tool.name}" class="vt-hero-logo" onerror="this.style.display='none'">
-    <div>
-      <span class="vt-hero-badge">🎬 Vidéothèque</span>
-      <h1>Tutoriels vidéo ${tool.name}</h1>
-      <p>${videos.length} tutoriels sélectionnés pour apprendre et maîtriser ${tool.name}, gratuit et en français.</p>
-      <div class="vt-card-note" data-note-outil="${toolId}" style="margin-top:8px;"></div>
-    </div>
-  </section>
-
-  <div class="vt-filtres-wrap">
-    <div class="vt-filtres" id="vt-filtres"></div>
-    <span class="vt-compteur" id="vt-compteur">${videos.length} tutoriel${videos.length>1?'s':''}</span>
-    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre une vidéo</button>
-  </div>
-
-  <div class="vt-grid">
-${videosHTML}
-  </div>
-
-  <div class="vt-cta-wrap">
-    <a href="${R}tutoriels/index.html" class="vt-cta-btn">🎬 Explorer toute la vidéothèque Albexia →</a>
-  </div>
+<div class="outil-breadcrumb">
+  <a href="${R}index.html">Accueil</a>
+  <span class="bc-sep">›</span>
+  <a href="${R}tutoriels/index.html">Tutoriels</a>
+  <span class="bc-sep">›</span>
+  <span id="bc-outil">${tool.name}</span>
 </div>
 
-${playerModalHTML()}
-${soumissionModalHTML(tool.name)}
-
-${footerHTML()}
-${sharedJS()}
-${videothequeFiltreJS()}
-${videothequeSharedScript({ mode: 'tool', outilId: toolId, outilNom: tool.name, outilPage: `${R}${info.folder}/`.replace(/\\/g,'/') })}
-</body>
-</html>`;
-}
-
-// ── Page vitrine : liste tous les outils avec vidéothèque ─
-function generateVideothequeHub(toolsAvecVideos) {
-  const canonicalUrl = `${SITE_ORIGIN}/tutoriels/index.html`;
-  const titleTag = `Tutoriels vidéo IA : apprendre ChatGPT, Midjourney et plus | Albexia`;
-  const metaDesc = `Toute la vidéothèque Albexia : des tutoriels vidéo gratuits, en français, pour apprendre à utiliser les meilleurs outils IA.`;
-  const totalVideos = toolsAvecVideos.reduce((s, t) => s + (t.videotheque||[]).length, 0);
-
-  const cartesHTML = toolsAvecVideos.map(videothequeCardHTML).join('\n');
-
-  return `<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${titleTag}</title>
-  <meta name="description" content="${metaDesc}" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="${canonicalUrl}" />
-  <meta property="og:title"       content="${titleTag}" />
-  <meta property="og:description" content="${metaDesc}" />
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="${canonicalUrl}" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Tutoriels IA en vidéo – Albexia",
-    "url": "${canonicalUrl}",
-    "publisher": { "@type": "Organization", "name": "Albexia", "url": "${SITE_ORIGIN}" }
-  }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="${R}css/style.css" />
-  <link rel="stylesheet" href="${R}css/videotheque.css" />
-</head>
-<body>
-
-${navHTML('fr')}
-
-<section class="vt-hub-hero">
-  <span class="vt-hero-badge">🎬 Vidéothèque francophone</span>
-  <h1>Explorez le futur de l'IA avec nos tutoriels vidéo</h1>
-  <p>${toolsAvecVideos.length} outils référencés, ${totalVideos} tutoriels sélectionnés. Gratuit, en français, pour tous les niveaux.</p>
-  <div class="vt-hub-hero-actions">
-    <button class="btn-main" onclick="document.getElementById('vt-hub-grid').scrollIntoView({behavior:'smooth'})">Explorer les tutoriels</button>
-    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre un tutoriel</button>
+<section class="outil-hero">
+  <a href="${ficheUrl}" id="lien-retour" class="outil-retour">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Voir la fiche complète de ${tool.name}
+  </a>
+  <div class="outil-hero-inner">
+    <div class="outil-logo-wrap">
+      <div id="outil-logo" class="outil-logo-grand" style="background:var(--bg3);color:var(--text)">${tool.emoji||'🤖'}</div>
+    </div>
+    <div class="outil-hero-infos">
+      <div class="outil-hero-top">
+        <span id="outil-cat" class="outil-cat-badge">${tool.category||''}</span>
+        <span id="outil-count" class="outil-count-badge">${videos.length} tutoriel${videos.length>1?'s':''}</span>
+      </div>
+      <h1 id="outil-h1" class="outil-h1">Maîtrisez ${tool.name} : La vidéothèque complète</h1>
+      <p id="outil-sous-titre" class="outil-sous-titre">${tool.description||''}</p>
+      <div id="outil-note" class="outil-note"></div>
+      <div id="outil-tags" class="tuto-card-tags" style="margin-top:14px;padding:0;">${tagsHTML}</div>
+    </div>
   </div>
 </section>
 
-<div class="container">
-  <div class="vt-hub-grid" id="vt-hub-grid">
-${cartesHTML}
+<div class="outil-filtres-wrap">
+  <div class="outil-filtres-bar">
+    <div class="filtres-groupe">
+      <button id="filtre-tout" class="filtre-btn actif" onclick="setFiltreType('tout')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Tout
+      </button>
+      <button id="filtre-video" class="filtre-btn" onclick="setFiltreType('video')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        Vidéos
+      </button>
+    </div>
+    <div id="wrap-duree" class="filtres-duree-wrap" style="display:none;">
+      <div class="duree-container">
+        <button id="btn-duree-dropdown" class="filtre-btn filtre-btn-duree" onclick="toggleDureeDropdown()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="btn-duree-label">Durée</span>
+          <svg class="duree-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="duree-dropdown" class="duree-dropdown">
+          <button class="duree-option actif" data-min="0" data-max="999999" onclick="setFiltreDuree(0,999999,this,'Tout')">Tout</button>
+          <button class="duree-option" data-min="0" data-max="600" onclick="setFiltreDuree(0,600,this,'&lt; 10 min')">&lt; 10 min</button>
+          <button class="duree-option" data-min="600" data-max="1200" onclick="setFiltreDuree(600,1200,this,'10 – 20 min')">10 – 20 min</button>
+          <button class="duree-option" data-min="1200" data-max="1800" onclick="setFiltreDuree(1200,1800,this,'20 – 30 min')">20 – 30 min</button>
+          <button class="duree-option" data-min="1800" data-max="2700" onclick="setFiltreDuree(1800,2700,this,'30 – 45 min')">30 – 45 min</button>
+          <button class="duree-option" data-min="2700" data-max="3600" onclick="setFiltreDuree(2700,3600,this,'45 min – 1h')">45 min – 1h</button>
+          <button class="duree-option" data-min="3600" data-max="999999" onclick="setFiltreDuree(3600,999999,this,'1h+')">1h+</button>
+        </div>
+      </div>
+    </div>
+    <span id="outil-video-count" class="filtres-count">${videos.length} résultat${videos.length>1?'s':''}</span>
+    <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('${toolId}','${tool.name.replace(/'/g,"&#39;")}')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Soumettre une vidéo
+    </button>
   </div>
 </div>
 
-${editorialEtFaqHTML()}
+<div class="outil-grille-wrap">
+  <div id="outil-video-grille" class="outil-video-grille">
+${videosHTML}
+  </div>
+</div>
 
-${playerModalHTML()}
-${soumissionModalHTML('')}
+<section class="outil-cta-section">
+  <div class="outil-cta-inner">
+    <div class="outil-cta-ico">🎬</div>
+    <h2 class="outil-cta-titre">Vous connaissez un excellent tutoriel&nbsp;?</h2>
+    <p class="outil-cta-sub">Enrichissez la bibliothèque de la communauté francophone. Soumettez une vidéo et atteignez une audience ultra-ciblée.</p>
+    <button class="btn-main" onclick="ouvrirModalSoumission('${toolId}','${tool.name.replace(/'/g,"&#39;")}')">Soumettre un tutoriel →</button>
+  </div>
+</section>
 
-${footerHTML()}
+${tutoPlayerModalHTML()}
+${tutoSoumissionModalHTML(allToolsAvecVideo)}
+
+${tutoFooterHTML()}
 ${sharedJS()}
-${videothequeSharedScript({ mode: 'hub' })}
+${firestoreModule}
+<script src="${R}js/tutoriel-outil.js"></script>
 </body>
 </html>`;
 }
@@ -2185,21 +2405,22 @@ async function main() {
   let vtGenerated = 0, vtUnchanged = 0, vtSkipped = 0;
   const toolsAvecVideos = [];
 
+  // Passe 1 — collecter tous les outils avec vidéothèque AVANT de générer quoi
+  // que ce soit, pour que le <select> du modal soumission liste la bonne liste
+  // complète sur chaque page (pas seulement les outils déjà traités dans la boucle).
   for (const tool of tools) {
-    const toolId = String(tool.id || slugify(tool.name));
     const videos = tool.videotheque || [];
-
-    // État suivi séparément des fiches : une vidéothèque peut changer
-    // (ajout d'une vidéo) sans que le reste du doc outil ne change de
-    // sens éditorial, mais hashDoc(tool) couvre déjà tout le document,
-    // donc changedToolIds détecte aussi les changements de videotheque.
     if (!videos.length) continue;
-    if (tool.generer_fiche === false) { vtSkipped++; continue; } // pas de fiche = pas de lien retour possible
-
-    const info = toolVideothequeFolder(tool);
-    if (!info) { vtSkipped++; continue; }
-
+    if (tool.generer_fiche === false) continue;
+    if (!toolVideothequeFolder(tool)) continue;
     toolsAvecVideos.push(tool);
+  }
+
+  // Passe 2 — générer les pages
+  for (const tool of toolsAvecVideos) {
+    const toolId = String(tool.id || slugify(tool.name));
+    const info = toolVideothequeFolder(tool);
+
     newState.videotheques[toolId] = { hash: hashDoc(tool), updatedAtMs: updatedAtMs(tool) };
 
     const hasChanged = changedToolIds.has(toolId);
@@ -2207,7 +2428,7 @@ async function main() {
 
     if (!hasChanged && fs.existsSync(filePath)) { vtUnchanged++; continue; }
 
-    const html = generateVideothequePage(tool, tools);
+    const html = generateVideothequePage(tool, toolsAvecVideos);
     if (!html) { vtSkipped++; continue; }
 
     fs.mkdirSync(info.folder, { recursive: true });

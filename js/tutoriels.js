@@ -27,28 +27,35 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ─── ACCORDÉON CARTE (aperçu 5 vidéos) ─── */
 function toggleCarte(id) {
   const expand = document.getElementById(`expand-${id}`);
-  const btn    = document.querySelector(`.tuto-btn-voir[data-id="${id}"]`);
+  const btn    = document.querySelector(`.tuto-card-btn[data-id="${id}"]`);
+  const card   = document.getElementById(`carte-${id}`);
   if (!expand) return;
 
-  const ouvert = TUTO.carteOuverte === id;
+  const estOuverte = expand.classList.contains('open');
 
   /* Fermer la carte précédemment ouverte, s'il y en a une autre */
   if (TUTO.carteOuverte && TUTO.carteOuverte !== id) {
-    const prevExpand = document.getElementById(`expand-${TUTO.carteOuverte}`);
-    const prevBtn     = document.querySelector(`.tuto-btn-voir[data-id="${TUTO.carteOuverte}"]`);
-    prevExpand?.classList.remove('open');
-    prevBtn?.classList.remove('actif');
+    const ancien    = document.getElementById(`expand-${TUTO.carteOuverte}`);
+    const ancienBtn = document.querySelector(`.tuto-card-btn[data-id="${TUTO.carteOuverte}"]`);
+    const ancienCard = document.getElementById(`carte-${TUTO.carteOuverte}`);
+    if (ancien) { ancien.style.maxHeight = '0'; ancien.classList.remove('open'); }
+    ancienBtn?.classList.remove('actif');
+    ancienCard?.classList.remove('actif');
   }
 
-  if (ouvert) {
+  if (!estOuverte) {
+    expand.classList.add('open');
+    expand.style.maxHeight = expand.scrollHeight + 80 + 'px';
+    btn?.classList.add('actif');
+    card?.classList.add('actif');
+    TUTO.carteOuverte = id;
+    setTimeout(() => card?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
+  } else {
+    expand.style.maxHeight = '0';
     expand.classList.remove('open');
     btn?.classList.remove('actif');
+    card?.classList.remove('actif');
     TUTO.carteOuverte = null;
-  } else {
-    expand.classList.add('open');
-    btn?.classList.add('actif');
-    TUTO.carteOuverte = id;
-    expand.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 

@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutoriels vidéo perplexity.ai : le guide complet | Albexia</title>
-  <meta name="description" content="10 tutoriels vidéo pour apprendre et maîtriser perplexity.ai, sélectionnés et classés par durée. Gratuit, en français." />
+  <title>Maîtrisez perplexity.ai : La vidéothèque complète | Albexia</title>
+  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser perplexity.ai. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://albexia.com/tools/standard/fr/perplexity-ai/tutoriels/" />
-  <meta property="og:title"       content="Tutoriels vidéo perplexity.ai : le guide complet | Albexia" />
-  <meta property="og:description" content="10 tutoriels vidéo pour apprendre et maîtriser perplexity.ai, sélectionnés et classés par durée. Gratuit, en français." />
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://albexia.com/tools/standard/fr/perplexity-ai/tutoriels/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Albexia" />
+  <meta property="og:title" content="Maîtrisez perplexity.ai : La vidéothèque complète | Albexia" />
+  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser perplexity.ai. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta property="og:url" content="https://albexia.com/tools/standard/fr/perplexity-ai/tutoriels/" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -32,280 +33,409 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/videotheque.css" />
 </head>
 <body>
 
 <nav>
-  <div class="logo">
+  <a href="/index.html" class="logo" style="text-decoration:none;color:inherit;">
     <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
-      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
-      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
-      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+      <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
     </svg>
-  </div>
+  </a>
   <div class="nav-links">
-    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
-    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
-    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+    <a href="/index.html#tools" class="nav-link" style="text-decoration:none;">Outils</a>
+    <a href="/index.html#blog" class="nav-link" style="text-decoration:none;">Blog</a>
+    <a href="/index.html#gallery" class="nav-link" style="text-decoration:none;">Galerie</a>
+    <a href="/tutoriels/index.html" class="nav-link active" style="text-decoration:none;">Tutoriels</a>
+    <a href="/comparateur/" class="nav-link" style="text-decoration:none;">Comparateur</a>
+    <a href="/ressources.html" class="nav-link" style="text-decoration:none;">Ressources</a>
   </div>
-  <div class="kebab-wrap" id="kebab-wrap">
-    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="/glossaire.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
-      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
-      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
-      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
-      <div class="kebab-divider"></div>
-      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
-    </div>
-  </div>
+  <button class="nav-cta" onclick="ouvrirModalSoumission('21','perplexity.ai')">↑ Soumettre un tutoriel</button>
 </nav>
 
-<div class="container">
-  <nav class="vt-breadcrumb" aria-label="Fil d'ariane">
-    <a href="/index.html">Accueil</a> <span class="vt-bc-sep">›</span>
-    <a href="/tutoriels/index.html">Tutoriels</a> <span class="vt-bc-sep">›</span>
-    <span>perplexity.ai</span>
-  </nav>
-
-  <a href="/tools/standard/fr/perplexity-ai/" class="vt-back">← Voir la fiche complète de perplexity.ai</a>
-
-  <section class="vt-hero">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=perplexity.ai" alt="perplexity.ai" class="vt-hero-logo" onerror="this.style.display='none'">
-    <div>
-      <span class="vt-hero-badge">🎬 Vidéothèque</span>
-      <h1>Tutoriels vidéo perplexity.ai</h1>
-      <p>10 tutoriels sélectionnés pour apprendre et maîtriser perplexity.ai, gratuit et en français.</p>
-      <div class="vt-card-note" data-note-outil="21" style="margin-top:8px;"></div>
-    </div>
-  </section>
-
-  <div class="vt-filtres-wrap">
-    <div class="vt-filtres" id="vt-filtres"></div>
-    <span class="vt-compteur" id="vt-compteur">10 tutoriels</span>
-    <button class="vt-btn-soumettre" onclick="ouvrirModalSoumission()">🎬 Soumettre une vidéo</button>
-  </div>
-
-  <div class="vt-grid">
-<div class="vt-video-item" data-secondes="988">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('KU9zUSomFe0','Perplexity AI : Le Google du futur ?')">
-    <img src="https://img.youtube.com/vi/KU9zUSomFe0/mqdefault.jpg" alt="Perplexity AI : Le Google du futur ?" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">16:28</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('KU9zUSomFe0','Perplexity AI : Le Google du futur ?')">Perplexity AI : Le Google du futur ?</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">TechFrancophone</span>
-      <button class="btn-save-video" data-video-id="KU9zUSomFe0" data-video-data="{&quot;videoId&quot;:&quot;KU9zUSomFe0&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity AI : Le Google du futur ?&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;16:28&quot;,&quot;youtubeId&quot;:&quot;KU9zUSomFe0&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="1315">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('T9aRN5JkmL8','Faire sa veille avec Perplexity en 2024')">
-    <img src="https://img.youtube.com/vi/T9aRN5JkmL8/mqdefault.jpg" alt="Faire sa veille avec Perplexity en 2024" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">21:55</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('T9aRN5JkmL8','Faire sa veille avec Perplexity en 2024')">Faire sa veille avec Perplexity en 2024</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">FormationIA</span>
-      <button class="btn-save-video" data-video-id="T9aRN5JkmL8" data-video-data="{&quot;videoId&quot;:&quot;T9aRN5JkmL8&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Faire sa veille avec Perplexity en 2024&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;21:55&quot;,&quot;youtubeId&quot;:&quot;T9aRN5JkmL8&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="760">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('mTBfJkDuDiU','Perplexity Spaces : fonctionnalité cachée')">
-    <img src="https://img.youtube.com/vi/mTBfJkDuDiU/mqdefault.jpg" alt="Perplexity Spaces : fonctionnalité cachée" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">12:40</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('mTBfJkDuDiU','Perplexity Spaces : fonctionnalité cachée')">Perplexity Spaces : fonctionnalité cachée</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">AIProductivité</span>
-      <button class="btn-save-video" data-video-id="mTBfJkDuDiU" data-video-data="{&quot;videoId&quot;:&quot;mTBfJkDuDiU&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity Spaces : fonctionnalité cachée&quot;,&quot;canal&quot;:&quot;AIProductivité&quot;,&quot;duree&quot;:&quot;12:40&quot;,&quot;youtubeId&quot;:&quot;mTBfJkDuDiU&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="1124">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('9q4uDVFXgIs','Perplexity pour la recherche académique')">
-    <img src="https://img.youtube.com/vi/9q4uDVFXgIs/mqdefault.jpg" alt="Perplexity pour la recherche académique" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">18:44</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('9q4uDVFXgIs','Perplexity pour la recherche académique')">Perplexity pour la recherche académique</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">FormationIA</span>
-      <button class="btn-save-video" data-video-id="9q4uDVFXgIs" data-video-data="{&quot;videoId&quot;:&quot;9q4uDVFXgIs&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity pour la recherche académique&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;18:44&quot;,&quot;youtubeId&quot;:&quot;9q4uDVFXgIs&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="862">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('bx7Tyj84YB4','Remplacer Google par Perplexity en 2024')">
-    <img src="https://img.youtube.com/vi/bx7Tyj84YB4/mqdefault.jpg" alt="Remplacer Google par Perplexity en 2024" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">14:22</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('bx7Tyj84YB4','Remplacer Google par Perplexity en 2024')">Remplacer Google par Perplexity en 2024</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">DigitalActu</span>
-      <button class="btn-save-video" data-video-id="bx7Tyj84YB4" data-video-data="{&quot;videoId&quot;:&quot;bx7Tyj84YB4&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Remplacer Google par Perplexity en 2024&quot;,&quot;canal&quot;:&quot;DigitalActu&quot;,&quot;duree&quot;:&quot;14:22&quot;,&quot;youtubeId&quot;:&quot;bx7Tyj84YB4&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="1750">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('HBuqkFhB2Zk','Perplexity pour créer des rapports de marché')">
-    <img src="https://img.youtube.com/vi/HBuqkFhB2Zk/mqdefault.jpg" alt="Perplexity pour créer des rapports de marché" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">29:10</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('HBuqkFhB2Zk','Perplexity pour créer des rapports de marché')">Perplexity pour créer des rapports de marché</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">EntrepreneurIA</span>
-      <button class="btn-save-video" data-video-id="HBuqkFhB2Zk" data-video-data="{&quot;videoId&quot;:&quot;HBuqkFhB2Zk&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity pour créer des rapports de marché&quot;,&quot;canal&quot;:&quot;EntrepreneurIA&quot;,&quot;duree&quot;:&quot;29:10&quot;,&quot;youtubeId&quot;:&quot;HBuqkFhB2Zk&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="1448">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('MVIAZm5GPNQ','Perplexity + Notion : prises de notes IA')">
-    <img src="https://img.youtube.com/vi/MVIAZm5GPNQ/mqdefault.jpg" alt="Perplexity + Notion : prises de notes IA" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">24:08</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('MVIAZm5GPNQ','Perplexity + Notion : prises de notes IA')">Perplexity + Notion : prises de notes IA</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">ProductivitéPro</span>
-      <button class="btn-save-video" data-video-id="MVIAZm5GPNQ" data-video-data="{&quot;videoId&quot;:&quot;MVIAZm5GPNQ&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity + Notion : prises de notes IA&quot;,&quot;canal&quot;:&quot;ProductivitéPro&quot;,&quot;duree&quot;:&quot;24:08&quot;,&quot;youtubeId&quot;:&quot;MVIAZm5GPNQ&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="690">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('3nFUkKZFpBc','Recherche d&#39;images avec Perplexity')">
-    <img src="https://img.youtube.com/vi/3nFUkKZFpBc/mqdefault.jpg" alt="Recherche d'images avec Perplexity" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">11:30</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('3nFUkKZFpBc','Recherche d&#39;images avec Perplexity')">Recherche d'images avec Perplexity</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">TechFrancophone</span>
-      <button class="btn-save-video" data-video-id="3nFUkKZFpBc" data-video-data="{&quot;videoId&quot;:&quot;3nFUkKZFpBc&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Recherche d'images avec Perplexity&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;11:30&quot;,&quot;youtubeId&quot;:&quot;3nFUkKZFpBc&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="1205">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('YlgA0fg4pBQ','Veille sectorielle automatique avec Perplexity')">
-    <img src="https://img.youtube.com/vi/YlgA0fg4pBQ/mqdefault.jpg" alt="Veille sectorielle automatique avec Perplexity" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">20:05</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('YlgA0fg4pBQ','Veille sectorielle automatique avec Perplexity')">Veille sectorielle automatique avec Perplexity</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">EntrepreneurIA</span>
-      <button class="btn-save-video" data-video-id="YlgA0fg4pBQ" data-video-data="{&quot;videoId&quot;:&quot;YlgA0fg4pBQ&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Veille sectorielle automatique avec Perplexity&quot;,&quot;canal&quot;:&quot;EntrepreneurIA&quot;,&quot;duree&quot;:&quot;20:05&quot;,&quot;youtubeId&quot;:&quot;YlgA0fg4pBQ&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-<div class="vt-video-item" data-secondes="2264">
-  <div class="vt-video-thumb" onclick="ouvrirPlayer('bJl1RgdXHaE','Perplexity API : intégrer dans ses outils')">
-    <img src="https://img.youtube.com/vi/bJl1RgdXHaE/mqdefault.jpg" alt="Perplexity API : intégrer dans ses outils" loading="lazy">
-    <div class="vt-video-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-    <span class="vt-video-duree-badge">37:44</span>
-  </div>
-  <div class="vt-video-info">
-    <p class="vt-video-titre" onclick="ouvrirPlayer('bJl1RgdXHaE','Perplexity API : intégrer dans ses outils')">Perplexity API : intégrer dans ses outils</p>
-    <div class="vt-video-footer">
-      <span class="vt-video-canal">DevIA</span>
-      <button class="btn-save-video" data-video-id="bJl1RgdXHaE" data-video-data="{&quot;videoId&quot;:&quot;bJl1RgdXHaE&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity API : intégrer dans ses outils&quot;,&quot;canal&quot;:&quot;DevIA&quot;,&quot;duree&quot;:&quot;37:44&quot;,&quot;youtubeId&quot;:&quot;bJl1RgdXHaE&quot;}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo" onclick="event.stopPropagation();toggleSaveVideo(this)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-  </div>
-
-  <div class="vt-cta-wrap">
-    <a href="/tutoriels/index.html" class="vt-cta-btn">🎬 Explorer toute la vidéothèque Albexia →</a>
-  </div>
+<div class="outil-breadcrumb">
+  <a href="/index.html">Accueil</a>
+  <span class="bc-sep">›</span>
+  <a href="/tutoriels/index.html">Tutoriels</a>
+  <span class="bc-sep">›</span>
+  <span id="bc-outil">perplexity.ai</span>
 </div>
 
-<div id="vt-player-modal" class="vt-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
-  <div class="vt-player-inner">
-    <div class="vt-player-top">
-      <p id="vt-player-titre" class="vt-player-titre"></p>
-      <button class="vt-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">✕</button>
-    </div>
-    <div class="vt-player-frame">
-      <iframe id="vt-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
-    </div>
-  </div>
-</div>
-<div id="vt-modal-soumission" class="vt-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
-  <div class="vt-modal-inner">
-    <button class="vt-modal-close" onclick="fermerModalSoumission()" aria-label="Fermer">✕</button>
-    <div class="vt-modal-ico">🎬</div>
-    <h2 class="vt-modal-titre">Soumettre un tutoriel</h2>
-    <p class="vt-modal-sub">Proposez une vidéo YouTube pour enrichir notre vidéothèque. Notre équipe éditoriale l'examinera sous 48h.</p>
-    <form id="form-vt-soumission" novalidate>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-url">URL de la vidéo YouTube *</label>
-        <input class="vt-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+<section class="outil-hero">
+  <a href="/tools/standard/fr/perplexity-ai/" id="lien-retour" class="outil-retour">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Voir la fiche complète de perplexity.ai
+  </a>
+  <div class="outil-hero-inner">
+    <div class="outil-logo-wrap">
+      <div id="outil-logo" class="outil-logo-grand" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
+        <img src="https://www.google.com/s2/favicons?sz=128&domain=perplexity.ai" alt="perplexity.ai" width="48" height="48" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'🤖'}))">
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-outil">Outil concerné</label>
-        <input class="vt-form-input" type="text" id="s-outil" name="outil" placeholder="ex : ChatGPT, Midjourney..." value="perplexity.ai">
+    </div>
+    <div class="outil-hero-infos">
+      <div class="outil-hero-top">
+        <span id="outil-cat" class="outil-cat-badge">Recherche</span>
+        <span id="outil-count" class="outil-count-badge">10 tutoriels</span>
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
-        <input class="vt-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+      <h1 id="outil-h1" class="outil-h1">Maîtrisez perplexity.ai : La vidéothèque complète</h1>
+      <p id="outil-sous-titre" class="outil-sous-titre">Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.</p>
+      <div id="outil-note" class="outil-note"></div>
+      <div id="outil-tags" class="tuto-card-tags" style="margin-top:14px;padding:0;"><span class="tuto-tag">recherche</span><span class="tuto-tag">analyse</span><span class="tuto-tag">veille</span><span class="tuto-tag">productivité</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="outil-filtres-wrap">
+  <div class="outil-filtres-bar">
+    <div class="filtres-groupe">
+      <button id="filtre-tout" class="filtre-btn actif" onclick="setFiltreType('tout')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Tout
+      </button>
+      <button id="filtre-video" class="filtre-btn" onclick="setFiltreType('video')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        Vidéos
+      </button>
+    </div>
+    <div id="wrap-duree" class="filtres-duree-wrap" style="display:none;">
+      <div class="duree-container">
+        <button id="btn-duree-dropdown" class="filtre-btn filtre-btn-duree" onclick="toggleDureeDropdown()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="btn-duree-label">Durée</span>
+          <svg class="duree-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="duree-dropdown" class="duree-dropdown">
+          <button class="duree-option actif" data-min="0" data-max="999999" onclick="setFiltreDuree(0,999999,this,'Tout')">Tout</button>
+          <button class="duree-option" data-min="0" data-max="600" onclick="setFiltreDuree(0,600,this,'&lt; 10 min')">&lt; 10 min</button>
+          <button class="duree-option" data-min="600" data-max="1200" onclick="setFiltreDuree(600,1200,this,'10 – 20 min')">10 – 20 min</button>
+          <button class="duree-option" data-min="1200" data-max="1800" onclick="setFiltreDuree(1200,1800,this,'20 – 30 min')">20 – 30 min</button>
+          <button class="duree-option" data-min="1800" data-max="2700" onclick="setFiltreDuree(1800,2700,this,'30 – 45 min')">30 – 45 min</button>
+          <button class="duree-option" data-min="2700" data-max="3600" onclick="setFiltreDuree(2700,3600,this,'45 min – 1h')">45 min – 1h</button>
+          <button class="duree-option" data-min="3600" data-max="999999" onclick="setFiltreDuree(3600,999999,this,'1h+')">1h+</button>
+        </div>
       </div>
-      <div class="vt-form-field">
-        <label class="vt-form-label" for="s-email">Votre email (pour notification)</label>
-        <input class="vt-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+    </div>
+    <span id="outil-video-count" class="filtres-count">10 résultats</span>
+    <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('21','perplexity.ai')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Soumettre une vidéo
+    </button>
+  </div>
+</div>
+
+<div class="outil-grille-wrap">
+  <div id="outil-video-grille" class="outil-video-grille">
+<div class="outil-video-card" title="Perplexity AI : Le Google du futur ?" data-secondes="988">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('KU9zUSomFe0','Perplexity AI : Le Google du futur ?')">
+      <img src="https://img.youtube.com/vi/KU9zUSomFe0/mqdefault.jpg" alt="Perplexity AI : Le Google du futur ?" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
       </div>
-      <button type="submit" class="vt-form-submit" id="vt-soumission-submit">Soumettre la vidéo →</button>
-      <p class="vt-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">16:28</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('KU9zUSomFe0','Perplexity AI : Le Google du futur ?')">Perplexity AI : Le Google du futur ?</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          TechFrancophone
+        </p>
+        <button class="btn-save-video" data-video-id="KU9zUSomFe0" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;KU9zUSomFe0&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity AI : Le Google du futur ?&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;16:28&quot;,&quot;youtubeId&quot;:&quot;KU9zUSomFe0&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Faire sa veille avec Perplexity en 2024" data-secondes="1315">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('T9aRN5JkmL8','Faire sa veille avec Perplexity en 2024')">
+      <img src="https://img.youtube.com/vi/T9aRN5JkmL8/mqdefault.jpg" alt="Faire sa veille avec Perplexity en 2024" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">21:55</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('T9aRN5JkmL8','Faire sa veille avec Perplexity en 2024')">Faire sa veille avec Perplexity en 2024</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          FormationIA
+        </p>
+        <button class="btn-save-video" data-video-id="T9aRN5JkmL8" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;T9aRN5JkmL8&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Faire sa veille avec Perplexity en 2024&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;21:55&quot;,&quot;youtubeId&quot;:&quot;T9aRN5JkmL8&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Perplexity Spaces : fonctionnalité cachée" data-secondes="760">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('mTBfJkDuDiU','Perplexity Spaces : fonctionnalité cachée')">
+      <img src="https://img.youtube.com/vi/mTBfJkDuDiU/mqdefault.jpg" alt="Perplexity Spaces : fonctionnalité cachée" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">12:40</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('mTBfJkDuDiU','Perplexity Spaces : fonctionnalité cachée')">Perplexity Spaces : fonctionnalité cachée</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          AIProductivité
+        </p>
+        <button class="btn-save-video" data-video-id="mTBfJkDuDiU" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;mTBfJkDuDiU&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity Spaces : fonctionnalité cachée&quot;,&quot;canal&quot;:&quot;AIProductivité&quot;,&quot;duree&quot;:&quot;12:40&quot;,&quot;youtubeId&quot;:&quot;mTBfJkDuDiU&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Perplexity pour la recherche académique" data-secondes="1124">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('9q4uDVFXgIs','Perplexity pour la recherche académique')">
+      <img src="https://img.youtube.com/vi/9q4uDVFXgIs/mqdefault.jpg" alt="Perplexity pour la recherche académique" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">18:44</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('9q4uDVFXgIs','Perplexity pour la recherche académique')">Perplexity pour la recherche académique</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          FormationIA
+        </p>
+        <button class="btn-save-video" data-video-id="9q4uDVFXgIs" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;9q4uDVFXgIs&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity pour la recherche académique&quot;,&quot;canal&quot;:&quot;FormationIA&quot;,&quot;duree&quot;:&quot;18:44&quot;,&quot;youtubeId&quot;:&quot;9q4uDVFXgIs&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Remplacer Google par Perplexity en 2024" data-secondes="862">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('bx7Tyj84YB4','Remplacer Google par Perplexity en 2024')">
+      <img src="https://img.youtube.com/vi/bx7Tyj84YB4/mqdefault.jpg" alt="Remplacer Google par Perplexity en 2024" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">14:22</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('bx7Tyj84YB4','Remplacer Google par Perplexity en 2024')">Remplacer Google par Perplexity en 2024</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          DigitalActu
+        </p>
+        <button class="btn-save-video" data-video-id="bx7Tyj84YB4" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;bx7Tyj84YB4&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Remplacer Google par Perplexity en 2024&quot;,&quot;canal&quot;:&quot;DigitalActu&quot;,&quot;duree&quot;:&quot;14:22&quot;,&quot;youtubeId&quot;:&quot;bx7Tyj84YB4&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Perplexity pour créer des rapports de marché" data-secondes="1750">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('HBuqkFhB2Zk','Perplexity pour créer des rapports de marché')">
+      <img src="https://img.youtube.com/vi/HBuqkFhB2Zk/mqdefault.jpg" alt="Perplexity pour créer des rapports de marché" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">29:10</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('HBuqkFhB2Zk','Perplexity pour créer des rapports de marché')">Perplexity pour créer des rapports de marché</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          EntrepreneurIA
+        </p>
+        <button class="btn-save-video" data-video-id="HBuqkFhB2Zk" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;HBuqkFhB2Zk&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity pour créer des rapports de marché&quot;,&quot;canal&quot;:&quot;EntrepreneurIA&quot;,&quot;duree&quot;:&quot;29:10&quot;,&quot;youtubeId&quot;:&quot;HBuqkFhB2Zk&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Perplexity + Notion : prises de notes IA" data-secondes="1448">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('MVIAZm5GPNQ','Perplexity + Notion : prises de notes IA')">
+      <img src="https://img.youtube.com/vi/MVIAZm5GPNQ/mqdefault.jpg" alt="Perplexity + Notion : prises de notes IA" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">24:08</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('MVIAZm5GPNQ','Perplexity + Notion : prises de notes IA')">Perplexity + Notion : prises de notes IA</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          ProductivitéPro
+        </p>
+        <button class="btn-save-video" data-video-id="MVIAZm5GPNQ" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;MVIAZm5GPNQ&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity + Notion : prises de notes IA&quot;,&quot;canal&quot;:&quot;ProductivitéPro&quot;,&quot;duree&quot;:&quot;24:08&quot;,&quot;youtubeId&quot;:&quot;MVIAZm5GPNQ&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Recherche d'images avec Perplexity" data-secondes="690">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('3nFUkKZFpBc','Recherche d&#39;images avec Perplexity')">
+      <img src="https://img.youtube.com/vi/3nFUkKZFpBc/mqdefault.jpg" alt="Recherche d'images avec Perplexity" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">11:30</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('3nFUkKZFpBc','Recherche d&#39;images avec Perplexity')">Recherche d'images avec Perplexity</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          TechFrancophone
+        </p>
+        <button class="btn-save-video" data-video-id="3nFUkKZFpBc" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;3nFUkKZFpBc&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Recherche d'images avec Perplexity&quot;,&quot;canal&quot;:&quot;TechFrancophone&quot;,&quot;duree&quot;:&quot;11:30&quot;,&quot;youtubeId&quot;:&quot;3nFUkKZFpBc&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Veille sectorielle automatique avec Perplexity" data-secondes="1205">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('YlgA0fg4pBQ','Veille sectorielle automatique avec Perplexity')">
+      <img src="https://img.youtube.com/vi/YlgA0fg4pBQ/mqdefault.jpg" alt="Veille sectorielle automatique avec Perplexity" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">20:05</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('YlgA0fg4pBQ','Veille sectorielle automatique avec Perplexity')">Veille sectorielle automatique avec Perplexity</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          EntrepreneurIA
+        </p>
+        <button class="btn-save-video" data-video-id="YlgA0fg4pBQ" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;YlgA0fg4pBQ&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Veille sectorielle automatique avec Perplexity&quot;,&quot;canal&quot;:&quot;EntrepreneurIA&quot;,&quot;duree&quot;:&quot;20:05&quot;,&quot;youtubeId&quot;:&quot;YlgA0fg4pBQ&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Perplexity API : intégrer dans ses outils" data-secondes="2264">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('bJl1RgdXHaE','Perplexity API : intégrer dans ses outils')">
+      <img src="https://img.youtube.com/vi/bJl1RgdXHaE/mqdefault.jpg" alt="Perplexity API : intégrer dans ses outils" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-badge badge-video">▶ Vidéo</span>
+      <span class="thumb-duree">37:44</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('bJl1RgdXHaE','Perplexity API : intégrer dans ses outils')">Perplexity API : intégrer dans ses outils</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          DevIA
+        </p>
+        <button class="btn-save-video" data-video-id="bJl1RgdXHaE" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;bJl1RgdXHaE&quot;,&quot;outilId&quot;:&quot;21&quot;,&quot;outilNom&quot;:&quot;perplexity.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/perplexity-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Perplexity API : intégrer dans ses outils&quot;,&quot;canal&quot;:&quot;DevIA&quot;,&quot;duree&quot;:&quot;37:44&quot;,&quot;youtubeId&quot;:&quot;bJl1RgdXHaE&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<section class="outil-cta-section">
+  <div class="outil-cta-inner">
+    <div class="outil-cta-ico">🎬</div>
+    <h2 class="outil-cta-titre">Vous connaissez un excellent tutoriel&nbsp;?</h2>
+    <p class="outil-cta-sub">Enrichissez la bibliothèque de la communauté francophone. Soumettez une vidéo et atteignez une audience ultra-ciblée.</p>
+    <button class="btn-main" onclick="ouvrirModalSoumission('21','perplexity.ai')">Soumettre un tutoriel →</button>
+  </div>
+</section>
+
+<div id="tuto-player-modal" class="tuto-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <div class="tuto-player-inner">
+    <div class="tuto-player-top">
+      <p id="tuto-player-titre" class="tuto-player-titre"></p>
+      <button class="tuto-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="tuto-player-frame">
+      <iframe id="tuto-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
+    </div>
+  </div>
+</div>
+<div id="tuto-modal-soumission" class="tuto-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  <div class="tuto-modal-inner">
+    <button class="tuto-modal-close" id="soumission-fermer" aria-label="Fermer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="tuto-modal-ico">🎬</div>
+    <h2 class="tuto-modal-titre">Soumettre un tutoriel</h2>
+    <p class="tuto-modal-sub">Proposez une vidéo pour <strong id="soumission-outil-nom">cet outil</strong>. Notre équipe éditoriale l'examinera sous 48h.</p>
+    <form id="form-soumission" novalidate>
+      <input type="hidden" id="soumission-outil-id" name="outil_id" value="">
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <input class="tuto-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-outil">Outil concerné</label>
+        <select class="tuto-form-select" id="s-outil" name="outil">
+          <option value="">Sélectionner un outil…</option>
+          <option value="17">ChatGPT</option>
+          <option value="18">Claude</option>
+          <option value="19">Midjourney</option>
+          <option value="20">Make</option>
+          <option value="21">perplexity.ai</option>
+          <option value="22">Runway</option>
+          <option value="autre">Autre outil IA</option>
+        </select>
+      </div>
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
+        <input class="tuto-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+      </div>
+      <div class="tuto-form-field">
+        <label class="tuto-form-label" for="s-email">Votre email (pour notification)</label>
+        <input class="tuto-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+      </div>
+      <button type="submit" class="tuto-form-submit" id="soumission-submit">Soumettre la vidéo →</button>
+      <p class="tuto-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
     </form>
   </div>
 </div>
 
-<footer>
-  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
-    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
-  </div>
+<footer style="border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-dim);font-size:12px;margin-top:auto;">
+  <p style="margin-bottom:8px;">
+    <a href="/index.html#tools" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Outils</a>
+    <a href="/index.html#blog" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Blog</a>
+    <a href="/tutoriels/index.html" style="color:var(--accent2);text-decoration:none;margin:0 10px;">Tutoriels</a>
+    <a href="/mentions-legales.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Mentions légales</a>
+    <a href="/politique-confidentialite.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Confidentialité</a>
+  </p>
+  <p>© 2025-2026 Albexia · L'annuaire IA francophone de référence</p>
 </footer>
 <script>
   const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
@@ -315,41 +445,58 @@
     km.addEventListener('click', e => e.stopPropagation());
   }
 </script>
-<script>
-  (function() {
-    const filtres = [
-      { label: 'Tout',        min: 0,    max: 999999 },
-      { label: '< 10 min',    min: 0,    max: 600 },
-      { label: '10 – 20 min', min: 600,  max: 1200 },
-      { label: '20 – 30 min', min: 1200, max: 1800 },
-      { label: '30 – 45 min', min: 1800, max: 2700 },
-      { label: '45 min – 1h', min: 2700, max: 3600 },
-      { label: '1h+',         min: 3600, max: 999999 },
-    ];
-    const wrap = document.getElementById('vt-filtres');
-    if (!wrap) return;
-    wrap.innerHTML = filtres.map((f, i) =>
-      `<button class="vt-filtre-btn${i===0?' actif':''}" data-min="${f.min}" data-max="${f.max}">${f.label}</button>`
-    ).join('');
-    wrap.addEventListener('click', e => {
-      const btn = e.target.closest('.vt-filtre-btn');
-      if (!btn) return;
-      wrap.querySelectorAll('.vt-filtre-btn').forEach(b => b.classList.remove('actif'));
-      btn.classList.add('actif');
-      const min = Number(btn.dataset.min), max = Number(btn.dataset.max);
-      let visibles = 0;
-      document.querySelectorAll('.vt-video-item').forEach(item => {
-        const s = Number(item.dataset.secondes);
-        const ok = s >= min && s <= max;
-        item.style.display = ok ? '' : 'none';
-        if (ok) visibles++;
-      });
-      const compteur = document.getElementById('vt-compteur');
-      if (compteur) compteur.textContent = visibles + ' tutoriel' + (visibles > 1 ? 's' : '');
+<script type="module">
+  import { getRatingSummary } from '/js/reviews.js';
+  import { auth } from '/js/firebase-config.js';
+  import { saveVideo, unsaveVideo, getSavedVideos } from '/js/firestore.js';
+  import { onAuthStateChanged } from '/js/firebase-config.js';
+
+  let _currentUser = null;
+  let _savedVideoIds = new Set();
+
+  onAuthStateChanged(auth, async (user) => {
+    _currentUser = user;
+    if (user) {
+      const saved = await getSavedVideos(user.uid);
+      _savedVideoIds = new Set(saved.map(v => v.videoId));
+    } else { _savedVideoIds = new Set(); }
+    window._refreshSaveBtns?.(); window._refreshSaveBtnsTuto?.();
+  });
+
+  /* Note réelle pour la page d'un seul outil */
+  window._chargerNoteReelle = async function(toolSlug) {
+    const noteEl = document.getElementById('outil-note');
+    try {
+      const { ratingAverage, ratingCount } = await getRatingSummary(toolSlug);
+      if (!noteEl) return;
+      if (!ratingCount) { noteEl.innerHTML = ''; return; }
+      const plein = Math.floor(ratingAverage), demi = (ratingAverage % 1) >= 0.5 ? 1 : 0, vide = 5 - plein - demi;
+      const etoiles = '★'.repeat(plein) + (demi?'½':'') + '☆'.repeat(vide);
+      noteEl.innerHTML = `${etoiles} <strong>${ratingAverage}</strong> <span>(${ratingCount} avis)</span>`;
+    } catch { if (noteEl) noteEl.innerHTML = ''; }
+  };
+  window._chargerNoteReelle('21');
+
+  window._toggleSaveVideo = async function(btn, videoData) {
+    if (!_currentUser) { window.location.href = '/profil.html'; return; }
+    const uid = _currentUser.uid, videoId = videoData.videoId;
+    const saving = !_savedVideoIds.has(videoId);
+    btn.disabled = true;
+    try {
+      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title='Retirer des vidéos sauvegardées'; }
+      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title='Sauvegarder cette vidéo'; }
+    } catch (e) { console.error('[Albexia] save vidéo :', e); }
+    btn.disabled = false;
+  };
+
+  window._refreshSaveBtns = window._refreshSaveBtnsTuto = function() {
+    document.querySelectorAll('.btn-save-video[data-video-id]').forEach(btn => {
+      const saved = _savedVideoIds.has(btn.dataset.videoId);
+      btn.classList.toggle('saved', saved);
+      btn.title = saved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
     });
-  })();
+  };
 </script>
-<script>window.__VT = {"mode":"tool","outilId":"21","outilNom":"perplexity.ai","outilPage":"/tools/standard/fr/perplexity-ai/tutoriels/"};</script>
-<script type="module" src="/js/videotheque-shared.js"></script>
+<script src="/js/tutoriel-outil.js"></script>
 </body>
 </html>

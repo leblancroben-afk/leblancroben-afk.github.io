@@ -1712,6 +1712,250 @@ ${sharedJS()}
 }
 
 // ════════════════════════════════════════════════════════════
+// GLOSSAIRE IA (pages dédiées /glossaire/{slug}/, cibles Position 0)
+// ════════════════════════════════════════════════════════════
+// Réutilise les classes .niche-* existantes (niche.css) — aucun nouveau
+// fichier CSS nécessaire. Seuls le badge de niveau et les 2 callouts
+// (définition flash / erreur fréquente) ont un <style> scopé en page.
+
+const GLOSSAIRE_NIVEAUX = {
+  debutant:      { emoji: '🌱', label: 'Débutant',      couleur: '#00d4aa' },
+  intermediaire: { emoji: '🌿', label: 'Intermédiaire', couleur: '#f5a623' },
+  avance:        { emoji: '🌳', label: 'Avancé',        couleur: '#ff6b9d' },
+};
+
+function glossaireNiveauBadgeHTML(niveau) {
+  const n = GLOSSAIRE_NIVEAUX[niveau] || GLOSSAIRE_NIVEAUX.debutant;
+  return `<span class="glossaire-niveau-badge" style="color:${n.couleur};border-color:${n.couleur}66;background:${n.couleur}1a">${n.emoji} ${n.label}</span>`;
+}
+
+// Carte non-cliquable pour le hub : un terme en brouillon (pas encore
+// enrichi/publié) reste visible pour la cohérence de la grille A-Z, mais
+// ne doit pas amener vers une page 404 — donc pas de <a href>, juste un
+// <div> avec un état visuel "bientôt disponible".
+function glossaireCardHTML(terme) {
+  const n = GLOSSAIRE_NIVEAUX[terme.niveau] || GLOSSAIRE_NIVEAUX.debutant;
+  const estPublie = terme.status === 'publie';
+  const def = (terme.definitionFlash || terme.definition || '').slice(0, 130);
+  const inner = `<div class="ntc-top">
+    <span class="ntc-name">${terme.terme}</span>
+    <span style="font-size:11px;color:${n.couleur}">${n.emoji}</span>
+  </div>
+  <span class="ntc-cat">${def}${def.length >= 130 ? '…' : ''}</span>
+  <span class="ntc-cta">${estPublie ? 'Voir la définition →' : 'Bientôt disponible'}</span>`;
+
+  return estPublie
+    ? `<a href="${R}glossaire/${terme.slug}/" class="niche-tool-card" data-lettre="${(terme.lettre||terme.terme[0]||'').toUpperCase()}" data-niveau="${terme.niveau||''}">${inner}</a>`
+    : `<div class="niche-tool-card" style="opacity:.5;cursor:default" data-lettre="${(terme.lettre||terme.terme[0]||'').toUpperCase()}" data-niveau="${terme.niveau||''}" aria-disabled="true">${inner}</div>`;
+}
+
+function generateGlossaireHub(termes) {
+  const langue = 'fr';
+  const canonicalUrl = `${SITE_ORIGIN}/glossaire/`;
+  const titleTag = `Glossaire IA — Tous les termes de l'intelligence artificielle expliqués | Albexia`;
+  const metaDesc = `Définitions claires des termes de l'IA : LLM, prompt, agent IA, RAG... Comprenez le vocabulaire de l'intelligence artificielle en français.`;
+
+  const parLettre = {};
+  for (const t of termes) {
+    const l = (t.lettre || t.terme?.[0] || '').toUpperCase();
+    if (!parLettre[l]) parLettre[l] = [];
+    parLettre[l].push(t);
+  }
+  const lettres = Object.keys(parLettre).sort();
+
+  const sectionsHTML = lettres.map(l => `<div class="niche-section" id="lettre-${l}">
+  <div class="niche-section-title">${l}</div>
+  <div class="niche-tools-grid">
+    ${parLettre[l].map(glossaireCardHTML).join('\n    ')}
+  </div>
+</div>`).join('\n');
+
+  const nombrePublies = termes.filter(t => t.status === 'publie').length;
+
+  return `<!DOCTYPE html>
+<html lang="${langue}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${titleTag}</title>
+  <meta name="description" content="${metaDesc}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+  <meta property="og:title" content="${titleTag}" />
+  <meta property="og:description" content="${metaDesc}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="${canonicalUrl}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="${R}css/style.css" />
+  <link rel="stylesheet" href="${R}css/niche.css" />
+  <style>
+    .glossaire-niveau-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:14px;border:1px solid;margin-left:8px}
+    .niche-tools-grid .niche-tool-card[aria-disabled="true"]:hover{transform:none}
+  </style>
+</head>
+<body>
+
+${navHTML(langue)}
+
+<section class="niche-hero">
+  <div class="niche-hero-glow"></div>
+  <div class="niche-badge">Glossaire</div>
+  <h1>Le glossaire de l'IA, expliqué simplement</h1>
+  <p>${nombrePublies} définitions claires pour comprendre le vocabulaire de l'intelligence artificielle, du niveau débutant à avancé.</p>
+</section>
+
+${sectionsHTML}
+
+<a href="${R}index.html#tools" class="niche-back">← Retour au catalogue</a>
+
+${footerHTML()}
+${sharedJS()}
+</body>
+</html>`;
+}
+
+function generateGlossaireTermePage(terme, tools, allTermes) {
+  const langue = 'fr';
+  const slug = terme.slug;
+  if (!slug) return null;
+
+  const canonicalUrl = `${SITE_ORIGIN}/glossaire/${slug}/`;
+  const titleTag = `C'est quoi ${/^[aeiouhAEIOUH]/.test(terme.terme) ? "l'" : "un "}${terme.terme} ? Définition IA | Albexia`;
+  const defFlash = terme.definitionFlash || terme.definition || '';
+  const metaDesc = defFlash.slice(0, 155);
+
+  const outilsSlugs = [...new Set(terme.outils || [])];
+  const outilsMatches = outilsSlugs.map(s => tools.find(t => slugify(t.name) === s)).filter(Boolean);
+  const outilsHTML = outilsMatches.length
+    ? `<div class="niche-section">
+  <div class="niche-section-title">🛠️ Outils IA pour pratiquer</div>
+  <div class="niche-tools-grid">
+    ${outilsMatches.map(nicheToolCardHTML).join('\n    ')}
+  </div>
+</div>`
+    : '';
+
+  const pourquoiHTML = terme.pourquoiImportant ? `<div class="niche-section">
+  <div class="niche-section-title">🎯 Pourquoi c'est important</div>
+  <div class="niche-conseils">${terme.pourquoiImportant}</div>
+</div>` : '';
+
+  const enPratiqueHTML = terme.enPratique ? `<div class="niche-section">
+  <div class="niche-section-title">⚙️ En pratique</div>
+  <div class="niche-conseils">${terme.enPratique}</div>
+</div>` : '';
+
+  const exempleHTML = terme.exemple ? `<div class="niche-section">
+  <div class="niche-section-title">💡 Exemple concret</div>
+  <div class="niche-conseils" style="font-style:italic">${terme.exemple}</div>
+</div>` : '';
+
+  const erreurHTML = terme.erreurFrequente ? `<div class="niche-section">
+  <div class="glossaire-erreur-box"><strong>Erreur fréquente :</strong> ${terme.erreurFrequente}</div>
+</div>` : '';
+
+  const faqItems = terme.faq || [];
+  const faqHTML = faqItems.length ? `<div class="niche-section">
+  <div class="niche-section-title">❓ Questions fréquentes</div>
+  <div class="niche-faq">
+    ${faqItems.map((f, i) => `<div class="niche-faq-item" id="gfaq-${i}">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(${i})">
+        <span>${f.question}</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">${f.reponse}</div>
+    </div>`).join('')}
+  </div>
+</div>` : '';
+
+  const connexesSlugs = [...new Set(terme.termesConnexes || [])];
+  const connexesMatches = connexesSlugs
+    .map(s => allTermes.find(t => t.slug === s && t.status === 'publie'))
+    .filter(Boolean);
+  const connexesHTML = connexesMatches.length ? `<div class="niche-section">
+  <div class="niche-section-title">🔗 Termes connexes</div>
+  <div class="niche-related">
+    ${connexesMatches.map(t => `<a href="${R}glossaire/${t.slug}/" class="niche-related-link">${t.terme}</a>`).join('')}
+  </div>
+</div>` : '';
+
+  const jsonLdGraph = [
+    {
+      '@type': 'DefinedTerm',
+      name: terme.terme,
+      description: defFlash,
+      inDefinedTermSet: { '@type': 'DefinedTermSet', name: 'Glossaire IA Albexia', url: `${SITE_ORIGIN}/glossaire/` },
+      url: canonicalUrl,
+    },
+  ];
+  if (faqItems.length) {
+    jsonLdGraph.push({
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map(f => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: (f.reponse || '').replace(/<[^>]+>/g, '') },
+      })),
+    });
+  }
+  const jsonLdHTML = `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLdGraph })}</script>`;
+
+  return `<!DOCTYPE html>
+<html lang="${langue}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${titleTag}</title>
+  <meta name="description" content="${metaDesc}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+  <meta property="og:title" content="${terme.terme} — Glossaire IA Albexia" />
+  <meta property="og:description" content="${metaDesc}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="${canonicalUrl}" />
+  ${jsonLdHTML}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="${R}css/style.css" />
+  <link rel="stylesheet" href="${R}css/niche.css" />
+  <style>
+    .glossaire-niveau-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:14px;border:1px solid;margin-bottom:16px}
+    .glossaire-erreur-box{background:rgba(255,107,157,0.06);border:1px solid rgba(255,107,157,0.25);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.7;color:var(--text)}
+    .glossaire-erreur-box strong{color:#ff6b9d}
+  </style>
+</head>
+<body>
+
+${navHTML(langue)}
+
+<section class="niche-hero">
+  <div class="niche-hero-glow"></div>
+  ${glossaireNiveauBadgeHTML(terme.niveau)}
+  <h1>${terme.terme}</h1>
+  <p style="font-size:17px">${defFlash}</p>
+</section>
+
+${pourquoiHTML}
+${exempleHTML}
+${enPratiqueHTML}
+${erreurHTML}
+${faqHTML}
+${outilsHTML}
+${connexesHTML}
+
+<a href="${R}glossaire/" class="niche-back">← Retour au glossaire complet</a>
+
+${footerHTML()}
+${faqHTML ? '<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>' : ''}
+${sharedJS()}
+</body>
+</html>`;
+}
+
+// ════════════════════════════════════════════════════════════
 // VIDÉOTHÈQUE (tutoriels vidéo par outil)
 // ════════════════════════════════════════════════════════════
 // Reproduit EXACTEMENT la structure et le CSS de tutoriels.html /
@@ -2310,7 +2554,7 @@ ${firestoreModule}
 // ════════════════════════════════════════════════════════════
 async function main() {
   const state = loadState();
-  const newState = { outils: {}, articles: {}, comparaisons: {}, niches: {}, videotheques: {} };
+  const newState = { outils: {}, articles: {}, comparaisons: {}, niches: {}, videotheques: {}, glossaire: {} };
 
   console.log('📥 Lecture de Firestore (outils)...');
   const snap  = await db.collection('outils').get();
@@ -2797,6 +3041,97 @@ async function main() {
     }
   }
   console.log(`✓ ${removedNiches} dossier(s) niche orphelin(s) ou dépublié(s) supprimé(s).`);
+
+  // ════════════════════════════════════════════════════════════
+  // GLOSSAIRE IA
+  // ════════════════════════════════════════════════════════════
+  // Comme les niches : seuls les termes status==='publie' génèrent une
+  // page HTML publique. Un terme en brouillon reste visible dans le hub
+  // (grille A-Z complète, cohérence pédagogique) mais sous forme de carte
+  // NON cliquable — pas de lien vers une page qui n'existe pas.
+  console.log(`\n📥 Lecture de Firestore (glossaire)...`);
+  const glossaireSnap = await db.collection('glossaire').get();
+  const termesGlossaire = glossaireSnap.docs.map(d => d.data());
+  console.log(`✓ ${termesGlossaire.length} documents trouvés`);
+
+  let glossGenerated = 0, glossSkippedNoSlug = 0, glossSkippedBrouillon = 0, glossUnchanged = 0, glossCascade = 0;
+  let glossaireAnyChange = false;
+
+  for (const terme of termesGlossaire) {
+    const termeHash = hashDoc(terme);
+    const termeId = String(terme.id || terme.slug);
+    newState.glossaire[termeId] = { hash: termeHash, updatedAtMs: updatedAtMs(terme) };
+
+    const ownHasChanged = state.glossaire?.[termeId]?.hash !== termeHash;
+
+    const outilsRefs = terme.outils || [];
+    const referencedToolChanged = outilsRefs.some(slugRef =>
+      changedToolIds.has(slugRef) ||
+      tools.some(t => slugify(t.name) === slugRef && changedToolIds.has(String(t.id || slugify(t.name))))
+    );
+
+    const hasChanged = ownHasChanged || referencedToolChanged;
+    if (hasChanged) glossaireAnyChange = true;
+
+    const slug = terme.slug;
+    if (!slug) { glossSkippedNoSlug++; continue; }
+
+    const folder   = path.join('glossaire', slug);
+    const filePath = path.join(folder, 'index.html');
+
+    if (terme.status !== 'publie') {
+      glossSkippedBrouillon++;
+      continue; // le nettoyage orphelin plus bas retire la page si dépublié
+    }
+
+    if (!ownHasChanged && referencedToolChanged) glossCascade++;
+
+    if (!hasChanged && fs.existsSync(filePath)) { glossUnchanged++; continue; }
+
+    const html = generateGlossaireTermePage(terme, toolsUniques, termesGlossaire);
+    if (!html) { glossSkippedNoSlug++; continue; }
+
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(filePath, html, 'utf8');
+    glossGenerated++;
+  }
+
+  console.log(`\n✅ Glossaire — ${glossGenerated} régénéré(s) (dont ${glossCascade} via cascade outil modifié), ${glossUnchanged} inchangé(s) (skip), ${glossSkippedBrouillon} en brouillon (non générés), ${glossSkippedNoSlug} ignoré(s) (slug vide).`);
+  console.log(`\nStructure :`);
+  console.log(`  glossaire/{slug}/index.html`);
+  console.log(`  glossaire/index.html (hub)`);
+
+  // ─── NETTOYAGE DES PAGES GLOSSAIRE ORPHELINES OU DÉPUBLIÉES ───
+  console.log(`\n🧹 Nettoyage des pages glossaire orphelines ou dépubliées...`);
+  const validGlossairePaths = new Set();
+  for (const terme of termesGlossaire) {
+    if (!terme.slug || terme.status !== 'publie') continue;
+    validGlossairePaths.add(path.join('glossaire', terme.slug));
+  }
+  let removedGlossaire = 0;
+  if (fs.existsSync('glossaire')) {
+    for (const slugDir of fs.readdirSync('glossaire')) {
+      const fullPath = path.join('glossaire', slugDir);
+      if (!fs.statSync(fullPath).isDirectory()) continue;
+      if (!validGlossairePaths.has(fullPath)) {
+        fs.rmSync(fullPath, { recursive: true, force: true });
+        console.log(`  🗑️  Supprimé : ${fullPath}`);
+        removedGlossaire++;
+      }
+    }
+  }
+  console.log(`✓ ${removedGlossaire} dossier(s) glossaire orphelin(s) ou dépublié(s) supprimé(s).`);
+
+  // ─── HUB GLOSSAIRE (grille A-Z, tous statuts) ───
+  const hubPath = path.join('glossaire', 'index.html');
+  if (glossaireAnyChange || removedGlossaire > 0 || !fs.existsSync(hubPath)) {
+    const hubHtml = generateGlossaireHub(termesGlossaire.filter(t => t.slug));
+    fs.mkdirSync('glossaire', { recursive: true });
+    fs.writeFileSync(hubPath, hubHtml, 'utf8');
+    console.log(`✅ Hub glossaire régénéré.`);
+  } else {
+    console.log(`✅ Hub glossaire — inchangé, régénération non nécessaire.`);
+  }
 
   // ─── SAUVEGARDE DE L'ÉTAT DE GÉNÉRATION ───
   // newState ne contient que les docs actuellement en base : un doc supprimé

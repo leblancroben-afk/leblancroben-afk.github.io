@@ -1,0 +1,36 @@
+name: Générer le contenu enrichi du glossaire (Gemini)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Écrire réellement dans Firestore (sinon simulation seule)'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer firebase-admin
+        run: npm install firebase-admin
+
+      - name: Lancer la génération
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ "${{ inputs.confirm }}" = "true" ]; then
+            node generate-glossaire-content.js --confirm
+          else
+            node generate-glossaire-content.js
+          fi

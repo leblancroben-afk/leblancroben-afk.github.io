@@ -150,7 +150,7 @@ function navHTML(langue) {
   <div class="kebab-wrap" id="kebab-wrap">
     <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="${R}glossaire.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
+      <a href="${R}glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
       <a href="${R}tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
       <a href="${R}comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
       <a href="${R}deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
@@ -1729,48 +1729,34 @@ function glossaireNiveauBadgeHTML(niveau) {
   return `<span class="glossaire-niveau-badge" style="color:${n.couleur};border-color:${n.couleur}66;background:${n.couleur}1a">${n.emoji} ${n.label}</span>`;
 }
 
-// Carte non-cliquable pour le hub : un terme en brouillon (pas encore
-// enrichi/publié) reste visible pour la cohérence de la grille A-Z, mais
-// ne doit pas amener vers une page 404 — donc pas de <a href>, juste un
-// <div> avec un état visuel "bientôt disponible".
-function glossaireCardHTML(terme) {
-  const n = GLOSSAIRE_NIVEAUX[terme.niveau] || GLOSSAIRE_NIVEAUX.debutant;
-  const estPublie = terme.status === 'publie';
-  const def = (terme.definitionFlash || terme.definition || '').slice(0, 130);
-  const inner = `<div class="ntc-top">
-    <span class="ntc-name">${terme.terme}</span>
-    <span style="font-size:11px;color:${n.couleur}">${n.emoji}</span>
-  </div>
-  <span class="ntc-cat">${def}${def.length >= 130 ? '…' : ''}</span>
-  <span class="ntc-cta">${estPublie ? 'Voir la définition →' : 'Bientôt disponible'}</span>`;
-
-  return estPublie
-    ? `<a href="${R}glossaire/${terme.slug}/" class="niche-tool-card" data-lettre="${(terme.lettre||terme.terme[0]||'').toUpperCase()}" data-niveau="${terme.niveau||''}">${inner}</a>`
-    : `<div class="niche-tool-card" style="opacity:.5;cursor:default" data-lettre="${(terme.lettre||terme.terme[0]||'').toUpperCase()}" data-niveau="${terme.niveau||''}" aria-disabled="true">${inner}</div>`;
-}
-
-function generateGlossaireHub(termes) {
+function generateGlossaireHub(termes, tools) {
   const langue = 'fr';
   const canonicalUrl = `${SITE_ORIGIN}/glossaire/`;
   const titleTag = `Glossaire IA — Tous les termes de l'intelligence artificielle expliqués | Albexia`;
   const metaDesc = `Définitions claires des termes de l'IA : LLM, prompt, agent IA, RAG... Comprenez le vocabulaire de l'intelligence artificielle en français.`;
 
-  const parLettre = {};
-  for (const t of termes) {
-    const l = (t.lettre || t.terme?.[0] || '').toUpperCase();
-    if (!parLettre[l]) parLettre[l] = [];
-    parLettre[l].push(t);
-  }
-  const lettres = Object.keys(parLettre).sort();
-
-  const sectionsHTML = lettres.map(l => `<div class="niche-section" id="lettre-${l}">
-  <div class="niche-section-title">${l}</div>
-  <div class="niche-tools-grid">
-    ${parLettre[l].map(glossaireCardHTML).join('\n    ')}
-  </div>
-</div>`).join('\n');
-
-  const nombrePublies = termes.filter(t => t.status === 'publie').length;
+  // Données embarquées statiquement — plus de fetch() séparé, donc plus de
+  // risque de casse si un fichier JSON bouge d'endroit. Chaque terme est
+  // enrichi avec le libellé + lien réel de ses outils, résolus une fois ici.
+  const dataJS = termes.map(t => {
+    const outilsResolus = (t.outils || [])
+      .map(s => tools.find(x => slugify(x.name) === s))
+      .filter(Boolean)
+      .map(tool => {
+        const plan = tool.plan === 'featured' ? 'featured' : tool.plan === 'starter' ? 'starter' : 'standard';
+        return { nom: tool.name, url: `${R}tools/${plan}/${tool.langue||'fr'}/${slugify(tool.name)}/` };
+      });
+    return {
+      terme: t.terme,
+      slug: t.slug,
+      lettre: (t.lettre || t.terme?.[0] || '').toUpperCase(),
+      niveau: t.niveau || 'debutant',
+      definition: t.definitionFlash || '',
+      exemple: t.exemple || '',
+      outils: outilsResolus,
+      publie: t.status === 'publie',
+    };
+  });
 
   return `<!DOCTYPE html>
 <html lang="${langue}">
@@ -1787,30 +1773,258 @@ function generateGlossaireHub(termes) {
   <meta property="og:url" content="${canonicalUrl}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
-  <link rel="stylesheet" href="${R}css/niche.css" />
   <style>
-    .glossaire-niveau-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:14px;border:1px solid;margin-left:8px}
-    .niche-tools-grid .niche-tool-card[aria-disabled="true"]:hover{transform:none}
+    .glossaire-hero{padding:64px 32px 48px;text-align:center;max-width:1100px;margin:0 auto;position:relative}
+    .glossaire-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse at center,rgba(108,99,255,0.12) 0%,transparent 70%);pointer-events:none}
+    .glossaire-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.3);color:#a8a3ff;font-size:12px;font-weight:600;padding:5px 16px;border-radius:20px;margin-bottom:24px;letter-spacing:0.08em;text-transform:uppercase}
+    .glossaire-hero h1{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:16px}
+    .glossaire-hero h1 .grad-purple{background:linear-gradient(135deg,#6c63ff 0%,#00d4aa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .glossaire-hero p{font-size:16px;color:var(--text-muted);max-width:480px;margin:0 auto 32px;font-weight:300;line-height:1.7}
+    .terme-jour-wrap{max-width:1100px;margin:0 auto;padding:0 32px 28px}
+    .terme-jour{background:linear-gradient(135deg,rgba(108,99,255,0.1) 0%,rgba(0,212,170,0.06) 100%);border:1px solid rgba(108,99,255,0.25);border-radius:16px;padding:24px 28px;display:flex;align-items:flex-start;gap:20px}
+    .terme-jour-ico{font-size:32px;flex-shrink:0;line-height:1}
+    .terme-jour-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#a8a3ff;margin-bottom:4px}
+    .terme-jour-nom{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px}
+    .terme-jour-def{font-size:13px;color:var(--text-muted);line-height:1.6;font-weight:300}
+    .glossaire-controls{max-width:1100px;margin:0 auto;padding:0 32px 28px}
+    .glossaire-search-wrap{position:relative;margin-bottom:16px}
+    .glossaire-search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:17px;pointer-events:none}
+    .glossaire-search{width:100%;padding:14px 16px 14px 48px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-size:14px;border-radius:12px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+    .glossaire-search::placeholder{color:var(--text-dim)}
+    .glossaire-search:focus{border-color:rgba(108,99,255,0.5)}
+    .alpha-nav{display:flex;gap:3px;flex-wrap:wrap}
+    .alpha-btn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+    .alpha-btn:hover{border-color:rgba(108,99,255,0.4);color:#a8a3ff;background:rgba(108,99,255,0.08)}
+    .alpha-btn.has-terms{color:var(--text)}
+    .alpha-btn.inactive{opacity:0.3;cursor:default;pointer-events:none}
+    .niveau-filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+    .niveau-filter{padding:5px 14px;font-size:12px;font-weight:500;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+    .niveau-filter:hover{border-color:var(--border-hover);color:var(--text)}
+    .niveau-filter.active{background:rgba(108,99,255,0.12);border-color:rgba(108,99,255,0.4);color:#a8a3ff}
+    .niveau-filter[data-niveau="debutant"].active{background:rgba(0,212,170,0.1);border-color:rgba(0,212,170,0.4);color:#00d4aa}
+    .niveau-filter[data-niveau="intermediaire"].active{background:rgba(245,166,35,0.1);border-color:rgba(245,166,35,0.4);color:#f5a623}
+    .niveau-filter[data-niveau="avance"].active{background:rgba(255,107,157,0.1);border-color:rgba(255,107,157,0.4);color:#ff6b9d}
+    .glossaire-body{max-width:1100px;margin:0 auto;padding:0 32px 64px}
+    .letter-section{margin-bottom:40px}
+    .letter-anchor{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+    .letter-char{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:rgba(108,99,255,0.5);line-height:1;min-width:36px}
+    .letter-line{flex:1;height:1px;background:var(--border)}
+    .terms-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
+    .term-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;transition:all .2s;position:relative}
+    .term-card:hover{border-color:rgba(108,99,255,0.35);transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,99,255,0.06)}
+    .term-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
+    .term-nom{font-family:'Syne',sans-serif;font-size:15px;font-weight:700}
+    .term-nom-link{color:var(--text);text-decoration:none}
+    .term-nom-link:hover{color:#a8a3ff}
+    .term-niveau{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border-radius:5px;flex-shrink:0}
+    .niveau-debutant{background:rgba(0,212,170,0.1);color:#00d4aa;border:1px solid rgba(0,212,170,0.2)}
+    .niveau-intermediaire{background:rgba(245,166,35,0.1);color:#f5a623;border:1px solid rgba(245,166,35,0.2)}
+    .niveau-avance{background:rgba(255,107,157,0.1);color:#ff6b9d;border:1px solid rgba(255,107,157,0.2)}
+    .term-def{font-size:13px;color:var(--text-muted);line-height:1.6;font-weight:300;margin-bottom:10px}
+    .term-toggle{font-size:11px;color:#a8a3ff;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-bottom:0;transition:color .15s}
+    .term-toggle:hover{color:#fff}
+    .term-extra{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+    .term-extra.open{display:block}
+    .term-exemple{font-size:12px;color:var(--text-dim);line-height:1.6;font-style:italic;margin-bottom:10px;padding:10px 14px;background:var(--bg3);border-radius:8px;border-left:2px solid rgba(108,99,255,0.4)}
+    .term-exemple::before{content:'💡 Exemple : ';font-style:normal;font-weight:500;color:#a8a3ff}
+    .term-outils{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+    .term-outil-tag{font-size:11px;padding:3px 10px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:6px;color:#ff6b9d;text-decoration:none;transition:all .15s}
+    .term-outil-tag:hover{background:rgba(255,107,157,0.15)}
+    .term-fiche-link{display:inline-block;font-size:11px;font-weight:600;color:#00d4aa;text-decoration:none}
+    .term-fiche-link:hover{text-decoration:underline}
+    .term-brouillon-tag{font-size:10px;color:var(--text-dim);font-style:italic}
+    .glossaire-cta{max-width:1100px;margin:0 auto 16px;padding:0 32px}
+    .glossaire-cta-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .glossaire-cta-text{font-size:14px;font-weight:500}
+    .glossaire-cta-text span{color:var(--text-muted);font-weight:300;display:block;font-size:12px;margin-top:2px}
+    .glossaire-cta-tools{display:flex;gap:8px;flex-wrap:wrap}
+    .cta-tool-btn{padding:7px 16px;font-size:12px;font-weight:500;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
+    .cta-tool-btn:hover{border-color:rgba(255,107,157,0.4);color:#ff6b9d;background:rgba(255,107,157,0.06)}
+    .no-results{text-align:center;padding:64px 32px;color:var(--text-muted);font-size:15px}
+    .no-results .no-results-ico{font-size:40px;margin-bottom:12px}
+    html,body{overflow-x:hidden;width:100%;position:relative}
+    @media (max-width:768px){
+      .glossaire-hero,.terme-jour-wrap,.glossaire-controls,.glossaire-body,.glossaire-cta{padding-left:20px;padding-right:20px}
+      .glossaire-hero::before{width:100%;height:200px}
+      .glossaire-hero div[style*="display:flex"]{flex-direction:column;gap:20px!important}
+      .terms-list{grid-template-columns:1fr}
+      .terme-jour{flex-direction:column;align-items:center;text-align:center}
+      .glossaire-cta-card{flex-direction:column;text-align:center}
+      .glossaire-cta-tools{justify-content:center;width:100%}
+      .cta-tool-btn{flex:1;text-align:center}
+    }
   </style>
 </head>
 <body>
 
 ${navHTML(langue)}
 
-<section class="niche-hero">
-  <div class="niche-hero-glow"></div>
-  <div class="niche-badge">Glossaire</div>
-  <h1>Le glossaire de l'IA, expliqué simplement</h1>
-  <p>${nombrePublies} définitions claires pour comprendre le vocabulaire de l'intelligence artificielle, du niveau débutant à avancé.</p>
+<section class="glossaire-hero">
+  <div class="glossaire-badge">📖 Référence francophone</div>
+  <h1>Glossaire de <span class="grad-purple">l'IA</span></h1>
+  <p>Tous les termes de l'intelligence artificielle expliqués simplement en français — pour débutants et professionnels.</p>
+  <div style="display:flex;gap:32px;justify-content:center;margin-top:32px;padding-top:28px;border-top:1px solid var(--border)">
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#6c63ff">${dataJS.length}</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">termes définis</div>
+    </div>
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#00d4aa">3</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">niveaux</div>
+    </div>
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#ff6b9d">FR</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">100% en français</div>
+    </div>
+  </div>
 </section>
 
-${sectionsHTML}
+<div class="terme-jour-wrap">
+  <div class="terme-jour" id="terme-jour">
+    <div class="terme-jour-ico">💡</div>
+    <div>
+      <div class="terme-jour-label">Terme du jour</div>
+      <div class="terme-jour-nom" id="tdj-nom">Chargement…</div>
+      <div class="terme-jour-def" id="tdj-def"></div>
+    </div>
+  </div>
+</div>
 
-<a href="${R}index.html#tools" class="niche-back">← Retour au catalogue</a>
+<div class="glossaire-controls">
+  <div class="glossaire-search-wrap">
+    <span class="glossaire-search-icon">🔍</span>
+    <input type="text" class="glossaire-search" id="glossaire-search" placeholder="Rechercher un terme… (ex: LLM, prompt, token)">
+  </div>
+  <div class="alpha-nav" id="alpha-nav"></div>
+  <div class="niveau-filters">
+    <button class="niveau-filter active" data-niveau="Tous">Tous les niveaux</button>
+    <button class="niveau-filter" data-niveau="debutant">🌱 Débutant</button>
+    <button class="niveau-filter" data-niveau="intermediaire">🌿 Intermédiaire</button>
+    <button class="niveau-filter" data-niveau="avance">🌳 Avancé</button>
+  </div>
+</div>
+
+<div class="glossaire-cta">
+  <div class="glossaire-cta-card">
+    <div class="glossaire-cta-text">
+      Vous découvrez l'IA ? Commencez gratuitement.
+      <span>Ces outils ont un plan gratuit — aucune carte requise.</span>
+    </div>
+    <div class="glossaire-cta-tools">
+      <a class="cta-tool-btn" href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT →</a>
+      <a class="cta-tool-btn" href="https://writesonic.com" target="_blank" rel="noopener">Writesonic →</a>
+      <a class="cta-tool-btn" href="https://canva.com" target="_blank" rel="noopener">Canva IA →</a>
+    </div>
+  </div>
+</div>
+
+<div class="glossaire-body" id="glossaire-body"><!-- injecté par JS --></div>
 
 ${footerHTML()}
+
+<script>
+'use strict';
+const allTermes = ${JSON.stringify(dataJS)};
+let activeNiveau = 'Tous';
+let activeLettre = null;
+let searchQuery = '';
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+function initTermeDuJour() {
+  const idx = new Date().getDate() % allTermes.length;
+  const t = allTermes[idx];
+  document.getElementById('tdj-nom').textContent = t.terme;
+  document.getElementById('tdj-def').textContent = t.definition;
+}
+function initAlpha() {
+  const lettresPresentes = new Set(allTermes.map(t => t.lettre));
+  const nav = document.getElementById('alpha-nav');
+  nav.innerHTML = ALPHABET.map(l => {
+    const has = lettresPresentes.has(l);
+    return '<button class="alpha-btn' + (has ? ' has-terms' : ' inactive') + '" data-lettre="' + l + '">' + l + '</button>';
+  }).join('');
+  nav.querySelectorAll('.alpha-btn.has-terms').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeLettre = activeLettre === btn.dataset.lettre ? null : btn.dataset.lettre;
+      searchQuery = '';
+      document.getElementById('glossaire-search').value = '';
+      nav.querySelectorAll('.alpha-btn').forEach(b => { b.style.background=''; b.style.borderColor=''; b.style.color=''; });
+      if (activeLettre) { btn.style.background='rgba(108,99,255,0.2)'; btn.style.borderColor='rgba(108,99,255,0.5)'; btn.style.color='#a8a3ff'; }
+      renderGlossaire();
+      if (activeLettre) { const s = document.getElementById('section-'+activeLettre); if (s) s.scrollIntoView({behavior:'smooth',block:'start'}); }
+    });
+  });
+}
+function initNiveaux() {
+  document.querySelectorAll('.niveau-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeNiveau = btn.dataset.niveau;
+      document.querySelectorAll('.niveau-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGlossaire();
+    });
+  });
+}
+function initSearch() {
+  document.getElementById('glossaire-search').addEventListener('input', e => {
+    searchQuery = normaliser(e.target.value);
+    activeLettre = null;
+    document.querySelectorAll('.alpha-btn').forEach(b => { b.style.background=''; b.style.borderColor=''; b.style.color=''; });
+    renderGlossaire();
+  });
+}
+function normaliser(str) { return str.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().trim(); }
+function filtrerTermes() {
+  let termes = [...allTermes];
+  if (activeNiveau !== 'Tous') termes = termes.filter(t => t.niveau === activeNiveau);
+  if (activeLettre) termes = termes.filter(t => t.lettre === activeLettre);
+  if (searchQuery) termes = termes.filter(t => normaliser(t.terme).includes(searchQuery) || normaliser(t.definition).includes(searchQuery));
+  return termes;
+}
+function niveauLabel(n) { return { debutant:'Débutant', intermediaire:'Intermédiaire', avance:'Avancé' }[n] || n; }
+function renderGlossaire() {
+  const termes = filtrerTermes();
+  const body = document.getElementById('glossaire-body');
+  if (!termes.length) {
+    body.innerHTML = '<div class="no-results"><div class="no-results-ico">🔍</div><p>Aucun terme trouvé pour "<strong>'+(searchQuery||activeLettre||activeNiveau)+'</strong>".</p><p style="margin-top:8px;font-size:13px">Essayez un autre mot-clé ou <a href="#" onclick="resetFilters();return false;" style="color:#a8a3ff">réinitialisez les filtres</a>.</p></div>';
+    return;
+  }
+  const byLetter = {};
+  termes.forEach(t => { (byLetter[t.lettre] ||= []).push(t); });
+  body.innerHTML = Object.keys(byLetter).sort().map(l =>
+    '<div class="letter-section" id="section-'+l+'"><div class="letter-anchor"><span class="letter-char">'+l+'</span><span class="letter-line"></span></div><div class="terms-list">'+byLetter[l].map(termCardHTML).join('')+'</div></div>'
+  ).join('');
+  body.querySelectorAll('.term-toggle').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const extra = btn.nextElementSibling;
+      const isOpen = extra.classList.toggle('open');
+      btn.textContent = isOpen ? '▲ Masquer l\\'exemple' : '▼ Voir exemple';
+    });
+  });
+}
+function termCardHTML(t) {
+  const outilsHTML = t.outils.length ? '<div class="term-outils">'+t.outils.map(o => '<a href="'+o.url+'" class="term-outil-tag">'+o.nom+'</a>').join('')+'</div>' : '';
+  const ficheLink = t.publie ? '<a href="/glossaire/'+t.slug+'/" class="term-fiche-link">Voir la fiche complète →</a>' : '<span class="term-brouillon-tag">Fiche détaillée bientôt disponible</span>';
+  const nomHTML = t.publie ? '<a href="/glossaire/'+t.slug+'/" class="term-nom-link">'+t.terme+'</a>' : t.terme;
+  const exempleHTML = t.exemple
+    ? '<button class="term-toggle">▼ Voir exemple</button><div class="term-extra"><div class="term-exemple">'+t.exemple+'</div>'+outilsHTML+ficheLink+'</div>'
+    : (outilsHTML + ficheLink);
+  return '<div class="term-card"><div class="term-head"><div class="term-nom">'+nomHTML+'</div><span class="term-niveau niveau-'+t.niveau+'">'+niveauLabel(t.niveau)+'</span></div><p class="term-def">'+t.definition+'</p>'+exempleHTML+'</div>';
+}
+function resetFilters() {
+  activeNiveau='Tous'; activeLettre=null; searchQuery='';
+  document.getElementById('glossaire-search').value='';
+  document.querySelectorAll('.niveau-filter').forEach(b => b.classList.remove('active'));
+  document.querySelector('.niveau-filter[data-niveau="Tous"]').classList.add('active');
+  document.querySelectorAll('.alpha-btn').forEach(b => { b.style.background=''; b.style.borderColor=''; b.style.color=''; });
+  renderGlossaire();
+}
+window.resetFilters = resetFilters;
+initTermeDuJour(); initAlpha(); initNiveaux(); initSearch(); renderGlossaire();
+</script>
 ${sharedJS()}
 </body>
 </html>`;
@@ -3125,7 +3339,7 @@ async function main() {
   // ─── HUB GLOSSAIRE (grille A-Z, tous statuts) ───
   const hubPath = path.join('glossaire', 'index.html');
   if (glossaireAnyChange || removedGlossaire > 0 || !fs.existsSync(hubPath)) {
-    const hubHtml = generateGlossaireHub(termesGlossaire.filter(t => t.slug));
+    const hubHtml = generateGlossaireHub(termesGlossaire.filter(t => t.slug), toolsUniques);
     fs.mkdirSync('glossaire', { recursive: true });
     fs.writeFileSync(hubPath, hubHtml, 'utf8');
     console.log(`✅ Hub glossaire régénéré.`);

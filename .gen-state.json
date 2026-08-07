@@ -311,7 +311,7 @@
   },
   "niches": {
     "ia-pour-les-avocats": {
-      "hash": "b75af417adeb77a0daf69418ce467bbb7905b56e16c5b18e7229bc7e067d5747",
+      "hash": "1a2645afab52d9144bdf6ce0d469b182d13ffe37d2beb287d702c9392b8d44ff",
       "updatedAtMs": 1784070748551
     },
     "ia-pour-les-marketeurs-digitaux": {
@@ -349,5 +349,170 @@
       "updatedAtMs": 1785407811360
     }
   },
-  "glossaire": {}
+  "glossaire": {
+    "agent-ia": {
+      "hash": "ec11956ebf7f81b79df8b3df21e299a7c4c2657cd91b6ee0ed1a5b85174a94c1",
+      "updatedAtMs": 1786119176043
+    },
+    "api": {
+      "hash": "4f8c6ef1cda6ee091aac5eb9e61c88cff84b8a17ef641aeaa10e0e6e5bf332bf",
+      "updatedAtMs": 1786119176559
+    },
+    "apprentissage-automatique": {
+      "hash": "a526d9a50642f6c0348f559946b0a1632e17ed746c0013f076b520c503c51a5c",
+      "updatedAtMs": 1786119176799
+    },
+    "apprentissage-profond": {
+      "hash": "34db5683442091af52cb856ade0f6febf0a0ff504e6a05c51ac085b4792b6969",
+      "updatedAtMs": 1786119177108
+    },
+    "chatbot": {
+      "hash": "3fb07cd89dd990233b4c0cbb9aa79d575df91e952243cb6f62f2a072dfcf143f",
+      "updatedAtMs": 1786119177307
+    },
+    "context-window": {
+      "hash": "48c207517990459853e10cb13f3c0688bd0f281f4455e57643614c1010eb003a",
+      "updatedAtMs": 1786119177512
+    },
+    "contexte": {
+      "hash": "254a19053a5736b727acca9c8ba82531145ffc1fe836053b2883352af808dfdd",
+      "updatedAtMs": 1786062364134
+    },
+    "diffusion": {
+      "hash": "8f64c71bc662e9439decfc5c83b35605c8c0a78a5bad699dc469129f87d7c21e",
+      "updatedAtMs": 1786118568627
+    },
+    "embeddings": {
+      "hash": "e85b5ef3ffc1221f8f114fda7a3e97d5561e715fc91eaacc6603917b611a8c34",
+      "updatedAtMs": 1786118569040
+    },
+    "few-shot": {
+      "hash": "58be47e6a2842b2a81e0a26b95f23efc23542114d32bfffe9a6e68fabc029009",
+      "updatedAtMs": 1786118569203
+    },
+    "fine-tuning": {
+      "hash": "6b732970ce8b68f714547b9d011336e53a295289edd10f74973b8a9e4a43bddb",
+      "updatedAtMs": 1786118569597
+    },
+    "gpt": {
+      "hash": "4b1f647591d25e816aeda39d23104ce658ca5ff5bc38655927731b13a1d60a3f",
+      "updatedAtMs": 1786118569843
+    },
+    "hallucination": {
+      "hash": "cc5e8287361a28424ca85bea726e8bc1b6a29cb4b7a440d0f6430e962ad2c1aa",
+      "updatedAtMs": 1786062530722
+    },
+    "ia-generative": {
+      "hash": "57eb63b78d7672959bed63a46bfee5130f170a83c05150eaec4ee5778138a76d",
+      "updatedAtMs": 1786062543358
+    },
+    "inference": {
+      "hash": "4ef5e03dd2e85db037c4bb202212a10256dcdd3b9dcd6514b87870e0c7b77a4e",
+      "updatedAtMs": 1786118570071
+    },
+    "invite-systeme": {
+      "hash": "a5621c72b1da84767966d7ba85785f8f6a0ca76bc04a2d3863ddfbdcb9ba6ea7",
+      "updatedAtMs": 1786062579763
+    },
+    "latence": {
+      "hash": "247063f03a1b25fdc7c4affa987bbf44813019317addf52f063d348c6fea078e",
+      "updatedAtMs": 1786062595678
+    },
+    "llm": {
+      "hash": "12483e4ccd22c4dfbad7f4c3433b5e00e5d5c9c37126d04a29763d63ac0b9811",
+      "updatedAtMs": 1786062609669
+    },
+    "midjourney": {
+      "hash": "fd3db837e8a083545cd0e18f2aacc17b74879f6dc5fed5b9cdfc796f91f11a82",
+      "updatedAtMs": 1786118596860
+    },
+    "modele-fondation": {
+      "hash": "b2b4f07deec471a3e64e9a43e8f81a9fbc3664939b19efaf6da1cae0d4196d91",
+      "updatedAtMs": 1786062623524
+    },
+    "multimodal": {
+      "hash": "90444ff02c80d9b46913e7fb53429df9feb5403c9f0df831f5fce54a658fd7bc",
+      "updatedAtMs": 1786118597253
+    },
+    "nlp": {
+      "hash": "e191a1f5e899fd69de20527294647ac742e82a7927f1efd2cf2c99b19590ed88",
+      "updatedAtMs": 1786118597420
+    },
+    "open-source": {
+      "hash": "ab60d3ca3db699b75df131370227aceea9672fd314739f8be1e3e8dfffec19d7",
+      "updatedAtMs": 1786118597793
+    },
+    "parametres": {
+      "hash": "1eb3bfe22f59736ba68fca43ad8fdb4cf99801b3309de475aec18ab62e6f77fe",
+      "updatedAtMs": 1786118597969
+    },
+    "prompt": {
+      "hash": "fb207f50e3680a3db2523fd39faf593e19e8d2471b97404725321672c3dc685d",
+      "updatedAtMs": 1786118598328
+    },
+    "prompt-engineering": {
+      "hash": "fc065cce01725fe514678ba20920d25553e6c5c087c36f3ef16382ab51ffe78f",
+      "updatedAtMs": 1786118622220
+    },
+    "quantization": {
+      "hash": "82d997c43f0b62fa89393032139a1a3ee5c6b022494da8a62ca1187be57b909b",
+      "updatedAtMs": 1786118622633
+    },
+    "rag": {
+      "hash": "51b4fc463b2aed38e316b2dacdaaf6c915b1dcbf4f02512128502a826ed6ee3c",
+      "updatedAtMs": 1786118622775
+    },
+    "rag-retrieval": {
+      "hash": "0c86af52c5f8eee7db4e969ab457504cc9b85041a77fe205ce7f4fb980c84c4b",
+      "updatedAtMs": 1786118623170
+    },
+    "reseau-de-neurones": {
+      "hash": "78581534a8cdc897855a36be895308ef9cfe1d519d8a3ac1515e1326a1937d85",
+      "updatedAtMs": 1786118623320
+    },
+    "rlhf": {
+      "hash": "474eb273ed730bc0a63ec26f12152ad2b5a35a62803ea677a64ebe60521a84c0",
+      "updatedAtMs": 1786118623714
+    },
+    "stable-diffusion": {
+      "hash": "cfeae5070f4385e3603385f5929aafdf2a1bd3ed55bac5bfd2d54d6e58a8c77d",
+      "updatedAtMs": 1786118653736
+    },
+    "systeme-recommandation": {
+      "hash": "036cb3d9cbd267fb4aabf6949df5317dc894d7463768d8bf290c66e324144a98",
+      "updatedAtMs": 1786118654144
+    },
+    "temperature": {
+      "hash": "4f3ea2d9fcdd7f8d33cbd1b59576e1744a394f89d90e55a899c499697d4ed62f",
+      "updatedAtMs": 1786118654322
+    },
+    "text-to-image": {
+      "hash": "ffc529a666792d0a13d7f5c49e00846a2eb7c2fee17fa61170d69c88bbf30826",
+      "updatedAtMs": 1786118654476
+    },
+    "text-to-speech": {
+      "hash": "978aef06873c9873a58773544f452960d0928495c78de0d79b00503506fbfe87",
+      "updatedAtMs": 1786118654871
+    },
+    "text-to-video": {
+      "hash": "ddc8dd3cd73c0079f9f3218c1227e2da88bc9258d6dea8d8ab6cf0fb7ab9fe4b",
+      "updatedAtMs": 1786118655038
+    },
+    "token": {
+      "hash": "c448e3e6b4b336632cb354646ca530a1bf14d28600916e6476c82be6f781e30d",
+      "updatedAtMs": 1786118675533
+    },
+    "transformer": {
+      "hash": "edfc5d9c097887999b3d592489e4502867d317036e5fe3d8f7b928a9254cff7b",
+      "updatedAtMs": 1786118675927
+    },
+    "vision-ordinateur": {
+      "hash": "3184814e3bdb72f399cec1fdd571a45b1d5540838e708464af9c10caed2cd360",
+      "updatedAtMs": 1786118676064
+    },
+    "zero-shot": {
+      "hash": "8f49c612c387f609aff50d5dfc339b35143659d6eefb94c7a5f7eec03229f025",
+      "updatedAtMs": 1786118676466
+    }
+  }
 }

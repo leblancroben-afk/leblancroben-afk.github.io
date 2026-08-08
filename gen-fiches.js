@@ -722,6 +722,143 @@ function articleNavHTML(langue) {
   return navHTML(langue);
 }
 
+// ═══════════════════════════════════════════════════════
+//  ARTICLES CRÉATEURS — rendu sécurisé depuis contenu[] structuré
+//  (jamais de HTML fourni par le créateur, voir schéma articles_createurs)
+// ═══════════════════════════════════════════════════════
+
+function escHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderContenuBloc(bloc) {
+  if (!bloc || typeof bloc !== 'object') return '';
+  switch (bloc.type) {
+    case 'paragraph':
+      return `<p>${escHtml(bloc.text)}</p>`;
+    case 'heading': {
+      const lvl = bloc.level === 3 ? 3 : 2;
+      return `<h${lvl}>${escHtml(bloc.text)}</h${lvl}>`;
+    }
+    case 'list':
+      return `<ul>${(Array.isArray(bloc.items) ? bloc.items : []).map(i => `<li>${escHtml(i)}</li>`).join('')}</ul>`;
+    case 'link': {
+      // URL validée minimalement : doit démarrer par http(s) — sinon le lien
+      // est rendu en texte brut plutôt que cliquable (évite javascript:, data:, etc.)
+      const url = String(bloc.url || '');
+      const isHttp = /^https?:\/\//i.test(url);
+      if (!isHttp) return `<span>${escHtml(bloc.text)}</span>`;
+      return `<a href="${escHtml(url)}" rel="nofollow noopener" target="_blank">${escHtml(bloc.text)}</a>`;
+    }
+    case 'image': {
+      const url = String(bloc.url || '');
+      const isHttp = /^https?:\/\//i.test(url);
+      if (!isHttp) return '';
+      return `<img src="${escHtml(url)}" alt="${escHtml(bloc.alt || '')}" loading="lazy" />`;
+    }
+    default:
+      // Type inconnu (bug, contournement, champ corrompu) → jamais rendu.
+      // C'est la vraie garantie de sécurité : même si une donnée invalide
+      // franchit les Firestore security rules, elle ne produit aucune sortie HTML.
+      return '';
+  }
+}
+
+function renderContenuComplet(contenu) {
+  if (!Array.isArray(contenu)) return '';
+  return contenu.map(renderContenuBloc).join('\n');
+}
+
+// Extrait un texte brut (pour meta description / excerpt) à partir du
+// premier bloc paragraph — jamais de HTML dans les balises <meta>.
+function extraireExcerpt(contenu, maxLen = 155) {
+  const premierParagraphe = (contenu || []).find(b => b.type === 'paragraph');
+  const texte = premierParagraphe ? String(premierParagraphe.text || '') : '';
+  return texte.length > maxLen ? texte.slice(0, maxLen - 1) + '…' : texte;
+}
+
+function generateArticleCreateur(article, outilsMap) {
+  const { id, titre, outil_slug, contenu, created_at, banniere_url } = article;
+  if (!titre || !outil_slug) return null;
+
+  // Slug propre + suffixe court de l'id doc pour garantir l'unicité
+  // sans jamais entrer en collision avec un article admin classique.
+  const slugBase = slugify(titre);
+  const slug = `${slugBase}-${String(id).slice(0, 6)}`;
+  const langue = 'fr'; // les articles créateurs sont FR uniquement pour l'instant
+  const canonicalUrl = `${SITE_ORIGIN}/articles/${langue}/${slug}/index.html`;
+
+  const dateAffichage = created_at?.toDate
+    ? created_at.toDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '';
+
+  const metaDesc = extraireExcerpt(contenu);
+  const bodyHTML = renderContenuComplet(contenu);
+  const titleTag = `${escHtml(titre)} | Albexia`;
+
+  const outil = outilsMap?.get(outil_slug);
+  const outilLienHTML = outil
+    ? `<p class="article-createur-badge">✍️ Article rédigé par l'équipe de <a href="${R}tools/${outil.dossierPlan}/${langue}/${outil_slug}/index.html">${escHtml(outil.nom)}</a></p>`
+    : '';
+
+  const bannerTag = banniere_url && /^https?:\/\//i.test(banniere_url)
+    ? `<meta property="og:image" content="${escHtml(banniere_url)}" />`
+    : '';
+
+  return `<!DOCTYPE html>
+<html lang="${langue}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${titleTag}</title>
+  <meta name="description" content="${escHtml(metaDesc)}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="${canonicalUrl}" />
+  <meta property="og:title" content="${escHtml(titre)} | Albexia" />
+  <meta property="og:description" content="${escHtml(metaDesc)}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="${canonicalUrl}" />
+${bannerTag}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="${R}css/style.css" />
+  <link rel="stylesheet" href="${R}css/article.css" />
+</head>
+<body>
+
+${articleNavHTML(langue)}
+
+<main class="article-main">
+<div class="article-container">
+
+  <header class="article-header">
+    <div class="article-meta-top">
+      <span class="article-cat fond">Actualité créateur</span>
+      <span class="dot"></span>
+      <span class="article-date">${dateAffichage}</span>
+    </div>
+    <h1 class="article-title">${escHtml(titre)}</h1>
+    ${outilLienHTML}
+  </header>
+
+  <div class="article-body">
+${bodyHTML}
+  </div>
+
+</div>
+</main>
+
+${footerHTML()}
+${sharedJS()}
+</body>
+</html>`;
+}
+
 function generateArticle(article, allArticles) {
   const {
     title, category='', emoji='📝', date='', readTime='', excerpt='',
@@ -2976,6 +3113,41 @@ async function main() {
   console.log(`  articles/fr/{slug}/index.html`);
   console.log(`  articles/en/{slug}/index.html`);
   console.log(`  articles/es/{slug}/index.html`);
+
+  // ════════════════════════════════════════════════════════════
+  //  ARTICLES CRÉATEURS (revendication + rédaction, voir schéma dédié)
+  // ════════════════════════════════════════════════════════════
+  console.log(`\n📥 Lecture de Firestore (articles_createurs)...`);
+  const articlesCreateursSnap = await db.collection('articles_createurs')
+    .where('statut', '==', 'publie')
+    .get();
+  const articlesCreateurs = articlesCreateursSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+  console.log(`✓ ${articlesCreateurs.length} article(s) créateur(s) publié(s)`);
+
+  // outilsMap : nom + dossier de plan par slug, pour le lien "rédigé par
+  // l'équipe de X" (réutilise la liste `tools` déjà chargée plus haut dans
+  // main(), et le même mapping plan→dossier utilisé partout ailleurs dans
+  // ce fichier, ex. ligne 282 : tool.plan === 'featured' ? 'featured' : ...)
+  const outilsMap = new Map(
+    tools.map(o => [o.slug, {
+      nom: o.nom,
+      dossierPlan: o.plan === 'featured' ? 'featured' : o.plan === 'starter' ? 'starter' : 'standard'
+    }])
+  );
+
+  let articlesCreateursGeneres = 0;
+  for (const article of articlesCreateurs) {
+    const html = generateArticleCreateur(article, outilsMap);
+    if (!html) continue;
+
+    const slugBase = slugify(article.titre);
+    const slug = `${slugBase}-${String(article.id).slice(0, 6)}`;
+    const folder = path.join('articles', 'fr', slug);
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(path.join(folder, 'index.html'), html, 'utf8');
+    articlesCreateursGeneres++;
+  }
+  console.log(`✅ Articles créateurs — ${articlesCreateursGeneres} généré(s).`);
 
   // ─── NETTOYAGE DES ARTICLES ORPHELINS ───
   console.log(`\n🧹 Nettoyage des articles orphelins...`);

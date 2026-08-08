@@ -779,6 +779,26 @@
       .soum-form-grid { grid-template-columns: 1fr; }
     }
 
+    /* ── Rédaction d'article créateur (blocs structurés, pas de HTML) ── */
+    .art-toolbar { display:flex; gap:6px; flex-wrap:wrap; margin:8px 0; }
+    .art-toolbar button {
+      background: var(--surface2); border:1px solid var(--border);
+      color:#c8c8d0; font-size:.8rem; padding:6px 12px; border-radius:8px; cursor:pointer;
+    }
+    .art-toolbar button:hover { border-color: #6c63ff; }
+    .art-bloc { background: var(--surface2); border:1px solid var(--border);
+      border-radius:10px; padding:12px; margin-bottom:8px; position:relative; }
+    .art-bloc textarea, .art-bloc input { width:100%; background:transparent; border:none;
+      color:var(--text); font-family:'DM Sans',sans-serif; resize:vertical; outline:none; }
+    .art-bloc-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.05em;
+      color:#00d4aa; margin-bottom:6px; display:block; }
+    .art-bloc-remove { position:absolute; top:8px; right:8px; background:none; border:none;
+      color:#ff5050; cursor:pointer; font-size:1rem; }
+    .soum-card-extra { padding:12px 0 0; border-top:1px solid var(--border); margin-top:10px; font-size:.85rem; }
+    .soum-actions-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .soum-motif { color:#ff9d6c; font-size:.82rem; margin-bottom:8px; }
+    .article-createur-badge { font-size:.8rem; color:var(--muted); margin-top:6px; }
+
     /* ── RESPONSIVE ──────────────────────────────── */
     @media (max-width: 768px) {
     }
@@ -2019,6 +2039,82 @@
   </div>
 </div>
 
+<!-- MODALE : Revendiquer un outil -->
+<div class="modal-overlay" id="modal-revendiquer">
+  <div class="modal">
+    <h3 style="display:flex;align-items:center;gap:8px;">
+      🚩 <span id="revendiquer-titre">Revendiquer la propriété</span>
+    </h3>
+    <p style="color:#aaa;font-size:.9rem;line-height:1.6;margin:8px 0 20px">
+      Confirmez que vous êtes le créateur ou un représentant officiel de cet outil.
+      Un code de validation prioritaire sera envoyé à l'email professionnel fourni.
+    </p>
+    <form id="form-revendiquer" class="soum-form-grid" style="grid-template-columns:1fr">
+      <div class="form-group full">
+        <label>Votre rôle dans le projet</label>
+        <select id="rev-role" required>
+          <option value="" disabled selected>Choisir…</option>
+          <option value="fondateur">Fondateur / CEO</option>
+          <option value="developpeur">Développeur / Lead</option>
+          <option value="marketing">Équipe Marketing / Com</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Email professionnel du domaine officiel</label>
+        <input type="email" id="rev-email" placeholder="contact@monoutil.com" required>
+      </div>
+      <div class="form-group full">
+        <label>Preuve complémentaire (lien réseau social officiel)</label>
+        <input type="url" id="rev-preuve" placeholder="https://x.com/monoutil" required>
+      </div>
+    </form>
+    <div class="modal-actions">
+      <button class="btn-sm btn-outline" onclick="closeRevendiquerModal()">Annuler</button>
+      <button class="btn-primary btn-sm" id="btn-submit-revendiquer" onclick="submitRevendication()">🚀 Soumettre la demande</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE : Rédiger un article -->
+<div class="modal-overlay" id="modal-article">
+  <div class="modal" style="max-width:600px">
+    <h3 style="display:flex;align-items:center;gap:8px;">
+      📝 <span id="article-titre-modal">Rédiger un article</span>
+    </h3>
+    <p style="color:#aaa;font-size:.85rem;line-height:1.5;margin:4px 0 18px">
+      ℹ️ Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots
+    </p>
+    <form id="form-article" class="soum-form-grid" style="grid-template-columns:1fr">
+      <div class="form-group full">
+        <label>Titre de l'article</label>
+        <input type="text" id="art-titre" maxlength="200" placeholder="ex. Notre outil V7 est disponible !" required>
+      </div>
+      <div class="form-group full">
+        <label>Image de couverture (bannière 1200×630px)</label>
+        <input type="file" id="art-banniere" accept="image/jpeg,image/png">
+      </div>
+      <div class="form-group full">
+        <label>Corps de l'article</label>
+        <div class="art-toolbar">
+          <button type="button" onclick="artAjouterBloc('heading')">H2</button>
+          <button type="button" onclick="artAjouterBloc('paragraph')">¶ Paragraphe</button>
+          <button type="button" onclick="artAjouterBloc('list')">• Liste</button>
+          <button type="button" onclick="artAjouterBloc('link')">🔗 Lien</button>
+        </div>
+        <div id="art-blocs-container"></div>
+      </div>
+      <div class="soum-char-count">
+        <span id="art-word-count">0</span> / 500 mots requis
+        <span id="art-word-check"></span>
+      </div>
+    </form>
+    <div class="modal-actions">
+      <button class="btn-sm btn-outline" onclick="closeArticleModal()">Annuler</button>
+      <button class="btn-primary btn-sm" id="btn-submit-article" onclick="submitArticle()" disabled>🚀 Envoyer pour relecture</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="quiz-overlay">
   <div class="modal quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
 
@@ -2100,7 +2196,11 @@
     updateSkipExitModal, setCollectionPublic,
     getSavedVideos, unsaveVideo,
     updatePublicProfile,
-    createSoumission, getUserSoumissions
+    createSoumission, getUserSoumissions,
+    submitRevendication as submitRevendication_,
+    cancelRevendication as cancelRevendication_,
+    getArticlesForSoumission as getArticlesForSoumission_,
+    createArticleCreateur as createArticleCreateur_
   } from './js/firestore.js';
   import { getUserReviews, deleteUserReview } from './js/reviews.js';
 
@@ -3204,7 +3304,7 @@
       ? `<a href="/${s.fiche_page}" class="soum-link">${t('quiz.viewSheet', langue)}</a>`
       : '';
 
-    return `
+    const cardHead = `
       <div class="soum-card">
         <div class="soum-icon">🤖</div>
         <div class="soum-info">
@@ -3218,7 +3318,291 @@
         <span class="status-pill ${st.cls}"><span class="status-dot"></span>${st.label}</span>
         ${link}
       </div>`;
+
+    // Si pas rejeté : comportement inchangé, rien de plus à afficher
+    if (s.status !== 'rejected') return cardHead;
+
+    const rev = s.revendication || { statut: 'aucune' };
+    let extra = '';
+
+    if (rev.statut === 'aucune' || !rev.statut) {
+      // ÉTAPE 1 : rejeté, revendication possible
+      extra = `
+        <div class="soum-card-extra">
+          ${s.motif_rejet ? `<p class="soum-motif">⚠️ Motif du rejet : ${escHtml(s.motif_rejet)}</p>` : ''}
+          <div class="soum-actions-row">
+            ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 Voir la fiche existante</a>` : ''}
+            <button class="btn-sm btn-outline" onclick="openRevendiquerModal('${s.id}', '${escHtml(s.nom_outil)}')">🚩 Revendiquer cet outil</button>
+          </div>
+        </div>`;
+    } else if (rev.statut === 'en_attente') {
+      // ÉTAPE 2 : en examen admin
+      const dateDemande = rev.date_demande?.seconds
+        ? new Date(rev.date_demande.seconds * 1000).toLocaleDateString(LOCALE_MAP[langue] || 'fr-FR', { day:'numeric', month:'short', year:'numeric' })
+        : '';
+      extra = `
+        <div class="soum-card-extra">
+          <p>⏳ Demande de revendication envoyée le ${dateDemande} <span class="status-pill status-pending">En examen</span></p>
+          <p style="font-size:.8rem;color:var(--muted)">Notre équipe vérifie votre identité sous 24h à 48h.</p>
+          <div class="soum-actions-row">
+            ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 Voir la fiche existante</a>` : ''}
+            <button class="btn-sm btn-outline" onclick="annulerRevendication('${s.id}')">🗑️ Annuler la demande</button>
+          </div>
+        </div>`;
+    } else if (rev.statut === 'validee') {
+      // ÉTAPE 3+4 : revendiqué, publication débloquée
+      extra = `
+        <div class="soum-card-extra">
+          <p>✔️ Outil revendiqué — associé à votre compte</p>
+          ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 Voir la fiche sur le site</a>` : ''}
+          <div id="article-zone-${s.id}" class="soum-card-extra" style="margin-top:10px">
+            <p style="font-size:.8rem;color:var(--muted)">Chargement…</p>
+          </div>
+        </div>`;
+      chargerZoneArticle(s.id, s.nom_outil);
+    } else if (rev.statut === 'refusee') {
+      extra = `
+        <div class="soum-card-extra">
+          <p style="color:var(--danger)">❌ Revendication refusée${rev.motif_refus ? ' — ' + escHtml(rev.motif_refus) : ''}</p>
+        </div>`;
+    }
+
+    return cardHead + extra;
   }
+
+  // ═══════════════════════════════════════════════════════
+  //  ÉCHAPPEMENT STRICT — escHtml() historique n'échappe pas < et >,
+  //  donc pour tout nouveau code on utilise cette version stricte.
+  // ═══════════════════════════════════════════════════════
+  function escHtmlStrict(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function trimestreActuel() {
+    const d = new Date();
+    const q = Math.floor(d.getMonth() / 3) + 1;
+    return `${d.getFullYear()}-Q${q}`;
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  MODALE REVENDICATION
+  // ═══════════════════════════════════════════════════════
+  let _revTargetId = null;
+
+  window.openRevendiquerModal = function(soumissionId, nomOutil) {
+    _revTargetId = soumissionId;
+    document.getElementById('revendiquer-titre').textContent = `Revendiquer la propriété : ${nomOutil}`;
+    document.getElementById('form-revendiquer').reset();
+    document.getElementById('modal-revendiquer').classList.add('open');
+  };
+
+  window.closeRevendiquerModal = function() {
+    document.getElementById('modal-revendiquer').classList.remove('open');
+    _revTargetId = null;
+  };
+
+  window.submitRevendication = async function() {
+    if (!_revTargetId) return;
+    const role = document.getElementById('rev-role').value;
+    const email = document.getElementById('rev-email').value.trim();
+    const preuve = document.getElementById('rev-preuve').value.trim();
+    if (!role || !email || !preuve) {
+      showToast('⚠️ Merci de remplir tous les champs.');
+      return;
+    }
+    const btn = document.getElementById('btn-submit-revendiquer');
+    btn.disabled = true;
+    btn.textContent = 'Envoi…';
+    try {
+      await submitRevendication_(_revTargetId, { role, email_pro: email, preuve_url: preuve });
+      closeRevendiquerModal();
+      showToast('✅ Demande envoyée ! Réponse sous 24 à 48h.');
+      await loadSoumissions();
+    } catch (e) {
+      showToast('❌ Erreur : ' + (e.message || e));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🚀 Soumettre la demande';
+    }
+  };
+
+  window.annulerRevendication = async function(soumissionId) {
+    if (!confirm('Annuler votre demande de revendication ?')) return;
+    try {
+      await cancelRevendication_(soumissionId);
+      showToast('Demande annulée.');
+      await loadSoumissions();
+    } catch (e) {
+      showToast('❌ Erreur : ' + (e.message || e));
+    }
+  };
+
+  // ═══════════════════════════════════════════════════════
+  //  ZONE ARTICLE (quota + bouton rédiger + suivi)
+  // ═══════════════════════════════════════════════════════
+  async function chargerZoneArticle(soumissionId, nomOutil) {
+    const zone = document.getElementById(`article-zone-${soumissionId}`);
+    if (!zone) return;
+    try {
+      const trimestre = trimestreActuel();
+      const articles = await getArticlesForSoumission_(currentUser.uid, soumissionId);
+
+      const enCours = articles.find(a => a.statut === 'en_relecture');
+      const publieCeTrimestre = articles.find(a => a.statut === 'publie' && a.trimestre === trimestre);
+
+      if (enCours) {
+        zone.innerHTML = `
+          <p>📄 "${escHtmlStrict(enCours.titre)}" <span class="status-pill status-pending">Article en relecture</span></p>
+          <p style="font-size:.8rem;color:var(--muted)">En cours d'examen par l'équipe Albexia.</p>`;
+      } else if (publieCeTrimestre) {
+        zone.innerHTML = `
+          <p>✅ "${escHtmlStrict(publieCeTrimestre.titre)}" publié ce trimestre.</p>
+          <p style="font-size:.8rem;color:var(--muted)">Quota d'1 article/trimestre atteint — revenez au prochain trimestre.</p>`;
+      } else {
+        zone.innerHTML = `
+          <p style="font-size:.85rem;color:var(--muted);margin-bottom:8px">
+            Publiez une mise à jour ou un cas d'usage (100% gratuit · 1 article / trimestre)
+          </p>
+          <button class="btn-sm btn-primary" onclick="openArticleModal('${soumissionId}', '${escHtmlStrict(nomOutil)}')">📝 Rédiger un article</button>`;
+      }
+    } catch (e) {
+      zone.innerHTML = `<p style="color:var(--danger)">Erreur de chargement.</p>`;
+      console.error('[chargerZoneArticle]', e);
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  MODALE ARTICLE — blocs structurés (JAMAIS de HTML brut)
+  // ═══════════════════════════════════════════════════════
+  let _artTargetSoumissionId = null;
+  let _artOutilSlug = null;
+  let _artBlocs = [];
+
+  window.openArticleModal = function(soumissionId, nomOutil) {
+    _artTargetSoumissionId = soumissionId;
+    _artOutilSlug = slugifyClient(nomOutil);
+    _artBlocs = [];
+    document.getElementById('article-titre-modal').textContent = `Rédiger un article sur ${nomOutil}`;
+    document.getElementById('form-article').reset();
+    document.getElementById('art-blocs-container').innerHTML = '';
+    updateArtWordCount();
+    document.getElementById('modal-article').classList.add('open');
+  };
+
+  window.closeArticleModal = function() {
+    document.getElementById('modal-article').classList.remove('open');
+    _artTargetSoumissionId = null;
+    _artBlocs = [];
+  };
+
+  function slugifyClient(str) {
+    return String(str || '').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  }
+
+  window.artAjouterBloc = function(type) {
+    const id = 'bloc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+    const bloc = { id, type, text: '', level: 2, items: [''], url: '' };
+    _artBlocs.push(bloc);
+    renderArtBlocs();
+  };
+
+  window.artSupprimerBloc = function(id) {
+    _artBlocs = _artBlocs.filter(b => b.id !== id);
+    renderArtBlocs();
+  };
+
+  window.artUpdateBlocTexte = function(id, val) {
+    const b = _artBlocs.find(x => x.id === id);
+    if (b) b.text = val; // texte brut, jamais interprété comme HTML
+    updateArtWordCount();
+  };
+
+  window.artUpdateBlocUrl = function(id, val) {
+    const b = _artBlocs.find(x => x.id === id);
+    if (b) b.url = val;
+  };
+
+  function renderArtBlocs() {
+    const container = document.getElementById('art-blocs-container');
+    container.innerHTML = _artBlocs.map(b => {
+      const labels = { heading: 'Titre H2', paragraph: 'Paragraphe', list: 'Liste (une ligne = un point)', link: 'Lien' };
+      if (b.type === 'link') {
+        return `
+          <div class="art-bloc">
+            <button type="button" class="art-bloc-remove" onclick="artSupprimerBloc('${b.id}')">✕</button>
+            <span class="art-bloc-label">${labels[b.type]}</span>
+            <input type="text" placeholder="Texte du lien" value="${escHtmlStrict(b.text)}"
+                   oninput="artUpdateBlocTexte('${b.id}', this.value)" style="margin-bottom:6px">
+            <input type="url" placeholder="https://…" value="${escHtmlStrict(b.url)}"
+                   oninput="artUpdateBlocUrl('${b.id}', this.value)">
+          </div>`;
+      }
+      return `
+        <div class="art-bloc">
+          <button type="button" class="art-bloc-remove" onclick="artSupprimerBloc('${b.id}')">✕</button>
+          <span class="art-bloc-label">${labels[b.type] || b.type}</span>
+          <textarea rows="${b.type === 'heading' ? 1 : 3}" placeholder="Texte brut, pas de HTML…"
+                    oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea>
+        </div>`;
+    }).join('');
+  }
+
+  function updateArtWordCount() {
+    const totalText = _artBlocs.map(b => b.type === 'list' ? (b.items||[]).join(' ') : b.text).join(' ');
+    const nbMots = totalText.trim().split(/\s+/).filter(Boolean).length;
+    document.getElementById('art-word-count').textContent = nbMots;
+    const ok = nbMots >= 500;
+    document.getElementById('art-word-check').textContent = ok ? '✅' : '';
+    document.getElementById('btn-submit-article').disabled = !ok;
+    return nbMots;
+  }
+
+  window.submitArticle = async function() {
+    if (!_artTargetSoumissionId) return;
+    const titre = document.getElementById('art-titre').value.trim();
+    const nbMots = updateArtWordCount();
+    if (!titre) { showToast('⚠️ Titre requis.'); return; }
+    if (nbMots < 500) { showToast('⚠️ 500 mots minimum requis.'); return; }
+    if (_artBlocs.length === 0) { showToast('⚠️ Ajoutez au moins un bloc de contenu.'); return; }
+
+    const contenu = _artBlocs.map(b => {
+      if (b.type === 'heading')   return { type: 'heading', level: 2, text: b.text.trim() };
+      if (b.type === 'paragraph') return { type: 'paragraph', text: b.text.trim() };
+      if (b.type === 'list')      return { type: 'list', items: b.text.trim().split('\n').filter(Boolean) };
+      if (b.type === 'link')      return { type: 'link', text: b.text.trim(), url: b.url.trim(), nofollow: true };
+      return null;
+    }).filter(Boolean);
+
+    const btn = document.getElementById('btn-submit-article');
+    btn.disabled = true;
+    btn.textContent = 'Envoi…';
+    try {
+      await createArticleCreateur_({
+        uid: currentUser.uid,
+        soumission_id: _artTargetSoumissionId,
+        outil_slug: _artOutilSlug,
+        titre,
+        banniere_url: '', // upload Storage séparé, hors scope de ce diff
+        trimestre: trimestreActuel(),
+        nb_mots: nbMots,
+        contenu
+      });
+      closeArticleModal();
+      showToast('✅ Article envoyé pour relecture !');
+      await loadSoumissions();
+    } catch (e) {
+      showToast('❌ Erreur : ' + (e.message || e));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🚀 Envoyer pour relecture';
+    }
+  };
 
   window.toggleSoumForm = function() {
     const wrap = document.getElementById('soum-form-wrap');

@@ -3159,6 +3159,15 @@ async function main() {
     if (!slug || !article.corps_html || !article.corps_html.trim()) continue;
     validArticlePaths.add(path.join('articles', langue, slug));
   }
+  // Les articles créateurs vivent dans le même dossier articles/{langue}/{slug}/
+  // mais viennent d'une collection Firestore séparée (articles_createurs) —
+  // sans cette ligne, le nettoyage ci-dessous les traite comme orphelins
+  // et les supprime juste après les avoir générés.
+  for (const article of articlesCreateurs) {
+    const slugBase = slugify(article.titre);
+    const slug = `${slugBase}-${String(article.id).slice(0, 6)}`;
+    validArticlePaths.add(path.join('articles', 'fr', slug));
+  }
 
   let removedArticles = 0;
   if (fs.existsSync('articles')) {

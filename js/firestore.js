@@ -262,3 +262,68 @@ export async function getUserSoumissions(uid) {
 
   return items;
 }
+
+// ══════════════════════════════════════
+// REVENDICATION D'OUTIL
+// ══════════════════════════════════════
+// Le statut est TOUJOURS forcé à 'en_attente' ici — jamais 'validee' —
+// conformément aux security rules qui bloquent toute auto-validation
+// (seul un admin peut écrire revendication.statut = 'validee'/'refusee').
+
+export async function submitRevendication(soumissionId, { role, email_pro, preuve_url }) {
+  const ref = doc(db, 'soumissions', soumissionId);
+  await updateDoc(ref, {
+    revendication: {
+      statut: 'en_attente',
+      role,
+      email_pro,
+      preuve_url,
+      date_demande: serverTimestamp(),
+      date_traitement: null,
+      motif_refus: null
+    }
+  });
+}
+
+export async function cancelRevendication(soumissionId) {
+  const ref = doc(db, 'soumissions', soumissionId);
+  await updateDoc(ref, {
+    revendication: {
+      statut: 'aucune',
+      role: null,
+      email_pro: null,
+      preuve_url: null,
+      date_demande: null,
+      date_traitement: null,
+      motif_refus: null
+    }
+  });
+}
+
+// ══════════════════════════════════════
+// ARTICLES CRÉATEURS
+// ══════════════════════════════════════
+// Contenu stocké en blocs structurés (jamais de HTML brut) — voir
+// gen-fiches.js pour le rendu sécurisé côté génération statique.
+
+export async function getArticlesForSoumission(uid, soumissionId) {
+  const ref = collection(db, 'articles_createurs');
+  const snap = await getDocs(query(
+    ref,
+    where('uid', '==', uid),
+    where('soumission_id', '==', soumissionId)
+  ));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function createArticleCreateur({ uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots, contenu }) {
+  const ref = collection(db, 'articles_createurs');
+  const docRef = await addDoc(ref, {
+    uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots,
+    statut: 'en_relecture',
+    contenu,
+    created_at: serverTimestamp(),
+    updated_at: serverTimestamp()
+  });
+  return docRef.id;
+}

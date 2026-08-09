@@ -41,6 +41,18 @@ window.slugify = slugify;
 window.buildToolPageUrl = buildToolPageUrl;
 window.buildBlogPageUrl = buildBlogPageUrl;
 
+// Échappement strict — utilisé UNIQUEMENT pour les champs venant de
+// articles_createurs (contenu soumis par un tiers non admin). Les articles
+// classiques restent injectés tels quels dans renderBlog() comme avant,
+// car ils ne sont écrits que par l'admin (toi) — pas de risque là-dessus.
+function escHtmlBlog(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 // ─── LANGUE ──────────────────────────────
 // Le dictionnaire de traductions (UI_TRANSLATIONS), la fonction t(),
 // appliquerTraductionsStatiques(), detecterLangue(), LS_LANG_KEY et
@@ -264,17 +276,49 @@ async function loadAllData() {
     // manuellement). Les fiches/articles HTML individuels restent générés
     // en statique par gen-fiches.js pour le SEO, mais l'INDEX affiché ici
     // (grille d'outils, liste blog, galerie) est toujours lu en direct.
-    const { db, collection, getDocs } = await import('./firebase-config.js');
+    const { db, collection, getDocs, query, where } = await import('./firebase-config.js');
 
-    const [toolsSnap, articlesSnap, gallerySnap] = await Promise.all([
+    const [toolsSnap, articlesSnap, gallerySnap, articlesCreateursSnap] = await Promise.all([
       getDocs(collection(db, 'outils')).catch(() => ({ docs: [] })),
       getDocs(collection(db, 'articles')).catch(() => ({ docs: [] })),
       getDocs(collection(db, 'galerie')).catch(() => ({ docs: [] })),
+      getDocs(query(collection(db, 'articles_createurs'), where('statut', '==', 'publie'))).catch(() => ({ docs: [] })),
     ]);
 
     state.tools   = toolsSnap.docs.map(d => d.data());
-    state.blog    = articlesSnap.docs.map(d => d.data());
     state.gallery = gallerySnap.docs.map(d => d.data());
+
+    // Articles créateurs (revendication + rédaction) — champs reconstruits
+    // pour correspondre au schéma attendu par renderBlog(), avec échappement
+    // strict des champs soumis par le créateur (titre, extrait), puisqu'ils
+    // n'ont jamais été validés par un admin avant affichage sur l'accueil.
+    const articlesCreateurs = articlesCreateursSnap.docs.map(d => {
+      const a = d.data();
+      const slug = `${slugify(a.titre || '')}-${String(d.id).slice(0, 6)}`;
+      const premierParagraphe = (a.contenu || []).find(b => b.type === 'paragraph');
+      const excerptBrut = premierParagraphe ? String(premierParagraphe.text || '') : '';
+      const excerpt = excerptBrut.length > 150 ? excerptBrut.slice(0, 149) + '…' : excerptBrut;
+      const nbMots = a.nb_mots || 0;
+      const outil = state.tools.find(t => t.slug === a.outil_slug);
+      const dateAffichage = a.created_at?.toDate
+        ? a.created_at.toDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+        : '';
+
+      return {
+        title: escHtmlBlog(a.titre),
+        slug,
+        langue: 'fr',
+        date: dateAffichage,
+        author: escHtmlBlog(outil ? `Équipe ${outil.nom}` : 'Créateur partenaire'),
+        excerpt: escHtmlBlog(excerpt),
+        category: 'Actualité créateur',
+        readTime: `${Math.max(1, Math.round(nbMots / 200))} min`,
+        og_image: /^https?:\/\//i.test(a.banniere_url || '') ? a.banniere_url : '',
+        emoji: '✍️',
+      };
+    });
+
+    state.blog = [...articlesSnap.docs.map(d => d.data()), ...articlesCreateurs];
     renderTools();
     renderBlog();
     renderGallery();

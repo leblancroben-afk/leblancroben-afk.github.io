@@ -1,0 +1,329 @@
+/* ═══════════════════════════════════════
+   Albexia — firestore.js
+   Collections, historique quiz, profil
+   ═══════════════════════════════════════ */
+
+import {
+  db, doc, setDoc, getDoc, updateDoc,
+  collection, addDoc, getDocs, deleteDoc, query, orderBy,
+  where, serverTimestamp
+} from './firebase-config.js';
+
+// ══════════════════════════════════════
+// COLLECTIONS D'OUTILS
+// ══════════════════════════════════════
+
+export async function getCollections(uid) {
+  const ref  = collection(db, 'users', uid, 'collections');
+  const snap = await getDocs(query(ref, orderBy('createdAt', 'desc')));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function createCollection(uid, name) {
+  const ref = collection(db, 'users', uid, 'collections');
+  const doc = await addDoc(ref, {
+    name,
+    tools:     [],
+    createdAt: new Date().toISOString(),
+  });
+  return doc.id;
+}
+
+export async function renameCollection(uid, colId, newName) {
+  const ref = doc(db, 'users', uid, 'collections', colId);
+  await updateDoc(ref, { name: newName });
+}
+
+export async function deleteCollection(uid, colId) {
+  const ref = doc(db, 'users', uid, 'collections', colId);
+  await deleteDoc(ref);
+}
+
+export async function addToolToCollection(uid, colId, tool) {
+  const ref  = doc(db, 'users', uid, 'collections', colId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  const tools = snap.data().tools || [];
+  const alreadyIn = tools.some(t => String(t.id) === String(tool.id));
+  if (alreadyIn) return;
+
+  tools.push({
+    id:       tool.id,
+    name:     tool.name,
+    emoji:    tool.emoji    || '🤖',
+    favicon:  tool.favicon  || '',
+    category: tool.category || '',
+    price:    tool.price    || 'free',
+    url:      tool.url      || '',
+    page:     tool.page     || '',
+    addedAt:  new Date().toISOString(),
+  });
+  await updateDoc(ref, { tools });
+}
+
+export async function removeToolFromCollection(uid, colId, toolId) {
+  const ref  = doc(db, 'users', uid, 'collections', colId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  const tools = (snap.data().tools || []).filter(t => String(t.id) !== String(toolId));
+  await updateDoc(ref, { tools });
+}
+
+// ══════════════════════════════════════
+// HISTORIQUE QUIZ
+// ══════════════════════════════════════
+
+export async function saveQuizSession(uid, answers, results) {
+  const ref = collection(db, 'users', uid, 'quizHistory');
+  await addDoc(ref, {
+    answers,
+    results: results.map(t => ({
+      id:       t.id,
+      name:     t.name,
+      emoji:    t.emoji    || '🤖',
+      favicon:  t.favicon  || '',
+      category: t.category || '',
+      price:    t.price    || 'free',
+      url:      t.url      || '',
+      page:     t.page     || '',
+    })),
+    createdAt: new Date().toISOString(),
+  });
+}
+
+export async function getQuizHistory(uid) {
+  const ref  = collection(db, 'users', uid, 'quizHistory');
+  const snap = await getDocs(query(ref, orderBy('createdAt', 'desc')));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function deleteQuizSession(uid, sessionId) {
+  const ref = doc(db, 'users', uid, 'quizHistory', sessionId);
+  await deleteDoc(ref);
+}
+
+// ══════════════════════════════════════
+// PROFIL UTILISATEUR
+// ══════════════════════════════════════
+
+export async function getUserProfile(uid) {
+  const ref  = doc(db, 'users', uid);
+  const snap = await getDoc(ref);
+  return snap.exists() ? snap.data() : null;
+}
+
+export async function updateDisplayName(uid, displayName) {
+  const ref = doc(db, 'users', uid);
+  await updateDoc(ref, { displayName });
+}
+
+export async function updateLangue(uid, langue) {
+  const ref = doc(db, 'users', uid);
+  await updateDoc(ref, { langue });
+}
+
+export async function updateNewsletter(uid, newsletterOk) {
+  const ref = doc(db, 'users', uid);
+  await updateDoc(ref, { newsletterOk });
+}
+
+export async function updatePhotoURL(uid, photoURL) {
+  const ref = doc(db, 'users', uid);
+  await updateDoc(ref, { photoURL });
+}
+
+export async function updateSkipExitModal(uid, value) {
+  const ref = doc(db, 'users', uid);
+  await updateDoc(ref, { skipExitModal: value });
+}
+
+// ── NOUVEAU : Champs profil public ────────────────
+// Sauvegarde bio, role/titre, liens sociaux en une seule opération
+
+export async function updatePublicProfile(uid, { bio, role, linkedin, twitter, website }) {
+  const ref = doc(db, 'users', uid);
+  const payload = {};
+  if (bio      !== undefined) payload.bio      = bio;
+  if (role     !== undefined) payload.role     = role;
+  if (linkedin !== undefined) payload.linkedin = linkedin;
+  if (twitter  !== undefined) payload.twitter  = twitter;
+  if (website  !== undefined) payload.website  = website;
+  await updateDoc(ref, payload);
+}
+
+// ══════════════════════════════════════
+// PROFIL PUBLIC
+// ══════════════════════════════════════
+
+export async function setCollectionPublic(uid, colId, isPublic) {
+  const ref = doc(db, 'users', uid, 'collections', colId);
+  await updateDoc(ref, { isPublic });
+}
+
+export async function getPublicProfile(uid) {
+  const ref  = doc(db, 'users', uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return null;
+  const data = snap.data();
+  // Champs exposés publiquement
+  return {
+    displayName: data.displayName || 'Utilisateur Albexia',
+    photoURL:    data.photoURL    || null,
+    bio:         data.bio         || null,
+    role:        data.role        || null,
+    linkedin:    data.linkedin    || null,
+    twitter:     data.twitter     || null,
+    website:     data.website     || null,
+    isPionnier:  data.isPionnier  || false,
+    isVerified:  data.isVerified  || false,
+    reviewCount: data.reviewCount || 0,
+  };
+}
+
+export async function getPublicCollections(uid) {
+  const ref  = collection(db, 'users', uid, 'collections');
+  const snap = await getDocs(query(ref, orderBy('createdAt', 'desc')));
+  return snap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(c => c.isPublic === true);
+}
+
+// ══════════════════════════════════════
+// VIDÉOS SAUVEGARDÉES
+// ══════════════════════════════════════
+
+export async function saveVideo(uid, videoData) {
+  const ref = doc(db, 'users', uid, 'savedVideos', videoData.videoId);
+  await setDoc(ref, {
+    videoId:   videoData.videoId,
+    outilId:   videoData.outilId   || '',
+    titre:     videoData.titre     || '',
+    canal:     videoData.canal     || '',
+    duree:     videoData.duree     || '',
+    youtubeId: videoData.youtubeId || '',
+    savedAt:   new Date().toISOString(),
+  });
+}
+
+export async function unsaveVideo(uid, videoId) {
+  const ref = doc(db, 'users', uid, 'savedVideos', videoId);
+  await deleteDoc(ref);
+}
+
+export async function getSavedVideos(uid) {
+  const ref  = collection(db, 'users', uid, 'savedVideos');
+  const snap = await getDocs(query(ref, orderBy('savedAt', 'desc')));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// ══════════════════════════════════════
+// SOUMISSIONS D'OUTILS (depuis le profil connecté)
+// ══════════════════════════════════════
+// Écrit dans la même collection top-level "soumissions" que soumettre.html,
+// avec un champ uid en plus pour permettre le filtrage par utilisateur.
+// Les soumissions faites via soumettre.html (visiteur non connecté) n'ont
+// pas de champ uid et n'apparaîtront donc pas ici (comportement voulu,
+// pas de rattachement rétroactif par email pour l'instant).
+
+export async function createSoumission(uid, data) {
+  const ref = collection(db, 'soumissions');
+  const doc = await addDoc(ref, {
+    uid,
+    nom_outil:     data.nom_outil     || '',
+    url_outil:     data.url_outil     || '',
+    categorie:     data.categorie     || '',
+    modele_prix:   data.modele_prix   || '',
+    tier_demande:  data.tier_demande  || 'gratuit',
+    description:   data.description   || '',
+    extras:        data.extras        || '',
+    status: 'pending',
+    created_at: serverTimestamp(),
+  });
+  return doc.id;
+}
+
+export async function getUserSoumissions(uid) {
+  const ref  = collection(db, 'soumissions');
+  const snap = await getDocs(query(ref, where('uid', '==', uid), orderBy('created_at', 'desc')));
+  const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+  // Pour les soumissions approuvées, résout l'URL réelle de la fiche
+  // via le champ "page" du document outils correspondant (outil_id).
+  await Promise.all(items.map(async (s) => {
+    if (s.status === 'approved' && s.outil_id) {
+      try {
+        const outilSnap = await getDoc(doc(db, 'outils', String(s.outil_id)));
+        if (outilSnap.exists()) s.fiche_page = outilSnap.data().page || null;
+      } catch (_) { /* ignore, le lien restera masqué */ }
+    }
+  }));
+
+  return items;
+}
+
+// ══════════════════════════════════════
+// REVENDICATION D'OUTIL
+// ══════════════════════════════════════
+// Le statut est TOUJOURS forcé à 'en_attente' ici — jamais 'validee' —
+// conformément aux security rules qui bloquent toute auto-validation
+// (seul un admin peut écrire revendication.statut = 'validee'/'refusee').
+
+export async function submitRevendication(soumissionId, { role, email_pro, preuve_url }) {
+  const ref = doc(db, 'soumissions', soumissionId);
+  await updateDoc(ref, {
+    revendication: {
+      statut: 'en_attente',
+      role,
+      email_pro,
+      preuve_url,
+      date_demande: serverTimestamp(),
+      date_traitement: null,
+      motif_refus: null
+    }
+  });
+}
+
+export async function cancelRevendication(soumissionId) {
+  const ref = doc(db, 'soumissions', soumissionId);
+  await updateDoc(ref, {
+    revendication: {
+      statut: 'aucune',
+      role: null,
+      email_pro: null,
+      preuve_url: null,
+      date_demande: null,
+      date_traitement: null,
+      motif_refus: null
+    }
+  });
+}
+
+// ══════════════════════════════════════
+// ARTICLES CRÉATEURS
+// ══════════════════════════════════════
+// Contenu stocké en blocs structurés (jamais de HTML brut) — voir
+// gen-fiches.js pour le rendu sécurisé côté génération statique.
+
+export async function getArticlesForSoumission(uid, soumissionId) {
+  const ref = collection(db, 'articles_createurs');
+  const snap = await getDocs(query(
+    ref,
+    where('uid', '==', uid),
+    where('soumission_id', '==', soumissionId)
+  ));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function createArticleCreateur({ uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots, contenu }) {
+  const ref = collection(db, 'articles_createurs');
+  const docRef = await addDoc(ref, {
+    uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots,
+    statut: 'en_relecture',
+    contenu,
+    created_at: serverTimestamp(),
+    updated_at: serverTimestamp()
+  });
+  return docRef.id;
+}

@@ -806,8 +806,34 @@ function extraireExcerpt(contenu, maxLen = 155) {
   return texte.length > maxLen ? texte.slice(0, maxLen - 1) + '…' : texte;
 }
 
-function generateArticleCreateur(article, outilsMap) {
-  const { id, titre, outil_slug, contenu, created_at, banniere_url } = article;
+// Récupère l'image og:image d'un site officiel, pour servir de bannière
+// automatique quand le créateur n'a pas fourni d'URL manuelle. Échoue
+// silencieusement (retourne '') dans tous les cas problématiques — un site
+// injoignable, lent, sans balise og:image, ou bloquant les robots ne doit
+// jamais faire planter la génération : juste un repli sur l'emoji ✍️.
+async function recupererOgImage(urlOutil) {
+  if (!urlOutil || !/^https?:\/\//i.test(urlOutil)) return '';
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const res = await fetch(urlOutil, {
+      signal: controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; AlbexiaBot/1.0)' }
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return '';
+    const html = await res.text();
+    const match = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+               || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+    const imageUrl = match ? match[1] : '';
+    return /^https?:\/\//i.test(imageUrl) ? imageUrl : '';
+  } catch {
+    return ''; // timeout, réseau, parsing — peu importe la cause, on continue sans bannière
+  }
+}
+
+async function generateArticleCreateur(article, outilsMap) {
+  const { id, titre, outil_slug, contenu, created_at } = article;
   if (!titre || !outil_slug) return null;
 
   // Slug propre + suffixe court de l'id doc pour garantir l'unicité
@@ -831,6 +857,16 @@ function generateArticleCreateur(article, outilsMap) {
   const outilLienHTML = outil
     ? `<p class="article-createur-badge">✍️ Article rédigé par l'équipe de <a href="${R}tools/${outil.dossierPlan}/${langue}/${outil_slug}/index.html">${escHtml(outil.nom)}</a></p>`
     : '';
+
+  // Bannière : priorité à l'URL fournie manuellement par le créateur ;
+  // sinon tentative de récupération automatique depuis le site officiel
+  // de l'outil (og:image) — échoue silencieusement si indisponible.
+  let banniere_url = article.banniere_url && /^https?:\/\//i.test(article.banniere_url)
+    ? article.banniere_url
+    : '';
+  if (!banniere_url && outil?.url_outil) {
+    banniere_url = await recupererOgImage(outil.url_outil);
+  }
 
   const bannerTag = banniere_url && /^https?:\/\//i.test(banniere_url)
     ? `<meta property="og:image" content="${escHtml(banniere_url)}" />`
@@ -3164,20 +3200,24 @@ async function main() {
   const articlesCreateurs = articlesCreateursSnap.docs.map(d => ({ id: d.id, ...d.data() }));
   console.log(`✓ ${articlesCreateurs.length} article(s) créateur(s) publié(s)`);
 
-  // outilsMap : nom + dossier de plan par slug, pour le lien "rédigé par
-  // l'équipe de X" (réutilise la liste `tools` déjà chargée plus haut dans
-  // main(), et le même mapping plan→dossier utilisé partout ailleurs dans
-  // ce fichier, ex. ligne 282 : tool.plan === 'featured' ? 'featured' : ...)
+  // outilsMap : nom, dossier de plan et url officielle par slug — cette
+  // dernière sert au fallback automatique og:image (voir recupererOgImage)
+  // quand le créateur n'a pas fourni de bannière manuelle.
   const outilsMap = new Map(
     tools.map(o => [o.slug, {
       nom: o.nom,
-      dossierPlan: o.plan === 'featured' ? 'featured' : o.plan === 'starter' ? 'starter' : 'standard'
+      dossierPlan: o.plan === 'featured' ? 'featured' : o.plan === 'starter' ? 'starter' : 'standard',
+      url_outil: o.url || ''
     }])
   );
 
   let articlesCreateursGeneres = 0;
   for (const article of articlesCreateurs) {
-    const html = generateArticleCreateur(article, outilsMap);
+    // await ici est volontaire : la boucle reste séquentielle plutôt que
+    // Promise.all, pour ne jamais envoyer plusieurs requêtes simultanées
+    // vers des sites tiers pendant le build (poli envers leurs serveurs,
+    // et plus facile à débugger si un site bloque le run).
+    const html = await generateArticleCreateur(article, outilsMap);
     if (!html) continue;
 
     const slugBase = slugify(article.titre);

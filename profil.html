@@ -2129,34 +2129,33 @@
 <div class="modal-overlay" id="modal-revendiquer">
   <div class="modal">
     <h3 style="display:flex;align-items:center;gap:8px;">
-      🚩 <span id="revendiquer-titre">Revendiquer la propriété</span>
+      🚩 <span id="revendiquer-titre" data-i18n="profil.claimTitle">Revendiquer la propriété</span>
     </h3>
-    <p style="color:#aaa;font-size:.9rem;line-height:1.6;margin:8px 0 20px">
-      Confirmez que vous êtes le créateur ou un représentant officiel de cet outil.
-      Un code de validation prioritaire sera envoyé à l'email professionnel fourni.
+    <p style="color:#aaa;font-size:.9rem;line-height:1.6;margin:8px 0 20px" data-i18n="profil.claimIntro">
+      Confirmez que vous êtes le créateur ou un représentant officiel de cet outil. Votre demande sera examinée par notre équipe sous 24 à 48h.
     </p>
     <form id="form-revendiquer" class="soum-form-grid" style="grid-template-columns:1fr">
       <div class="form-group full">
-        <label>Votre rôle dans le projet</label>
+        <label data-i18n="profil.claimRoleLabel">Votre rôle dans le projet</label>
         <select id="rev-role" required>
-          <option value="" disabled selected>Choisir…</option>
-          <option value="fondateur">Fondateur / CEO</option>
-          <option value="developpeur">Développeur / Lead</option>
-          <option value="marketing">Équipe Marketing / Com</option>
+          <option value="" disabled selected data-i18n="profil.claimRoleChoose">Choisir…</option>
+          <option value="fondateur" data-i18n="profil.claimRoleFounder">Fondateur / CEO</option>
+          <option value="developpeur" data-i18n="profil.claimRoleDev">Développeur / Lead</option>
+          <option value="marketing" data-i18n="profil.claimRoleMarketing">Équipe Marketing / Com</option>
         </select>
       </div>
       <div class="form-group full">
-        <label>Email professionnel du domaine officiel</label>
+        <label data-i18n="profil.claimEmailLabel">Email professionnel du domaine officiel</label>
         <input type="email" id="rev-email" placeholder="contact@monoutil.com" required>
       </div>
       <div class="form-group full">
-        <label>Preuve complémentaire (lien réseau social officiel)</label>
+        <label data-i18n="profil.claimProofLabel">Preuve complémentaire (lien réseau social officiel)</label>
         <input type="url" id="rev-preuve" placeholder="https://x.com/monoutil" required>
       </div>
     </form>
     <div class="modal-actions">
-      <button class="btn-sm btn-outline" onclick="closeRevendiquerModal()">Annuler</button>
-      <button class="btn-primary btn-sm" id="btn-submit-revendiquer" onclick="submitRevendication()">🚀 Soumettre la demande</button>
+      <button class="btn-sm btn-outline" onclick="closeRevendiquerModal()" data-i18n="profil.cancel">Annuler</button>
+      <button class="btn-primary btn-sm" id="btn-submit-revendiquer" onclick="submitRevendication()" data-i18n="profil.claimSubmit">🚀 Soumettre la demande</button>
     </div>
   </div>
 </div>
@@ -2164,41 +2163,42 @@
 <!-- MODALE : Rédiger un article -->
 <div class="fullscreen-editor" id="editor-article">
   <div class="fe-topbar">
-    <button class="fe-back" onclick="closeArticleModal()">← Retour</button>
-    <div class="fe-topbar-title" id="article-titre-modal">Rédiger un article</div>
+    <button class="fe-back" onclick="closeArticleModal()" data-i18n="profil.articleBack">← Retour</button>
+    <div class="fe-topbar-title" id="article-titre-modal" data-i18n="profil.articleWrite">Rédiger un article</div>
     <div class="fe-autosave" id="art-autosave-status"></div>
-    <button class="fe-preview-toggle" id="btn-toggle-preview" onclick="toggleArtPreview()">👁️ Aperçu</button>
+    <button class="fe-preview-toggle" id="btn-toggle-preview" onclick="toggleArtPreview()" data-i18n="profil.articlePreview">👁️ Aperçu</button>
   </div>
 
   <div class="fe-body" id="fe-edit-view">
-    <p class="fe-hint">ℹ️ Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots</p>
+    <p class="fe-hint" data-i18n="profil.articleHint">ℹ️ Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots</p>
 
     <div class="form-group full">
-      <label>Titre de l'article</label>
-      <input type="text" id="art-titre" maxlength="200" placeholder="ex. Notre outil V7 est disponible !" oninput="scheduleArtAutosave()">
+      <label data-i18n="profil.articleTitleLabel">Titre de l'article</label>
+      <input type="text" id="art-titre" maxlength="200" placeholder="ex. Notre outil V7 est disponible !" data-i18n-placeholder="profil.articleTitlePlaceholder" oninput="scheduleArtAutosave()">
     </div>
     <div class="form-group full">
-      <label>Image de couverture (bannière 1200×630px)</label>
-      <input type="file" id="art-banniere" accept="image/jpeg,image/png">
+      <label data-i18n="profil.articleBannerLabel">Image de couverture (bannière — optionnel)</label>
+      <input type="url" id="art-banniere-url" placeholder="https://…" data-i18n-placeholder="profil.articleBannerPlaceholder" oninput="scheduleArtAutosave()">
+      <span style="display:block;font-size:.75rem;color:var(--muted);margin-top:4px" data-i18n="profil.articleBannerHint">Si laissé vide, une image sera récupérée automatiquement depuis le site officiel de l'outil.</span>
     </div>
 
     <div id="art-blocs-container"></div>
 
-    <button type="button" class="fe-add-block-btn" onclick="toggleArtBlockPicker()">+ Ajouter un bloc</button>
+    <button type="button" class="fe-add-block-btn" onclick="toggleArtBlockPicker()" data-i18n="profil.articleAddBlock">+ Ajouter un bloc</button>
     <div id="art-block-picker" class="fe-block-picker" style="display:none">
-      <button type="button" onclick="artAjouterBloc('heading')">H2 — Titre</button>
-      <button type="button" onclick="artAjouterBloc('paragraph')">¶ Paragraphe</button>
-      <button type="button" onclick="artAjouterBloc('list')">• Liste</button>
-      <button type="button" onclick="artAjouterBloc('link')">🔗 Lien</button>
-      <button type="button" onclick="artAjouterBloc('image')">🖼️ Image + légende</button>
-      <button type="button" onclick="artAjouterBloc('callout')">💡 Encadré</button>
-      <button type="button" onclick="artAjouterBloc('quote')">❝ Citation</button>
-      <button type="button" onclick="artAjouterBloc('cta')">🔘 Bouton CTA</button>
-      <button type="button" onclick="artAjouterBloc('divider')">— Séparateur</button>
+      <button type="button" onclick="artAjouterBloc('heading')" data-i18n="profil.blockHeading">H2 — Titre</button>
+      <button type="button" onclick="artAjouterBloc('paragraph')" data-i18n="profil.blockParagraph">¶ Paragraphe</button>
+      <button type="button" onclick="artAjouterBloc('list')" data-i18n="profil.blockList">• Liste</button>
+      <button type="button" onclick="artAjouterBloc('link')" data-i18n="profil.blockLink">🔗 Lien</button>
+      <button type="button" onclick="artAjouterBloc('image')" data-i18n="profil.blockImage">🖼️ Image + légende</button>
+      <button type="button" onclick="artAjouterBloc('callout')" data-i18n="profil.blockCallout">💡 Encadré</button>
+      <button type="button" onclick="artAjouterBloc('quote')" data-i18n="profil.blockQuote">❝ Citation</button>
+      <button type="button" onclick="artAjouterBloc('cta')" data-i18n="profil.blockCta">🔘 Bouton CTA</button>
+      <button type="button" onclick="artAjouterBloc('divider')" data-i18n="profil.blockDivider">— Séparateur</button>
     </div>
 
     <div class="soum-char-count">
-      <span id="art-word-count">0</span> / 500 mots requis
+      <span id="art-word-count">0</span> <span data-i18n="profil.articleWordsRequired">/ 500 mots requis</span>
       <span id="art-word-check"></span>
     </div>
   </div>
@@ -2208,8 +2208,8 @@
   </div>
 
   <div class="fe-bottombar">
-    <button class="btn-sm btn-outline" onclick="closeArticleModal()">Annuler</button>
-    <button class="btn-primary btn-sm" id="btn-submit-article" onclick="submitArticle()" disabled>🚀 Envoyer pour relecture</button>
+    <button class="btn-sm btn-outline" onclick="closeArticleModal()" data-i18n="profil.cancel">Annuler</button>
+    <button class="btn-primary btn-sm" id="btn-submit-article" onclick="submitArticle()" disabled data-i18n="profil.claimSubmitArticle">🚀 Envoyer pour relecture</button>
   </div>
 </div>
 
@@ -3387,7 +3387,7 @@
     // rien (les éléments n'existent pas encore pendant le map() ci-dessus).
     userSoumissions.forEach(s => {
       if (s.status === 'rejected' && s.revendication?.statut === 'validee') {
-        chargerZoneArticle(s.id, s.nom_outil);
+        chargerZoneArticle(s.id, s.nom_outil, langue);
       }
     });
   }
@@ -3436,10 +3436,10 @@
       // ÉTAPE 1 : rejeté, revendication possible
       extra = `
         <div class="soum-card-extra">
-          ${s.motif_rejet ? `<p class="soum-motif">⚠️ Motif du rejet : ${escHtml(s.motif_rejet)}</p>` : ''}
+          ${s.motif_rejet ? `<p class="soum-motif">⚠️ ${t('profil.rejectReason', langue)} : ${escHtml(s.motif_rejet)}</p>` : ''}
           <div class="soum-actions-row">
-            ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 Voir la fiche existante</a>` : ''}
-            <button class="btn-sm btn-outline" onclick="openRevendiquerModal('${s.id}', '${escHtml(s.nom_outil)}')">🚩 Revendiquer cet outil</button>
+            ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 ${t('profil.viewExistingSheet', langue)}</a>` : ''}
+            <button class="btn-sm btn-outline" onclick="openRevendiquerModal('${s.id}', '${escHtml(s.nom_outil)}')">🚩 ${t('profil.claimThisTool', langue)}</button>
           </div>
         </div>`;
     } else if (rev.statut === 'en_attente') {
@@ -3449,27 +3449,27 @@
         : '';
       extra = `
         <div class="soum-card-extra">
-          <p>⏳ Demande de revendication envoyée le ${dateDemande} <span class="status-pill status-pending">En examen</span></p>
-          <p style="font-size:.8rem;color:var(--muted)">Notre équipe vérifie votre identité sous 24h à 48h.</p>
+          <p>⏳ ${t('profil.claimSentOn', langue)} ${dateDemande} <span class="status-pill status-pending">${t('profil.underReview', langue)}</span></p>
+          <p style="font-size:.8rem;color:var(--muted)">${t('profil.claimReviewDelay', langue)}</p>
           <div class="soum-actions-row">
-            ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 Voir la fiche existante</a>` : ''}
-            <button class="btn-sm btn-outline" onclick="annulerRevendication('${s.id}')">🗑️ Annuler la demande</button>
+            ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 ${t('profil.viewExistingSheet', langue)}</a>` : ''}
+            <button class="btn-sm btn-outline" onclick="annulerRevendication('${s.id}')">🗑️ ${t('profil.cancelClaim', langue)}</button>
           </div>
         </div>`;
     } else if (rev.statut === 'validee') {
       // ÉTAPE 3+4 : revendiqué, publication débloquée
       extra = `
         <div class="soum-card-extra">
-          <p>✔️ Outil revendiqué — associé à votre compte</p>
-          ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 Voir la fiche sur le site</a>` : ''}
+          <p>✔️ ${t('profil.toolClaimed', langue)}</p>
+          ${s.outil_existant_slug ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 ${t('profil.viewSheetOnSite', langue)}</a>` : ''}
           <div id="article-zone-${s.id}" class="soum-card-extra" style="margin-top:10px">
-            <p style="font-size:.8rem;color:var(--muted)">Chargement…</p>
+            <p style="font-size:.8rem;color:var(--muted)">${t('profil.loading', langue)}</p>
           </div>
         </div>`;
     } else if (rev.statut === 'refusee') {
       extra = `
         <div class="soum-card-extra">
-          <p style="color:var(--danger)">❌ Revendication refusée${rev.motif_refus ? ' — ' + escHtml(rev.motif_refus) : ''}</p>
+          <p style="color:var(--danger)">❌ ${t('profil.claimRefused', langue)}${rev.motif_refus ? ' — ' + escHtml(rev.motif_refus) : ''}</p>
         </div>`;
     }
 
@@ -3513,44 +3513,46 @@
 
   window.submitRevendication = async function() {
     if (!_revTargetId) return;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const role = document.getElementById('rev-role').value;
     const email = document.getElementById('rev-email').value.trim();
     const preuve = document.getElementById('rev-preuve').value.trim();
     if (!role || !email || !preuve) {
-      showToast('⚠️ Merci de remplir tous les champs.');
+      showToast('⚠️ ' + t('profil.fillAllFields', langue));
       return;
     }
     const btn = document.getElementById('btn-submit-revendiquer');
     btn.disabled = true;
-    btn.textContent = 'Envoi…';
+    btn.textContent = t('profil.sending', langue);
     try {
       await submitRevendication_(_revTargetId, { role, email_pro: email, preuve_url: preuve });
       closeRevendiquerModal();
-      showToast('✅ Demande envoyée ! Réponse sous 24 à 48h.');
+      showToast('✅ ' + t('profil.claimSentToast', langue));
       await loadSoumissions();
     } catch (e) {
-      showToast('❌ Erreur : ' + (e.message || e));
+      showToast('❌ ' + t('profil.errorPrefix', langue) + (e.message || e));
     } finally {
       btn.disabled = false;
-      btn.textContent = '🚀 Soumettre la demande';
+      btn.textContent = t('profil.claimSubmit', langue);
     }
   };
 
   window.annulerRevendication = async function(soumissionId) {
-    if (!confirm('Annuler votre demande de revendication ?')) return;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    if (!confirm(t('profil.confirmCancelClaim', langue))) return;
     try {
       await cancelRevendication_(soumissionId);
-      showToast('Demande annulée.');
+      showToast(t('profil.claimCancelled', langue));
       await loadSoumissions();
     } catch (e) {
-      showToast('❌ Erreur : ' + (e.message || e));
+      showToast('❌ ' + t('profil.errorPrefix', langue) + (e.message || e));
     }
   };
 
   // ═══════════════════════════════════════════════════════
   //  ZONE ARTICLE (quota + bouton rédiger + suivi)
   // ═══════════════════════════════════════════════════════
-  async function chargerZoneArticle(soumissionId, nomOutil) {
+  async function chargerZoneArticle(soumissionId, nomOutil, langue) {
     const zone = document.getElementById(`article-zone-${soumissionId}`);
     if (!zone) return;
     try {
@@ -3562,21 +3564,19 @@
 
       if (enCours) {
         zone.innerHTML = `
-          <p>📄 "${escHtmlStrict(enCours.titre)}" <span class="status-pill status-pending">Article en relecture</span></p>
-          <p style="font-size:.8rem;color:var(--muted)">En cours d'examen par l'équipe Albexia.</p>`;
+          <p>📄 "${escHtmlStrict(enCours.titre)}" <span class="status-pill status-pending">${t('profil.articleInReview', langue)}</span></p>
+          <p style="font-size:.8rem;color:var(--muted)">${t('profil.articleUnderReviewByTeam', langue)}</p>`;
       } else if (publieCeTrimestre) {
         zone.innerHTML = `
-          <p>✅ "${escHtmlStrict(publieCeTrimestre.titre)}" publié ce trimestre.</p>
-          <p style="font-size:.8rem;color:var(--muted)">Quota d'1 article/trimestre atteint — revenez au prochain trimestre.</p>`;
+          <p>✅ "${escHtmlStrict(publieCeTrimestre.titre)}" ${t('profil.articlePublishedThisQuarter', langue)}</p>
+          <p style="font-size:.8rem;color:var(--muted)">${t('profil.quotaReached', langue)}</p>`;
       } else {
         zone.innerHTML = `
-          <p style="font-size:.85rem;color:var(--muted);margin-bottom:8px">
-            Publiez une mise à jour ou un cas d'usage (100% gratuit · 1 article / trimestre)
-          </p>
-          <button class="btn-sm btn-primary" onclick="openArticleModal('${soumissionId}', '${escHtmlStrict(nomOutil)}')">📝 Rédiger un article</button>`;
+          <p style="font-size:.85rem;color:var(--muted);margin-bottom:8px">${t('profil.publishCtaText', langue)}</p>
+          <button class="btn-sm btn-primary" onclick="openArticleModal('${soumissionId}', '${escHtmlStrict(nomOutil)}')">📝 ${t('profil.writeArticleBtn', langue)}</button>`;
       }
     } catch (e) {
-      zone.innerHTML = `<p style="color:var(--danger)">Erreur de chargement.</p>`;
+      zone.innerHTML = `<p style="color:var(--danger)">${t('profil.loadError', langue)}</p>`;
       console.error('[chargerZoneArticle]', e);
     }
   }
@@ -3590,11 +3590,15 @@
   let _artAutosaveTimer = null;
   let _artPreviewMode = false;
 
-  const ART_BLOCK_LABELS = {
-    heading: 'Titre H2', paragraph: 'Paragraphe', list: 'Liste (une ligne = un point)',
-    link: 'Lien', image: 'Image', callout: 'Encadré', quote: 'Citation',
-    cta: 'Bouton CTA', divider: 'Séparateur'
-  };
+  function artBlockLabels(langue) {
+    return {
+      heading: t('profil.blockHeading', langue), paragraph: t('profil.blockParagraph', langue),
+      list: t('profil.blockListLabel', langue), link: t('profil.blockLink', langue),
+      image: t('profil.blockImage', langue), callout: t('profil.blockCallout', langue),
+      quote: t('profil.blockQuote', langue), cta: t('profil.blockCta', langue),
+      divider: t('profil.blockDivider', langue)
+    };
+  }
 
   window.openArticleModal = function(soumissionId, nomOutil) {
     _artTargetSoumissionId = soumissionId;
@@ -3609,10 +3613,12 @@
         const data = JSON.parse(brouillon);
         document.getElementById('art-titre').value = data.titre || '';
         _artBlocs = data.blocs || [];
+        document.getElementById('art-banniere-url').value = data.banniereUrl || '';
       } catch { _artBlocs = []; }
     } else {
       document.getElementById('art-titre').value = '';
       _artBlocs = [];
+      document.getElementById('art-banniere-url').value = '';
     }
 
     _artPreviewMode = false;
@@ -3626,8 +3632,9 @@
   };
 
   window.closeArticleModal = function() {
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     if (_artBlocs.length > 0 || document.getElementById('art-titre').value.trim()) {
-      if (!confirm('Fermer sans envoyer ? Ton brouillon reste sauvegardé, tu pourras le reprendre plus tard.')) return;
+      if (!confirm(t('profil.confirmCloseEditor', langue))) return;
     }
     document.getElementById('editor-article').classList.remove('open');
     _artTargetSoumissionId = null;
@@ -3647,7 +3654,11 @@
     if (statusEl) statusEl.textContent = '…';
     _artAutosaveTimer = setTimeout(() => {
       if (!_artTargetSoumissionId) return;
-      const data = { titre: document.getElementById('art-titre').value, blocs: _artBlocs };
+      const data = {
+        titre: document.getElementById('art-titre').value,
+        blocs: _artBlocs,
+        banniereUrl: document.getElementById('art-banniere-url').value
+      };
       localStorage.setItem('art-brouillon-' + _artTargetSoumissionId, JSON.stringify(data));
       if (statusEl) statusEl.textContent = 'Enregistré ✓';
     }, 600);
@@ -3714,7 +3725,8 @@
     const textarea = document.getElementById('ta-' + id);
     if (!textarea) return;
     const start = textarea.selectionStart, end = textarea.selectionEnd;
-    if (start === end) { showToast('Sélectionne du texte d\'abord.'); return; }
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    if (start === end) { showToast(t('profil.selectTextFirst', langue)); return; }
     const val = textarea.value;
     const selected = val.slice(start, end);
     const nouveau = val.slice(0, start) + marqueur + selected + marqueur + val.slice(end);
@@ -3735,7 +3747,8 @@
   function renderArtBlocs() {
     const container = document.getElementById('art-blocs-container');
     container.innerHTML = _artBlocs.map((b, i) => {
-      const label = ART_BLOCK_LABELS[b.type] || b.type;
+      const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+      const label = artBlockLabels(langue)[b.type] || b.type;
       const controls = `
         <div class="art-bloc-controls">
           ${i > 0 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',-1)" title="Monter">↑</button>` : ''}
@@ -3746,31 +3759,31 @@
 
       if (b.type === 'link') {
         return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
-          <input type="text" placeholder="Texte du lien" value="${escHtmlStrict(b.text)}"
+          <input type="text" placeholder="${t('profil.linkTextPlaceholder', langue)}" value="${escHtmlStrict(b.text)}"
                  oninput="artUpdateBlocTexte('${b.id}', this.value)" style="margin-bottom:6px">
           <input type="url" placeholder="https://…" value="${escHtmlStrict(b.url)}"
                  oninput="artUpdateBlocChamp('${b.id}','url', this.value)"></div>`;
       }
       if (b.type === 'cta') {
         return `<div class="art-bloc-cta">${controls}<span class="art-bloc-label">${label}</span>
-          <input type="text" placeholder="Texte du bouton (ex. Voir l'outil)" value="${escHtmlStrict(b.text)}"
+          <input type="text" placeholder="${t('profil.ctaTextPlaceholder', langue)}" value="${escHtmlStrict(b.text)}"
                  oninput="artUpdateBlocTexte('${b.id}', this.value)" style="margin-bottom:6px">
           <input type="url" placeholder="https://…" value="${escHtmlStrict(b.url)}"
                  oninput="artUpdateBlocChamp('${b.id}','url', this.value)"></div>`;
       }
       if (b.type === 'image') {
         return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
-          <input type="url" placeholder="URL de l'image (https://…)" value="${escHtmlStrict(b.url)}"
+          <input type="url" placeholder="${t('profil.imageUrlPlaceholder', langue)}" value="${escHtmlStrict(b.url)}"
                  oninput="artUpdateBlocChamp('${b.id}','url', this.value)" style="margin-bottom:6px">
-          <input type="text" placeholder="Légende (optionnel)" value="${escHtmlStrict(b.caption)}"
+          <input type="text" placeholder="${t('profil.captionPlaceholder', langue)}" value="${escHtmlStrict(b.caption)}"
                  oninput="artUpdateBlocChamp('${b.id}','caption', this.value)"></div>`;
       }
       if (b.type === 'divider') {
-        return `<div class="art-bloc-divider">${controls}— Séparateur —</div>`;
+        return `<div class="art-bloc-divider">${controls}— ${t('profil.blockDivider', langue)} —</div>`;
       }
       if (b.type === 'list') {
         return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
-          <textarea rows="3" placeholder="Une ligne = un point de liste…"
+          <textarea rows="3" placeholder="${t('profil.listItemsPlaceholder', langue)}"
                     oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea></div>`;
       }
 
@@ -3783,7 +3796,7 @@
            </div>` : '';
       return `<div class="${wrapClass}">${controls}<span class="art-bloc-label">${label}</span>
         ${miniToolbar}
-        <textarea id="ta-${b.id}" rows="${b.type === 'heading' ? 1 : 3}" placeholder="Texte brut — sélectionne pour mettre en gras/italique…"
+        <textarea id="ta-${b.id}" rows="${b.type === 'heading' ? 1 : 3}" placeholder="${t('profil.rawTextPlaceholder', langue)}"
                   oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea></div>`;
     }).join('');
   }
@@ -3832,9 +3845,10 @@
       const titre = document.getElementById('art-titre').value.trim() || '(Sans titre)';
       const nbMots = updateArtWordCount();
       const tempsLecture = Math.max(1, Math.round(nbMots / 200));
+      const langueAp = window.detecterLangue ? window.detecterLangue() : 'fr';
       document.getElementById('art-preview-content').innerHTML = `
         <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">
-          Actualité créateur · ${tempsLecture} min de lecture
+          ${t('profil.creatorNewsLabel', langueAp)} · ${tempsLecture} ${t('profil.minRead', langueAp)}
         </div>
         <h1>${escHtmlStrict(titre)}</h1>
         ${_artBlocs.map(renderPreviewBloc).join('')}`;
@@ -3843,11 +3857,12 @@
 
   window.submitArticle = async function() {
     if (!_artTargetSoumissionId) return;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const titre = document.getElementById('art-titre').value.trim();
     const nbMots = updateArtWordCount();
-    if (!titre) { showToast('⚠️ Titre requis.'); return; }
-    if (nbMots < 500) { showToast('⚠️ 500 mots minimum requis.'); return; }
-    if (_artBlocs.length === 0) { showToast('⚠️ Ajoutez au moins un bloc de contenu.'); return; }
+    if (!titre) { showToast('⚠️ ' + t('profil.titleRequired', langue)); return; }
+    if (nbMots < 500) { showToast('⚠️ ' + t('profil.min500Words', langue)); return; }
+    if (_artBlocs.length === 0) { showToast('⚠️ ' + t('profil.addAtLeastOneBlock', langue)); return; }
 
     const contenu = _artBlocs.map(b => {
       if (b.type === 'heading')   return { type: 'heading', level: 2, text: b.text.trim() };
@@ -3864,27 +3879,27 @@
 
     const btn = document.getElementById('btn-submit-article');
     btn.disabled = true;
-    btn.textContent = 'Envoi…';
+    btn.textContent = t('profil.sending', langue);
     try {
       await createArticleCreateur_({
         uid: currentUser.uid,
         soumission_id: _artTargetSoumissionId,
         outil_slug: _artOutilSlug,
         titre,
-        banniere_url: '', // upload Storage séparé, hors scope de ce diff
+        banniere_url: document.getElementById('art-banniere-url').value.trim(),
         trimestre: trimestreActuel(),
         nb_mots: nbMots,
         contenu
       });
       localStorage.removeItem('art-brouillon-' + _artTargetSoumissionId);
       document.getElementById('editor-article').classList.remove('open');
-      showToast('✅ Article envoyé pour relecture !');
+      showToast('✅ ' + t('profil.articleSentToast', langue));
       await loadSoumissions();
     } catch (e) {
-      showToast('❌ Erreur : ' + (e.message || e));
+      showToast('❌ ' + t('profil.errorPrefix', langue) + (e.message || e));
     } finally {
       btn.disabled = false;
-      btn.textContent = '🚀 Envoyer pour relecture';
+      btn.textContent = t('profil.claimSubmitArticle', langue);
     }
   };
 

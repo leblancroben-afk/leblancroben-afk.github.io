@@ -735,17 +735,33 @@ function escHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+// Transforme **gras** et *italique* en <strong>/<em> — appliqué UNIQUEMENT
+// sur du texte déjà passé par escHtml(). Les astérisques ne font pas partie
+// des caractères échappés, donc cette regex ne peut produire que ces deux
+// balises fermées à partir de texte déjà neutralisé — aucune injection possible.
+function appliquerMarkdownLite(texteEchappe) {
+  return texteEchappe
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>');
+}
+
 function renderContenuBloc(bloc) {
   if (!bloc || typeof bloc !== 'object') return '';
   switch (bloc.type) {
     case 'paragraph':
-      return `<p>${escHtml(bloc.text)}</p>`;
+      return `<p>${appliquerMarkdownLite(escHtml(bloc.text))}</p>`;
     case 'heading': {
       const lvl = bloc.level === 3 ? 3 : 2;
       return `<h${lvl}>${escHtml(bloc.text)}</h${lvl}>`;
     }
     case 'list':
       return `<ul>${(Array.isArray(bloc.items) ? bloc.items : []).map(i => `<li>${escHtml(i)}</li>`).join('')}</ul>`;
+    case 'quote':
+      return `<blockquote>${appliquerMarkdownLite(escHtml(bloc.text))}</blockquote>`;
+    case 'callout':
+      return `<div class="pv-callout">💡 ${appliquerMarkdownLite(escHtml(bloc.text))}</div>`;
+    case 'divider':
+      return `<hr>`;
     case 'link': {
       // URL validée minimalement : doit démarrer par http(s) — sinon le lien
       // est rendu en texte brut plutôt que cliquable (évite javascript:, data:, etc.)
@@ -754,11 +770,20 @@ function renderContenuBloc(bloc) {
       if (!isHttp) return `<span>${escHtml(bloc.text)}</span>`;
       return `<a href="${escHtml(url)}" rel="nofollow noopener" target="_blank">${escHtml(bloc.text)}</a>`;
     }
+    case 'cta': {
+      const url = String(bloc.url || '');
+      const isHttp = /^https?:\/\//i.test(url);
+      if (!isHttp) return '';
+      return `<a class="pv-cta" href="${escHtml(url)}" rel="nofollow noopener" target="_blank">${escHtml(bloc.text)}</a>`;
+    }
     case 'image': {
       const url = String(bloc.url || '');
       const isHttp = /^https?:\/\//i.test(url);
       if (!isHttp) return '';
-      return `<img src="${escHtml(url)}" alt="${escHtml(bloc.alt || '')}" loading="lazy" />`;
+      const img = `<img src="${escHtml(url)}" alt="${escHtml(bloc.alt || '')}" loading="lazy" />`;
+      return bloc.caption
+        ? `<figure>${img}<figcaption>${escHtml(bloc.caption)}</figcaption></figure>`
+        : img;
     }
     default:
       // Type inconnu (bug, contournement, champ corrompu) → jamais rendu.
@@ -799,6 +824,8 @@ function generateArticleCreateur(article, outilsMap) {
   const metaDesc = extraireExcerpt(contenu);
   const bodyHTML = renderContenuComplet(contenu);
   const titleTag = `${escHtml(titre)} | Albexia`;
+  const nbMots = article.nb_mots || (contenu || []).reduce((acc, b) => acc + String(b.text || '').split(/\s+/).filter(Boolean).length, 0);
+  const tempsLecture = Math.max(1, Math.round(nbMots / 200));
 
   const outil = outilsMap?.get(outil_slug);
   const outilLienHTML = outil
@@ -828,6 +855,17 @@ ${bannerTag}
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/article.css" />
+  <style>
+    /* Styles des nouveaux blocs créateurs — inline ici pour ne pas dépendre
+       d'un ajout manuel dans article.css (peut être déplacé plus tard). */
+    .article-body p:first-of-type { font-size: 1.1em; }
+    .article-body blockquote { border-left: 3px solid #6c63ff; padding: 8px 20px; margin: 20px 0; font-style: italic; color: #c8c8d0; }
+    .pv-callout { background: rgba(255,157,108,.08); border: 1px solid rgba(255,157,108,.25); border-left: 3px solid #ff9d6c; border-radius: 8px; padding: 16px 18px; margin: 20px 0; }
+    .pv-cta { display: block; text-align: center; background: #00d4aa; color: #0a0a12; font-weight: 700; text-decoration: none; padding: 16px 24px; border-radius: 10px; margin: 24px 0; text-transform: uppercase; font-size: .85rem; letter-spacing: .03em; }
+    .article-body hr { border: none; border-top: 1px solid rgba(255,255,255,.1); margin: 32px 0; }
+    .article-body figure { margin: 20px 0; }
+    .article-body figcaption { font-size: .8rem; color: #8a8a9a; text-align: center; margin-top: 8px; }
+  </style>
 </head>
 <body>
 
@@ -841,6 +879,8 @@ ${articleNavHTML(langue)}
       <span class="article-cat fond">Actualité créateur</span>
       <span class="dot"></span>
       <span class="article-date">${dateAffichage}</span>
+      <span class="dot"></span>
+      <span class="article-readtime">${tempsLecture} min</span>
     </div>
     <h1 class="article-title">${escHtml(titre)}</h1>
     ${outilLienHTML}

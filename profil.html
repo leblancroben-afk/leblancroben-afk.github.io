@@ -799,6 +799,92 @@
     .soum-motif { color:#ff9d6c; font-size:.82rem; margin-bottom:8px; }
     .article-createur-badge { font-size:.8rem; color:var(--muted); margin-top:6px; }
 
+    /* ── Éditeur d'article plein écran (remplace la modale) ── */
+    .fullscreen-editor {
+      display:none; position:fixed; inset:0; z-index:200;
+      background:var(--bg); flex-direction:column;
+    }
+    .fullscreen-editor.open { display:flex; }
+    .fe-topbar {
+      display:flex; align-items:center; gap:10px; padding:14px 16px;
+      border-bottom:1px solid var(--border); flex-shrink:0; background:var(--surface);
+    }
+    .fe-back { background:none; border:none; color:var(--muted); font-size:.9rem; cursor:pointer; padding:6px 0; }
+    .fe-topbar-title { flex:1; font-weight:700; font-size:1rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .fe-autosave { font-size:.72rem; color:var(--muted); white-space:nowrap; }
+    .fe-preview-toggle {
+      background:var(--surface2); border:1px solid var(--border); color:var(--text);
+      font-size:.8rem; padding:7px 12px; border-radius:8px; cursor:pointer; white-space:nowrap;
+    }
+    .fe-preview-toggle.active { background:#6c63ff; border-color:#6c63ff; color:#fff; }
+    .fe-body { flex:1; overflow-y:auto; padding:18px 16px 100px; max-width:640px; margin:0 auto; width:100%; box-sizing:border-box; }
+    .fe-hint { color:#aaa; font-size:.85rem; line-height:1.5; margin:0 0 18px; }
+    .fe-bottombar {
+      display:flex; gap:10px; justify-content:flex-end; padding:12px 16px;
+      border-top:1px solid var(--border); background:var(--surface); flex-shrink:0;
+    }
+    .fe-add-block-btn {
+      width:100%; background:var(--surface2); border:1px dashed var(--border); color:var(--muted);
+      font-size:.85rem; padding:12px; border-radius:10px; cursor:pointer; margin-top:6px;
+    }
+    .fe-add-block-btn:hover { border-color:#6c63ff; color:var(--text); }
+    .fe-block-picker {
+      display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;
+      background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:8px;
+    }
+    .fe-block-picker button {
+      background:transparent; border:1px solid var(--border); color:#c8c8d0;
+      font-size:.78rem; padding:8px; border-radius:8px; cursor:pointer; text-align:left;
+    }
+    .fe-block-picker button:hover { border-color:#6c63ff; color:var(--text); }
+
+    /* blocs — poignées de réordonnancement/suppression */
+    .art-bloc-controls { position:absolute; top:6px; right:6px; display:flex; gap:4px; }
+    .art-bloc-controls button {
+      background:none; border:none; color:var(--muted); cursor:pointer; font-size:.85rem; padding:2px 5px;
+    }
+    .art-bloc-controls button:hover { color:var(--text); }
+
+    /* nouveaux types de blocs */
+    .art-bloc-callout {
+      background:rgba(255,157,108,.08); border:1px solid rgba(255,157,108,.25); border-left:3px solid #ff9d6c;
+      border-radius:8px; padding:12px 12px 12px 14px; margin-bottom:8px; position:relative;
+    }
+    .art-bloc-quote {
+      border-left:3px solid #6c63ff; padding:10px 12px 10px 14px; margin-bottom:8px;
+      background:var(--surface2); border-radius:0 8px 8px 0; position:relative; font-style:italic;
+    }
+    .art-bloc-cta { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:8px; position:relative; }
+    .art-bloc-divider { text-align:center; color:var(--muted); font-size:.8rem; padding:8px; margin-bottom:8px; position:relative; }
+    .fe-mini-toolbar { display:flex; gap:4px; margin-bottom:4px; }
+    .fe-mini-toolbar button {
+      background:var(--surface2); border:1px solid var(--border); color:#c8c8d0;
+      font-size:.75rem; padding:3px 8px; border-radius:5px; cursor:pointer;
+    }
+
+    /* aperçu — miroir du rendu réel du site */
+    .article-preview-frame { max-width:680px; margin:0 auto; }
+    .article-preview-frame h1 { font-family:'Syne',sans-serif; font-size:1.7rem; margin:6px 0 16px; }
+    .article-preview-frame h2 { font-family:'Syne',sans-serif; font-size:1.25rem; margin:22px 0 10px; }
+    .article-preview-frame p { line-height:1.75; margin:0 0 14px; color:#d8d8e0; }
+    .article-preview-frame p:first-of-type { font-size:1.1em; }
+    .article-preview-frame ul { margin:0 0 14px 20px; line-height:1.7; }
+    .article-preview-frame a { color:#a8a3ff; }
+    .article-preview-frame blockquote {
+      border-left:3px solid #6c63ff; padding:8px 16px; margin:16px 0; font-style:italic; color:#c8c8d0;
+    }
+    .article-preview-frame .pv-callout {
+      background:rgba(255,157,108,.08); border:1px solid rgba(255,157,108,.25); border-left:3px solid #ff9d6c;
+      border-radius:8px; padding:14px 16px; margin:16px 0;
+    }
+    .article-preview-frame .pv-cta {
+      display:block; text-align:center; background:#00d4aa; color:#0a0a12; font-weight:700;
+      text-decoration:none; padding:14px 20px; border-radius:10px; margin:20px 0; text-transform:uppercase; font-size:.85rem;
+    }
+    .article-preview-frame hr { border:none; border-top:1px solid var(--border); margin:24px 0; }
+    .article-preview-frame img { max-width:100%; border-radius:10px; }
+    .article-preview-frame figcaption { font-size:.8rem; color:var(--muted); text-align:center; margin-top:6px; }
+
     /* ── RESPONSIVE ──────────────────────────────── */
     @media (max-width: 768px) {
     }
@@ -2076,42 +2162,54 @@
 </div>
 
 <!-- MODALE : Rédiger un article -->
-<div class="modal-overlay" id="modal-article">
-  <div class="modal" style="max-width:600px">
-    <h3 style="display:flex;align-items:center;gap:8px;">
-      📝 <span id="article-titre-modal">Rédiger un article</span>
-    </h3>
-    <p style="color:#aaa;font-size:.85rem;line-height:1.5;margin:4px 0 18px">
-      ℹ️ Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots
-    </p>
-    <form id="form-article" class="soum-form-grid" style="grid-template-columns:1fr">
-      <div class="form-group full">
-        <label>Titre de l'article</label>
-        <input type="text" id="art-titre" maxlength="200" placeholder="ex. Notre outil V7 est disponible !" required>
-      </div>
-      <div class="form-group full">
-        <label>Image de couverture (bannière 1200×630px)</label>
-        <input type="file" id="art-banniere" accept="image/jpeg,image/png">
-      </div>
-      <div class="form-group full">
-        <label>Corps de l'article</label>
-        <div class="art-toolbar">
-          <button type="button" onclick="artAjouterBloc('heading')">H2</button>
-          <button type="button" onclick="artAjouterBloc('paragraph')">¶ Paragraphe</button>
-          <button type="button" onclick="artAjouterBloc('list')">• Liste</button>
-          <button type="button" onclick="artAjouterBloc('link')">🔗 Lien</button>
-        </div>
-        <div id="art-blocs-container"></div>
-      </div>
-      <div class="soum-char-count">
-        <span id="art-word-count">0</span> / 500 mots requis
-        <span id="art-word-check"></span>
-      </div>
-    </form>
-    <div class="modal-actions">
-      <button class="btn-sm btn-outline" onclick="closeArticleModal()">Annuler</button>
-      <button class="btn-primary btn-sm" id="btn-submit-article" onclick="submitArticle()" disabled>🚀 Envoyer pour relecture</button>
+<div class="fullscreen-editor" id="editor-article">
+  <div class="fe-topbar">
+    <button class="fe-back" onclick="closeArticleModal()">← Retour</button>
+    <div class="fe-topbar-title" id="article-titre-modal">Rédiger un article</div>
+    <div class="fe-autosave" id="art-autosave-status"></div>
+    <button class="fe-preview-toggle" id="btn-toggle-preview" onclick="toggleArtPreview()">👁️ Aperçu</button>
+  </div>
+
+  <div class="fe-body" id="fe-edit-view">
+    <p class="fe-hint">ℹ️ Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots</p>
+
+    <div class="form-group full">
+      <label>Titre de l'article</label>
+      <input type="text" id="art-titre" maxlength="200" placeholder="ex. Notre outil V7 est disponible !" oninput="scheduleArtAutosave()">
     </div>
+    <div class="form-group full">
+      <label>Image de couverture (bannière 1200×630px)</label>
+      <input type="file" id="art-banniere" accept="image/jpeg,image/png">
+    </div>
+
+    <div id="art-blocs-container"></div>
+
+    <button type="button" class="fe-add-block-btn" onclick="toggleArtBlockPicker()">+ Ajouter un bloc</button>
+    <div id="art-block-picker" class="fe-block-picker" style="display:none">
+      <button type="button" onclick="artAjouterBloc('heading')">H2 — Titre</button>
+      <button type="button" onclick="artAjouterBloc('paragraph')">¶ Paragraphe</button>
+      <button type="button" onclick="artAjouterBloc('list')">• Liste</button>
+      <button type="button" onclick="artAjouterBloc('link')">🔗 Lien</button>
+      <button type="button" onclick="artAjouterBloc('image')">🖼️ Image + légende</button>
+      <button type="button" onclick="artAjouterBloc('callout')">💡 Encadré</button>
+      <button type="button" onclick="artAjouterBloc('quote')">❝ Citation</button>
+      <button type="button" onclick="artAjouterBloc('cta')">🔘 Bouton CTA</button>
+      <button type="button" onclick="artAjouterBloc('divider')">— Séparateur</button>
+    </div>
+
+    <div class="soum-char-count">
+      <span id="art-word-count">0</span> / 500 mots requis
+      <span id="art-word-check"></span>
+    </div>
+  </div>
+
+  <div class="fe-body" id="fe-preview-view" style="display:none">
+    <div class="article-preview-frame" id="art-preview-content"></div>
+  </div>
+
+  <div class="fe-bottombar">
+    <button class="btn-sm btn-outline" onclick="closeArticleModal()">Annuler</button>
+    <button class="btn-primary btn-sm" id="btn-submit-article" onclick="submitArticle()" disabled>🚀 Envoyer pour relecture</button>
   </div>
 </div>
 
@@ -3484,25 +3582,54 @@
   }
 
   // ═══════════════════════════════════════════════════════
-  //  MODALE ARTICLE — blocs structurés (JAMAIS de HTML brut)
+  //  ÉDITEUR ARTICLE PLEIN ÉCRAN — blocs structurés (JAMAIS de HTML brut)
   // ═══════════════════════════════════════════════════════
   let _artTargetSoumissionId = null;
   let _artOutilSlug = null;
   let _artBlocs = [];
+  let _artAutosaveTimer = null;
+  let _artPreviewMode = false;
+
+  const ART_BLOCK_LABELS = {
+    heading: 'Titre H2', paragraph: 'Paragraphe', list: 'Liste (une ligne = un point)',
+    link: 'Lien', image: 'Image', callout: 'Encadré', quote: 'Citation',
+    cta: 'Bouton CTA', divider: 'Séparateur'
+  };
 
   window.openArticleModal = function(soumissionId, nomOutil) {
     _artTargetSoumissionId = soumissionId;
     _artOutilSlug = slugifyClient(nomOutil);
-    _artBlocs = [];
-    document.getElementById('article-titre-modal').textContent = `Rédiger un article sur ${nomOutil}`;
-    document.getElementById('form-article').reset();
-    document.getElementById('art-blocs-container').innerHTML = '';
+    document.getElementById('article-titre-modal').textContent = nomOutil;
+
+    // Restauration d'un brouillon local s'il existe pour cette soumission —
+    // évite de perdre le travail si la page a été fermée par erreur.
+    const brouillon = localStorage.getItem('art-brouillon-' + soumissionId);
+    if (brouillon) {
+      try {
+        const data = JSON.parse(brouillon);
+        document.getElementById('art-titre').value = data.titre || '';
+        _artBlocs = data.blocs || [];
+      } catch { _artBlocs = []; }
+    } else {
+      document.getElementById('art-titre').value = '';
+      _artBlocs = [];
+    }
+
+    _artPreviewMode = false;
+    document.getElementById('fe-edit-view').style.display = '';
+    document.getElementById('fe-preview-view').style.display = 'none';
+    document.getElementById('btn-toggle-preview').classList.remove('active');
+    document.getElementById('art-block-picker').style.display = 'none';
+    renderArtBlocs();
     updateArtWordCount();
-    document.getElementById('modal-article').classList.add('open');
+    document.getElementById('editor-article').classList.add('open');
   };
 
   window.closeArticleModal = function() {
-    document.getElementById('modal-article').classList.remove('open');
+    if (_artBlocs.length > 0 || document.getElementById('art-titre').value.trim()) {
+      if (!confirm('Fermer sans envoyer ? Ton brouillon reste sauvegardé, tu pourras le reprendre plus tard.')) return;
+    }
+    document.getElementById('editor-article').classList.remove('open');
     _artTargetSoumissionId = null;
     _artBlocs = [];
   };
@@ -3513,56 +3640,156 @@
       .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   }
 
+  // ── Autosave silencieux (localStorage, par soumission) ──
+  window.scheduleArtAutosave = function() {
+    clearTimeout(_artAutosaveTimer);
+    const statusEl = document.getElementById('art-autosave-status');
+    if (statusEl) statusEl.textContent = '…';
+    _artAutosaveTimer = setTimeout(() => {
+      if (!_artTargetSoumissionId) return;
+      const data = { titre: document.getElementById('art-titre').value, blocs: _artBlocs };
+      localStorage.setItem('art-brouillon-' + _artTargetSoumissionId, JSON.stringify(data));
+      if (statusEl) statusEl.textContent = 'Enregistré ✓';
+    }, 600);
+  };
+
+  // ── Ajout / suppression / réordonnancement de blocs ──
+  window.toggleArtBlockPicker = function() {
+    const p = document.getElementById('art-block-picker');
+    p.style.display = p.style.display === 'none' ? 'grid' : 'none';
+  };
+
   window.artAjouterBloc = function(type) {
     const id = 'bloc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
-    const bloc = { id, type, text: '', level: 2, items: [''], url: '' };
+    const bloc = { id, type, text: '', level: 2, url: '', alt: '', caption: '' };
     _artBlocs.push(bloc);
+    document.getElementById('art-block-picker').style.display = 'none';
     renderArtBlocs();
+    scheduleArtAutosave();
   };
 
   window.artSupprimerBloc = function(id) {
     _artBlocs = _artBlocs.filter(b => b.id !== id);
     renderArtBlocs();
+    updateArtWordCount();
+    scheduleArtAutosave();
+  };
+
+  window.artDupliquerBloc = function(id) {
+    const idx = _artBlocs.findIndex(b => b.id === id);
+    if (idx === -1) return;
+    const copie = { ..._artBlocs[idx], id: 'bloc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7) };
+    _artBlocs.splice(idx + 1, 0, copie);
+    renderArtBlocs();
+    scheduleArtAutosave();
+  };
+
+  window.artDeplacerBloc = function(id, direction) {
+    const idx = _artBlocs.findIndex(b => b.id === id);
+    const newIdx = idx + direction;
+    if (idx === -1 || newIdx < 0 || newIdx >= _artBlocs.length) return;
+    [_artBlocs[idx], _artBlocs[newIdx]] = [_artBlocs[newIdx], _artBlocs[idx]];
+    renderArtBlocs();
+    scheduleArtAutosave();
   };
 
   window.artUpdateBlocTexte = function(id, val) {
     const b = _artBlocs.find(x => x.id === id);
     if (b) b.text = val; // texte brut, jamais interprété comme HTML
     updateArtWordCount();
+    scheduleArtAutosave();
   };
 
-  window.artUpdateBlocUrl = function(id, val) {
+  window.artUpdateBlocChamp = function(id, champ, val) {
     const b = _artBlocs.find(x => x.id === id);
-    if (b) b.url = val;
+    if (b) b[champ] = val;
+    scheduleArtAutosave();
   };
+
+  // ── Gras/italique par sélection (façon Medium) — insère des marqueurs
+  // **gras** / *italique* dans le texte brut, jamais de HTML. Le rendu
+  // (aperçu + site final) transforme ces marqueurs en <strong>/<em>
+  // APRÈS échappement complet, donc aucune injection possible.
+  window.artFormaterSelection = function(id, marqueur) {
+    const textarea = document.getElementById('ta-' + id);
+    if (!textarea) return;
+    const start = textarea.selectionStart, end = textarea.selectionEnd;
+    if (start === end) { showToast('Sélectionne du texte d\'abord.'); return; }
+    const val = textarea.value;
+    const selected = val.slice(start, end);
+    const nouveau = val.slice(0, start) + marqueur + selected + marqueur + val.slice(end);
+    textarea.value = nouveau;
+    artUpdateBlocTexte(id, nouveau);
+  };
+
+  // Transforme **gras** et *italique* en <strong>/<em> — TOUJOURS appliqué
+  // sur du texte déjà échappé (escHtmlStrict), donc sans risque d'injection :
+  // les astérisques ne sont pas des caractères échappés, la regex ne peut
+  // produire que ces deux balises fermées, rien d'autre.
+  function appliquerMarkdownLite(texteEchappe) {
+    return texteEchappe
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>');
+  }
 
   function renderArtBlocs() {
     const container = document.getElementById('art-blocs-container');
-    container.innerHTML = _artBlocs.map(b => {
-      const labels = { heading: 'Titre H2', paragraph: 'Paragraphe', list: 'Liste (une ligne = un point)', link: 'Lien' };
-      if (b.type === 'link') {
-        return `
-          <div class="art-bloc">
-            <button type="button" class="art-bloc-remove" onclick="artSupprimerBloc('${b.id}')">✕</button>
-            <span class="art-bloc-label">${labels[b.type]}</span>
-            <input type="text" placeholder="Texte du lien" value="${escHtmlStrict(b.text)}"
-                   oninput="artUpdateBlocTexte('${b.id}', this.value)" style="margin-bottom:6px">
-            <input type="url" placeholder="https://…" value="${escHtmlStrict(b.url)}"
-                   oninput="artUpdateBlocUrl('${b.id}', this.value)">
-          </div>`;
-      }
-      return `
-        <div class="art-bloc">
-          <button type="button" class="art-bloc-remove" onclick="artSupprimerBloc('${b.id}')">✕</button>
-          <span class="art-bloc-label">${labels[b.type] || b.type}</span>
-          <textarea rows="${b.type === 'heading' ? 1 : 3}" placeholder="Texte brut, pas de HTML…"
-                    oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea>
+    container.innerHTML = _artBlocs.map((b, i) => {
+      const label = ART_BLOCK_LABELS[b.type] || b.type;
+      const controls = `
+        <div class="art-bloc-controls">
+          ${i > 0 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',-1)" title="Monter">↑</button>` : ''}
+          ${i < _artBlocs.length - 1 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',1)" title="Descendre">↓</button>` : ''}
+          <button type="button" onclick="artDupliquerBloc('${b.id}')" title="Dupliquer">⧉</button>
+          <button type="button" onclick="artSupprimerBloc('${b.id}')" title="Supprimer">🗑️</button>
         </div>`;
+
+      if (b.type === 'link') {
+        return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
+          <input type="text" placeholder="Texte du lien" value="${escHtmlStrict(b.text)}"
+                 oninput="artUpdateBlocTexte('${b.id}', this.value)" style="margin-bottom:6px">
+          <input type="url" placeholder="https://…" value="${escHtmlStrict(b.url)}"
+                 oninput="artUpdateBlocChamp('${b.id}','url', this.value)"></div>`;
+      }
+      if (b.type === 'cta') {
+        return `<div class="art-bloc-cta">${controls}<span class="art-bloc-label">${label}</span>
+          <input type="text" placeholder="Texte du bouton (ex. Voir l'outil)" value="${escHtmlStrict(b.text)}"
+                 oninput="artUpdateBlocTexte('${b.id}', this.value)" style="margin-bottom:6px">
+          <input type="url" placeholder="https://…" value="${escHtmlStrict(b.url)}"
+                 oninput="artUpdateBlocChamp('${b.id}','url', this.value)"></div>`;
+      }
+      if (b.type === 'image') {
+        return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
+          <input type="url" placeholder="URL de l'image (https://…)" value="${escHtmlStrict(b.url)}"
+                 oninput="artUpdateBlocChamp('${b.id}','url', this.value)" style="margin-bottom:6px">
+          <input type="text" placeholder="Légende (optionnel)" value="${escHtmlStrict(b.caption)}"
+                 oninput="artUpdateBlocChamp('${b.id}','caption', this.value)"></div>`;
+      }
+      if (b.type === 'divider') {
+        return `<div class="art-bloc-divider">${controls}— Séparateur —</div>`;
+      }
+      if (b.type === 'list') {
+        return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
+          <textarea rows="3" placeholder="Une ligne = un point de liste…"
+                    oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea></div>`;
+      }
+
+      // paragraph / heading / callout / quote — tous éditables avec gras/italique
+      const wrapClass = b.type === 'callout' ? 'art-bloc-callout' : b.type === 'quote' ? 'art-bloc-quote' : 'art-bloc';
+      const miniToolbar = (b.type === 'paragraph' || b.type === 'callout' || b.type === 'quote')
+        ? `<div class="fe-mini-toolbar">
+             <button type="button" onclick="artFormaterSelection('${b.id}','**')"><b>G</b></button>
+             <button type="button" onclick="artFormaterSelection('${b.id}','*')"><i>I</i></button>
+           </div>` : '';
+      return `<div class="${wrapClass}">${controls}<span class="art-bloc-label">${label}</span>
+        ${miniToolbar}
+        <textarea id="ta-${b.id}" rows="${b.type === 'heading' ? 1 : 3}" placeholder="Texte brut — sélectionne pour mettre en gras/italique…"
+                  oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea></div>`;
     }).join('');
   }
 
   function updateArtWordCount() {
-    const totalText = _artBlocs.map(b => b.type === 'list' ? (b.items||[]).join(' ') : b.text).join(' ');
+    const totalText = _artBlocs.map(b => b.text || '').join(' ');
     const nbMots = totalText.trim().split(/\s+/).filter(Boolean).length;
     document.getElementById('art-word-count').textContent = nbMots;
     const ok = nbMots >= 500;
@@ -3570,6 +3797,49 @@
     document.getElementById('btn-submit-article').disabled = !ok;
     return nbMots;
   }
+
+  // ── Aperçu — miroir du rendu final du site (même logique que gen-fiches.js) ──
+  function renderPreviewBloc(b) {
+    if (b.type === 'paragraph') return `<p>${appliquerMarkdownLite(escHtmlStrict(b.text))}</p>`;
+    if (b.type === 'heading')   return `<h2>${escHtmlStrict(b.text)}</h2>`;
+    if (b.type === 'list')      return `<ul>${b.text.split('\n').filter(Boolean).map(i => `<li>${escHtmlStrict(i)}</li>`).join('')}</ul>`;
+    if (b.type === 'quote')     return `<blockquote>${appliquerMarkdownLite(escHtmlStrict(b.text))}</blockquote>`;
+    if (b.type === 'callout')   return `<div class="pv-callout">💡 ${appliquerMarkdownLite(escHtmlStrict(b.text))}</div>`;
+    if (b.type === 'divider')   return `<hr>`;
+    if (b.type === 'link') {
+      const isHttp = /^https?:\/\//i.test(b.url || '');
+      return isHttp ? `<p><a href="${escHtmlStrict(b.url)}" target="_blank" rel="nofollow">${escHtmlStrict(b.text)}</a></p>` : `<p>${escHtmlStrict(b.text)}</p>`;
+    }
+    if (b.type === 'cta') {
+      const isHttp = /^https?:\/\//i.test(b.url || '');
+      return isHttp ? `<a class="pv-cta" href="${escHtmlStrict(b.url)}" target="_blank" rel="nofollow">${escHtmlStrict(b.text)}</a>` : '';
+    }
+    if (b.type === 'image') {
+      const isHttp = /^https?:\/\//i.test(b.url || '');
+      if (!isHttp) return '';
+      return `<figure><img src="${escHtmlStrict(b.url)}" alt="${escHtmlStrict(b.alt||'')}">${b.caption ? `<figcaption>${escHtmlStrict(b.caption)}</figcaption>` : ''}</figure>`;
+    }
+    return '';
+  }
+
+  window.toggleArtPreview = function() {
+    _artPreviewMode = !_artPreviewMode;
+    const btn = document.getElementById('btn-toggle-preview');
+    btn.classList.toggle('active', _artPreviewMode);
+    document.getElementById('fe-edit-view').style.display = _artPreviewMode ? 'none' : '';
+    document.getElementById('fe-preview-view').style.display = _artPreviewMode ? '' : 'none';
+    if (_artPreviewMode) {
+      const titre = document.getElementById('art-titre').value.trim() || '(Sans titre)';
+      const nbMots = updateArtWordCount();
+      const tempsLecture = Math.max(1, Math.round(nbMots / 200));
+      document.getElementById('art-preview-content').innerHTML = `
+        <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">
+          Actualité créateur · ${tempsLecture} min de lecture
+        </div>
+        <h1>${escHtmlStrict(titre)}</h1>
+        ${_artBlocs.map(renderPreviewBloc).join('')}`;
+    }
+  };
 
   window.submitArticle = async function() {
     if (!_artTargetSoumissionId) return;
@@ -3582,8 +3852,13 @@
     const contenu = _artBlocs.map(b => {
       if (b.type === 'heading')   return { type: 'heading', level: 2, text: b.text.trim() };
       if (b.type === 'paragraph') return { type: 'paragraph', text: b.text.trim() };
+      if (b.type === 'callout')   return { type: 'callout', text: b.text.trim() };
+      if (b.type === 'quote')     return { type: 'quote', text: b.text.trim() };
+      if (b.type === 'divider')   return { type: 'divider' };
       if (b.type === 'list')      return { type: 'list', items: b.text.trim().split('\n').filter(Boolean) };
       if (b.type === 'link')      return { type: 'link', text: b.text.trim(), url: b.url.trim(), nofollow: true };
+      if (b.type === 'cta')       return { type: 'cta', text: b.text.trim(), url: b.url.trim() };
+      if (b.type === 'image')     return { type: 'image', url: b.url.trim(), alt: b.alt || '', caption: b.caption || '' };
       return null;
     }).filter(Boolean);
 
@@ -3601,7 +3876,8 @@
         nb_mots: nbMots,
         contenu
       });
-      closeArticleModal();
+      localStorage.removeItem('art-brouillon-' + _artTargetSoumissionId);
+      document.getElementById('editor-article').classList.remove('open');
       showToast('✅ Article envoyé pour relecture !');
       await loadSoumissions();
     } catch (e) {

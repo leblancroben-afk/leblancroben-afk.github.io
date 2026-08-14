@@ -11,17 +11,14 @@
             l'admin affiche le bandeau "🤖 X outil(s) à vérifier"
             (voir admin-index-2.html / runDiagnosticIA()).
 
-   Moteur : Gemini avec l'outil de recherche Google (grounding) —
-   nécessaire ici car, contrairement à traduire-fiches.js, il ne
-   s'agit pas de traduire du contenu existant mais de RECHERCHER
-   des faits (URL officielle, prix réel...) sur le web.
-
-   ⚠️ À vérifier après premier run : la syntaxe exacte du tool
-   "google_search" dépend de la version d'API Gemini disponible au
-   moment où tu lances ce script — si l'appel échoue avec une erreur
-   sur le champ "tools", consulte la doc Gemini à jour (elle peut
-   avoir changé depuis l'écriture de ce script) et ajuste le bloc
-   GEMINI_TOOLS ci-dessous en conséquence.
+   Fonctionnement EN DEUX ÉTAPES (pas de "grounding" Gemini — quota
+   429 rencontré sur google_search, voir historique) :
+   1. Google Programmable Search (Custom Search API, gratuit, 100
+      requêtes/jour) — trouve l'outil sur le web réellement.
+   2. Gemini (generateContent standard, même quota que le glossaire
+      et les niches, déjà utilisé sans souci ailleurs dans le projet)
+      — structure URL/catégorie/prix/description/tags à partir des
+      résultats de recherche, pas depuis sa seule mémoire.
 
    Usage : node enrichir-outils.js
    Cron  : GitHub Actions, nocturne + déclenchement manuel
@@ -36,26 +33,52 @@ const db = getFirestore();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-3.5-flash';
-const MAX_OUTILS_PAR_RUN = 10; // recherche web = plus coûteux/lent qu'une simple traduction
-
-// Déclaration de l'outil de recherche Google pour Gemini (grounding).
-// Voir avertissement en tête de fichier si ça échoue.
-const GEMINI_TOOLS = [{ google_search: {} }];
+const GOOGLE_SEARCH_API_KEY = process.env.GOOGLE_SEARCH_API_KEY;
+const GOOGLE_SEARCH_CX = process.env.GOOGLE_SEARCH_CX;
+const MAX_OUTILS_PAR_RUN = 10;
 
 async function fetchCategories() {
   const snap = await db.collection('categories').get();
   return snap.docs.map(d => d.data().nom).filter(Boolean);
 }
 
-async function enrichirOutil(nomOutil, categoriesDisponibles) {
-  const prompt = `Tu es un assistant de recherche pour un annuaire d'outils IA francophone (Albexia). ` +
-    `Recherche l'outil nommé "${nomOutil}" sur le web et renvoie ses informations réelles et actuelles. ` +
-    `Catégorie à choisir OBLIGATOIREMENT dans cette liste exacte (recopie le texte exact) : ${JSON.stringify(categoriesDisponibles)}. ` +
-    `Si aucune catégorie ne correspond bien, choisis la plus proche de cette liste — n'en invente jamais une nouvelle. ` +
-    `Prix : "free" (gratuit), "freemium" (gratuit avec palier payant), ou "paid" (payant uniquement). ` +
+// ══════════════════════════════════════
+// ÉTAPE 1 — Google Custom Search
+// ══════════════════════════════════════
+async function chercherOutil(nomOutil) {
+  const q = encodeURIComponent(`${nomOutil} outil IA officiel`);
+  const url = `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_SEARCH_API_KEY}&cx=${GOOGLE_SEARCH_CX}&q=${q}&num=5`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!res.ok) throw new Error(`Google Search API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+
+  return (data.items || []).map(it => ({
+    titre: it.title || '',
+    lien: it.link || '',
+    extrait: it.snippet || '',
+  }));
+}
+
+// ══════════════════════════════════════
+// ÉTAPE 2 — Gemini structure les champs à partir des résultats
+// ══════════════════════════════════════
+async function enrichirOutil(nomOutil, resultatsRecherche, categoriesDisponibles) {
+  if (!resultatsRecherche.length) return { trouve: false };
+
+  const contexte = resultatsRecherche
+    .map((r, i) => `[${i + 1}] ${r.titre}\nURL: ${r.lien}\nExtrait: ${r.extrait}`)
+    .join('\n\n');
+
+  const prompt = `Tu structures une fiche pour un annuaire d'outils IA francophone (Albexia). ` +
+    `Voici des résultats de recherche web réels pour l'outil "${nomOutil}" :\n\n${contexte}\n\n` +
+    `À partir de CES résultats (n'invente rien qui ne soit pas suggéré par eux), identifie le site officiel de l'outil ` +
+    `et structure ses informations. Catégorie à choisir OBLIGATOIREMENT dans cette liste exacte (recopie le texte exact) : ` +
+    `${JSON.stringify(categoriesDisponibles)}. Si aucune catégorie ne correspond bien, choisis la plus proche — n'en invente jamais une nouvelle. ` +
+    `Prix : "free" (gratuit), "freemium" (gratuit avec palier payant), ou "paid" (payant uniquement) — déduis-le du contexte, ou "freemium" si incertain. ` +
     `Description : 150-200 caractères, en français, factuelle, sans superlatifs marketing exagérés. ` +
     `Tags : 3 à 6 mots-clés courts en français. ` +
-    `Si tu ne trouves pas l'outil avec certitude, renvoie {"trouve": false} et rien d'autre. ` +
+    `Si les résultats ne parlent clairement PAS du bon outil (nom similaire mais produit différent, page inexistante...), ` +
+    `renvoie {"trouve": false} et rien d'autre. ` +
     `Sinon réponds UNIQUEMENT avec un objet JSON valide, sans markdown, avec exactement cette forme :\n` +
     `{"trouve": true, "url": "https://...", "category": "...", "price": "free|freemium|paid", ` +
     `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖"}`;
@@ -66,18 +89,17 @@ async function enrichirOutil(nomOutil, categoriesDisponibles) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       contents: [{ parts: [{ text: prompt }] }],
-      tools: GEMINI_TOOLS,
+      generationConfig: { responseMimeType: 'application/json' },
     }),
   });
 
   const data = await res.json();
   if (!res.ok) throw new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
 
-  const texte = data?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
-  const jsonMatch = texte.match(/\{[\s\S]*\}/); // au cas où le modèle ajoute du texte autour malgré la consigne
-  if (!jsonMatch) throw new Error('Réponse Gemini sans JSON exploitable : ' + texte.slice(0, 200));
+  const texte = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!texte) throw new Error('Réponse Gemini vide ou inattendue.');
 
-  return JSON.parse(jsonMatch[0]);
+  return JSON.parse(texte);
 }
 
 function slugify(str) {
@@ -91,6 +113,10 @@ function slugify(str) {
 async function main() {
   if (!GEMINI_API_KEY) {
     console.error('✗ GEMINI_API_KEY manquant dans les secrets.');
+    process.exit(1);
+  }
+  if (!GOOGLE_SEARCH_API_KEY || !GOOGLE_SEARCH_CX) {
+    console.error('✗ GOOGLE_SEARCH_API_KEY et/ou GOOGLE_SEARCH_CX manquant(s) dans les secrets.');
     process.exit(1);
   }
 
@@ -110,7 +136,9 @@ async function main() {
   for (const docSnap of aTraiter) {
     const outil = docSnap.data();
     try {
-      const infos = await enrichirOutil(outil.name, categoriesDisponibles);
+      const resultats = await chercherOutil(outil.name);
+      await new Promise(r => setTimeout(r, 300));
+      const infos = await enrichirOutil(outil.name, resultats, categoriesDisponibles);
 
       if (!infos.trouve) {
         console.log(`  – ${outil.name} : introuvable par l'IA, laissé en 'a_enrichir' pour retraitement ou vérification manuelle.`);

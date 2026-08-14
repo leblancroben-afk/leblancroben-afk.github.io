@@ -1,0 +1,33 @@
+name: Attribution vidéos YouTube (nocturne)
+
+on:
+  schedule:
+    # 00:00 heure de Paris = 23:00 UTC (heure d'été CEST) ou 22:00 UTC (hiver CET).
+    # GitHub cron ne gère pas les fuseaux : on cale sur 23:00 UTC toute l'année,
+    # ce qui donne minuit en été et 1h du matin en hiver — ajustable si besoin.
+    - cron: '0 23 * * *'
+  workflow_dispatch: {} # permet de le lancer manuellement depuis l'onglet Actions
+
+permissions:
+  contents: write
+
+jobs:
+  generer-videos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer firebase-admin
+        run: npm install firebase-admin
+
+      - name: Lancer le script d'attribution de vidéos
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: node generer-videos.js

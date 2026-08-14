@@ -507,6 +507,8 @@ function renderTools() {
   ).join('');
 
   const filtered = toolsLangue.filter(t =>
+    t.status !== 'offline' && // outil dont le lien est mort depuis 7 checks consécutifs
+                               // (check-liens.js) — carte masquée, fiche HTML reste publiée
     (state.activeToolCat === 'Tous' || t.category === state.activeToolCat) &&
     (matchRecherche(state.searchQuery, t.name) ||
      matchRecherche(state.searchQuery, t.description) ||
@@ -1120,7 +1122,7 @@ function scoreOutil(tool, answers) {
 
 function showQuizResults() {
   const answers = quizState.answers;
-  const outils  = filtrerParLangue(state.tools);
+  const outils  = filtrerParLangue(state.tools).filter(t => t.status !== 'offline');
   const scored  = outils.map(t => ({ tool: t, score: scoreOutil(t, answers) }));
   scored.sort((a, b) => b.score - a.score);
 

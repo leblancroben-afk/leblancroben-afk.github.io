@@ -299,6 +299,120 @@ function toolLangueUrls(tool, allTools) {
 // ════════════════════════════════════════════════════════════
 // GÉNÉRATEUR STANDARD
 // ════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════
+// GÉNÉRATEUR — TAKEOVER OUTIL HORS LIGNE
+// (status='offline' écrit par check-liens.js, 7+ échecs consécutifs)
+// Reprend le langage visuel de 404.html (voir css/tool-detail.css,
+// bloc "OFFLINE TAKEOVER"). La fiche continue d'être servie à son
+// URL habituelle — le SEO résiduel (recherches sur le nom de l'outil)
+// n'est pas perdu — mais tout le contenu commercial (hero, tarifs,
+// fonctionnalités) est remplacé par cette page neutre + alternatives.
+// ════════════════════════════════════════════════════════════
+function toolFicheUrl(t) {
+  const folder = t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard';
+  return `${R}tools/${folder}/${t.langue || 'fr'}/${slugify(t.name)}/`;
+}
+
+function generateOfflineTakeover(tool, allTools = []) {
+  const { name, description = '', category = '', langue = 'fr' } = tool;
+  const titres = {
+    fr: `${name} — Outil hors ligne | Albexia`,
+    en: `${name} — Tool offline | Albexia`,
+    es: `${name} — Herramienta fuera de línea | Albexia`,
+  };
+  const metaDesc = {
+    fr: `${name} ne semble plus être en ligne. Découvrez des alternatives actives dans la même catégorie sur Albexia.`,
+    en: `${name} no longer appears to be online. Discover active alternatives in the same category on Albexia.`,
+    es: `${name} ya no parece estar en línea. Descubre alternativas activas en la misma categoría en Albexia.`,
+  }[langue] || `${name} ne semble plus être en ligne.`;
+  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
+
+  const dateVerif = tool.updatedAt && typeof tool.updatedAt.toDate === 'function'
+    ? tool.updatedAt.toDate().toLocaleDateString(langue === 'en' ? 'en-GB' : langue === 'es' ? 'es-ES' : 'fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '';
+
+  // Alternatives calculées au build : même catégorie, actives uniquement,
+  // jamais un autre outil mort. Triées par note.
+  const alternatives = allTools
+    .filter(t => t.langue === langue && t.category === category && t.name !== name && t.status !== 'offline' && t.status !== 'warning')
+    .sort((a, b) => (b.note || b.rating || 0) - (a.note || a.rating || 0))
+    .slice(0, 3);
+
+  const labels = {
+    fr: { headline: 'est', word: 'hors ligne', body: `Nous vérifions ce lien régulièrement, et il ne répond plus depuis un moment. L'outil a peut-être fermé, changé de nom, ou déménagé sans laisser d'adresse.`,
+          verif: dateVerif ? `Dernière vérification le ${dateVerif}.` : '', altLabel: 'Alternative', linksLabel: 'Dans la même catégorie', foot: 'OUTIL HORS LIGNE',
+          about: `${name} était référencé dans la catégorie ${category || 'outils IA'} sur Albexia.` },
+    en: { headline: 'is', word: 'offline', body: `We check this link regularly, and it hasn't responded in a while. The tool may have shut down, rebranded, or moved without a trace.`,
+          verif: dateVerif ? `Last checked on ${dateVerif}.` : '', altLabel: 'Alternative', linksLabel: 'In the same category', foot: 'TOOL OFFLINE',
+          about: `${name} was listed in the ${category || 'AI tools'} category on Albexia.` },
+    es: { headline: 'está', word: 'fuera de línea', body: `Verificamos este enlace regularmente, y no responde desde hace un tiempo. La herramienta puede haber cerrado, cambiado de nombre o mudado sin dejar rastro.`,
+          verif: dateVerif ? `Última verificación el ${dateVerif}.` : '', altLabel: 'Alternativa', linksLabel: 'En la misma categoría', foot: 'HERRAMIENTA FUERA DE LÍNEA',
+          about: `${name} estaba listada en la categoría ${category || 'herramientas IA'} en Albexia.` },
+  };
+  const t = labels[langue] || labels.fr;
+
+  const altLinksHTML = alternatives.map(alt => `
+    <a href="${toolFicheUrl(alt)}" class="offline-link-item">
+      <div>
+        <span class="offline-link-label">${t.altLabel}</span>
+        <span class="offline-link-main">${alt.emoji || '🤖'} ${alt.name}</span>
+        <span class="offline-link-sub">${(alt.description || '').slice(0, 90)}</span>
+      </div>
+      <span class="offline-link-arrow">→</span>
+    </a>`).join('');
+
+  return `<!DOCTYPE html>
+<html lang="${langue}">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${titres[langue] || titres.fr}</title>
+  <meta name="description" content="${metaDesc}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${canonicalUrl}">
+${hreflangTags}
+  <meta property="og:title" content="${titres[langue] || titres.fr}">
+  <meta property="og:description" content="${metaDesc}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${canonicalUrl}">
+  <meta property="og:locale" content="${ogLocale}">
+${ogLocaleAlternates}
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="${R}css/style.css">
+  <link rel="stylesheet" href="${R}css/tool-detail.css">
+</head>
+<body>
+${navHTML(langue)}
+<main><div class="container">
+  <div class="tool-breadcrumb"><div class="container">
+    <a href="${R}index.html#tools">${{fr:'Outils',en:'Tools',es:'Herramientas'}[langue]||'Outils'}</a> ›
+    <a href="${R}index.html#tools">${category}</a> › <span>${name}</span>
+  </div></div>
+
+  <div class="offline-page"><div class="offline-container">
+    <div class="offline-giant">${name}</div>
+    <h1 class="offline-headline">${name} ${t.headline} <span class="word-h">${t.word}</span>.</h1>
+    <p class="offline-body-text">${t.body}${t.verif ? ` <span class="em">${t.verif}</span>` : ''}</p>
+
+    <div class="offline-about">
+      <strong>${name}</strong> — ${t.about} ${description ? description : ''}
+    </div>
+
+    ${altLinksHTML ? `
+    <div class="offline-divider"></div>
+    <div class="offline-links-label">${t.linksLabel}</div>
+    <div class="offline-links">${altLinksHTML}</div>` : ''}
+
+    <p class="offline-foot">${t.foot} · <span>${name.toUpperCase()}</span></p>
+  </div></div>
+</div></main>
+${footerHTML()}
+${sharedJS()}
+</body>
+</html>`;
+}
+
 function generateStandard(tool, allTools=[]) {
   const { name, description='', price='freemium', category='', url='#', favicon, emoji='🤖', langue='fr' } = tool;
   const fav = favicon || `https://www.google.com/s2/favicons?sz=128&domain=${new URL(url).hostname}`;
@@ -3020,9 +3134,10 @@ async function main() {
     if (!hasChanged && fs.existsSync(filePath)) { unchanged++; continue; }
 
     let html;
-    if (plan === 'featured')      html = generateFeatured(tool, tools);
-    else if (plan === 'starter')  html = generateStarter(tool, tools);
-    else                          html = generateStandard(tool, tools);
+    if (tool.status === 'offline')     html = generateOfflineTakeover(tool, tools);
+    else if (plan === 'featured')      html = generateFeatured(tool, tools);
+    else if (plan === 'starter')       html = generateStarter(tool, tools);
+    else                                html = generateStandard(tool, tools);
 
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(filePath, html, 'utf8');

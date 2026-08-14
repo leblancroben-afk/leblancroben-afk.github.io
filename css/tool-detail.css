@@ -982,3 +982,139 @@ footer a { color: #a8a3ff; text-decoration: none; }
   .avo-tool-name { font-size:1.1rem; }
 }
 
+
+/* ============================================================
+   OFFLINE TAKEOVER — fiche d'un outil dont le lien est mort
+   (status='offline' dans Firestore, écrit par check-liens.js)
+   Reprend le langage visuel de 404.html : chiffres/texte en
+   contour, mot souligné en rose, cartes-liens, ligne meta.
+   ============================================================ */
+
+.offline-page {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 2rem 5rem;
+}
+.offline-container { max-width: 720px; margin: 0 auto; }
+
+.offline-giant {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 10vw, 5rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,107,157,0.25);
+  letter-spacing: -0.03em;
+  user-select: none;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
+}
+
+.offline-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  line-height: 1.15;
+  margin-bottom: 1.6rem;
+}
+.offline-headline .word-h {
+  position: relative;
+  display: inline-block;
+  color: var(--accent2);
+}
+.offline-headline .word-h::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent2);
+}
+
+.offline-body-text {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  max-width: 560px;
+}
+.offline-body-text .em { color: var(--text); font-style: italic; font-weight: 400; }
+
+/* Bloc factuel résiduel — sérieux, pour le SEO */
+.offline-about {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 2.2rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+.offline-about strong { color: var(--text); }
+
+.offline-divider {
+  width: 3rem; height: 1px;
+  background: linear-gradient(90deg, var(--accent2), transparent);
+  margin-bottom: 1.6rem;
+}
+
+.offline-links-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+}
+
+.offline-links { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+.offline-link-item {
+  display: flex; align-items: center; gap: 1rem;
+  text-decoration: none; color: var(--text);
+  font-size: 0.95rem; font-weight: 300;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--bg2);
+  transition: all 0.25s;
+  position: relative; overflow: hidden;
+}
+.offline-link-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--accent2);
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 0.25s ease;
+}
+.offline-link-item:hover {
+  border-color: var(--border-hover);
+  background: rgba(255,107,157,0.06);
+  transform: translateX(4px);
+}
+.offline-link-item:hover::before { transform: scaleY(1); }
+.offline-link-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.1em;
+  color: var(--text-dim); text-transform: uppercase;
+  display: block; margin-bottom: 2px;
+}
+.offline-link-main { display: block; font-size: 0.95rem; }
+.offline-link-sub { display: block; font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+.offline-link-arrow {
+  font-family: 'Space Mono', monospace; font-size: 0.75rem;
+  color: var(--accent2); margin-left: auto; transition: transform 0.25s;
+}
+.offline-link-item:hover .offline-link-arrow { transform: translateX(4px); }
+
+.offline-foot {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+.offline-foot span { color: var(--accent2); }
+
+@media (max-width: 600px) {
+  .offline-page { padding: 2.5rem 1.2rem 3rem; }
+  .offline-headline { font-size: clamp(1.2rem, 5.5vw, 1.6rem); }
+  .offline-body-text { font-size: 0.88rem; }
+}

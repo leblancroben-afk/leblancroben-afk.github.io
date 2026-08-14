@@ -1,0 +1,40 @@
+name: Enrichissement IA des outils (nocturne)
+
+on:
+  schedule:
+    - cron: '30 23 * * *' # décalé pour ne pas tourner en même temps que les autres crons
+  workflow_dispatch: {} # bouton "Run workflow" — lance aussi gen-fiches.js à la suite
+
+permissions:
+  contents: write
+
+jobs:
+  enrichir-outils:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install firebase-admin
+
+      - name: Enrichir les outils en attente
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node enrichir-outils.js
+
+      - name: Régénérer les fiches (gen-fiches.js)
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node gen-fiches.js
+
+      - name: Commit & push si des fichiers ont changé
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tools/ articles/ comparateur/ niches/ tutoriels/ glossaire/ .gen-state.json
+          git diff --staged --quiet || git commit -m "🤖 Outils enrichis par IA + régénération fiches (auto)"
+          git push

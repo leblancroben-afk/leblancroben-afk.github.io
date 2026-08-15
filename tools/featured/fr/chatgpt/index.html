@@ -106,6 +106,27 @@
     </div></div>
       </section>
       
+      <section class="tool-section">
+        <h2>Tutoriels vidéo</h2>
+        <div class="tutorials-list"><div class="tutorial-item" id="tuto-0">
+      <div class="tutorial-header" onclick="toggleTutorial('tuto-0')">
+        <div class="tutorial-thumb">
+          <img src="https://img.youtube.com/vi/cjLT7mmY0VU/mqdefault.jpg" alt="ChatGPT : Le Guide Ultime GRATUIT pour Débutants - Edition 2026" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="tutorial-meta">
+          <div class="tutorial-title">ChatGPT : Le Guide Ultime GRATUIT pour Débutants - Edition 2026</div>
+          <div class="tutorial-duration">32:14</div>
+        </div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video">
+        <div class="tutorial-video-inner">
+          <iframe data-src="https://www.youtube.com/embed/cjLT7mmY0VU" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+        </div>
+      </div>
+    </div></div>
+      </section>
       
       <section class="tool-section">
         <h2>Questions fréquentes</h2>
@@ -177,7 +198,17 @@
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
-
+<script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script>
 <script>
   const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
   if (kb && km) {

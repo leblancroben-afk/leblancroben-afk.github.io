@@ -45,7 +45,7 @@ async function fetchCategories() {
 // ══════════════════════════════════════
 // Gemini structure les champs depuis sa mémoire (pas de recherche web)
 // ══════════════════════════════════════
-async function enrichirOutil(nomOutil, categoriesDisponibles) {
+async function enrichirOutil(nomOutil, categoriesDisponibles, _retry = false) {
   const prompt = `Tu structures une fiche pour un annuaire d'outils IA francophone (Albexia), à partir de ` +
     `l'outil nommé "${nomOutil}". Tu n'as PAS accès à une recherche web en temps réel — utilise uniquement ` +
     `ce que tu sais avec certitude sur cet outil précis. ` +
@@ -75,7 +75,15 @@ async function enrichirOutil(nomOutil, categoriesDisponibles) {
   });
 
   const data = await res.json();
-  if (!res.ok) throw new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+  if (!res.ok) {
+    // 503 = surcharge temporaire côté Google, pas une erreur de config —
+    // un seul retry après une pause suffit dans l'immense majorité des cas.
+    if (res.status === 503 && !_retry) {
+      await new Promise(r => setTimeout(r, 5000));
+      return enrichirOutil(nomOutil, categoriesDisponibles, true);
+    }
+    throw new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+  }
 
   const texte = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!texte) throw new Error('Réponse Gemini vide ou inattendue.');

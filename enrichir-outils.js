@@ -5,8 +5,21 @@
 
    Source : Firestore "outils" où status === 'a_enrichir'
    Écrit  : url, category, price, description, tags, maker,
-            plateformes, ideal_pour, favicon, emoji, puis bascule
-            status='active' et generer_fiche=true (publication).
+            plateformes, ideal_pour, favicon, emoji, points_forts,
+            limite_principale, alternatives, fonctionnalites, faq,
+            interface_fr/api/mobile (si connus avec certitude),
+            url_tarifs, essai_gratuit, duree_essai, stats — puis
+            bascule status='active' et generer_fiche=true (publication).
+
+   ⚠️ STATS INCLUS TEMPORAIREMENT sur demande explicite, en attendant
+   le passage à une vraie API de recherche web (Perplexity Sonar ou
+   équivalent). C'est le champ le plus exposé à l'hallucination
+   silencieuse (chiffres inventés mais plausibles) puisque Gemini
+   répond ici depuis sa mémoire d'entraînement, sans vérification en
+   temps réel — voir avertissement dans le prompt ci-dessous. Vérifie
+   spécifiquement ce champ dans le bandeau "🤖 à vérifier" de l'admin.
+   Traductions EN/ES : géré séparément par traduire-fiches.js, workflow
+   distinct — pas automatiquement chaîné après un enrichissement.
    Marque : enrichi_ia=true, enrichi_ia_le=<timestamp> — pour que
             l'admin affiche le bandeau "🤖 X outil(s) à vérifier"
             (voir admin-index-2.html / runDiagnosticIA()).
@@ -45,24 +58,47 @@ async function fetchCategories() {
 // ══════════════════════════════════════
 // Gemini structure les champs depuis sa mémoire (pas de recherche web)
 // ══════════════════════════════════════
-async function enrichirOutil(nomOutil, categoriesDisponibles, _retry = false) {
-  const prompt = `Tu structures une fiche pour un annuaire d'outils IA francophone (Albexia), à partir de ` +
+async function enrichirOutil(nomOutil, categoriesDisponibles, tentative = 0) {
+  const prompt = `Tu structures une fiche complète pour un annuaire d'outils IA francophone (Albexia), à partir de ` +
     `l'outil nommé "${nomOutil}". Tu n'as PAS accès à une recherche web en temps réel — utilise uniquement ` +
     `ce que tu sais avec certitude sur cet outil précis. ` +
     `RÈGLE ABSOLUE : si tu n'es pas sûr à un niveau élevé de confiance de l'identité exacte de cet outil ` +
     `(nom ambigu, outil trop récent ou trop obscur pour que tu le connaisses fiablement, ou risque de confusion ` +
-    `avec un outil similaire), réponds UNIQUEMENT {"trouve": false} — n'invente JAMAIS une URL, un prix ou une ` +
-    `description plausibles pour un outil que tu ne connais pas avec certitude. Une réponse honnête "je ne sais pas" ` +
-    `vaut infiniment mieux qu'une information inventée qui semble crédible. ` +
+    `avec un outil similaire), réponds UNIQUEMENT {"trouve": false} — n'invente JAMAIS une information plausible ` +
+    `pour un outil que tu ne connais pas avec certitude. Une réponse honnête "je ne sais pas" vaut infiniment ` +
+    `mieux qu'une information inventée qui semble crédible. ` +
+    `Cette même règle vaut CHAMP PAR CHAMP si tu connais l'outil globalement mais pas un détail précis (ex. tu sais ` +
+    `ce qu'est l'outil mais pas s'il propose une API) : mets alors null pour CE champ précis plutôt que d'inventer, ` +
+    `le reste de la fiche peut quand même être rempli. ` +
     `Si tu connais l'outil avec certitude : catégorie à choisir OBLIGATOIREMENT dans cette liste exacte ` +
     `(recopie le texte exact) : ${JSON.stringify(categoriesDisponibles)} — si aucune ne correspond bien, choisis ` +
     `la plus proche, n'en invente jamais une nouvelle. ` +
     `Prix : "free" (gratuit), "freemium" (gratuit avec palier payant), ou "paid" (payant uniquement). ` +
     `Description : 150-200 caractères, en français, factuelle, sans superlatifs marketing exagérés. ` +
     `Tags : 3 à 6 mots-clés courts en français. ` +
+    `points_forts : 2 à 4 points forts réels et vérifiables (pas des généralités marketing), courtes phrases. ` +
+    `limite_principale : LA limite/faiblesse principale connue de cet outil, une phrase honnête. ` +
+    `alternatives : noms de 2-3 outils concurrents réellement comparables, séparés par des virgules. ` +
+    `fonctionnalites : 3 à 4 fonctionnalités clés, chacune avec un emoji pertinent, un titre court, une description d'une phrase. ` +
+    `faq : 2 à 4 questions/réponses réellement utiles pour quelqu'un qui découvre cet outil. ` +
+    `interface_fr : true si l'interface existe en français, false sinon, null si tu ne sais pas avec certitude. ` +
+    `api : true si l'outil propose une API publique, false sinon, null si incertain. ` +
+    `mobile : true si une app mobile existe, false sinon, null si incertain. ` +
+    `url_tarifs : URL de la page tarifs si tu la connais avec certitude, sinon null. ` +
+    `essai_gratuit : true si l'outil propose un essai gratuit du plan payant, false sinon, null si incertain. ` +
+    `duree_essai : durée de l'essai si tu la connais avec certitude (ex. "14 jours"), sinon null. ` +
+    `stats : 2 à 4 statistiques chiffrées RÉELLES et vérifiées sur cet outil (ex. nombre de tokens de contexte, ` +
+    `version du modèle, taille de la fenêtre de contexte, pourcentage documenté). C'est le champ où une erreur ` +
+    `est la plus visible et la plus grave — si tu n'es pas certain à 100% d'un chiffre précis, NE L'INCLUS PAS, ` +
+    `un tableau stats plus court (ou vide) vaut infiniment mieux qu'un chiffre inventé. N'arrondis pas et ne ` +
+    `déduis pas un chiffre approximatif "au pif" pour remplir la case. ` +
     `Réponds UNIQUEMENT avec un objet JSON valide, sans markdown, avec exactement cette forme :\n` +
     `{"trouve": true, "url": "https://...", "category": "...", "price": "free|freemium|paid", ` +
-    `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖"}`;
+    `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖", ` +
+    `"points_forts": ["...","..."], "limite_principale": "...", "alternatives": "Nom1, Nom2, Nom3", ` +
+    `"fonctionnalites": [{"emoji":"🚀","titre":"...","desc":"..."}], "faq": [{"q":"...","a":"..."}], ` +
+    `"interface_fr": true|false|null, "api": true|false|null, "mobile": true|false|null, "url_tarifs": "..."|null, ` +
+    `"essai_gratuit": true|false|null, "duree_essai": "..."|null, "stats": [{"valeur":"200k","label":"tokens de contexte"}]}`;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
   const res = await fetch(url, {
@@ -77,10 +113,11 @@ async function enrichirOutil(nomOutil, categoriesDisponibles, _retry = false) {
   const data = await res.json();
   if (!res.ok) {
     // 503 = surcharge temporaire côté Google, pas une erreur de config —
-    // un seul retry après une pause suffit dans l'immense majorité des cas.
-    if (res.status === 503 && !_retry) {
-      await new Promise(r => setTimeout(r, 5000));
-      return enrichirOutil(nomOutil, categoriesDisponibles, true);
+    // jusqu'à 3 tentatives avec délai croissant avant d'abandonner.
+    if (res.status === 503 && tentative < 2) {
+      const pause = 5000 * (tentative + 1); // 5s, puis 10s
+      await new Promise(r => setTimeout(r, pause));
+      return enrichirOutil(nomOutil, categoriesDisponibles, tentative + 1);
     }
     throw new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
   }
@@ -144,6 +181,23 @@ async function main() {
         ideal_pour: infos.ideal_pour || '',
         emoji: infos.emoji || '🤖',
         favicon,
+        points_forts: Array.isArray(infos.points_forts) ? infos.points_forts : [],
+        limite_principale: infos.limite_principale || '',
+        alternatives: infos.alternatives || '',
+        fonctionnalites: Array.isArray(infos.fonctionnalites) ? infos.fonctionnalites : [],
+        faq: Array.isArray(infos.faq) ? infos.faq : [],
+        // null volontaire de Gemini (incertain) → on n'écrit PAS le champ,
+        // ce qui laisse "Non renseigné" dans l'admin plutôt qu'une fausse valeur.
+        ...(infos.interface_fr !== null && infos.interface_fr !== undefined ? { interface_fr: infos.interface_fr } : {}),
+        ...(infos.api !== null && infos.api !== undefined ? { api: infos.api } : {}),
+        ...(infos.mobile !== null && infos.mobile !== undefined ? { mobile: infos.mobile } : {}),
+        ...(infos.url_tarifs ? { url_tarifs: infos.url_tarifs } : {}),
+        ...(infos.essai_gratuit !== null && infos.essai_gratuit !== undefined ? { essai_gratuit: infos.essai_gratuit } : {}),
+        ...(infos.duree_essai ? { duree_essai: infos.duree_essai } : {}),
+        stats: Array.isArray(infos.stats) ? infos.stats : [],
+        // stats délibérément absent : des chiffres inventés (ex. "200k tokens")
+        // sont le risque d'hallucination le plus visible et le plus gênant —
+        // reste à remplir à la main si tu veux ce bloc.
         status: 'active',
         generer_fiche: true, // publication — voir garde-fou existant dans gen-fiches.js
         enrichi_ia: true,

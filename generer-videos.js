@@ -29,6 +29,8 @@ initializeApp({ credential: cert(serviceAccount) });
 const db = getFirestore();
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_MODEL = 'gemini-3.5-flash';
 const MAX_OUTILS_PAR_RUN = 25; // marge large sous le quota gratuit (10 000 unités/jour)
 const DUREE_MIN_SECONDES = 90; // exclut les Shorts
 
@@ -69,7 +71,7 @@ async function fetchJSON(url) {
 // Cherche des vidéos pertinentes pour un outil et retourne une liste
 // triée par vues décroissantes, déjà filtrée (pas de Shorts).
 async function chercherVideos(nomOutil, max = 8) {
-  const q = encodeURIComponent(`${nomOutil} tutoriel`);
+  const q = encodeURIComponent(`${nomOutil} outil IA tutoriel`);
   const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${q}` +
     `&type=video&order=relevance&relevanceLanguage=fr&maxResults=${max}&safeSearch=moderate&key=${YOUTUBE_API_KEY}`;
 
@@ -86,12 +88,47 @@ async function chercherVideos(nomOutil, max = 8) {
       youtube_id: v.id,
       titre: v.snippet?.title || '',
       canal: v.snippet?.channelTitle || '',
+      description_video: (v.snippet?.description || '').slice(0, 200),
       duree: isoDureeVersMMSS(v.contentDetails?.duration),
       secondes: isoDureeVersSecondes(v.contentDetails?.duration),
       vues: parseInt(v.statistics?.viewCount || '0', 10),
     }))
     .filter(v => v.titre && v.youtube_id && v.secondes >= DUREE_MIN_SECONDES)
     .sort((a, b) => b.vues - a.vues);
+}
+
+// Filtre par pertinence via Gemini : un nom d'outil ambigu (ex. "Mutiny",
+// "Albert") ramène souvent des vidéos hors-sujet (jeux vidéo, musique...)
+// si on ne trie QUE par nombre de vues. Gemini reçoit la description réelle
+// de l'outil + les candidats et ne garde que ceux qui en parlent vraiment.
+async function filtrerPertinence(nomOutil, descriptionOutil, candidats) {
+  if (!candidats.length) return [];
+
+  const liste = candidats.map((v, i) =>
+    `[${i}] Titre: ${v.titre}\nChaîne: ${v.canal}\nDescription: ${v.description_video}`).join('\n\n');
+
+  const prompt = `Un annuaire d'outils IA cherche des tutoriels YouTube pour l'outil "${nomOutil}", décrit ainsi : ` +
+    `"${descriptionOutil || 'pas de description disponible'}". ` +
+    `Voici des vidéos candidates trouvées sur YouTube :\n\n${liste}\n\n` +
+    `Certaines peuvent être hors-sujet si "${nomOutil}" est un mot ambigu (jeu vidéo, film, chanson, produit sans rapport...). ` +
+    `Renvoie UNIQUEMENT un tableau JSON des index (nombres) des vidéos qui parlent RÉELLEMENT de cet outil IA précis, ` +
+    `dans l'ordre où tu les recommanderais. Exemple : [2, 0, 4]. Si aucune ne correspond, renvoie [].`;
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { responseMimeType: 'application/json' },
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+
+  const texte = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  const indices = JSON.parse(texte || '[]');
+  return indices.map(i => candidats[i]).filter(Boolean);
 }
 
 // ══════════════════════════════════════
@@ -101,6 +138,10 @@ async function chercherVideos(nomOutil, max = 8) {
 async function main() {
   if (!YOUTUBE_API_KEY) {
     console.error('✗ YOUTUBE_API_KEY manquant dans les secrets.');
+    process.exit(1);
+  }
+  if (!GEMINI_API_KEY) {
+    console.error('✗ GEMINI_API_KEY manquant dans les secrets.');
     process.exit(1);
   }
 
@@ -119,10 +160,12 @@ async function main() {
 
   for (const outil of aTraiter) {
     try {
-      const videos = await chercherVideos(outil.name);
+      const candidats = await chercherVideos(outil.name, 10); // pool plus large, Gemini trie ensuite
+      await new Promise(r => setTimeout(r, 300));
+      const videos = await filtrerPertinence(outil.name, outil.description, candidats);
 
       if (videos.length === 0) {
-        console.log(`  – ${outil.name} : aucune vidéo trouvée, ignoré.`);
+        console.log(`  – ${outil.name} : aucune vidéo pertinente trouvée (${candidats.length} candidate(s) écartée(s) comme hors-sujet), ignoré.`);
         sansResultat++;
         continue;
       }

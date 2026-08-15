@@ -11,14 +11,16 @@
             l'admin affiche le bandeau "🤖 X outil(s) à vérifier"
             (voir admin-index-2.html / runDiagnosticIA()).
 
-   Fonctionnement EN DEUX ÉTAPES (pas de "grounding" Gemini — quota
-   429 rencontré sur google_search, voir historique) :
-   1. Google Programmable Search (Custom Search API, gratuit, 100
-      requêtes/jour) — trouve l'outil sur le web réellement.
-   2. Gemini (generateContent standard, même quota que le glossaire
-      et les niches, déjà utilisé sans souci ailleurs dans le projet)
-      — structure URL/catégorie/prix/description/tags à partir des
-      résultats de recherche, pas depuis sa seule mémoire.
+   ⚠️ PAS DE RECHERCHE WEB (voir historique : Google Custom Search
+   déprécié, Brave Search API sans tier gratuit, HF Docker verrouillé
+   PRO — plus d'option gratuite viable en 2026). Gemini répond depuis
+   sa mémoire d'entraînement uniquement. Fiable pour les outils connus
+   et établis (ChatGPT, Midjourney, Notion AI...), risqué pour un
+   outil très récent ou peu connu — le prompt pousse volontairement
+   Gemini à renvoyer {"trouve": false} plutôt que d'inventer une URL
+   ou un prix plausibles quand il n'est pas sûr. VÉRIFIE l'URL en
+   particulier dans le diagnostic "🤖 Enrichis par IA" de l'admin —
+   c'est le champ le plus à risque d'hallucination.
 
    Usage : node enrichir-outils.js
    Cron  : GitHub Actions, nocturne + déclenchement manuel
@@ -33,8 +35,6 @@ const db = getFirestore();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-3.5-flash';
-const GOOGLE_SEARCH_API_KEY = process.env.GOOGLE_SEARCH_API_KEY;
-const GOOGLE_SEARCH_CX = process.env.GOOGLE_SEARCH_CX;
 const MAX_OUTILS_PAR_RUN = 10;
 
 async function fetchCategories() {
@@ -43,43 +43,24 @@ async function fetchCategories() {
 }
 
 // ══════════════════════════════════════
-// ÉTAPE 1 — Google Custom Search
+// Gemini structure les champs depuis sa mémoire (pas de recherche web)
 // ══════════════════════════════════════
-async function chercherOutil(nomOutil) {
-  const q = encodeURIComponent(`${nomOutil} outil IA officiel`);
-  const url = `https://www.googleapis.com/customsearch/v1?key=${GOOGLE_SEARCH_API_KEY}&cx=${GOOGLE_SEARCH_CX}&q=${q}&num=5`;
-  const res = await fetch(url);
-  const data = await res.json();
-  if (!res.ok) throw new Error(`Google Search API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
-
-  return (data.items || []).map(it => ({
-    titre: it.title || '',
-    lien: it.link || '',
-    extrait: it.snippet || '',
-  }));
-}
-
-// ══════════════════════════════════════
-// ÉTAPE 2 — Gemini structure les champs à partir des résultats
-// ══════════════════════════════════════
-async function enrichirOutil(nomOutil, resultatsRecherche, categoriesDisponibles) {
-  if (!resultatsRecherche.length) return { trouve: false };
-
-  const contexte = resultatsRecherche
-    .map((r, i) => `[${i + 1}] ${r.titre}\nURL: ${r.lien}\nExtrait: ${r.extrait}`)
-    .join('\n\n');
-
-  const prompt = `Tu structures une fiche pour un annuaire d'outils IA francophone (Albexia). ` +
-    `Voici des résultats de recherche web réels pour l'outil "${nomOutil}" :\n\n${contexte}\n\n` +
-    `À partir de CES résultats (n'invente rien qui ne soit pas suggéré par eux), identifie le site officiel de l'outil ` +
-    `et structure ses informations. Catégorie à choisir OBLIGATOIREMENT dans cette liste exacte (recopie le texte exact) : ` +
-    `${JSON.stringify(categoriesDisponibles)}. Si aucune catégorie ne correspond bien, choisis la plus proche — n'en invente jamais une nouvelle. ` +
-    `Prix : "free" (gratuit), "freemium" (gratuit avec palier payant), ou "paid" (payant uniquement) — déduis-le du contexte, ou "freemium" si incertain. ` +
+async function enrichirOutil(nomOutil, categoriesDisponibles) {
+  const prompt = `Tu structures une fiche pour un annuaire d'outils IA francophone (Albexia), à partir de ` +
+    `l'outil nommé "${nomOutil}". Tu n'as PAS accès à une recherche web en temps réel — utilise uniquement ` +
+    `ce que tu sais avec certitude sur cet outil précis. ` +
+    `RÈGLE ABSOLUE : si tu n'es pas sûr à un niveau élevé de confiance de l'identité exacte de cet outil ` +
+    `(nom ambigu, outil trop récent ou trop obscur pour que tu le connaisses fiablement, ou risque de confusion ` +
+    `avec un outil similaire), réponds UNIQUEMENT {"trouve": false} — n'invente JAMAIS une URL, un prix ou une ` +
+    `description plausibles pour un outil que tu ne connais pas avec certitude. Une réponse honnête "je ne sais pas" ` +
+    `vaut infiniment mieux qu'une information inventée qui semble crédible. ` +
+    `Si tu connais l'outil avec certitude : catégorie à choisir OBLIGATOIREMENT dans cette liste exacte ` +
+    `(recopie le texte exact) : ${JSON.stringify(categoriesDisponibles)} — si aucune ne correspond bien, choisis ` +
+    `la plus proche, n'en invente jamais une nouvelle. ` +
+    `Prix : "free" (gratuit), "freemium" (gratuit avec palier payant), ou "paid" (payant uniquement). ` +
     `Description : 150-200 caractères, en français, factuelle, sans superlatifs marketing exagérés. ` +
     `Tags : 3 à 6 mots-clés courts en français. ` +
-    `Si les résultats ne parlent clairement PAS du bon outil (nom similaire mais produit différent, page inexistante...), ` +
-    `renvoie {"trouve": false} et rien d'autre. ` +
-    `Sinon réponds UNIQUEMENT avec un objet JSON valide, sans markdown, avec exactement cette forme :\n` +
+    `Réponds UNIQUEMENT avec un objet JSON valide, sans markdown, avec exactement cette forme :\n` +
     `{"trouve": true, "url": "https://...", "category": "...", "price": "free|freemium|paid", ` +
     `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖"}`;
 
@@ -115,10 +96,6 @@ async function main() {
     console.error('✗ GEMINI_API_KEY manquant dans les secrets.');
     process.exit(1);
   }
-  if (!GOOGLE_SEARCH_API_KEY || !GOOGLE_SEARCH_CX) {
-    console.error('✗ GOOGLE_SEARCH_API_KEY et/ou GOOGLE_SEARCH_CX manquant(s) dans les secrets.');
-    process.exit(1);
-  }
 
   const categoriesDisponibles = await fetchCategories();
   if (!categoriesDisponibles.length) {
@@ -136,9 +113,7 @@ async function main() {
   for (const docSnap of aTraiter) {
     const outil = docSnap.data();
     try {
-      const resultats = await chercherOutil(outil.name);
-      await new Promise(r => setTimeout(r, 300));
-      const infos = await enrichirOutil(outil.name, resultats, categoriesDisponibles);
+      const infos = await enrichirOutil(outil.name, categoriesDisponibles);
 
       if (!infos.trouve) {
         console.log(`  – ${outil.name} : introuvable par l'IA, laissé en 'a_enrichir' pour retraitement ou vérification manuelle.`);
@@ -170,7 +145,7 @@ async function main() {
 
       console.log(`  ✓ ${outil.name} → ${infos.category} / ${infos.price} / ${infos.url}`);
       succes++;
-      await new Promise(r => setTimeout(r, 800)); // pause entre recherches web
+      await new Promise(r => setTimeout(r, 500)); // pause entre appels Gemini
     } catch (err) {
       console.error(`  ✗ ${outil.name} : ${err.message}`);
       echecs++;

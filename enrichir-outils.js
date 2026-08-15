@@ -183,7 +183,7 @@ async function main() {
         favicon,
         points_forts: Array.isArray(infos.points_forts) ? infos.points_forts : [],
         limite_principale: infos.limite_principale || '',
-        alternatives: infos.alternatives || '',
+        alternatives: (infos.alternatives || '').split(',').map(s => s.trim()).filter(Boolean),
         fonctionnalites: Array.isArray(infos.fonctionnalites) ? infos.fonctionnalites : [],
         faq: Array.isArray(infos.faq) ? infos.faq : [],
         // null volontaire de Gemini (incertain) → on n'écrit PAS le champ,

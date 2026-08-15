@@ -1,0 +1,21 @@
+name: RESET vidéothèque (ponctuel — à supprimer après usage)
+
+on:
+  workflow_dispatch: {} # bouton "Run workflow" — pas de cron, jamais automatique
+
+permissions:
+  contents: write
+
+jobs:
+  reset-videotheque:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install firebase-admin
+      - name: Vider les vidéothèques existantes
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node reset-videotheque.js

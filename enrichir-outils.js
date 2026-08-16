@@ -58,9 +58,9 @@ async function fetchCategories() {
 // ══════════════════════════════════════
 // Gemini structure les champs depuis sa mémoire (pas de recherche web)
 // ══════════════════════════════════════
-async function enrichirOutil(nomOutil, categoriesDisponibles, tentative = 0) {
+async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 0) {
   const prompt = `Tu structures une fiche complète pour un annuaire d'outils IA francophone (Albexia), à partir de ` +
-    `l'outil nommé "${nomOutil}". Tu n'as PAS accès à une recherche web en temps réel — utilise uniquement ` +
+    `l'outil nommé "${nomOutil}" (plan : "${plan}"). Tu n'as PAS accès à une recherche web en temps réel — utilise uniquement ` +
     `ce que tu sais avec certitude sur cet outil précis. ` +
     `RÈGLE ABSOLUE : si tu n'es pas sûr à un niveau élevé de confiance de l'identité exacte de cet outil ` +
     `(nom ambigu, outil trop récent ou trop obscur pour que tu le connaisses fiablement, ou risque de confusion ` +
@@ -79,8 +79,10 @@ async function enrichirOutil(nomOutil, categoriesDisponibles, tentative = 0) {
     `points_forts : 2 à 4 points forts réels et vérifiables (pas des généralités marketing), courtes phrases. ` +
     `limite_principale : LA limite/faiblesse principale connue de cet outil, une phrase honnête. ` +
     `alternatives : noms de 2-3 outils concurrents réellement comparables, séparés par des virgules. ` +
-    `fonctionnalites : 3 à 4 fonctionnalités clés, chacune avec un emoji pertinent, un titre court, une description d'une phrase. ` +
+    `fonctionnalites : 3 à 4 fonctionnalités clés, chacune avec un emoji pertinent dans le champ "icon" (pas "emoji"), un titre court, une description d'une phrase. ` +
     `faq : 2 à 4 questions/réponses réellement utiles pour quelqu'un qui découvre cet outil. ` +
+    `presentation : SI le plan est "featured", rédige 2-3 paragraphes de présentation détaillée (séparés par un retour à la ligne), sinon null. ` +
+    `meta_description : SI le plan est "featured", une meta-description SEO de 155 caractères maximum, sinon null. ` +
     `interface_fr : true si l'interface existe en français, false sinon, null si tu ne sais pas avec certitude. ` +
     `api : true si l'outil propose une API publique, false sinon, null si incertain. ` +
     `mobile : true si une app mobile existe, false sinon, null si incertain. ` +
@@ -96,7 +98,8 @@ async function enrichirOutil(nomOutil, categoriesDisponibles, tentative = 0) {
     `{"trouve": true, "url": "https://...", "category": "...", "price": "free|freemium|paid", ` +
     `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖", ` +
     `"points_forts": ["...","..."], "limite_principale": "...", "alternatives": "Nom1, Nom2, Nom3", ` +
-    `"fonctionnalites": [{"emoji":"🚀","titre":"...","desc":"..."}], "faq": [{"q":"...","a":"..."}], ` +
+    `"fonctionnalites": [{"icon":"🚀","titre":"...","desc":"..."}], "faq": [{"q":"...","a":"..."}], ` +
+    `"presentation": "..."|null, "meta_description": "..."|null, ` +
     `"interface_fr": true|false|null, "api": true|false|null, "mobile": true|false|null, "url_tarifs": "..."|null, ` +
     `"essai_gratuit": true|false|null, "duree_essai": "..."|null, "stats": [{"valeur":"200k","label":"tokens de contexte"}]}`;
 
@@ -158,7 +161,7 @@ async function main() {
   for (const docSnap of aTraiter) {
     const outil = docSnap.data();
     try {
-      const infos = await enrichirOutil(outil.name, categoriesDisponibles);
+      const infos = await enrichirOutil(outil.name, outil.plan || 'standard', categoriesDisponibles);
 
       if (!infos.trouve) {
         console.log(`  – ${outil.name} : introuvable par l'IA, laissé en 'a_enrichir' pour retraitement ou vérification manuelle.`);
@@ -195,6 +198,8 @@ async function main() {
         ...(infos.essai_gratuit !== null && infos.essai_gratuit !== undefined ? { essai_gratuit: infos.essai_gratuit } : {}),
         ...(infos.duree_essai ? { duree_essai: infos.duree_essai } : {}),
         stats: Array.isArray(infos.stats) ? infos.stats : [],
+        ...(infos.presentation ? { presentation: infos.presentation } : {}),
+        ...(infos.meta_description ? { meta_description: infos.meta_description } : {}),
         // stats délibérément absent : des chiffres inventés (ex. "200k tokens")
         // sont le risque d'hallucination le plus visible et le plus gênant —
         // reste à remplir à la main si tu veux ce bloc.

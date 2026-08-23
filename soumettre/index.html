@@ -217,6 +217,136 @@
       margin-left: 0.4rem;
     }
 
+    /* ── PLANS (cartes de formules) ── */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    @media (max-width: 900px) {
+      .plans-grid { grid-template-columns: 1fr; }
+    }
+    .plan-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .plan-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-hover, rgba(255,255,255,0.15));
+    }
+    .plan-card.featured {
+      border: 2px solid var(--pink);
+    }
+    .plan-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--pink);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      white-space: nowrap;
+    }
+    .plan-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .plan-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+      min-height: 2.4em;
+    }
+    .plan-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--off-white);
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+    .plan-price.free { color: #4ade80; }
+    .plan-card.featured .plan-price { color: var(--pink); }
+    .plan-price-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1.3rem;
+    }
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .plan-features li {
+      font-size: 0.85rem;
+      color: var(--off-white);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .plan-features li::before {
+      content: '✓';
+      color: #4ade80;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .plan-features li.plan-features-note {
+      color: var(--muted);
+      font-style: italic;
+    }
+    .plan-features li.plan-features-note::before { content: ''; }
+    .btn-plan {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--off-white);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .btn-plan:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+    .plan-card.featured .btn-plan {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: #fff;
+    }
+    .plan-card.featured .btn-plan:hover {
+      background: var(--pink-light);
+    }
+    .plans-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 1.2rem;
+      text-align: center;
+    }
+
     /* ── STEPS ── */
     .steps {
       display: grid;
@@ -676,6 +806,62 @@ html, body {
   <p class="hero-sub" data-i18n="submit.heroSub">Les créateurs qui nous rejoignent bénéficient automatiquement d'un listing premium — badge vérifié, fiche complète, mise en avant éditoriale.</p>
 </section>
 
+<!-- PLANS -->
+<section class="section" style="padding-bottom:1rem;">
+  <div class="section-label" data-i18n="submit.plansLabel">Nos formules</div>
+  <div class="section-title" data-i18n="submit.plansTitle">Choisissez votre visibilité</div>
+
+  <div class="plans-grid">
+
+    <!-- Standard -->
+    <div class="plan-card">
+      <div class="plan-name" data-i18n="submit.planStdName">Standard</div>
+      <div class="plan-desc" data-i18n="submit.planStdDesc">L'essentiel pour être découvert</div>
+      <div class="plan-price free" data-i18n="submit.planStdPrice">Gratuit</div>
+      <div class="plan-price-sub" data-i18n="submit.planStdPriceSub">toujours</div>
+      <ul class="plan-features">
+        <li data-i18n="submit.planStdF1">Fiche basique</li>
+        <li data-i18n="submit.planStdF2">Position standard dans la catégorie</li>
+      </ul>
+      <button type="button" class="btn-plan" onclick="choisirFormule('gratuit')" data-i18n="submit.planStdCta">Choisir Standard</button>
+    </div>
+
+    <!-- Starter -->
+    <div class="plan-card">
+      <div class="plan-name" data-i18n="submit.planStarterName">Starter</div>
+      <div class="plan-desc" data-i18n="submit.planStarterDesc">Pour une fiche qui se démarque</div>
+      <div class="plan-price">9$</div>
+      <div class="plan-price-sub" data-i18n="submit.planStarterPriceSub">paiement unique</div>
+      <ul class="plan-features">
+        <li data-i18n="submit.planStarterF1">Fiche complète (description longue, captures, vidéo)</li>
+        <li data-i18n="submit.planStarterF2">Badge Partenaire Albexia</li>
+        <li data-i18n="submit.planStarterF3">Position prioritaire dans la catégorie</li>
+      </ul>
+      <button type="button" class="btn-plan" onclick="choisirFormule('starter')" data-i18n="submit.planStarterCta">Choisir Starter</button>
+    </div>
+
+    <!-- Featured -->
+    <div class="plan-card featured">
+      <div class="plan-badge" data-i18n="submit.planFeaturedBadge">Recommandé</div>
+      <div class="plan-name" data-i18n="submit.planFeaturedName">Featured</div>
+      <div class="plan-desc" data-i18n="submit.planFeaturedDesc">Visibilité continue et mise en avant</div>
+      <div class="plan-price">9$</div>
+      <div class="plan-price-sub" data-i18n="submit.planFeaturedPriceSub">/ mois</div>
+      <ul class="plan-features">
+        <li class="plan-features-note" data-i18n="submit.planFeaturedF1">Tout Starter, plus :</li>
+        <li data-i18n="submit.planFeaturedF2">Mise en avant éditoriale</li>
+        <li data-i18n="submit.planFeaturedF3">Mention newsletter & réseaux sociaux</li>
+        <li data-i18n="submit.planFeaturedF4">Article de blog dédié (si pertinent)</li>
+        <li data-i18n="submit.planFeaturedF5">Notification en vedette sur le site</li>
+      </ul>
+      <button type="button" class="btn-plan" onclick="choisirFormule('featured')" data-i18n="submit.planFeaturedCta">Choisir Featured</button>
+    </div>
+
+  </div>
+
+  <p class="plans-note" data-i18n="submit.planPaymentNote">Starter et Featured : paiement en crypto (USDT), lien envoyé après validation de votre soumission.</p>
+</section>
+
 <!-- COMPARATIF -->
 <section class="section">
   <div class="section-label" data-i18n="submit.whyLabel">Pourquoi soumettre ?</div>
@@ -803,8 +989,8 @@ html, body {
           <label for="tool-tier"><span data-i18n="submit.labelTier">Formule de listing souhaitée</span> <span>*</span></label>
           <select id="tool-tier" name="tier_demande" required>
             <option value="gratuit" selected data-i18n="submit.tierFree">Gratuit — Standard</option>
-            <option value="starter" data-i18n="submit.tierStarter">Starter</option>
-            <option value="featured" data-i18n="submit.tierFeatured">Featured — mise en avant éditoriale</option>
+            <option value="starter" data-i18n="submit.tierStarter">Starter — 9$ (paiement unique)</option>
+            <option value="featured" data-i18n="submit.tierFeatured">Featured — 9$/mois — mise en avant éditoriale</option>
           </select>
         </div>
 
@@ -938,6 +1124,22 @@ html, body {
       'submit.badge': 'Phase de lancement — Listing premium gratuit',
       'submit.h1': "Votre outil mérite d'être vu",
       'submit.heroSub': 'Les créateurs qui nous rejoignent bénéficient automatiquement d\'un listing premium — badge vérifié, fiche complète, mise en avant éditoriale.',
+      'submit.plansLabel': 'Nos formules', 'submit.plansTitle': 'Choisissez votre visibilité',
+      'submit.planStdName': 'Standard', 'submit.planStdDesc': "L'essentiel pour être découvert",
+      'submit.planStdPrice': 'Gratuit', 'submit.planStdPriceSub': 'toujours',
+      'submit.planStdF1': 'Fiche basique', 'submit.planStdF2': 'Position standard dans la catégorie',
+      'submit.planStdCta': 'Choisir Standard',
+      'submit.planStarterName': 'Starter', 'submit.planStarterDesc': 'Pour une fiche qui se démarque',
+      'submit.planStarterPriceSub': 'paiement unique',
+      'submit.planStarterF1': 'Fiche complète (description longue, captures, vidéo)',
+      'submit.planStarterF2': 'Badge Partenaire Albexia', 'submit.planStarterF3': 'Position prioritaire dans la catégorie',
+      'submit.planStarterCta': 'Choisir Starter',
+      'submit.planFeaturedBadge': 'Recommandé', 'submit.planFeaturedName': 'Featured',
+      'submit.planFeaturedDesc': 'Visibilité continue et mise en avant', 'submit.planFeaturedPriceSub': '/ mois',
+      'submit.planFeaturedF1': 'Tout Starter, plus :', 'submit.planFeaturedF2': 'Mise en avant éditoriale',
+      'submit.planFeaturedF3': 'Mention newsletter & réseaux sociaux', 'submit.planFeaturedF4': 'Article de blog dédié (si pertinent)',
+      'submit.planFeaturedF5': 'Notification en vedette sur le site', 'submit.planFeaturedCta': 'Choisir Featured',
+      'submit.planPaymentNote': 'Starter et Featured : paiement en crypto (USDT), lien envoyé après validation de votre soumission.',
       'submit.whyLabel': 'Pourquoi soumettre ?', 'submit.whyTitle': 'Deux niveaux de listing, une seule règle',
       'submit.thAdvantage': 'Avantage', 'submit.thSubmitted': 'Soumis par le créateur', 'submit.thDiscovered': 'Découvert par Albexia',
       'submit.rowBadge': 'Badge Partenaire Albexia',
@@ -959,8 +1161,9 @@ html, body {
       'submit.catEducation': 'Éducation', 'submit.catHealth': 'Santé & Bien-être', 'submit.catFinance': 'Finance & Business', 'submit.catOther': 'Autre',
       'submit.labelPrice': 'Modèle de prix', 'submit.optSelect': 'Sélectionner',
       'submit.priceFree': 'Gratuit', 'submit.priceFreemium': 'Freemium', 'submit.pricePaid': 'Payant', 'submit.priceTrial': 'Essai gratuit',
-      'submit.labelTier': 'Formule de listing souhaitée', 'submit.tierFree': 'Gratuit — Standard', 'submit.tierStarter': 'Starter',
-      'submit.tierFeatured': 'Featured — mise en avant éditoriale',
+      'submit.labelTier': 'Formule de listing souhaitée', 'submit.tierFree': 'Gratuit — Standard', 'submit.tierStarter': 'Starter — 9$ (paiement unique)',
+      'submit.tierFeatured': 'Featured — 9$/mois — mise en avant éditoriale',
+      'submit.tierNote': 'Starter et Featured : paiement en crypto (USDT), lien envoyé après validation de votre soumission.',
       'submit.labelDesc': 'Description courte', 'submit.descMax': '(150 mots max)',
       'submit.placeholderDesc': 'Décrivez votre outil : à quoi il sert, pour qui, ce qui le rend unique…',
       'submit.charCount': '/ 900 caractères',
@@ -980,6 +1183,22 @@ html, body {
       'submit.badge': 'Launch phase — Free premium listing',
       'submit.h1': 'Your tool deserves to be seen',
       'submit.heroSub': 'Creators who join us automatically get a premium listing — verified badge, full sheet, editorial spotlight.',
+      'submit.plansLabel': 'Our plans', 'submit.plansTitle': 'Choose your visibility',
+      'submit.planStdName': 'Standard', 'submit.planStdDesc': 'The essentials to get discovered',
+      'submit.planStdPrice': 'Free', 'submit.planStdPriceSub': 'always',
+      'submit.planStdF1': 'Basic listing', 'submit.planStdF2': 'Standard position in category',
+      'submit.planStdCta': 'Choose Standard',
+      'submit.planStarterName': 'Starter', 'submit.planStarterDesc': 'For a listing that stands out',
+      'submit.planStarterPriceSub': 'one-time payment',
+      'submit.planStarterF1': 'Full listing (long description, screenshots, video)',
+      'submit.planStarterF2': 'Albexia Partner badge', 'submit.planStarterF3': 'Priority position in category',
+      'submit.planStarterCta': 'Choose Starter',
+      'submit.planFeaturedBadge': 'Recommended', 'submit.planFeaturedName': 'Featured',
+      'submit.planFeaturedDesc': 'Ongoing visibility and spotlight', 'submit.planFeaturedPriceSub': '/ month',
+      'submit.planFeaturedF1': 'Everything in Starter, plus:', 'submit.planFeaturedF2': 'Editorial spotlight',
+      'submit.planFeaturedF3': 'Newsletter & social media mention', 'submit.planFeaturedF4': 'Dedicated blog post (if relevant)',
+      'submit.planFeaturedF5': 'Featured site notification', 'submit.planFeaturedCta': 'Choose Featured',
+      'submit.planPaymentNote': 'Starter and Featured: crypto payment (USDT), link sent after your submission is approved.',
       'submit.whyLabel': 'Why submit?', 'submit.whyTitle': 'Two listing tiers, one simple rule',
       'submit.thAdvantage': 'Benefit', 'submit.thSubmitted': 'Submitted by creator', 'submit.thDiscovered': 'Discovered by Albexia',
       'submit.rowBadge': 'Albexia Partner Badge',
@@ -1001,8 +1220,9 @@ html, body {
       'submit.catEducation': 'Education', 'submit.catHealth': 'Health & Wellness', 'submit.catFinance': 'Finance & Business', 'submit.catOther': 'Other',
       'submit.labelPrice': 'Pricing model', 'submit.optSelect': 'Select',
       'submit.priceFree': 'Free', 'submit.priceFreemium': 'Freemium', 'submit.pricePaid': 'Paid', 'submit.priceTrial': 'Free trial',
-      'submit.labelTier': 'Desired listing plan', 'submit.tierFree': 'Free — Standard', 'submit.tierStarter': 'Starter',
-      'submit.tierFeatured': 'Featured — editorial spotlight',
+      'submit.labelTier': 'Desired listing plan', 'submit.tierFree': 'Free — Standard', 'submit.tierStarter': 'Starter — $9 (one-time)',
+      'submit.tierFeatured': 'Featured — $9/month — editorial spotlight',
+      'submit.tierNote': 'Starter and Featured: crypto payment (USDT), link sent after your submission is approved.',
       'submit.labelDesc': 'Short description', 'submit.descMax': '(150 words max)',
       'submit.placeholderDesc': 'Describe your tool: what it does, for whom, what makes it unique…',
       'submit.charCount': '/ 900 characters',
@@ -1022,6 +1242,22 @@ html, body {
       'submit.badge': 'Fase de lanzamiento — Listado premium gratis',
       'submit.h1': 'Tu herramienta merece ser vista',
       'submit.heroSub': 'Los creadores que se unen reciben automáticamente un listado premium — insignia verificada, ficha completa, destaque editorial.',
+      'submit.plansLabel': 'Nuestros planes', 'submit.plansTitle': 'Elige tu visibilidad',
+      'submit.planStdName': 'Estándar', 'submit.planStdDesc': 'Lo esencial para ser descubierto',
+      'submit.planStdPrice': 'Gratis', 'submit.planStdPriceSub': 'siempre',
+      'submit.planStdF1': 'Ficha básica', 'submit.planStdF2': 'Posición estándar en la categoría',
+      'submit.planStdCta': 'Elegir Estándar',
+      'submit.planStarterName': 'Starter', 'submit.planStarterDesc': 'Para una ficha que destaca',
+      'submit.planStarterPriceSub': 'pago único',
+      'submit.planStarterF1': 'Ficha completa (descripción larga, capturas, vídeo)',
+      'submit.planStarterF2': 'Insignia de Socio Albexia', 'submit.planStarterF3': 'Posición prioritaria en la categoría',
+      'submit.planStarterCta': 'Elegir Starter',
+      'submit.planFeaturedBadge': 'Recomendado', 'submit.planFeaturedName': 'Featured',
+      'submit.planFeaturedDesc': 'Visibilidad continua y destaque', 'submit.planFeaturedPriceSub': '/ mes',
+      'submit.planFeaturedF1': 'Todo lo de Starter, más:', 'submit.planFeaturedF2': 'Destaque editorial',
+      'submit.planFeaturedF3': 'Mención en boletín y redes sociales', 'submit.planFeaturedF4': 'Artículo de blog dedicado (según relevancia)',
+      'submit.planFeaturedF5': 'Notificación destacada en el sitio', 'submit.planFeaturedCta': 'Elegir Featured',
+      'submit.planPaymentNote': 'Starter y Featured: pago en cripto (USDT), enlace enviado tras la validación de tu envío.',
       'submit.whyLabel': '¿Por qué enviar?', 'submit.whyTitle': 'Dos niveles de listado, una sola regla',
       'submit.thAdvantage': 'Ventaja', 'submit.thSubmitted': 'Enviado por el creador', 'submit.thDiscovered': 'Descubierto por Albexia',
       'submit.rowBadge': 'Insignia de Socio Albexia',
@@ -1043,8 +1279,9 @@ html, body {
       'submit.catEducation': 'Educación', 'submit.catHealth': 'Salud y bienestar', 'submit.catFinance': 'Finanzas y negocios', 'submit.catOther': 'Otro',
       'submit.labelPrice': 'Modelo de precio', 'submit.optSelect': 'Seleccionar',
       'submit.priceFree': 'Gratis', 'submit.priceFreemium': 'Freemium', 'submit.pricePaid': 'De pago', 'submit.priceTrial': 'Prueba gratis',
-      'submit.labelTier': 'Plan de listado deseado', 'submit.tierFree': 'Gratis — Estándar', 'submit.tierStarter': 'Starter',
-      'submit.tierFeatured': 'Featured — destaque editorial',
+      'submit.labelTier': 'Plan de listado deseado', 'submit.tierFree': 'Gratis — Estándar', 'submit.tierStarter': 'Starter — 9$ (pago único)',
+      'submit.tierFeatured': 'Featured — 9$/mes — destaque editorial',
+      'submit.tierNote': 'Starter y Featured: pago en cripto (USDT), enlace enviado tras la validación de tu envío.',
       'submit.labelDesc': 'Descripción corta', 'submit.descMax': '(máx. 150 palabras)',
       'submit.placeholderDesc': 'Describe tu herramienta: para qué sirve, para quién, qué la hace única…',
       'submit.charCount': '/ 900 caracteres',
@@ -1096,6 +1333,15 @@ html, body {
     kebabMenu.addEventListener('click', e => e.stopPropagation());
   }
         
+
+  // Clic sur une carte de formule : synchronise le <select> du formulaire
+  // et scrolle jusqu'à celui-ci.
+  window.choisirFormule = function(tier) {
+    const select = document.getElementById('tool-tier');
+    if (select) select.value = tier;
+    const form = document.getElementById('form-soumettre-outil');
+    if (form) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   function updateCount(el) {
     document.getElementById('char-count').textContent = el.value.length;

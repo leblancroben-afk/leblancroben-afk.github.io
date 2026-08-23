@@ -735,6 +735,42 @@
       transition: background .15s;
     }
     .btn-pay-now:hover { background: #ff8fb5; }
+    .soum-pending-publish {
+      font-size: .78rem;
+      color: var(--text-muted, #8a8a9a);
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    /* ── PLANS (cartes de formules, réutilisées dans le formulaire inline) ── */
+    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; margin-bottom: .8rem; }
+    @media (max-width: 700px) { .plans-grid { grid-template-columns: 1fr; } }
+    .plan-card {
+      background: var(--surface2); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.1rem 1rem; display: flex; flex-direction: column; position: relative;
+    }
+    .plan-card.featured { border: 2px solid #ff6b9d; }
+    .plan-badge {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      background: #ff6b9d; color: #fff; font-family: 'Syne', sans-serif; font-size: .65rem;
+      font-weight: 700; text-transform: uppercase; border-radius: 100px; padding: .25rem .7rem; white-space: nowrap;
+    }
+    .plan-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: .2rem; }
+    .plan-desc { font-size: .75rem; color: var(--muted); margin-bottom: .7rem; }
+    .plan-price { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800; line-height: 1; }
+    .plan-price.free { color: #4ade80; }
+    .plan-card.featured .plan-price { color: #ff6b9d; }
+    .plan-price-sub { font-size: .72rem; color: var(--muted); margin-bottom: .8rem; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: .35rem; margin-bottom: .9rem; flex: 1; }
+    .plan-features li { font-size: .78rem; display: flex; align-items: flex-start; gap: .4rem; }
+    .plan-features li::before { content: '✓'; color: #4ade80; font-weight: 700; flex-shrink: 0; }
+    .btn-plan {
+      display: block; width: 100%; text-align: center; background: transparent; border: 1px solid var(--border);
+      color: var(--text); font-family: 'Syne', sans-serif; font-weight: 700; font-size: .82rem;
+      border-radius: 8px; padding: .55rem .8rem; cursor: pointer;
+    }
+    .plan-card.featured .btn-plan { background: #ff6b9d; border-color: #ff6b9d; color: #fff; }
+    .plans-note { font-size: .72rem; color: var(--muted); font-style: italic; margin: .6rem 0 1.2rem; text-align: center; }
     .status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
     .soum-link { font-size: .75rem; color: var(--muted); text-decoration: none; flex-shrink: 0; }
     .soum-link:hover { color: #ff6b9d; }
@@ -1881,6 +1917,10 @@
             ✓ <span data-i18n="profil.connectedAs">Connecté en tant que</span> <strong id="soum-connected-email">—</strong> — <span data-i18n="profil.noNeedEmail">pas besoin de ressaisir votre email</span>
           </div>
 
+          <div id="profil-plans-cards-container">
+            <p style="text-align:center;color:var(--muted);padding:1rem 0;font-size:.85rem;">Chargement des formules…</p>
+          </div>
+
           <form id="form-soum-outil">
             <div class="soum-form-grid">
               <div class="form-group">
@@ -1921,8 +1961,8 @@
                 <label for="soum-tier"><span data-i18n="submit.labelTier">Formule de listing souhaitée</span> <span>*</span></label>
                 <select id="soum-tier" required>
                   <option value="gratuit" selected data-i18n="submit.tierFree">Gratuit — Standard</option>
-                  <option value="starter" data-i18n="submit.tierStarter">Starter</option>
-                  <option value="featured" data-i18n="submit.tierFeatured">Featured — mise en avant éditoriale</option>
+                  <option value="starter" data-i18n="submit.tierStarterShort">Starter (voir formules ci-dessus)</option>
+                  <option value="featured" data-i18n="submit.tierFeaturedShort">Featured (voir formules ci-dessus)</option>
                 </select>
               </div>
               <div class="form-group full">
@@ -2295,6 +2335,7 @@
 <script type="module">
   import { loginWithGoogle, loginWithEmail, registerWithEmail, logout, watchAuthState }
     from './js/auth.js';
+  import { afficherCartesPlans } from './js/plans-cards.js';
   import {
     getCollections, createCollection, renameCollection, deleteCollection,
     removeToolFromCollection,
@@ -3416,9 +3457,19 @@
       : { gratuit: 'Gratuit', starter: 'Starter', featured: 'Featured' };
     const tierLabel = tierLabels[s.tier_demande] || s.tier_demande || '';
 
-    const link = (s.status === 'approved' && s.fiche_page)
-      ? `<a href="/${s.fiche_page}" class="soum-link">${t('quiz.viewSheet', langue)}</a>`
-      : '';
+    // Le lien "Voir la fiche" n'apparaît que si gen-fiches.js a confirmé
+    // avoir réellement écrit le fichier HTML (fiche_generee, mis à jour en
+    // fin de run) — sinon la fiche existe sur Firestore mais pas encore
+    // sur le site (jusqu'au prochain passage, cron minuit ou manuel), et
+    // le lien renverrait un 404.
+    let link = '';
+    if (s.status === 'approved') {
+      if (s.fiche_generee && s.fiche_page) {
+        link = `<a href="/${s.fiche_page}" class="soum-link">${t('quiz.viewSheet', langue)}</a>`;
+      } else {
+        link = `<span class="soum-pending-publish">${t('profil.publishPending', langue)}</span>`;
+      }
+    }
 
     // Formule payante (Starter/Featured), approuvée, mais paiement pas
     // encore confirmé côté Worker (payment_status écrit par
@@ -3928,6 +3979,7 @@
     }
   };
 
+  let plansCartesChargees = false;
   window.toggleSoumForm = function() {
     const wrap = document.getElementById('soum-form-wrap');
     const isOpen = wrap.style.display !== 'none';
@@ -3936,7 +3988,16 @@
       const emailEl = document.getElementById('soum-connected-email');
       if (emailEl && currentUser) emailEl.textContent = currentUser.email || '—';
       wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (!plansCartesChargees) {
+        plansCartesChargees = true;
+        afficherCartesPlans('profil-plans-cards-container', 'choisirFormuleProfil', window.detecterLangue ? window.detecterLangue() : 'fr');
+      }
     }
+  };
+
+  window.choisirFormuleProfil = function(tier) {
+    const select = document.getElementById('soum-tier');
+    if (select) select.value = tier;
   };
 
   window.updateSoumCount = function(el) {

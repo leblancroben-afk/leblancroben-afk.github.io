@@ -726,6 +726,15 @@
     .status-pending  { background: rgba(245,166,35,.12);  color: #f5a623; border: 1px solid rgba(245,166,35,.3); }
     .status-approved { background: rgba(0,212,170,.12);   color: #00d4aa; border: 1px solid rgba(0,212,170,.3); }
     .status-rejected { background: rgba(255,71,87,.12);   color: var(--danger); border: 1px solid rgba(255,71,87,.3); }
+    .status-payment  { background: rgba(255,107,157,.12); color: #ff6b9d; border: 1px solid rgba(255,107,157,.3); }
+    .btn-pay-now {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #ff6b9d; color: #fff; border: none;
+      font-size: .78rem; font-weight: 700; padding: 6px 14px;
+      border-radius: 20px; text-decoration: none; white-space: nowrap;
+      transition: background .15s;
+    }
+    .btn-pay-now:hover { background: #ff8fb5; }
     .status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
     .soum-link { font-size: .75rem; color: var(--muted); text-decoration: none; flex-shrink: 0; }
     .soum-link:hover { color: #ff6b9d; }
@@ -3411,6 +3420,21 @@
       ? `<a href="/${s.fiche_page}" class="soum-link">${t('quiz.viewSheet', langue)}</a>`
       : '';
 
+    // Formule payante (Starter/Featured), approuvée, mais paiement pas
+    // encore confirmé côté Worker (payment_status écrit par
+    // /generer-paiement puis mis à jour par /ipn-nowpayments).
+    const estPayant = s.tier_demande === 'starter' || s.tier_demande === 'featured';
+    const paiementEnAttente = s.status === 'approved' && estPayant && s.payment_status && s.payment_status !== 'paye';
+
+    let pillHtml = `<span class="status-pill ${st.cls}"><span class="status-dot"></span>${st.label}</span>`;
+    let payBtnHtml = '';
+    if (paiementEnAttente) {
+      pillHtml = `<span class="status-pill status-payment"><span class="status-dot"></span>${t('profil.paymentRequired', langue)}</span>`;
+      if (s.payment_url) {
+        payBtnHtml = `<a href="${escHtml(s.payment_url)}" target="_blank" rel="noopener" class="btn-pay-now">💳 ${t('profil.payNow', langue)}</a>`;
+      }
+    }
+
     const cardHead = `
       <div class="soum-card">
         <div class="soum-icon">🤖</div>
@@ -3422,7 +3446,8 @@
             <span>${t('profil.submittedOn', langue)} ${date}</span>
           </div>
         </div>
-        <span class="status-pill ${st.cls}"><span class="status-dot"></span>${st.label}</span>
+        ${pillHtml}
+        ${payBtnHtml}
         ${link}
       </div>`;
 

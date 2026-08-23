@@ -1,0 +1,40 @@
+name: Vérifier expiration notifications
+
+on:
+  schedule:
+    # Minuit UTC tous les jours.
+    # ⚠️ Si tu veux minuit heure Haïti (UTC-4 / UTC-5 selon saison),
+    # décale l'heure ci-dessous, ex. "0 4 * * *" pour minuit UTC-4.
+    - cron: '0 0 * * *'
+  workflow_dispatch: {} # permet de le lancer manuellement depuis l'onglet Actions
+
+permissions:
+  contents: write
+
+jobs:
+  verifier-expiration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+
+      - name: Configurer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Exécuter la vérification d'expiration
+        id: verif
+        run: node scripts/verifier-expiration-notifications.js
+
+      - name: Commit et push si changements
+        run: |
+          if [ -n "$(git status --porcelain data/notifications.json)" ]; then
+            git config user.name "albexia-bot"
+            git config user.email "actions@github.com"
+            git add data/notifications.json
+            git commit -m "chore: désactivation automatique des notifications expirées"
+            git push
+          else
+            echo "Aucun changement à committer."
+          fi

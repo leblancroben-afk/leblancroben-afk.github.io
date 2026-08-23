@@ -3104,6 +3104,10 @@ async function main() {
 
   let generated = 0, skipped = 0, noFiche = 0, unchanged = 0;
   const changedToolIds = new Set(); // pour la cascade vers comparaisons
+  // Soumissions dont la fiche vient d'être (re)générée — confirmation renvoyée
+  // à la fin du run, lue ensuite par profil.html pour activer le lien
+  // "Voir la fiche" (évite les 404 entre l'approbation admin et ce build).
+  const soumissionsAMettreAJour = new Set();
 
   for (const tool of tools) {
     const toolHash = hashDoc(tool);
@@ -3143,6 +3147,8 @@ async function main() {
     fs.writeFileSync(filePath, html, 'utf8');
     generated++;
 
+    if (tool.soumission_id) soumissionsAMettreAJour.add(tool.soumission_id);
+
     if (generated % 50 === 0) console.log(`  → ${generated} fiches générées...`);
   }
 
@@ -3153,6 +3159,29 @@ async function main() {
   console.log(`  tools/featured/es/{slug}/index.html`);
   console.log(`  tools/starter/{langue}/{slug}/index.html`);
   console.log(`  tools/standard/{langue}/{slug}/index.html`);
+
+  // ─── CONFIRMATION DE PUBLICATION VERS "soumissions" ───
+  // Permet à profil.html de savoir que la fiche existe réellement sur le
+  // site (et pas seulement dans Firestore) avant d'afficher un lien cliquable.
+  if (soumissionsAMettreAJour.size > 0) {
+    console.log(`\n📨 Confirmation de publication pour ${soumissionsAMettreAJour.size} soumission(s)...`);
+    const batch = db.batch();
+    for (const soumissionId of soumissionsAMettreAJour) {
+      batch.set(
+        db.collection('soumissions').doc(soumissionId),
+        { fiche_generee: true, fiche_generee_le: new Date().toISOString() },
+        { merge: true }
+      );
+    }
+    try {
+      await batch.commit();
+      console.log(`✓ ${soumissionsAMettreAJour.size} soumission(s) confirmée(s).`);
+    } catch (err) {
+      // Ne doit jamais faire échouer tout le build pour ça (ex. soumission
+      // supprimée entre-temps) — on log et on continue.
+      console.error('⚠️ Erreur confirmation fiche_generee sur soumissions :', err.message);
+    }
+  }
 
   // ─── NETTOYAGE DES FICHES OUTILS ORPHELINES ───
   console.log(`\n🧹 Nettoyage des fiches outils orphelines...`);

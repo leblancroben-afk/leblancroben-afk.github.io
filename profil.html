@@ -4000,6 +4000,18 @@
     if (select) select.value = tier;
   };
 
+  // Même logique que sur soumettre.html : les cartes viennent de Firestore,
+  // pas du dictionnaire data-i18n statique, donc il faut explicitement les
+  // re-générer au changement de langue (seulement si déjà chargées une
+  // première fois, sinon rien à re-rendre).
+  const precedentOnLangueChangeProfil = window.onLangueChange;
+  window.onLangueChange = function(code) {
+    if (typeof precedentOnLangueChangeProfil === 'function') precedentOnLangueChangeProfil(code);
+    if (plansCartesChargees) {
+      afficherCartesPlans('profil-plans-cards-container', 'choisirFormuleProfil', code);
+    }
+  };
+
   window.updateSoumCount = function(el) {
     document.getElementById('soum-char-count').textContent = el.value.length;
   };

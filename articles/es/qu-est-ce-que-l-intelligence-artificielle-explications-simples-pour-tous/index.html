@@ -94,261 +94,73 @@
   </header>
 
   <div class="article-body">
-<style>
-/* Réinitialisation simple */
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background: #ffffff;
-  color: #202124;
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.7;
-}
-
-/* Conteneur principal */
-.article-container {
-  width: 100%;
-  padding: 40px 20px;
-}
-
-.article {
-  max-width: 820px;
-  margin: 0 auto;
-  background: #ffffff;
-}
-
-/* En-tête */
-.article-header {
-  margin-bottom: 28px;
-}
-
-.article-category {
-  display: inline-block;
-  margin-bottom: 12px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  background: #f0edff;
-  color: #6246d8;
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-h1 {
-  margin: 0 0 18px;
-  color: #171717;
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1.2;
-}
-
-h2 {
-  margin-top: 38px;
-  margin-bottom: 14px;
-  color: #29204f;
-  font-size: 1.55rem;
-  line-height: 1.3;
-}
-
-.article-summary {
-  margin: 0 0 18px;
-  color: #5f6368;
-  font-size: 1.1rem;
-}
-
-.article-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  color: #777777;
-  font-size: 0.9rem;
-}
-
-/* Images et légendes */
-figure {
-  margin: 30px 0;
-}
-
-.cover-figure img,
-.content-figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-.cover-figure img {
-  max-height: 430px;
-}
-
-.content-figure {
-  padding: 12px;
-  border: 1px solid #e8e8e8;
-  border-radius: 14px;
-  background: #fafafa;
-}
-
-.content-figure img {
-  max-height: 390px;
-}
-
-figcaption {
-  margin-top: 10px;
-  color: #6b6b6b;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  text-align: center;
-}
-
-/* Texte */
-.article-content p {
-  margin: 0 0 18px;
-  font-size: 1.05rem;
-}
-
-.article-content ul {
-  margin: 18px 0 26px;
-  padding-left: 24px;
-}
-
-.article-content li {
-  margin-bottom: 12px;
-}
-
-.article-content strong {
-  color: #29204f;
-}
-
-/* Appel à l'action */
-.article-cta {
-  margin-top: 45px;
-  padding: 28px;
-  border-radius: 16px;
-  background: #f4f1ff;
-  border: 1px solid #ddd5ff;
-  text-align: center;
-}
-
-.article-cta h2 {
-  margin-top: 0;
-  color: #29204f;
-}
-
-.article-cta p {
-  margin-bottom: 22px;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 12px 22px;
-  border-radius: 8px;
-  background: #6246d8;
-  color: #ffffff;
-  font-weight: 700;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.cta-button:hover,
-.cta-button:focus {
-  background: #4931b5;
-}
-
-/* Adaptation mobile */
-@media (max-width: 600px) {
-  .article-container {
-    padding: 24px 15px;
-  }
-
-  .article-content p {
-    font-size: 1rem;
-  }
-
-  .article-meta {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .article-cta {
-    padding: 22px 18px;
-  }
-}
-</style><article class="article"> Artículo encabezado <header class="article-header"><span class="article-category">Introducción a la AI</span><h1>¿Qué es la inteligencia artificial? Simples explicaciones para todos</h1><p class="article-summary">Una presentación clara de conceptos básicos: IA, aprendizaje automático,
-redes de neuronas y ejemplos concretos de la vida cotidiana.
- </p></header> Imagen de cobertura <figure class="cover-figure"><img alt="Illustration représentant un cerveau humain relié à des circuits numériques" loading="eager" src="https://leblancroben-afk.github.io/medias/blog/intelligence-artificielle-couverture.jpg"/><figcaption>Inteligencia artificial combina datos, algoritmos
-y modelos de ordenador.
- </figcaption></figure> Artículo <div class="article-content"><p>Inteligencia artificial, a menudo llamada AI, se refiere a un todo
-tecnologías capaces de realizar ciertas tareas que requieren
-usualmente la inteligencia humana. Puede analizarse en particular
-información, reconocer imágenes, entender texto,
-traducir un idioma o proponer recomendaciones.
- </p><p>El propósito de la AI no es necesariamente crear una máquina consciente
-o capaz de pensar como una persona. En la mayoría de los casos,
-Se utiliza principalmente para automatizar tareas, identificar tendencias
-y para ayudar a los usuarios a tomar mejores decisiones.
- </p><h2>¿Cómo funciona la inteligencia artificial?</h2><p>Un sistema de inteligencia artificial suele funcionar a partir de datos,
-a) los algoritmos y modelo. Los datos pueden ser texto,
-imágenes, sonidos, números o videos. El algoritmo
-analiza esta información para producir un resultado.
- </p> Imagen integrada en el cuerpo <figure class="content-figure"><img alt="Schéma montrant le passage des données vers un algorithme puis vers un résultat" loading="lazy" src="https://leblancroben-afk.github.io/medias/blog/fonctionnement-ia-donnees-algorithme.jpg"/><figcaption>Gráfico 1 - Funcionamiento simplificado de un sistema de inteligencia
-artificial: datos, análisis y resultado.
- </figcaption></figure><h2>¿Qué es el aprendizaje automático?</h2><p>Aprendizaje automático o <em>machine learning</em>, es
-las principales ramas de la inteligencia artificial. Para
-programar manualmente todas las reglas, proporcionamos el sistema
-muchos ejemplos para que pueda descubrir regularidades.
- </p><p>Por ejemplo, para aprender a reconocer a un gato en una foto,
-un modelo puede recibir varios miles de imágenes identificadas
-representando a un gato u otro animal. Luego analiza
-las características de las imágenes y utiliza lo que aprendió
-clasificar nuevas fotos.
- </p><h2>El papel de las redes neuronas</h2><p>Las redes neuronas son modelos de ordenador inspirados,
-de una manera simplificada, el funcionamiento del cerebro humano. Ellos
-tienen varias capas de tratamiento capaces de análisis
-información compleja.
- </p><p>Redes de neuronas profundas, también conocidas como
- <em>aprendizaje profundo</em>, se utilizan especialmente para
-reconocer imágenes, entender el discurso, traducir textos
+Imagen de cobertura <figure style="margin: 30px auto; max-width: 100%; text-align: center; border: 1px solid #e5e7eb; padding: 10px; border-radius: 8px; background-color: #f9fafb;"><img alt="Illustration représentant un cerveau humain relié à des circuits numériques" loading="lazy" src="https://leblancroben-afk.github.io/medias/blog/intelligence-artificielle-couverture.jpg" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;"/><figcaption style="margin-top: 10px; font-size: 0.9rem; color: #6b7280; font-style: italic; line-height: 1.4;">La inteligencia artificial combina datos, algoritmos y modelos informáticos.
+ </figcaption></figure> Artículo <div style="color: #1f2937; background-color: #ffffff; padding: 25px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto;"><p>Inteligencia artificial, a menudo llamada <strong style="color: #000000;">IA</strong>,
+significa un conjunto de tecnologías capaces de llevar a cabo ciertas tareas
+Normalmente requieren inteligencia humana.
+ </p><p>Puede analizar información, reconocer imágenes,
+entender el texto, traducir un idioma o proponer recomendaciones.
+El objetivo no es necesariamente crear una máquina consciente, sino más bien
+automatizar ciertas tareas y ayudar a los usuarios a diario.
+ </p><hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;"/><h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">¿Cómo funciona la inteligencia artificial?
+ </h2><p>Un sistema AI suele funcionar con tres elementos principales:
+datos, algoritmos y un modelo. Los datos pueden ser texto,
+imágenes, sonidos, números o videos.
+ </p><p>El algoritmo analiza esta información para detectar tendencias o
+regularidad. El sistema puede entonces producir un resultado, como el reconocimiento
+una imagen, responder una pregunta o recomendar contenido.
+ </p> Imagen integrada en el cuerpo <figure style="margin: 30px auto; max-width: 100%; text-align: center; border: 1px solid #e5e7eb; padding: 10px; border-radius: 8px; background-color: #f9fafb;"><img alt="Schéma montrant le fonctionnement de l’intelligence artificielle à partir des données" loading="lazy" src="https://leblancroben-afk.github.io/medias/blog/fonctionnement-ia-donnees-algorithme.jpg" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;"/><figcaption style="margin-top: 10px; font-size: 0.9rem; color: #6b7280; font-style: italic; line-height: 1.4;">Funcionamiento simplificado de un sistema AI: se analizan los datos para producir un resultado.
+ </figcaption></figure><h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">¿Qué es el aprendizaje automático?
+ </h2><p>Aprendizaje automático, también conocido como <em>machine learning</em>, es
+las principales ramas de la inteligencia artificial.
+ </p><p>En lugar de programar manualmente todas las reglas, el sistema se proporciona
+muchos ejemplos. IA analiza estos ejemplos para descubrir
+y usar lo que ha aprendido sobre nuevas situaciones.
+ </p><p>Por ejemplo, para reconocer a un gato en una foto, un modelo puede recibir
+varias miles de imágenes identificadas como representativas de un gato u otro
+animal. Luego aprende a identificar ciertas características específicas para los gatos.
+ </p><h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">El papel de las redes neuronas
+ </h2><p>Las redes neuronas son modelos de ordenador inspirados,
+el funcionamiento del cerebro humano. Hay varios
+capas capaces de transformar y analizar la información.
+ </p><p>Redes de neuronas profundas, también conocidas como <em>aprendizaje profundo</em>,
+son utilizados para reconocer imágenes, entender el discurso, traducir
 y generar contenido.
- </p><h2>Ejemplos en la vida cotidiana</h2><p>Incluso sin saberlo, muchas personas ya utilizan AI
-Todos los días. Está integrado en muchas aplicaciones y
-Servicios digitales.
- </p> Segunda imagen integrada <figure class="content-figure"><img alt="Illustration de plusieurs usages de l’intelligence artificielle au quotidien" loading="lazy" src="https://leblancroben-afk.github.io/medias/blog/usages-ia-quotidien.jpg"/><figcaption>Figura 2 - Interviene en particular en asistentes virtuales,
-Recomendaciones y traducción automática.
- </figcaption></figure><ul><li><strong>Recomendaciones:</strong> plataformas de vídeo,
-contenido según sus intereses.
- </li><li><strong>Virtual Assistants:</strong> pueden entender
-algunos comandos de voz y responder preguntas simples.
- </li><li><strong>Traducción automática:</strong> IA ayuda a traducir
-rápidamente frases y documentos.
- </li><li><strong>Filtro por correo electrónico:</strong> puede identificar
-mensajes no deseados o potencialmente peligrosos.
- </li><li><strong>Reconocimiento de imagen:</strong> puede detectar
-objetos, caras o ciertas características visuales.
- </li></ul><h2>¿Cuáles son los límites de AI?</h2><p>La AI es poderosa, pero no es perfecta. Depende de
-la calidad de los datos utilizados para la formación. Si estos
-los datos son incompletos o parciales, los resultados también pueden
-sea incorrecto o injusto.
- </p><p>Una AI también puede producir una respuesta que parece convincente
-Pero no es verdad. Por lo tanto, es importante comprobar
-información importante y considerar la AI como una herramienta de ayuda,
-y no como fuente infalible.
- </p><h2>¿Cómo utilizar AI responsablemente?</h2><ul><li>Revise la información importante proporcionada por una AI.</li><li>Evite compartir datos personales confidenciales.</li><li>Compare los resultados con fuentes confiables.</li><li>Mantener el control humano sobre decisiones importantes.</li></ul><h2>Conclusión</h2><p>La inteligencia artificial reúne tecnologías capaces
-analizar datos y realizar diferentes tareas
-automáticamente. Ya está presente en muchos aspectos
-pero su uso requiere precaución,
-y especial atención a la protección
-datos.
- </p> Call for action <div class="article-cta"><h2>Descubra las herramientas de la AI adaptadas a sus necesidades</h2><p>Buscando una herramienta para escribir, aprender, crear imágenes
-o mejorar su productividad? Vea nuestro directorio IA
-para descubrir y comparar diferentes soluciones.
- </p><a class="cta-button" href="https://leblancroben-afk.github.io/index.html#tools">Explore el directorio IA
- </a></div></div></article>
+ </p><hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;"/><h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">IIA en la vida cotidiana
+ </h2><p>Incluso sin saberlo, muchas personas ya usan inteligencia
+Todos los días. Está integrado en muchas aplicaciones
+y plataformas digitales.
+ </p> Segunda imagen incrustada en el cuerpo <figure style="margin: 30px auto; max-width: 100%; text-align: center; border: 1px solid #e5e7eb; padding: 10px; border-radius: 8px; background-color: #f9fafb;"><img alt="Illustration montrant plusieurs usages de l’intelligence artificielle dans la vie quotidienne" loading="lazy" src="https://leblancroben-afk.github.io/medias/blog/usages-ia-quotidien.jpg" style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;"/><figcaption style="margin-top: 10px; font-size: 0.9rem; color: #6b7280; font-style: italic; line-height: 1.4;">Está presente en asistentes virtuales, recomendaciones y traducción automática.
+ </figcaption></figure><ul style="padding-left: 20px; color: #374151;"><li style="margin-bottom: 12px;"><strong style="color: #111827;">Recomendaciones:</strong>plataformas de vídeo, música y negocios ofrecen contenido
+según sus intereses.
+ </li><li style="margin-bottom: 12px;"><strong style="color: #111827;">Asistente virtual:</strong>pueden entender ciertos comandos de voz y responder a
+preguntas simples.
+ </li><li style="margin-bottom: 12px;"><strong style="color: #111827;">Traducción automática:</strong>IA ayuda a traducir frases y documentos rápidamente.
+ </li><li style="margin-bottom: 12px;"><strong style="color: #111827;">Filtro por correo electrónico:</strong>puede identificar mensajes no deseados o potencialmente peligrosos.
+ </li><li style="margin-bottom: 12px;"><strong style="color: #111827;">Reconocimiento de imagen:</strong>Puede detectar objetos, caras o ciertas características visuales.
+ </li></ul><h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">¿Cuáles son los límites de AI?
+ </h2><p>La inteligencia artificial es poderosa, pero no es perfecta.
+Depende en gran medida de la calidad de los datos utilizados para la capacitación.
+ </p><p>Si los datos son incompletos o parciales, los resultados pueden ser
+incorrecto o injusto. Una AI también puede producir una respuesta
+convincente, pero falso.
+ </p><blockquote style="background-color: #fff7ed; border-left: 4px solid #f97316; padding: 15px 20px; margin: 20px 0; border-radius: 0 6px 6px 0;"><p style="margin: 0; color: #7c2d12;"><strong>Cabe señalar:</strong> una respuesta de AI debe ser
+cuando se trata de una decisión importante,
+sensible o un sujeto que requiere gran precisión.
+ </p></blockquote><h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">¿Cómo utilizar AI responsablemente?
+ </h2><ol style="padding-left: 20px; color: #374151;"><li style="margin-bottom: 12px;">Revise la información importante proporcionada por una AI.
+ </li><li style="margin-bottom: 12px;">Evite compartir datos personales o confidenciales.
+ </li><li style="margin-bottom: 12px;">Compare respuestas con fuentes confiables.
+ </li><li style="margin-bottom: 12px;">Mantener el control humano sobre decisiones importantes.
+ </li></ol><h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">Conclusión
+ </h2><p>La inteligencia artificial reúne tecnologías capaces de analizar
+datos y realizar diferentes tareas automáticamente. Ella ya está.
+presente en muchos aspectos de nuestra vida.
+ </p><p>Para aprovecharse plenamente de ella, es importante comprender su funcionamiento,
+conocer sus límites y utilizarlo críticamente.
+ </p> Call for action <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; margin-top: 30px; border-radius: 8px; text-align: center;"><p style="margin: 0 0 15px; font-size: 1.1rem; color: #166534;">¿Buscas una herramienta de inteligencia artificial adaptada a tus necesidades?
+ </p><a href="https://leblancroben-afk.github.io/index.html#tools" style="display: inline-block; background-color: #16a34a; color: #ffffff; padding: 11px 18px; border-radius: 6px; font-weight: bold; text-decoration: none;">Descubra nuestro directorio IA
+ </a></div></div>
     <div class="article-tags">
       <a href="#" class="article-tag">#intelligence artificielle</a>
       <a href="#" class="article-tag">#définition IA</a>

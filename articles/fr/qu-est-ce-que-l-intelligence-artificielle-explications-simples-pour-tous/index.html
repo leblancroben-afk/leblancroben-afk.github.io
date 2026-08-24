@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qu’est‑ce que l’intelligence artificielle ? Explications simples pour tous | Albexia</title>
+  <meta name="description" content="Découvrez simplement ce qu’est l’intelligence artificielle, ses principales techniques (apprentissage automatique, réseaux de neurones) et des exemples." />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="canonical" href="https://albexia.com/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" />
+
+  <link rel="alternate" hreflang="fr" href="https://albexia.com/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" />
+  <link rel="alternate" hreflang="en" href="https://albexia.com/articles/en/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" />
+  <link rel="alternate" hreflang="es" href="https://albexia.com/articles/es/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" />
+  <link rel="alternate" hreflang="x-default" href="https://albexia.com/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" />
+
+  <meta property="og:title"       content="Qu’est‑ce que l’intelligence artificielle ? Explications simples pour tous | Albexia" />
+  <meta property="og:description" content="Découvrez simplement ce qu’est l’intelligence artificielle, ses principales techniques (apprentissage automatique, réseaux de neurones) et des exemples." />
+  <meta property="og:type"        content="article" />
+  <meta property="og:url"         content="https://albexia.com/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" />
+  <meta property="og:image" content="https://leblancroben-afk.github.io/medias/blog/intelligence-artificielle-couverture.jpg" />
+  <meta name="twitter:image" content="https://leblancroben-afk.github.io/medias/blog/intelligence-artificielle-couverture.jpg" />
+  <meta property="og:locale"           content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="es_ES" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Qu’est‑ce que l’intelligence artificielle ? Explications simples pour tous | Albexia" />
+  <meta name="twitter:description" content="Découvrez simplement ce qu’est l’intelligence artificielle, ses principales techniques (apprentissage automatique, réseaux de neurones) et des exemples." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Qu’est‑ce que l’intelligence artificielle ? Explications simples pour tous",
+    "description": "Découvrez simplement ce qu’est l’intelligence artificielle, ses principales techniques (apprentissage automatique, réseaux de neurones) et des exemples.",
+    "inLanguage": "fr",
+    "datePublished": "24 août 2026",
+    "dateModified": "24 août 2026",
+    "author": { "@type": "Organization", "name": "Albexia" },
+    "publisher": { "@type": "Organization", "name": "Albexia", "url": "https://albexia.com" },
+    "image": "https://leblancroben-afk.github.io/medias/blog/intelligence-artificielle-couverture.jpg",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://albexia.com/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" },
+    "workTranslation": [
+      { "@type": "Article", "inLanguage": "en", "url": "https://albexia.com/articles/en/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" },
+      { "@type": "Article", "inLanguage": "es", "url": "https://albexia.com/articles/es/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/index.html" }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/article.css" />
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+  </div>
+  <div class="kebab-wrap" id="kebab-wrap">
+    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="kebab-menu" id="kebab-menu" role="menu">
+      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
+      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
+      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
+      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <div class="kebab-divider"></div>
+      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+    </div>
+  </div>
+</nav>
+
+<main class="article-main">
+<div class="article-container">
+
+  <header class="article-header">
+    <div class="article-meta-top">
+      <span class="article-cat fond">Introduction à l’IA</span>
+      <span class="dot"></span>
+      <span class="article-date">24 août 2026</span>
+      <span class="dot"></span>
+      <span class="article-read-time">⏱ 5 minutes</span>
+    </div>
+    <h1 class="article-title">Qu’est‑ce que l’intelligence artificielle ? Explications simples pour tous</h1>
+    <p class="article-intro">Une présentation claire des notions de base : IA, apprentissage automatique, réseaux de neurones et exemples concrets du quotidien.</p>
+  </header>
+
+  <div class="article-body">
+<style>
+/* Réinitialisation simple */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #202124;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+}
+
+/* Conteneur principal */
+.article-container {
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.article {
+  max-width: 820px;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+/* En-tête */
+.article-header {
+  margin-bottom: 28px;
+}
+
+.article-category {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #f0edff;
+  color: #6246d8;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0 0 18px;
+  color: #171717;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.2;
+}
+
+h2 {
+  margin-top: 38px;
+  margin-bottom: 14px;
+  color: #29204f;
+  font-size: 1.55rem;
+  line-height: 1.3;
+}
+
+.article-summary {
+  margin: 0 0 18px;
+  color: #5f6368;
+  font-size: 1.1rem;
+}
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: #777777;
+  font-size: 0.9rem;
+}
+
+/* Images et légendes */
+figure {
+  margin: 30px 0;
+}
+
+.cover-figure img,
+.content-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.cover-figure img {
+  max-height: 430px;
+}
+
+.content-figure {
+  padding: 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  background: #fafafa;
+}
+
+.content-figure img {
+  max-height: 390px;
+}
+
+figcaption {
+  margin-top: 10px;
+  color: #6b6b6b;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Texte */
+.article-content p {
+  margin: 0 0 18px;
+  font-size: 1.05rem;
+}
+
+.article-content ul {
+  margin: 18px 0 26px;
+  padding-left: 24px;
+}
+
+.article-content li {
+  margin-bottom: 12px;
+}
+
+.article-content strong {
+  color: #29204f;
+}
+
+/* Appel à l'action */
+.article-cta {
+  margin-top: 45px;
+  padding: 28px;
+  border-radius: 16px;
+  background: #f4f1ff;
+  border: 1px solid #ddd5ff;
+  text-align: center;
+}
+
+.article-cta h2 {
+  margin-top: 0;
+  color: #29204f;
+}
+
+.article-cta p {
+  margin-bottom: 22px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 8px;
+  background: #6246d8;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.cta-button:hover,
+.cta-button:focus {
+  background: #4931b5;
+}
+
+/* Adaptation mobile */
+@media (max-width: 600px) {
+  .article-container {
+    padding: 24px 15px;
+  }
+
+  .article-content p {
+    font-size: 1rem;
+  }
+
+  .article-meta {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .article-cta {
+    padding: 22px 18px;
+  }
+}
+</style>
+
+<article class="article">
+
+      <!-- En-tête de l'article -->
+      <header class="article-header">
+        <span class="article-category">Introduction à l’IA</span>
+
+        <h1>Qu’est-ce que l’intelligence artificielle ? Explications simples pour tous</h1>
+
+        <p class="article-summary">
+          Une présentation claire des notions de base : IA, apprentissage automatique,
+          réseaux de neurones et exemples concrets du quotidien.
+        </p>
+
+      </header>
+
+      <!-- Image de couverture -->
+      <figure class="cover-figure">
+        <img
+          src="https://leblancroben-afk.github.io/medias/blog/intelligence-artificielle-couverture.jpg"
+          alt="Illustration représentant un cerveau humain relié à des circuits numériques"
+          loading="eager">
+
+        <figcaption>
+          L’intelligence artificielle associe des données, des algorithmes
+          et des modèles informatiques.
+        </figcaption>
+      </figure>
+
+      <!-- Corps de l'article -->
+      <div class="article-content">
+
+        <p>
+          L’intelligence artificielle, souvent appelée IA, désigne un ensemble
+          de technologies capables d’effectuer certaines tâches qui nécessitent
+          habituellement l’intelligence humaine. Elle peut notamment analyser
+          des informations, reconnaître des images, comprendre du texte,
+          traduire une langue ou proposer des recommandations.
+        </p>
+
+        <p>
+          L’objectif de l’IA n’est pas forcément de créer une machine consciente
+          ou capable de penser comme une personne. Dans la plupart des cas,
+          elle sert surtout à automatiser des tâches, à repérer des tendances
+          et à aider les utilisateurs à prendre de meilleures décisions.
+        </p>
+
+        <h2>Comment fonctionne l’intelligence artificielle ?</h2>
+
+        <p>
+          Un système d’IA fonctionne généralement à partir de données,
+          d’algorithmes et d’un modèle. Les données peuvent être des textes,
+          des images, des sons, des chiffres ou des vidéos. L’algorithme
+          analyse ces informations afin de produire un résultat.
+        </p>
+
+        <!-- Image intégrée dans le corps -->
+        <figure class="content-figure">
+          <img
+            src="https://leblancroben-afk.github.io/medias/blog/fonctionnement-ia-donnees-algorithme.jpg"
+            alt="Schéma montrant le passage des données vers un algorithme puis vers un résultat"
+            loading="lazy">
+
+          <figcaption>
+            Figure 1 — Fonctionnement simplifié d’un système d’intelligence
+            artificielle : données, analyse et résultat.
+          </figcaption>
+        </figure>
+
+        <h2>Qu’est-ce que l’apprentissage automatique ?</h2>
+
+        <p>
+          L’apprentissage automatique, ou <em>machine learning</em>, est l’une
+          des principales branches de l’intelligence artificielle. Au lieu de
+          programmer manuellement toutes les règles, on fournit au système
+          de nombreux exemples afin qu’il puisse découvrir des régularités.
+        </p>
+
+        <p>
+          Par exemple, pour apprendre à reconnaître un chat sur une photo,
+          un modèle peut recevoir plusieurs milliers d’images identifiées
+          comme représentant un chat ou un autre animal. Il analyse ensuite
+          les caractéristiques des images et utilise ce qu’il a appris pour
+          classer de nouvelles photos.
+        </p>
+
+        <h2>Le rôle des réseaux de neurones</h2>
+
+        <p>
+          Les réseaux de neurones sont des modèles informatiques inspirés,
+          de manière simplifiée, du fonctionnement du cerveau humain. Ils
+          comportent plusieurs couches de traitement capables d’analyser
+          des informations complexes.
+        </p>
+
+        <p>
+          Les réseaux de neurones profonds, également appelés
+          <em>deep learning</em>, sont particulièrement utilisés pour
+          reconnaître des images, comprendre la parole, traduire des textes
+          et générer du contenu.
+        </p>
+
+        <h2>Des exemples dans la vie quotidienne</h2>
+
+        <p>
+          Même sans le savoir, beaucoup de personnes utilisent déjà l’IA
+          chaque jour. Elle est intégrée à de nombreuses applications et
+          services numériques.
+        </p>
+
+        <!-- Deuxième image intégrée -->
+        <figure class="content-figure">
+          <img
+            src="https://leblancroben-afk.github.io/medias/blog/usages-ia-quotidien.jpg"
+            alt="Illustration de plusieurs usages de l’intelligence artificielle au quotidien"
+            loading="lazy">
+
+          <figcaption>
+            Figure 2 — L’IA intervient notamment dans les assistants virtuels,
+            les recommandations et la traduction automatique.
+          </figcaption>
+        </figure>
+
+        <ul>
+          <li>
+            <strong>Recommandations :</strong> les plateformes de vidéos,
+            de musique et de commerce proposent du contenu selon vos intérêts.
+          </li>
+
+          <li>
+            <strong>Assistants virtuels :</strong> ils peuvent comprendre
+            certaines commandes vocales et répondre à des questions simples.
+          </li>
+
+          <li>
+            <strong>Traduction automatique :</strong> l’IA aide à traduire
+            rapidement des phrases et des documents.
+          </li>
+
+          <li>
+            <strong>Filtrage des courriels :</strong> elle peut identifier
+            les messages indésirables ou potentiellement dangereux.
+          </li>
+
+          <li>
+            <strong>Reconnaissance d’images :</strong> elle peut détecter
+            des objets, des visages ou certaines caractéristiques visuelles.
+          </li>
+        </ul>
+
+        <h2>Quelles sont les limites de l’IA ?</h2>
+
+        <p>
+          L’IA est puissante, mais elle n’est pas parfaite. Elle dépend de
+          la qualité des données utilisées pour son entraînement. Si ces
+          données sont incomplètes ou biaisées, les résultats peuvent aussi
+          être incorrects ou injustes.
+        </p>
+
+        <p>
+          Une IA peut également produire une réponse qui semble convaincante
+          tout en étant fausse. Il est donc important de vérifier les
+          informations importantes et de considérer l’IA comme un outil d’aide,
+          et non comme une source infaillible.
+        </p>
+
+        <h2>Comment utiliser l’IA de manière responsable ?</h2>
+
+        <ul>
+          <li>Vérifiez les informations importantes fournies par une IA.</li>
+          <li>Évitez de partager des données personnelles sensibles.</li>
+          <li>Comparez les résultats avec des sources fiables.</li>
+          <li>Gardez un contrôle humain sur les décisions importantes.</li>
+        </ul>
+
+        <h2>Conclusion</h2>
+
+        <p>
+          L’intelligence artificielle regroupe des technologies capables
+          d’analyser des données et d’effectuer différentes tâches
+          automatiquement. Elle est déjà présente dans de nombreux aspects
+          de notre vie, mais son utilisation demande de la prudence,
+          de l’esprit critique et une attention particulière à la protection
+          des données.
+        </p>
+
+        <!-- Appel à l'action -->
+        <div class="article-cta">
+          <h2>Découvrez les outils d’IA adaptés à vos besoins</h2>
+
+          <p>
+            Vous cherchez un outil pour écrire, apprendre, créer des images
+            ou améliorer votre productivité ? Consultez notre annuaire IA
+            pour découvrir et comparer différentes solutions.
+          </p>
+
+          <a href="https://leblancroben-afk.github.io/index.html#tools" class="cta-button">
+            Explorer l’annuaire IA
+          </a>
+        </div>
+
+      </div>
+
+    </article>
+
+  </main>
+    <div class="article-tags">
+      <a href="#" class="article-tag">#intelligence artificielle</a>
+      <a href="#" class="article-tag">#définition IA</a>
+      <a href="#" class="article-tag">#IA pour débutants</a>
+    </div>
+
+  </div>
+
+  <nav class="article-nav-bottom" aria-label="Navigation articles">
+    <a href="/articles/fr/avis-customgpt-ai-agent-entreprise/index.html" class="article-nav-btn">← CustomGPT.ai : Comment créer un agent IA qui connaît votre entreprise par cœur (sans coder)</a>
+    
+  </nav>
+
+</div>
+</main>
+
+<footer>
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script>
+  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
+  if (kb && km) {
+    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
+    km.addEventListener('click', e => e.stopPropagation());
+  }
+</script>
+</body>
+</html>

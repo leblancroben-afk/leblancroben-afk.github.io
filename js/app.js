@@ -82,7 +82,6 @@ function changerLangue(code) {
   state.activeToolCat    = 'Tous';
   state.activeBlogCat    = 'Tous';
   state.activeGalleryCat = 'Tous';
-  state.activeHomeCat    = null;
   state.toolsPage  = 1;
   state.blogPage   = 1;
   document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -90,8 +89,6 @@ function changerLangue(code) {
   });
   appliquerTraductionsStatiques(code);
   renderTools();
-  renderHomeCategories();
-  document.getElementById('home-cat-preview').hidden = true;
   renderBlog();
   renderGallery();
 
@@ -123,9 +120,8 @@ const state = {
   activeToolCat:    'Tous',
   activeBlogCat:    'Tous',
   activeGalleryCat: 'Tous',
-  activeHomeCat:    null, // catégorie ouverte dans l'aperçu de l'accueil (null = aucune)
   priceFilter: 'tous',    // 'tous' | 'freemium' | 'gratuit' | 'payant'
-  minRating:   0,         // 0 ou 4 (toggle "4+ étoiles")
+  minRating:   0,         // 0-5 (via le menu étoiles)
   apiOnly:     false,
   trialOnly:   false,
   toolsSort:   'popularite', // 'popularite' | 'note' | 'nom'
@@ -369,7 +365,6 @@ async function loadAllData() {
 
     state.blog = [...articlesSnap.docs.map(d => d.data()), ...articlesCreateurs];
     renderTools();
-    renderHomeCategories();
     renderBlog();
     renderGallery();
     checkToolsParam();
@@ -547,6 +542,11 @@ async function renderRatingsOnCards() {
 // TOOLS
 // ═══════════════════════════════════════
 
+// Les libellés FR des filtres (Freemium/Gratuit/Payant) ne correspondent pas
+// forcément aux valeurs stockées dans Firestore (t.price = 'free'/'freemium'/'paid').
+// Cette table fait le pont pour éviter un filtre qui matche jamais rien.
+const PRICE_FIELD_MAP = { freemium: 'freemium', gratuit: 'free', payant: 'paid' };
+
 function renderTools() {
   const toolsLangue = filtrerParLangue(state.tools);
 
@@ -554,14 +554,15 @@ function renderTools() {
   renderCategoryTiles('tools-cat-grid', state.activeToolCat, 'setToolCat');
 
   // Entête dynamique (nom, compteur, description, placeholder recherche)
-  updateToolsPageHeader(toolsLangue);
+  const catCount = updateToolsPageHeader(toolsLangue);
+  renderCatConfirmBar(state.activeToolCat, catCount);
 
   // Filtres de base : catégorie, prix, recherche texte
   let base = toolsLangue.filter(t =>
     t.status !== 'offline' && // outil dont le lien est mort depuis 7 checks consécutifs
                                // (check-liens.js) — carte masquée, fiche HTML reste publiée
     (state.activeToolCat === 'Tous' || t.category === state.activeToolCat) &&
-    (state.priceFilter === 'tous' || t.price === state.priceFilter) &&
+    (state.priceFilter === 'tous' || t.price === PRICE_FIELD_MAP[state.priceFilter]) &&
     (matchRecherche(state.searchQuery, t.name) ||
      matchRecherche(state.searchQuery, t.description) ||
      t.tags.some(tag => matchRecherche(state.searchQuery, tag)))
@@ -605,6 +606,8 @@ function updateToolsPageHeader(toolsLangue) {
       ? 'Rechercher un outil, une catégorie, un tag...'
       : `Rechercher un outil ${cat}...`;
   }
+
+  return count;
 }
 
 // ─── Filtres avancés (prix / note / API / essai) + tri ───
@@ -626,7 +629,22 @@ function renderSecondaryFilters() {
       ${priceOpts.map(([val, label]) =>
         `<button class="filter${state.priceFilter === val ? ' active' : ''}" onclick="setPriceFilter('${val}')">${label}</button>`
       ).join('')}
-      <button class="filter${state.minRating >= 4 ? ' active' : ''}" onclick="toggleMinRating()">★ 4+ étoiles</button>
+      <details class="star-filter" id="star-filter-details">
+        <summary class="filter star-filter-summary${state.minRating > 0 ? ' active' : ''}">
+          ★ ${state.minRating > 0 ? state.minRating + '+ étoiles' : 'Note'}
+        </summary>
+        <div class="star-menu">
+          ${[5, 4, 3, 2, 1].map(n => `
+            <label class="star-menu-option">
+              <input type="radio" name="star-rating" value="${n}" ${state.minRating === n ? 'checked' : ''} onchange="setMinRating(${n})">
+              <span>${'★'.repeat(n)}${'☆'.repeat(5 - n)} ${n}+ étoiles</span>
+            </label>`).join('')}
+          <label class="star-menu-option star-menu-clear">
+            <input type="radio" name="star-rating" value="0" ${state.minRating === 0 ? 'checked' : ''} onchange="setMinRating(0)">
+            <span>Toutes les notes</span>
+          </label>
+        </div>
+      </details>
       <button class="filter${state.apiOnly ? ' active' : ''}${hasApiField ? '' : ' filter-disabled'}"
         ${hasApiField ? `onclick="toggleApiOnly()"` : `title="Champ 'api' pas encore renseigné en base"`}>API disponible</button>
       <button class="filter${state.trialOnly ? ' active' : ''}${hasTrialField ? '' : ' filter-disabled'}"
@@ -644,12 +662,12 @@ function renderSecondaryFilters() {
 }
 
 function setPriceFilter(val) { state.priceFilter = val; state.toolsPage = 1; renderTools(); }
-function toggleMinRating()   { state.minRating = state.minRating >= 4 ? 0 : 4; state.toolsPage = 1; renderTools(); }
+function setMinRating(n)     { state.minRating = n; state.toolsPage = 1; renderTools(); }
 function toggleApiOnly()     { state.apiOnly = !state.apiOnly; state.toolsPage = 1; renderTools(); }
 function toggleTrialOnly()   { state.trialOnly = !state.trialOnly; state.toolsPage = 1; renderTools(); }
 function setToolsSort(val)   { state.toolsSort = val; state.toolsPage = 1; renderTools(); }
 window.setPriceFilter = setPriceFilter;
-window.toggleMinRating = toggleMinRating;
+window.setMinRating = setMinRating;
 window.toggleApiOnly = toggleApiOnly;
 window.toggleTrialOnly = toggleTrialOnly;
 window.setToolsSort = setToolsSort;
@@ -790,11 +808,17 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
   const total = [...counts.values()].reduce((a, b) => a + b, 0);
   const cats  = [...counts.keys()];
 
+  const badge = document.getElementById('cat-count-badge');
+  if (badge) badge.textContent = `${cats.length} catégories`;
+
+  const selectedTag = `<span class="home-cat-selected">✓ Sélectionné</span>`;
+
   const tousTile = `
     <button class="home-cat-tile${activeCat === 'Tous' ? ' active' : ''}" onclick="${onSelectFn}('Tous')">
       <span class="home-cat-icon">🗂️</span>
       <span class="home-cat-name">Tous</span>
       <span class="home-cat-count">${total} outils</span>
+      ${activeCat === 'Tous' ? selectedTag : ''}
     </button>`;
 
   const tiles = cats.map(c => {
@@ -805,84 +829,31 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
         <span class="home-cat-icon">${icon}</span>
         <span class="home-cat-name">${c}</span>
         <span class="home-cat-count">${counts.get(c)} outils</span>
+        ${isActive ? selectedTag : ''}
       </button>`;
   }).join('');
 
   grid.innerHTML = tousTile + tiles;
 }
 
-// ═══════════════════════════════════════
-// CATÉGORIES — ACCUEIL (aperçu)
-// ═══════════════════════════════════════
-// Tuiles de catégories avec compteur (visible sur la page d'accueil).
-// Au clic sur une vraie catégorie : aperçu de 4 outils avec un CTA vers
-// la page complète. Au clic sur "Tous" : va directement sur la page
-// Outils complète (pas de sens d'avoir un aperçu de 1500+ outils ici).
+// Barre de confirmation affichée sous la grille de tuiles quand une vraie
+// catégorie (≠ Tous) est sélectionnée. Le CTA renvoie vers la vraie page
+// catégorie statique (/categorie/{slug}/index.html), pas vers un filtre
+// en place — en attendant que ces pages soient générées par gen-fiches.js,
+// le lien pointera vers une page qui n'existe pas encore.
+function renderCatConfirmBar(cat, count) {
+  const bar = document.getElementById('cat-confirm-bar');
+  if (!bar) return;
+  if (cat === 'Tous') { bar.hidden = true; bar.innerHTML = ''; return; }
 
-const NB_APERCU_CAT = 4;
-
-function renderHomeCategories() {
-  const toolsLangue = filtrerParLangue(state.tools);
-  if (!toolsLangue.length) return; // pas encore de données
-
-  renderCategoryTiles('home-cat-grid', state.activeHomeCat || 'Tous', 'selectHomeCategory');
-
-  // Si une catégorie était déjà sélectionnée (ex: après un changement
-  // de langue), on rafraîchit son aperçu avec les nouvelles données.
-  if (state.activeHomeCat) {
-    renderHomeCategoryPreview(state.activeHomeCat);
-  }
+  const icon = catIcons[cat] || catIcons._default;
+  const slug = slugify(cat);
+  bar.innerHTML = `
+    <span class="cat-confirm-icon">${icon}</span>
+    <span class="cat-confirm-text">${cat} — ${count} outils</span>
+    <a class="cat-confirm-cta" href="/categorie/${slug}/index.html">Voir la page ${cat} →</a>`;
+  bar.hidden = false;
 }
-
-function selectHomeCategory(cat) {
-  if (cat === 'Tous') { goToFullCategory('Tous'); return; }
-
-  // Reclique sur la catégorie active → referme l'aperçu
-  if (state.activeHomeCat === cat) {
-    state.activeHomeCat = null;
-    document.getElementById('home-cat-preview').hidden = true;
-    renderHomeCategories();
-    return;
-  }
-  state.activeHomeCat = cat;
-  renderHomeCategories();
-  renderHomeCategoryPreview(cat);
-}
-
-function renderHomeCategoryPreview(cat) {
-  const preview = document.getElementById('home-cat-preview');
-  if (!preview) return;
-
-  const toolsLangue = filtrerParLangue(state.tools);
-  const toolsCat = toolsLangue.filter(t => t.status !== 'offline' && t.category === cat);
-  const apercu = toolsCat.slice(0, NB_APERCU_CAT);
-
-  const catLabel = { fr: 'Voir tous les outils', en: 'View all', es: 'Ver todas las herramientas' };
-  const label = catLabel[state.langue] || catLabel.fr;
-
-  preview.innerHTML = `
-    <div class="home-cat-preview-head">
-      <h3>${cat} <span class="home-cat-preview-count">${toolsCat.length} outils</span></h3>
-    </div>
-    <div class="home-cat-preview-grid">
-      ${apercu.map(t => buildToolCard(t)).join('')}
-    </div>
-    <button class="home-cat-preview-cta" onclick="goToFullCategory('${cat.replace(/'/g, "\\'")}')">
-      ${label} ${cat} →
-    </button>`;
-  preview.hidden = false;
-
-  renderRatingsOnCards();
-}
-
-function goToFullCategory(cat) {
-  showPage('tools');
-  setToolCat(cat);
-  window.location.hash = 'tools';
-  document.getElementById('tools').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-window.selectHomeCategory = selectHomeCategory;
-window.goToFullCategory   = goToFullCategory;
 
 // ═══════════════════════════════════════
 // BLOG

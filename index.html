@@ -523,8 +523,8 @@
     <div class="home-categories">
       <div class="container">
         <div class="home-cat-header">
-          <h2 class="home-cat-title" data-i18n="categories.title">Catégories <span class="grad">IA</span></h2>
-          <p class="home-cat-sub" data-i18n="categories.subtitle">Explore les meilleurs outils d'intelligence artificielle par catégorie.</p>
+          <h2 class="home-cat-title">Catégories <span class="grad">IA</span></h2>
+          <p class="home-cat-sub">Explore les meilleurs outils d'intelligence artificielle par catégorie.</p>
         </div>
 
         <div class="home-cat-grid" id="home-cat-grid">
@@ -562,9 +562,19 @@
   <!-- ─── PAGE : OUTILS ─── -->
   <section id="tools" class="page">
     <div class="container">
+
+      <!-- Bloc catégories — identique à l'accueil -->
+      <div class="home-cat-header" style="padding-top:24px">
+        <h2 class="home-cat-title">Catégories <span class="grad">IA</span></h2>
+        <p class="home-cat-sub">Explore les meilleurs outils d'intelligence artificielle par catégorie.</p>
+      </div>
+      <div class="home-cat-grid" id="tools-cat-grid">
+        <!-- Généré par JS -->
+      </div>
+
       <div class="page-header">
-        <h2 class="page-title" data-i18n="tools.title">Outils & logiciels IA</h2>
-        <p class="page-sub" data-i18n="tools.subtitle">Découvrez les meilleurs outils d'intelligence artificielle, classés et évalués.</p>
+        <h2 class="page-title" id="tools-page-title" data-i18n="tools.title">Outils & logiciels IA</h2>
+        <p class="page-sub" id="tools-page-sub" data-i18n="tools.subtitle">Découvrez les meilleurs outils d'intelligence artificielle, classés et évalués.</p>
       </div>
 
       <div class="search-wrap">
@@ -579,8 +589,8 @@
         >
       </div>
 
-      <div class="filters" id="tool-filters">
-        <!-- Généré par JS -->
+      <div id="tool-secondary-filters">
+        <!-- Généré par JS : filtres prix/note/API/essai + tri -->
       </div>
 
       <div class="tools-grid" id="tools-grid">

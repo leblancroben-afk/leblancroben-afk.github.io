@@ -1,1 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO — 8 outils IA | Albexia</title>
+<meta name="description" content="Découvrez les meilleurs outils d'intelligence artificielle pour améliorer votre référencement, analyser vos mots-clés, optimiser votre contenu et booste…">
+<link rel="canonical" href="https://albexia.com/categorie/seo/">
+<meta property="og:title" content="SEO — 8 outils IA | Albexia">
+<meta property="og:description" content="Découvrez les meilleurs outils d'intelligence artificielle pour améliorer votre référencement, analyser vos mots-clés, optimiser votre contenu et booste…">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/categorie.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "SEO — 8 outils IA | Albexia",
+  "description": "Découvrez les meilleurs outils d'intelligence artificielle pour améliorer votre référencement, analyser vos mots-clés, optimiser votre contenu et booste…",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://albexia.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Catégories", "item": "https://albexia.com/outils/" },
+      { "@type": "ListItem", "position": 3, "name": "SEO" }
+    ]
+  }
+}
+</script>
+</head>
+<body>
 
+<nav>
+  <div class="logo">
+    <a href="../../index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none">
+      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+        <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
+        <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+        <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
+        <text x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+      </svg>
+    </a>
+  </div>
+  <div class="nav-links">
+    <a href="../../index.html" class="nav-link">Accueil</a>
+    <a href="../../index.html#tools" class="nav-link active">Outils</a>
+    <a href="../../index.html#blog" class="nav-link">Blog</a>
+    <a href="../../index.html#gallery" class="nav-link">Galerie</a>
+  </div>
+  <div class="lang-selector">
+    <button class="lang-btn active">FR</button>
+  </div>
+  <a href="../../index.html#tools" class="nav-cta">Soumettre un outil +</a>
+</nav>
+
+<main class="cat-page">
+  <div class="container">
+
+    <!-- Fil d'Ariane -->
+    <nav class="cat-breadcrumb" aria-label="Fil d'Ariane">
+      <a href="../../index.html">⌂ Accueil</a>
+      <span>›</span>
+      <a href="../../index.html#tools">Catégories</a>
+      <span>›</span>
+      <span aria-current="page">SEO</span>
+    </nav>
+
+    <!-- Hero -->
+    <section class="cat-hero" style="--cat-color:#6c63ff">
+      <div class="cat-hero-main">
+        <div class="cat-hero-icon">🔍</div>
+        <div class="cat-hero-body">
+          <span class="cat-hero-badge">CATÉGORIE</span>
+          <h1 class="cat-hero-title">SEO</h1>
+          <p class="cat-hero-count">8 outils</p>
+          <p class="cat-hero-desc">Découvrez les meilleurs outils d'intelligence artificielle pour améliorer votre référencement, analyser vos mots-clés, optimiser votre contenu et booster votre visibilité sur les moteurs de recherche.</p>
+          <div class="cat-hero-actions">
+            <a href="#tools-grid" class="btn-main">Voir tous les outils SEO →</a>
+            <button class="btn-outline" onclick="partagerPage()">Partager ⤴</button>
+          </div>
+        </div>
+      </div>
+      <div class="cat-hero-illustration" aria-hidden="true">
+        <div class="cat-illu-blob"></div>
+        <div class="cat-illu-icon">🔍</div>
+        <div class="cat-illu-bars">
+          <span style="height:35%"></span><span style="height:55%"></span>
+          <span style="height:40%"></span><span style="height:75%"></span>
+          <span style="height:95%"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="cat-stats-bar">
+      <div class="cat-stat">
+        <span class="cat-stat-ico">★</span>
+        <div><strong>8</strong><span>Outils disponibles</span></div>
+      </div>
+      <div class="cat-stat cat-stat-muted" title="Bientôt disponible">
+        <span class="cat-stat-ico">◷</span>
+        <div><strong>Auto</strong><span>Mise à jour continue</span></div>
+      </div>
+    </div>
+
+    <!-- Recherche + tri + filtres (hydratés par categorie-page.js) -->
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" id="tool-search" type="text" placeholder="Rechercher un outil SEO..." autocomplete="off">
+    </div>
+    <div id="tool-secondary-filters"><!-- généré par categorie-page.js --></div>
+
+    <!-- Grille -->
+    <div class="tools-grid" id="tools-grid" data-category="SEO">
+      <article class="tool-card" data-tool-slug="se-ranking" onclick="window.location.href='https://seranking.com'">
+        <div class="tool-head">
+          <div class="tool-ico"><span class="tool-ico-fallback">⚡</span></div>
+          <div style="flex:1">
+            <div class="tool-name">SE Ranking</div>
+            <div class="tool-cat">SEO</div>
+          </div>
+        </div>
+        <p class="tool-desc">Plateforme SEO tout-en-un pour le suivi de position, l'audit de site, la recherche de mots-clés et plus.</p>
+        <div class="tool-foot">
+          <span class="price-tag price-freemium">Freemium</span>
+          <span class="tool-rating-badge" data-slug="se-ranking"></span>
+        </div>
+      </article>
+      <article class="tool-card" data-tool-slug="clearscope" onclick="window.location.href='https://clearscope.io'">
+        <div class="tool-head">
+          <div class="tool-ico"><span class="tool-ico-fallback">🅲</span></div>
+          <div style="flex:1">
+            <div class="tool-name">Clearscope</div>
+            <div class="tool-cat">SEO</div>
+          </div>
+        </div>
+        <p class="tool-desc">Optimise ton contenu avec des recommandations basées sur l'IA et les meilleures pratiques SEO.</p>
+        <div class="tool-foot">
+          <span class="price-tag price-paid">Payant</span>
+          <span class="tool-rating-badge" data-slug="clearscope"></span>
+        </div>
+      </article>
+      <article class="tool-card" data-tool-slug="surfer-seo" onclick="window.location.href='https://surferseo.com'">
+        <div class="tool-head">
+          <div class="tool-ico"><span class="tool-ico-fallback">🏄</span></div>
+          <div style="flex:1">
+            <div class="tool-name">Surfer SEO</div>
+            <div class="tool-cat">SEO</div>
+          </div>
+        </div>
+        <p class="tool-desc">Optimise ton contenu en temps réel avec des données basées sur les résultats de recherche.</p>
+        <div class="tool-foot">
+          <span class="price-tag price-paid">Payant</span>
+          <span class="tool-rating-badge" data-slug="surfer-seo"></span>
+        </div>
+      </article>
+      <article class="tool-card" data-tool-slug="ahrefs" onclick="window.location.href='https://ahrefs.com'">
+        <div class="tool-head">
+          <div class="tool-ico"><span class="tool-ico-fallback">🅰️</span></div>
+          <div style="flex:1">
+            <div class="tool-name">Ahrefs</div>
+            <div class="tool-cat">SEO</div>
+          </div>
+        </div>
+        <p class="tool-desc">Analyse de backlinks, recherche de mots-clés, audit de site et veille concurrentielle puissante.</p>
+        <div class="tool-foot">
+          <span class="price-tag price-paid">Payant</span>
+          <span class="tool-rating-badge" data-slug="ahrefs"></span>
+        </div>
+      </article>
+      <article class="tool-card" data-tool-slug="semrush" onclick="window.location.href='https://semrush.com'">
+        <div class="tool-head">
+          <div class="tool-ico"><span class="tool-ico-fallback">🟠</span></div>
+          <div style="flex:1">
+            <div class="tool-name">Semrush</div>
+            <div class="tool-cat">SEO</div>
+          </div>
+        </div>
+        <p class="tool-desc">Suite SEO complète pour l'analyse de la concurrence, la recherche de mots-clés et le marketing de contenu.</p>
+        <div class="tool-foot">
+          <span class="price-tag price-paid">Payant</span>
+          <span class="tool-rating-badge" data-slug="semrush"></span>
+        </div>
+      </article>
+      <article class="tool-card" data-tool-slug="ubersuggest" onclick="window.location.href='https://neilpatel.com/ubersuggest'">
+        <div class="tool-head">
+          <div class="tool-ico"><span class="tool-ico-fallback">🔵</span></div>
+          <div style="flex:1">
+            <div class="tool-name">Ubersuggest</div>
+            <div class="tool-cat">SEO</div>
+          </div>
+        </div>
+        <p class="tool-desc">Recherche de mots-clés, analyse de la concurrence et idées de contenu simplifiées.</p>
+        <div class="tool-foot">
+          <span class="price-tag price-freemium">Freemium</span>
+          <span class="tool-rating-badge" data-slug="ubersuggest"></span>
+        </div>
+      </article>
+      <article class="tool-card" data-tool-slug="moz-pro" onclick="window.location.href='https://moz.com'">
+        <div class="tool-head">
+          <div class="tool-ico"><span class="tool-ico-fallback">🅼</span></div>
+          <div style="flex:1">
+            <div class="tool-name">Moz Pro</div>
+            <div class="tool-cat">SEO</div>
+          </div>
+        </div>
+        <p class="tool-desc">Outils SEO pour améliorer votre classement et suivre vos performances.</p>
+        <div class="tool-foot">
+          <span class="price-tag price-paid">Payant</span>
+          <span class="tool-rating-badge" data-slug="moz-pro"></span>
+        </div>
+      </article>
+      <article class="tool-card" data-tool-slug="screaming-frog" onclick="window.location.href='https://screamingfrog.co.uk'">
+        <div class="tool-head">
+          <div class="tool-ico"><span class="tool-ico-fallback">🐸</span></div>
+          <div style="flex:1">
+            <div class="tool-name">Screaming Frog</div>
+            <div class="tool-cat">SEO</div>
+          </div>
+        </div>
+        <p class="tool-desc">Crawler SEO pour analyser les problèmes techniques de votre site web.</p>
+        <div class="tool-foot">
+          <span class="price-tag price-paid">Payant</span>
+          <span class="tool-rating-badge" data-slug="screaming-frog"></span>
+        </div>
+      </article>
+    </div>
+    <div id="tools-grid-pagination"></div>
+
+    <!-- Bloc soumission -->
+    <div class="cat-submit-cta">
+      <span class="cat-submit-ico">♔</span>
+      <div class="cat-submit-text">
+        <strong>Vous ne trouvez pas l'outil qu'il vous faut ?</strong>
+        <p>Proposez un outil et aidez la communauté à découvrir les meilleures solutions IA.</p>
+      </div>
+      <a href="../../index.html#tools" class="btn-main">Soumettre un outil +</a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg" height="30" aria-label="Albexia">
+              <polygon points="14,2 24,32 4,32" fill="none" stroke="#ff6b9d" stroke-width="2" stroke-linejoin="round"/>
+              <polygon points="14,10 21,30 7,30" fill="#ff6b9d" opacity="0.2"/>
+              <circle cx="14" cy="24" r="2.5" fill="#ff6b9d"/>
+              <text x="32" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+            </svg>
+          </div>
+          <p style="color:var(--text-dim);font-size:13px;max-width:260px">Le meilleur annuaire d'outils IA pour booster votre productivité.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Plateforme</div>
+          <a class="footer-link" href="../../index.html">Accueil</a>
+          <a class="footer-link" href="../../index.html#tools">Tous les outils</a>
+          <a class="footer-link" href="../../index.html#tools">Catégories</a>
+          <a class="footer-link" href="../../index.html#tools">Soumettre un outil</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Ressources</div>
+          <a class="footer-link" href="../../index.html#blog">Blog</a>
+          <a class="footer-link" href="../../glossaire/">Glossaire</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Entreprise</div>
+          <a class="footer-link" href="../../contact.html">Contact</a>
+          <a class="footer-link" href="../../mentions-legales.html">Mentions légales</a>
+          <a class="footer-link" href="../../politique-confidentialite.html">Confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <span class="footer-copy">&copy; 2025-2026 Albexia — Tous droits réservés</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Données embarquées au build par gen-fiches.js — la page fonctionne
+  // sans appel Firestore pour la liste d'outils (rapide + indexable).
+  window.CATEGORY_TOOLS = [{"id":"1","name":"SE Ranking","category":"SEO","description":"Plateforme SEO tout-en-un pour le suivi de position, l'audit de site, la recherche de mots-clés et plus.","price":"freemium","tags":["seo","suivi","audit"],"emoji":"⚡","url":"https://seranking.com","status":"online"},{"id":"2","name":"Clearscope","category":"SEO","description":"Optimise ton contenu avec des recommandations basées sur l'IA et les meilleures pratiques SEO.","price":"paid","tags":["seo","contenu"],"emoji":"🅲","url":"https://clearscope.io","status":"online"},{"id":"3","name":"Surfer SEO","category":"SEO","description":"Optimise ton contenu en temps réel avec des données basées sur les résultats de recherche.","price":"paid","tags":["seo","contenu","temps réel"],"emoji":"🏄","url":"https://surferseo.com","status":"online"},{"id":"4","name":"Ahrefs","category":"SEO","description":"Analyse de backlinks, recherche de mots-clés, audit de site et veille concurrentielle puissante.","price":"paid","tags":["seo","backlinks","audit"],"emoji":"🅰️","url":"https://ahrefs.com","status":"online"},{"id":"5","name":"Semrush","category":"SEO","description":"Suite SEO complète pour l'analyse de la concurrence, la recherche de mots-clés et le marketing de contenu.","price":"paid","tags":["seo","marketing","concurrence"],"emoji":"🟠","url":"https://semrush.com","status":"online"},{"id":"6","name":"Ubersuggest","category":"SEO","description":"Recherche de mots-clés, analyse de la concurrence et idées de contenu simplifiées.","price":"freemium","tags":["seo","mots-clés"],"emoji":"🔵","url":"https://neilpatel.com/ubersuggest","status":"online"},{"id":"7","name":"Moz Pro","category":"SEO","description":"Outils SEO pour améliorer votre classement et suivre vos performances.","price":"paid","tags":["seo","classement"],"emoji":"🅼","url":"https://moz.com","status":"online"},{"id":"8","name":"Screaming Frog","category":"SEO","description":"Crawler SEO pour analyser les problèmes techniques de votre site web.","price":"paid","tags":["seo","crawler","technique"],"emoji":"🐸","url":"https://screamingfrog.co.uk","status":"online"}];
+  window.CATEGORY_META  = { name: "SEO", slug: "seo" };
+  function partagerPage() {
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: window.location.href }).catch(() => {});
+    } else {
+      navigator.clipboard?.writeText(window.location.href);
+      alert('Lien copié !');
+    }
+  }
+</script>
+<script src="../../js/i18n.js"></script>
+<script src="../../js/app.js"></script>
+</body>
+</html>

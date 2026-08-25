@@ -330,6 +330,14 @@
       "hash": "9fb3264ffe1e110c4c011999373779873c5d22e6f2a33865c3b6c5d37d5af6b3",
       "updatedAtMs": 1787601013005
     },
+    "6": {
+      "hash": "cc9a49dc2e91183c2f3f537590f9e7d4c525d0a3301d626cdab4192742586d94",
+      "updatedAtMs": 1787670669072
+    },
+    "7": {
+      "hash": "ca30e293411a94bfea6895185893039c6cead7255b86864a791991e1888ddab2",
+      "updatedAtMs": 1787672252413
+    },
     "2-en": {
       "hash": "314471f0d93171012626a8699fb88e500e3b811749299e629b8cc68ad7dbcd9a",
       "updatedAtMs": 0
@@ -361,6 +369,22 @@
     "5-es": {
       "hash": "a8f4dcfed09b2eb9e5eaad89af95926d25e58b68b3df59d309f8902a5cb7d9db",
       "updatedAtMs": 1787601013770
+    },
+    "6-en": {
+      "hash": "50a93882348c54664fba95e6621190a0c89c7494b849d11a954149a6fb7f430e",
+      "updatedAtMs": 1787670669376
+    },
+    "6-es": {
+      "hash": "115b9694aff8a4803016e2a89c077a88c1466edb6615a5a656232eb3dd22a971",
+      "updatedAtMs": 1787670669670
+    },
+    "7-en": {
+      "hash": "d20f1e4400fcd0bce4c1946f6690442af20ef89b169c3476878eef4c3faa6cdd",
+      "updatedAtMs": 1787672252698
+    },
+    "7-es": {
+      "hash": "da0a678397e6aca6c7f5f8d0ca534085ef73ea4eea941acc8bf38738c922c25b",
+      "updatedAtMs": 1787672252987
     }
   },
   "comparaisons": {

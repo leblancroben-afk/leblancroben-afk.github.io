@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Les limites actuelles de l’intelligence artificielle expliquées simplement | Albexia</title>
+  <meta name="description" content="Comprenez les principales limites de l’intelligence artificielle et pourquoi il faut vérifier ses réponses." />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="canonical" href="https://albexia.com/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" />
+
+  <link rel="alternate" hreflang="fr" href="https://albexia.com/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" />
+  <link rel="alternate" hreflang="en" href="https://albexia.com/articles/en/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" />
+  <link rel="alternate" hreflang="es" href="https://albexia.com/articles/es/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" />
+  <link rel="alternate" hreflang="x-default" href="https://albexia.com/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" />
+
+  <meta property="og:title"       content="Les limites actuelles de l’intelligence artificielle expliquées simplement | Albexia" />
+  <meta property="og:description" content="Comprenez les principales limites de l’intelligence artificielle et pourquoi il faut vérifier ses réponses." />
+  <meta property="og:type"        content="article" />
+  <meta property="og:url"         content="https://albexia.com/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" />
+  <meta property="og:image" content="https://leblancroben-afk.github.io/medias/blog/limites-intelligence-artificielle.jpg" />
+  <meta name="twitter:image" content="https://leblancroben-afk.github.io/medias/blog/limites-intelligence-artificielle.jpg" />
+  <meta property="og:locale"           content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="es_ES" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Les limites actuelles de l’intelligence artificielle expliquées simplement | Albexia" />
+  <meta name="twitter:description" content="Comprenez les principales limites de l’intelligence artificielle et pourquoi il faut vérifier ses réponses." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Les limites actuelles de l’intelligence artificielle expliquées simplement",
+    "description": "Comprenez les principales limites de l’intelligence artificielle et pourquoi il faut vérifier ses réponses.",
+    "inLanguage": "fr",
+    "datePublished": "11 septembre 2026",
+    "dateModified": "11 septembre 2026",
+    "author": { "@type": "Organization", "name": "Albexia" },
+    "publisher": { "@type": "Organization", "name": "Albexia", "url": "https://albexia.com" },
+    "image": "https://leblancroben-afk.github.io/medias/blog/limites-intelligence-artificielle.jpg",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://albexia.com/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" },
+    "workTranslation": [
+      { "@type": "Article", "inLanguage": "en", "url": "https://albexia.com/articles/en/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" },
+      { "@type": "Article", "inLanguage": "es", "url": "https://albexia.com/articles/es/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/article.css" />
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+  </div>
+  <div class="kebab-wrap" id="kebab-wrap">
+    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="kebab-menu" id="kebab-menu" role="menu">
+      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
+      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
+      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
+      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <div class="kebab-divider"></div>
+      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+    </div>
+  </div>
+</nav>
+
+<main class="article-main">
+<div class="article-container">
+
+  <header class="article-header">
+    <div class="article-meta-top">
+      <span class="article-cat fond">Sécurité et éthique</span>
+      <span class="dot"></span>
+      <span class="article-date">11 septembre 2026</span>
+      <span class="dot"></span>
+      <span class="article-read-time">⏱ 4 minutes</span>
+    </div>
+    <h1 class="article-title">Les limites actuelles de l’intelligence artificielle expliquées simplement</h1>
+    <p class="article-intro">Comprenez les principales limites de l’intelligence artificielle et découvrez pourquoi ses réponses doivent être vérifiées avant toute utilisation importante.</p>
+  </header>
+
+  <div class="article-body">
+<!-- Image de couverture -->
+<figure style="margin: 30px auto; max-width: 100%; text-align: center; border: 1px solid #e5e7eb; padding: 10px; border-radius: 8px; background-color: #f9fafb;">
+  <img 
+    src=" https://leblancroben-afk.github.io/medias/blog/limites-intelligence-artificielle.jpg"
+    alt="Robot numérique représentant les limites et les risques de l'intelligence artificielle"
+    style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;"
+    loading="lazy">
+
+  <figcaption style="margin-top: 10px; font-size: 0.9rem; color: #6b7280; font-style: italic; line-height: 1.4;">
+    L’intelligence artificielle est utile, mais ses résultats doivent être vérifiés.
+  </figcaption>
+</figure>
+
+<!-- Corps de l'article -->
+<div style="color: #1f2937; background-color: #ffffff; padding: 25px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto;">
+
+  <p>
+    L’intelligence artificielle est devenue un outil utile pour rédiger,
+    traduire, analyser des informations et créer du contenu. Cependant,
+    ses résultats ne sont pas toujours exacts et son fonctionnement possède
+    plusieurs limites importantes.
+  </p>
+
+  <p>
+    Comprendre ces limites permet de mieux utiliser les outils IA, d’éviter
+    certaines erreurs et de conserver un regard critique sur les réponses
+    obtenues.
+  </p>
+
+  <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    L’IA peut produire des informations fausses
+  </h2>
+
+  <p>
+    L’une des principales limites de l’IA est sa capacité à générer une réponse
+    qui semble convaincante, mais qui contient une erreur. Le texte peut être
+    bien écrit, organisé et présenté avec assurance tout en étant incorrect.
+  </p>
+
+  <p>
+    Ce phénomène est parfois appelé hallucination. Il peut concerner une date,
+    un nom, une statistique, une source ou l’explication d’un événement.
+    L’IA ne prévient pas toujours clairement l’utilisateur lorsqu’elle n’est
+    pas certaine de sa réponse.
+  </p>
+
+  <p>
+    Pour cette raison, vérifiez les informations importantes avec des sources
+    fiables avant de les publier ou de les utiliser.
+  </p>
+
+  <!-- Image intégrée dans le corps -->
+  <figure style="margin: 30px auto; max-width: 100%; text-align: center; border: 1px solid #e5e7eb; padding: 10px; border-radius: 8px; background-color: #f9fafb;">
+    <img 
+      src="https://ia-directory.github.io/medias/blog/erreur-reponse-ia.jpg"
+      alt="Utilisateur vérifiant une réponse générée par une intelligence artificielle"
+      style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;"
+      loading="lazy">
+
+    <figcaption style="margin-top: 10px; font-size: 0.9rem; color: #6b7280; font-style: italic; line-height: 1.4;">
+      Une réponse bien formulée n’est pas forcément une réponse exacte.
+    </figcaption>
+  </figure>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    L’IA ne comprend pas comme un être humain
+  </h2>
+
+  <p>
+    Une IA peut analyser des mots, des images et des relations entre différentes
+    informations. Elle peut également produire un texte qui ressemble à une
+    conversation humaine.
+  </p>
+
+  <p>
+    Cela ne signifie pas qu’elle comprend le monde de la même manière qu’une
+    personne. Elle ne possède pas automatiquement une expérience personnelle,
+    une conscience ou un jugement humain.
+  </p>
+
+  <p>
+    Elle peut donc mal interpréter une phrase ambiguë, une blague, une émotion
+    ou une situation qui demande du bon sens.
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    La qualité dépend des données
+  </h2>
+
+  <p>
+    Les systèmes d’IA apprennent à partir de grandes quantités de données.
+    Si ces données sont incomplètes, anciennes, incorrectes ou déséquilibrées,
+    les résultats produits peuvent être limités.
+  </p>
+
+  <p>
+    Cette idée est souvent résumée par l’expression « garbage in, garbage out » :
+    lorsque les informations utilisées sont mauvaises, le résultat risque
+    également de l’être.
+  </p>
+
+  <p>
+    Une IA ne peut pas toujours distinguer automatiquement une information
+    fiable d’une information erronée présente dans ses données.
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Les biais peuvent influencer les résultats
+  </h2>
+
+  <p>
+    Un biais apparaît lorsqu’un système produit des résultats déséquilibrés
+    ou défavorables pour certaines personnes, certains groupes ou certaines
+    situations.
+  </p>
+
+  <p>
+    Les biais peuvent provenir des données, de la manière dont le modèle a été
+    conçu ou de la façon dont les résultats sont interprétés. Ils peuvent
+    influencer une recommandation, une classification ou une décision automatisée.
+  </p>
+
+  <blockquote style="background-color: #fff7ed; border-left: 4px solid #f97316; padding: 15px 20px; margin: 20px 0; border-radius: 0 6px 6px 0;">
+    <p style="margin: 0; color: #7c2d12;">
+      <strong>À retenir :</strong> une réponse automatique doit être examinée
+      avec attention lorsqu’elle concerne une personne, un groupe ou une
+      décision importante.
+    </p>
+  </blockquote>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    L’IA peut manquer de contexte
+  </h2>
+
+  <p>
+    Une réponse dépend fortement des informations fournies dans la demande.
+    Si le contexte est incomplet, l’IA peut proposer une solution qui ne
+    correspond pas réellement à votre situation.
+  </p>
+
+  <p>
+    Par exemple, une recommandation générale concernant une entreprise,
+    un voyage ou une méthode d’apprentissage peut devenir inadaptée si
+    le budget, le lieu, le niveau ou les contraintes ne sont pas précisés.
+  </p>
+
+  <p>
+    Plus votre demande est claire, plus l’outil dispose d’informations pour
+    produire une réponse adaptée. Même dans ce cas, le résultat doit être
+    évalué par l’utilisateur.
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    L’IA ne remplace pas l’expertise humaine
+  </h2>
+
+  <p>
+    Une IA peut aider à comprendre un sujet ou préparer une première version
+    d’un document. Elle ne doit cependant pas remplacer systématiquement
+    un médecin, un avocat, un comptable, un enseignant ou un autre professionnel.
+  </p>
+
+  <p>
+    Dans les domaines sensibles comme la santé, le droit, les finances ou
+    la sécurité, une erreur peut avoir des conséquences importantes.
+    L’avis d’une personne qualifiée reste donc nécessaire.
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Les données personnelles représentent un risque
+  </h2>
+
+  <p>
+    Pour obtenir une réponse personnalisée, certains utilisateurs copient
+    des conversations privées, des documents professionnels ou des informations
+    concernant d’autres personnes.
+  </p>
+
+  <p>
+    Cette pratique peut exposer des données sensibles. Évitez de partager
+    des mots de passe, des informations bancaires, des documents d’identité
+    ou des fichiers confidentiels sans avoir vérifié les règles du service.
+  </p>
+
+  <!-- Deuxième image intégrée -->
+  <figure style="margin: 30px auto; max-width: 100%; text-align: center; border: 1px solid #e5e7eb; padding: 10px; border-radius: 8px; background-color: #f9fafb;">
+    <img 
+      src="https://leblancroben-afk.github.io/medias/blog/esprit-critique-ia.jpg"
+      alt="Personne comparant une réponse d'intelligence artificielle avec une source fiable"
+      style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;"
+      loading="lazy">
+
+    <figcaption style="margin-top: 10px; font-size: 0.9rem; color: #6b7280; font-style: italic; line-height: 1.4;">
+      Vérifier et comparer les informations permet de mieux utiliser l’IA.
+    </figcaption>
+  </figure>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Comment utiliser l’IA avec prudence ?
+  </h2>
+
+  <ol style="padding-left: 20px; color: #374151;">
+    <li style="margin-bottom: 12px;">
+      Vérifiez les faits importants avec plusieurs sources fiables.
+    </li>
+
+    <li style="margin-bottom: 12px;">
+      Ne partagez pas de données personnelles ou confidentielles.
+    </li>
+
+    <li style="margin-bottom: 12px;">
+      Demandez des explications lorsque la réponse semble imprécise.
+    </li>
+
+    <li style="margin-bottom: 12px;">
+      Utilisez l’IA comme une aide et non comme une autorité absolue.
+    </li>
+
+    <li style="margin-bottom: 12px;">
+      Consultez un professionnel pour les décisions sensibles.
+    </li>
+  </ol>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Conclusion
+  </h2>
+
+  <p>
+    L’intelligence artificielle peut être très utile, mais elle ne garantit
+    pas toujours des résultats exacts, complets ou adaptés. Elle peut se tromper,
+    manquer de contexte, reproduire des biais ou produire une réponse qui
+    semble fiable sans l’être réellement.
+  </p>
+
+  <p>
+    La meilleure façon de l’utiliser consiste à lui donner des instructions
+    claires, protéger ses données et vérifier les résultats. L’esprit critique
+    reste indispensable pour profiter des avantages de l’IA sans dépendre
+    entièrement de ses réponses.
+  </p>
+
+  <!-- Call-to-action -->
+  <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; margin-top: 30px; border-radius: 8px; text-align: center;">
+    <p style="margin: 0 0 15px; font-size: 1.1rem; color: #166534;">
+      Vous souhaitez découvrir des outils IA et mieux comprendre leurs fonctionnalités ?
+    </p>
+
+    <a href="https://leblancroben-afk.github.io/index.html#tools"
+       style="display: inline-block; color: #ffffff; background-color: #16a34a; padding: 11px 18px; border-radius: 6px; font-weight: bold; text-decoration: none;">
+      Visiter l’annuaire IA
+    </a>
+  </div>
+
+</div>
+    <div class="article-tags">
+      <a href="#" class="article-tag">#limites IA</a>
+      <a href="#" class="article-tag">#erreurs IA</a>
+      <a href="#" class="article-tag">#hallucinations</a>
+      <a href="#" class="article-tag">#biais IA</a>
+      <a href="#" class="article-tag">#esprit critique</a>
+    </div>
+
+  </div>
+
+  <nav class="article-nav-bottom" aria-label="Navigation articles">
+    <a href="/articles/fr/annuaire-ia-comment-choisir-l-outil-adapte-a-vos-besoins/index.html" class="article-nav-btn">← Annuaire IA : comment choisir l’outil adapté à vos besoins</a>
+    
+  </nav>
+
+</div>
+</main>
+
+<footer>
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script>
+  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
+  if (kb && km) {
+    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
+    km.addEventListener('click', e => e.stopPropagation());
+  }
+</script>
+</body>
+</html>

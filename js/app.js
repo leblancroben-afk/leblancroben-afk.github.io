@@ -82,6 +82,7 @@ function changerLangue(code) {
   state.activeToolCat    = 'Tous';
   state.activeBlogCat    = 'Tous';
   state.activeGalleryCat = 'Tous';
+  state.activeHomeCat    = null;
   state.toolsPage  = 1;
   state.blogPage   = 1;
   document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -89,6 +90,8 @@ function changerLangue(code) {
   });
   appliquerTraductionsStatiques(code);
   renderTools();
+  renderHomeCategories();
+  document.getElementById('home-cat-preview').hidden = true;
   renderBlog();
   renderGallery();
 
@@ -120,6 +123,7 @@ const state = {
   activeToolCat:    'Tous',
   activeBlogCat:    'Tous',
   activeGalleryCat: 'Tous',
+  activeHomeCat:    null, // catégorie ouverte dans l'aperçu de l'accueil (null = aucune)
   searchQuery: '',
   toolsPage:   1,
   blogPage:    1,
@@ -139,6 +143,28 @@ const catColors = {
   Audio:        { bg: 'rgba(108,99,255,0.18)'  },
   Productivité: { bg: 'rgba(245,166,35,0.18)'  },
   Autre:        { bg: 'rgba(255,255,255,0.08)' },
+};
+
+// Icônes des catégories affichées en tuiles sur l'accueil.
+// Clé = valeur exacte de t.category en base. '_default' sert de repli
+// pour toute catégorie non listée ici (nouvelle catégorie ajoutée en Firestore
+// sans mise à jour de cette table).
+const catIcons = {
+  Juridique:       '⚖️',
+  Marketing:       '📣',
+  SEO:             '🔍',
+  Contenu:         '✍️',
+  Code:            '💻',
+  'Design 3D':     '🧊',
+  Automatisation:  '⚡',
+  Recherche:       '🧠',
+  Vidéo:           '🎬',
+  Productivité:    '🚀',
+  Texte:           '📝',
+  Image:           '🎨',
+  Musique:         '🎵',
+  Audio:           '🎧',
+  _default:        '✨',
 };
 
 const blogColors = {
@@ -320,6 +346,7 @@ async function loadAllData() {
 
     state.blog = [...articlesSnap.docs.map(d => d.data()), ...articlesCreateurs];
     renderTools();
+    renderHomeCategories();
     renderBlog();
     renderGallery();
     checkToolsParam();
@@ -577,6 +604,99 @@ function setToolCat(cat) {
   state.toolsPage = 1;
   renderTools(); // renderRatingsOnCards() appelé à l'intérieur
 }
+
+// ═══════════════════════════════════════
+// CATÉGORIES — ACCUEIL
+// ═══════════════════════════════════════
+// Tuiles de catégories avec compteur (visible sur la page d'accueil).
+// Au clic : aperçu de 4 outils de la catégorie choisie, avec un CTA
+// vers la page complète (actuellement #tools filtré ; basculera vers
+// /outils/{slug}/ une fois les pages statiques catégorie générées
+// par gen-fiches.js).
+
+const NB_APERCU_CAT = 4;
+
+function renderHomeCategories() {
+  const grid = document.getElementById('home-cat-grid');
+  if (!grid) return; // page pas encore chargée dans le DOM
+
+  const toolsLangue = filtrerParLangue(state.tools);
+  if (!toolsLangue.length) return; // pas encore de données
+
+  // Compte par catégorie, dans l'ordre de première apparition
+  const counts = new Map();
+  toolsLangue.forEach(t => {
+    if (t.status === 'offline') return;
+    counts.set(t.category, (counts.get(t.category) || 0) + 1);
+  });
+
+  const cats = [...counts.keys()];
+
+  grid.innerHTML = cats.map(c => {
+    const icon = catIcons[c] || catIcons._default;
+    const isActive = state.activeHomeCat === c;
+    return `
+      <button class="home-cat-tile${isActive ? ' active' : ''}" onclick="selectHomeCategory('${c.replace(/'/g, "\\'")}')">
+        <span class="home-cat-icon">${icon}</span>
+        <span class="home-cat-name">${c}</span>
+        <span class="home-cat-count">${counts.get(c)} outils</span>
+      </button>`;
+  }).join('');
+
+  // Si une catégorie était déjà sélectionnée (ex: après un changement
+  // de langue), on rafraîchit son aperçu avec les nouvelles données.
+  if (state.activeHomeCat && counts.has(state.activeHomeCat)) {
+    renderHomeCategoryPreview(state.activeHomeCat);
+  }
+}
+
+function selectHomeCategory(cat) {
+  // Reclique sur la catégorie active → referme l'aperçu
+  if (state.activeHomeCat === cat) {
+    state.activeHomeCat = null;
+    document.getElementById('home-cat-preview').hidden = true;
+    renderHomeCategories();
+    return;
+  }
+  state.activeHomeCat = cat;
+  renderHomeCategories();
+  renderHomeCategoryPreview(cat);
+}
+
+function renderHomeCategoryPreview(cat) {
+  const preview = document.getElementById('home-cat-preview');
+  if (!preview) return;
+
+  const toolsLangue = filtrerParLangue(state.tools);
+  const toolsCat = toolsLangue.filter(t => t.status !== 'offline' && t.category === cat);
+  const apercu = toolsCat.slice(0, NB_APERCU_CAT);
+
+  const catLabel = { fr: 'Voir tous les outils', en: 'View all', es: 'Ver todas las herramientas' };
+  const label = catLabel[state.langue] || catLabel.fr;
+
+  preview.innerHTML = `
+    <div class="home-cat-preview-head">
+      <h3>${cat} <span class="home-cat-preview-count">${toolsCat.length} outils</span></h3>
+    </div>
+    <div class="home-cat-preview-grid">
+      ${apercu.map(t => buildToolCard(t)).join('')}
+    </div>
+    <button class="home-cat-preview-cta" onclick="goToFullCategory('${cat.replace(/'/g, "\\'")}')">
+      ${label} ${cat} →
+    </button>`;
+  preview.hidden = false;
+
+  renderRatingsOnCards();
+}
+
+function goToFullCategory(cat) {
+  showPage('tools');
+  setToolCat(cat);
+  window.location.hash = 'tools';
+  document.getElementById('tools').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+window.selectHomeCategory = selectHomeCategory;
+window.goToFullCategory   = goToFullCategory;
 
 // ═══════════════════════════════════════
 // BLOG

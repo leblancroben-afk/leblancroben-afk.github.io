@@ -124,6 +124,12 @@ const state = {
   activeBlogCat:    'Tous',
   activeGalleryCat: 'Tous',
   activeHomeCat:    null, // catégorie ouverte dans l'aperçu de l'accueil (null = aucune)
+  priceFilter: 'tous',    // 'tous' | 'freemium' | 'gratuit' | 'payant'
+  minRating:   0,         // 0 ou 4 (toggle "4+ étoiles")
+  apiOnly:     false,
+  trialOnly:   false,
+  toolsSort:   'popularite', // 'popularite' | 'note' | 'nom'
+  ratingsCache: new Map(),   // slug -> { ratingAverage, ratingCount }, alimenté au fil des tris/filtres
   searchQuery: '',
   toolsPage:   1,
   blogPage:    1,
@@ -165,6 +171,23 @@ const catIcons = {
   Musique:         '🎵',
   Audio:           '🎧',
   _default:        '✨',
+};
+
+// Descriptions affichées dans l'entête dynamique de la page Outils.
+// À ajuster/compléter par Damon — texte générique en repli pour toute
+// catégorie non listée ici.
+const catDescriptions = {
+  Tous:            "Découvre tous les outils d'intelligence artificielle disponibles.",
+  Juridique:       "Outils IA pour la recherche juridique, l'analyse de contrats et la conformité.",
+  Marketing:       "Outils IA pour automatiser vos campagnes et personnaliser vos contenus marketing.",
+  SEO:             "Outils IA pour améliorer ton référencement, analyser et optimiser ton contenu.",
+  Contenu:         "Outils IA pour générer et éditer du texte, des visuels et des vidéos.",
+  Code:            "Outils IA pour écrire, corriger et accélérer le développement logiciel.",
+  'Design 3D':     "Outils IA pour créer des visuels, modèles et rendus 3D.",
+  Automatisation:  "Outils IA pour connecter vos applications et automatiser vos workflows.",
+  Recherche:       "Outils IA pour explorer, synthétiser et vérifier l'information.",
+  Vidéo:           "Outils IA pour générer, monter et éditer des vidéos.",
+  Productivité:    "Outils IA pour gagner du temps sur vos tâches quotidiennes.",
 };
 
 const blogColors = {
@@ -526,35 +549,176 @@ async function renderRatingsOnCards() {
 
 function renderTools() {
   const toolsLangue = filtrerParLangue(state.tools);
-  const cats = ['Tous', ...new Set(toolsLangue.map(t => t.category))];
 
-  document.getElementById('tool-filters').innerHTML = cats.map(c =>
-    `<button class="filter${c === state.activeToolCat ? ' active' : ''}"
-      onclick="setToolCat('${c}')">${c}</button>`
-  ).join('');
+  // Grille de catégories partagée (identique à l'accueil)
+  renderCategoryTiles('tools-cat-grid', state.activeToolCat, 'setToolCat');
 
-  const filtered = toolsLangue.filter(t =>
+  // Entête dynamique (nom, compteur, description, placeholder recherche)
+  updateToolsPageHeader(toolsLangue);
+
+  // Filtres de base : catégorie, prix, recherche texte
+  let base = toolsLangue.filter(t =>
     t.status !== 'offline' && // outil dont le lien est mort depuis 7 checks consécutifs
                                // (check-liens.js) — carte masquée, fiche HTML reste publiée
     (state.activeToolCat === 'Tous' || t.category === state.activeToolCat) &&
+    (state.priceFilter === 'tous' || t.price === state.priceFilter) &&
     (matchRecherche(state.searchQuery, t.name) ||
      matchRecherche(state.searchQuery, t.description) ||
      t.tags.some(tag => matchRecherche(state.searchQuery, tag)))
   );
 
-  if (!filtered.length) { showEmpty('tools-grid'); setPaginationEl('tools-grid', ''); return; }
+  if (state.apiOnly)   base = base.filter(t => t.api === true);
+  if (state.trialOnly) base = base.filter(t => t.essaiGratuit === true);
 
-  const total      = filtered.length;
+  renderSecondaryFilters();
+
+  const needsRatings = state.minRating > 0 || state.toolsSort === 'note' || state.toolsSort === 'popularite';
+  if (needsRatings) {
+    // Rendu immédiat avec les notes déjà en cache (peut être approximatif
+    // au premier passage), puis on complète et on re-rend.
+    finalizeAndRenderTools(base);
+    ensureRatingsLoaded(base).then(() => finalizeAndRenderTools(base));
+  } else {
+    finalizeAndRenderTools(base);
+  }
+}
+
+function updateToolsPageHeader(toolsLangue) {
+  const cat = state.activeToolCat;
+  const count = cat === 'Tous'
+    ? toolsLangue.filter(t => t.status !== 'offline').length
+    : toolsLangue.filter(t => t.status !== 'offline' && t.category === cat).length;
+
+  const titleEl = document.getElementById('tools-page-title');
+  const subEl   = document.getElementById('tools-page-sub');
+  if (titleEl) {
+    const title = cat === 'Tous' ? 'Tous les outils IA' : cat;
+    titleEl.innerHTML = `${title} <span class="tools-page-count">${count} outils</span>`;
+  }
+  if (subEl) {
+    subEl.textContent = catDescriptions[cat] || `Outils IA classés dans la catégorie ${cat}.`;
+  }
+
+  const search = document.getElementById('tool-search');
+  if (search && document.activeElement !== search) {
+    search.placeholder = cat === 'Tous'
+      ? 'Rechercher un outil, une catégorie, un tag...'
+      : `Rechercher un outil ${cat}...`;
+  }
+}
+
+// ─── Filtres avancés (prix / note / API / essai) + tri ───
+
+function renderSecondaryFilters() {
+  const el = document.getElementById('tool-secondary-filters');
+  if (!el) return;
+
+  // On ne propose les filtres API / essai gratuit que si au moins un
+  // outil expose réellement ces champs en base — sinon ils restent
+  // visibles mais désactivés (évite un filtre qui renverrait toujours 0 résultat).
+  const hasApiField   = state.tools.some(t => typeof t.api === 'boolean');
+  const hasTrialField = state.tools.some(t => typeof t.essaiGratuit === 'boolean');
+
+  const priceOpts = [['tous', 'Tous'], ['freemium', 'Freemium'], ['gratuit', 'Gratuit'], ['payant', 'Payant']];
+
+  el.innerHTML = `
+    <div class="tool-filter-row">
+      ${priceOpts.map(([val, label]) =>
+        `<button class="filter${state.priceFilter === val ? ' active' : ''}" onclick="setPriceFilter('${val}')">${label}</button>`
+      ).join('')}
+      <button class="filter${state.minRating >= 4 ? ' active' : ''}" onclick="toggleMinRating()">★ 4+ étoiles</button>
+      <button class="filter${state.apiOnly ? ' active' : ''}${hasApiField ? '' : ' filter-disabled'}"
+        ${hasApiField ? `onclick="toggleApiOnly()"` : `title="Champ 'api' pas encore renseigné en base"`}>API disponible</button>
+      <button class="filter${state.trialOnly ? ' active' : ''}${hasTrialField ? '' : ' filter-disabled'}"
+        ${hasTrialField ? `onclick="toggleTrialOnly()"` : `title="Champ 'essaiGratuit' pas encore renseigné en base"`}>Essai gratuit</button>
+      <button class="filter filter-reset" onclick="resetToolFilters()">↻ Réinitialiser</button>
+    </div>
+    <div class="tool-sort-row">
+      <label for="tool-sort-select">Trier par</label>
+      <select id="tool-sort-select" onchange="setToolsSort(this.value)">
+        <option value="popularite" ${state.toolsSort === 'popularite' ? 'selected' : ''}>Popularité</option>
+        <option value="note" ${state.toolsSort === 'note' ? 'selected' : ''}>Note</option>
+        <option value="nom" ${state.toolsSort === 'nom' ? 'selected' : ''}>Nom A-Z</option>
+      </select>
+    </div>`;
+}
+
+function setPriceFilter(val) { state.priceFilter = val; state.toolsPage = 1; renderTools(); }
+function toggleMinRating()   { state.minRating = state.minRating >= 4 ? 0 : 4; state.toolsPage = 1; renderTools(); }
+function toggleApiOnly()     { state.apiOnly = !state.apiOnly; state.toolsPage = 1; renderTools(); }
+function toggleTrialOnly()   { state.trialOnly = !state.trialOnly; state.toolsPage = 1; renderTools(); }
+function setToolsSort(val)   { state.toolsSort = val; state.toolsPage = 1; renderTools(); }
+window.setPriceFilter = setPriceFilter;
+window.toggleMinRating = toggleMinRating;
+window.toggleApiOnly = toggleApiOnly;
+window.toggleTrialOnly = toggleTrialOnly;
+window.setToolsSort = setToolsSort;
+
+function resetToolFilters() {
+  state.priceFilter = 'tous';
+  state.minRating   = 0;
+  state.apiOnly     = false;
+  state.trialOnly   = false;
+  state.toolsSort   = 'popularite';
+  state.searchQuery = '';
+  const search = document.getElementById('tool-search');
+  if (search) search.value = '';
+  state.toolsPage = 1;
+  renderTools();
+}
+window.resetToolFilters = resetToolFilters;
+
+// ─── Notes Firestore pour tri/filtre (pas seulement badge visuel) ───
+// Distinct de renderRatingsOnCards() : celle-ci alimente state.ratingsCache
+// pour TOUT l'ensemble filtré (avant pagination), nécessaire pour trier par
+// note/popularité ou filtrer "4+ étoiles" sur des outils pas encore affichés.
+async function ensureRatingsLoaded(tools) {
+  if (typeof window._getRatingSummaries !== 'function') return;
+  const slugs = tools.map(t => slugify(t.name) || String(t.id));
+  const missing = [...new Set(slugs)].filter(s => !state.ratingsCache.has(s));
+  if (!missing.length) return;
+  try {
+    const summaries = await window._getRatingSummaries(missing);
+    if (summaries) {
+      missing.forEach(s => {
+        const sum = summaries.get(s);
+        state.ratingsCache.set(s, sum || { ratingAverage: 0, ratingCount: 0 });
+      });
+    }
+  } catch (err) {
+    console.warn('Notes non chargées pour tri/filtre:', err);
+  }
+}
+
+function finalizeAndRenderTools(base) {
+  let list = [...base];
+  const getRating = t => state.ratingsCache.get(slugify(t.name) || String(t.id)) || { ratingAverage: 0, ratingCount: 0 };
+
+  if (state.minRating > 0) {
+    list = list.filter(t => getRating(t).ratingCount > 0 && getRating(t).ratingAverage >= state.minRating);
+  }
+
+  if (state.toolsSort === 'note') {
+    list.sort((a, b) => getRating(b).ratingAverage - getRating(a).ratingAverage);
+  } else if (state.toolsSort === 'popularite') {
+    list.sort((a, b) => getRating(b).ratingCount - getRating(a).ratingCount);
+  } else if (state.toolsSort === 'nom') {
+    list.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  if (!list.length) { showEmpty('tools-grid'); setPaginationEl('tools-grid', ''); return; }
+
+  const total      = list.length;
   const totalPages = Math.ceil(total / state.itemsPerPage);
   if (state.toolsPage > totalPages) state.toolsPage = 1;
   const start    = (state.toolsPage - 1) * state.itemsPerPage;
-  const paged    = filtered.slice(start, start + state.itemsPerPage);
+  const paged    = list.slice(start, start + state.itemsPerPage);
   const shownEnd = start + paged.length;
 
   document.getElementById('tools-grid').innerHTML = paged.map(t => buildToolCard(t)).join('');
   setPaginationEl('tools-grid', buildPaginationHTML(state.toolsPage, totalPages, total, start + 1, shownEnd, 'tools', 'outils'));
 
-  // Ratings Firestore après chaque rendu
+  // Ratings Firestore (badges visuels) après chaque rendu
   renderRatingsOnCards();
 }
 
@@ -604,53 +768,75 @@ function setToolCat(cat) {
   state.toolsPage = 1;
   renderTools(); // renderRatingsOnCards() appelé à l'intérieur
 }
+window.setToolCat = setToolCat;
 
 // ═══════════════════════════════════════
-// CATÉGORIES — ACCUEIL
+// GRILLE DE CATÉGORIES — composant partagé
+// (accueil + page Outils, rendu identique)
 // ═══════════════════════════════════════
-// Tuiles de catégories avec compteur (visible sur la page d'accueil).
-// Au clic : aperçu de 4 outils de la catégorie choisie, avec un CTA
-// vers la page complète (actuellement #tools filtré ; basculera vers
-// /outils/{slug}/ une fois les pages statiques catégorie générées
-// par gen-fiches.js).
 
-const NB_APERCU_CAT = 4;
-
-function renderHomeCategories() {
-  const grid = document.getElementById('home-cat-grid');
-  if (!grid) return; // page pas encore chargée dans le DOM
+function renderCategoryTiles(containerId, activeCat, onSelectFn) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
 
   const toolsLangue = filtrerParLangue(state.tools);
   if (!toolsLangue.length) return; // pas encore de données
 
-  // Compte par catégorie, dans l'ordre de première apparition
   const counts = new Map();
   toolsLangue.forEach(t => {
     if (t.status === 'offline') return;
     counts.set(t.category, (counts.get(t.category) || 0) + 1);
   });
+  const total = [...counts.values()].reduce((a, b) => a + b, 0);
+  const cats  = [...counts.keys()];
 
-  const cats = [...counts.keys()];
+  const tousTile = `
+    <button class="home-cat-tile${activeCat === 'Tous' ? ' active' : ''}" onclick="${onSelectFn}('Tous')">
+      <span class="home-cat-icon">🗂️</span>
+      <span class="home-cat-name">Tous</span>
+      <span class="home-cat-count">${total} outils</span>
+    </button>`;
 
-  grid.innerHTML = cats.map(c => {
+  const tiles = cats.map(c => {
     const icon = catIcons[c] || catIcons._default;
-    const isActive = state.activeHomeCat === c;
+    const isActive = activeCat === c;
     return `
-      <button class="home-cat-tile${isActive ? ' active' : ''}" onclick="selectHomeCategory('${c.replace(/'/g, "\\'")}')">
+      <button class="home-cat-tile${isActive ? ' active' : ''}" onclick="${onSelectFn}('${c.replace(/'/g, "\\'")}')">
         <span class="home-cat-icon">${icon}</span>
         <span class="home-cat-name">${c}</span>
         <span class="home-cat-count">${counts.get(c)} outils</span>
       </button>`;
   }).join('');
 
+  grid.innerHTML = tousTile + tiles;
+}
+
+// ═══════════════════════════════════════
+// CATÉGORIES — ACCUEIL (aperçu)
+// ═══════════════════════════════════════
+// Tuiles de catégories avec compteur (visible sur la page d'accueil).
+// Au clic sur une vraie catégorie : aperçu de 4 outils avec un CTA vers
+// la page complète. Au clic sur "Tous" : va directement sur la page
+// Outils complète (pas de sens d'avoir un aperçu de 1500+ outils ici).
+
+const NB_APERCU_CAT = 4;
+
+function renderHomeCategories() {
+  const toolsLangue = filtrerParLangue(state.tools);
+  if (!toolsLangue.length) return; // pas encore de données
+
+  renderCategoryTiles('home-cat-grid', state.activeHomeCat || 'Tous', 'selectHomeCategory');
+
   // Si une catégorie était déjà sélectionnée (ex: après un changement
   // de langue), on rafraîchit son aperçu avec les nouvelles données.
-  if (state.activeHomeCat && counts.has(state.activeHomeCat)) {
+  if (state.activeHomeCat) {
     renderHomeCategoryPreview(state.activeHomeCat);
   }
 }
 
 function selectHomeCategory(cat) {
+  if (cat === 'Tous') { goToFullCategory('Tous'); return; }
+
   // Reclique sur la catégorie active → referme l'aperçu
   if (state.activeHomeCat === cat) {
     state.activeHomeCat = null;

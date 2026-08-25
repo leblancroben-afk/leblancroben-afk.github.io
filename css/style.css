@@ -320,6 +320,44 @@ nav {
   .home-cat-title { font-size: 22px; }
 }
 
+/* ─── TOOLS PAGE : entête dynamique par catégorie ─── */
+.tools-page-count {
+  font-size: 13px; font-weight: 500; color: var(--text-dim);
+  background: rgba(255,255,255,0.05); padding: 2px 10px; border-radius: 10px;
+  vertical-align: middle; margin-left: 6px;
+}
+
+/* ─── TOOLS PAGE : filtres avancés + tri ─── */
+.tool-filter-row {
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 12px;
+}
+.filter-disabled {
+  opacity: 0.35; cursor: not-allowed; pointer-events: none;
+}
+.filter-reset {
+  margin-left: auto; color: var(--text-dim); border-style: dashed;
+}
+.filter-reset:hover { color: var(--text); border-color: var(--border-hover); }
+
+.tool-sort-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 24px;
+}
+.tool-sort-row label {
+  font-size: 12px; color: var(--text-muted); font-weight: 500;
+}
+.tool-sort-row select {
+  background: var(--bg2); border: 1px solid var(--border); color: var(--text);
+  font-size: 13px; font-family: 'DM Sans', sans-serif;
+  padding: 7px 12px; border-radius: 10px; cursor: pointer; outline: none;
+}
+.tool-sort-row select:focus { border-color: rgba(108,99,255,0.5); }
+
+@media (max-width: 600px) {
+  .filter-reset { margin-left: 0; }
+}
+
 /* ─── TOOLS GRID ─── */
 .tools-grid {
   display: grid;

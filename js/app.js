@@ -315,6 +315,17 @@ async function loadJSON(path) {
 }
 
 async function loadAllData() {
+  // Pages catégorie statiques générées par gen-fiches.js : les outils de la
+  // catégorie sont déjà embarqués dans le HTML (window.CATEGORY_TOOLS) pour
+  // le SEO et la vitesse — inutile de retélécharger tout Firestore ici.
+  // Le reste de l'app (blog/galerie) n'a pas de sens sur ces pages.
+  if (window.CATEGORY_TOOLS) {
+    state.tools = window.CATEGORY_TOOLS;
+    state.activeToolCat = (window.CATEGORY_TOOLS[0] && window.CATEGORY_TOOLS[0].category) || 'Tous';
+    renderTools();
+    return;
+  }
+
   try {
     // Outils, articles et galerie viennent tous de Firestore désormais
     // (mise à jour immédiate sans redéploiement ni fichier JSON à régénérer
@@ -1078,7 +1089,7 @@ function readSearchFromURL() {
     state.searchQuery = q;
     const searchEl = document.getElementById('tool-search');
     if (searchEl) searchEl.value = q;
-    showPage('tools');
+    if (document.getElementById('tools')) showPage('tools'); // page absente sur les pages catégorie statiques
   }
 }
 
@@ -1089,7 +1100,7 @@ function readSearchFromURL() {
 document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.nav-link').forEach(btn => {
-    btn.addEventListener('click', () => showPage(btn.dataset.page));
+    if (btn.dataset.page) btn.addEventListener('click', () => showPage(btn.dataset.page));
   });
 
   const searchEl = document.getElementById('tool-search');
@@ -1576,7 +1587,7 @@ window.closeSpotlight = closeSpotlight;
 (function() {
   const hash = window.location.hash.replace('#', '');
   const pages = ['tools', 'blog', 'gallery', 'favorites'];
-  if (pages.includes(hash)) {
+  if (pages.includes(hash) && document.getElementById(hash)) {
     window.addEventListener('DOMContentLoaded', () => {
       if (typeof showPage === 'function') showPage(hash);
     });

@@ -111,6 +111,9 @@ const UI = {
   seeAll:     { fr: 'Voir tous les outils',    en: 'See all',               es: 'Ver todas las herramientas de' },
   share:      { fr: 'Partager',                en: 'Share',                 es: 'Compartir' },
   available:  { fr: 'Outils disponibles',      en: 'Tools available',      es: 'Herramientas disponibles' },
+  avgRating:  { fr: 'Note moyenne',            en: 'Average rating',       es: 'Valoración media' },
+  popularCats:{ fr: 'Catégories populaires',   en: 'Popular categories',   es: 'Categorías populares' },
+  seeAllCats: { fr: 'Voir toutes les catégories →', en: 'See all categories →', es: 'Ver todas las categorías →' },
   autoUpdate: { fr: 'Mise à jour continue',    en: 'Continuously updated', es: 'Actualización continua' },
   search:     { fr: 'Rechercher un outil',     en: 'Search a tool',        es: 'Buscar una herramienta' },
   breadHome:  { fr: '⌂ Accueil',               en: '⌂ Home',               es: '⌂ Inicio' },
@@ -132,7 +135,7 @@ function genererPagesCategories(tousLesOutils, helpers) {
   const slugify = helpers.slugify || slugifyFallback;
   const outilsActifs = tousLesOutils.filter(t => t.status !== 'offline');
 
-  const parCategorie = new Map();
+  const parCategorie = new Map(); // categorie -> Map(langue -> [outils])
   for (const t of outilsActifs) {
     const cat = t.category;
     if (!cat) continue;
@@ -143,11 +146,23 @@ function genererPagesCategories(tousLesOutils, helpers) {
     parLangue.get(langue).push(t);
   }
 
+  // Slug + URLs de TOUTES les catégories, par langue — nécessaire pour la
+  // section "Catégories populaires" (exclut la catégorie courante) et pour
+  // la page hub /categorie/{langue}/.
+  const slugParCat = new Map([...parCategorie.keys()].map(cat => [cat, slugify(cat)]));
+  const parLangueGlobal = new Map(); // langue -> [{ name, slug, count }]
+  for (const [cat, parLangue] of parCategorie) {
+    for (const [langue, outils] of parLangue) {
+      if (!parLangueGlobal.has(langue)) parLangueGlobal.set(langue, []);
+      parLangueGlobal.get(langue).push({ name: cat, slug: slugParCat.get(cat), count: outils.length });
+    }
+  }
+
   let genere = 0;
   const languesGenerees = new Set();
 
   for (const [cat, parLangue] of parCategorie) {
-    const slug = slugify(cat);
+    const slug = slugParCat.get(cat);
     const languesDisponibles = [...parLangue.keys()];
     if (!languesDisponibles.length) continue;
 
@@ -157,10 +172,12 @@ function genererPagesCategories(tousLesOutils, helpers) {
     }
 
     for (const langue of languesDisponibles) {
+      const autresCategories = (parLangueGlobal.get(langue) || []).filter(c => c.name !== cat);
+      const hubUrl = `/categorie/${langue}/`;
       const html = genererPageCategorie(
         { name: cat, slug },
         parLangue.get(langue),
-        { langue, langueUrls, helpers }
+        { langue, langueUrls, autresCategories, hubUrl, helpers }
       );
       const dir = path.join('categorie', langue, slug);
       fs.mkdirSync(dir, { recursive: true });
@@ -170,13 +187,25 @@ function genererPagesCategories(tousLesOutils, helpers) {
     }
   }
 
-  return { genere, langues: languesGenerees.size };
+  // Page hub /categorie/{langue}/ — une par langue ayant au moins 1 catégorie.
+  let hubsGeneres = 0;
+  for (const [langue, categories] of parLangueGlobal) {
+    const html = genererPageHub(langue, categories, helpers);
+    const dir = path.join('categorie', langue);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
+    hubsGeneres++;
+  }
+
+  return { genere, langues: languesGenerees.size, hubs: hubsGeneres };
 }
 
 function genererPageCategorie(cat, tools, opts = {}) {
   const { navHTML, footerHTML, seoHeadTags, sharedJS, R, SITE_ORIGIN, escHtml } = opts.helpers;
   const langue = opts.langue || 'fr';
   const langueUrls = opts.langueUrls || { [langue]: `${SITE_ORIGIN}/categorie/${langue}/${cat.slug}/` };
+  const autresCategories = opts.autresCategories || [];
+  const hubUrl = opts.hubUrl || `${R}categorie/${langue}/`;
 
   const meta = CATEGORY_META[cat.name] || CATEGORY_META._default;
   const i18n = (CATEGORY_I18N[cat.name] && (CATEGORY_I18N[cat.name][langue] || CATEGORY_I18N[cat.name].fr))
@@ -187,6 +216,11 @@ function genererPageCategorie(cat, tools, opts = {}) {
   const description = i18n.desc;
 
   const count = tools.length;
+  // Vraie moyenne (champ t.note déjà en base, utilisé partout ailleurs dans
+  // gen-fiches.js) — pas de "2.5K+ utilisateurs" inventé, cette donnée
+  // n'existe nulle part dans le système.
+  const notes = tools.map(t => (typeof t.note === 'number' ? t.note : (typeof t.rating === 'number' ? t.rating : null))).filter(n => n !== null);
+  const noteMoyenne = notes.length ? notes.reduce((a, b) => a + b, 0) / notes.length : 0;
 
   const APERCU_SSR = 12;
   const cartesInitiales = tools.slice(0, APERCU_SSR).map(t => buildToolCardSSR(t, langue)).join('\n');
@@ -241,27 +275,13 @@ ${navHTML(langue)}
 <main class="cat-page">
   <div class="container">
 
-    <nav class="cat-breadcrumb" aria-label="Fil d'Ariane">
-      <a href="${R}index.html">${u('breadHome', langue)}</a>
-      <span>›</span>
-      <a href="${R}index.html#tools">${u('breadCats', langue)}</a>
-      <span>›</span>
-      <span aria-current="page">${escHtml(name)}</span>
-    </nav>
-
     <section class="cat-hero" style="--cat-color:${color}">
       <div class="cat-hero-main">
         <div class="cat-hero-icon">${icon}</div>
         <div class="cat-hero-body">
           <span class="cat-hero-badge">${u('category', langue)}</span>
           <h1 class="cat-hero-title">${escHtml(name)}</h1>
-          <p class="cat-hero-count">${count} ${u('tools', langue)}</p>
           <p class="cat-hero-desc">${escHtml(description)}</p>
-          <div class="cat-hero-actions">
-            <a href="#tools-grid" class="btn-main">${u('seeAll', langue)} ${escHtml(name)} →</a>
-            <button class="btn-outline" onclick="partagerPage()">${u('share', langue)} ⤴</button>
-          </div>
-          ${genererSelecteurLangue(langueUrls, langue)}
         </div>
       </div>
       <div class="cat-hero-illustration" aria-hidden="true">
@@ -280,9 +300,9 @@ ${navHTML(langue)}
         <span class="cat-stat-ico">★</span>
         <div><strong>${count}</strong><span>${u('available', langue)}</span></div>
       </div>
-      <div class="cat-stat cat-stat-muted">
-        <span class="cat-stat-ico">◷</span>
-        <div><strong>Auto</strong><span>${u('autoUpdate', langue)}</span></div>
+      <div class="cat-stat">
+        <span class="cat-stat-ico">✦</span>
+        <div><strong>${noteMoyenne.toFixed(1)}</strong><span>${u('avgRating', langue)}</span></div>
       </div>
     </div>
 
@@ -305,6 +325,8 @@ ${cartesInitiales || `<p class="cat-empty">${u('empty', langue)}</p>`}
       </div>
       <a href="${R}index.html#tools" class="btn-main">${u('submitBtn', langue)}</a>
     </div>
+
+    ${genererCategoriesPopulaires(autresCategories, langue, hubUrl)}
 
   </div>
 </main>
@@ -330,16 +352,114 @@ ${sharedJS ? sharedJS() : ''}
 </html>`;
 }
 
-function genererSelecteurLangue(langueUrls, langueActuelle) {
-  const labels = { fr: 'FR', en: 'EN', es: 'ES' };
-  const ordre = ['fr', 'en', 'es'].filter(l => langueUrls[l]);
-  if (ordre.length < 2) return '';
-  return `<div class="cat-lang-switch">
-    ${ordre.map(l => l === langueActuelle
-      ? `<span class="cat-lang-current">${labels[l]}</span>`
-      : `<a href="${langueUrls[l]}" class="cat-lang-link">${labels[l]}</a>`
-    ).join('')}
-  </div>`;
+// Mini-grille "Catégories populaires" en bas de page — jusqu'à 6 autres
+// catégories (celle de la page courante exclue), + lien vers le hub complet.
+function genererCategoriesPopulaires(autresCategories, langue, hubUrl) {
+  if (!autresCategories.length) return '';
+  const top = [...autresCategories].sort((a, b) => b.count - a.count).slice(0, 6);
+  const tuiles = top.map(c => {
+    const meta = CATEGORY_META[c.name] || CATEGORY_META._default;
+    const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: c.name };
+    return `<a class="pop-cat-tile" href="/categorie/${langue}/${c.slug}/">
+      <span class="pop-cat-icon">${meta.icon}</span>
+      <span class="pop-cat-name">${i18n.name}</span>
+      <span class="pop-cat-count">${c.count} ${u('tools', langue)}</span>
+    </a>`;
+  }).join('');
+
+  return `<section class="cat-popular">
+    <div class="cat-popular-head">
+      <h2>${u('popularCats', langue)}</h2>
+      <a href="${hubUrl}" class="cat-popular-all">${u('seeAllCats', langue)}</a>
+    </div>
+    <div class="cat-popular-grid">${tuiles}</div>
+  </section>`;
+}
+
+// Page hub /categorie/{langue}/ — liste TOUTES les catégories de cette
+// langue. Statique, pas de dépendance à app.js (juste un filtre de
+// recherche client très simple, sans framework).
+function genererPageHub(langue, categories, helpers) {
+  const { navHTML, footerHTML, seoHeadTags, sharedJS, R, SITE_ORIGIN, escHtml } = helpers;
+  const tri = [...categories].sort((a, b) => b.count - a.count);
+  const total = tri.reduce((s, c) => s + c.count, 0);
+
+  const titre = { fr: 'Toutes les catégories', en: 'All categories', es: 'Todas las categorías' }[langue] || 'Toutes les catégories';
+  const sousTitre = {
+    fr: "Explorez toutes nos catégories d'outils IA",
+    en: 'Browse all our AI tool categories',
+    es: 'Explora todas nuestras categorías de herramientas de IA',
+  }[langue] || '';
+  const searchPh = {
+    fr: 'Rechercher une catégorie...', en: 'Search a category...', es: 'Buscar una categoría...',
+  }[langue] || 'Rechercher une catégorie...';
+
+  const langueUrls = {};
+  // Le hub existe pour chaque langue ayant ≥1 catégorie — on ne peut pas
+  // savoir ici lesquelles sans info supplémentaire, donc pas de hreflang
+  // multi-langue pour le hub (juste canonical) pour rester simple et honnête.
+  langueUrls[langue] = `${SITE_ORIGIN}/categorie/${langue}/`;
+  const { canonicalUrl } = seoHeadTags(langue, langueUrls);
+
+  const tuiles = tri.map(c => {
+    const meta = CATEGORY_META[c.name] || CATEGORY_META._default;
+    const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: c.name };
+    return `<a class="hub-cat-tile" href="/categorie/${langue}/${c.slug}/" data-name="${escHtml(i18n.name.toLowerCase())}">
+      <span class="hub-cat-icon">${meta.icon}</span>
+      <span class="hub-cat-name">${escHtml(i18n.name)}</span>
+      <span class="hub-cat-count">${c.count} ${u('tools', langue)}</span>
+    </a>`;
+  }).join('');
+
+  return `<!DOCTYPE html>
+<html lang="${langue}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escHtml(titre)} — Albexia (${total} outils IA)</title>
+<meta name="description" content="${escHtml(sousTitre)} — ${total} outils IA classés dans ${tri.length} catégories.">
+<link rel="canonical" href="${canonicalUrl}">
+<link rel="stylesheet" href="${R}css/style.css">
+<link rel="stylesheet" href="${R}css/categorie.css">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+${navHTML(langue)}
+
+<main class="cat-page">
+  <div class="container">
+    <div class="hub-header">
+      <h1>${escHtml(titre)}</h1>
+      <p>${escHtml(sousTitre)}</p>
+    </div>
+
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" id="hub-search" type="text" placeholder="${escHtml(searchPh)}" autocomplete="off">
+    </div>
+
+    <div class="hub-grid" id="hub-grid">
+      ${tuiles}
+    </div>
+  </div>
+</main>
+
+${footerHTML()}
+${sharedJS ? sharedJS() : ''}
+<script>
+  const input = document.getElementById('hub-search');
+  if (input) {
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      document.querySelectorAll('#hub-grid .hub-cat-tile').forEach(tile => {
+        tile.style.display = tile.dataset.name.includes(q) ? '' : 'none';
+      });
+    });
+  }
+</script>
+</body>
+</html>`;
 }
 
 function buildToolCardSSR(t, langue) {

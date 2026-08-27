@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompting : comment poser les bonnes questions à une IA | Albexia</title>
+  <meta name="description" content="Apprenez à rédiger des prompts clairs pour obtenir des réponses plus utiles et précises avec une IA." />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="canonical" href="https://albexia.com/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" />
+
+  <link rel="alternate" hreflang="fr" href="https://albexia.com/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" />
+  <link rel="alternate" hreflang="en" href="https://albexia.com/articles/en/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" />
+  <link rel="alternate" hreflang="es" href="https://albexia.com/articles/es/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" />
+  <link rel="alternate" hreflang="x-default" href="https://albexia.com/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" />
+
+  <meta property="og:title"       content="Prompting : comment poser les bonnes questions à une IA | Albexia" />
+  <meta property="og:description" content="Apprenez à rédiger des prompts clairs pour obtenir des réponses plus utiles et précises avec une IA." />
+  <meta property="og:type"        content="article" />
+  <meta property="og:url"         content="https://albexia.com/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" />
+  <meta property="og:image" content="https://leblancroben-afk.github.io/medias/blog/rediger-prompt-ia.jpg" />
+  <meta name="twitter:image" content="https://leblancroben-afk.github.io/medias/blog/rediger-prompt-ia.jpg" />
+  <meta property="og:locale"           content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="es_ES" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Prompting : comment poser les bonnes questions à une IA | Albexia" />
+  <meta name="twitter:description" content="Apprenez à rédiger des prompts clairs pour obtenir des réponses plus utiles et précises avec une IA." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Prompting : comment poser les bonnes questions à une IA",
+    "description": "Apprenez à rédiger des prompts clairs pour obtenir des réponses plus utiles et précises avec une IA.",
+    "inLanguage": "fr",
+    "datePublished": "4 septembre 2026",
+    "dateModified": "4 septembre 2026",
+    "author": { "@type": "Organization", "name": "Albexia" },
+    "publisher": { "@type": "Organization", "name": "Albexia", "url": "https://albexia.com" },
+    "image": "https://leblancroben-afk.github.io/medias/blog/rediger-prompt-ia.jpg",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://albexia.com/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" },
+    "workTranslation": [
+      { "@type": "Article", "inLanguage": "en", "url": "https://albexia.com/articles/en/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" },
+      { "@type": "Article", "inLanguage": "es", "url": "https://albexia.com/articles/es/prompting-comment-poser-les-bonnes-questions-a-une-ia/index.html" }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/article.css" />
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+  </div>
+  <div class="kebab-wrap" id="kebab-wrap">
+    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="kebab-menu" id="kebab-menu" role="menu">
+      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
+      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
+      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
+      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <div class="kebab-divider"></div>
+      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+    </div>
+  </div>
+</nav>
+
+<main class="article-main">
+<div class="article-container">
+
+  <header class="article-header">
+    <div class="article-meta-top">
+      <span class="article-cat fond">Guides et tutoriels</span>
+      <span class="dot"></span>
+      <span class="article-date">4 septembre 2026</span>
+      <span class="dot"></span>
+      <span class="article-read-time">⏱ 3 minutes</span>
+    </div>
+    <h1 class="article-title">Prompting : comment poser les bonnes questions à une IA</h1>
+    <p class="article-intro">Apprenez à rédiger des instructions claires pour obtenir des réponses plus utiles, précises et adaptées avec les outils d’intelligence artificielle.</p>
+  </header>
+
+  <div class="article-body">
+<!-- Image de couverture -->
+<figure style="margin: 30px auto; max-width: 100%; text-align: center; border: 1px solid #e5e7eb; padding: 10px; border-radius: 8px; background-color: #f9fafb;">
+  <img 
+    src="https://leblancroben-afk.github.io/medias/blog/rediger-prompt-ia.jpg"
+    alt="Personne rédigeant une instruction pour communiquer avec une intelligence artificielle"
+    style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;"
+    loading="lazy">
+
+  <figcaption style="margin-top: 10px; font-size: 0.9rem; color: #6b7280; font-style: italic; line-height: 1.4;">
+    Une instruction claire aide l’intelligence artificielle à mieux comprendre votre demande.
+  </figcaption>
+</figure>
+
+<!-- Corps de l'article -->
+<div style="color: #1f2937; background-color: #ffffff; padding: 25px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto;">
+
+  <p>
+    Lorsque vous utilisez une intelligence artificielle, la manière dont vous
+    formulez votre demande influence directement la qualité de la réponse.
+    Cette demande, appelée <strong style="color: #000000;">prompt</strong>,
+    peut être une question, une instruction ou une description détaillée.
+  </p>
+
+  <p>
+    Il n’est pas nécessaire d’être développeur ou spécialiste de la technologie
+    pour écrire un bon prompt. Il suffit d’expliquer clairement ce que vous
+    souhaitez obtenir et de fournir les informations utiles à l’IA.
+  </p>
+
+  <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Qu’est-ce qu’un prompt ?
+  </h2>
+
+  <p>
+    Un prompt est le message que vous envoyez à un outil d’intelligence
+    artificielle. Il peut servir à demander une explication, rédiger un texte,
+    créer une image, résumer un document ou obtenir des idées.
+  </p>
+
+  <p>
+    Une demande courte peut parfois suffire. Cependant, lorsque la tâche est
+    plus précise, il est préférable d’ajouter un contexte, un objectif et
+    des consignes concernant le résultat attendu.
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Commencez par donner un contexte
+  </h2>
+
+  <p>
+    Le contexte permet à l’IA de mieux comprendre votre situation. Indiquez
+    votre niveau de connaissance, votre activité, le public concerné ou
+    la raison pour laquelle vous avez besoin d’une réponse.
+  </p>
+
+  <p style="background-color: #f9fafb; padding: 15px; border-radius: 6px;">
+    <strong>Exemple :</strong><br>
+    « Je suis débutant en marketing numérique et je souhaite comprendre
+    les notions essentielles avant de créer un site web. »
+  </p>
+
+  <p>
+    Cette information est plus utile qu’une simple demande comme :
+    « Explique-moi le marketing. »
+  </p>
+
+  <!-- Image intégrée dans le corps -->
+  <figure style="margin: 30px auto; max-width: 100%; text-align: center; border: 1px solid #e5e7eb; padding: 10px; border-radius: 8px; background-color: #f9fafb;">
+    <img 
+      src="https://leblancroben-afk.github.io/medias/blog/structure-prompt-ia.jpg"
+      alt="Schéma présentant les différentes parties d'un prompt efficace"
+      style="max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto;"
+      loading="lazy">
+
+    <figcaption style="margin-top: 10px; font-size: 0.9rem; color: #6b7280; font-style: italic; line-height: 1.4;">
+      Un prompt efficace peut contenir un contexte, une tâche, un format et des contraintes.
+    </figcaption>
+  </figure>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Formulez une tâche précise
+  </h2>
+
+  <p>
+    Expliquez exactement ce que vous voulez que l’IA réalise. Utilisez un
+    verbe d’action comme rédiger, résumer, comparer, expliquer, corriger
+    ou organiser.
+  </p>
+
+  <p style="background-color: #fff7ed; padding: 15px; border-left: 4px solid #f97316; border-radius: 0 6px 6px 0;">
+    <strong>Demande vague :</strong><br>
+    « Parle-moi des réseaux sociaux. »
+  </p>
+
+  <p style="background-color: #f0fdf4; padding: 15px; border-left: 4px solid #16a34a; border-radius: 0 6px 6px 0;">
+    <strong>Demande précise :</strong><br>
+    « Explique les avantages et les limites des réseaux sociaux à un débutant,
+    en utilisant cinq points simples et un exemple pour chaque point. »
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Indiquez le format de la réponse
+  </h2>
+
+  <p>
+    Vous pouvez demander à l’IA de présenter sa réponse sous la forme qui
+    vous convient le mieux. Cela peut être une liste, un tableau, un résumé,
+    un plan détaillé ou une procédure étape par étape.
+  </p>
+
+  <ul style="padding-left: 20px; color: #374151;">
+    <li style="margin-bottom: 10px;">« Réponds en cinq points. »</li>
+    <li style="margin-bottom: 10px;">« Présente les informations dans un tableau. »</li>
+    <li style="margin-bottom: 10px;">« Résume ce texte en 100 mots. »</li>
+    <li style="margin-bottom: 10px;">« Donne-moi une procédure en six étapes. »</li>
+    <li style="margin-bottom: 10px;">« Ajoute un exemple concret à chaque explication. »</li>
+  </ul>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Précisez le ton et le niveau
+  </h2>
+
+  <p>
+    Une même information peut être expliquée de plusieurs façons. Vous pouvez
+    demander un ton professionnel, pédagogique, simple, direct ou adapté
+    à un enfant.
+  </p>
+
+  <p>
+    Précisez également la longueur souhaitée. Par exemple :
+    « Rédige une explication de 300 mots pour un public débutant avec
+    un ton professionnel et accessible. »
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Ajoutez vos contraintes
+  </h2>
+
+  <p>
+    Les contraintes permettent d’éviter une réponse trop générale ou trop longue.
+    Vous pouvez préciser les sujets à inclure, les éléments à éviter, la langue
+    utilisée et le nombre d’exemples souhaité.
+  </p>
+
+  <p style="background-color: #f9fafb; padding: 15px; border-radius: 6px;">
+    <strong>Exemple :</strong><br>
+    « Rédige un texte en français de 600 mots, sans termes techniques,
+    avec trois sous-titres et une conclusion courte. »
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Améliorez la réponse progressivement
+  </h2>
+
+  <p>
+    Il n’est pas toujours nécessaire d’écrire un prompt parfait dès le départ.
+    Si la réponse ne correspond pas à vos attentes, indiquez simplement ce
+    qui doit être modifié.
+  </p>
+
+  <ol style="padding-left: 20px; color: #374151;">
+    <li style="margin-bottom: 12px;">
+      Demandez une réponse initiale.
+    </li>
+    <li style="margin-bottom: 12px;">
+      Identifiez ce qui ne vous convient pas.
+    </li>
+    <li style="margin-bottom: 12px;">
+      Demandez une version plus claire ou plus courte.
+    </li>
+    <li style="margin-bottom: 12px;">
+      Ajoutez les informations manquantes.
+    </li>
+  </ol>
+
+  <blockquote style="background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px 20px; margin: 20px 0; border-radius: 0 6px 6px 0;">
+    <p style="margin: 0; color: #1e3a8a;">
+      <strong>Astuce :</strong> au lieu de recommencer une nouvelle conversation,
+      demandez à l’IA de corriger ou d’améliorer sa réponse précédente.
+    </p>
+  </blockquote>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Un modèle simple à réutiliser
+  </h2>
+
+  <p>
+    Vous pouvez utiliser le modèle suivant pour créer rapidement un prompt
+    adapté à la plupart des situations :
+  </p>
+
+  <p style="background-color: #f9fafb; border: 1px solid #e5e7eb; padding: 18px; border-radius: 8px;">
+    « Tu es [rôle ou spécialiste]. Aide-moi à [tâche précise].
+    Mon contexte est [informations utiles]. Réponds sous la forme de
+    [format souhaité], avec un ton [style] et une longueur de [nombre de mots]. »
+  </p>
+
+  <p>
+    Par exemple :
+    « Tu es un professeur de français. Aide-moi à corriger ce texte.
+    Explique chaque erreur simplement et présente les corrections dans un tableau. »
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Les erreurs à éviter
+  </h2>
+
+  <p>
+    Évitez les demandes trop vagues, les consignes contradictoires et les
+    messages qui ne précisent pas le public visé. N’envoyez pas non plus
+    d’informations confidentielles simplement pour obtenir une réponse plus
+    personnalisée.
+  </p>
+
+  <p>
+    Enfin, relisez toujours le résultat. Une IA peut produire une réponse
+    bien écrite tout en contenant une erreur ou une information inexacte.
+  </p>
+
+  <h2 style="color: #111827; font-size: 1.5rem; margin-top: 30px;">
+    Conclusion
+  </h2>
+
+  <p>
+    Bien communiquer avec une intelligence artificielle ne consiste pas à
+    utiliser des mots compliqués. Il faut surtout expliquer clairement votre
+    objectif, fournir le contexte nécessaire et préciser le format attendu.
+  </p>
+
+  <p>
+    Avec un peu de pratique, vous pourrez obtenir des réponses plus précises,
+    plus rapides et mieux adaptées à vos besoins personnels ou professionnels.
+  </p>
+
+  <!-- Call-to-action -->
+  <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; margin-top: 30px; border-radius: 8px; text-align: center;">
+    <p style="margin: 0 0 15px; font-size: 1.1rem; color: #166534;">
+      Vous souhaitez découvrir des outils pour mieux utiliser l’intelligence artificielle ?
+    </p>
+
+    <a href="https://leblancroben-afk.github.io/index.html#tools"
+       style="display: inline-block; color: #ffffff; background-color: #16a34a; padding: 11px 18px; border-radius: 6px; font-weight: bold; text-decoration: none;">
+      Découvrir l’annuaire IA
+    </a>
+  </div>
+
+</div>
+    <div class="article-tags">
+      <a href="#" class="article-tag">#prompting</a>
+      <a href="#" class="article-tag">#prompts</a>
+      <a href="#" class="article-tag">#débutant</a>
+      <a href="#" class="article-tag">#productivité</a>
+      <a href="#" class="article-tag">#communication avec IA</a>
+    </div>
+
+  </div>
+
+  <nav class="article-nav-bottom" aria-label="Navigation articles">
+    <a href="/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/index.html" class="article-nav-btn">← Les limites actuelles de l’intelligence artificielle expliquées simplement</a>
+    <a href="/articles/fr/comment-proteger-vos-donnees-face-aux-services-ia/index.html" class="article-nav-btn">Comment protéger vos données face aux services IA →</a>
+  </nav>
+
+</div>
+</main>
+
+<footer>
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script>
+  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
+  if (kb && km) {
+    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
+    km.addEventListener('click', e => e.stopPropagation());
+  }
+</script>
+</body>
+</html>

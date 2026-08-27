@@ -32,6 +32,7 @@ const { getFirestore }        = require('firebase-admin/firestore');
 const fs     = require('fs');
 const path   = require('path');
 const crypto = require('crypto');
+const { genererPagesCategories } = require('./categorie-template.js');
 
 // ── Init Firebase Admin ──────────────────────────────────
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -3754,6 +3755,17 @@ async function main() {
   } else {
     console.log(`✅ Hub glossaire — inchangé, régénération non nécessaire.`);
   }
+
+  // ─── PAGES CATÉGORIE (une par langue avec du contenu réel) ───
+  // Regénérées à chaque run à partir de `tools` (tous les documents bruts,
+  // toutes langues confondues — pas `toolsUniques`, qui a dédupliqué à un
+  // seul document par outil et perdrait les variantes EN/ES nécessaires ici).
+  console.log(`\n📂 Génération des pages catégorie...`);
+  const catResult = genererPagesCategories(tools, {
+    navHTML, footerHTML, seoHeadTags, sharedJS, R, SITE_ORIGIN, slugify, escHtml,
+  });
+  console.log(`✅ Catégories — ${catResult.genere} page(s) générée(s) sur ${catResult.langues} langue(s).`);
+  console.log(`  categorie/{langue}/{slug}/index.html`);
 
   // ─── SAUVEGARDE DE L'ÉTAT DE GÉNÉRATION ───
   // newState ne contient que les docs actuellement en base : un doc supprimé

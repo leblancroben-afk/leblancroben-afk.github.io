@@ -1,24 +1,30 @@
 // ═══════════════════════════════════════════════════════════
 // categorie-template.js
-// Génère le HTML complet d'une page catégorie statique
-// (/categorie/{slug}/index.html) à intégrer dans gen-fiches.js,
-// à côté de genererPagesNiches() / genererPagesComparateur().
+// Genere les pages categorie statiques, une par langue :
+//   /categorie/{langue}/{slug}/index.html
+// (meme schema que /tools/{plan}/{langue}/{slug}/ et /articles/{langue}/{slug}/)
 //
-// Usage prévu depuis gen-fiches.js :
+// N'a AUCUNE logique dupliquee de nav/footer/SEO — tout est injecte
+// depuis gen-fiches.js (navHTML, footerHTML, seoHeadTags, R, SITE_ORIGIN,
+// slugify, escHtml existent deja la-bas et sont la source unique de verite
+// pour le rendu commun a toutes les pages du site).
 //
-//   const { genererPageCategorie } = require('./categorie-template.js');
-//   for (const cat of categoriesUniques) {
-//     const toolsCat = tousLesOutils.filter(t => t.category === cat.name && t.status !== 'offline');
-//     const html = genererPageCategorie(cat, toolsCat);
-//     fs.mkdirSync(`categorie/${cat.slug}`, { recursive: true });
-//     fs.writeFileSync(`categorie/${cat.slug}/index.html`, html);
-//   }
+// Usage prevu depuis gen-fiches.js, dans main() :
+//
+//   const { genererPagesCategories } = require('./categorie-template.js');
+//   genererPagesCategories(toolsUniques, {
+//     navHTML, footerHTML, seoHeadTags, R, SITE_ORIGIN, slugify, escHtml,
+//   });
 //
 // ═══════════════════════════════════════════════════════════
 
-// Icônes + couleur d'accent par catégorie. '_default' sert de repli pour
-// toute catégorie ajoutée côté admin sans mise à jour de cette table —
-// la page catégorie continue de se générer, juste avec un style neutre.
+const fs = require('fs');
+const path = require('path');
+
+// Icone + couleur d'accent par categorie (cle = valeur canonique de
+// t.category en base, toujours en francais quelle que soit la langue
+// de la page). '_default' sert de repli pour toute categorie ajoutee
+// cote admin sans mise a jour de cette table.
 const CATEGORY_META = {
   Juridique:       { icon: '⚖️', color: '#6c63ff' },
   Marketing:       { icon: '📣', color: '#ff6b9d' },
@@ -37,76 +43,159 @@ const CATEGORY_META = {
   _default:        { icon: '✨', color: '#6c63ff' },
 };
 
-const CATEGORY_DESCRIPTIONS = {
-  Tous:            "Découvre tous les outils d'intelligence artificielle disponibles.",
-  Juridique:       "Outils IA pour la recherche juridique, l'analyse de contrats et la conformité.",
-  Marketing:       "Outils IA pour automatiser vos campagnes et personnaliser vos contenus marketing.",
-  SEO:             "Découvrez les meilleurs outils d'intelligence artificielle pour améliorer votre référencement, analyser vos mots-clés, optimiser votre contenu et booster votre visibilité sur les moteurs de recherche.",
-  Contenu:         "Outils IA pour générer et éditer du texte, des visuels et des vidéos.",
-  Code:            "Outils IA pour écrire, corriger et accélérer le développement logiciel.",
-  'Design 3D':     "Outils IA pour créer des visuels, modèles et rendus 3D.",
-  Automatisation:  "Outils IA pour connecter vos applications et automatiser vos workflows.",
-  Recherche:       "Outils IA pour explorer, synthétiser et vérifier l'information.",
-  Vidéo:           "Outils IA pour générer, monter et éditer des vidéos.",
-  Productivité:    "Outils IA pour gagner du temps sur vos tâches quotidiennes.",
+// Le SLUG reste toujours derive du nom francais canonique, quelle que
+// soit la langue de la page (/categorie/en/juridique/, pas /categorie/en/legal/).
+// Ca evite d'avoir a maintenir un slug par langue en plus du nom par langue,
+// et garde la correspondance slug <-> categorie triviale a retrouver.
+//
+// Nom affiche + description, eux, sont traduits. Traductions redigees par
+// Claude — a relire/ajuster, ce ne sont pas des donnees extraites de Firestore.
+const CATEGORY_I18N = {
+  Juridique: {
+    fr: { name: 'Juridique', desc: "Outils IA pour la recherche juridique, l'analyse de contrats et la conformité." },
+    en: { name: 'Legal',     desc: "AI tools for legal research, contract analysis and compliance." },
+    es: { name: 'Legal',     desc: "Herramientas de IA para investigación jurídica, análisis de contratos y cumplimiento normativo." },
+  },
+  Marketing: {
+    fr: { name: 'Marketing', desc: "Outils IA pour automatiser vos campagnes et personnaliser vos contenus marketing." },
+    en: { name: 'Marketing', desc: "AI tools to automate your campaigns and personalize your marketing content." },
+    es: { name: 'Marketing', desc: "Herramientas de IA para automatizar tus campañas y personalizar tu contenido de marketing." },
+  },
+  SEO: {
+    fr: { name: 'SEO', desc: "Découvrez les meilleurs outils d'intelligence artificielle pour améliorer votre référencement, analyser vos mots-clés, optimiser votre contenu et booster votre visibilité sur les moteurs de recherche." },
+    en: { name: 'SEO', desc: "Discover the best AI tools to improve your search rankings, analyze keywords, optimize your content and boost your visibility on search engines." },
+    es: { name: 'SEO', desc: "Descubre las mejores herramientas de IA para mejorar tu posicionamiento, analizar palabras clave, optimizar tu contenido e impulsar tu visibilidad en los motores de búsqueda." },
+  },
+  Contenu: {
+    fr: { name: 'Contenu', desc: "Outils IA pour générer et éditer du texte, des visuels et des vidéos." },
+    en: { name: 'Content', desc: "AI tools to generate and edit text, visuals and videos." },
+    es: { name: 'Contenido', desc: "Herramientas de IA para generar y editar texto, imágenes y vídeos." },
+  },
+  Code: {
+    fr: { name: 'Code', desc: "Outils IA pour écrire, corriger et accélérer le développement logiciel." },
+    en: { name: 'Code', desc: "AI tools to write, fix and speed up software development." },
+    es: { name: 'Código', desc: "Herramientas de IA para escribir, corregir y acelerar el desarrollo de software." },
+  },
+  'Design 3D': {
+    fr: { name: 'Design 3D', desc: "Outils IA pour créer des visuels, modèles et rendus 3D." },
+    en: { name: '3D Design', desc: "AI tools to create 3D visuals, models and renders." },
+    es: { name: 'Diseño 3D', desc: "Herramientas de IA para crear visuales, modelos y renders 3D." },
+  },
+  Automatisation: {
+    fr: { name: 'Automatisation', desc: "Outils IA pour connecter vos applications et automatiser vos workflows." },
+    en: { name: 'Automation', desc: "AI tools to connect your apps and automate your workflows." },
+    es: { name: 'Automatización', desc: "Herramientas de IA para conectar tus aplicaciones y automatizar tus flujos de trabajo." },
+  },
+  Recherche: {
+    fr: { name: 'Recherche', desc: "Outils IA pour explorer, synthétiser et vérifier l'information." },
+    en: { name: 'Research', desc: "AI tools to explore, summarize and verify information." },
+    es: { name: 'Investigación', desc: "Herramientas de IA para explorar, resumir y verificar información." },
+  },
+  Vidéo: {
+    fr: { name: 'Vidéo', desc: "Outils IA pour générer, monter et éditer des vidéos." },
+    en: { name: 'Video', desc: "AI tools to generate, edit and produce videos." },
+    es: { name: 'Vídeo', desc: "Herramientas de IA para generar, montar y editar vídeos." },
+  },
+  Productivité: {
+    fr: { name: 'Productivité', desc: "Outils IA pour gagner du temps sur vos tâches quotidiennes." },
+    en: { name: 'Productivity', desc: "AI tools to save time on your everyday tasks." },
+    es: { name: 'Productividad', desc: "Herramientas de IA para ahorrar tiempo en tus tareas diarias." },
+  },
 };
 
-function slugify(str) {
+// Petites chaines d'interface propres a cette page (hors nav/footer, deja
+// geres par navHTML()/footerHTML() de gen-fiches.js).
+const UI = {
+  category:   { fr: 'CATÉGORIE',              en: 'CATEGORY',              es: 'CATEGORÍA' },
+  tools:      { fr: 'outils',                 en: 'tools',                 es: 'herramientas' },
+  seeAll:     { fr: 'Voir tous les outils',    en: 'See all',               es: 'Ver todas las herramientas de' },
+  share:      { fr: 'Partager',                en: 'Share',                 es: 'Compartir' },
+  available:  { fr: 'Outils disponibles',      en: 'Tools available',      es: 'Herramientas disponibles' },
+  autoUpdate: { fr: 'Mise à jour continue',    en: 'Continuously updated', es: 'Actualización continua' },
+  search:     { fr: 'Rechercher un outil',     en: 'Search a tool',        es: 'Buscar una herramienta' },
+  breadHome:  { fr: '⌂ Accueil',               en: '⌂ Home',               es: '⌂ Inicio' },
+  breadCats:  { fr: 'Catégories',              en: 'Categories',           es: 'Categorías' },
+  submitTitle:{ fr: "Vous ne trouvez pas l'outil qu'il vous faut ?", en: "Can't find the tool you need?", es: '¿No encuentras la herramienta que necesitas?' },
+  submitText: { fr: "Proposez un outil et aidez la communauté à découvrir les meilleures solutions IA.", en: 'Suggest a tool and help the community discover the best AI solutions.', es: 'Propón una herramienta y ayuda a la comunidad a descubrir las mejores soluciones de IA.' },
+  submitBtn:  { fr: 'Soumettre un outil +',    en: 'Submit a tool +',      es: 'Enviar una herramienta +' },
+  empty:      { fr: 'Aucun outil publié dans cette catégorie pour le moment.', en: 'No tools published in this category yet.', es: 'Aún no hay herramientas publicadas en esta categoría.' },
+};
+const u = (key, langue) => (UI[key] && (UI[key][langue] || UI[key].fr)) || '';
+
+function slugifyFallback(str) {
   return String(str || '')
-    .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
-function escHtml(s) {
-  return String(s || '')
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+function genererPagesCategories(tousLesOutils, helpers) {
+  const slugify = helpers.slugify || slugifyFallback;
+  const outilsActifs = tousLesOutils.filter(t => t.status !== 'offline');
+
+  const parCategorie = new Map();
+  for (const t of outilsActifs) {
+    const cat = t.category;
+    if (!cat) continue;
+    const langue = t.langue || 'fr';
+    if (!parCategorie.has(cat)) parCategorie.set(cat, new Map());
+    const parLangue = parCategorie.get(cat);
+    if (!parLangue.has(langue)) parLangue.set(langue, []);
+    parLangue.get(langue).push(t);
+  }
+
+  let genere = 0;
+  const languesGenerees = new Set();
+
+  for (const [cat, parLangue] of parCategorie) {
+    const slug = slugify(cat);
+    const languesDisponibles = [...parLangue.keys()];
+    if (!languesDisponibles.length) continue;
+
+    const langueUrls = {};
+    for (const langue of languesDisponibles) {
+      langueUrls[langue] = `${helpers.SITE_ORIGIN}/categorie/${langue}/${slug}/`;
+    }
+
+    for (const langue of languesDisponibles) {
+      const html = genererPageCategorie(
+        { name: cat, slug },
+        parLangue.get(langue),
+        { langue, langueUrls, helpers }
+      );
+      const dir = path.join('categorie', langue, slug);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
+      genere++;
+      languesGenerees.add(langue);
+    }
+  }
+
+  return { genere, langues: languesGenerees.size };
 }
 
-/**
- * Génère le HTML complet d'une page catégorie.
- *
- * @param {object} cat  { name, slug?, description?, icon?, color? }
- *   Seul `name` est obligatoire — tout le reste a un repli automatique
- *   basé sur CATEGORY_META / CATEGORY_DESCRIPTIONS / slugify(name).
- * @param {Array}  tools  Outils déjà filtrés sur cette catégorie
- *   (même schéma que les documents Firestore `outils` : name, category,
- *   description, price, tags, favicon, emoji, url, status, plan, id).
- * @param {object} [opts]
- * @param {string} [opts.langue='fr']
- * @param {number} [opts.rootDepth=2]  Nombre de niveaux entre index.html
- *   et cette page (categorie/{slug}/index.html = 2), pour générer les
- *   chemins relatifs vers js/app.js, style.css, etc.
- */
 function genererPageCategorie(cat, tools, opts = {}) {
+  const { navHTML, footerHTML, seoHeadTags, sharedJS, R, SITE_ORIGIN, escHtml } = opts.helpers;
   const langue = opts.langue || 'fr';
-  const rootDepth = opts.rootDepth ?? 2;
-  const root = '../'.repeat(rootDepth) || './';
+  const langueUrls = opts.langueUrls || { [langue]: `${SITE_ORIGIN}/categorie/${langue}/${cat.slug}/` };
 
-  const name  = cat.name;
-  const slug  = cat.slug || slugify(name);
-  const meta  = CATEGORY_META[name] || CATEGORY_META._default;
+  const meta = CATEGORY_META[cat.name] || CATEGORY_META._default;
+  const i18n = (CATEGORY_I18N[cat.name] && (CATEGORY_I18N[cat.name][langue] || CATEGORY_I18N[cat.name].fr))
+    || { name: cat.name, desc: `${cat.name}` };
   const icon  = cat.icon  || meta.icon;
   const color = cat.color || meta.color;
-  const description = cat.description || CATEGORY_DESCRIPTIONS[name]
-    || `Outils IA classés dans la catégorie ${name}.`;
+  const name  = i18n.name;
+  const description = i18n.desc;
 
-  const outilsActifs = tools.filter(t => t.status !== 'offline');
-  const count = outilsActifs.length;
+  const count = tools.length;
 
-  // 12 premières cartes pré-rendues côté serveur pour le SEO/crawlers —
-  // le reste (filtres, tri, pagination) est hydraté par categorie-page.js
-  // à partir de window.CATEGORY_TOOLS (voir plus bas), sans re-fetch réseau.
   const APERCU_SSR = 12;
-  const cartesInitiales = outilsActifs.slice(0, APERCU_SSR)
-    .map(t => buildToolCardSSR(t)).join('\n');
+  const cartesInitiales = tools.slice(0, APERCU_SSR).map(t => buildToolCardSSR(t, langue)).join('\n');
+  const toolsJson = JSON.stringify(tools).replace(/</g, '\\u003c');
 
-  const toolsJson = JSON.stringify(outilsActifs).replace(/</g, '\\u003c');
-
-  const title = `${name} — ${count} outils IA | Albexia`;
+  const title = `${name} — ${count} ${u('tools', langue)} IA | Albexia`;
   const metaDesc = description.length > 155 ? description.slice(0, 152) + '…' : description;
+
+  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, langueUrls);
 
   return `<!DOCTYPE html>
 <html lang="${langue}">
@@ -115,12 +204,17 @@ function genererPageCategorie(cat, tools, opts = {}) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${escHtml(title)}</title>
 <meta name="description" content="${escHtml(metaDesc)}">
-<link rel="canonical" href="https://albexia.com/categorie/${slug}/">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="${canonicalUrl}">
+${hreflangTags}
 <meta property="og:title" content="${escHtml(title)}">
 <meta property="og:description" content="${escHtml(metaDesc)}">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="${root}css/style.css">
-<link rel="stylesheet" href="${root}css/categorie.css">
+<meta property="og:url" content="${canonicalUrl}">
+<meta property="og:locale" content="${ogLocale}">
+${ogLocaleAlternates}
+<link rel="stylesheet" href="${R}css/style.css">
+<link rel="stylesheet" href="${R}css/categorie.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
@@ -132,8 +226,8 @@ function genererPageCategorie(cat, tools, opts = {}) {
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://albexia.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Catégories", "item": "https://albexia.com/outils/" },
+      { "@type": "ListItem", "position": 1, "name": ${JSON.stringify(u('breadHome', langue).replace('⌂ ', ''))}, "item": "${SITE_ORIGIN}/" },
+      { "@type": "ListItem", "position": 2, "name": ${JSON.stringify(u('breadCats', langue))}, "item": "${SITE_ORIGIN}/${R === '/' ? '' : R}index.html#tools" },
       { "@type": "ListItem", "position": 3, "name": ${JSON.stringify(name)} }
     ]
   }
@@ -142,33 +236,32 @@ function genererPageCategorie(cat, tools, opts = {}) {
 </head>
 <body>
 
-${genererNav(root)}
+${navHTML(langue)}
 
 <main class="cat-page">
   <div class="container">
 
-    <!-- Fil d'Ariane -->
     <nav class="cat-breadcrumb" aria-label="Fil d'Ariane">
-      <a href="${root}index.html">⌂ Accueil</a>
+      <a href="${R}index.html">${u('breadHome', langue)}</a>
       <span>›</span>
-      <a href="${root}index.html#tools">Catégories</a>
+      <a href="${R}index.html#tools">${u('breadCats', langue)}</a>
       <span>›</span>
       <span aria-current="page">${escHtml(name)}</span>
     </nav>
 
-    <!-- Hero -->
     <section class="cat-hero" style="--cat-color:${color}">
       <div class="cat-hero-main">
         <div class="cat-hero-icon">${icon}</div>
         <div class="cat-hero-body">
-          <span class="cat-hero-badge">CATÉGORIE</span>
+          <span class="cat-hero-badge">${u('category', langue)}</span>
           <h1 class="cat-hero-title">${escHtml(name)}</h1>
-          <p class="cat-hero-count">${count} outils</p>
+          <p class="cat-hero-count">${count} ${u('tools', langue)}</p>
           <p class="cat-hero-desc">${escHtml(description)}</p>
           <div class="cat-hero-actions">
-            <a href="#tools-grid" class="btn-main">Voir tous les outils ${escHtml(name)} →</a>
-            <button class="btn-outline" onclick="partagerPage()">Partager ⤴</button>
+            <a href="#tools-grid" class="btn-main">${u('seeAll', langue)} ${escHtml(name)} →</a>
+            <button class="btn-outline" onclick="partagerPage()">${u('share', langue)} ⤴</button>
           </div>
+          ${genererSelecteurLangue(langueUrls, langue)}
         </div>
       </div>
       <div class="cat-hero-illustration" aria-hidden="true">
@@ -182,89 +275,95 @@ ${genererNav(root)}
       </div>
     </section>
 
-    <!-- Stats -->
     <div class="cat-stats-bar">
       <div class="cat-stat">
         <span class="cat-stat-ico">★</span>
-        <div><strong>${count}</strong><span>Outils disponibles</span></div>
+        <div><strong>${count}</strong><span>${u('available', langue)}</span></div>
       </div>
-      <div class="cat-stat cat-stat-muted" title="Bientôt disponible">
+      <div class="cat-stat cat-stat-muted">
         <span class="cat-stat-ico">◷</span>
-        <div><strong>Auto</strong><span>Mise à jour continue</span></div>
+        <div><strong>Auto</strong><span>${u('autoUpdate', langue)}</span></div>
       </div>
     </div>
 
-    <!-- Recherche + tri + filtres (hydratés par categorie-page.js) -->
     <div class="search-wrap">
       <span class="search-icon">⌕</span>
-      <input class="search-input" id="tool-search" type="text" placeholder="Rechercher un outil ${escHtml(name)}..." autocomplete="off">
+      <input class="search-input" id="tool-search" type="text" placeholder="${escHtml(u('search', langue))} ${escHtml(name)}..." autocomplete="off">
     </div>
-    <div id="tool-secondary-filters"><!-- généré par categorie-page.js --></div>
+    <div id="tool-secondary-filters"><!-- genere par app.js --></div>
 
-    <!-- Grille -->
-    <div class="tools-grid" id="tools-grid" data-category="${escHtml(name)}">
-${cartesInitiales || '<p class="cat-empty">Aucun outil publié dans cette catégorie pour le moment.</p>'}
+    <div class="tools-grid" id="tools-grid" data-category="${escHtml(cat.name)}">
+${cartesInitiales || `<p class="cat-empty">${u('empty', langue)}</p>`}
     </div>
     <div id="tools-grid-pagination"></div>
 
-    <!-- Bloc soumission -->
     <div class="cat-submit-cta">
       <span class="cat-submit-ico">♔</span>
       <div class="cat-submit-text">
-        <strong>Vous ne trouvez pas l'outil qu'il vous faut ?</strong>
-        <p>Proposez un outil et aidez la communauté à découvrir les meilleures solutions IA.</p>
+        <strong>${u('submitTitle', langue)}</strong>
+        <p>${u('submitText', langue)}</p>
       </div>
-      <a href="${root}index.html#tools" class="btn-main">Soumettre un outil +</a>
+      <a href="${R}index.html#tools" class="btn-main">${u('submitBtn', langue)}</a>
     </div>
 
   </div>
 </main>
 
-${genererFooter(root)}
+${footerHTML()}
+${sharedJS ? sharedJS() : ''}
 
 <script>
-  // Données embarquées au build par gen-fiches.js — la page fonctionne
-  // sans appel Firestore pour la liste d'outils (rapide + indexable).
   window.CATEGORY_TOOLS = ${toolsJson};
-  window.CATEGORY_META  = { name: ${JSON.stringify(name)}, slug: ${JSON.stringify(slug)} };
+  window.CATEGORY_META  = { name: ${JSON.stringify(cat.name)}, slug: ${JSON.stringify(cat.slug)}, langue: ${JSON.stringify(langue)} };
   function partagerPage() {
     if (navigator.share) {
       navigator.share({ title: document.title, url: window.location.href }).catch(() => {});
     } else {
       navigator.clipboard?.writeText(window.location.href);
-      alert('Lien copié !');
+      alert('✓');
     }
   }
 </script>
-<script src="${root}js/i18n.js"></script>
-<script src="${root}js/app.js"></script>
+<script src="${R}js/i18n.js"></script>
+<script src="${R}js/app.js"></script>
 </body>
 </html>`;
 }
 
-// Carte outil pré-rendue côté serveur (SSR) — markup identique à
-// buildToolCard() dans app.js, dupliqué ici volontairement : ce fichier
-// tourne côté Node (gen-fiches.js) et n'a pas accès à state.langue /
-// catColors du navigateur. categorie-page.js remplace ce HTML par un
-// rendu identique via buildToolCard() dès que le JS est prêt (hydratation),
-// donc toute dérive entre les deux gabarits reste invisible pour l'utilisateur.
-function buildToolCardSSR(t) {
-  const priceLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
-  const slug = slugify(t.name) || String(t.id || '');
-  const iconHtml = t.favicon
-    ? `<img src="${escHtml(t.favicon)}" alt="${escHtml(t.name)}" class="tool-favicon">`
-    : `<span class="tool-ico-fallback">${t.emoji || '✨'}</span>`;
-  const pageUrl = t.slugFiche ? `${slugify(t.name)}.html` : (t.url || '#');
+function genererSelecteurLangue(langueUrls, langueActuelle) {
+  const labels = { fr: 'FR', en: 'EN', es: 'ES' };
+  const ordre = ['fr', 'en', 'es'].filter(l => langueUrls[l]);
+  if (ordre.length < 2) return '';
+  return `<div class="cat-lang-switch">
+    ${ordre.map(l => l === langueActuelle
+      ? `<span class="cat-lang-current">${labels[l]}</span>`
+      : `<a href="${langueUrls[l]}" class="cat-lang-link">${labels[l]}</a>`
+    ).join('')}
+  </div>`;
+}
 
-  return `      <article class="tool-card" data-tool-slug="${slug}" onclick="window.location.href='${escHtml(pageUrl)}'">
+function buildToolCardSSR(t, langue) {
+  const priceLabels = {
+    fr: { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' },
+    en: { free: 'Free',    freemium: 'Freemium', paid: 'Paid' },
+    es: { free: 'Gratis',  freemium: 'Freemium', paid: 'De pago' },
+  };
+  const priceLabel = priceLabels[langue] || priceLabels.fr;
+  const slug = slugifyFallback(t.name) || String(t.id || '');
+  const iconHtml = t.favicon
+    ? `<img src="${t.favicon}" alt="${t.name}" class="tool-favicon">`
+    : `<span class="tool-ico-fallback">${t.emoji || '✨'}</span>`;
+  const pageUrl = t.url || '#';
+
+  return `      <article class="tool-card" data-tool-slug="${slug}" onclick="window.location.href='${pageUrl}'">
         <div class="tool-head">
           <div class="tool-ico">${iconHtml}</div>
           <div style="flex:1">
-            <div class="tool-name">${escHtml(t.name)}</div>
-            <div class="tool-cat">${escHtml(t.category)}</div>
+            <div class="tool-name">${t.name}</div>
+            <div class="tool-cat">${t.category}</div>
           </div>
         </div>
-        <p class="tool-desc">${escHtml(t.description)}</p>
+        <p class="tool-desc">${t.description || ''}</p>
         <div class="tool-foot">
           <span class="price-tag price-${t.price}">${priceLabel[t.price] || ''}</span>
           <span class="tool-rating-badge" data-slug="${slug}"></span>
@@ -272,74 +371,9 @@ function buildToolCardSSR(t) {
       </article>`;
 }
 
-function genererNav(root) {
-  return `<nav>
-  <div class="logo">
-    <a href="${root}index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none">
-      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-        <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
-        <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-        <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
-        <text x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
-      </svg>
-    </a>
-  </div>
-  <div class="nav-links">
-    <a href="${root}index.html" class="nav-link">Accueil</a>
-    <a href="${root}index.html#tools" class="nav-link active">Outils</a>
-    <a href="${root}index.html#blog" class="nav-link">Blog</a>
-    <a href="${root}index.html#gallery" class="nav-link">Galerie</a>
-  </div>
-  <div class="lang-selector">
-    <button class="lang-btn active">FR</button>
-  </div>
-  <a href="${root}index.html#tools" class="nav-cta">Soumettre un outil +</a>
-</nav>`;
-}
-
-function genererFooter(root) {
-  return `<footer class="site-footer">
-  <div class="footer-top">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="footer-logo">
-            <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg" height="30" aria-label="Albexia">
-              <polygon points="14,2 24,32 4,32" fill="none" stroke="#ff6b9d" stroke-width="2" stroke-linejoin="round"/>
-              <polygon points="14,10 21,30 7,30" fill="#ff6b9d" opacity="0.2"/>
-              <circle cx="14" cy="24" r="2.5" fill="#ff6b9d"/>
-              <text x="32" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
-            </svg>
-          </div>
-          <p style="color:var(--text-dim);font-size:13px;max-width:260px">Le meilleur annuaire d'outils IA pour booster votre productivité.</p>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-title">Plateforme</div>
-          <a class="footer-link" href="${root}index.html">Accueil</a>
-          <a class="footer-link" href="${root}index.html#tools">Tous les outils</a>
-          <a class="footer-link" href="${root}index.html#tools">Catégories</a>
-          <a class="footer-link" href="${root}index.html#tools">Soumettre un outil</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-title">Ressources</div>
-          <a class="footer-link" href="${root}index.html#blog">Blog</a>
-          <a class="footer-link" href="${root}glossaire/">Glossaire</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-title">Entreprise</div>
-          <a class="footer-link" href="${root}contact.html">Contact</a>
-          <a class="footer-link" href="${root}mentions-legales.html">Mentions légales</a>
-          <a class="footer-link" href="${root}politique-confidentialite.html">Confidentialité</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="container footer-bottom-inner">
-      <span class="footer-copy">&copy; 2025-2026 Albexia — Tous droits réservés</span>
-    </div>
-  </div>
-</footer>`;
-}
-
-module.exports = { genererPageCategorie, CATEGORY_META, CATEGORY_DESCRIPTIONS, slugify };
+module.exports = {
+  genererPagesCategories,
+  genererPageCategorie,
+  CATEGORY_META,
+  CATEGORY_I18N,
+};

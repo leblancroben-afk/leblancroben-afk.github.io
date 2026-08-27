@@ -130,6 +130,14 @@
   letter-spacing: -0.03em; margin-bottom: 8px;
 }
 .hub-header p { color: var(--text-muted); font-size: 15px; }
+
+.hub-stats-bar {
+  display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 32px;
+}
+.hub-section-title {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+  margin-bottom: 16px;
+}
 .hub-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 12px; margin-top: 24px;

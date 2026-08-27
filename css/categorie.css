@@ -5,15 +5,6 @@
 
 .cat-page { padding: 24px 0 60px; }
 
-/* Fil d'Ariane */
-.cat-breadcrumb {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  font-size: 13px; color: var(--text-dim); margin-bottom: 20px;
-}
-.cat-breadcrumb a { color: var(--text-dim); text-decoration: none; }
-.cat-breadcrumb a:hover { color: var(--text); }
-.cat-breadcrumb span[aria-current] { color: var(--text); font-weight: 500; }
-
 /* Hero */
 .cat-hero {
   display: flex; justify-content: space-between; align-items: center; gap: 32px;
@@ -34,31 +25,9 @@
 }
 .cat-hero-title {
   font-family: 'Syne', sans-serif; font-weight: 800; font-size: 34px;
-  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 4px;
+  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 10px;
 }
-.cat-hero-count { color: var(--cat-color); font-weight: 700; font-size: 15px; margin-bottom: 12px; }
-.cat-hero-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 560px; margin-bottom: 20px; }
-.cat-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.cat-hero-actions .btn-main { text-decoration: none; display: inline-flex; align-items: center; }
-
-/* Sélecteur de langue = vrais liens vers /categorie/{langue}/{slug}/,
-   pas de bouton JS (contrairement à l'accueil). N'apparaît que si au
-   moins 2 langues existent pour cette catégorie. */
-.cat-lang-switch {
-  display: flex; gap: 4px; margin-top: 14px;
-}
-.cat-lang-switch a,
-.cat-lang-switch span {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.03em;
-  padding: 4px 9px; border-radius: 6px; text-decoration: none;
-}
-.cat-lang-current {
-  background: rgba(108,99,255,0.18); color: #a8a3ff;
-}
-.cat-lang-link {
-  color: var(--text-dim); border: 1px solid var(--border);
-}
-.cat-lang-link:hover { color: var(--text); border-color: var(--border-hover); }
+.cat-hero-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 560px; }
 
 .cat-hero-illustration {
   flex-shrink: 0; position: relative; width: 220px; height: 200px;
@@ -124,4 +93,57 @@
 @media (max-width: 480px) {
   .cat-hero-main { flex-direction: column; }
   .cat-hero-icon { width: 56px; height: 56px; font-size: 26px; }
+}
+
+/* Section "Catégories populaires" en bas de page catégorie */
+.cat-popular { margin: 40px 0 8px; }
+.cat-popular-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.cat-popular-head h2 {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+}
+.cat-popular-all {
+  font-size: 13px; font-weight: 600; color: #a8a3ff; text-decoration: none;
+  white-space: nowrap;
+}
+.cat-popular-all:hover { text-decoration: underline; }
+.cat-popular-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+.pop-cat-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px 10px; text-decoration: none; text-align: center; transition: all .15s;
+}
+.pop-cat-tile:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+.pop-cat-icon { font-size: 24px; }
+.pop-cat-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.pop-cat-count { font-size: 10px; color: var(--text-dim); }
+
+/* Page hub /categorie/{langue}/ */
+.hub-header { padding: 24px 0 20px; text-align: center; }
+.hub-header h1 {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px;
+  letter-spacing: -0.03em; margin-bottom: 8px;
+}
+.hub-header p { color: var(--text-muted); font-size: 15px; }
+.hub-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px; margin-top: 24px;
+}
+.hub-cat-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 12px; text-decoration: none; text-align: center; transition: all .15s;
+}
+.hub-cat-tile:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+.hub-cat-icon { font-size: 32px; }
+.hub-cat-name { font-size: 14px; font-weight: 700; color: var(--text); }
+.hub-cat-count { font-size: 11px; color: var(--text-dim); }
+
+@media (max-width: 480px) {
+  .hub-header h1 { font-size: 24px; }
 }

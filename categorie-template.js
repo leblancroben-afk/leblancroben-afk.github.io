@@ -154,7 +154,9 @@ function genererPagesCategories(tousLesOutils, helpers) {
   for (const [cat, parLangue] of parCategorie) {
     for (const [langue, outils] of parLangue) {
       if (!parLangueGlobal.has(langue)) parLangueGlobal.set(langue, []);
-      parLangueGlobal.get(langue).push({ name: cat, slug: slugParCat.get(cat), count: outils.length });
+      const notesCat = outils.map(t => (typeof t.note === 'number' ? t.note : (typeof t.rating === 'number' ? t.rating : null))).filter(n => n !== null);
+      const noteMoyenneCat = notesCat.length ? notesCat.reduce((a, b) => a + b, 0) / notesCat.length : null;
+      parLangueGlobal.get(langue).push({ name: cat, slug: slugParCat.get(cat), count: outils.length, noteMoyenne: noteMoyenneCat });
     }
   }
 
@@ -384,6 +386,13 @@ function genererPageHub(langue, categories, helpers) {
   const tri = [...categories].sort((a, b) => b.count - a.count);
   const total = tri.reduce((s, c) => s + c.count, 0);
 
+  // Moyenne pondérée par le nombre d'outils de chaque catégorie — vraie
+  // donnée calculée depuis t.note, pas un chiffre décoratif.
+  const catsAvecNote = tri.filter(c => c.noteMoyenne !== null);
+  const noteGlobale = catsAvecNote.length
+    ? catsAvecNote.reduce((s, c) => s + c.noteMoyenne * c.count, 0) / catsAvecNote.reduce((s, c) => s + c.count, 0)
+    : null;
+
   const titre = { fr: 'Toutes les catégories', en: 'All categories', es: 'Todas las categorías' }[langue] || 'Toutes les catégories';
   const sousTitre = {
     fr: "Explorez toutes nos catégories d'outils IA",
@@ -393,6 +402,10 @@ function genererPageHub(langue, categories, helpers) {
   const searchPh = {
     fr: 'Rechercher une catégorie...', en: 'Search a category...', es: 'Buscar una categoría...',
   }[langue] || 'Rechercher une catégorie...';
+  const statToolsLabel = { fr: 'Outils au total', en: 'Total tools', es: 'Herramientas en total' }[langue] || 'Outils au total';
+  const statCatsLabel  = { fr: 'Catégories', en: 'Categories', es: 'Categorías' }[langue] || 'Catégories';
+  const statRatingLabel = { fr: 'Note moyenne', en: 'Average rating', es: 'Valoración media' }[langue] || 'Note moyenne';
+  const popularLabel = { fr: 'Catégories populaires', en: 'Popular categories', es: 'Categorías populares' }[langue] || 'Catégories populaires';
 
   const langueUrls = {};
   // Le hub existe pour chaque langue ayant ≥1 catégorie — on ne peut pas
@@ -439,6 +452,23 @@ ${navHTML(langue)}
       <input class="search-input" id="hub-search" type="text" placeholder="${escHtml(searchPh)}" autocomplete="off">
     </div>
 
+    <div class="hub-stats-bar">
+      <div class="cat-stat">
+        <span class="cat-stat-ico">▦</span>
+        <div><strong>${total}</strong><span>${statToolsLabel}</span></div>
+      </div>
+      <div class="cat-stat">
+        <span class="cat-stat-ico">☰</span>
+        <div><strong>${tri.length}</strong><span>${statCatsLabel}</span></div>
+      </div>
+      ${noteGlobale !== null ? `
+      <div class="cat-stat">
+        <span class="cat-stat-ico">✦</span>
+        <div><strong>${noteGlobale.toFixed(1)}</strong><span>${statRatingLabel}</span></div>
+      </div>` : ''}
+    </div>
+
+    <h2 class="hub-section-title">${popularLabel}</h2>
     <div class="hub-grid" id="hub-grid">
       ${tuiles}
     </div>

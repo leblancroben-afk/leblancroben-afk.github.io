@@ -316,11 +316,24 @@ async function loadJSON(path) {
 
 async function loadAllData() {
   // Pages catégorie statiques générées par gen-fiches.js : les outils de la
-  // catégorie sont déjà embarqués dans le HTML (window.CATEGORY_TOOLS) pour
-  // le SEO et la vitesse — inutile de retélécharger tout Firestore ici.
-  // Le reste de l'app (blog/galerie) n'a pas de sens sur ces pages.
+  // catégorie (une seule langue par page désormais — vraies URLs par langue,
+  // voir categorie-template.js) sont déjà embarqués dans le HTML
+  // (window.CATEGORY_TOOLS) pour le SEO et la vitesse — inutile de
+  // retélécharger tout Firestore ici. Le reste de l'app (blog/galerie) n'a
+  // pas de sens sur ces pages.
   if (window.CATEGORY_TOOLS) {
     state.tools = window.CATEGORY_TOOLS;
+    // La langue est fixée par l'URL de la page, pas par le choix du visiteur
+    // (localStorage) — sinon un visiteur FR qui atterrit sur /categorie/en/seo/
+    // verrait sa grille filtrée à vide par filtrerParLangue().
+    if (window.CATEGORY_META && window.CATEGORY_META.langue) {
+      state.langue = window.CATEGORY_META.langue;
+      // js/i18n.js applique automatiquement detecterLangue() (préférence du
+      // visiteur) sur DOMContentLoaded, avant que ce bloc ne s'exécute — ça
+      // écrase <html lang="..."> avec la mauvaise valeur sur une page dont
+      // la langue est fixée par l'URL. On la restaure ici explicitement.
+      document.documentElement.lang = state.langue;
+    }
     state.activeToolCat = (window.CATEGORY_TOOLS[0] && window.CATEGORY_TOOLS[0].category) || 'Tous';
     renderTools();
     return;
@@ -871,9 +884,12 @@ function renderCatConfirmBar(cat, count) {
 // ═══════════════════════════════════════
 
 function renderBlog() {
+  const filtersEl = document.getElementById('blog-filters');
+  if (!filtersEl) return; // page sans section blog (ex: page catégorie statique)
+
   const blogLangue = filtrerParLangue(state.blog);
   const cats = ['Tous', ...new Set(blogLangue.map(p => p.category))];
-  document.getElementById('blog-filters').innerHTML = cats.map(c =>
+  filtersEl.innerHTML = cats.map(c =>
     `<button class="filter${c === state.activeBlogCat ? ' active' : ''}"
       onclick="setBlogCat('${c}')">${c}</button>`
   ).join('');
@@ -928,11 +944,14 @@ function setBlogCat(cat) {
 // ═══════════════════════════════════════
 
 function renderGallery() {
+  const filtersEl = document.getElementById('gallery-filters');
+  if (!filtersEl) return; // page sans galerie (ex: page catégorie statique)
+
   const types = ['Tous', 'image', 'vidéo', 'musique'];
   const typeLabels = { Tous: 'Tous', image: 'Image', vidéo: 'Vidéo', musique: 'Musique' };
   const typeIcons  = { image: '🖼', vidéo: '▶', musique: '♪' };
 
-  document.getElementById('gallery-filters').innerHTML = types.map(t =>
+  filtersEl.innerHTML = types.map(t =>
     `<button class="filter${t === state.activeGalleryCat ? ' active' : ''}"
       onclick="setGalleryCat('${t}')">${typeLabels[t]}</button>`
   ).join('');

@@ -54,13 +54,14 @@
 
   <button class="comp-filters-btn" id="comp-filters-btn" aria-expanded="false">
     <span>⚙️ Filtres &amp; outils</span>
-    <span class="cfb-count" id="cfb-count"></span>
+    <span class="cfb-right">
+      <span class="cfb-count" id="cfb-count"></span>
+      <span class="cfb-chevron">˅</span>
+    </span>
   </button>
-  <div class="comp-sidebar-backdrop" id="comp-sidebar-backdrop"></div>
 
   <aside class="comp-sidebar" id="comp-sidebar">
-    <div class="sidebar-close" id="sidebar-close">✕</div>
-
+   <div class="sidebar-inner">
     <div class="sidebar-block">
       <div class="sidebar-block-title">Ajouter des outils</div>
       <div class="comp-search">
@@ -78,6 +79,13 @@
         <div class="select-wrap">
           <select id="f-cat" onchange="applyFilters()"></select>
         </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Tarification</div>
+        <label class="filter-check"><input type="checkbox" id="f-gratuit" onchange="applyFilters()"> Gratuit</label>
+        <label class="filter-check"><input type="checkbox" id="f-freemium" onchange="applyFilters()"> Freemium</label>
+        <label class="filter-check"><input type="checkbox" id="f-paid" onchange="applyFilters()"> Payant</label>
       </div>
 
       <div class="filter-group">
@@ -102,6 +110,17 @@
 
       <button class="filter-reset" onclick="resetFilters()">Réinitialiser les filtres</button>
     </div>
+
+    <div class="sidebar-block sidebar-block--toggle">
+      <label class="toggle-switch-wrap">
+        <span class="toggle-label">Voir uniquement les différences</span>
+        <span class="toggle-switch">
+          <input type="checkbox" id="diff-toggle" onchange="toggleDiffOnly()">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+    </div>
+   </div>
   </aside>
 
   <main class="comp-main">
@@ -116,16 +135,6 @@
     </div>
 
     <div class="comp-result" id="comp-result">
-      <div class="comp-result-head">
-        <label class="toggle-switch-wrap">
-          <span class="toggle-switch">
-            <input type="checkbox" id="diff-toggle" onchange="toggleDiffOnly()">
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-          </span>
-          <span class="toggle-label">Voir uniquement les différences</span>
-        </label>
-      </div>
-
       <div class="comp-cards-row" id="comp-cards-row"></div>
 
       <div class="comp-table-wrap">
@@ -208,11 +217,19 @@ function applyFilters(){
   const q = normaliser(document.getElementById('comp-search-input').value);
   const cat = document.getElementById('f-cat').value || 'Tous';
   const lang = document.getElementById('f-lang').value;
+  const wantGratuit = document.getElementById('f-gratuit').checked;
+  const wantFreemium = document.getElementById('f-freemium').checked;
+  const wantPaid = document.getElementById('f-paid').checked;
+  const anyPriceChecked = wantGratuit || wantFreemium || wantPaid;
   filteredTools = TOOLS_DATA.filter(t=>{
     const matchCat = cat==='Tous' || t.category===cat;
     const matchQ = !q || normaliser(t.name).includes(q) || normaliser(t.category).includes(q);
     const matchLang = lang==='toutes' || (lang==='fr' && t.langue_fr===true) || (lang==='en');
-    return matchCat && matchQ && matchLang;
+    const matchPrice = !anyPriceChecked
+      || (wantGratuit && t.price==='free')
+      || (wantFreemium && t.price==='freemium')
+      || (wantPaid && t.price==='paid');
+    return matchCat && matchQ && matchLang && matchPrice;
   });
   renderPicker();
 }
@@ -221,6 +238,9 @@ function resetFilters(){
   document.getElementById('f-cat').value = 'Tous';
   document.getElementById('f-lang').value = 'toutes';
   document.getElementById('f-integrations').value = 'toutes';
+  document.getElementById('f-gratuit').checked = false;
+  document.getElementById('f-freemium').checked = false;
+  document.getElementById('f-paid').checked = false;
   document.getElementById('comp-search-input').value = '';
   applyFilters();
 }
@@ -369,19 +389,17 @@ function renderReco(){
   `).join('');
 }
 
-function openSidebar(){
-  document.getElementById('comp-sidebar').classList.add('open');
-  document.getElementById('comp-sidebar-backdrop').classList.add('show');
-  document.getElementById('comp-filters-btn').setAttribute('aria-expanded','true');
+function toggleSidebar(){
+  const open = document.getElementById('comp-sidebar').classList.toggle('open');
+  document.getElementById('comp-filters-btn').classList.toggle('open', open);
+  document.getElementById('comp-filters-btn').setAttribute('aria-expanded', open);
 }
 function closeSidebar(){
   document.getElementById('comp-sidebar').classList.remove('open');
-  document.getElementById('comp-sidebar-backdrop').classList.remove('show');
+  document.getElementById('comp-filters-btn').classList.remove('open');
   document.getElementById('comp-filters-btn').setAttribute('aria-expanded','false');
 }
-document.getElementById('comp-filters-btn').addEventListener('click', openSidebar);
-document.getElementById('sidebar-close').addEventListener('click', closeSidebar);
-document.getElementById('comp-sidebar-backdrop').addEventListener('click', closeSidebar);
+document.getElementById('comp-filters-btn').addEventListener('click', toggleSidebar);
 
 document.getElementById('comp-search-input').addEventListener('input',applyFilters);
 initFilters(); applyFilters(); renderReco();

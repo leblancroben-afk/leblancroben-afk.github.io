@@ -13,7 +13,7 @@
   <meta property="og:url"         content="https://albexia.com/comparateur/index.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
@@ -45,10 +45,9 @@
   </div>
 </nav>
 
-<section class="comp-hero comp-hero--compact">
-  <div class="comp-badge">⚖️ Comparateur d'outils IA</div>
-  <h1>Trouvez <span class="grad">le meilleur outil</span> pour vous</h1>
-  <p>Sélectionnez jusqu'à 4 outils et comparez-les côte à côte.</p>
+<section class="comp-hero comp-hero--sober">
+  <h1>Comparateur d'outils IA</h1>
+  <p>Comparez jusqu'à 4 outils IA pour trouver celui qui correspond le mieux à vos besoins.</p>
 </section>
 
 <div class="comp-layout">
@@ -76,18 +75,29 @@
 
       <div class="filter-group">
         <div class="filter-label">Catégories</div>
-        <div class="comp-cat-filters comp-cat-filters--sidebar" id="comp-cats"></div>
-      </div>
-
-      <div class="filter-group">
-        <div class="filter-label">Tarification</div>
-        <label class="filter-check"><input type="checkbox" id="f-freemium" onchange="applyFilters()"> Freemium</label>
-        <label class="filter-check"><input type="checkbox" id="f-paid" onchange="applyFilters()"> Payant</label>
+        <div class="select-wrap">
+          <select id="f-cat" onchange="applyFilters()"></select>
+        </div>
       </div>
 
       <div class="filter-group">
         <div class="filter-label">Langue</div>
-        <label class="filter-check"><input type="checkbox" id="f-langue-fr" onchange="applyFilters()"> Français disponible</label>
+        <div class="select-wrap">
+          <select id="f-lang" onchange="applyFilters()">
+            <option value="toutes">Toutes</option>
+            <option value="fr">Français disponible</option>
+            <option value="en">Anglais</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Intégrations</div>
+        <div class="select-wrap">
+          <select id="f-integrations" onchange="applyFilters()">
+            <option value="toutes">Toutes</option>
+          </select>
+        </div>
       </div>
 
       <button class="filter-reset" onclick="resetFilters()">Réinitialiser les filtres</button>
@@ -107,10 +117,12 @@
 
     <div class="comp-result" id="comp-result">
       <div class="comp-result-head">
-        <div class="comp-result-title" id="comp-result-title"></div>
-        <label class="filter-toggle">
-          <input type="checkbox" id="diff-toggle" onchange="toggleDiffOnly()">
-          <span>Voir uniquement les différences</span>
+        <label class="toggle-switch-wrap">
+          <span class="toggle-switch">
+            <input type="checkbox" id="diff-toggle" onchange="toggleDiffOnly()">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+          <span class="toggle-label">Voir uniquement les différences</span>
         </label>
       </div>
 
@@ -127,12 +139,17 @@
       <div class="paires-title">Duels populaires</div>
       <div class="duel-carousel" id="paires-grid">
         <a href="/comparateur/zapier-vs-make/index.html" class="duel-card">
-          <div class="paire-logos">
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=zapier.com" alt="Zapier" onerror="this.style.display='none'">
-            <span class="paire-vs">VS</span>
-            <img src="https://www.google.com/s2/favicons?sz=64&domain=make.com" alt="Make" onerror="this.style.display='none'">
+          <div class="duel-tools">
+            <div class="duel-tool">
+              <img src="https://www.google.com/s2/favicons?sz=64&domain=zapier.com" alt="Zapier" class="duel-logo" onerror="this.style.display='none'">
+              <span class="duel-tool-name">Zapier</span>
+            </div>
+            <span class="duel-vs">VS</span>
+            <div class="duel-tool">
+              <img src="https://www.google.com/s2/favicons?sz=64&domain=make.com" alt="Make" class="duel-logo" onerror="this.style.display='none'">
+              <span class="duel-tool-name">Make</span>
+            </div>
           </div>
-          <span class="duel-names">Zapier vs Make</span>
           <span class="duel-cta">Voir le duel →</span>
         </a>
       </div>
@@ -158,16 +175,18 @@
 
 <script>
 /* ═══════════════════════════════════════════
-   DONNÉES — à terme, charger depuis Firestore
-   (collection `outils`) plutôt qu'un tableau statique.
-   Champs optionnels non présents actuellement dans les données réelles :
-   `editeur` (éditeur/société) et `avis` (nombre d'avis) — affichés seulement
-   s'ils existent, jamais inventés.
+   DONNÉES — à terme, charger depuis Firestore (collection `outils`).
+   Champs listés ci-dessous mais ABSENTS de TOOLS_DATA aujourd'hui :
+   description, modele_gratuit, langues (liste), acces_web,
+   generation_images, telechargement_fichiers, integrations, avis.
+   Ils s'affichent en "—" tant qu'ils ne sont pas renseignés — rien n'est inventé.
    ═══════════════════════════════════════════ */
 const TOOLS_DATA = [{"id":1,"name":"Harvey","emoji":"⚖️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.harvey.ai","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Cabinets d'avocats et équipes juridiques d'entreprise","note":0,"lien_affilie":"https://www.harvey.ai"},{"id":10,"name":"Mutiny","emoji":"🧭","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.mutinyhq.com","category":"Marketing","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Équipes marketing B2B SaaS pratiquant l'account-based marketing","note":0,"lien_affilie":"https://www.mutinyhq.com"},{"id":11,"name":"Phrasee","emoji":"✒️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=phrasee.co","category":"Marketing","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Grandes marques et retailers gérant des campagnes e-mail et push à grande échelle","note":0,"lien_affilie":"https://phrasee.co"},{"id":12,"name":"Surfer SEO","emoji":"🏄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=surferseo.com","category":"SEO","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":true,"api":true,"mobile":false,"ideal_pour":"Blogueurs, agences et équipes de contenu produisant 10 à 100+ articles par mois","note":0,"lien_affilie":"https://surferseo.com"},{"id":13,"name":"SE Ranking","emoji":"📊","favicon":"https://www.google.com/s2/favicons?sz=64&domain=seranking.com","category":"SEO","price":"freemium","essai_gratuit":true,"duree_essai":"14 jours","langue_fr":true,"api":true,"mobile":true,"ideal_pour":"PME et agences cherchant un outil SEO complet à prix accessible","note":4.3,"lien_affilie":"https://seranking.com"},{"id":14,"name":"Clearscope","emoji":"📝","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.clearscope.io","category":"SEO","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Équipes de contenu et agences avec une cadence de publication régulière","note":0,"lien_affilie":"https://www.clearscope.io"},{"id":15,"name":"WordLift","emoji":"🕸️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=wordlift.io","category":"SEO","price":"paid","essai_gratuit":true,"duree_essai":"14 jours","langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Sites WordPress cherchant à renforcer leur SEO sémantique et leur visibilité dans les réponses IA","note":0,"lien_affilie":"https://wordlift.io"},{"id":16,"name":"MarketMuse","emoji":"🧠","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.marketmuse.com","category":"SEO","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Équipes de contenu et SEO stratégique gérant des sites à fort volume d'articles","note":0,"lien_affilie":"https://www.marketmuse.com"},{"id":17,"name":"ChatGPT","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com","category":"Contenu","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Tous publics","note":4.7,"lien_affilie":"https://chatgpt.com"},{"id":18,"name":"Claude","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=claude.ai","category":"Code","price":"freemium","essai_gratuit":null,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Professionnels, Développeurs, Rédacteurs","note":4.6,"lien_affilie":"https://claude.ai"},{"id":19,"name":"Midjourney","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=midjourney.com","category":"Design 3D","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":false,"mobile":false,"ideal_pour":"Designers, Artistes, Créatifs, Graphistes","note":0,"lien_affilie":"https://midjourney.com"},{"id":2,"name":"Luminance","emoji":"📄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.luminance.com","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":true,"api":false,"mobile":false,"ideal_pour":"Directions juridiques d'entreprise et cabinets à fort volume de contrats","note":0,"lien_affilie":"https://www.luminance.com"},{"id":20,"name":"Make","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=make.com","category":"Automatisation","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":true,"api":true,"mobile":false,"ideal_pour":"Entreprises, Growth Hackers, Product Managers, Freelances","note":0,"lien_affilie":"https://make.com"},{"id":21,"name":"perplexity.ai","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=perplexity.ai","category":"Recherche","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":null,"api":null,"mobile":null,"ideal_pour":"Chercheurs, Étudiants, Journalistes","note":4.4,"lien_affilie":"https://perplexity.ai"},{"id":22,"name":"Runway","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=runwayml.com","category":"Vidéo","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":null,"api":null,"mobile":null,"ideal_pour":"Vidéastes, Réalisateurs, Motion Designers, Agences de pub","note":0,"lien_affilie":"https://runwayml.com"},{"id":24,"name":"Gamma","emoji":"📊","favicon":"https://www.google.com/s2/favicons?sz=64&domain=gamma.app","category":"Présentation","price":"freemium","essai_gratuit":null,"duree_essai":null,"langue_fr":true,"api":null,"mobile":false,"ideal_pour":"Professionnels, formateurs et créateurs de contenu","note":0,"lien_affilie":"https://gamma.app"},{"id":25,"name":"Gemini ai","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com","category":"Productivité","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Professionnels et particuliers cherchant un assistant connecté à l'écosystème Google","note":4.5,"lien_affilie":"https://gemini.google.com"},{"id":26,"name":"Canva","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.canva.com","category":"Contenu","price":"freemium","essai_gratuit":true,"duree_essai":"30 jours","langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Créateurs de contenu, marketeurs, entrepreneurs et enseignants.","note":0,"lien_affilie":"https://www.canva.com/"},{"id":27,"name":"TestOutilAlbexia","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=example.com","category":"Texte","price":"freemium","essai_gratuit":null,"duree_essai":null,"langue_fr":null,"api":null,"mobile":null,"ideal_pour":"","note":0,"lien_affilie":"https://example.com"},{"id":3,"name":"CoCounsel","emoji":"🔎","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.thomsonreuters.com","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":false,"mobile":false,"ideal_pour":"Avocats et équipes juridiques d'entreprise ayant besoin d'une recherche jurisprudentielle fiable","note":0,"lien_affilie":"https://www.thomsonreuters.com/en/cocounsel"},{"id":4,"name":"Kira Systems","emoji":"🧬","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.litera.com","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Grands cabinets et équipes juridiques traitant un fort volume de due diligence","note":0,"lien_affilie":"https://www.litera.com/products/kira"},{"id":5,"name":"Juri'Predis","emoji":"⚖️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=juripredis.com","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":true,"api":false,"mobile":false,"ideal_pour":"Avocats et cabinets français cherchant une aide stratégique en jurisprudence","note":0,"lien_affilie":"https://juripredis.com"},{"id":6,"name":"Gumloop","emoji":"🔁","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.gumloop.com","category":"Marketing","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Équipes marketing, ventes et opérations voulant automatiser des tâches répétitives","note":0,"lien_affilie":"https://www.gumloop.com"},{"id":7,"name":"AdCreative.ai","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai","category":"Marketing","price":"paid","essai_gratuit":true,"duree_essai":"7 jours","langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Équipes marketing et agences gérant des campagnes publicitaires à fort volume","note":0,"lien_affilie":"https://www.adcreative.ai"},{"id":8,"name":"Albert","emoji":"🎛️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=albert.ai","category":"Marketing","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":false,"mobile":false,"ideal_pour":"Grandes marques et agences avec un budget publicitaire important (généralement 50 000$+/mois)","note":0,"lien_affilie":"https://albert.ai"},{"id":9,"name":"Brand24","emoji":"📡","favicon":"https://www.google.com/s2/favicons?sz=64&domain=brand24.com","category":"Marketing","price":"paid","essai_gratuit":true,"duree_essai":"14 jours","langue_fr":false,"api":true,"mobile":true,"ideal_pour":"Équipes marketing et communication suivant leur réputation en ligne","note":0,"lien_affilie":"https://brand24.com"}];
 
+const PRICE_LABELS = { freemium:'Freemium', paid:'Payant', free:'Gratuit' };
+
 const MAX_SELECTION = 4;
-let selected = [], filteredTools = [...TOOLS_DATA], activeCategory = 'Tous';
+let selected = [], filteredTools = [...TOOLS_DATA];
 
 function normaliser(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
 function slugify(name){ return normaliser(name).replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
@@ -180,42 +199,29 @@ function logoOrFallback(t, cls, fbCls){
     : `<span class="${fbCls}">${t.emoji}</span>`;
 }
 
-function initCats(){
+function initFilters(){
   const cats = ['Tous', ...new Set(TOOLS_DATA.map(t=>t.category).filter(Boolean))];
-  const el = document.getElementById('comp-cats');
-  el.innerHTML = cats.map(c=>`<button class="comp-cat-btn${c==='Tous'?' active':''}" data-cat="${c}">${c}</button>`).join('');
-  el.querySelectorAll('.comp-cat-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      activeCategory=btn.dataset.cat;
-      el.querySelectorAll('.comp-cat-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      applyFilters();
-    });
-  });
+  document.getElementById('f-cat').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 
 function applyFilters(){
   const q = normaliser(document.getElementById('comp-search-input').value);
-  const wantFreemium = document.getElementById('f-freemium').checked;
-  const wantPaid = document.getElementById('f-paid').checked;
-  const wantFr = document.getElementById('f-langue-fr').checked;
+  const cat = document.getElementById('f-cat').value || 'Tous';
+  const lang = document.getElementById('f-lang').value;
   filteredTools = TOOLS_DATA.filter(t=>{
-    const matchCat = activeCategory==='Tous' || t.category===activeCategory;
+    const matchCat = cat==='Tous' || t.category===cat;
     const matchQ = !q || normaliser(t.name).includes(q) || normaliser(t.category).includes(q);
-    const matchPrice = (!wantFreemium && !wantPaid) || (wantFreemium && t.price==='freemium') || (wantPaid && t.price==='paid');
-    const matchFr = !wantFr || t.langue_fr===true;
-    return matchCat && matchQ && matchPrice && matchFr;
+    const matchLang = lang==='toutes' || (lang==='fr' && t.langue_fr===true) || (lang==='en');
+    return matchCat && matchQ && matchLang;
   });
   renderPicker();
 }
 
 function resetFilters(){
-  document.getElementById('f-freemium').checked = false;
-  document.getElementById('f-paid').checked = false;
-  document.getElementById('f-langue-fr').checked = false;
+  document.getElementById('f-cat').value = 'Tous';
+  document.getElementById('f-lang').value = 'toutes';
+  document.getElementById('f-integrations').value = 'toutes';
   document.getElementById('comp-search-input').value = '';
-  activeCategory = 'Tous';
-  document.querySelectorAll('.comp-cat-btn').forEach(b=>b.classList.toggle('active', b.dataset.cat==='Tous'));
   applyFilters();
 }
 
@@ -254,15 +260,25 @@ function renderChips(){
   document.getElementById('cfb-count').textContent = selected.length>0 ? selected.length : '';
 }
 
+/* Table complète alignée sur la maquette light — les champs non présents
+   dans TOOLS_DATA affichent "—" plutôt que d'être inventés. */
 const CRITERES = [
-  ['Prix de base',       t=>t.price||'—',                    false],
-  ['Essai gratuit',      t=>t.essai_gratuit,                 true],
-  ["Durée d'essai",      t=>t.duree_essai||'—',              false],
-  ['Support français',   t=>t.langue_fr,                     true],
-  ['API disponible',     t=>t.api,                           true],
-  ['App mobile',         t=>t.mobile,                        true],
-  ['Idéal pour',         t=>t.ideal_pour||'—',               false],
-  ['Note Albexia',       t=>t.note?t.note+'/5':'—',          false],
+  ['Description',            t=>t.description||'—',                          false],
+  ['Catégorie',               t=>t.category||'—',                             false],
+  ['Prix',                    t=>PRICE_LABELS[t.price]||t.price||'—',         false],
+  ['Modèle gratuit',          t=>t.modele_gratuit ?? null,                    true],
+  ['Essai gratuit',           t=>t.essai_gratuit,                             true],
+  ["Durée d'essai",           t=>t.duree_essai||'—',                          false],
+  ['Langues',                 t=>t.langues||'—',                              false],
+  ['Support français',        t=>t.langue_fr,                                 true],
+  ['Accès web',                t=>t.acces_web ?? null,                        true],
+  ["Génération d'images",     t=>t.generation_images ?? null,                 true],
+  ['Téléchargement fichiers', t=>t.telechargement_fichiers ?? null,           true],
+  ['API',                     t=>t.api,                                       true],
+  ['Intégrations',            t=>t.integrations||'—',                         false],
+  ['Application mobile',      t=>t.mobile,                                    true],
+  ['Idéal pour',              t=>t.ideal_pour||'—',                           false],
+  ['Note Albexia',            t=>t.note?t.note+'/5':'—',                      false],
 ];
 
 function afficherComparaison(){
@@ -270,9 +286,7 @@ function afficherComparaison(){
   if(outils.length<2) return;
 
   const result=document.getElementById('comp-result');
-  document.getElementById('comp-result-title').textContent=outils.map(t=>t.name).join(' vs ');
 
-  /* Cartes — hauteur égale garantie par CSS Grid (stretch par défaut) + flex column interne */
   document.getElementById('comp-cards-row').style.setProperty('--n-tools', outils.length);
   document.getElementById('comp-cards-row').innerHTML = outils.map(t=>{
     const note = t.note && t.note>0
@@ -284,13 +298,12 @@ function afficherComparaison(){
       <div class="ct-cat">${t.category||''}</div>
       ${note}
       <div class="ct-actions">
-        <a href="${t.lien_affilie}" target="_blank" rel="noopener sponsored" class="ct-btn ct-btn-primary">Visiter le site ↗</a>
+        <a href="${t.lien_affilie}" target="_blank" rel="noopener sponsored" class="ct-btn ct-btn-primary">Visiter le site</a>
         <a href="${ficheUrl(t)}" class="ct-btn ct-btn-secondary">Voir la fiche</a>
       </div>
     </div>`;
   }).join('');
 
-  /* Tableau */
   let thead='<thead><tr><th>Critère</th>';
   outils.forEach(t=>{ thead+=`<th class="tool-col">${logoOrFallback(t,'th-logo','th-logo-fallback')}${t.name}</th>`; });
   thead+='</tr></thead>';
@@ -301,7 +314,7 @@ function afficherComparaison(){
     const allSame = vals.every(v => String(v)===String(vals[0]));
     tbody+=`<tr data-diff="${allSame?0:1}"><td class="crit-col">${label}</td>`;
     vals.forEach(val=>{
-      if(isBool){ tbody+=val===true?'<td><span class="yes">✓</span></td>':val===false?'<td><span class="no">✗</span></td>':'<td><span style="color:var(--text-dim)">—</span></td>'; }
+      if(isBool){ tbody+=val===true?'<td><span class="yes">✓</span></td>':val===false?'<td><span class="no">✗</span></td>':'<td><span class="dash">—</span></td>'; }
       else { tbody+=`<td>${val}</td>`; }
     });
     tbody+='</tr>';
@@ -326,9 +339,6 @@ function resetComparaison(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ── Notre recommandation ──
-   Calculée depuis TOOLS_DATA.note (aucun outil ne peut occuper 2 slots).
-   À terme, ces 4 emplacements pourront être curatés manuellement. */
 function renderReco(){
   const notes = TOOLS_DATA.filter(t=>t.note && t.note>0);
   if(notes.length===0){
@@ -359,7 +369,6 @@ function renderReco(){
   `).join('');
 }
 
-/* ── Sidebar mobile ── */
 function openSidebar(){
   document.getElementById('comp-sidebar').classList.add('open');
   document.getElementById('comp-sidebar-backdrop').classList.add('show');
@@ -375,7 +384,7 @@ document.getElementById('sidebar-close').addEventListener('click', closeSidebar)
 document.getElementById('comp-sidebar-backdrop').addEventListener('click', closeSidebar);
 
 document.getElementById('comp-search-input').addEventListener('input',applyFilters);
-initCats(); applyFilters(); renderReco();
+initFilters(); applyFilters(); renderReco();
 </script>
 <script>
   const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');

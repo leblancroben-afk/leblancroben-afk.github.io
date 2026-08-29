@@ -1488,6 +1488,41 @@ nav .logo { display: flex; align-items: center; }
 .paire-logos img { width:18px; height:18px; border-radius:4px; object-fit:contain; }
 .paire-vs { font-size:9px; color:var(--text-dim); font-weight:700; letter-spacing:0.08em; }
 
+/* ── COMPARATEUR : cartes outils + recommandations ── */
+.comp-cards-row { display:grid; gap:12px; margin-bottom:20px; grid-template-columns:repeat(var(--n-tools,2),1fr); }
+
+.comp-tool-card { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:22px 16px; text-align:center; }
+.comp-tool-card .ct-logo, .comp-tool-card .ct-logo-fallback { width:48px; height:48px; border-radius:12px; object-fit:contain; margin:0 auto 10px; background:var(--bg3); display:flex; align-items:center; justify-content:center; font-size:24px; }
+.comp-tool-card .ct-name { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:4px; }
+.comp-tool-card .ct-cat { font-size:10.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px; }
+.comp-tool-card .ct-note { font-size:12px; font-weight:600; color:var(--accent-amber); margin-bottom:14px; }
+.comp-tool-card .ct-note.empty { color:var(--text-dim); font-weight:400; }
+.comp-tool-card .ct-actions { display:flex; flex-direction:column; gap:6px; }
+
+.ct-btn { display:block; text-decoration:none; font-size:12.5px; font-weight:600; padding:8px 10px; border-radius:8px; transition:all .15s; border:1px solid; }
+.ct-btn-primary { background:rgba(255,107,157,0.12); border-color:rgba(255,107,157,0.3); color:var(--accent2); }
+.ct-btn-primary:hover { background:rgba(255,107,157,0.2); }
+.ct-btn-secondary { background:transparent; border-color:var(--border); color:var(--text-muted); }
+.ct-btn-secondary:hover { border-color:var(--border-hover); color:var(--text); }
+
+.reco-section { max-width:900px; margin:0 auto 64px; padding:0 32px; }
+.reco-title { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-dim); margin-bottom:4px; }
+.reco-sub { font-size:12.5px; color:var(--text-dim); margin-bottom:16px; }
+.reco-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+.reco-card { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:16px; text-decoration:none; display:block; transition:all .15s; }
+.reco-card:hover { border-color:rgba(255,107,157,0.3); transform:translateY(-2px); }
+.reco-label { font-size:10.5px; font-weight:700; letter-spacing:0.04em; padding:3px 9px; border-radius:6px; display:inline-block; margin-bottom:10px; }
+.reco-label.gold { background:rgba(245,166,35,0.12); color:var(--accent-amber); }
+.reco-label.mint { background:rgba(0,212,170,0.12); color:var(--accent3); }
+.reco-label.purple { background:rgba(108,99,255,0.12); color:#a8a3ff; }
+.reco-label.pink { background:rgba(255,107,157,0.12); color:var(--accent2); }
+.reco-tool { display:flex; align-items:center; gap:8px; }
+.reco-tool img, .reco-tool .reco-fallback { width:26px; height:26px; border-radius:7px; object-fit:contain; background:var(--bg3); display:flex; align-items:center; justify-content:center; font-size:14px; }
+.reco-tool-name { font-size:13.5px; font-weight:600; color:var(--text); }
+
+.comp-empty { text-align:center; padding:32px 0; color:var(--text-dim); font-size:13px; }
+.comp-empty a { color:var(--accent2); }
+
 /* ── PAGES STATIQUES (/comparer/) ── */
 .comparer-hero { padding:56px 32px 40px; text-align:center; max-width:900px; margin:0 auto; }
 .comparer-hero h1 { font-family:'Syne',sans-serif; font-size:clamp(26px,4vw,44px); font-weight:800; letter-spacing:-0.03em; margin-bottom:12px; }
@@ -1542,12 +1577,14 @@ nav .logo { display: flex; align-items: center; }
 
 /* ── RESPONSIVE COMPARATEUR ── */
 @media (max-width:768px) {
-  .comp-hero,.comp-selection,.selected-bar,.comp-result,.paires-section { padding-left:20px; padding-right:20px; }
+  .comp-hero,.comp-selection,.selected-bar,.comp-result,.paires-section,.reco-section { padding-left:20px; padding-right:20px; }
   .comp-hero { padding-top:48px; }
   .tools-header { flex-direction:column; gap:12px; }
   .vs-divider { transform:rotate(90deg); }
   .table-wrap,.verdict-wrap,.cta-wrap { padding-left:20px; padding-right:20px; }
   .comparer-hero { padding:40px 20px 28px; }
+  .comp-cards-row { grid-template-columns:repeat(2,1fr); gap:8px; }
+  .comp-tool-card { padding:16px 10px; }
 }
 
 /* ════════════════════════════════════════

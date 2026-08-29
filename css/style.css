@@ -1540,10 +1540,10 @@ nav .logo { display: flex; align-items: center; }
 .comp-main .reco-section { margin-bottom:0; }
 
 .comp-filters-btn { display:none; align-items:center; justify-content:space-between; width:calc(100% - 40px); margin:0 20px 16px; background:var(--bg2); border:1px solid var(--border); color:var(--text); font-size:13px; font-weight:600; padding:12px 16px; border-radius:12px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.cfb-right { display:flex; align-items:center; gap:8px; }
 .cfb-count { background:var(--accent2); color:#fff; font-size:11px; font-weight:700; padding:1px 8px; border-radius:20px; min-width:18px; text-align:center; }
-.comp-sidebar-backdrop { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:200; }
-.comp-sidebar-backdrop.show { display:block; }
-.sidebar-close { display:none; }
+.cfb-chevron { color:var(--text-dim); font-size:13px; transition:transform .2s; }
+.comp-filters-btn.open .cfb-chevron { transform:rotate(180deg); }
 
 .sidebar-block { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:18px; margin-bottom:16px; position:sticky; top:16px; }
 .sidebar-block:last-child { margin-bottom:0; }
@@ -1567,7 +1567,9 @@ nav .logo { display: flex; align-items: center; }
 
 .comp-result-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
 .comp-result-head .comp-result-title { margin-bottom:0; }
-.toggle-switch-wrap { display:flex; align-items:center; gap:10px; cursor:pointer; }
+.toggle-switch-wrap { display:flex; align-items:center; justify-content:space-between; gap:10px; cursor:pointer; }
+.sidebar-block--toggle { background:rgba(108,99,255,0.08); border-color:rgba(108,99,255,0.25); padding:14px 16px; }
+.sidebar-block--toggle .toggle-label { color:#a8a3ff; font-weight:500; }
 .toggle-switch { position:relative; display:inline-block; width:38px; height:22px; }
 .toggle-switch input { position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer; z-index:1; }
 .toggle-track { position:absolute; inset:0; background:var(--bg3); border:1px solid var(--border); border-radius:20px; transition:background .2s,border-color .2s; }
@@ -1581,7 +1583,7 @@ nav .logo { display: flex; align-items: center; }
 .duel-carousel { display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; scroll-snap-type:x proximity; }
 .duel-carousel::-webkit-scrollbar { height:4px; }
 .duel-carousel::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:2px; }
-.duel-card { flex:0 0 220px; scroll-snap-align:start; display:flex; flex-direction:column; gap:10px; background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:16px; text-decoration:none; color:var(--text); transition:all .2s; }
+.duel-card { flex:0 0 170px; scroll-snap-align:start; display:flex; flex-direction:column; gap:8px; background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:12px; text-decoration:none; color:var(--text); transition:all .2s; }
 .duel-card:hover { border-color:rgba(108,99,255,0.4); background:rgba(108,99,255,0.06); }
 .duel-tools { display:flex; align-items:center; justify-content:center; gap:10px; }
 .duel-tool { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; min-width:0; }
@@ -1591,13 +1593,13 @@ nav .logo { display: flex; align-items: center; }
 .duel-cta { font-size:11.5px; color:var(--accent2); font-weight:600; text-align:center; }
 
 @media (max-width:900px) {
-  .comp-layout { grid-template-columns:1fr; padding:0; }
+  .comp-layout { grid-template-columns:1fr; padding:0 20px; }
   .comp-filters-btn { display:flex; }
-  .comp-sidebar { position:fixed; top:0; left:0; bottom:0; width:min(320px,86vw); background:var(--bg); border-right:1px solid var(--border); z-index:210; padding:20px; overflow-y:auto; transform:translateX(-100%); transition:transform .25s ease; }
-  .comp-sidebar.open { transform:translateX(0); }
-  .sidebar-close { display:block; text-align:right; font-size:18px; color:var(--text-dim); cursor:pointer; margin-bottom:12px; }
+  .comp-sidebar { display:grid; grid-template-rows:0fr; overflow:hidden; transition:grid-template-rows .25s ease; }
+  .comp-sidebar .sidebar-inner { min-height:0; }
+  .comp-sidebar.open { grid-template-rows:1fr; margin-bottom:16px; }
   .sidebar-block { position:static; }
-  .comp-main { padding:0 20px; }
+  .comp-main { padding:0; }
 }
 
 /* ── PAGES STATIQUES (/comparer/) ── */

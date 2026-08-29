@@ -1467,9 +1467,10 @@ nav .logo { display: flex; align-items: center; }
 .comp-table th.tool-col { font-size:14px; letter-spacing:0; color:var(--text); text-transform:none; font-weight:600; }
 .comp-table th.tool-col .th-logo { width:32px; height:32px; border-radius:8px; object-fit:contain; display:block; margin:0 auto 6px; background:var(--bg3); }
 .comp-table th.tool-col .th-logo-fallback { width:32px; height:32px; border-radius:8px; background:var(--bg3); display:flex; align-items:center; justify-content:center; font-size:18px; margin:0 auto 6px; }
-.comp-table td { padding:13px 14px; border-bottom:1px solid var(--border); font-size:13px; text-align:center; transition:background .15s; }
-.comp-table tr:hover td { background:rgba(255,255,255,0.02); }
-.comp-table td.crit-col { text-align:left; color:var(--text-muted); font-weight:400; background:var(--bg2); }
+.comp-table td { padding:13px 14px; border-bottom:1px solid var(--border); font-size:13px; text-align:center; color:var(--text); transition:background .15s; }
+.comp-table tr:hover td { background:rgba(255,255,255,0.03); }
+.comp-table td.crit-col { text-align:left; color:var(--text); font-weight:500; background:var(--bg3); }
+.comp-table td .dash { color:var(--text-dim); }
 .yes { color:#00d4aa; font-weight:700; font-size:16px; }
 .no  { color:#ff4d4d; font-weight:700; font-size:16px; }
 .comp-cta-row { display:flex; gap:8px; justify-content:center; margin-top:24px; flex-wrap:wrap; }
@@ -1525,8 +1526,10 @@ nav .logo { display: flex; align-items: center; }
 .comp-empty a { color:var(--accent2); }
 
 /* ── COMPARATEUR : layout sidebar + filtres (maquette de référence) ── */
-.comp-hero--compact { padding:40px 32px 24px; }
-.comp-hero--compact::before { display:none; }
+.comp-hero--sober { padding:36px 32px 20px; text-align:left; max-width:1200px; }
+.comp-hero--sober::before { display:none; }
+.comp-hero--sober h1 { font-family:'DM Sans',sans-serif; font-size:26px; font-weight:700; letter-spacing:-0.01em; color:var(--text); margin-bottom:8px; }
+.comp-hero--sober p { margin:0; max-width:none; text-align:left; }
 
 .comp-layout { max-width:1200px; margin:0 auto; padding:0 32px 24px; display:grid; grid-template-columns:260px 1fr; gap:28px; align-items:start; }
 .comp-main { min-width:0; }
@@ -1547,8 +1550,12 @@ nav .logo { display: flex; align-items: center; }
 .sidebar-block-title { font-family:'Syne',sans-serif; font-size:12.5px; font-weight:700; letter-spacing:0.04em; margin-bottom:12px; }
 
 .tools-picker--sidebar { grid-template-columns:1fr; max-height:280px; }
-.comp-cat-filters--sidebar { flex-direction:column; align-items:flex-start; }
-.comp-cat-filters--sidebar .comp-cat-btn { width:100%; text-align:left; border-radius:8px; }
+
+.select-wrap { position:relative; }
+.select-wrap::after { content:'˅'; position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text-dim); font-size:13px; pointer-events:none; }
+.select-wrap select { width:100%; appearance:none; -webkit-appearance:none; background:var(--bg3); border:1px solid var(--border); color:var(--text); font-size:13px; font-family:'DM Sans',sans-serif; padding:9px 30px 9px 12px; border-radius:10px; cursor:pointer; transition:border-color .15s; }
+.select-wrap select:hover, .select-wrap select:focus { border-color:var(--border-hover); outline:none; }
+.select-wrap select option { background:var(--bg2); color:var(--text); }
 
 .filter-group { margin-bottom:16px; }
 .filter-group:last-of-type { margin-bottom:14px; }
@@ -1560,18 +1567,28 @@ nav .logo { display: flex; align-items: center; }
 
 .comp-result-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
 .comp-result-head .comp-result-title { margin-bottom:0; }
-.filter-toggle { display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--text-muted); cursor:pointer; }
-.filter-toggle input { accent-color:var(--accent2); width:15px; height:15px; }
+.toggle-switch-wrap { display:flex; align-items:center; gap:10px; cursor:pointer; }
+.toggle-switch { position:relative; display:inline-block; width:38px; height:22px; }
+.toggle-switch input { position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer; z-index:1; }
+.toggle-track { position:absolute; inset:0; background:var(--bg3); border:1px solid var(--border); border-radius:20px; transition:background .2s,border-color .2s; }
+.toggle-thumb { position:absolute; top:2px; left:2px; width:16px; height:16px; background:var(--text-dim); border-radius:50%; transition:transform .2s,background .2s; }
+.toggle-switch input:checked ~ .toggle-track { background:rgba(255,107,157,0.25); border-color:rgba(255,107,157,0.5); }
+.toggle-switch input:checked ~ .toggle-track .toggle-thumb { transform:translateX(16px); background:var(--accent2); }
+.toggle-label { font-size:12.5px; color:var(--text-muted); }
 .comp-table tbody tr[data-diff="0"] { display:none; }
 .comp-table:not(.diff-only) tbody tr[data-diff="0"] { display:table-row; }
 
 .duel-carousel { display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; scroll-snap-type:x proximity; }
 .duel-carousel::-webkit-scrollbar { height:4px; }
 .duel-carousel::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:2px; }
-.duel-card { flex:0 0 200px; scroll-snap-align:start; display:flex; flex-direction:column; gap:8px; background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:14px 16px; text-decoration:none; color:var(--text); transition:all .2s; }
+.duel-card { flex:0 0 220px; scroll-snap-align:start; display:flex; flex-direction:column; gap:10px; background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:16px; text-decoration:none; color:var(--text); transition:all .2s; }
 .duel-card:hover { border-color:rgba(108,99,255,0.4); background:rgba(108,99,255,0.06); }
-.duel-names { font-size:13px; font-weight:500; }
-.duel-cta { font-size:11.5px; color:var(--accent2); font-weight:600; }
+.duel-tools { display:flex; align-items:center; justify-content:center; gap:10px; }
+.duel-tool { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; min-width:0; }
+.duel-logo { width:32px; height:32px; border-radius:8px; object-fit:contain; background:var(--bg3); }
+.duel-tool-name { font-size:11.5px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+.duel-vs { font-size:10px; font-weight:700; color:var(--text-dim); flex-shrink:0; }
+.duel-cta { font-size:11.5px; color:var(--accent2); font-weight:600; text-align:center; }
 
 @media (max-width:900px) {
   .comp-layout { grid-template-columns:1fr; padding:0; }

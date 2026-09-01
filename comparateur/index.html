@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Comparateur d'outils IA — Comparaisons détaillées | Albexia</title>
-  <meta name="description" content="Comparez les meilleurs outils IA côte à côte : fonctionnalités, prix, avis. 1 comparaisons détaillées sur Albexia." />
+  <meta name="description" content="Comparez jusqu'à 4 outils IA côte à côte : fonctionnalités, prix, avis. 1 comparaisons détaillées sur Albexia." />
   <meta name="robots" content="index, follow" />
 
   <link rel="canonical" href="https://albexia.com/comparateur/index.html" />
@@ -12,15 +12,14 @@
   
 
   <meta property="og:title"       content="Comparateur d'outils IA — Comparaisons détaillées | Albexia" />
-  <meta property="og:description" content="Comparez les meilleurs outils IA côte à côte : fonctionnalités, prix, avis. 1 comparaisons détaillées sur Albexia." />
+  <meta property="og:description" content="Comparez jusqu'à 4 outils IA côte à côte : fonctionnalités, prix, avis. 1 comparaisons détaillées sur Albexia." />
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://albexia.com/comparateur/index.html" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/comparer.css" />
 </head>
 <body>
 
@@ -52,42 +51,117 @@
   </div>
 </nav>
 
-<section class="comp-hero">
-  <div class="comp-badge">⚖️ Comparez les outils IA</div>
-  <h1>Trouvez <span class="grad">le meilleur outil</span><br>pour vous</h1>
-  <p>Sélectionnez 2 ou 3 outils et comparez-les côte à côte en quelques secondes.</p>
+<section class="comp-hero comp-hero--sober">
+  <h1>Comparateur d'outils IA</h1>
+  <p>Comparez jusqu'à 4 outils IA pour trouver celui qui correspond le mieux à vos besoins.</p>
 </section>
 
-<div class="comp-selection">
-  <div class="comp-search">
-    <span class="comp-search-icon">🔍</span>
-    <input type="text" id="comp-search-input" placeholder="Rechercher un outil… (ex: Jasper, Canva, Runway)">
-  </div>
-  <div class="comp-cat-filters" id="comp-cats"></div>
-  <div class="tools-picker" id="tools-picker"></div>
-</div>
+<div class="comp-layout">
 
-<div class="selected-bar">
-  <div class="selected-bar-inner">
-    <div class="selected-chips" id="selected-chips">
-      <span class="selected-hint" id="selected-hint">Sélectionnez 2 ou 3 outils ci-dessus</span>
+  <button class="comp-filters-btn" id="comp-filters-btn" aria-expanded="false">
+    <span>⚙️ Filtres &amp; outils</span>
+    <span class="cfb-right"><span class="cfb-count" id="cfb-count"></span><span class="cfb-chevron">˅</span></span>
+  </button>
+
+  <aside class="comp-sidebar" id="comp-sidebar">
+   <div class="sidebar-inner">
+    <div class="sidebar-block">
+      <div class="sidebar-block-title">Ajouter des outils</div>
+      <div class="comp-search">
+        <span class="comp-search-icon">🔍</span>
+        <input type="text" id="comp-search-input" placeholder="Rechercher un outil…">
+      </div>
+      <div class="tools-picker tools-picker--sidebar" id="tools-picker"></div>
     </div>
-    <button class="comp-btn" id="comp-btn" disabled onclick="afficherComparaison()">Comparer →</button>
-  </div>
-</div>
 
-<div class="comp-result" id="comp-result">
-  <div class="comp-result-title" id="comp-result-title"></div>
-  <div class="comp-table-wrap">
-    <table class="comp-table" id="comp-table"></table>
-  </div>
-  <div class="comp-cta-row" id="comp-cta-row"></div>
-  <span class="comp-reset" onclick="resetComparaison()">← Nouvelle comparaison</span>
-</div>
+    <div class="sidebar-block">
+      <div class="sidebar-block-title">Filtres rapides</div>
 
-<div class="paires-section">
-  <div class="paires-title">Comparaisons populaires (1)</div>
-  <div class="paires-grid" id="paires-grid">
+      <div class="filter-group">
+        <div class="filter-label">Catégories</div>
+        <div class="select-wrap"><select id="f-cat" onchange="applyFilters()"></select></div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Tarification</div>
+        <label class="filter-check"><input type="checkbox" id="f-gratuit" onchange="applyFilters()"> Gratuit</label>
+        <label class="filter-check"><input type="checkbox" id="f-freemium" onchange="applyFilters()"> Freemium</label>
+        <label class="filter-check"><input type="checkbox" id="f-paid" onchange="applyFilters()"> Payant</label>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Langue</div>
+        <div class="select-wrap">
+          <select id="f-lang" onchange="applyFilters()">
+            <option value="toutes">Toutes</option>
+            <option value="fr">Français disponible</option>
+            <option value="en">Anglais</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Intégrations</div>
+        <div class="select-wrap">
+          <select id="f-integrations" onchange="applyFilters()"><option value="toutes">Toutes</option></select>
+        </div>
+      </div>
+
+      <button class="filter-reset" onclick="resetFilters()">Réinitialiser les filtres</button>
+    </div>
+
+    <div class="sidebar-block sidebar-block--toggle">
+      <label class="toggle-switch-wrap">
+        <span class="toggle-label">Voir uniquement les différences</span>
+        <span class="toggle-switch">
+          <input type="checkbox" id="diff-toggle" onchange="toggleDiffOnly()">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+    </div>
+   </div>
+  </aside>
+
+  <main class="comp-main">
+
+    <div class="selected-bar">
+      <div class="selected-bar-inner">
+        <div class="selected-chips" id="selected-chips">
+          <span class="selected-hint" id="selected-hint">Sélectionnez 2 à 4 outils</span>
+        </div>
+        <button class="comp-btn" id="comp-btn" disabled onclick="afficherComparaison()">Comparer →</button>
+      </div>
+    </div>
+
+    <div class="comp-result" id="comp-result">
+      <div class="comp-cards-row" id="comp-cards-row"></div>
+      <div class="comp-table-wrap"><table class="comp-table" id="comp-table"></table></div>
+      <span class="comp-reset" onclick="resetComparaison()">← Nouvelle comparaison</span>
+    </div>
+
+    <div class="paires-section">
+      <div class="paires-title">Duels populaires</div>
+      <div class="duel-carousel" id="paires-grid">
+<a href="/comparateur/zapier-vs-make/index.html" class="duel-card">
+      <div class="duel-tools">
+        <div class="duel-tool"><img src="https://www.google.com/s2/favicons?sz=64&domain=zapier.com" alt="Zapier" class="duel-logo" onerror="this.style.display='none'"><span class="duel-tool-name">Zapier</span></div>
+        <span class="duel-vs">VS</span>
+        <div class="duel-tool"><img src="https://www.google.com/s2/favicons?sz=64&domain=make.com" alt="Make" class="duel-logo" onerror="this.style.display='none'"><span class="duel-tool-name">Make</span></div>
+      </div>
+      <span class="duel-cta">Voir le duel →</span>
+    </a>
+      </div>
+    </div>
+
+    <div class="reco-section">
+      <div class="reco-title">Notre recommandation</div>
+      <div class="reco-sub">Basée sur nos critères et les avis de la communauté.</div>
+      <div class="reco-grid" id="reco-grid"></div>
+    </div>
+
+    <div class="paires-section">
+      <div class="paires-title">Toutes les comparaisons (1)</div>
+      <div class="paires-grid-seo">
 <a href="/comparateur/zapier-vs-make/index.html" class="paire-link">
     <div class="paire-logos">
       <img src="https://www.google.com/s2/favicons?sz=64&domain=zapier.com" alt="Zapier" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span style="display:none">⚡</span>
@@ -97,8 +171,11 @@
     <span style="flex:1;font-size:12px">Zapier vs Make</span>
     <span style="color:var(--text-dim);font-size:11px">→</span>
   </a>
-  </div>
-  
+      </div>
+      
+    </div>
+
+  </main>
 </div>
 
 <footer>
@@ -110,51 +187,68 @@
   </div>
 </footer>
 <script>
-const TOOLS_DATA = [{"id":1,"name":"Harvey","emoji":"⚖️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.harvey.ai","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Cabinets d'avocats et équipes juridiques d'entreprise","note":0,"lien_affilie":"https://www.harvey.ai"},{"id":10,"name":"Mutiny","emoji":"🧭","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.mutinyhq.com","category":"Marketing","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Équipes marketing B2B SaaS pratiquant l'account-based marketing","note":0,"lien_affilie":"https://www.mutinyhq.com"},{"id":11,"name":"Phrasee","emoji":"✒️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=phrasee.co","category":"Marketing","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Grandes marques et retailers gérant des campagnes e-mail et push à grande échelle","note":0,"lien_affilie":"https://phrasee.co"},{"id":12,"name":"Surfer SEO","emoji":"🏄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=surferseo.com","category":"SEO","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":true,"api":true,"mobile":false,"ideal_pour":"Blogueurs, agences et équipes de contenu produisant 10 à 100+ articles par mois","note":0,"lien_affilie":"https://surferseo.com"},{"id":"12-en","name":"Surf SEO","emoji":"🏄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=surferseo.com","category":"SEO","price":"paid","essai_gratuit":null,"duree_essai":null,"langue_fr":true,"api":true,"mobile":false,"ideal_pour":"Bloggers, agencies and content teams producing 10 to 100+ items per month","note":0,"lien_affilie":"https://surferseo.com"},{"id":13,"name":"SE Ranking","emoji":"📊","favicon":"https://www.google.com/s2/favicons?sz=64&domain=seranking.com","category":"SEO","price":"freemium","essai_gratuit":true,"duree_essai":"14 jours","langue_fr":true,"api":true,"mobile":true,"ideal_pour":"PME et agences cherchant un outil SEO complet à prix accessible","note":0,"lien_affilie":"https://seranking.com"},{"id":14,"name":"Clearscope","emoji":"📝","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.clearscope.io","category":"SEO","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Équipes de contenu et agences avec une cadence de publication régulière","note":0,"lien_affilie":"https://www.clearscope.io"},{"id":15,"name":"WordLift","emoji":"🕸️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=wordlift.io","category":"SEO","price":"paid","essai_gratuit":true,"duree_essai":"14 jours","langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Sites WordPress cherchant à renforcer leur SEO sémantique et leur visibilité dans les réponses IA","note":0,"lien_affilie":"https://wordlift.io"},{"id":16,"name":"MarketMuse","emoji":"🧠","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.marketmuse.com","category":"SEO","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Équipes de contenu et SEO stratégique gérant des sites à fort volume d'articles","note":0,"lien_affilie":"https://www.marketmuse.com"},{"id":17,"name":"ChatGPT","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com","category":"Contenu","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Tous publics","note":0,"lien_affilie":"https://chatgpt.com"},{"id":18,"name":"Claude","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=claude.ai","category":"Code","price":"freemium","essai_gratuit":null,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Professionnels, Développeurs, Rédacteurs","note":0,"lien_affilie":"https://claude.ai"},{"id":19,"name":"Midjourney","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=midjourney.com","category":"Design 3D","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":false,"mobile":false,"ideal_pour":"Designers, Artistes, Créatifs, Graphistes","note":0,"lien_affilie":"https://midjourney.com"},{"id":"19-en","name":"Midday","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=midjourney.com","category":"Design 3D","price":"paid","essai_gratuit":null,"duree_essai":null,"langue_fr":false,"api":false,"mobile":false,"ideal_pour":"Designers, Artists, Creatives, Graphics","note":0,"lien_affilie":"https://midjourney.com"},{"id":"19-es","name":"Medio día","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=midjourney.com","category":"Design 3D","price":"paid","essai_gratuit":null,"duree_essai":null,"langue_fr":false,"api":false,"mobile":false,"ideal_pour":"Diseñadores, Artistas, Creativos, Gráficos","note":0,"lien_affilie":"https://midjourney.com"},{"id":2,"name":"Luminance","emoji":"📄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.luminance.com","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":true,"api":false,"mobile":false,"ideal_pour":"Directions juridiques d'entreprise et cabinets à fort volume de contrats","note":0,"lien_affilie":"https://www.luminance.com"},{"id":20,"name":"Make","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=make.com","category":"Automatisation","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":true,"api":true,"mobile":false,"ideal_pour":"Entreprises, Growth Hackers, Product Managers, Freelances","note":0,"lien_affilie":"https://make.com"},{"id":21,"name":"perplexity.ai","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=perplexity.ai","category":"Recherche","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":null,"api":null,"mobile":null,"ideal_pour":"Chercheurs, Étudiants, Journalistes","note":0,"lien_affilie":"https://perplexity.ai"},{"id":22,"name":"Runway","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=runwayml.com","category":"Vidéo","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":null,"api":null,"mobile":null,"ideal_pour":"Vidéastes, Réalisateurs, Motion Designers, Agences de pub","note":0,"lien_affilie":"https://runwayml.com"},{"id":24,"name":"Gamma","emoji":"📊","favicon":"https://www.google.com/s2/favicons?sz=64&domain=gamma.app","category":"Présentation","price":"freemium","essai_gratuit":null,"duree_essai":null,"langue_fr":true,"api":null,"mobile":false,"ideal_pour":"Professionnels, formateurs et créateurs de contenu","note":null,"lien_affilie":"https://gamma.app"},{"id":25,"name":"Gemini ai","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com","category":"Productivité","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Professionnels et particuliers cherchant un assistant connecté à l'écosystème Google","note":null,"lien_affilie":"https://gemini.google.com"},{"id":"25-en","name":"Gemini","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com","category":"Productivité","price":"freemium","essai_gratuit":null,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Professionals and individuals looking for an assistant connected to the Google ecosystem","note":0,"lien_affilie":"https://gemini.google.com"},{"id":26,"name":"Canva","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.canva.com","category":"Contenu","price":"freemium","essai_gratuit":true,"duree_essai":"30 jours","langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Créateurs de contenu, marketeurs, entrepreneurs et enseignants.","note":null,"lien_affilie":"https://www.canva.com/"},{"id":27,"name":"TestOutilAlbexia","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=example.com","category":"Texte","price":"freemium","essai_gratuit":null,"duree_essai":null,"langue_fr":null,"api":null,"mobile":null,"ideal_pour":"","note":0,"lien_affilie":"https://example.com"},{"id":3,"name":"CoCounsel","emoji":"🔎","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.thomsonreuters.com","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":false,"mobile":false,"ideal_pour":"Avocats et équipes juridiques d'entreprise ayant besoin d'une recherche jurisprudentielle fiable","note":0,"lien_affilie":"https://www.thomsonreuters.com/en/cocounsel"},{"id":4,"name":"Kira Systems","emoji":"🧬","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.litera.com","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Grands cabinets et équipes juridiques traitant un fort volume de due diligence","note":0,"lien_affilie":"https://www.litera.com/products/kira"},{"id":5,"name":"Juri'Predis","emoji":"⚖️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=juripredis.com","category":"Juridique","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":true,"api":false,"mobile":false,"ideal_pour":"Avocats et cabinets français cherchant une aide stratégique en jurisprudence","note":0,"lien_affilie":"https://juripredis.com"},{"id":6,"name":"Gumloop","emoji":"🔁","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.gumloop.com","category":"Marketing","price":"freemium","essai_gratuit":true,"duree_essai":null,"langue_fr":false,"api":true,"mobile":false,"ideal_pour":"Équipes marketing, ventes et opérations voulant automatiser des tâches répétitives","note":0,"lien_affilie":"https://www.gumloop.com"},{"id":7,"name":"AdCreative.ai","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai","category":"Marketing","price":"paid","essai_gratuit":true,"duree_essai":"7 jours","langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Équipes marketing et agences gérant des campagnes publicitaires à fort volume","note":0,"lien_affilie":"https://www.adcreative.ai"},{"id":"7-en","name":"Creative. a","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai","category":"Marketing","price":"paid","essai_gratuit":null,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Marketing teams and agencies managing high volume advertising campaigns","note":0,"lien_affilie":"https://www.adcreative.ai"},{"id":"7-es","name":"Creativo. a","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai","category":"Marketing","price":"paid","essai_gratuit":null,"duree_essai":null,"langue_fr":true,"api":true,"mobile":true,"ideal_pour":"Equipos y agencias de marketing gestionan campañas publicitarias de alto volumen","note":0,"lien_affilie":"https://www.adcreative.ai"},{"id":8,"name":"Albert","emoji":"🎛️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=albert.ai","category":"Marketing","price":"paid","essai_gratuit":false,"duree_essai":null,"langue_fr":false,"api":false,"mobile":false,"ideal_pour":"Grandes marques et agences avec un budget publicitaire important (généralement 50 000$+/mois)","note":0,"lien_affilie":"https://albert.ai"},{"id":9,"name":"Brand24","emoji":"📡","favicon":"https://www.google.com/s2/favicons?sz=64&domain=brand24.com","category":"Marketing","price":"paid","essai_gratuit":true,"duree_essai":"14 jours","langue_fr":false,"api":true,"mobile":true,"ideal_pour":"Équipes marketing et communication suivant leur réputation en ligne","note":0,"lien_affilie":"https://brand24.com"}];
+const TOOLS_DATA = [{"id":1,"name":"Harvey","emoji":"⚖️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.harvey.ai","category":"Juridique","description":"Harvey est une IA juridique conçue pour les cabinets d'avocats et directions juridiques d'entreprise. Elle assiste la recherche réglementaire, l'analyse de contrats et le due diligence complexe.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Cabinets d'avocats et équipes juridiques d'entreprise","note":0,"lien_affilie":"https://www.harvey.ai","fiche_url":"/tools/starter/fr/harvey/"},{"id":10,"name":"Mutiny","emoji":"🧭","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.mutinyhq.com","category":"Marketing","description":"Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Équipes marketing B2B SaaS pratiquant l'account-based marketing","note":0,"lien_affilie":"https://www.mutinyhq.com","fiche_url":"/tools/standard/fr/mutiny/"},{"id":11,"name":"Phrasee","emoji":"✒️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=phrasee.co","category":"Marketing","description":"Phrasee génère et optimise la micro-copie marketing (objets d'e-mails, notifications push) en s'appuyant sur les neurosciences cognitives. L'IA respecte la voix de marque tout en boostant l'engagement.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Grandes marques et retailers gérant des campagnes e-mail et push à grande échelle","note":0,"lien_affilie":"https://phrasee.co","fiche_url":"/tools/standard/fr/phrasee/"},{"id":12,"name":"Surfer SEO","emoji":"🏄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=surferseo.com","category":"SEO","description":"Surfer SEO analyse en temps réel les contenus les mieux classés sur Google pour guider la rédaction et l'optimisation de vos articles. Son Content Editor propose un score dynamique et un suivi de visibilité dans les moteurs IA.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Blogueurs, agences et équipes de contenu produisant 10 à 100+ articles par mois","note":0,"lien_affilie":"https://surferseo.com","fiche_url":"/tools/starter/fr/surfer-seo/"},{"id":"12-en","name":"Surf SEO","emoji":"🏄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=surferseo.com","category":"SEO","description":"Surfing SEO analyzes in real time the best ranked content on Google to guide the writing and optimization of your articles. Its Content Editor offers dynamic score and visibility tracking in IA engines.","price":"paid","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Bloggers, agencies and content teams producing 10 to 100+ items per month","note":0,"lien_affilie":"https://surferseo.com","fiche_url":"/tools/starter/en/surf-seo/"},{"id":13,"name":"SE Ranking","emoji":"📊","favicon":"https://www.google.com/s2/favicons?sz=64&domain=seranking.com","category":"SEO","description":"SE Ranking est une plateforme SEO tout-en-un combinant suivi de position, audit technique et recherche de mots-clés. Sa fonctionnalité SE Visible ajoute le suivi de la visibilité de marque dans ChatGPT, Gemini et Perplexity.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":"14 jours","langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"PME et agences cherchant un outil SEO complet à prix accessible","note":0,"lien_affilie":"https://seranking.com","fiche_url":"/tools/starter/fr/se-ranking/"},{"id":14,"name":"Clearscope","emoji":"📝","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.clearscope.io","category":"SEO","description":"Clearscope note vos contenus de A à F selon leur pertinence face aux pages les mieux classées sur un mot-clé donné. Réputé pour son interface simple et son intégration fluide à Google Docs.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Équipes de contenu et agences avec une cadence de publication régulière","note":0,"lien_affilie":"https://www.clearscope.io","fiche_url":"/tools/standard/fr/clearscope/"},{"id":15,"name":"WordLift","emoji":"🕸️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=wordlift.io","category":"SEO","description":"WordLift automatise le balisage Schema.org et construit un graphe de connaissances à partir de votre contenu WordPress. L'outil connecte vos entités à des sources externes comme Wikidata pour renforcer la compréhension par les moteurs et les IA.","price":"paid","modele_gratuit":false,"essai_gratuit":true,"duree_essai":"14 jours","langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Sites WordPress cherchant à renforcer leur SEO sémantique et leur visibilité dans les réponses IA","note":0,"lien_affilie":"https://wordlift.io","fiche_url":"/tools/standard/fr/wordlift/"},{"id":16,"name":"MarketMuse","emoji":"🧠","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.marketmuse.com","category":"SEO","description":"MarketMuse analyse l'ensemble d'un site pour identifier les lacunes de contenu par rapport aux concurrents et bâtir l'autorité thématique. Il génère des briefs détaillés basés sur son modélisation de sujets propriétaire.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Équipes de contenu et SEO stratégique gérant des sites à fort volume d'articles","note":0,"lien_affilie":"https://www.marketmuse.com","fiche_url":"/tools/starter/fr/marketmuse/"},{"id":17,"name":"ChatGPT","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com","category":"Contenu","description":"L'assistant IA pionnier d'OpenAI pour rédiger des textes, programmer, analyser des données et automatiser vos tâches quotidiennes via une interface de discussion intuitive.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Tous publics","note":0,"lien_affilie":"https://chatgpt.com","fiche_url":"/tools/featured/fr/chatgpt/"},{"id":18,"name":"Claude","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=claude.ai","category":"Code","description":"L'assistant IA d'Anthropic réputé pour sa plume naturelle, ses capacités d'analyse de documents volumineux et sa fonctionnalité révolutionnaire Artifacts pour prévisualiser du code.","price":"freemium","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Professionnels, Développeurs, Rédacteurs","note":0,"lien_affilie":"https://claude.ai","fiche_url":"/tools/featured/fr/claude/"},{"id":19,"name":"Midjourney","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=midjourney.com","category":"Design 3D","description":"Le leader incontesté de la génération d'images par IA. Créez des visuels ultra-réalistes, des illustrations artistiques et des designs professionnels à partir de simples descriptions textuelles.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":false,"integrations":null,"mobile":false,"ideal_pour":"Designers, Artistes, Créatifs, Graphistes","note":0,"lien_affilie":"https://midjourney.com","fiche_url":"/tools/featured/fr/midjourney/"},{"id":"19-en","name":"Midday","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=midjourney.com","category":"Design 3D","description":"IA's undisputed leader in image generation. Create ultra-realistic visuals, artistic illustrations and professional designs from simple text descriptions.","price":"paid","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":false,"integrations":null,"mobile":false,"ideal_pour":"Designers, Artists, Creatives, Graphics","note":0,"lien_affilie":"https://midjourney.com","fiche_url":"/tools/featured/en/midday/"},{"id":"19-es","name":"Medio día","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=midjourney.com","category":"Design 3D","description":"El líder indiscutible de IA en generación de imágenes. Crear visuales ultra-realistas, ilustraciones artísticas y diseños profesionales de descripciones sencillas de texto.","price":"paid","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":false,"integrations":null,"mobile":false,"ideal_pour":"Diseñadores, Artistas, Creativos, Gráficos","note":0,"lien_affilie":"https://midjourney.com","fiche_url":"/tools/featured/es/medio-dia/"},{"id":2,"name":"Luminance","emoji":"📄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.luminance.com","category":"Juridique","description":"Luminance est une IA juridique britannique spécialisée dans la relecture et la négociation de contrats. Son architecture \"Panel of Judges\" croise plusieurs modèles pour détecter les clauses à risque avec une fiabilité renforcée.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":false,"integrations":null,"mobile":false,"ideal_pour":"Directions juridiques d'entreprise et cabinets à fort volume de contrats","note":0,"lien_affilie":"https://www.luminance.com","fiche_url":"/tools/starter/fr/luminance/"},{"id":20,"name":"Make","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=make.com","category":"Automatisation","description":"La plateforme d'automatisation no-code visuelle par excellence. Connectez vos applications préférées, manipulez des données et intégrez l'IA pour créer des workflows puissants.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Entreprises, Growth Hackers, Product Managers, Freelances","note":0,"lien_affilie":"https://make.com","fiche_url":"/tools/featured/fr/make/"},{"id":21,"name":"perplexity.ai","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=perplexity.ai","category":"Recherche","description":"Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":null,"langues":null,"langue_fr":null,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":null,"integrations":null,"mobile":null,"ideal_pour":"Chercheurs, Étudiants, Journalistes","note":0,"lien_affilie":"https://perplexity.ai","fiche_url":"/tools/standard/fr/perplexity-ai/"},{"id":22,"name":"Runway","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=runwayml.com","category":"Vidéo","description":"La suite créative leader pour la génération et l'édition de vidéos par IA. Donnez vie à vos textes et images avec les modèles cinématiques Gen-2 et Gen-3 Alpha.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":null,"langues":null,"langue_fr":null,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":null,"integrations":null,"mobile":null,"ideal_pour":"Vidéastes, Réalisateurs, Motion Designers, Agences de pub","note":0,"lien_affilie":"https://runwayml.com","fiche_url":"/tools/standard/fr/runway/"},{"id":24,"name":"Gamma","emoji":"📊","favicon":"https://www.google.com/s2/favicons?sz=64&domain=gamma.app","category":"Présentation","description":"Gamma est un outil en ligne utilisant l'intelligence artificielle pour générer rapidement des présentations, des documents et des pages web à partir de descriptions textuelles.","price":"freemium","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":null,"integrations":null,"mobile":false,"ideal_pour":"Professionnels, formateurs et créateurs de contenu","note":null,"lien_affilie":"https://gamma.app","fiche_url":"/tools/featured/fr/gamma/"},{"id":25,"name":"Gemini ai","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com","category":"Productivité","description":"Assistant IA de Google conçu pour générer du texte, analyser des données, programmer et répondre à des requêtes complexes en s'appuyant sur les modèles Gemini.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Professionnels et particuliers cherchant un assistant connecté à l'écosystème Google","note":null,"lien_affilie":"https://gemini.google.com","fiche_url":"/tools/featured/fr/gemini-ai/"},{"id":"25-en","name":"Gemini","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com","category":"Productivité","description":"Google's IA Assistant designed to generate text, analyze data, program and respond to complex queries using Gemini models.","price":"freemium","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Professionals and individuals looking for an assistant connected to the Google ecosystem","note":0,"lien_affilie":"https://gemini.google.com","fiche_url":"/tools/featured/en/gemini/"},{"id":26,"name":"Canva","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.canva.com","category":"Contenu","description":"Canva est une plateforme de design graphique en ligne intuitive permettant de créer des visuels, présentations, vidéos et documents grâce à des milliers de modèles personnalisables.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":"30 jours","langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Créateurs de contenu, marketeurs, entrepreneurs et enseignants.","note":null,"lien_affilie":"https://www.canva.com/","fiche_url":"/tools/featured/fr/canva/"},{"id":27,"name":"TestOutilAlbexia","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=example.com","category":"Texte","description":"Outil de test pour valider le pipeline de paiement Albexia. À supprimer après vérification.","price":"freemium","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":null,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":null,"integrations":null,"mobile":null,"ideal_pour":"","note":0,"lien_affilie":"https://example.com","fiche_url":"/tools/starter/fr/testoutilalbexia/"},{"id":3,"name":"CoCounsel","emoji":"🔎","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.thomsonreuters.com","category":"Juridique","description":"CoCounsel (ex-Casetext) est l'assistant de recherche juridique de Thomson Reuters. Adossé à Westlaw, il prépare des dossiers de plaidoirie, vérifie la jurisprudence et accélère la revue documentaire.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":false,"integrations":null,"mobile":false,"ideal_pour":"Avocats et équipes juridiques d'entreprise ayant besoin d'une recherche jurisprudentielle fiable","note":0,"lien_affilie":"https://www.thomsonreuters.com/en/cocounsel","fiche_url":"/tools/starter/fr/cocounsel/"},{"id":4,"name":"Kira Systems","emoji":"🧬","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.litera.com","category":"Juridique","description":"Kira Systems, propriété de Litera, est une plateforme d'intelligence contractuelle spécialisée dans l'extraction de clauses lors des due diligence M&A. Plus de 1400 champs prédéfinis identifient automatiquement les points critiques.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Grands cabinets et équipes juridiques traitant un fort volume de due diligence","note":0,"lien_affilie":"https://www.litera.com/products/kira","fiche_url":"/tools/standard/fr/kira-systems/"},{"id":5,"name":"Juri'Predis","emoji":"⚖️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=juripredis.com","category":"Juridique","description":"Juri'Predis est une plateforme française de recherche jurisprudentielle et de justice prédictive. Elle analyse plus de 8 millions de décisions de justice en langage naturel pour anticiper les tendances des tribunaux.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":false,"integrations":null,"mobile":false,"ideal_pour":"Avocats et cabinets français cherchant une aide stratégique en jurisprudence","note":0,"lien_affilie":"https://juripredis.com","fiche_url":"/tools/starter/fr/juri-predis/"},{"id":6,"name":"Gumloop","emoji":"🔁","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.gumloop.com","category":"Marketing","description":"Gumloop est une plateforme d'automatisation no-code propulsée par l'IA. Elle permet de créer des workflows agentiques complexes par glisser-déposer, sans écrire de code.","price":"freemium","modele_gratuit":false,"essai_gratuit":true,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":false,"ideal_pour":"Équipes marketing, ventes et opérations voulant automatiser des tâches répétitives","note":0,"lien_affilie":"https://www.gumloop.com","fiche_url":"/tools/starter/fr/gumloop/"},{"id":7,"name":"AdCreative.ai","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai","category":"Marketing","description":"AdCreative.ai génère des bannières et visuels publicitaires optimisés pour la conversion à partir de vos données de marque. Plus de 4,2 millions d'utilisateurs s'appuient sur ses algorithmes entraînés sur des performances publicitaires réelles.","price":"paid","modele_gratuit":false,"essai_gratuit":true,"duree_essai":"7 jours","langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Équipes marketing et agences gérant des campagnes publicitaires à fort volume","note":0,"lien_affilie":"https://www.adcreative.ai","fiche_url":"/tools/starter/fr/adcreative-ai/"},{"id":"7-en","name":"Creative. a","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai","category":"Marketing","description":"AdCreative.ai generates banners and visual advertising optimized for conversion from your brand data. More than 4.2 million users rely on its algorithms trained in real advertising performance.","price":"paid","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Marketing teams and agencies managing high volume advertising campaigns","note":0,"lien_affilie":"https://www.adcreative.ai","fiche_url":"/tools/starter/en/creative-a/"},{"id":"7-es","name":"Creativo. a","emoji":"🎨","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai","category":"Marketing","description":"AdCreative.ai genera banners y publicidad visual optimizada para la conversión de datos de su marca. Más de 4.2 millones de usuarios confían en sus algoritmos entrenados en el rendimiento publicitario real.","price":"paid","modele_gratuit":false,"essai_gratuit":null,"duree_essai":null,"langues":null,"langue_fr":true,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Equipos y agencias de marketing gestionan campañas publicitarias de alto volumen","note":0,"lien_affilie":"https://www.adcreative.ai","fiche_url":"/tools/starter/es/creativo-a/"},{"id":8,"name":"Albert","emoji":"🎛️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=albert.ai","category":"Marketing","description":"Albert est une IA autonome qui gère et optimise des campagnes publicitaires cross-canal (recherche, social, programmatique). Racheté par Zoomd en 2022, l'outil combine automatisation robotisée et apprentissage automatique.","price":"paid","modele_gratuit":false,"essai_gratuit":false,"duree_essai":null,"langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":false,"integrations":null,"mobile":false,"ideal_pour":"Grandes marques et agences avec un budget publicitaire important (généralement 50 000$+/mois)","note":0,"lien_affilie":"https://albert.ai","fiche_url":"/tools/standard/fr/albert/"},{"id":9,"name":"Brand24","emoji":"📡","favicon":"https://www.google.com/s2/favicons?sz=64&domain=brand24.com","category":"Marketing","description":"Brand24 surveille en temps réel les mentions de votre marque sur les réseaux sociaux, forums, blogs et sites d'actualité. Son analyse de sentiment dopée à l'IA aide à protéger la réputation et détecter les signaux faibles.","price":"paid","modele_gratuit":false,"essai_gratuit":true,"duree_essai":"14 jours","langues":null,"langue_fr":false,"acces_web":null,"generation_images":null,"telechargement_fichiers":null,"api":true,"integrations":null,"mobile":true,"ideal_pour":"Équipes marketing et communication suivant leur réputation en ligne","note":0,"lien_affilie":"https://brand24.com","fiche_url":"/tools/starter/fr/brand24/"}];
+const PRICE_LABELS = { freemium:'Freemium', paid:'Payant', free:'Gratuit' };
+const MAX_SELECTION = 4;
+let selected = [], filteredTools = [...TOOLS_DATA];
 
-let selected = [], filteredTools = [...TOOLS_DATA], activeCategory = 'Tous';
+function normaliser(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
 
-function normaliser(s){ return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim(); }
+function logoOrFallback(t, cls, fbCls){
+  return t.favicon
+    ? `<img src="${t.favicon}" alt="${t.name}" class="${cls}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="${fbCls}" style="display:none">${t.emoji}</span>`
+    : `<span class="${fbCls}">${t.emoji}</span>`;
+}
 
-function initCats(){
+function initFilters(){
   const cats = ['Tous', ...new Set(TOOLS_DATA.map(t=>t.category).filter(Boolean))];
-  const el = document.getElementById('comp-cats');
-  el.innerHTML = cats.map(c=>`<button class="comp-cat-btn${c==='Tous'?' active':''}" data-cat="${c}">${c}</button>`).join('');
-  el.querySelectorAll('.comp-cat-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      activeCategory=btn.dataset.cat;
-      el.querySelectorAll('.comp-cat-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      applyFilters();
-    });
-  });
+  document.getElementById('f-cat').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 
 function applyFilters(){
-  const q=normaliser(document.getElementById('comp-search-input').value);
-  filteredTools=TOOLS_DATA.filter(t=>{
-    const matchCat=activeCategory==='Tous'||t.category===activeCategory;
-    const matchQ=!q||normaliser(t.name).includes(q)||normaliser(t.category).includes(q);
-    return matchCat&&matchQ;
+  const q = normaliser(document.getElementById('comp-search-input').value);
+  const cat = document.getElementById('f-cat').value || 'Tous';
+  const lang = document.getElementById('f-lang').value;
+  const wantGratuit = document.getElementById('f-gratuit').checked;
+  const wantFreemium = document.getElementById('f-freemium').checked;
+  const wantPaid = document.getElementById('f-paid').checked;
+  const anyPrice = wantGratuit || wantFreemium || wantPaid;
+  filteredTools = TOOLS_DATA.filter(t=>{
+    const matchCat = cat==='Tous' || t.category===cat;
+    const matchQ = !q || normaliser(t.name).includes(q) || normaliser(t.category).includes(q);
+    const matchLang = lang==='toutes' || (lang==='fr' && t.langue_fr===true) || (lang==='en');
+    const matchPrice = !anyPrice
+      || (wantGratuit && t.price==='free')
+      || (wantFreemium && t.price==='freemium')
+      || (wantPaid && t.price==='paid');
+    return matchCat && matchQ && matchLang && matchPrice;
   });
   renderPicker();
 }
 
+function resetFilters(){
+  document.getElementById('f-cat').value = 'Tous';
+  document.getElementById('f-lang').value = 'toutes';
+  document.getElementById('f-integrations').value = 'toutes';
+  document.getElementById('f-gratuit').checked = false;
+  document.getElementById('f-freemium').checked = false;
+  document.getElementById('f-paid').checked = false;
+  document.getElementById('comp-search-input').value = '';
+  applyFilters();
+}
+
 function renderPicker(){
-  document.getElementById('tools-picker').innerHTML=filteredTools.map(t=>{
-    const isSel=selected.includes(t.id), isDisabled=!isSel&&selected.length>=3;
-    const logo = t.favicon
-      ? `<img src="${t.favicon}" alt="${t.name}" class="picker-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="picker-logo-fallback" style="display:none">${t.emoji}</span>`
-      : `<span class="picker-logo-fallback">${t.emoji}</span>`;
+  document.getElementById('tools-picker').innerHTML = filteredTools.map(t=>{
+    const isSel = selected.includes(t.id), isDisabled = !isSel && selected.length>=MAX_SELECTION;
     return `<div class="picker-card${isSel?' selected':''}${isDisabled?' disabled':''}" onclick="toggleTool(${t.id})">
-      ${logo}<span class="picker-name">${t.name}</span><span class="picker-check">✓</span>
+      ${logoOrFallback(t,'picker-logo','picker-logo-fallback')}<span class="picker-name">${t.name}</span><span class="picker-check">✓</span>
     </div>`;
   }).join('');
 }
 
 function toggleTool(id){
-  const idx=selected.indexOf(id);
-  if(idx>-1){ selected.splice(idx,1); } else if(selected.length<3){ selected.push(id); }
+  const idx = selected.indexOf(id);
+  if(idx>-1){ selected.splice(idx,1); } else if(selected.length<MAX_SELECTION){ selected.push(id); }
   renderPicker(); renderChips();
 }
 
@@ -175,49 +269,75 @@ function renderChips(){
     });
   }
   btn.disabled=selected.length<2;
+  document.getElementById('cfb-count').textContent = selected.length>0 ? selected.length : '';
 }
+
+const CRITERES = [
+  ['Description',            t=>t.description||'—',                  false],
+  ['Catégorie',               t=>t.category||'—',                     false],
+  ['Prix',                    t=>PRICE_LABELS[t.price]||t.price||'—', false],
+  ['Modèle gratuit',          t=>t.modele_gratuit,                    true],
+  ['Essai gratuit',           t=>t.essai_gratuit,                     true],
+  ["Durée d'essai",           t=>t.duree_essai||'—',                  false],
+  ['Langues',                 t=>t.langues||'—',                      false],
+  ['Support français',        t=>t.langue_fr,                         true],
+  ['Accès web',                t=>t.acces_web,                        true],
+  ["Génération d'images",     t=>t.generation_images,                 true],
+  ['Téléchargement fichiers', t=>t.telechargement_fichiers,           true],
+  ['API',                     t=>t.api,                               true],
+  ['Intégrations',            t=>t.integrations||'—',                 false],
+  ['Application mobile',      t=>t.mobile,                            true],
+  ['Idéal pour',              t=>t.ideal_pour||'—',                   false],
+  ['Note Albexia',            t=>t.note?t.note+'/5':'—',              false],
+];
 
 function afficherComparaison(){
   const outils=selected.map(id=>TOOLS_DATA.find(t=>t.id===id)).filter(Boolean);
   if(outils.length<2) return;
   const result=document.getElementById('comp-result');
-  document.getElementById('comp-result-title').textContent=outils.map(t=>t.name).join(' vs ');
-  const criteres=[
-    ['Prix de base',       t=>t.price||'—',                    false],
-    ['Essai gratuit',      t=>t.essai_gratuit,                 true],
-    ["Durée d'essai",      t=>t.duree_essai||'—',              false],
-    ['Support français',   t=>t.langue_fr,                     true],
-    ['API disponible',     t=>t.api,                           true],
-    ['App mobile',         t=>t.mobile,                        true],
-    ['Idéal pour',         t=>t.ideal_pour||'—',               false],
-    ['Note Albexia',       t=>t.note?t.note+'/5':'—',          false],
-  ];
+
+  document.getElementById('comp-cards-row').style.setProperty('--n-tools', outils.length);
+  document.getElementById('comp-cards-row').innerHTML = outils.map(t=>{
+    const note = t.note && t.note>0 ? `<div class="ct-note">★ ${t.note}/5</div>` : `<div class="ct-note empty">Pas encore noté</div>`;
+    return `<div class="comp-tool-card">
+      ${logoOrFallback(t,'ct-logo','ct-logo-fallback')}
+      <div class="ct-name">${t.name}</div>
+      <div class="ct-cat">${t.category||''}</div>
+      ${note}
+      <div class="ct-actions">
+        <a href="${t.lien_affilie}" target="_blank" rel="noopener sponsored" class="ct-btn ct-btn-primary">Visiter le site</a>
+        <a href="${t.fiche_url}" class="ct-btn ct-btn-secondary">Voir la fiche</a>
+      </div>
+    </div>`;
+  }).join('');
+
   let thead='<thead><tr><th>Critère</th>';
-  outils.forEach(t=>{
-    const logoEl = t.favicon
-      ? `<img src="${t.favicon}" alt="${t.name}" class="th-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="th-logo-fallback" style="display:none">${t.emoji}</span>`
-      : `<span class="th-logo-fallback">${t.emoji}</span>`;
-    thead+=`<th class="tool-col">${logoEl}${t.name}</th>`;
-  });
+  outils.forEach(t=>{ thead+=`<th class="tool-col">${logoOrFallback(t,'th-logo','th-logo-fallback')}${t.name}</th>`; });
   thead+='</tr></thead>';
+
   let tbody='<tbody>';
-  criteres.forEach(([label,fn,isBool])=>{
-    tbody+=`<tr><td class="crit-col">${label}</td>`;
-    outils.forEach(t=>{
-      const val=fn(t);
-      if(isBool){ tbody+=val===true?'<td><span class="yes">✓</span></td>':val===false?'<td><span class="no">✗</span></td>':'<td><span style="color:var(--text-dim)">—</span></td>'; }
+  CRITERES.forEach(([label,fn,isBool])=>{
+    const vals = outils.map(fn);
+    const allSame = vals.every(v => String(v)===String(vals[0]));
+    tbody+=`<tr data-diff="${allSame?0:1}"><td class="crit-col">${label}</td>`;
+    vals.forEach(val=>{
+      if(isBool){ tbody+=val===true?'<td><span class="yes">✓</span></td>':val===false?'<td><span class="no">✗</span></td>':'<td><span class="dash">—</span></td>'; }
       else { tbody+=`<td>${val}</td>`; }
     });
     tbody+='</tr>';
   });
   tbody+='</tbody>';
   document.getElementById('comp-table').innerHTML=thead+tbody;
-  document.getElementById('comp-cta-row').innerHTML=outils.map(t=>{
-    const logoEl = t.favicon ? `<img src="${t.favicon}" alt="">` : '';
-    return `<a href="${t.lien_affilie}" target="_blank" rel="noopener" class="comp-cta-btn">${logoEl} Essayer ${t.name} →</a>`;
-  }).join('');
+  document.getElementById('diff-toggle').checked = false;
+  document.getElementById('comp-table').classList.remove('diff-only');
+
   result.classList.add('show');
+  closeSidebar();
   result.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function toggleDiffOnly(){
+  document.getElementById('comp-table').classList.toggle('diff-only', document.getElementById('diff-toggle').checked);
 }
 
 function resetComparaison(){
@@ -226,8 +346,46 @@ function resetComparaison(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function renderReco(){
+  const notes = TOOLS_DATA.filter(t=>t.note && t.note>0);
+  if(notes.length===0){
+    document.getElementById('reco-grid').innerHTML = '<div class="comp-empty">Recommandations bientôt disponibles.</div>';
+    return;
+  }
+  const used = new Set();
+  function pickBest(filterFn){
+    const c = [...notes].filter(t=>!used.has(t.id) && filterFn(t)).sort((a,b)=>b.note-a.note)[0];
+    if (c) used.add(c.id);
+    return c;
+  }
+  const slots = [
+    { icon:'🏆', label:'Meilleur rapport qualité/prix', cls:'gold',   tool: pickBest(t=>t.price==='freemium') },
+    { icon:'⭐', label:'Meilleure note globale',         cls:'mint',   tool: pickBest(()=>true) },
+    { icon:'🔗', label:'Meilleure intégration (API)',    cls:'purple', tool: pickBest(t=>t.api) },
+    { icon:'🇫🇷', label:'Meilleur en français',          cls:'pink',   tool: pickBest(t=>t.langue_fr) },
+  ].filter(s => s.tool);
+
+  document.getElementById('reco-grid').innerHTML = slots.map(s=>`
+    <a href="${s.tool.fiche_url}" class="reco-card">
+      <span class="reco-label ${s.cls}">${s.icon} ${s.label}</span>
+      <div class="reco-tool">${logoOrFallback(s.tool,'reco-logo','reco-fallback')}<span class="reco-tool-name">${s.tool.name}</span></div>
+    </a>`).join('');
+}
+
+function toggleSidebar(){
+  const open = document.getElementById('comp-sidebar').classList.toggle('open');
+  document.getElementById('comp-filters-btn').classList.toggle('open', open);
+  document.getElementById('comp-filters-btn').setAttribute('aria-expanded', open);
+}
+function closeSidebar(){
+  document.getElementById('comp-sidebar').classList.remove('open');
+  document.getElementById('comp-filters-btn').classList.remove('open');
+  document.getElementById('comp-filters-btn').setAttribute('aria-expanded','false');
+}
+document.getElementById('comp-filters-btn').addEventListener('click', toggleSidebar);
+
 document.getElementById('comp-search-input').addEventListener('input',applyFilters);
-initCats(); applyFilters();
+initFilters(); applyFilters(); renderReco();
 </script>
 <script>
   const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');

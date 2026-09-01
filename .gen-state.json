@@ -424,6 +424,14 @@
     }
   },
   "comparaisons": {
+    "chatgpt-vs-gemini-ai": {
+      "hash": "2f62c47548a5003a0b78aeb2fbcae960a42f9804799574bbb6d467de840a7981",
+      "updatedAtMs": 1788294202470
+    },
+    "claude-vs-chatgpt": {
+      "hash": "426785d4d72b43e0aca9a4de24df646846a55a86ae715541b58804be5498a8bf",
+      "updatedAtMs": 1788293046293
+    },
     "zapier-vs-make": {
       "hash": "7053a031186cbbc3d7bef967ddbfd0b3e8d74c837331509a405ab924d2c78a58",
       "updatedAtMs": 0

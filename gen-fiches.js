@@ -1352,15 +1352,25 @@ function buildToolsDataJSON(tools) {
     emoji: t.emoji || '🤖',
     favicon: `https://www.google.com/s2/favicons?sz=64&domain=${(t.url||'').replace(/^https?:\/\//,'').split('/')[0]}`,
     category: t.category || '',
+    description: t.description || '',
     price: t.price || '',
+    modele_gratuit: t.price ? t.price === 'free' : null,
     essai_gratuit: triEtat(t.essai_gratuit),
     duree_essai: t.duree_essai || null,
+    langues: t.langues_disponibles || null,
     langue_fr: triEtat(t.interface_fr),
+    acces_web: triEtat(t.acces_web),
+    generation_images: triEtat(t.generation_images),
+    telechargement_fichiers: triEtat(t.telechargement_fichiers),
     api: triEtat(t.api),
+    integrations: t.integrations || null,
     mobile: triEtat(t.mobile),
     ideal_pour: t.ideal_pour || '',
     note: typeof t.note === 'number' ? t.note : (typeof t.rating === 'number' ? t.rating : null),
     lien_affilie: t.url || '#',
+    // Réutilise exactement la même logique que toolFicheUrl() (définie plus
+    // haut dans ce fichier) plutôt que de dupliquer un pattern d'URL séparé.
+    fiche_url: toolFicheUrl(t),
   }));
   return JSON.stringify(data);
 }
@@ -1386,6 +1396,7 @@ function paginationHTML(currentPage, totalPages) {
 }
 
 // comparaisonsTriees : déjà triées (plus récentes en premier) par l'appelant
+// comparaisonsTriees : déjà triées (plus récentes en premier) par l'appelant
 function generateComparateurIndexPage(comparaisonsTriees, tools, pageNum, totalPages) {
   const langue = 'fr';
   const start = (pageNum - 1) * COMPARATEUR_PAR_PAGE;
@@ -1398,15 +1409,32 @@ function generateComparateurIndexPage(comparaisonsTriees, tools, pageNum, totalP
   const titleTag = pageNum === 1
     ? `Comparateur d'outils IA — Comparaisons détaillées | Albexia`
     : `Comparateur d'outils IA — Page ${pageNum} | Albexia`;
-  const metaDesc = `Comparez les meilleurs outils IA côte à côte : fonctionnalités, prix, avis. ${comparaisonsTriees.length} comparaisons détaillées sur Albexia.`;
+  const metaDesc = `Comparez jusqu'à 4 outils IA côte à côte : fonctionnalités, prix, avis. ${comparaisonsTriees.length} comparaisons détaillées sur Albexia.`;
 
+  // Carousel "Duels populaires" : les 10 premiers de la page courante (déjà
+  // triés par date par l'appelant) — pas de requête ni de données séparées.
+  const duelsCarouselHTML = pageItems.slice(0, 10).map(c => {
+    const a = resoudreOutilComparaison('a', c, tools, langue);
+    const b = resoudreOutilComparaison('b', c, tools, langue);
+    const logo = (outil) => outil.favicon
+      ? `<img src="${outil.favicon}" alt="${outil.nom}" class="duel-logo" onerror="this.style.display='none'">`
+      : `<span class="duel-logo" style="display:flex;align-items:center;justify-content:center;font-size:16px;">${outil.emoji}</span>`;
+    return `<a href="${R}comparateur/${c.slug}/index.html" class="duel-card">
+      <div class="duel-tools">
+        <div class="duel-tool">${logo(a)}<span class="duel-tool-name">${a.nom}</span></div>
+        <span class="duel-vs">VS</span>
+        <div class="duel-tool">${logo(b)}<span class="duel-tool-name">${b.nom}</span></div>
+      </div>
+      <span class="duel-cta">Voir le duel →</span>
+    </a>`;
+  }).join('\n');
+
+  // Liste complète paginée — conservée pour le SEO (contenu index/follow),
+  // affichée sous le carousel plutôt qu'à sa place.
   const listHTML = pageItems.length
     ? pageItems.map(c => comparateurItemHTML(c, tools)).join('\n')
     : `<div class="cpl-empty">Aucune comparaison publiée pour le moment.</div>`;
 
-  // La pagination 2+ est en noindex : évite le contenu quasi-dupliqué en SERP
-  // tout en gardant ces pages crawlables (follow) pour que Google découvre
-  // les comparaisons individuelles au fil des pages suivantes.
   const robotsTag = pageNum === 1 ? 'index, follow' : 'noindex, follow';
   const prevUrl = pageNum === 2 ? `${SITE_ORIGIN}/comparateur/index.html` : `${SITE_ORIGIN}/comparateur/page/${pageNum-1}/index.html`;
   const nextUrl = `${SITE_ORIGIN}/comparateur/page/${pageNum+1}/index.html`;
@@ -1431,102 +1459,189 @@ function generateComparateurIndexPage(comparaisonsTriees, tools, pageNum, totalP
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
-  <link rel="stylesheet" href="${R}css/comparer.css" />
 </head>
 <body>
 
 ${navHTML(langue)}
 
-<section class="comp-hero">
-  <div class="comp-badge">⚖️ Comparez les outils IA</div>
-  <h1>Trouvez <span class="grad">le meilleur outil</span><br>pour vous</h1>
-  <p>Sélectionnez 2 ou 3 outils et comparez-les côte à côte en quelques secondes.</p>
+<section class="comp-hero comp-hero--sober">
+  <h1>Comparateur d'outils IA</h1>
+  <p>Comparez jusqu'à 4 outils IA pour trouver celui qui correspond le mieux à vos besoins.</p>
 </section>
 
-<div class="comp-selection">
-  <div class="comp-search">
-    <span class="comp-search-icon">🔍</span>
-    <input type="text" id="comp-search-input" placeholder="Rechercher un outil… (ex: Jasper, Canva, Runway)">
-  </div>
-  <div class="comp-cat-filters" id="comp-cats"></div>
-  <div class="tools-picker" id="tools-picker"></div>
-</div>
+<div class="comp-layout">
 
-<div class="selected-bar">
-  <div class="selected-bar-inner">
-    <div class="selected-chips" id="selected-chips">
-      <span class="selected-hint" id="selected-hint">Sélectionnez 2 ou 3 outils ci-dessus</span>
+  <button class="comp-filters-btn" id="comp-filters-btn" aria-expanded="false">
+    <span>⚙️ Filtres &amp; outils</span>
+    <span class="cfb-right"><span class="cfb-count" id="cfb-count"></span><span class="cfb-chevron">˅</span></span>
+  </button>
+
+  <aside class="comp-sidebar" id="comp-sidebar">
+   <div class="sidebar-inner">
+    <div class="sidebar-block">
+      <div class="sidebar-block-title">Ajouter des outils</div>
+      <div class="comp-search">
+        <span class="comp-search-icon">🔍</span>
+        <input type="text" id="comp-search-input" placeholder="Rechercher un outil…">
+      </div>
+      <div class="tools-picker tools-picker--sidebar" id="tools-picker"></div>
     </div>
-    <button class="comp-btn" id="comp-btn" disabled onclick="afficherComparaison()">Comparer →</button>
-  </div>
-</div>
 
-<div class="comp-result" id="comp-result">
-  <div class="comp-result-title" id="comp-result-title"></div>
-  <div class="comp-table-wrap">
-    <table class="comp-table" id="comp-table"></table>
-  </div>
-  <div class="comp-cta-row" id="comp-cta-row"></div>
-  <span class="comp-reset" onclick="resetComparaison()">← Nouvelle comparaison</span>
-</div>
+    <div class="sidebar-block">
+      <div class="sidebar-block-title">Filtres rapides</div>
 
-<div class="paires-section">
-  <div class="paires-title">${pageNum === 1 ? 'Comparaisons populaires' : `Comparaisons populaires — Page ${pageNum}`} (${comparaisonsTriees.length})</div>
-  <div class="paires-grid" id="paires-grid">
+      <div class="filter-group">
+        <div class="filter-label">Catégories</div>
+        <div class="select-wrap"><select id="f-cat" onchange="applyFilters()"></select></div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Tarification</div>
+        <label class="filter-check"><input type="checkbox" id="f-gratuit" onchange="applyFilters()"> Gratuit</label>
+        <label class="filter-check"><input type="checkbox" id="f-freemium" onchange="applyFilters()"> Freemium</label>
+        <label class="filter-check"><input type="checkbox" id="f-paid" onchange="applyFilters()"> Payant</label>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Langue</div>
+        <div class="select-wrap">
+          <select id="f-lang" onchange="applyFilters()">
+            <option value="toutes">Toutes</option>
+            <option value="fr">Français disponible</option>
+            <option value="en">Anglais</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="filter-label">Intégrations</div>
+        <div class="select-wrap">
+          <select id="f-integrations" onchange="applyFilters()"><option value="toutes">Toutes</option></select>
+        </div>
+      </div>
+
+      <button class="filter-reset" onclick="resetFilters()">Réinitialiser les filtres</button>
+    </div>
+
+    <div class="sidebar-block sidebar-block--toggle">
+      <label class="toggle-switch-wrap">
+        <span class="toggle-label">Voir uniquement les différences</span>
+        <span class="toggle-switch">
+          <input type="checkbox" id="diff-toggle" onchange="toggleDiffOnly()">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </span>
+      </label>
+    </div>
+   </div>
+  </aside>
+
+  <main class="comp-main">
+
+    <div class="selected-bar">
+      <div class="selected-bar-inner">
+        <div class="selected-chips" id="selected-chips">
+          <span class="selected-hint" id="selected-hint">Sélectionnez 2 à 4 outils</span>
+        </div>
+        <button class="comp-btn" id="comp-btn" disabled onclick="afficherComparaison()">Comparer →</button>
+      </div>
+    </div>
+
+    <div class="comp-result" id="comp-result">
+      <div class="comp-cards-row" id="comp-cards-row"></div>
+      <div class="comp-table-wrap"><table class="comp-table" id="comp-table"></table></div>
+      <span class="comp-reset" onclick="resetComparaison()">← Nouvelle comparaison</span>
+    </div>
+
+    <div class="paires-section">
+      <div class="paires-title">Duels populaires</div>
+      <div class="duel-carousel" id="paires-grid">
+${duelsCarouselHTML || '<div class="comp-empty">Aucun duel publié pour le moment.</div>'}
+      </div>
+    </div>
+
+    <div class="reco-section">
+      <div class="reco-title">Notre recommandation</div>
+      <div class="reco-sub">Basée sur nos critères et les avis de la communauté.</div>
+      <div class="reco-grid" id="reco-grid"></div>
+    </div>
+
+    <div class="paires-section">
+      <div class="paires-title">${pageNum === 1 ? 'Toutes les comparaisons' : `Toutes les comparaisons — Page ${pageNum}`} (${comparaisonsTriees.length})</div>
+      <div class="paires-grid-seo">
 ${listHTML}
-  </div>
-  ${paginationHTML(pageNum, totalPages)}
+      </div>
+      ${paginationHTML(pageNum, totalPages)}
+    </div>
+
+  </main>
 </div>
 
 ${footerHTML()}
 <script>
 const TOOLS_DATA = ${buildToolsDataJSON(tools)};
+const PRICE_LABELS = { freemium:'Freemium', paid:'Payant', free:'Gratuit' };
+const MAX_SELECTION = 4;
+let selected = [], filteredTools = [...TOOLS_DATA];
 
-let selected = [], filteredTools = [...TOOLS_DATA], activeCategory = 'Tous';
+function normaliser(s){ return (s||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().trim(); }
 
-function normaliser(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+function logoOrFallback(t, cls, fbCls){
+  return t.favicon
+    ? \`<img src="\${t.favicon}" alt="\${t.name}" class="\${cls}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="\${fbCls}" style="display:none">\${t.emoji}</span>\`
+    : \`<span class="\${fbCls}">\${t.emoji}</span>\`;
+}
 
-function initCats(){
+function initFilters(){
   const cats = ['Tous', ...new Set(TOOLS_DATA.map(t=>t.category).filter(Boolean))];
-  const el = document.getElementById('comp-cats');
-  el.innerHTML = cats.map(c=>\`<button class="comp-cat-btn\${c==='Tous'?' active':''}" data-cat="\${c}">\${c}</button>\`).join('');
-  el.querySelectorAll('.comp-cat-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      activeCategory=btn.dataset.cat;
-      el.querySelectorAll('.comp-cat-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      applyFilters();
-    });
-  });
+  document.getElementById('f-cat').innerHTML = cats.map(c=>\`<option value="\${c}">\${c}</option>\`).join('');
 }
 
 function applyFilters(){
-  const q=normaliser(document.getElementById('comp-search-input').value);
-  filteredTools=TOOLS_DATA.filter(t=>{
-    const matchCat=activeCategory==='Tous'||t.category===activeCategory;
-    const matchQ=!q||normaliser(t.name).includes(q)||normaliser(t.category).includes(q);
-    return matchCat&&matchQ;
+  const q = normaliser(document.getElementById('comp-search-input').value);
+  const cat = document.getElementById('f-cat').value || 'Tous';
+  const lang = document.getElementById('f-lang').value;
+  const wantGratuit = document.getElementById('f-gratuit').checked;
+  const wantFreemium = document.getElementById('f-freemium').checked;
+  const wantPaid = document.getElementById('f-paid').checked;
+  const anyPrice = wantGratuit || wantFreemium || wantPaid;
+  filteredTools = TOOLS_DATA.filter(t=>{
+    const matchCat = cat==='Tous' || t.category===cat;
+    const matchQ = !q || normaliser(t.name).includes(q) || normaliser(t.category).includes(q);
+    const matchLang = lang==='toutes' || (lang==='fr' && t.langue_fr===true) || (lang==='en');
+    const matchPrice = !anyPrice
+      || (wantGratuit && t.price==='free')
+      || (wantFreemium && t.price==='freemium')
+      || (wantPaid && t.price==='paid');
+    return matchCat && matchQ && matchLang && matchPrice;
   });
   renderPicker();
 }
 
+function resetFilters(){
+  document.getElementById('f-cat').value = 'Tous';
+  document.getElementById('f-lang').value = 'toutes';
+  document.getElementById('f-integrations').value = 'toutes';
+  document.getElementById('f-gratuit').checked = false;
+  document.getElementById('f-freemium').checked = false;
+  document.getElementById('f-paid').checked = false;
+  document.getElementById('comp-search-input').value = '';
+  applyFilters();
+}
+
 function renderPicker(){
-  document.getElementById('tools-picker').innerHTML=filteredTools.map(t=>{
-    const isSel=selected.includes(t.id), isDisabled=!isSel&&selected.length>=3;
-    const logo = t.favicon
-      ? \`<img src="\${t.favicon}" alt="\${t.name}" class="picker-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="picker-logo-fallback" style="display:none">\${t.emoji}</span>\`
-      : \`<span class="picker-logo-fallback">\${t.emoji}</span>\`;
+  document.getElementById('tools-picker').innerHTML = filteredTools.map(t=>{
+    const isSel = selected.includes(t.id), isDisabled = !isSel && selected.length>=MAX_SELECTION;
     return \`<div class="picker-card\${isSel?' selected':''}\${isDisabled?' disabled':''}" onclick="toggleTool(\${t.id})">
-      \${logo}<span class="picker-name">\${t.name}</span><span class="picker-check">✓</span>
+      \${logoOrFallback(t,'picker-logo','picker-logo-fallback')}<span class="picker-name">\${t.name}</span><span class="picker-check">✓</span>
     </div>\`;
   }).join('');
 }
 
 function toggleTool(id){
-  const idx=selected.indexOf(id);
-  if(idx>-1){ selected.splice(idx,1); } else if(selected.length<3){ selected.push(id); }
+  const idx = selected.indexOf(id);
+  if(idx>-1){ selected.splice(idx,1); } else if(selected.length<MAX_SELECTION){ selected.push(id); }
   renderPicker(); renderChips();
 }
 
@@ -1547,49 +1662,75 @@ function renderChips(){
     });
   }
   btn.disabled=selected.length<2;
+  document.getElementById('cfb-count').textContent = selected.length>0 ? selected.length : '';
 }
+
+const CRITERES = [
+  ['Description',            t=>t.description||'—',                  false],
+  ['Catégorie',               t=>t.category||'—',                     false],
+  ['Prix',                    t=>PRICE_LABELS[t.price]||t.price||'—', false],
+  ['Modèle gratuit',          t=>t.modele_gratuit,                    true],
+  ['Essai gratuit',           t=>t.essai_gratuit,                     true],
+  ["Durée d'essai",           t=>t.duree_essai||'—',                  false],
+  ['Langues',                 t=>t.langues||'—',                      false],
+  ['Support français',        t=>t.langue_fr,                         true],
+  ['Accès web',                t=>t.acces_web,                        true],
+  ["Génération d'images",     t=>t.generation_images,                 true],
+  ['Téléchargement fichiers', t=>t.telechargement_fichiers,           true],
+  ['API',                     t=>t.api,                               true],
+  ['Intégrations',            t=>t.integrations||'—',                 false],
+  ['Application mobile',      t=>t.mobile,                            true],
+  ['Idéal pour',              t=>t.ideal_pour||'—',                   false],
+  ['Note Albexia',            t=>t.note?t.note+'/5':'—',              false],
+];
 
 function afficherComparaison(){
   const outils=selected.map(id=>TOOLS_DATA.find(t=>t.id===id)).filter(Boolean);
   if(outils.length<2) return;
   const result=document.getElementById('comp-result');
-  document.getElementById('comp-result-title').textContent=outils.map(t=>t.name).join(' vs ');
-  const criteres=[
-    ['Prix de base',       t=>t.price||'—',                    false],
-    ['Essai gratuit',      t=>t.essai_gratuit,                 true],
-    ["Durée d'essai",      t=>t.duree_essai||'—',              false],
-    ['Support français',   t=>t.langue_fr,                     true],
-    ['API disponible',     t=>t.api,                           true],
-    ['App mobile',         t=>t.mobile,                        true],
-    ['Idéal pour',         t=>t.ideal_pour||'—',               false],
-    ['Note Albexia',       t=>t.note?t.note+'/5':'—',          false],
-  ];
+
+  document.getElementById('comp-cards-row').style.setProperty('--n-tools', outils.length);
+  document.getElementById('comp-cards-row').innerHTML = outils.map(t=>{
+    const note = t.note && t.note>0 ? \`<div class="ct-note">★ \${t.note}/5</div>\` : \`<div class="ct-note empty">Pas encore noté</div>\`;
+    return \`<div class="comp-tool-card">
+      \${logoOrFallback(t,'ct-logo','ct-logo-fallback')}
+      <div class="ct-name">\${t.name}</div>
+      <div class="ct-cat">\${t.category||''}</div>
+      \${note}
+      <div class="ct-actions">
+        <a href="\${t.lien_affilie}" target="_blank" rel="noopener sponsored" class="ct-btn ct-btn-primary">Visiter le site</a>
+        <a href="\${t.fiche_url}" class="ct-btn ct-btn-secondary">Voir la fiche</a>
+      </div>
+    </div>\`;
+  }).join('');
+
   let thead='<thead><tr><th>Critère</th>';
-  outils.forEach(t=>{
-    const logoEl = t.favicon
-      ? \`<img src="\${t.favicon}" alt="\${t.name}" class="th-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="th-logo-fallback" style="display:none">\${t.emoji}</span>\`
-      : \`<span class="th-logo-fallback">\${t.emoji}</span>\`;
-    thead+=\`<th class="tool-col">\${logoEl}\${t.name}</th>\`;
-  });
+  outils.forEach(t=>{ thead+=\`<th class="tool-col">\${logoOrFallback(t,'th-logo','th-logo-fallback')}\${t.name}</th>\`; });
   thead+='</tr></thead>';
+
   let tbody='<tbody>';
-  criteres.forEach(([label,fn,isBool])=>{
-    tbody+=\`<tr><td class="crit-col">\${label}</td>\`;
-    outils.forEach(t=>{
-      const val=fn(t);
-      if(isBool){ tbody+=val===true?'<td><span class="yes">✓</span></td>':val===false?'<td><span class="no">✗</span></td>':'<td><span style="color:var(--text-dim)">—</span></td>'; }
+  CRITERES.forEach(([label,fn,isBool])=>{
+    const vals = outils.map(fn);
+    const allSame = vals.every(v => String(v)===String(vals[0]));
+    tbody+=\`<tr data-diff="\${allSame?0:1}"><td class="crit-col">\${label}</td>\`;
+    vals.forEach(val=>{
+      if(isBool){ tbody+=val===true?'<td><span class="yes">✓</span></td>':val===false?'<td><span class="no">✗</span></td>':'<td><span class="dash">—</span></td>'; }
       else { tbody+=\`<td>\${val}</td>\`; }
     });
     tbody+='</tr>';
   });
   tbody+='</tbody>';
   document.getElementById('comp-table').innerHTML=thead+tbody;
-  document.getElementById('comp-cta-row').innerHTML=outils.map(t=>{
-    const logoEl = t.favicon ? \`<img src="\${t.favicon}" alt="">\` : '';
-    return \`<a href="\${t.lien_affilie}" target="_blank" rel="noopener" class="comp-cta-btn">\${logoEl} Essayer \${t.name} →</a>\`;
-  }).join('');
+  document.getElementById('diff-toggle').checked = false;
+  document.getElementById('comp-table').classList.remove('diff-only');
+
   result.classList.add('show');
+  closeSidebar();
   result.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function toggleDiffOnly(){
+  document.getElementById('comp-table').classList.toggle('diff-only', document.getElementById('diff-toggle').checked);
 }
 
 function resetComparaison(){
@@ -1598,8 +1739,46 @@ function resetComparaison(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function renderReco(){
+  const notes = TOOLS_DATA.filter(t=>t.note && t.note>0);
+  if(notes.length===0){
+    document.getElementById('reco-grid').innerHTML = '<div class="comp-empty">Recommandations bientôt disponibles.</div>';
+    return;
+  }
+  const used = new Set();
+  function pickBest(filterFn){
+    const c = [...notes].filter(t=>!used.has(t.id) && filterFn(t)).sort((a,b)=>b.note-a.note)[0];
+    if (c) used.add(c.id);
+    return c;
+  }
+  const slots = [
+    { icon:'🏆', label:'Meilleur rapport qualité/prix', cls:'gold',   tool: pickBest(t=>t.price==='freemium') },
+    { icon:'⭐', label:'Meilleure note globale',         cls:'mint',   tool: pickBest(()=>true) },
+    { icon:'🔗', label:'Meilleure intégration (API)',    cls:'purple', tool: pickBest(t=>t.api) },
+    { icon:'🇫🇷', label:'Meilleur en français',          cls:'pink',   tool: pickBest(t=>t.langue_fr) },
+  ].filter(s => s.tool);
+
+  document.getElementById('reco-grid').innerHTML = slots.map(s=>\`
+    <a href="\${s.tool.fiche_url}" class="reco-card">
+      <span class="reco-label \${s.cls}">\${s.icon} \${s.label}</span>
+      <div class="reco-tool">\${logoOrFallback(s.tool,'reco-logo','reco-fallback')}<span class="reco-tool-name">\${s.tool.name}</span></div>
+    </a>\`).join('');
+}
+
+function toggleSidebar(){
+  const open = document.getElementById('comp-sidebar').classList.toggle('open');
+  document.getElementById('comp-filters-btn').classList.toggle('open', open);
+  document.getElementById('comp-filters-btn').setAttribute('aria-expanded', open);
+}
+function closeSidebar(){
+  document.getElementById('comp-sidebar').classList.remove('open');
+  document.getElementById('comp-filters-btn').classList.remove('open');
+  document.getElementById('comp-filters-btn').setAttribute('aria-expanded','false');
+}
+document.getElementById('comp-filters-btn').addEventListener('click', toggleSidebar);
+
 document.getElementById('comp-search-input').addEventListener('input',applyFilters);
-initCats(); applyFilters();
+initFilters(); applyFilters(); renderReco();
 </script>
 ${sharedJS()}
 </body>

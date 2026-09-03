@@ -2377,151 +2377,672 @@
 </div>
 
 <!-- MODALE : Rédiger un article (libre, catégorie au choix) -->
+
+<!-- MODALE : Rédiger un article -->
 <div class="fullscreen-editor" id="editor-article">
+
+  <!-- TOPBAR -->
   <div class="fe-topbar">
-    <button class="fe-back" onclick="closeArticleModal()" data-i18n="profil.articleBack"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Retour</button>
-    <div class="fe-topbar-title" id="article-titre-modal">Nouvel article</div>
+
+    <button class="fe-back" onclick="closeArticleModal()" type="button">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5"></path>
+        <path d="M12 19l-7-7 7-7"></path>
+      </svg>
+      <span>Retour</span>
+    </button>
+
+    <div class="fe-topbar-title" id="article-titre-modal">
+      Nouvel article
+    </div>
+
     <div class="fe-autosave" id="art-autosave-status"></div>
+
     <div class="fe-preview-modes" id="fe-preview-modes" style="display:none">
-      <button type="button" class="fe-pm-btn active" id="fe-pm-desktop" onclick="setArtPreviewDevice('desktop')" title="Aperçu desktop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
-      <button type="button" class="fe-pm-btn" id="fe-pm-mobile" onclick="setArtPreviewDevice('mobile')" title="Aperçu mobile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></button>
+
+      <button
+        type="button"
+        id="fe-pm-desktop"
+        onclick="setArtPreviewDevice('desktop')"
+        aria-label="Aperçu ordinateur">
+
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <rect x="3" y="4" width="18" height="14" rx="2"></rect>
+          <path d="M8 21h8"></path>
+          <path d="M12 18v3"></path>
+        </svg>
+
+      </button>
+
+      <button
+        type="button"
+        id="fe-pm-mobile"
+        onclick="setArtPreviewDevice('mobile')"
+        aria-label="Aperçu mobile">
+
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <rect x="7" y="2" width="10" height="20" rx="2"></rect>
+          <path d="M11 18h2"></path>
+        </svg>
+
+      </button>
+
     </div>
-    <button class="fe-preview-toggle" id="btn-toggle-preview" onclick="toggleArtPreview()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg><span data-i18n="profil.articlePreview">Aperçu</span></button>
+
+    <button
+      class="fe-preview-toggle"
+      id="btn-toggle-preview"
+      onclick="toggleArtPreview()"
+      type="button">
+
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+
+      <span>Aperçu</span>
+
+    </button>
+
   </div>
 
+
+  <!-- VUE ÉDITION -->
   <div class="fe-body" id="fe-edit-view">
+
+    <!-- HEADER -->
     <div class="fe-header">
-      <div class="fe-header-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <path d="M12 20h9"></path>
+        <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path>
+      </svg>
+
       <div>
-        <div class="fe-header-title">Soumettre un article</div>
-        <div class="fe-header-sub">Partagez vos connaissances et découvrez l'IA avec la communauté Albexia.</div>
+        <div class="fe-header-title">
+          Soumettre un article
+        </div>
+
+        <div class="fe-header-sub">
+          Partagez vos connaissances et découvrez l'IA avec la communauté Albexia.
+        </div>
       </div>
+
     </div>
-    <p class="fe-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="profil.articleHint">Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots</span></p>
 
+
+    <!-- INFORMATION -->
+    <p class="fe-hint">
+
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M12 11v5"></path>
+        <path d="M12 8h.01"></path>
+      </svg>
+
+      Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots
+
+    </p>
+
+
+    <!-- INFORMATIONS ARTICLE -->
     <div class="fe-card">
-      <div class="fe-card-title">Informations de l'article</div>
-      <div class="fe-field-row">
-        <div class="form-group full">
-          <label class="form-label" data-i18n="profil.articleTitleLabel">Titre de l'article <span class="fe-req">*</span></label>
-          <input type="text" id="art-titre" class="form-input" maxlength="200" placeholder="ex. Notre outil V7 est disponible !" data-i18n-placeholder="profil.articleTitlePlaceholder" oninput="scheduleArtAutosave()">
-        </div>
-        <div class="form-group full">
-          <label class="form-label">Catégorie <span class="fe-req">*</span></label>
-          <select id="art-categorie" class="form-input" onchange="scheduleArtAutosave()">
-            <option value="" disabled selected data-i18n="submit.optChooseCat">Choisir une catégorie</option>
-            <option data-i18n="submit.catWriting">Rédaction & Contenu</option>
-            <option data-i18n="submit.catImage">Image & Design</option>
-            <option data-i18n="submit.catVideo">Vidéo & Audio</option>
-            <option data-i18n="submit.catCode">Code & Développement</option>
-            <option data-i18n="submit.catProductivity">Productivité</option>
-            <option data-i18n="submit.catMarketing">Marketing & SEO</option>
-            <option data-i18n="submit.catEducation">Éducation</option>
-            <option data-i18n="submit.catHealth">Santé & Bien-être</option>
-            <option data-i18n="submit.catFinance">Finance & Business</option>
-            <option data-i18n="submit.catOther">Autre</option>
-          </select>
-        </div>
+
+      <div class="fe-card-title">
+        Informations de l'article
       </div>
 
-      <div class="fe-field-row">
-        <div class="form-group full">
-          <label class="form-label">Image de couverture <span class="fe-req">*</span></label>
-          <div class="art-img-upload">
-            <div class="art-img-preview" id="art-banniere-preview" style="display:none">
-              <img id="art-banniere-preview-img" src="" alt="">
-              <button type="button" class="art-img-remove" onclick="artRemoveBanniere()" title="Retirer l'image"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
-            </div>
-            <div class="fe-dropzone" id="art-banniere-dropzone" onclick="document.getElementById('art-banniere-file').click()" ondragover="artDropzoneOver(event)" ondragleave="artDropzoneLeave()" ondrop="artDropzoneDrop(event)">
-              <span class="fe-dropzone-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>
-              <span class="fe-dropzone-text">Glissez votre image ici</span>
-              <span class="fe-dropzone-or">ou</span>
-              <button type="button" class="art-img-upload-btn" id="art-banniere-upload-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Choisir une image</button>
-            </div>
-            <input type="file" id="art-banniere-file" accept="image/*" style="display:none" onchange="artUploadBanniere(event)">
-            <span class="art-img-status" id="art-banniere-status"></span>
+
+      <!-- TITRE -->
+      <div class="form-group">
+
+        <label for="art-titre">
+          Titre de l'article *
+        </label>
+
+        <input
+          id="art-titre"
+          type="text"
+          maxlength="200"
+          placeholder="ex. Notre outil V7 est disponible !"
+          oninput="scheduleArtAutosave()">
+
+      </div>
+
+
+      <!-- CATÉGORIE -->
+      <div class="form-group">
+
+        <label for="art-categorie">
+          Catégorie *
+        </label>
+
+        <select
+          id="art-categorie"
+          onchange="scheduleArtAutosave()">
+
+          <option value="" disabled selected>
+            Choisir une catégorie
+          </option>
+
+          <option>Rédaction &amp; Contenu</option>
+          <option>Image &amp; Design</option>
+          <option>Vidéo &amp; Audio</option>
+          <option>Code &amp; Développement</option>
+          <option>Productivité</option>
+          <option>Marketing &amp; SEO</option>
+          <option>Éducation</option>
+          <option>Santé &amp; Bien-être</option>
+          <option>Finance &amp; Business</option>
+          <option>Autre</option>
+
+        </select>
+
+      </div>
+
+
+      <!-- IMAGE DE COUVERTURE -->
+      <div class="form-group">
+
+        <label>
+          Image de couverture *
+        </label>
+
+        <div class="art-cover-upload">
+
+          <div class="art-cover-upload-icon">
+
+            <svg width="28" height="28" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <path d="M21 15l-5-5L5 21"></path>
+
+            </svg>
+
           </div>
-          <input type="hidden" id="art-banniere-url">
-          <span style="display:block;font-size:.75rem;color:var(--muted);margin-top:4px">Format recommandé : 1200 × 630 px.</span>
+
+          <div class="art-cover-upload-text">
+            <strong>Glissez votre image ici</strong>
+            <span>ou</span>
+          </div>
+
+          <label class="art-upload-button">
+
+            <svg width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+
+              <path d="M12 16V4"></path>
+              <path d="M7 9l5-5 5 5"></path>
+              <path d="M5 20h14"></path>
+
+            </svg>
+
+            Choisir une image
+
+            <input
+              type="file"
+              id="art-banniere-file"
+              accept="image/*"
+              onchange="artUploadBanniere(event)"
+              hidden>
+
+          </label>
+
         </div>
-        <div class="form-group full">
-          <label class="form-label">Extrait <span class="fe-req">*</span></label>
-          <textarea id="art-extrait" class="form-input" rows="4" maxlength="250" placeholder="Présentez brièvement votre article…" oninput="updateArtExtraitCount();scheduleArtAutosave()"></textarea>
-          <div class="soum-char-count"><span id="art-extrait-count">0</span> / 250</div>
-        </div>
+
+        <input
+          type="hidden"
+          id="art-banniere-url">
+
+        <span class="form-help">
+          Format recommandé : 1200 × 630 px.
+        </span>
+
       </div>
+
+
+      <!-- EXTRAIT -->
+      <div class="form-group">
+
+        <label for="art-extrait">
+          Extrait *
+        </label>
+
+        <textarea
+          id="art-extrait"
+          maxlength="250"
+          placeholder="Décrivez brièvement votre article..."
+          oninput="updateArtExcerptCount(); scheduleArtAutosave()"></textarea>
+
+        <div class="field-counter">
+          <span id="art-extrait-count">0</span> / 250
+        </div>
+
+      </div>
+
     </div>
 
+
+    <!-- CONTENU -->
     <div class="fe-card">
-      <div class="fe-card-title">Contenu de l'article</div>
-      <div id="art-block-picker" class="fe-block-picker">
-        <button type="button" onclick="artAjouterBloc('heading')"><span class="fe-bp-ico">H2</span><span class="fe-bp-label">Titre H2</span></button>
-        <button type="button" onclick="artAjouterBloc('subheading')"><span class="fe-bp-ico">H3</span><span class="fe-bp-label">Titre H3</span></button>
-        <button type="button" onclick="artAjouterBloc('paragraph')"><span class="fe-bp-ico">¶</span><span class="fe-bp-label" data-i18n="profil.blockParagraph">Paragraphe</span></button>
-        <button type="button" onclick="artAjouterBloc('list')"><span class="fe-bp-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span><span class="fe-bp-label" data-i18n="profil.blockList">Liste</span></button>
-        <button type="button" onclick="artAjouterBloc('image')"><span class="fe-bp-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span><span class="fe-bp-label" data-i18n="profil.blockImage">Image</span></button>
-        <button type="button" onclick="artAjouterBloc('callout')"><span class="fe-bp-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.05V17h6v-.25c0-.85.4-1.55 1-2.05A7 7 0 0 0 12 2Z"/></svg></span><span class="fe-bp-label" data-i18n="profil.blockCallout">Encadré</span></button>
-        <button type="button" onclick="artAjouterBloc('quote')"><span class="fe-bp-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s0 2 0 2Z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s0 2 0 2Z"/></svg></span><span class="fe-bp-label" data-i18n="profil.blockQuote">Citation</span></button>
-        <button type="button" onclick="artAjouterBloc('divider')"><span class="fe-bp-ico">—</span><span class="fe-bp-label" data-i18n="profil.blockDivider">Séparateur</span></button>
+
+      <div class="fe-card-title">
+        Contenu de l'article
       </div>
 
+
+      <!-- BLOCS -->
+      <div class="fe-block-picker">
+
+        <!-- H2 -->
+        <button
+          type="button"
+          onclick="artAjouterBloc('heading')">
+
+          <span class="block-icon block-text">
+            H2
+          </span>
+
+          <span>Titre H2</span>
+
+        </button>
+
+
+        <!-- H3 -->
+        <button
+          type="button"
+          onclick="artAjouterBloc('subheading')">
+
+          <span class="block-icon block-text">
+            H3
+          </span>
+
+          <span>Titre H3</span>
+
+        </button>
+
+
+        <!-- PARAGRAPHE -->
+        <button
+          type="button"
+          onclick="artAjouterBloc('paragraph')">
+
+          <span class="block-icon block-text">
+            ¶
+          </span>
+
+          <span>Paragraphe</span>
+
+        </button>
+
+
+        <!-- LISTE -->
+        <button
+          type="button"
+          onclick="artAjouterBloc('list')">
+
+          <svg width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+
+            <path d="M8 6h13"></path>
+            <path d="M8 12h13"></path>
+            <path d="M8 18h13"></path>
+            <path d="M3 6h.01"></path>
+            <path d="M3 12h.01"></path>
+            <path d="M3 18h.01"></path>
+
+          </svg>
+
+          <span>Liste</span>
+
+        </button>
+
+
+        <!-- IMAGE -->
+        <button
+          type="button"
+          onclick="artAjouterBloc('image')">
+
+          <svg width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <path d="M21 15l-5-5L5 21"></path>
+
+          </svg>
+
+          <span>Image</span>
+
+        </button>
+
+
+        <!-- ENCADRÉ -->
+        <button
+          type="button"
+          onclick="artAjouterBloc('callout')">
+
+          <svg width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+
+            <path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8-5-3.6-5 3.6 1.9-5.8L4 8.8h6.1L12 3z"></path>
+
+          </svg>
+
+          <span>Encadré</span>
+
+        </button>
+
+
+        <!-- CITATION -->
+        <button
+          type="button"
+          onclick="artAjouterBloc('quote')">
+
+          <svg width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+
+            <path d="M10 11H5a3 3 0 0 0-3 3v1a3 3 0 0 0 3 3h1a4 4 0 0 0 4-4V8"></path>
+            <path d="M22 11h-5a3 3 0 0 0-3 3v1a3 3 0 0 0 3 3h1a4 4 0 0 0 4-4V8"></path>
+
+          </svg>
+
+          <span>Citation</span>
+
+        </button>
+
+
+        <!-- SÉPARATEUR -->
+        <button
+          type="button"
+          onclick="artAjouterBloc('divider')">
+
+          <svg width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+
+            <path d="M5 12h14"></path>
+
+          </svg>
+
+          <span>Séparateur</span>
+
+        </button>
+
+      </div>
+
+
+      <!-- BLOCS ARTICLE -->
       <div id="art-blocs-container"></div>
-      <p class="fe-blocs-empty" id="art-blocs-empty">Commencez à écrire votre article… Utilisez les blocs ci-dessus pour structurer votre contenu.</p>
 
+
+      <!-- MESSAGE VIDE -->
+      <p class="fe-blocs-empty" id="art-blocs-empty">
+        Commencez à écrire votre article… Utilisez les blocs ci-dessus pour structurer votre contenu.
+      </p>
+
+
+      <!-- COMPTEUR -->
       <div class="soum-char-count">
-        <span id="art-word-count">0</span> <span data-i18n="profil.articleWordsRequired">/ 500 mots requis</span>
+
+        <span id="art-word-count">0</span>
+        / 500 mots requis
+
         <span id="art-word-check"></span>
+
       </div>
+
     </div>
 
+
+    <!-- SOURCES -->
     <div class="fe-card">
-      <div class="fe-card-title">Sources et références</div>
-      <p class="fe-hint" style="margin-top:-4px">Ajoutez les sources utilisées pour votre article (facultatif).</p>
+
+      <div class="fe-card-title">
+        Sources et références
+      </div>
+
+      <p class="fe-hint">
+        Ajoutez les sources utilisées pour votre article (facultatif).
+      </p>
+
       <div id="art-sources-container"></div>
-      <button type="button" class="fe-add-block-btn" onclick="artAjouterSource()">+ Ajouter une source</button>
+
+      <button
+        type="button"
+        class="fe-add-block-btn"
+        onclick="artAjouterSource()">
+
+        <svg width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+
+          <path d="M12 5v14"></path>
+          <path d="M5 12h14"></path>
+
+        </svg>
+
+        Ajouter une source
+
+      </button>
+
     </div>
 
+
+    <!-- AUTEUR -->
     <div class="fe-card">
-      <div class="fe-card-title">Auteur</div>
-      <div class="fe-field-row">
-        <div class="form-group full">
-          <label class="form-label">Nom affiché <span class="fe-req">*</span></label>
-          <input type="text" id="art-auteur-nom" class="form-input" maxlength="60" placeholder="Votre nom ou nom de créateur" oninput="scheduleArtAutosave()">
-        </div>
-        <div class="form-group full">
-          <label class="form-label">Bio courte</label>
-          <textarea id="art-auteur-bio" class="form-input" rows="2" maxlength="160" placeholder="Présentez-vous en quelques mots…" oninput="updateArtBioCount();scheduleArtAutosave()"></textarea>
-          <div class="soum-char-count"><span id="art-bio-count">0</span> / 160</div>
-        </div>
+
+      <div class="fe-card-title">
+        Auteur
       </div>
+
+
+      <div class="form-group">
+
+        <label for="art-auteur-nom">
+          Nom affiché *
+        </label>
+
+        <input
+          id="art-auteur-nom"
+          type="text"
+          maxlength="100"
+          placeholder="Votre nom"
+          oninput="scheduleArtAutosave()">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="art-auteur-bio">
+          Bio courte
+        </label>
+
+        <textarea
+          id="art-auteur-bio"
+          maxlength="160"
+          placeholder="Présentez-vous brièvement..."
+          oninput="updateArtBioCount(); scheduleArtAutosave()"></textarea>
+
+        <div class="field-counter">
+          <span id="art-auteur-bio-count">0</span> / 160
+        </div>
+
+      </div>
+
     </div>
 
+
+    <!-- CONDITIONS -->
     <div class="fe-notice">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+
+      <svg width="20" height="20" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true">
+
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M12 11v5"></path>
+        <path d="M12 8h.01"></path>
+
+      </svg>
+
+
       <div class="fe-notice-body">
-      <strong>Avant de soumettre votre article</strong>
-      <p>Votre article sera vérifié et mis en forme par l'équipe Albexia avant publication.</p>
-      <p>Albexia peut ajouter des éléments éditoriaux, notamment un bouton CTA en rapport avec l'outil présenté dans votre article.</p>
-      <p><strong>Si votre article présente un outil, le CTA sera associé à cet outil et ne pourra pas rediriger les lecteurs vers un outil concurrent.</strong></p>
-      <p>Les modifications importantes du contenu pourront vous être signalées avant publication.</p>
-      <label class="fe-consent">
-        <input type="checkbox" id="art-consent" onchange="updateArtSubmitState()">
-        <span>J'ai lu et j'accepte ces conditions.</span>
-      </label>
+
+        <strong>Avant de soumettre votre article</strong>
+
+        <p>
+          Votre article sera vérifié et mis en forme par l'équipe Albexia avant publication.
+        </p>
+
+        <p>
+          Albexia peut ajouter des éléments éditoriaux, notamment un bouton CTA en rapport avec l'outil présenté dans votre article.
+        </p>
+
+        <p>
+          <strong>
+            Si votre article présente un outil, le CTA sera associé à cet outil et ne pourra pas rediriger les lecteurs vers un outil concurrent.
+          </strong>
+        </p>
+
+        <p>
+          Les modifications importantes du contenu pourront vous être signalées avant publication.
+        </p>
+
+
+        <label class="fe-consent">
+
+          <input
+            type="checkbox"
+            id="art-consent"
+            onchange="updateArtSubmitState()">
+
+          <span>
+            J'ai lu et j'accepte ces conditions.
+          </span>
+
+        </label>
+
       </div>
+
     </div>
-  </div> 
 
-  <div class="fe-body" id="fe-preview-view" style="display:none">
-    <div class="article-preview-frame" id="art-preview-content"></div>
   </div>
 
+
+  <!-- VUE APERÇU -->
+  <div
+    class="fe-body"
+    id="fe-preview-view"
+    style="display:none">
+
+    <div
+      class="article-preview-frame"
+      id="art-preview-content">
+    </div>
+
+  </div>
+
+
+  <!-- BOTTOM BAR -->
   <div class="fe-bottombar">
-    <button class="btn-sm btn-outline" onclick="closeArticleModal()" data-i18n="profil.cancel">Annuler</button>
-    <button class="btn-sm btn-outline" onclick="scheduleArtAutosave(true)">💾 Enregistrer le brouillon</button>
-    <button class="btn-primary btn-sm" id="btn-submit-article" onclick="submitArticle()" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span data-i18n="profil.claimSubmitArticle">Envoyer pour relecture</span></button>
+
+    <button
+      class="btn-sm btn-outline"
+      onclick="closeArticleModal()"
+      type="button">
+
+      Annuler
+
+    </button>
+
+
+    <!-- ENREGISTRER -->
+    <button
+      class="btn-sm btn-outline"
+      onclick="scheduleArtAutosave(true)"
+      type="button">
+
+      <svg width="16" height="16" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true">
+
+        <path d="M5 3h12l2 2v16H5z"></path>
+        <path d="M8 3v6h8V3"></path>
+        <path d="M8 21v-7h8v7"></path>
+
+      </svg>
+
+      Enregistrer le brouillon
+
+    </button>
+
+
+    <!-- ENVOYER -->
+    <button
+      class="btn-primary btn-sm"
+      id="btn-submit-article"
+      onclick="submitArticle()"
+      type="button"
+      disabled>
+
+      <svg width="16" height="16" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true">
+
+        <path d="M22 2L11 13"></path>
+        <path d="M22 2l-7 20-4-9-9-4Z"></path>
+
+      </svg>
+
+      Envoyer pour relecture
+
+    </button>
+
   </div>
+
 </div>
+    
+
+    
+  
 
 <div class="modal-overlay" id="quiz-overlay">
   <div class="modal quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">

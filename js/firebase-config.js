@@ -10,7 +10,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup,
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import { getFirestore, doc, setDoc, getDoc, updateDoc,
          collection, addDoc, getDocs, deleteDoc, query, orderBy,
-         where, increment, serverTimestamp, writeBatch }
+         where, increment, arrayUnion, arrayRemove, serverTimestamp, writeBatch }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -35,5 +35,7 @@ export {
   doc, setDoc, getDoc, updateDoc,
   collection, addDoc, getDocs, deleteDoc, query, orderBy,
   // ── Nouveaux exports pour reviews.js ──
-  where, increment, serverTimestamp, writeBatch
+  where, increment, serverTimestamp, writeBatch,
+  // ── Nouveaux exports pour les likes d'articles créateurs (firestore.js) ──
+  arrayUnion, arrayRemove
 };

@@ -12,14 +12,14 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://albexia.com/articles/fr/article-de-test-midjourney-v7-fwlgSw/index.html" />
 
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Article de test Midjourney V7","description":"Midjourney V7 marque une étape importante dans l'évolution de l'outil de génération d'images par intelligence artificielle, consolidant sa position parmi …","inLanguage":"fr","author":{"@type":"Person","name":"Créateur Albexia"},"publisher":{"@type":"Organization","name":"Albexia","url":"https://albexia.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://albexia.com/articles/fr/article-de-test-midjourney-v7-fwlgSw/index.html"},"datePublished":"2026-08-08T20:16:28.948Z","dateModified":"2026-08-08T20:16:28.948Z"}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/article.css" />
   <style>
-    /* Styles des nouveaux blocs créateurs — inline ici pour ne pas dépendre
-       d'un ajout manuel dans article.css (peut être déplacé plus tard). */
+    /* ── Blocs de contenu créateurs (paragraph/quote/callout/cta/etc.) ── */
     .article-body p:first-of-type { font-size: 1.1em; }
     .article-body blockquote { border-left: 3px solid #6c63ff; padding: 8px 20px; margin: 20px 0; font-style: italic; color: #c8c8d0; }
     .pv-callout { background: rgba(255,157,108,.08); border: 1px solid rgba(255,157,108,.25); border-left: 3px solid #ff9d6c; border-radius: 8px; padding: 16px 18px; margin: 20px 0; }
@@ -27,6 +27,93 @@
     .article-body hr { border: none; border-top: 1px solid rgba(255,255,255,.1); margin: 32px 0; }
     .article-body figure { margin: 20px 0; }
     .article-body figcaption { font-size: .8rem; color: #8a8a9a; text-align: center; margin-top: 8px; }
+
+    /* ── Layout créateur : fil d'Ariane + grille contenu/sidebar ── */
+    .pvac-breadcrumb { font-size: 11px; color: #7a7a9a; padding: 16px 32px 0; max-width: 1280px; margin: 0 auto; }
+    .pvac-breadcrumb a { color: #7a7a9a; text-decoration: none; }
+    .pvac-breadcrumb a:hover { color: #a8a3ff; }
+    .pvac-breadcrumb span.sep { margin: 0 6px; color: #4a4a6a; }
+    .pvac-grid { display: grid; grid-template-columns: minmax(0,1fr) 320px; gap: 40px; max-width: 1280px; margin: 0 auto; padding: 20px 32px 64px; align-items: start; }
+    @media (max-width: 900px) { .pvac-grid { grid-template-columns: 1fr; padding: 16px 20px 48px; gap: 24px; } }
+
+    .pvac-cover { border-radius: 14px; overflow: hidden; margin: 20px 0 28px; border: 1px solid rgba(255,255,255,0.07); }
+    .pvac-cover img { width: 100%; max-height: 420px; object-fit: cover; display: block; }
+
+    .pvac-meta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 14px 0 4px; font-size: 12px; color: #7a7a9a; }
+    .pvac-author-chip { display: flex; align-items: center; gap: 8px; color: #f0f0f5; font-size: 13px; }
+    .pvac-author-avatar {
+      width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#6c63ff,#ff6b9d);
+      display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 12px; flex-shrink: 0;
+    }
+    .pvac-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+    .pvac-icon-btn {
+      display: inline-flex; align-items: center; gap: 6px; background: #12121a; border: 1px solid rgba(255,255,255,0.07);
+      color: #7a7a9a; border-radius: 20px; padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: border-color .15s, color .15s;
+    }
+    .pvac-icon-btn:hover { border-color: rgba(255,107,157,0.4); color: #f0f0f5; }
+    .pvac-icon-btn.liked { color: #ff6b9d; border-color: rgba(255,107,157,0.4); }
+    .pvac-share-wrap { position: relative; }
+    .pvac-share-panel {
+      display: none; position: absolute; right: 0; top: 38px; background: #12121a; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 6px; min-width: 150px; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .pvac-share-panel.show { display: block; }
+    .pvac-share-panel button {
+      display: block; width: 100%; text-align: left; background: none; border: none; color: #f0f0f5; font-size: 12px;
+      padding: 9px 10px; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+    .pvac-share-panel button:hover { background: #1a1a26; }
+
+    .pvac-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .pvac-tag-pill { background: rgba(108,99,255,0.12); color: #a8a3ff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+
+    .pvac-sources { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 28px; padding-top: 20px; }
+    .pvac-sources h2 { font-family: 'Syne', sans-serif; font-size: 1.05rem; margin: 0 0 12px; }
+    .pvac-source { font-size: 13px; line-height: 1.7; margin: 6px 0; color: #c8c8d0; }
+    .pvac-source a { color: #a8a3ff; word-break: break-all; }
+
+    .pvac-cta-card {
+      background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(0,212,170,0.06)); border: 1px solid rgba(108,99,255,0.25);
+      border-radius: 14px; padding: 24px; margin: 32px 0; display: flex; flex-direction: column; gap: 10px;
+    }
+    .pvac-cta-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #a8a3ff; }
+    .pvac-cta-titre { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; }
+    .pvac-cta-desc { font-size: 13px; color: #c8c8d0; line-height: 1.6; }
+    .pvac-cta-btn {
+      align-self: flex-start; background: #ff6b9d; color: #0a0a12; font-weight: 700; text-decoration: none;
+      padding: 11px 20px; border-radius: 8px; font-size: 13px; margin-top: 4px;
+    }
+
+    /* ── Sidebar (sticky, pattern Albexia — voir albexia-design skill) ── */
+    .pvac-sidebar { display: flex; flex-direction: column; gap: 16px; }
+    .pvac-sidebar .sidebar-card {
+      background: #12121a; border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 20px;
+    }
+    .pvac-sidebar .sidebar-card:nth-child(1) { position: sticky; top: 80px; }
+    .pvac-sidebar .sidebar-card:nth-child(2) { position: sticky; top: 96px; }
+    .pvac-sidebar .sidebar-card:nth-child(3) { position: sticky; top: 112px; }
+    @media (max-width: 900px) { .pvac-sidebar .sidebar-card { position: static !important; } }
+    .sc-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; margin-bottom: 14px; }
+
+    .pvac-toc { border-left: 2px solid rgba(255,255,255,0.07); padding-left: 12px; display: flex; flex-direction: column; }
+    .pvac-toc a { display: block; padding: 6px 0; font-size: 12px; color: #7a7a9a; text-decoration: none; line-height: 1.4; }
+    .pvac-toc a:hover { color: #f0f0f5; }
+    .pvac-toc a.active { color: #a8a3ff; font-weight: 700; }
+    .pvac-toc a.pvac-toc-h3 { padding-left: 14px; font-size: 11px; }
+
+    .pvac-author-card { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+    .pvac-author-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; }
+    .pvac-author-bio { font-size: 12px; line-height: 1.6; color: #7a7a9a; margin-top: 8px; }
+
+    .pvac-related-card { display: flex; gap: 10px; text-decoration: none; margin-bottom: 12px; align-items: flex-start; }
+    .pvac-related-card:last-child { margin-bottom: 0; }
+    .pvac-related-card img, .pvac-related-noimg {
+      width: 56px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+      background: linear-gradient(135deg,#1a1a26,#12121a); display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .pvac-related-cat { font-size: 10px; color: #ff6b9d; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    .pvac-related-titre { font-size: 12px; line-height: 1.4; color: #f0f0f5; margin: 3px 0 0; }
   </style>
 </head>
 <body>
@@ -59,24 +146,75 @@
   </div>
 </nav>
 
+<div class="pvac-breadcrumb">
+  <a href="/index.html">Accueil</a><span class="sep">›</span>
+  <a href="/index.html#blog">Articles</a><span class="sep">›</span>
+  <span>Article de test Midjourney V7</span>
+</div>
+
 <main class="article-main">
-<div class="article-container">
+<div class="pvac-grid">
 
-  <header class="article-header">
-    <div class="article-meta-top">
-      <span class="article-cat fond">Actualité créateur</span>
-      <span class="dot"></span>
-      <span class="article-date">8 août 2026</span>
-      <span class="dot"></span>
-      <span class="article-readtime">3 min</span>
-    </div>
-    <h1 class="article-title">Article de test Midjourney V7</h1>
+  <article class="pvac-article">
+    <header class="article-header">
+      <div class="article-meta-top">
+        <span class="article-cat fond">Actualité créateur</span>
+        <span class="dot"></span>
+        <span class="article-date">8 août 2026</span>
+        <span class="dot"></span>
+        <span class="article-readtime">3 min</span>
+      </div>
+      <h1 class="article-title">Article de test Midjourney V7</h1>
+      
+
+      <div class="pvac-meta-row">
+        <div class="pvac-author-chip">
+          <span class="pvac-author-avatar">A</span>
+          <strong>Créateur Albexia</strong>
+        </div>
+        <span id="pvac-vues">·</span>
+        <div class="pvac-actions">
+          <button class="pvac-icon-btn" id="pvac-like-btn" onclick="window._pvacToggleLike()">♡ <span id="pvac-like-count">0</span></button>
+          <div class="pvac-share-wrap">
+            <button class="pvac-icon-btn" id="pvac-share-btn">↗ Partager</button>
+            <div class="pvac-share-panel" id="pvac-share-panel">
+              <button onclick="navigator.clipboard.writeText(window.location.href);document.getElementById('pvac-share-panel').classList.remove('show')">Copier le lien</button>
+              <button onclick="if(navigator.share){navigator.share({title:document.title,url:window.location.href})}">Partager…</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
     
-  </header>
 
-  <div class="article-body">
+    <div class="article-body" id="pvac-content">
 <p>Midjourney V7 marque une étape importante dans l'évolution de l'outil de génération d'images par intelligence artificielle, consolidant sa position parmi les références du secteur. Cette nouvelle version apporte des améliorations significatives en matière de cohérence visuelle, de gestion de la lumière naturelle et de rendu des textures complexes, qu'il s'agisse de matières organiques, de surfaces métalliques ou de tissus détaillés. Les créateurs et designers qui utilisent l'outil au quotidien remarqueront immédiatement une nette progression dans la qualité des images produites, notamment pour les scènes comportant plusieurs personnages ou des compositions architecturales élaborées, deux domaines historiquement plus délicats pour les modèles de génération d'images. L'équipe de développement a également travaillé sur la rapidité de génération, réduisant sensiblement le temps d'attente moyen tout en conservant, voire en améliorant, le niveau de détail dans chaque image produite. Parmi les fonctionnalités les plus attendues de cette mise à jour figurent un meilleur contrôle sur les proportions anatomiques, une gestion plus fine des styles artistiques combinés, ainsi qu'une compréhension plus profonde des instructions textuelles complexes et nuancées. Les utilisateurs peuvent désormais combiner plusieurs références visuelles avec un niveau de précision inédit, ce qui ouvre de nouvelles possibilités pour les professionnels du design graphique, de l'illustration numérique et de la création de concepts visuels destinés au cinéma ou aux jeux vidéo. Cette évolution technique s'inscrit dans une tendance générale du secteur vers des outils toujours plus précis, prévisibles et contrôlables par leurs utilisateurs, réduisant la part d'aléatoire qui caractérisait les premières générations de ces technologies. L'accueil réservé à cette version par la communauté des créateurs a été particulièrement positif, notamment grâce à l'amélioration notable de la gestion des mains et des expressions faciales, deux points longtemps considérés comme les faiblesses principales des modèles de génération d'images. Les artistes professionnels soulignent également la meilleure compréhension du contexte narratif dans les prompts longs et détaillés, ce qui permet de produire des séries d'images cohérentes pour des projets de storytelling visuel ou de pré-production cinématographique complète. Cette avancée technique répond directement aux besoins exprimés depuis plusieurs mois par les studios de création qui intègrent progressivement l'outil dans leurs processus de conception quotidiens. Sur le plan purement technique, l'architecture sous-jacente du modèle a été entièrement retravaillée pour permettre une meilleure scalabilité et une réduction sensible de la consommation de ressources de calcul, ce qui se traduit concrètement par une expérience plus fluide pour l'ensemble des utilisateurs, y compris ceux qui génèrent un grand volume d'images sur une base quotidienne. Cette optimisation ouvre également la voie à de futures fonctionnalités déjà annoncées pour les prochains mois, incluant potentiellement des options de génération vidéo courte ainsi que des outils de retouche intégrés directement dans l'interface principale, sans nécessiter de logiciel tiers. Les premiers retours d'utilisateurs bêta-testeurs confirment une nette amélioration de la satisfaction générale, en particulier chez les professionnels qui dépendent de cet outil pour livrer des projets à leurs clients dans des délais serrés. La documentation officielle a également été enrichie de nombreux exemples pratiques et de guides pas à pas, facilitant grandement la prise en main de ces nouvelles capacités pour les créateurs qui découvrent l'outil pour la première fois. En résumé, cette mise à jour représente un pas significatif vers une génération d'images encore plus maîtrisée, professionnelle et adaptée aux exigences des studios créatifs contemporains, tout en restant accessible aux créateurs indépendants.</p>
-  </div>
+    </div>
+
+    
+    
+    
+  </article>
+
+  <aside class="pvac-sidebar">
+    <div class="sidebar-card">
+      <div class="sc-title">Sommaire</div>
+      <div class="pvac-toc" id="pvac-toc"></div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sc-title">L'auteur</div>
+      <div class="pvac-author-card">
+        <span class="pvac-author-avatar" style="width:38px;height:38px;font-size:15px;">A</span>
+        <div class="pvac-author-name">Créateur Albexia</div>
+      </div>
+      
+    </div>
+
+    
+    
+  </aside>
 
 </div>
 </main>
@@ -97,5 +235,94 @@
     km.addEventListener('click', e => e.stopPropagation());
   }
 </script>
+
+<script>
+  // ── Sommaire automatique + surlignage actif au scroll ──
+  (function() {
+    const content = document.getElementById('pvac-content');
+    const toc = document.getElementById('pvac-toc');
+    if (!content || !toc) return;
+    const headings = content.querySelectorAll('h2, h3');
+    if (!headings.length) { document.querySelectorAll('.pvac-sidebar .sidebar-card')[0]?.remove(); return; }
+    headings.forEach((h, i) => {
+      if (!h.id) {
+        h.id = h.textContent.trim().toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-') || ('section-' + i);
+      }
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      if (h.tagName === 'H3') a.classList.add('pvac-toc-h3');
+      toc.appendChild(a);
+    });
+    const links = toc.querySelectorAll('a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          toc.querySelector('a[href="#' + entry.target.id + '"]')?.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -70% 0px' });
+    headings.forEach(h => observer.observe(h));
+  })();
+
+  // ── Partage ──
+  (function() {
+    const btn = document.getElementById('pvac-share-btn');
+    const panel = document.getElementById('pvac-share-panel');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', (e) => { e.stopPropagation(); panel.classList.toggle('show'); });
+    document.addEventListener('click', (e) => { if (!panel.contains(e.target) && e.target !== btn) panel.classList.remove('show'); });
+  })();
+</script>
+
+<script type="module">
+  import { getArticleCreateurStats, incrementArticleViews, toggleLikeArticle } from '/js/firestore.js';
+  import { auth, onAuthStateChanged } from '/js/firebase-config.js';
+
+  const ARTICLE_ID = "fwlgSwfmsrskWLDz1o4b";
+  let _currentUser = null;
+  let _likedByMe = false;
+
+  function _renderCounts(vues, likesCount, liked) {
+    const vuesEl = document.getElementById('pvac-vues');
+    if (vuesEl) vuesEl.textContent = vues + (vues === 1 ? ' vue' : ' vues');
+    const likeBtn = document.getElementById('pvac-like-btn');
+    if (likeBtn) {
+      likeBtn.classList.toggle('liked', !!liked);
+      likeBtn.innerHTML = (liked ? '♥' : '♡') + ' <span id="pvac-like-count">' + likesCount + '</span>';
+    }
+  }
+
+  onAuthStateChanged(auth, async (user) => {
+    _currentUser = user;
+    try {
+      const stats = await getArticleCreateurStats(ARTICLE_ID, user ? user.uid : null);
+      _likedByMe = stats.likedByCurrentUser;
+      _renderCounts(stats.vues, stats.likesCount, _likedByMe);
+    } catch (e) { /* silencieux */ }
+  });
+
+  // Incrémenté une fois par chargement de page, indépendamment de l'état
+  // d'authentification (voir règles Firestore : écriture publique limitée
+  // au seul champ "vues", +1 exact).
+  incrementArticleViews(ARTICLE_ID).catch(() => {});
+
+  window._pvacToggleLike = async function() {
+    if (!_currentUser) { window.location.href = '/profil.html'; return; }
+    const btn = document.getElementById('pvac-like-btn');
+    if (btn) btn.disabled = true;
+    try {
+      const liked = await toggleLikeArticle(ARTICLE_ID, _currentUser.uid);
+      _likedByMe = liked;
+      const stats = await getArticleCreateurStats(ARTICLE_ID, _currentUser.uid);
+      _renderCounts(stats.vues, stats.likesCount, _likedByMe);
+    } catch (e) { /* silencieux */ }
+    if (btn) btn.disabled = false;
+  };
+</script>
+
 </body>
 </html>

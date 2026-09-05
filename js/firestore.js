@@ -6,7 +6,7 @@
 import {
   db, doc, setDoc, getDoc, updateDoc,
   collection, addDoc, getDocs, deleteDoc, query, orderBy,
-  where, serverTimestamp
+  where, serverTimestamp, increment, arrayUnion, arrayRemove
 } from './firebase-config.js';
 
 // ══════════════════════════════════════
@@ -316,14 +316,86 @@ export async function getArticlesForSoumission(uid, soumissionId) {
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-export async function createArticleCreateur({ uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots, contenu }) {
+// CORRECTIF : la version précédente ne retenait que
+// {uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots, contenu} —
+// categorie, extrait, auteur_nom, auteur_bio, sources et mots_cles étaient
+// silencieusement perdus alors que profil.html les envoie déjà. On les
+// capture tous ici, avec une valeur de repli sûre pour chacun (jamais
+// `undefined`, que Firestore refuse d'écrire).
+//
+// vues et liked_by sont initialisés ici (jamais fournis par l'auteur) —
+// voir incrementArticleViews() et toggleLikeArticle() plus bas.
+export async function createArticleCreateur({
+  uid, soumission_id, outil_slug, titre, categorie, extrait, banniere_url,
+  auteur_nom, auteur_bio, sources, mots_cles, trimestre, nb_mots, contenu
+}) {
   const ref = collection(db, 'articles_createurs');
   const docRef = await addDoc(ref, {
-    uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots,
+    uid,
+    soumission_id: soumission_id || null,
+    outil_slug: outil_slug || null,
+    titre,
+    categorie: categorie || '',
+    extrait: extrait || '',
+    banniere_url: banniere_url || '',
+    auteur_nom: auteur_nom || '',
+    auteur_bio: auteur_bio || '',
+    sources: sources || [],
+    mots_cles: (mots_cles || []).slice(0, 5),
+    trimestre,
+    nb_mots,
     statut: 'en_relecture',
     contenu,
+    vues: 0,
+    liked_by: [],
     created_at: serverTimestamp(),
     updated_at: serverTimestamp()
   });
   return docRef.id;
+}
+
+// ── Vues ──
+// Incrémentée une fois par chargement de page (voir le script inline
+// injecté par gen-fiches.js dans chaque fiche article créateur générée).
+// Écriture non authentifiée, comme le reste du site public : compromis
+// assumé — un visiteur déterminé pourrait gonfler le compteur en
+// rechargeant la page en boucle, mais c'est un indicateur d'audience,
+// pas une donnée sensible ni monétisée. Les security rules Firestore
+// doivent limiter cette écriture publique au seul champ "vues" (voir
+// note de sécurité fournie séparément).
+export async function incrementArticleViews(articleId) {
+  const ref = doc(db, 'articles_createurs', articleId);
+  await updateDoc(ref, { vues: increment(1) });
+}
+
+// ── Likes ──
+// Un like par utilisateur connecté, stocké comme tableau d'uids sur le
+// doc article lui-même (et non sous users/{uid}, contrairement à
+// savedVideos) : on affiche un compteur PUBLIC par article, donc la
+// liste doit vivre sur l'article pour être lue en un seul accès par
+// n'importe quel visiteur, sans avoir à interroger tous les profils.
+// Retourne le nouvel état (true = vient d'être liké, false = un-liké).
+export async function toggleLikeArticle(articleId, uid) {
+  const ref  = doc(db, 'articles_createurs', articleId);
+  const snap = await getDoc(ref);
+  const likedBy = snap.exists() ? (snap.data().liked_by || []) : [];
+  const dejaLike = likedBy.includes(uid);
+  await updateDoc(ref, { liked_by: dejaLike ? arrayRemove(uid) : arrayUnion(uid) });
+  return !dejaLike;
+}
+
+// Lecture légère des compteurs pour l'affichage initial d'une fiche
+// article (vues + nombre de likes + statut liké pour l'utilisateur
+// courant si connecté). Un seul accès Firestore.
+export async function getArticleCreateurStats(articleId, uid) {
+  const ref  = doc(db, 'articles_createurs', articleId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return { vues: 0, likesCount: 0, likedByCurrentUser: false };
+  const data = snap.data();
+  const likedBy = data.liked_by || [];
+  return {
+    vues: data.vues || 0,
+    likesCount: likedBy.length,
+    likedByCurrentUser: uid ? likedBy.includes(uid) : false,
+  };
 }

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comment j'utilise Notion AI pour organiser mes projets clients | Albexia</title>
+  <meta name="description" content="Après six mois d'utilisation quotidienne, voici comment Notion AI a changé ma façon de gérer mes projets — sans y passer des heures." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://albexia.com/articles/fr/comment-j-utilise-notion-ai-pour-organiser-mes-projets-clients-arWRPX/index.html" />
+  <meta property="og:title" content="Comment j'utilise Notion AI pour organiser mes projets clients | Albexia" />
+  <meta property="og:description" content="Après six mois d'utilisation quotidienne, voici comment Notion AI a changé ma façon de gérer mes projets — sans y passer des heures." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://albexia.com/articles/fr/comment-j-utilise-notion-ai-pour-organiser-mes-projets-clients-arWRPX/index.html" />
+<meta property="og:image" content="https://i.ibb.co/gFtjYKxy/choisir-outil-ia.jpg" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Comment j'utilise Notion AI pour organiser mes projets clients","description":"Après six mois d'utilisation quotidienne, voici comment Notion AI a changé ma façon de gérer mes projets — sans y passer des heures.","inLanguage":"fr","author":{"@type":"Person","name":"Leblanc Robenson"},"publisher":{"@type":"Organization","name":"Albexia","url":"https://albexia.com"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://albexia.com/articles/fr/comment-j-utilise-notion-ai-pour-organiser-mes-projets-clients-arWRPX/index.html"},"datePublished":"2026-09-05T22:37:29.411Z","dateModified":"2026-09-05T22:37:29.411Z"}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/article.css" />
+  <style>
+    /* ── Blocs de contenu créateurs (paragraph/quote/callout/cta/etc.) ── */
+    .article-body p:first-of-type { font-size: 1.1em; }
+    .article-body blockquote { border-left: 3px solid #6c63ff; padding: 8px 20px; margin: 20px 0; font-style: italic; color: #c8c8d0; }
+    .pv-callout { background: rgba(255,157,108,.08); border: 1px solid rgba(255,157,108,.25); border-left: 3px solid #ff9d6c; border-radius: 8px; padding: 16px 18px; margin: 20px 0; }
+    .pv-cta { display: block; text-align: center; background: #00d4aa; color: #0a0a12; font-weight: 700; text-decoration: none; padding: 16px 24px; border-radius: 10px; margin: 24px 0; text-transform: uppercase; font-size: .85rem; letter-spacing: .03em; }
+    .article-body hr { border: none; border-top: 1px solid rgba(255,255,255,.1); margin: 32px 0; }
+    .article-body figure { margin: 20px 0; }
+    .article-body figcaption { font-size: .8rem; color: #8a8a9a; text-align: center; margin-top: 8px; }
+
+    /* ── Layout créateur : fil d'Ariane + grille contenu/sidebar ── */
+    .pvac-breadcrumb { font-size: 11px; color: #7a7a9a; padding: 16px 32px 0; max-width: 1280px; margin: 0 auto; }
+    .pvac-breadcrumb a { color: #7a7a9a; text-decoration: none; }
+    .pvac-breadcrumb a:hover { color: #a8a3ff; }
+    .pvac-breadcrumb span.sep { margin: 0 6px; color: #4a4a6a; }
+    .pvac-grid { display: grid; grid-template-columns: minmax(0,1fr) 320px; gap: 40px; max-width: 1280px; margin: 0 auto; padding: 20px 32px 64px; align-items: start; }
+    @media (max-width: 900px) { .pvac-grid { grid-template-columns: 1fr; padding: 16px 20px 48px; gap: 24px; } }
+
+    .pvac-cover { border-radius: 14px; overflow: hidden; margin: 20px 0 28px; border: 1px solid rgba(255,255,255,0.07); }
+    .pvac-cover img { width: 100%; max-height: 420px; object-fit: cover; display: block; }
+
+    .pvac-meta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 14px 0 4px; font-size: 12px; color: #7a7a9a; }
+    .pvac-author-chip { display: flex; align-items: center; gap: 8px; color: #f0f0f5; font-size: 13px; }
+    .pvac-author-avatar {
+      width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#6c63ff,#ff6b9d);
+      display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 12px; flex-shrink: 0;
+    }
+    .pvac-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+    .pvac-icon-btn {
+      display: inline-flex; align-items: center; gap: 6px; background: #12121a; border: 1px solid rgba(255,255,255,0.07);
+      color: #7a7a9a; border-radius: 20px; padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: border-color .15s, color .15s;
+    }
+    .pvac-icon-btn:hover { border-color: rgba(255,107,157,0.4); color: #f0f0f5; }
+    .pvac-icon-btn.liked { color: #ff6b9d; border-color: rgba(255,107,157,0.4); }
+    .pvac-share-wrap { position: relative; }
+    .pvac-share-panel {
+      display: none; position: absolute; right: 0; top: 38px; background: #12121a; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 6px; min-width: 150px; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .pvac-share-panel.show { display: block; }
+    .pvac-share-panel button {
+      display: block; width: 100%; text-align: left; background: none; border: none; color: #f0f0f5; font-size: 12px;
+      padding: 9px 10px; border-radius: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+    .pvac-share-panel button:hover { background: #1a1a26; }
+
+    .pvac-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .pvac-tag-pill { background: rgba(108,99,255,0.12); color: #a8a3ff; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+
+    .pvac-sources { border-top: 1px solid rgba(255,255,255,0.07); margin-top: 28px; padding-top: 20px; }
+    .pvac-sources h2 { font-family: 'Syne', sans-serif; font-size: 1.05rem; margin: 0 0 12px; }
+    .pvac-source { font-size: 13px; line-height: 1.7; margin: 6px 0; color: #c8c8d0; }
+    .pvac-source a { color: #a8a3ff; word-break: break-all; }
+
+    .pvac-cta-card {
+      background: linear-gradient(135deg, rgba(108,99,255,0.1), rgba(0,212,170,0.06)); border: 1px solid rgba(108,99,255,0.25);
+      border-radius: 14px; padding: 24px; margin: 32px 0; display: flex; flex-direction: column; gap: 10px;
+    }
+    .pvac-cta-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #a8a3ff; }
+    .pvac-cta-titre { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; }
+    .pvac-cta-desc { font-size: 13px; color: #c8c8d0; line-height: 1.6; }
+    .pvac-cta-btn {
+      align-self: flex-start; background: #ff6b9d; color: #0a0a12; font-weight: 700; text-decoration: none;
+      padding: 11px 20px; border-radius: 8px; font-size: 13px; margin-top: 4px;
+    }
+
+    /* ── Sidebar (sticky, pattern Albexia — voir albexia-design skill) ── */
+    .pvac-sidebar { display: flex; flex-direction: column; gap: 16px; }
+    .pvac-sidebar .sidebar-card {
+      background: #12121a; border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 20px;
+    }
+    .pvac-sidebar .sidebar-card:nth-child(1) { position: sticky; top: 80px; }
+    .pvac-sidebar .sidebar-card:nth-child(2) { position: sticky; top: 96px; }
+    .pvac-sidebar .sidebar-card:nth-child(3) { position: sticky; top: 112px; }
+    @media (max-width: 900px) { .pvac-sidebar .sidebar-card { position: static !important; } }
+    .sc-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; margin-bottom: 14px; }
+
+    .pvac-toc { border-left: 2px solid rgba(255,255,255,0.07); padding-left: 12px; display: flex; flex-direction: column; }
+    .pvac-toc a { display: block; padding: 6px 0; font-size: 12px; color: #7a7a9a; text-decoration: none; line-height: 1.4; }
+    .pvac-toc a:hover { color: #f0f0f5; }
+    .pvac-toc a.active { color: #a8a3ff; font-weight: 700; }
+    .pvac-toc a.pvac-toc-h3 { padding-left: 14px; font-size: 11px; }
+
+    .pvac-author-card { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+    .pvac-author-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; }
+    .pvac-author-bio { font-size: 12px; line-height: 1.6; color: #7a7a9a; margin-top: 8px; }
+
+    .pvac-related-card { display: flex; gap: 10px; text-decoration: none; margin-bottom: 12px; align-items: flex-start; }
+    .pvac-related-card:last-child { margin-bottom: 0; }
+    .pvac-related-card img, .pvac-related-noimg {
+      width: 56px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+      background: linear-gradient(135deg,#1a1a26,#12121a); display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .pvac-related-cat { font-size: 10px; color: #ff6b9d; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    .pvac-related-titre { font-size: 12px; line-height: 1.4; color: #f0f0f5; margin: 3px 0 0; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+  </div>
+  <div class="kebab-wrap" id="kebab-wrap">
+    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="kebab-menu" id="kebab-menu" role="menu">
+      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
+      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
+      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
+      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <div class="kebab-divider"></div>
+      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+    </div>
+  </div>
+</nav>
+
+<div class="pvac-breadcrumb">
+  <a href="/index.html">Accueil</a><span class="sep">›</span>
+  <a href="/index.html#blog">Articles</a><span class="sep">›</span>
+  <span>Comment j'utilise Notion AI pour organiser mes projets clients</span>
+</div>
+
+<main class="article-main">
+<div class="pvac-grid">
+
+  <article class="pvac-article">
+    <header class="article-header">
+      <div class="article-meta-top">
+        <span class="article-cat fond">Productivité</span>
+        <span class="dot"></span>
+        <span class="article-date">5 septembre 2026</span>
+        <span class="dot"></span>
+        <span class="article-readtime">3 min</span>
+      </div>
+      <h1 class="article-title">Comment j'utilise Notion AI pour organiser mes projets clients</h1>
+      <p style="font-size:15px;line-height:1.7;color:#c8c8d0;margin:10px 0 0;">Après six mois d'utilisation quotidienne, voici comment Notion AI a changé ma façon de gérer mes projets — sans y passer des heures.</p>
+
+      <div class="pvac-meta-row">
+        <div class="pvac-author-chip">
+          <span class="pvac-author-avatar">L</span>
+          <strong>Leblanc Robenson</strong>
+        </div>
+        <span id="pvac-vues">·</span>
+        <div class="pvac-actions">
+          <button class="pvac-icon-btn" id="pvac-like-btn" onclick="window._pvacToggleLike()">♡ <span id="pvac-like-count">0</span></button>
+          <div class="pvac-share-wrap">
+            <button class="pvac-icon-btn" id="pvac-share-btn">↗ Partager</button>
+            <div class="pvac-share-panel" id="pvac-share-panel">
+              <button onclick="navigator.clipboard.writeText(window.location.href);document.getElementById('pvac-share-panel').classList.remove('show')">Copier le lien</button>
+              <button onclick="if(navigator.share){navigator.share({title:document.title,url:window.location.href})}">Partager…</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="pvac-cover"><img src="https://i.ibb.co/gFtjYKxy/choisir-outil-ia.jpg" alt="Comment j'utilise Notion AI pour organiser mes projets clients" loading="lazy"></div>
+
+    <div class="article-body" id="pvac-content">
+<h2>Pourquoi j'ai commencé à chercher un outil comme celui-ci</h2>
+<p>Gérer plusieurs clients signifie multiplier les réunions, les comptes-rendus, les tâches et les échéances. Avant, je notais tout dans des documents séparés, puis je devais relire des pages entières pour extraire les actions ou retrouver un détail. Avec Notion AI, j’ai centralisé mes projets dans un seul espace et automatisé les parties les plus chronophages.</p>
+<div class="pv-callout">💡 Le vrai gain n’est pas la génération de texte — c’est la recherche intelligente dans mes propres notes. La fonction « Ask Notion » scanne l’intégralité de mon espace (pages, bases de données, documents connectés) et me donne des réponses synthétiques avec sources, ce qui élimine le besoin de fouiller manuellement.</div>
+<h2>Ce qui fonctionne vraiment bien</h2>
+<p><strong>Résumé automatique des comptes-rendus de réunion : </strong>Je colle mes notes brutes ou une transcription, et Notion AI génère un résumé structuré avec décisions, actions et questions ouvertes. Cela me fait gagner 15 à 20 minutes par réunion.</p>
+<p><strong>Recherche en langage naturel dans toutes mes bases :</strong> Au lieu de filtrer manuellement, je pose des questions comme « Quels sont les livrables en retard pour le client X ? » et l’IA me répond en citant les pages concernées.</p>
+<p><strong>Génération de plans de projet à partir de quelques puces :</strong> Je saisis trois ou quatre objectifs, et Notion AI propose un plan détaillé, des tâches associées et même des suggestions de timeline.</p>
+<p><strong>Mise à jour automatique des statuts : </strong>Grâce aux propriétés de base de données alimentées par l’IA, les résumés de projet et les indicateurs de progression se remplissent seuls à partir des tâches et notes liées.</p>
+<h2>Mon flux de travail type avec un nouveau client</h2>
+<p><strong>Création du hub client : </strong>Une page centrale avec les objectifs, les contacts, les livrables et un lien vers la base de tâches.</p>
+<p><strong>Import des notes de kickoff :</strong> Je colle le compte-rendu et demande à Notion AI d’extraire les actions et de les assigner dans la base de tâches.</p>
+<p><strong>Suivi hebdomadaire :</strong> Chaque vendredi, je lance un prompt pour générer un résumé de la semaine à partir des tâches complétées et des notes de réunion.</p>
+<p><strong>Portail client :</strong> Je partage une vue filtrée de la page avec le client, qui ne voit que ses propres informations.</p>
+<h2>Ce qui manque encore</h2>
+<p><strong>Intégration calendrier limitée </strong>: La synchronisation avec Google Calendar ou Outlook reste basique ; il faut parfois copier-coller les événements manuellement.</p>
+<p><strong>Requêtes à reformuler :</strong> Selon la complexité de la question, il arrive de devoir préciser deux fois pour obtenir un résultat pertinent.</p>
+<p><strong>Coût pour les équipes :</strong> L’accès complet (agents, Q&amp;A, connecteurs) nécessite un abonnement Business à 20 $/utilisateur/mois, ce qui peut être un frein pour les freelances.</p>
+<p>Rien de bloquant, mais à savoir avant de tout miser dessus.</p>
+<h2>En pratique : gains concrets</h2>
+<p>Depuis que j’ai adopté Notion AI, je passe environ 30% de temps en moins sur l’administratif de projet. Les résumés de réunion sont prêts en quelques secondes, les statuts clients se génèrent automatiquement, et je retrouve n’importe quelle information en posant une question en langage naturel.</p>
+<p>Ce n’est pas magique, mais ça retire la friction — et c’est déjà énorme au quotidien. Pour les consultants, freelances ou petites équipes qui gèrent plusieurs clients, Notion AI agit comme un « co-pilote » qui s’occupe de la documentation pendant que vous vous concentrez sur le fond.</p>
+    </div>
+
+    
+    
+    <div class="pvac-tags">
+      <span class="pvac-tag-pill">#notion</span><span class="pvac-tag-pill">#productivité</span><span class="pvac-tag-pill">#organisation</span><span class="pvac-tag-pill">#gestion de projet</span><span class="pvac-tag-pill">#ia</span>
+    </div>
+    
+    <div class="pvac-sources">
+      <h2>Sources et références</h2>
+      <div class="pvac-source"><strong>Favais Blog</strong> — <a href="https://favais.com/blog/notion-ai-complete-guide-2026/" target="_blank" rel="nofollow noopener">https://favais.com/blog/notion-ai-complete-guide-2026/</a></div><div class="pvac-source"><strong>Notion Blog</strong> — <a href="https://www.notion.com/blog/project-management-automation" target="_blank" rel="nofollow noopener">https://www.notion.com/blog/project-management-automation</a></div><div class="pvac-source"><strong>Notion (guide projet)</strong> — <a href="https://www.notion.com/use-case/project-management/cross-functional-project-management" target="_blank" rel="nofollow noopener">https://www.notion.com/use-case/project-management/cross-functional-project-management</a></div><div class="pvac-source"><strong>AIonX</strong> — <a href="https://aionx.co/ai-comparisons/notion-ai-review/" target="_blank" rel="nofollow noopener">https://aionx.co/ai-comparisons/notion-ai-review/</a></div>
+    </div>
+  </article>
+
+  <aside class="pvac-sidebar">
+    <div class="sidebar-card">
+      <div class="sc-title">Sommaire</div>
+      <div class="pvac-toc" id="pvac-toc"></div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sc-title">L'auteur</div>
+      <div class="pvac-author-card">
+        <span class="pvac-author-avatar" style="width:38px;height:38px;font-size:15px;">L</span>
+        <div class="pvac-author-name">Leblanc Robenson</div>
+      </div>
+      <p class="pvac-author-bio">et la productivité. Je partage ici mes stacks et workflows validés au quotidien ! 🚀</p>
+    </div>
+
+    
+    
+  </aside>
+
+</div>
+</main>
+
+<footer>
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script>
+  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
+  if (kb && km) {
+    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
+    km.addEventListener('click', e => e.stopPropagation());
+  }
+</script>
+
+<script>
+  // ── Sommaire automatique + surlignage actif au scroll ──
+  (function() {
+    const content = document.getElementById('pvac-content');
+    const toc = document.getElementById('pvac-toc');
+    if (!content || !toc) return;
+    const headings = content.querySelectorAll('h2, h3');
+    if (!headings.length) { document.querySelectorAll('.pvac-sidebar .sidebar-card')[0]?.remove(); return; }
+    headings.forEach((h, i) => {
+      if (!h.id) {
+        h.id = h.textContent.trim().toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-') || ('section-' + i);
+      }
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent;
+      if (h.tagName === 'H3') a.classList.add('pvac-toc-h3');
+      toc.appendChild(a);
+    });
+    const links = toc.querySelectorAll('a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          toc.querySelector('a[href="#' + entry.target.id + '"]')?.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -70% 0px' });
+    headings.forEach(h => observer.observe(h));
+  })();
+
+  // ── Partage ──
+  (function() {
+    const btn = document.getElementById('pvac-share-btn');
+    const panel = document.getElementById('pvac-share-panel');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', (e) => { e.stopPropagation(); panel.classList.toggle('show'); });
+    document.addEventListener('click', (e) => { if (!panel.contains(e.target) && e.target !== btn) panel.classList.remove('show'); });
+  })();
+</script>
+
+<script type="module">
+  import { getArticleCreateurStats, incrementArticleViews, toggleLikeArticle } from '/js/firestore.js';
+  import { auth, onAuthStateChanged } from '/js/firebase-config.js';
+
+  const ARTICLE_ID = "arWRPXrmyQK1ok4orunT";
+  let _currentUser = null;
+  let _likedByMe = false;
+
+  function _renderCounts(vues, likesCount, liked) {
+    const vuesEl = document.getElementById('pvac-vues');
+    if (vuesEl) vuesEl.textContent = vues + (vues === 1 ? ' vue' : ' vues');
+    const likeBtn = document.getElementById('pvac-like-btn');
+    if (likeBtn) {
+      likeBtn.classList.toggle('liked', !!liked);
+      likeBtn.innerHTML = (liked ? '♥' : '♡') + ' <span id="pvac-like-count">' + likesCount + '</span>';
+    }
+  }
+
+  onAuthStateChanged(auth, async (user) => {
+    _currentUser = user;
+    try {
+      const stats = await getArticleCreateurStats(ARTICLE_ID, user ? user.uid : null);
+      _likedByMe = stats.likedByCurrentUser;
+      _renderCounts(stats.vues, stats.likesCount, _likedByMe);
+    } catch (e) { /* silencieux */ }
+  });
+
+  // Incrémenté une fois par chargement de page, indépendamment de l'état
+  // d'authentification (voir règles Firestore : écriture publique limitée
+  // au seul champ "vues", +1 exact).
+  incrementArticleViews(ARTICLE_ID).catch(() => {});
+
+  window._pvacToggleLike = async function() {
+    if (!_currentUser) { window.location.href = '/profil.html'; return; }
+    const btn = document.getElementById('pvac-like-btn');
+    if (btn) btn.disabled = true;
+    try {
+      const liked = await toggleLikeArticle(ARTICLE_ID, _currentUser.uid);
+      _likedByMe = liked;
+      const stats = await getArticleCreateurStats(ARTICLE_ID, _currentUser.uid);
+      _renderCounts(stats.vues, stats.likesCount, _likedByMe);
+    } catch (e) { /* silencieux */ }
+    if (btn) btn.disabled = false;
+  };
+</script>
+
+</body>
+</html>

@@ -332,8 +332,8 @@ export async function createArticleCreateur({
   const ref = collection(db, 'articles_createurs');
   const docRef = await addDoc(ref, {
     uid,
-    soumission_id: soumission_id || '',
-outil_slug: outil_slug || '',
+soumission_id: soumission_id || null,
+outil_slug: outil_slug || null,
     titre,
     categorie: categorie || '',
     extrait: extrait || '',

@@ -853,12 +853,27 @@ function escHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-// Transforme **gras** et *italique* en <strong>/<em> — appliqué UNIQUEMENT
-// sur du texte déjà passé par escHtml(). Les astérisques ne font pas partie
-// des caractères échappés, donc cette regex ne peut produire que ces deux
-// balises fermées à partir de texte déjà neutralisé — aucune injection possible.
+// Transforme les marqueurs texte brut (façon Medium/Markdown) en balises
+// sûres — appliqué UNIQUEMENT sur du texte déjà passé par escHtml().
+// Syntaxes supportées : **gras**, *italique*, ~~barré~~, `code`,
+// ==surligné==, {c:couleur}...{/c} (palette fixe ci-dessous, jamais une
+// couleur arbitraire), [texte](url) (validée http/https, sinon rendue en
+// texte brut). Aucun des caractères utilisés par ces marqueurs n'est
+// neutralisé par escHtml(), donc cette fonction ne peut produire que les
+// balises explicitement listées ici — aucune injection possible même à
+// partir d'un marqueur malformé ou imbriqué.
+//
+// IMPORTANT : cette fonction doit rester STRICTEMENT identique à sa
+// jumelle dans profil.html (même ordre, mêmes regex) — c'est ce qui
+// garantit que l'aperçu du créateur correspond exactement au rendu publié.
+const PALETTE_COULEURS_ARTICLE = { rouge: '#ff6b6b', bleu: '#4dabf7', vert: '#51cf66', jaune: '#ffd43b', violet: '#a78bfa' };
 function appliquerMarkdownLite(texteEchappe) {
   return texteEchappe
+    .replace(/\[([^\[\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" rel="nofollow noopener" target="_blank">$1</a>')
+    .replace(/\{c:(rouge|bleu|vert|jaune|violet)\}(.+?)\{\/c\}/g, (m, id, texte) => `<span style="color:${PALETTE_COULEURS_ARTICLE[id]}">${texte}</span>`)
+    .replace(/==(.+?)==/g, '<mark>$1</mark>')
+    .replace(/~~(.+?)~~/g, '<s>$1</s>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>');
 }
@@ -873,7 +888,10 @@ function renderContenuBloc(bloc) {
       return `<h${lvl}>${escHtml(bloc.text)}</h${lvl}>`;
     }
     case 'list':
-      return `<ul>${(Array.isArray(bloc.items) ? bloc.items : []).map(i => `<li>${escHtml(i)}</li>`).join('')}</ul>`;
+      // Compatible avec les anciens articles (items = string[]) et le
+      // format enrichi éventuel — items reste toujours un tableau de
+      // chaînes brutes ici, le markdown-lite s'applique après échappement.
+      return `<ul>${(Array.isArray(bloc.items) ? bloc.items : []).map(i => `<li>${appliquerMarkdownLite(escHtml(i))}</li>`).join('')}</ul>`;
     case 'quote':
       return `<blockquote>${appliquerMarkdownLite(escHtml(bloc.text))}</blockquote>`;
     case 'callout':
@@ -959,6 +977,30 @@ async function recupererOgImage(urlOutil) {
 function articleCreateurSlug(article) {
   const slugBase = slugify(article.titre);
   return `${slugBase}-${String(article.id).slice(0, 6)}`;
+}
+
+// Navigation allégée pour la fiche article créateur UNIQUEMENT — le
+// breadcrumb (Accueil › Articles › Titre), déjà présent juste en dessous,
+// assure la navigation contextuelle. On retire ici nav-links et
+// kebab-wrap (doublons fonctionnels avec le breadcrumb sur CETTE page
+// précise) pour éviter deux systèmes de navigation qui font la même
+// chose, en gardant le logo. navHTML() elle-même n'est PAS modifiée —
+// elle reste utilisée telle quelle par tous les autres templates du site
+// (fiches outils, comparateur, niches, glossaire…), qui n'ont pas ce
+// doublon avec un breadcrumb. sharedJS() reste appelée normalement sur
+// cette page : son code kebab-menu vérifie déjà la présence des éléments
+// avant de s'attacher, donc leur absence ici ne casse rien.
+function navHTMLArticleCreateur() {
+  return `<nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+</nav>`;
 }
 
 async function generateArticleCreateur(article, outilsMap, allArticlesCreateurs = []) {
@@ -1198,7 +1240,7 @@ ${bannerTag}
 </head>
 <body>
 
-${navHTML(langue)}
+${navHTMLArticleCreateur()}
 
 <div class="pvac-breadcrumb">
   <a href="${R}index.html">Accueil</a><span class="sep">›</span>

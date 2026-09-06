@@ -661,6 +661,10 @@
       white-space: nowrap;
     }
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast-action-btn {
+      background:none; border:none; color:#a8a3ff; text-decoration:underline; cursor:pointer;
+      font-weight:700; margin-left:10px; font-size:inherit; font-family:inherit; padding:0;
+    }
 
     /* ── LOADER ──────────────────────────────────── */
     .loader {
@@ -1043,11 +1047,61 @@
     .art-bloc-quote textarea::placeholder { color:#767c94; }
     .art-bloc-divider { text-align:center; color:var(--muted); font-size:.8rem; padding:8px; margin-bottom:8px; position:relative; }
     .art-bloc-divider hr { border:none; border-top:1px solid var(--border); margin:0; }
-    .fe-mini-toolbar { display:flex; gap:4px; margin-bottom:4px; }
+    .fe-mini-toolbar { display:flex; gap:4px; margin-bottom:4px; flex-wrap:wrap; align-items:center; }
     .fe-mini-toolbar button {
       background:var(--surface2); border:1px solid var(--border); color:#c8c8d0;
       font-size:.75rem; padding:3px 8px; border-radius:5px; cursor:pointer;
     }
+    .fe-mini-toolbar-couleurs { display:inline-flex; gap:3px; padding:0 2px; }
+    .fe-color-dot {
+      width:16px; height:16px; border-radius:50%; padding:0 !important; border:1px solid rgba(255,255,255,.25) !important;
+      cursor:pointer;
+    }
+    .art-bloc-note-badge {
+      position:absolute; top:6px; left:10px; font-size:.7rem; color:var(--accent2,#00d4aa); cursor:pointer;
+    }
+
+    /* menu "⋮" — changer le type de bloc */
+    .art-bloc-menu-wrap { position:relative; display:inline-block; }
+    .art-bloc-menu-panel {
+      display:none; position:absolute; top:22px; right:0; background:var(--surface2); border:1px solid var(--border);
+      border-radius:8px; padding:6px; min-width:150px; z-index:20; box-shadow:0 8px 24px rgba(0,0,0,.4);
+    }
+    .art-bloc-menu-panel.open { display:block; }
+    .art-bloc-menu-panel .amp-title { font-size:.7rem; color:var(--muted); padding:4px 8px; text-transform:uppercase; letter-spacing:.04em; }
+    .art-bloc-menu-panel button {
+      display:block; width:100%; text-align:left; background:none; border:none; color:var(--text);
+      font-size:.8rem; padding:7px 8px; border-radius:5px; cursor:pointer; font-family:'DM Sans',sans-serif;
+    }
+    .art-bloc-menu-panel button:hover { background:var(--surface); }
+
+    /* points d'insertion "+" entre les blocs */
+    .art-insert-point { position:relative; height:14px; margin:2px 0; }
+    .art-insert-point-btn {
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:22px; height:22px; border-radius:50%; background:var(--surface2); border:1px solid var(--border);
+      color:var(--muted); font-size:.9rem; line-height:1; cursor:pointer; opacity:0; transition:opacity .15s;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .art-insert-point:hover .art-insert-point-btn, .art-insert-point.open .art-insert-point-btn { opacity:1; }
+    .art-insert-picker {
+      display:none; position:absolute; left:50%; top:100%; transform:translateX(-50%); margin-top:4px;
+      background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:6px; z-index:15;
+      box-shadow:0 8px 24px rgba(0,0,0,.4); flex-wrap:wrap; gap:4px; width:220px;
+    }
+    .art-insert-point.open .art-insert-picker { display:flex; }
+    .art-insert-picker button {
+      background:var(--surface); border:1px solid var(--border); color:var(--text); font-size:.72rem;
+      padding:5px 7px; border-radius:5px; cursor:pointer;
+    }
+
+    /* poignée de glisser-déposer tactile */
+    .art-bloc-draghandle {
+      cursor:grab; touch-action:none; color:var(--muted); padding:2px 5px; font-size:.85rem;
+    }
+    .art-bloc-draghandle:active { cursor:grabbing; }
+    .art-bloc.dragging, .art-bloc-callout.dragging, .art-bloc-quote.dragging, .art-bloc-divider.dragging { opacity:.4; }
+    .art-bloc-dropline { height:3px; background:var(--accent); border-radius:2px; margin:4px 0; }
 
     /* titres H2/H3 dans l'éditeur — grand texte sans bordure, comme le rendu final */
     .art-block-title {
@@ -1115,6 +1169,17 @@
     .pv-source a { color:#a8a3ff; word-break:break-all; }
     .pv-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:22px; padding-top:16px; border-top:1px solid var(--border); }
     .pv-tag-pill { background:rgba(108,99,255,.12); color:#a8a3ff; padding:4px 10px; border-radius:20px; font-size:.72rem; font-weight:600; }
+
+    /* aperçu — sommaire + emplacements protégés (générés par Albexia, non éditables ici) */
+    .pv-toc { border-left:2px solid var(--border); padding-left:12px; margin:18px 0; }
+    .pv-toc-title { font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin-bottom:8px; }
+    .pv-toc a { display:block; padding:3px 0; font-size:.82rem; color:#c8c8d0; text-decoration:none; }
+    .pv-toc a.pv-toc-h3 { padding-left:12px; font-size:.76rem; color:var(--muted); }
+    .pv-locked-block {
+      border:1px dashed rgba(255,255,255,.18); border-radius:10px; padding:14px 16px; margin:22px 0;
+      color:var(--muted); font-size:.8rem; display:flex; align-items:center; gap:8px;
+    }
+    .pv-locked-block .lock-ico { flex-shrink:0; opacity:.7; }
 
     /* ── RESPONSIVE ──────────────────────────────── */
     @media (max-width: 768px) {
@@ -2404,6 +2469,8 @@
     <button class="fe-back" onclick="closeArticleModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span data-i18n="profil.articleBack">Retour</span></button>
     <div class="fe-topbar-title" id="article-titre-modal">Nouvel article</div>
     <div class="fe-autosave" id="art-autosave-status"></div>
+    <button type="button" id="art-undo-btn" class="fe-pm-btn" onclick="artUndo()" title="Annuler" disabled>↶</button>
+    <button type="button" id="art-redo-btn" class="fe-pm-btn" onclick="artRedo()" title="Rétablir" disabled>↷</button>
     <div class="fe-preview-modes" id="fe-preview-modes" style="display:none">
       <button type="button" class="fe-pm-btn active" id="fe-pm-desktop" onclick="setArtPreviewDevice('desktop')" title="Aperçu desktop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
       <button type="button" class="fe-pm-btn" id="fe-pm-mobile" onclick="setArtPreviewDevice('mobile')" title="Aperçu mobile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></button>
@@ -4024,6 +4091,12 @@
     document.getElementById('art-consent').checked = false;
     updateArtExtraitCount();
     updateArtBioCount();
+    _artUndoStack = [];
+    _artRedoStack = [];
+    _artTypingSnapshotTaken.clear();
+    _artOpenBlocMenu = null;
+    _artInsertOpenPour = null;
+    updateArtUndoButtons();
 
     // Restaure l'aperçu de la bannière si une URL a été chargée
     const banniereUrl = document.getElementById('art-banniere-url').value;
@@ -4062,6 +4135,9 @@
     _artBlocs = [];
     _artSources = [];
     _artMotsCles = [];
+    _artUndoStack = [];
+    _artRedoStack = [];
+    _artTypingSnapshotTaken.clear();
   };
 
   function slugifyClient(str) {
@@ -4213,26 +4289,121 @@
     if (immediat) run(); else _artAutosaveTimer = setTimeout(run, 600);
   };
 
+  // ── Palette de couleurs éditeur (fixe — jamais de couleur arbitraire de
+  // l'utilisateur, pour éviter tout risque d'injection via une valeur CSS
+  // non contrôlée) ──
+  const PALETTE_COULEURS_EDITEUR = [
+    { id: 'rouge',  hex: '#ff6b6b' },
+    { id: 'bleu',   hex: '#4dabf7' },
+    { id: 'vert',   hex: '#51cf66' },
+    { id: 'jaune',  hex: '#ffd43b' },
+    { id: 'violet', hex: '#a78bfa' },
+  ];
+
+  // ── Historique Annuler / Rétablir (blocs uniquement — pile d'instantanés) ──
+  // Choix technique : un instantané complet de _artBlocs à chaque action
+  // plutôt qu'un pattern "commande" fin par fin. Moins élégant en mémoire,
+  // beaucoup plus robuste à écrire et à vérifier sans environnement de test
+  // — le tableau de blocs reste petit (quelques dizaines d'éléments max),
+  // le coût mémoire est négligeable. Plafonné à 50 entrées.
+  let _artUndoStack = [];
+  let _artRedoStack = [];
+  let _artTypingSnapshotTaken = new Set(); // coalesce les frappes continues dans un même bloc en un seul snapshot
+  const ART_UNDO_MAX = 50;
+
+  function clonerBlocs(blocs) {
+    return blocs.map(b => ({ ...b, items: Array.isArray(b.items) ? [...b.items] : [] }));
+  }
+
+  function pushUndoSnapshot() {
+    _artUndoStack.push(clonerBlocs(_artBlocs));
+    if (_artUndoStack.length > ART_UNDO_MAX) _artUndoStack.shift();
+    _artRedoStack = [];
+    updateArtUndoButtons();
+  }
+
+  function updateArtUndoButtons() {
+    const bU = document.getElementById('art-undo-btn');
+    const bR = document.getElementById('art-redo-btn');
+    if (bU) bU.disabled = !_artUndoStack.length;
+    if (bR) bR.disabled = !_artRedoStack.length;
+  }
+
+  window.artUndo = function() {
+    if (!_artUndoStack.length) return;
+    _artRedoStack.push(clonerBlocs(_artBlocs));
+    _artBlocs = _artUndoStack.pop();
+    _artTypingSnapshotTaken.clear();
+    renderArtBlocs();
+    updateArtWordCount();
+    updateArtSubmitState();
+    scheduleArtAutosave();
+    updateArtUndoButtons();
+  };
+
+  window.artRedo = function() {
+    if (!_artRedoStack.length) return;
+    _artUndoStack.push(clonerBlocs(_artBlocs));
+    _artBlocs = _artRedoStack.pop();
+    _artTypingSnapshotTaken.clear();
+    renderArtBlocs();
+    updateArtWordCount();
+    updateArtSubmitState();
+    scheduleArtAutosave();
+    updateArtUndoButtons();
+  };
+
+  // Toast avec action rattachée (ex: "Bloc supprimé — Annuler") — réutilise
+  // le même élément #toast que showToast(), avec un bouton en plus et un
+  // délai plus long pour laisser le temps de cliquer.
+  window.showToastAction = function(msg, labelBtn, action) {
+    const el = document.getElementById('toast');
+    el.innerHTML = escHtmlStrict(msg) + ' <button type="button" class="toast-action-btn" id="toast-action-btn">' + escHtmlStrict(labelBtn) + '</button>';
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    const btn = document.getElementById('toast-action-btn');
+    if (btn) btn.onclick = () => { action(); el.classList.remove('show'); };
+    toastTimer = setTimeout(() => el.classList.remove('show'), 5000);
+  };
+
   // ── Ajout / suppression / réordonnancement de blocs ──
-  window.artAjouterBloc = function(type) {
+  // apresIndex : position d'insertion optionnelle (undefined = ajout en fin,
+  // comportement historique conservé pour la palette de blocs du haut).
+  window.artAjouterBloc = function(type, apresIndex) {
+    pushUndoSnapshot();
     const id = 'bloc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
     const level = type === 'subheading' ? 3 : 2;
     const bloc = {
-      id, type, text: '', level, url: '', alt: '', caption: '', titre: '',
+      id, type, text: '', level, url: '', alt: '', caption: '', titre: '', note: '',
       items: type === 'list' ? ['', ''] : []
     };
-    _artBlocs.push(bloc);
+    if (typeof apresIndex === 'number' && apresIndex >= -1 && apresIndex < _artBlocs.length) {
+      _artBlocs.splice(apresIndex + 1, 0, bloc);
+    } else {
+      _artBlocs.push(bloc);
+    }
+    _artInsertOpenPour = null;
     renderArtBlocs();
     scheduleArtAutosave();
   };
 
+  // Point d'insertion "+" entre deux blocs — ouvre/ferme le petit picker
+  // inline juste à cet endroit (un seul ouvert à la fois).
+  let _artInsertOpenPour = null;
+  window.artToggleInsertPoint = function(index) {
+    _artInsertOpenPour = (_artInsertOpenPour === index) ? null : index;
+    renderArtBlocs();
+  };
+
   window.artAjouterListItem = function(blocId) {
+    pushUndoSnapshot();
     const b = _artBlocs.find(x => x.id === blocId);
     if (!b) return;
     b.items.push('');
     renderArtBlocs();
     scheduleArtAutosave();
   };
+
   window.artSupprimerListItem = function(blocId, idx) {
     const b = _artBlocs.find(x => x.id === blocId);
     if (!b) return;
@@ -4241,6 +4412,7 @@
     scheduleArtAutosave();
   };
   window.artUpdateListItem = function(blocId, idx, val) {
+    if (!_artTypingSnapshotTaken.has(blocId + ':' + idx)) { pushUndoSnapshot(); _artTypingSnapshotTaken.add(blocId + ':' + idx); }
     const b = _artBlocs.find(x => x.id === blocId);
     if (b) b.items[idx] = val;
     updateArtSubmitState();
@@ -4248,31 +4420,41 @@
   };
 
   window.artSupprimerBloc = function(id) {
+    pushUndoSnapshot();
     _artBlocs = _artBlocs.filter(b => b.id !== id);
     renderArtBlocs();
+    updateArtWordCount();
     updateArtSubmitState();
     scheduleArtAutosave();
+    showToastAction('Bloc supprimé.', 'Annuler', () => artUndo());
   };
 
   window.artDupliquerBloc = function(id) {
+    pushUndoSnapshot();
     const idx = _artBlocs.findIndex(b => b.id === id);
     if (idx === -1) return;
-    const copie = { ..._artBlocs[idx], id: 'bloc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7) };
+    // Copie profonde : items est un tableau, il doit être dupliqué séparément
+    // pour que les deux blocs ne partagent plus la même référence — modifier
+    // le duplicata (ex: un élément de liste) ne doit jamais toucher l'original.
+    const source = _artBlocs[idx];
+    const copie = { ...source, id: 'bloc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7), items: [...(source.items || [])] };
     _artBlocs.splice(idx + 1, 0, copie);
     renderArtBlocs();
     scheduleArtAutosave();
   };
 
   window.artDeplacerBloc = function(id, direction) {
+    pushUndoSnapshot();
     const idx = _artBlocs.findIndex(b => b.id === id);
     const newIdx = idx + direction;
-    if (idx === -1 || newIdx < 0 || newIdx >= _artBlocs.length) return;
+    if (idx === -1 || newIdx < 0 || newIdx >= _artBlocs.length) { _artUndoStack.pop(); updateArtUndoButtons(); return; }
     [_artBlocs[idx], _artBlocs[newIdx]] = [_artBlocs[newIdx], _artBlocs[idx]];
     renderArtBlocs();
     scheduleArtAutosave();
   };
 
   window.artUpdateBlocTexte = function(id, val) {
+    if (!_artTypingSnapshotTaken.has(id)) { pushUndoSnapshot(); _artTypingSnapshotTaken.add(id); }
     const b = _artBlocs.find(x => x.id === id);
     if (b) b.text = val; // texte brut, jamais interprété comme HTML
     updateArtSubmitState();
@@ -4280,55 +4462,270 @@
   };
 
   window.artUpdateBlocChamp = function(id, champ, val) {
+    if (!_artTypingSnapshotTaken.has(id + ':' + champ)) { pushUndoSnapshot(); _artTypingSnapshotTaken.add(id + ':' + champ); }
     const b = _artBlocs.find(x => x.id === id);
     if (b) b[champ] = val;
     scheduleArtAutosave();
   };
 
-  // ── Gras/italique par sélection (façon Medium) — insère des marqueurs
-  // **gras** / *italique* dans le texte brut, jamais de HTML. Le rendu
-  // (aperçu + site final) transforme ces marqueurs en <strong>/<em>
-  // APRÈS échappement complet, donc aucune injection possible.
-  window.artFormaterSelection = function(id, marqueur) {
+  // Réinitialise le "coalesçage" d'un instantané dès qu'on quitte un champ —
+  // la prochaine frappe dans ce champ (ou un autre) déclenchera un nouveau
+  // point d'annulation distinct, au lieu de fusionner deux sessions de
+  // frappe séparées en un seul "undo".
+  window.artResetSnapshotCoalesce = function(cle) { _artTypingSnapshotTaken.delete(cle); };
+
+  // ── Changer le type d'un bloc (menu "⋮") ──
+  // Conserve le contenu compatible (texte ↔ texte, liste ↔ texte via
+  // jonction/découpage sur les retours à la ligne). Demande confirmation
+  // uniquement quand la conversion perd réellement du contenu (image ↔
+  // texte), conformément à la consigne.
+  const ART_TYPES_CONVERTIBLES = ['heading', 'subheading', 'paragraph', 'list', 'callout', 'quote', 'image', 'divider'];
+
+  window.artToggleBlocMenu = function(id) {
+    _artOpenBlocMenu = (_artOpenBlocMenu === id) ? null : id;
+    renderArtBlocs();
+  };
+  let _artOpenBlocMenu = null;
+
+  window.artConvertirBloc = function(id, nouveauType) {
+    const b = _artBlocs.find(x => x.id === id);
+    if (!b) return;
+    _artOpenBlocMenu = null;
+    if (b.type === nouveauType) { renderArtBlocs(); return; }
+    const perteImage = (b.type === 'image' && nouveauType !== 'image') || (nouveauType === 'image' && b.type !== 'image');
+    const appliquer = () => {
+      pushUndoSnapshot();
+      if (b.type === 'list' && nouveauType !== 'list') {
+        b.text = (b.items || []).filter(s => s && s.trim()).join('. ');
+      } else if (b.type !== 'list' && nouveauType === 'list') {
+        const lignes = (b.text || '').split('\n').map(s => s.trim()).filter(Boolean);
+        b.items = lignes.length ? lignes : ['', ''];
+      }
+      if (nouveauType === 'heading') b.level = 2;
+      if (nouveauType === 'subheading') b.level = 3;
+      b.type = nouveauType;
+      renderArtBlocs();
+      scheduleArtAutosave();
+    };
+    if (perteImage) {
+      if (confirm('Cette conversion fera perdre le contenu actuel de ce bloc (image ou texte). Continuer ?')) appliquer();
+      else renderArtBlocs();
+    } else {
+      appliquer();
+    }
+  };
+
+  // ── Note personnelle sur un bloc ("Commentaire") ──
+  // Visible UNIQUEMENT dans cet éditeur, pour l'auteur lui-même — jamais
+  // envoyée à Firestore (retirée du bloc avant soumission, voir
+  // submitArticle()), jamais affichée sur le site public. C'est le choix
+  // volontaire fait ici plutôt qu'un vrai système de commentaires/fils de
+  // discussion : aucun risque qu'une note reste accidentellement publique.
+  window.artAjouterCommentaire = function(id) {
+    const b = _artBlocs.find(x => x.id === id);
+    if (!b) return;
+    const note = prompt('Note personnelle sur ce bloc (visible seulement par vous, jamais publiée) :', b.note || '');
+    if (note === null) return;
+    pushUndoSnapshot();
+    b.note = note.trim();
+    renderArtBlocs();
+    scheduleArtAutosave();
+  };
+
+  // ── Formatage par sélection ──
+  // Insère des marqueurs texte brut (façon Medium/Markdown) dans le
+  // contenu, jamais de HTML : **gras**, *italique*, ~~barré~~, `code`,
+  // ==surligné==, {c:couleur}...{/c}, [texte](url). Le rendu (aperçu ET
+  // site final, voir appliquerMarkdownLite ci-dessous et gen-fiches.js)
+  // transforme ces marqueurs en balises sûres UNIQUEMENT après échappement
+  // complet du texte — aucun de ces marqueurs ne contient de caractère
+  // que escHtml() neutralise, donc aucune injection n'est possible même si
+  // le marqueur est mal formé ou imbriqué.
+  function appliquerFormatSelection(id, wrapOuvrant, wrapFermant) {
     const textarea = document.getElementById('ta-' + id);
     if (!textarea) return;
     const start = textarea.selectionStart, end = textarea.selectionEnd;
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     if (start === end) { showToast(t('profil.selectTextFirst', langue)); return; }
+    pushUndoSnapshot();
     const val = textarea.value;
     const selected = val.slice(start, end);
-    const nouveau = val.slice(0, start) + marqueur + selected + marqueur + val.slice(end);
+    const nouveau = val.slice(0, start) + wrapOuvrant + selected + wrapFermant + val.slice(end);
     textarea.value = nouveau;
-    artUpdateBlocTexte(id, nouveau);
+    const b = _artBlocs.find(x => x.id === id);
+    if (b) b.text = nouveau;
+    _artTypingSnapshotTaken.add(id); // évite un second snapshot si l'utilisateur continue à taper juste après
+    updateArtSubmitState();
+    scheduleArtAutosave();
+  }
+
+  window.artFormaterSelection = function(id, marqueur) { appliquerFormatSelection(id, marqueur, marqueur); };
+  window.artFormaterGras      = function(id) { appliquerFormatSelection(id, '**', '**'); };
+  window.artFormaterItalique  = function(id) { appliquerFormatSelection(id, '*', '*'); };
+  window.artFormaterBarre     = function(id) { appliquerFormatSelection(id, '~~', '~~'); };
+  window.artFormaterCode      = function(id) { appliquerFormatSelection(id, '`', '`'); };
+  window.artFormaterSurligne  = function(id) { appliquerFormatSelection(id, '==', '=='); };
+  window.artFormaterCouleur   = function(id, couleurId) { appliquerFormatSelection(id, '{c:' + couleurId + '}', '{/c}'); };
+
+  window.artInsererLien = function(id) {
+    const textarea = document.getElementById('ta-' + id);
+    if (!textarea) return;
+    const start = textarea.selectionStart, end = textarea.selectionEnd;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    if (start === end) { showToast(t('profil.selectTextFirst', langue)); return; }
+    const url = (prompt('URL du lien (doit commencer par https://)') || '').trim();
+    if (!url) return;
+    if (!/^https?:\/\//i.test(url)) { showToast('⚠️ URL invalide — doit commencer par http:// ou https://'); return; }
+    appliquerFormatSelection(id, '[', '](' + url + ')');
   };
 
-  // Transforme **gras** et *italique* en <strong>/<em> — TOUJOURS appliqué
-  // sur du texte déjà échappé (escHtmlStrict), donc sans risque d'injection :
-  // les astérisques ne sont pas des caractères échappés, la regex ne peut
-  // produire que ces deux balises fermées, rien d'autre.
+  // Transforme les marqueurs texte brut en balises sûres — TOUJOURS
+  // appliqué sur du texte déjà échappé (escHtmlStrict), donc sans risque
+  // d'injection : aucun des caractères utilisés par ces marqueurs
+  // (*, ~, `, =, {, }, [, ], (, )) n'est neutralisé par l'échappement HTML,
+  // donc la regex ne peut jamais produire autre chose que les balises
+  // explicitement listées ici. La couleur vient d'une palette fixe
+  // (PALETTE_COULEURS_EDITEUR) — jamais une valeur CSS arbitraire de
+  // l'utilisateur. Cette fonction doit rester STRICTEMENT identique à sa
+  // jumelle dans gen-fiches.js (même ordre, mêmes regex) : c'est ce qui
+  // garantit que l'aperçu ici correspond exactement au rendu publié.
   function appliquerMarkdownLite(texteEchappe) {
     return texteEchappe
+      .replace(/\[([^\[\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" rel="nofollow noopener" target="_blank">$1</a>')
+      .replace(/\{c:(rouge|bleu|vert|jaune|violet)\}(.+?)\{\/c\}/g, function(m, id, texte) {
+        const couleur = PALETTE_COULEURS_EDITEUR.find(c => c.id === id);
+        return couleur ? '<span style="color:' + couleur.hex + '">' + texte + '</span>' : texte;
+      })
+      .replace(/==(.+?)==/g, '<mark>$1</mark>')
+      .replace(/~~(.+?)~~/g, '<s>$1</s>')
+      .replace(/`(.+?)`/g, '<code>$1</code>')
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.+?)\*/g, '<em>$1</em>');
+  }
+
+  // ── Réordonnancement tactile par glisser-déposer (Pointer Events) ──
+  // Volontairement PAS le drag-and-drop HTML5 natif (draggable="true") :
+  // son support tactile est très inégal sur mobile, alors que Damon
+  // travaille exclusivement depuis un téléphone. Les Pointer Events
+  // fonctionnent de façon identique au doigt et à la souris. Les boutons
+  // Monter/Descendre restent de toute façon disponibles en repli, comme
+  // demandé, y compris pendant qu'un glisser est en cours ailleurs.
+  let _artDrag = null; // { id, startY, placeholderIdx }
+
+  // Exposée sur window : référencée depuis un attribut HTML inline
+  // (onpointerdown), qui s'exécute en scope global — un script type="module"
+  // (celui-ci) n'attache pas ses déclarations de fonction à window
+  // automatiquement, contrairement à un script classique. C'est exactement
+  // la raison pour laquelle tout le reste du fichier utilise déjà
+  // "window.nomFonction = function" au lieu de "function nomFonction".
+  window.artDragStart = function(ev, id) {
+    ev.preventDefault();
+    const idx = _artBlocs.findIndex(b => b.id === id);
+    if (idx === -1) return;
+    _artDrag = { id, idx };
+    const el = document.querySelector('[data-bloc-id="' + id + '"]');
+    if (el) el.classList.add('dragging');
+    document.addEventListener('pointermove', artDragMove);
+    document.addEventListener('pointerup', artDragEnd, { once: true });
+  }
+
+  function artDragMove(ev) {
+    if (!_artDrag) return;
+    const conteneur = document.getElementById('art-blocs-container');
+    if (!conteneur) return;
+    const elements = [...conteneur.querySelectorAll('[data-bloc-id]')].filter(el => el.dataset.blocId !== _artDrag.id);
+    let cible = null;
+    for (const el of elements) {
+      const rect = el.getBoundingClientRect();
+      if (ev.clientY >= rect.top && ev.clientY <= rect.bottom) { cible = el; break; }
+    }
+    document.querySelectorAll('.art-bloc-dropline').forEach(l => l.remove());
+    if (cible) {
+      const rect = cible.getBoundingClientRect();
+      const ligne = document.createElement('div');
+      ligne.className = 'art-bloc-dropline';
+      cible.insertAdjacentElement(ev.clientY < rect.top + rect.height / 2 ? 'beforebegin' : 'afterend', ligne);
+    }
+  }
+
+  function artDragEnd(ev) {
+    document.removeEventListener('pointermove', artDragMove);
+    if (!_artDrag) return;
+    const conteneur = document.getElementById('art-blocs-container');
+    const ligne = conteneur ? conteneur.querySelector('.art-bloc-dropline') : null;
+    if (ligne) {
+      // Détermine le nouvel index à partir de la position de la ligne
+      // indicatrice dans le DOM plutôt que de recalculer une coordonnée —
+      // plus fiable et plus simple à vérifier sans environnement de test.
+      const elements = [...conteneur.children];
+      const posLigne = elements.indexOf(ligne);
+      const idsAvant = elements.slice(0, posLigne)
+        .map(el => el.dataset && el.dataset.blocId).filter(Boolean);
+      const idxDepart = _artBlocs.findIndex(b => b.id === _artDrag.id);
+      pushUndoSnapshot();
+      const [bloc] = _artBlocs.splice(idxDepart, 1);
+      let nouvelIdx = idsAvant.length;
+      // Une fois le bloc retiré, un id "avant la ligne" qui le précédait
+      // dans la liste d'origine décale l'index de 1 vers le bas.
+      const idxOriginal = idsAvant.map(id2 => _artBlocs.findIndex(b => b.id === id2)).filter(n => n !== -1);
+      nouvelIdx = idxOriginal.length ? Math.max(...idxOriginal) + 1 : 0;
+      _artBlocs.splice(nouvelIdx, 0, bloc);
+    }
+    _artDrag = null;
+    renderArtBlocs();
+    scheduleArtAutosave();
+  }
+
+
+
+  // Petit picker inline pour insérer un bloc à une position précise —
+  // référence apresIndex tel qu'attendu par artAjouterBloc().
+  function insertPointHTML(apresIndex) {
+    const ouvert = _artInsertOpenPour === apresIndex;
+    const picker = ART_TYPES_CONVERTIBLES
+      .map(ty => `<button type="button" onclick="artAjouterBloc('${ty}', ${apresIndex})">${artBlockLabels(window.detecterLangue ? window.detecterLangue() : 'fr')[ty] || ty}</button>`)
+      .join('');
+    return `<div class="art-insert-point${ouvert ? ' open' : ''}">
+      <button type="button" class="art-insert-point-btn" onclick="artToggleInsertPoint(${apresIndex})" title="Insérer un bloc ici">+</button>
+      <div class="art-insert-picker">${picker}</div>
+    </div>`;
+  }
+
+  function blocMenuHTML(b) {
+    const ouvert = _artOpenBlocMenu === b.id;
+    const autresTypes = ART_TYPES_CONVERTIBLES.filter(ty => ty !== b.type);
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const items = autresTypes.map(ty => `<button type="button" onclick="artConvertirBloc('${b.id}','${ty}')">${artBlockLabels(langue)[ty] || ty}</button>`).join('');
+    return `<div class="art-bloc-menu-wrap">
+      <button type="button" onclick="artToggleBlocMenu('${b.id}')" title="Plus d'options">⋮</button>
+      <div class="art-bloc-menu-panel${ouvert ? ' open' : ''}">
+        <div class="amp-title">Changer le type</div>
+        ${items}
+      </div>
+    </div>`;
   }
 
   function renderArtBlocs() {
     const container = document.getElementById('art-blocs-container');
     const emptyEl = document.getElementById('art-blocs-empty');
     if (emptyEl) emptyEl.style.display = _artBlocs.length ? 'none' : '';
-    container.innerHTML = _artBlocs.map((b, i) => {
+    container.innerHTML = insertPointHTML(-1) + _artBlocs.map((b, i) => {
       const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
       const label = artBlockLabels(langue)[b.type] || b.type;
+      const noteBadge = b.note ? `<span class="art-bloc-note-badge" onclick="artAjouterCommentaire('${b.id}')" title="Note personnelle : ${escHtmlStrict(b.note)}">💬</span>` : '';
       const controls = `
         <div class="art-bloc-controls">
+          <span class="art-bloc-draghandle" title="Glisser pour réordonner" onpointerdown="artDragStart(event,'${b.id}')">⠿</span>
           ${i > 0 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',-1)" title="Monter"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>` : ''}
           ${i < _artBlocs.length - 1 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',1)" title="Descendre"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></button>` : ''}
           <button type="button" onclick="artDupliquerBloc('${b.id}')" title="Dupliquer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
           <button type="button" onclick="artSupprimerBloc('${b.id}')" title="Supprimer">${icoTrash(14)}</button>
+          ${blocMenuHTML(b)}
         </div>`;
 
+      let blocHTML;
       if (b.type === 'image') {
-        return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
+        blocHTML = `<div class="art-bloc" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
           <div class="art-img-upload">
             <div class="art-img-preview" id="art-bloc-preview-${b.id}" style="display:${b.url ? '' : 'none'}">
               <img id="art-bloc-preview-img-${b.id}" src="${escHtmlStrict(b.url)}" alt="">
@@ -4341,60 +4738,90 @@
             <span class="art-img-status" id="art-bloc-status-${b.id}"></span>
           </div>
           <input type="text" placeholder="Légende de l'image (facultatif)" value="${escHtmlStrict(b.caption)}"
-                 oninput="artUpdateBlocChamp('${b.id}','caption', this.value)" class="art-image-caption"></div>`;
-      }
-      if (b.type === 'divider') {
-        return `<div class="art-bloc-divider">${controls}<hr></div>`;
-      }
-      if (b.type === 'list') {
+                 oninput="artUpdateBlocChamp('${b.id}','caption', this.value)" onblur="artResetSnapshotCoalesce('${b.id}:caption')" class="art-image-caption"></div>`;
+      } else if (b.type === 'divider') {
+        blocHTML = `<div class="art-bloc-divider" data-bloc-id="${b.id}">${controls}${noteBadge}<hr></div>`;
+      } else if (b.type === 'list') {
         const items = b.items && b.items.length ? b.items : [''];
-        return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
+        blocHTML = `<div class="art-bloc" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
           <div class="art-list-items">
             ${items.map((val, idx) => `
               <div class="art-list-item">
                 <input type="text" placeholder="Élément de la liste" value="${escHtmlStrict(val)}"
-                       oninput="artUpdateListItem('${b.id}', ${idx}, this.value)">
+                       oninput="artUpdateListItem('${b.id}', ${idx}, this.value)" onblur="artResetSnapshotCoalesce('${b.id}:${idx}')">
                 <button type="button" class="art-list-remove" onclick="artSupprimerListItem('${b.id}', ${idx})" title="Retirer">×</button>
               </div>`).join('')}
           </div>
           <button type="button" class="fe-add-block-btn" style="margin-top:0" onclick="artAjouterListItem('${b.id}')">+ Ajouter un élément</button>
         </div>`;
-      }
-      if (b.type === 'callout') {
-        return `<div class="art-bloc-callout">${controls}<span class="art-bloc-label">${label}</span>
+      } else if (b.type === 'callout') {
+        blocHTML = `<div class="art-bloc-callout" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
           <input type="text" class="art-box-title" placeholder="Titre de l'encadré" value="${escHtmlStrict(b.titre)}"
-                 oninput="artUpdateBlocChamp('${b.id}','titre', this.value)">
-          <textarea rows="3" placeholder="Ajoutez votre conseil ou information."
-                    oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea>
+                 oninput="artUpdateBlocChamp('${b.id}','titre', this.value)" onblur="artResetSnapshotCoalesce('${b.id}:titre')">
+          ${miniToolbarHTML(b.id)}
+          <textarea rows="3" id="ta-${b.id}" placeholder="Ajoutez votre conseil ou information."
+                    oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';artUpdateBlocTexte('${b.id}', this.value)"
+                    onblur="artResetSnapshotCoalesce('${b.id}')">${escHtmlStrict(b.text)}</textarea>
         </div>`;
-      }
-      if (b.type === 'quote') {
-        return `<div class="art-bloc-quote">${controls}<span class="art-bloc-label">${label}</span>
-          <textarea class="art-quote-editor" rows="3" placeholder="Votre citation ou témoignage…"
-                    oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea>
+      } else if (b.type === 'quote') {
+        blocHTML = `<div class="art-bloc-quote" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
+          ${miniToolbarHTML(b.id)}
+          <textarea class="art-quote-editor" id="ta-${b.id}" rows="3" placeholder="Votre citation ou témoignage…"
+                    oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';artUpdateBlocTexte('${b.id}', this.value)"
+                    onblur="artResetSnapshotCoalesce('${b.id}')">${escHtmlStrict(b.text)}</textarea>
         </div>`;
+      } else {
+        // paragraph / heading / subheading — titres en grand texte sans bordure, paragraphe classique
+        const estTitre = b.type === 'heading' || b.type === 'subheading';
+        const inputClass = estTitre ? `art-block-title art-block-title-${b.type}` : 'art-block-text';
+        if (estTitre) {
+          blocHTML = `<div class="art-bloc" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
+            <input type="text" class="${inputClass}" id="ta-${b.id}" value="${escHtmlStrict(b.text)}"
+                   placeholder="${b.type === 'heading' ? "Écrivez votre titre H2…" : "Écrivez votre titre H3…"}"
+                   oninput="artUpdateBlocTexte('${b.id}', this.value)" onblur="artResetSnapshotCoalesce('${b.id}')"></div>`;
+        } else {
+          blocHTML = `<div class="art-bloc" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
+            ${miniToolbarHTML(b.id)}
+            <textarea class="${inputClass}" id="ta-${b.id}" rows="3" placeholder="Écrivez votre paragraphe ici…"
+                      oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';artUpdateBlocTexte('${b.id}', this.value)"
+                      onblur="artResetSnapshotCoalesce('${b.id}')">${escHtmlStrict(b.text)}</textarea></div>`;
+        }
       }
-
-      // paragraph / heading / subheading — titres en grand texte sans bordure, paragraphe classique
-      const estTitre = b.type === 'heading' || b.type === 'subheading';
-      const inputClass = estTitre ? `art-block-title art-block-title-${b.type}` : 'art-block-text';
-      const miniToolbar = b.type === 'paragraph'
-        ? `<div class="fe-mini-toolbar">
-             <button type="button" onclick="artFormaterSelection('${b.id}','**')"><b>G</b></button>
-             <button type="button" onclick="artFormaterSelection('${b.id}','*')"><i>I</i></button>
-           </div>` : '';
-      if (estTitre) {
-        return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
-          <input type="text" class="${inputClass}" id="ta-${b.id}" value="${escHtmlStrict(b.text)}"
-                 placeholder="${b.type === 'heading' ? "Écrivez votre titre H2…" : "Écrivez votre titre H3…"}"
-                 oninput="artUpdateBlocTexte('${b.id}', this.value)"></div>`;
-      }
-      return `<div class="art-bloc">${controls}<span class="art-bloc-label">${label}</span>
-        ${miniToolbar}
-        <textarea class="${inputClass}" id="ta-${b.id}" rows="3" placeholder="Écrivez votre paragraphe ici…"
-                  oninput="artUpdateBlocTexte('${b.id}', this.value)">${escHtmlStrict(b.text)}</textarea></div>`;
+      return blocHTML + insertPointHTML(i);
     }).join('');
+    redimensionnerTextareasBlocs();
   }
+
+  // Barre de formatage complète — partagée par paragraphe/citation/encadré.
+  function miniToolbarHTML(blocId) {
+    const couleurs = PALETTE_COULEURS_EDITEUR.map(c =>
+      `<button type="button" class="fe-color-dot" style="background:${c.hex}" onclick="artFormaterCouleur('${blocId}','${c.id}')" title="Couleur"></button>`
+    ).join('');
+    return `<div class="fe-mini-toolbar">
+      <button type="button" onclick="artFormaterGras('${blocId}')" title="Gras"><b>G</b></button>
+      <button type="button" onclick="artFormaterItalique('${blocId}')" title="Italique"><i>I</i></button>
+      <button type="button" onclick="artFormaterBarre('${blocId}')" title="Barré"><s>S</s></button>
+      <button type="button" onclick="artFormaterCode('${blocId}')" title="Code">&lt;/&gt;</button>
+      <button type="button" onclick="artFormaterSurligne('${blocId}')" title="Surligner">◐</button>
+      <span class="fe-mini-toolbar-couleurs">${couleurs}</span>
+      <button type="button" onclick="artInsererLien('${blocId}')" title="Lien">🔗</button>
+      <button type="button" onclick="artAjouterCommentaire('${blocId}')" title="Note personnelle (jamais publiée)">💬</button>
+    </div>`;
+  }
+
+  // Ajuste la hauteur de chaque textarea de bloc à son contenu réel — pas
+  // de scrollbar interne, pas de hauteur fixe, comme demandé. Appelé après
+  // chaque re-rendu (contenu chargé depuis un brouillon, conversion de
+  // type…) ; la croissance PENDANT la frappe est gérée par le oninput de
+  // chaque textarea (voir plus haut).
+  function redimensionnerTextareasBlocs() {
+    document.querySelectorAll('#art-blocs-container textarea').forEach(ta => {
+      ta.style.height = 'auto';
+      ta.style.height = ta.scrollHeight + 'px';
+    });
+  }
+
+
 
   function updateArtWordCount() {
     const totalText = _artBlocs.map(b => {
@@ -4415,7 +4842,7 @@
     if (b.type === 'paragraph') return `<p>${appliquerMarkdownLite(escHtmlStrict(b.text))}</p>`;
     if (b.type === 'heading')   return `<h2>${escHtmlStrict(b.text)}</h2>`;
     if (b.type === 'subheading') return `<h3>${escHtmlStrict(b.text)}</h3>`;
-    if (b.type === 'list')      return `<ul>${(b.items || []).filter(i => i.trim()).map(i => `<li>${escHtmlStrict(i)}</li>`).join('')}</ul>`;
+    if (b.type === 'list')      return `<ul>${(b.items || []).filter(i => i.trim()).map(i => `<li>${appliquerMarkdownLite(escHtmlStrict(i))}</li>`).join('')}</ul>`;
     if (b.type === 'quote')     return `<blockquote>${appliquerMarkdownLite(escHtmlStrict(b.text))}</blockquote>`;
     if (b.type === 'callout')   return `<div class="pv-callout"><strong>${escHtmlStrict(b.titre || 'À retenir')}</strong><p>${appliquerMarkdownLite(escHtmlStrict(b.text))}</p></div>`;
     if (b.type === 'divider')   return `<hr>`;
@@ -4465,6 +4892,21 @@
           }).join('')}
         </div>` : '';
 
+      // ── Sommaire (aperçu de ce que gen-fiches.js générera côté client) ──
+      const tocItems = _artBlocs.filter(b => (b.type === 'heading' || b.type === 'subheading') && (b.text || '').trim());
+      const tocHtml = tocItems.length ? `
+        <div class="pv-toc">
+          <div class="pv-toc-title">Sommaire (généré automatiquement)</div>
+          ${tocItems.map(b => `<a href="#" class="${b.type === 'subheading' ? 'pv-toc-h3' : ''}" onclick="return false">${escHtmlStrict(b.text)}</a>`).join('')}
+        </div>` : '';
+
+      // ── Éléments protégés : jamais éditables ici, générés uniquement au
+      // moment de la publication (CTA choisi par l'admin, recommandations
+      // calculées sur l'ensemble des articles publiés) — voir gen-fiches.js.
+      const lockIco = '<svg class="lock-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+      const ctaPlaceholder = `<div class="pv-locked-block">${lockIco}<span>CTA — l'outil associé sera choisi par l'équipe Albexia à la publication et injecté ici automatiquement.</span></div>`;
+      const recosPlaceholder = `<div class="pv-locked-block">${lockIco}<span>Articles similaires &amp; "Plus de cet auteur" — calculés automatiquement à la publication, à partir de la catégorie et de l'auteur.</span></div>`;
+
       contentEl.innerHTML = `
         <div class="pv-cover">${banniereUrl ? `<img src="${escHtmlStrict(banniereUrl)}" alt="">` : ''}</div>
         <div class="pv-body">
@@ -4472,9 +4914,12 @@
           <h1>${escHtmlStrict(titre)}</h1>
           <div class="pv-meta">👤 <strong>${escHtmlStrict(auteurNom)}</strong> · ${tempsLecture} ${t('profil.minRead', langueAp)}</div>
           ${extrait ? `<p class="pv-lead">${escHtmlStrict(extrait)}</p>` : ''}
+          ${tocHtml}
           <div class="pv-render">${_artBlocs.map(renderPreviewBloc).join('')}</div>
-          ${sourcesHtml}
+          ${ctaPlaceholder}
           ${_artMotsCles.length ? `<div class="pv-tags">${_artMotsCles.map(m => `<span class="pv-tag-pill">#${escHtmlStrict(m)}</span>`).join('')}</div>` : ''}
+          ${sourcesHtml}
+          ${recosPlaceholder}
         </div>`;
     }
   };

@@ -886,10 +886,20 @@
       font-size:.8rem; padding:7px 12px; border-radius:8px; cursor:pointer; white-space:nowrap;
     }
     .fe-preview-toggle.active { background:var(--accent); border-color:var(--accent); color:#fff; }
-    
-    .fe-body { flex:1; overflow-y:auto; padding:20px 16px 100px; max-width:900px; margin:0 auto; width:100%; box-sizing:border-box; }
-
+    .fe-body { flex:1; overflow-y:auto; padding:20px 16px 100px; max-width:640px; margin:0 auto; width:100%; box-sizing:border-box; }
     .fe-hint { color:var(--muted); font-size:.8rem; line-height:1.5; margin:0 0 20px; display:flex; align-items:center; gap:6px; }
+
+    /* Sélecteur d'outil revendiqué (article créateur) */
+    .art-outil-pick-card {
+      display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--border);
+      border-radius:10px; margin-bottom:8px; cursor:pointer; transition:border-color .15s;
+    }
+    .art-outil-pick-card:hover { border-color:var(--accent); }
+    .art-outil-pick-card.selected { border-color:var(--accent); background:rgba(108,99,255,.08); }
+    .art-outil-pick-card input[type="radio"] { flex-shrink:0; }
+    .art-outil-pick-card img { width:28px; height:28px; border-radius:6px; flex-shrink:0; }
+    .aopc-nom { font-weight:600; font-size:.88rem; }
+    .aopc-cat { font-size:.75rem; color:var(--muted); }
     .fe-hint svg { flex-shrink:0; opacity:.7; }
     .fe-bottombar {
       display:flex; gap:10px; justify-content:flex-end; padding:14px 16px;
@@ -2161,6 +2171,10 @@
           </div>
         </div>
 
+        <div id="mes-articles-container">
+          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+        </div>
+
         <div id="soumissions-container">
           <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
         </div>
@@ -2491,6 +2505,20 @@
     <p class="fe-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="profil.articleHint">Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots</span></p>
 
     <div class="fe-card">
+      <div class="fe-card-title">Outil concerné <span class="fe-req">*</span></div>
+      <p class="fe-hint">Choisissez l'outil revendiqué auquel cet article est consacré.</p>
+      <div id="art-outil-picker-list"></div>
+      <p class="fe-hint" id="art-outil-picker-empty" style="display:none">Vous n'avez pas encore d'outil revendiqué — un article créateur doit être associé à un outil que vous possédez. <a href="#" onclick="closeArticleModal();document.querySelector('[data-tooltip=\'Mes soumissions\']')?.click();return false;">Revendiquer un outil</a></p>
+    </div>
+
+    <div class="fe-card" id="art-cta-card" style="display:none">
+      <div class="fe-card-title">CTA</div>
+      <p class="fe-hint">Le lien du bouton pointe toujours automatiquement vers la fiche officielle de l'outil — vous ne choisissez que le texte affiché.</p>
+      <select id="art-cta-preset" class="form-input" onchange="artOnCtaPresetChange()"></select>
+      <input type="text" id="art-cta-custom" class="form-input" maxlength="60" placeholder="Votre texte personnalisé" style="display:none;margin-top:8px" oninput="_artCtaCustom=this.value;scheduleArtAutosave()">
+    </div>
+
+    <div class="fe-card">
       <div class="fe-card-title">Informations de l'article</div>
       <div class="fe-field-row">
         <div class="form-group full">
@@ -2710,7 +2738,11 @@
     submitRevendication as submitRevendication_,
     cancelRevendication as cancelRevendication_,
     getArticlesForSoumission as getArticlesForSoumission_,
-    createArticleCreateur as createArticleCreateur_
+    createArticleCreateur as createArticleCreateur_,
+    updateArticleCreateur as updateArticleCreateur_,
+    getOutilsCreateur as getOutilsCreateur_,
+    getArticlesCreateurUtilisateur as getArticlesCreateurUtilisateur_,
+    getArticleCreateur as getArticleCreateur_
   } from './js/firestore.js';
   import { getUserReviews, deleteUserReview } from './js/reviews.js';
 
@@ -3773,7 +3805,96 @@
       return;
     }
     renderSoumissions();
+    loadMesArticles();
   }
+
+  // ── Mes articles (créateur) ──
+  // Liste minimale pour cette phase : titre, statut, date, action selon
+  // statut (Continuer/Voir/Modifier/Voir l'article) — la version visuelle
+  // enrichie (favicons, hiérarchie complète "Mes contributions") viendra
+  // dans une passe suivante ; ici l'objectif est que le circuit de reprise
+  // après "modifications demandées" soit réellement utilisable.
+  const ARTICLE_STATUT_LABELS = {
+    en_relecture: { emoji: '🟡', texte: 'En attente' },
+    modifications_demandees: { emoji: '🔴', texte: 'Modifications demandées' },
+    publie: { emoji: '🟢', texte: 'Publié' },
+  };
+
+  async function loadMesArticles() {
+    const container = document.getElementById('mes-articles-container');
+    if (!container) return;
+    try {
+      const articles = await getArticlesCreateurUtilisateur_(currentUser.uid);
+      articles.sort((a, b) => (b.created_at?.seconds || 0) - (a.created_at?.seconds || 0));
+      if (!articles.length) { container.innerHTML = ''; return; }
+
+      const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+      container.innerHTML = `
+        <div class="soum-form-title" style="margin-bottom:10px">Mes articles · ${articles.length} article${articles.length > 1 ? 's' : ''}</div>
+        <div class="soum-list">${articles.map(a => renderArticleCard(a, langue)).join('')}</div>`;
+    } catch (e) {
+      console.error('[Mes articles] Erreur de chargement :', e);
+      container.innerHTML = '';
+    }
+  }
+
+  function renderArticleCard(a, langue) {
+    const st = ARTICLE_STATUT_LABELS[a.statut] || ARTICLE_STATUT_LABELS.en_relecture;
+    const date = a.created_at?.seconds
+      ? new Date(a.created_at.seconds * 1000).toLocaleDateString(LOCALE_MAP[langue] || 'fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
+      : '';
+    let actionHTML = '';
+    if (a.statut === 'modifications_demandees') {
+      actionHTML = `<button class="btn-sm btn-primary" onclick="ouvrirRepriseArticle('${a.id}')">Modifier</button>`;
+    } else if (a.statut === 'publie') {
+      actionHTML = `<span class="soum-pending-publish">Publication en cours (sous 24h)</span>`;
+    } else {
+      actionHTML = `<button class="btn-sm btn-outline" onclick="voirDetailArticle('${a.id}')">Voir</button>`;
+    }
+    const motifsHTML = (a.statut === 'modifications_demandees' && (a.rejection_reasons || []).length) ? `
+      <div style="font-size:.78rem;color:var(--muted);margin-top:6px">
+        <strong>Motifs :</strong> ${a.rejection_reasons.map(escHtmlStrict).join(', ')}
+        ${a.admin_comment ? `<br><strong>Commentaire :</strong> ${escHtmlStrict(a.admin_comment)}` : ''}
+      </div>` : '';
+    return `
+      <div class="soum-card">
+        <div class="soum-card-top">
+          <div>
+            <div class="soum-card-name">${escHtmlStrict(a.titre || 'Sans titre')}</div>
+            <div class="soum-card-meta">${escHtmlStrict(a.categorie || '')} · Article créateur · Soumis le ${date}</div>
+            ${motifsHTML}
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <span class="soum-status">${st.emoji} ${st.texte}</span>
+            ${actionHTML}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // Reprise après modifications demandées : recharge l'article existant
+  // dans l'éditeur (pas un brouillon local cette fois, le vrai document
+  // Firestore) et bascule submitArticle() en mode "mise à jour".
+  window.ouvrirRepriseArticle = async function(articleId) {
+    try {
+      const a = await getArticleCreateur_(articleId);
+      if (!a) { showToast('❌ Article introuvable.'); return; }
+      await ouvrirEditeurPourArticleExistant(a);
+    } catch (e) {
+      showToast('❌ ' + (e.message || e));
+    }
+  };
+
+  window.voirDetailArticle = async function(articleId) {
+    try {
+      const a = await getArticleCreateur_(articleId);
+      if (!a) { showToast('❌ Article introuvable.'); return; }
+      await ouvrirEditeurPourArticleExistant(a, true);
+    } catch (e) {
+      showToast('❌ ' + (e.message || e));
+    }
+  };
+
 
   function renderSoumissions() {
     const container = document.getElementById('soumissions-container');
@@ -4043,6 +4164,104 @@
   let _artPreviewDevice = 'desktop';
   const ART_DRAFT_KEY = 'art-brouillon-libre';
 
+  // ── Sélecteur outil / CTA (obligatoire — un article créateur DOIT être
+  // associé à un outil revendiqué, voir les security rules) ──
+  let _artOutilsDisponibles = [];   // outils revendiqués de l'utilisateur, résolus depuis getOutilsCreateur_()
+  let _artOutilChoisi = null;       // entrée choisie dans _artOutilsDisponibles
+  let _artEditingArticleId = null;  // id Firestore si on reprend un article existant (modifications_demandees), sinon null = nouvel article
+  let _artCtaPreset = 'decouvrir';
+  let _artCtaCustom = '';
+
+  const CTA_PRESETS = [
+    { id: 'decouvrir',    label: (nom) => `Découvrir ${nom}` },
+    { id: 'essayer',      label: (nom) => `Essayer ${nom}` },
+    { id: 'voir',         label: (nom) => `Voir ${nom}` },
+    { id: 'tester',       label: (nom) => `Tester ${nom}` },
+    { id: 'generique',    label: () => `Découvrir l'outil` },
+    { id: 'personnalise', label: () => 'Personnalisé' },
+  ];
+
+  function calculerCtaTexteFinal() {
+    if (!_artOutilChoisi) return '';
+    if (_artCtaPreset === 'personnalise') {
+      return (document.getElementById('art-cta-custom')?.value || '').trim().slice(0, 60);
+    }
+    const preset = CTA_PRESETS.find(p => p.id === _artCtaPreset);
+    return preset ? preset.label(_artOutilChoisi.nom).slice(0, 60) : '';
+  }
+
+  async function chargerOutilsCreateurDansEditeur() {
+    const listEl = document.getElementById('art-outil-picker-list');
+    const emptyEl = document.getElementById('art-outil-picker-empty');
+    if (listEl) listEl.innerHTML = '<p class="fe-hint">Chargement de vos outils revendiqués…</p>';
+    try {
+      _artOutilsDisponibles = await getOutilsCreateur_(currentUser.uid);
+    } catch (e) {
+      _artOutilsDisponibles = [];
+      console.error('[outils créateur] erreur de chargement :', e);
+    }
+    if (!_artOutilChoisi && _artOutilsDisponibles.length) {
+      // Présélection : par soumission_id (reprise/rédaction depuis une
+      // fiche précise) sinon par outil_slug, sinon rien — le créateur
+      // choisit alors explicitement.
+      _artOutilChoisi = _artOutilsDisponibles.find(o => _artTargetSoumissionId && o.soumission_id === _artTargetSoumissionId)
+        || _artOutilsDisponibles.find(o => _artOutilSlug && o.outil_slug === _artOutilSlug)
+        || null;
+    }
+    renderArtOutilPicker();
+    renderArtCtaPicker();
+  }
+
+  function renderArtOutilPicker() {
+    const listEl = document.getElementById('art-outil-picker-list');
+    const emptyEl = document.getElementById('art-outil-picker-empty');
+    if (!listEl) return;
+    if (!_artOutilsDisponibles.length) {
+      listEl.innerHTML = '';
+      if (emptyEl) emptyEl.style.display = '';
+      return;
+    }
+    if (emptyEl) emptyEl.style.display = 'none';
+    listEl.innerHTML = _artOutilsDisponibles.map(o => `
+      <label class="art-outil-pick-card${_artOutilChoisi && _artOutilChoisi.soumission_id === o.soumission_id ? ' selected' : ''}">
+        <input type="radio" name="art-outil-pick" ${_artOutilChoisi && _artOutilChoisi.soumission_id === o.soumission_id ? 'checked' : ''}
+               onchange="artChoisirOutil('${o.soumission_id}')">
+        <img src="${escHtmlStrict(o.favicon)}" alt="" onerror="this.style.display='none'">
+        <div><div class="aopc-nom">${escHtmlStrict(o.nom)}</div><div class="aopc-cat">${escHtmlStrict(o.categorie)} · Revendiqué</div></div>
+      </label>`).join('');
+  }
+
+  window.artChoisirOutil = function(soumissionId) {
+    _artOutilChoisi = _artOutilsDisponibles.find(o => o.soumission_id === soumissionId) || null;
+    renderArtOutilPicker();
+    renderArtCtaPicker();
+    updateArtSubmitState();
+    scheduleArtAutosave();
+  };
+
+  function renderArtCtaPicker() {
+    const card = document.getElementById('art-cta-card');
+    if (!card) return;
+    if (!_artOutilChoisi) { card.style.display = 'none'; return; }
+    card.style.display = '';
+    const select = document.getElementById('art-cta-preset');
+    const custom = document.getElementById('art-cta-custom');
+    if (select) {
+      select.innerHTML = CTA_PRESETS.map(p => `<option value="${p.id}"${p.id === _artCtaPreset ? ' selected' : ''}>${escHtmlStrict(p.label(_artOutilChoisi.nom))}</option>`).join('');
+    }
+    if (custom) {
+      custom.style.display = _artCtaPreset === 'personnalise' ? '' : 'none';
+      custom.value = _artCtaCustom;
+    }
+  }
+
+  window.artOnCtaPresetChange = function() {
+    const select = document.getElementById('art-cta-preset');
+    _artCtaPreset = select ? select.value : 'decouvrir';
+    renderArtCtaPicker();
+    scheduleArtAutosave();
+  };
+
   function artBlockLabels(langue) {
     return {
       heading: t('profil.blockHeading', langue), subheading: 'H3 — Sous-titre',
@@ -4058,9 +4277,13 @@
   // "Rédiger un article" présent sur une fiche de soumission déjà réclamée —
   // dans ce cas le titre est pré-suggéré mais tout le reste (catégorie,
   // extrait, sources…) est identique à un article 100% libre.
-  window.openArticleModal = function(soumissionId, nomOutil) {
+  window.openArticleModal = async function(soumissionId, nomOutil) {
     _artTargetSoumissionId = soumissionId || null;
     _artOutilSlug = nomOutil ? slugifyClient(nomOutil) : null;
+    _artEditingArticleId = null; // nouvel article, jamais une reprise
+    _artOutilChoisi = null;
+    _artCtaPreset = 'decouvrir';
+    _artCtaCustom = '';
     document.getElementById('article-titre-modal').textContent = nomOutil
       ? nomOutil : 'Nouvel article';
 
@@ -4077,6 +4300,8 @@
         _artBlocs = data.blocs || [];
         _artSources = data.sources || [];
         _artMotsCles = (data.motsCles || []).slice(0, ART_MOTS_CLES_MAX);
+        _artCtaPreset = data.ctaPreset || 'decouvrir';
+        _artCtaCustom = data.ctaCustom || '';
         document.getElementById('art-banniere-url').value = data.banniereUrl || '';
       } catch { _artBlocs = []; _artSources = []; _artMotsCles = []; }
     } else {
@@ -4118,14 +4343,94 @@
     document.getElementById('fe-preview-view').style.display = 'none';
     document.getElementById('fe-preview-modes').style.display = 'none';
     document.getElementById('btn-toggle-preview').classList.remove('active');
+    document.getElementById('btn-submit-article').style.display = '';
     renderArtBlocs();
     renderArtSources();
     renderArtMotsCles();
     document.getElementById('art-mot-cle-input').value = '';
     updateArtWordCount();
-    updateArtSubmitState();
     document.getElementById('editor-article').classList.add('open');
+    await chargerOutilsCreateurDansEditeur();
+    updateArtSubmitState();
   };
+
+  // Convertit un bloc au format de stockage Firestore (contenu[]) vers le
+  // format interne de l'éditeur — utilisé uniquement pour rouvrir un
+  // article existant (reprise après modifications demandées, ou "Voir").
+  function firestoreBlocVersEditeur(fb) {
+    const id = 'bloc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+    const base = { id, text: '', level: 2, url: '', alt: '', caption: '', titre: '', note: '', items: [] };
+    if (fb.type === 'heading') return { ...base, type: fb.level === 3 ? 'subheading' : 'heading', text: fb.text || '', level: fb.level === 3 ? 3 : 2 };
+    if (fb.type === 'image')   return { ...base, type: 'image', url: fb.url || '', alt: fb.alt || '', caption: fb.caption || '' };
+    if (fb.type === 'list')    return { ...base, type: 'list', items: (fb.items || []).slice() };
+    if (fb.type === 'callout') return { ...base, type: 'callout', text: fb.text || '', titre: fb.titre || '' };
+    if (fb.type === 'divider') return { ...base, type: 'divider' };
+    if (fb.type === 'quote')   return { ...base, type: 'quote', text: fb.text || '' };
+    return { ...base, type: 'paragraph', text: fb.text || '' };
+  }
+
+  // Rouvre l'éditeur sur un article Firestore EXISTANT (pas un brouillon
+  // local) — reprise après "modifications demandées", ou consultation
+  // ("Voir", lectureSeule=true → ouvre directement en aperçu, bouton de
+  // soumission masqué).
+  async function ouvrirEditeurPourArticleExistant(a, lectureSeule) {
+    _artTargetSoumissionId = a.soumission_id || null;
+    _artOutilSlug = a.outil_slug || null;
+    _artEditingArticleId = a.id;
+    _artOutilChoisi = null; // résolu par chargerOutilsCreateurDansEditeur() ci-dessous
+
+    document.getElementById('article-titre-modal').textContent = a.titre || 'Article';
+    document.getElementById('art-titre').value = a.titre || '';
+    document.getElementById('art-categorie').value = a.categorie || '';
+    document.getElementById('art-extrait').value = a.extrait || '';
+    document.getElementById('art-auteur-nom').value = a.auteur_nom || (userProfile?.displayName || currentUser?.displayName || '');
+    document.getElementById('art-auteur-bio').value = a.auteur_bio || (userProfile?.bio || '');
+    document.getElementById('art-banniere-url').value = a.banniere_url || '';
+    _artBlocs = (a.contenu || []).map(firestoreBlocVersEditeur);
+    _artSources = (a.sources || []).map(s => ({ id: 'src-' + Math.random().toString(36).slice(2, 8), texte: s.texte || '', url: s.url || '' }));
+    _artMotsCles = (a.mots_cles || []).slice(0, ART_MOTS_CLES_MAX);
+    _artCtaPreset = 'personnalise';
+    _artCtaCustom = a.cta_text || '';
+
+    document.getElementById('art-consent').checked = false;
+    updateArtExtraitCount();
+    updateArtBioCount();
+    _artUndoStack = [];
+    _artRedoStack = [];
+    _artTypingSnapshotTaken.clear();
+    _artOpenBlocMenu = null;
+    _artInsertOpenPour = null;
+    updateArtUndoButtons();
+
+    const banniereUrl = a.banniere_url || '';
+    if (banniereUrl) {
+      document.getElementById('art-banniere-preview-img').src = banniereUrl;
+      document.getElementById('art-banniere-preview').style.display = '';
+      document.getElementById('art-banniere-dropzone').style.display = 'none';
+    } else {
+      document.getElementById('art-banniere-preview').style.display = 'none';
+      document.getElementById('art-banniere-dropzone').style.display = '';
+    }
+    document.getElementById('art-banniere-status').textContent = '';
+
+    _artPreviewMode = false;
+    _artPreviewDevice = 'desktop';
+    document.getElementById('fe-edit-view').style.display = '';
+    document.getElementById('fe-preview-view').style.display = 'none';
+    document.getElementById('fe-preview-modes').style.display = 'none';
+    document.getElementById('btn-toggle-preview').classList.remove('active');
+    renderArtBlocs();
+    renderArtSources();
+    renderArtMotsCles();
+    document.getElementById('art-mot-cle-input').value = '';
+    updateArtWordCount();
+    document.getElementById('editor-article').classList.add('open');
+    await chargerOutilsCreateurDansEditeur();
+    updateArtSubmitState();
+
+    document.getElementById('btn-submit-article').style.display = lectureSeule ? 'none' : '';
+    if (lectureSeule) toggleArtPreview();
+  }
 
   window.closeArticleModal = function() {
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
@@ -4134,6 +4439,12 @@
     }
     document.getElementById('editor-article').classList.remove('open');
     _artTargetSoumissionId = null;
+    _artOutilSlug = null;
+    _artOutilsDisponibles = [];
+    _artOutilChoisi = null;
+    _artEditingArticleId = null;
+    _artCtaPreset = 'decouvrir';
+    _artCtaCustom = '';
     _artBlocs = [];
     _artSources = [];
     _artMotsCles = [];
@@ -4281,6 +4592,8 @@
         blocs: _artBlocs,
         sources: _artSources,
         motsCles: _artMotsCles,
+        ctaPreset: _artCtaPreset,
+        ctaCustom: _artCtaCustom,
         banniereUrl: document.getElementById('art-banniere-url').value
       };
       localStorage.setItem(draftKey, JSON.stringify(data));
@@ -5009,7 +5322,9 @@
   window.updateArtSubmitState = function() {
     const consent = document.getElementById('art-consent')?.checked;
     const nbMots = updateArtWordCount();
-    document.getElementById('btn-submit-article').disabled = !(consent && nbMots >= 500);
+    // Un outil revendiqué doit être sélectionné — un article créateur ne
+    // peut jamais être soumis sans outil associé dans cette phase.
+    document.getElementById('btn-submit-article').disabled = !(consent && nbMots >= 500 && _artOutilChoisi);
   };
 
   // ── Toggle desktop/mobile dans l'aperçu ──
@@ -5038,6 +5353,12 @@
     if (nbMots < 500) { showToast('⚠️ ' + t('profil.min500Words', langue)); return; }
     if (_artBlocs.length === 0) { showToast(t('profil.addAtLeastOneBlock', langue)); return; }
     if (!consent) { showToast('⚠️ Acceptez les conditions avant d\'envoyer.'); return; }
+    if (!_artOutilChoisi) {
+      showToast(_artOutilsDisponibles.length
+        ? '⚠️ Choisissez l\'outil concerné par cet article.'
+        : '⚠️ Vous devez revendiquer un outil avant de pouvoir rédiger un article créateur.');
+      return;
+    }
 
     const contenu = _artBlocs.map(b => {
       if (b.type === 'heading')   return { type: 'heading', level: 2, text: b.text.trim() };
@@ -5055,33 +5376,52 @@
       .map(s => ({ texte: (s.texte || '').trim(), url: (s.url || '').trim() }))
       .filter(s => s.texte || s.url);
 
+    const ctaText = calculerCtaTexteFinal();
+
+    const payload = {
+      soumission_id: _artOutilChoisi.soumission_id,
+      outil_slug: _artOutilChoisi.outil_slug,
+      titre,
+      categorie,
+      extrait,
+      banniere_url: banniereUrl,
+      auteur_nom: auteurNom,
+      auteur_bio: auteurBio,
+      mots_cles: _artMotsCles.slice(0, ART_MOTS_CLES_MAX),
+      cta_text: ctaText,
+      sources,
+      trimestre: trimestreActuel(),
+      nb_mots: nbMots,
+      contenu
+    };
+
     const btn = document.getElementById('btn-submit-article');
     btn.disabled = true;
     btn.textContent = t('profil.sending', langue);
     try {
-      await createArticleCreateur_({
-        uid: currentUser.uid,
-        soumission_id: _artTargetSoumissionId || null,
-        outil_slug: _artOutilSlug || null,
-        titre,
-        categorie,
-        extrait,
-        banniere_url: banniereUrl,
-        auteur_nom: auteurNom,
-        auteur_bio: auteurBio,
-        mots_cles: _artMotsCles.slice(0, ART_MOTS_CLES_MAX),
-        sources,
-        trimestre: trimestreActuel(),
-        nb_mots: nbMots,
-        contenu
-      });
+      if (_artEditingArticleId) {
+        // Reprise après modifications demandées : mise à jour de l'article
+        // existant, jamais de nouvelle transaction de quota (l'article est
+        // déjà compté ce trimestre).
+        await updateArticleCreateur_(_artEditingArticleId, payload);
+      } else {
+        await createArticleCreateur_({ uid: currentUser.uid, ...payload });
+      }
       const draftKey = _artTargetSoumissionId ? ('art-brouillon-' + _artTargetSoumissionId) : ART_DRAFT_KEY;
       localStorage.removeItem(draftKey);
       document.getElementById('editor-article').classList.remove('open');
-      showToast('✅ ' + t('profil.articleSentToast', langue));
+      showToast('✅ ' + (_artEditingArticleId ? 'Article renvoyé pour validation.' : t('profil.articleSentToast', langue)));
+      await loadMesArticles();
       if (_artTargetSoumissionId) await loadSoumissions();
     } catch (e) {
-      showToast('❌ ' + t('profil.errorPrefix', langue) + (e.message || e));
+      // Message clair et spécifique pour le cas de quota trimestriel déjà
+      // consommé (voir createArticleCreateur() dans firestore.js) plutôt
+      // que l'erreur générique — c'est un refus attendu, pas un bug.
+      if (e.message === 'QUOTA_TRIMESTRE_ATTEINT') {
+        showToast('⚠️ Vous avez déjà utilisé votre quota d\'article créateur pour ce trimestre. Revenez au prochain trimestre.');
+      } else {
+        showToast('❌ ' + t('profil.errorPrefix', langue) + (e.message || e));
+      }
     } finally {
       btn.disabled = false;
       btn.textContent = t('profil.claimSubmitArticle', langue);

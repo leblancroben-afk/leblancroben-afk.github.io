@@ -1006,12 +1006,13 @@ function navHTMLArticleCreateur() {
 async function generateArticleCreateur(article, outilsMap, allArticlesCreateurs = []) {
   const {
     id, titre, categorie = '', extrait = '', outil_slug, contenu, created_at,
-    auteur_nom = '', auteur_bio = '', sources = [], mots_cles = []
+    auteur_nom = '', auteur_bio = '', sources = [], mots_cles = [], cta_text = ''
   } = article;
-  // outil_slug est désormais optionnel : c'est l'admin qui le choisit/confirme
-  // au moment de la pré-validation (voir admin/index.html), pas le créateur à
-  // la rédaction. "Aucun outil lié" est un choix valide — l'article se publie
-  // simplement sans bloc CTA (voir outilLienHTML plus bas).
+  // outil_slug est choisi par le créateur parmi ses outils revendiqués
+  // (voir profil.html), et confirmé/corrigé par l'admin à la
+  // pré-validation (voir admin/index.html) — jamais figé unilatéralement
+  // par l'un des deux. cta_text suit la même logique : proposé par le
+  // créateur, éditable par l'admin avant publication.
   if (!titre) return null;
 
   const slug = articleCreateurSlug(article);
@@ -1092,7 +1093,7 @@ async function generateArticleCreateur(article, outilsMap, allArticlesCreateurs 
         <div class="pvac-cta-label">Outil présenté</div>
         <div class="pvac-cta-titre">Découvrez ${escHtml(outil.nom)}</div>
         ${outil.description ? `<p class="pvac-cta-desc">${escHtml(outil.description).slice(0, 140)}</p>` : ''}
-        <a href="${R}tools/${outil.dossierPlan}/${langue}/${outil_slug}/index.html" class="pvac-cta-btn">Voir la fiche ${escHtml(outil.nom)} →</a>
+        <a href="${R}tools/${outil.dossierPlan}/${langue}/${outil_slug}/index.html" class="pvac-cta-btn">${escHtml(cta_text) || `Voir la fiche ${escHtml(outil.nom)} →`}</a>
       </div>`
     : '';
 

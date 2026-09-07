@@ -6,7 +6,8 @@
 import {
   db, doc, setDoc, getDoc, updateDoc,
   collection, addDoc, getDocs, deleteDoc, query, orderBy,
-  where, serverTimestamp, increment, arrayUnion, arrayRemove
+  where, serverTimestamp, increment, arrayUnion, arrayRemove,
+  runTransaction, Timestamp
 } from './firebase-config.js';
 
 // ══════════════════════════════════════
@@ -306,6 +307,48 @@ export async function cancelRevendication(soumissionId) {
 // Contenu stocké en blocs structurés (jamais de HTML brut) — voir
 // gen-fiches.js pour le rendu sécurisé côté génération statique.
 
+// Petit slugify local — évite de faire dépendre firestore.js d'une
+// fonction définie côté page (profil.html a la sienne, gen-fiches.js a la
+// sienne aussi) ; les trois doivent juste produire le même résultat pour
+// un même nom d'outil, ce qui est le cas ici (même logique partout).
+function slugifyLocal(str) {
+  return String(str || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+// Outils qu'un utilisateur peut légitimement associer à un article
+// créateur : ses soumissions dont la revendication est validée ET qui
+// pointent vers un outil réellement indexé (outil_id). Les données
+// affichées (nom, catégorie, favicon) viennent TOUJOURS du document
+// "outils" officiel — jamais des champs saisis dans la soumission
+// d'origine, qui peuvent dater d'avant validation/modification de la
+// fiche par l'admin.
+export async function getOutilsCreateur(uid) {
+  const ref = collection(db, 'soumissions');
+  const snap = await getDocs(query(ref, where('uid', '==', uid), where('revendication.statut', '==', 'validee')));
+  const candidats = snap.docs
+    .map(d => ({ soumission_id: d.id, ...d.data() }))
+    .filter(s => s.outil_id);
+
+  const resolus = await Promise.all(candidats.map(async (s) => {
+    try {
+      const outilSnap = await getDoc(doc(db, 'outils', String(s.outil_id)));
+      if (!outilSnap.exists()) return null;
+      const o = outilSnap.data();
+      return {
+        soumission_id: s.soumission_id,
+        outil_id: String(s.outil_id),
+        outil_slug: slugifyLocal(o.name),
+        nom: o.name,
+        categorie: o.category || '',
+        favicon: `https://www.google.com/s2/favicons?sz=64&domain=${(o.url || '').replace(/^https?:\/\//, '').split('/')[0]}`,
+      };
+    } catch { return null; }
+  }));
+  return resolus.filter(Boolean);
+}
+
 export async function getArticlesForSoumission(uid, soumissionId) {
   const ref = collection(db, 'articles_createurs');
   const snap = await getDocs(query(
@@ -314,6 +357,21 @@ export async function getArticlesForSoumission(uid, soumissionId) {
     where('soumission_id', '==', soumissionId)
   ));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// Tous les articles créateurs d'un utilisateur, tous statuts confondus —
+// pour la liste "Mes articles" de profil.html.
+export async function getArticlesCreateurUtilisateur(uid) {
+  const ref = collection(db, 'articles_createurs');
+  const snap = await getDocs(query(ref, where('uid', '==', uid)));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// Un seul article créateur par id — utilisé pour rouvrir l'éditeur en cas
+// de reprise après "modifications demandées".
+export async function getArticleCreateur(articleId) {
+  const snap = await getDoc(doc(db, 'articles_createurs', articleId));
+  return snap.exists() ? { id: snap.id, ...snap.data() } : null;
 }
 
 // CORRECTIF : la version précédente ne retenait que
@@ -325,15 +383,120 @@ export async function getArticlesForSoumission(uid, soumissionId) {
 //
 // vues et liked_by sont initialisés ici (jamais fournis par l'auteur) —
 // voir incrementArticleViews() et toggleLikeArticle() plus bas.
+// ── Quota transactionnel (1 article créateur par trimestre, tous outils
+// confondus) ──
+// Calcule le début du trimestre calendaire (UTC) contenant `date`, avec
+// EXACTEMENT la même logique que la fonction jumelle côté règles Firestore
+// (debutTrimestreCourant()) — les deux DOIVENT rester strictement
+// identiques, sinon le client et les règles ne s'accorderont jamais sur
+// la valeur attendue et toute soumission échouera.
+function debutTrimestreUTC(date) {
+  const y = date.getUTCFullYear();
+  const m = date.getUTCMonth() + 1; // 1-12
+  const moisDebut = m <= 3 ? 1 : m <= 6 ? 4 : m <= 9 ? 7 : 10;
+  return new Date(Date.UTC(y, moisDebut - 1, 1, 0, 0, 0));
+}
+
+// CORRECTIF : la version précédente ne retenait que
+// {uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots, contenu} —
+// categorie, extrait, auteur_nom, auteur_bio, sources et mots_cles étaient
+// silencieusement perdus alors que profil.html les envoie déjà. On les
+// capture tous ici, avec une valeur de repli sûre pour chacun (jamais
+// `undefined`, que Firestore refuse d'écrire).
+//
+// vues et liked_by sont initialisés ici (jamais fournis par l'auteur) —
+// voir incrementArticleViews() et toggleLikeArticle() plus bas.
+//
+// QUOTA : la création de l'article et la consommation du quota (1 article
+// créateur par trimestre, tous outils confondus) se font dans UNE SEULE
+// transaction Firestore. Les security rules exigent que la mise à jour du
+// quota sur users/{uid} ait bien eu lieu dans la même transaction pour que
+// la création de l'article soit acceptée — donc impossible de créer un
+// article sans consommer le quota, et impossible de consommer le quota
+// deux fois dans le même trimestre (voir règles /users/{userId} et
+// /articles_createurs/{articleId}). `fenetre_debut` envoyée ici n'est
+// qu'une PROPOSITION du client : les règles la valident indépendamment à
+// partir de request.time (temps serveur), jamais depuis l'horloge du
+// navigateur — un client malveillant ne peut donc pas mentir dessus.
+//
+// Si le quota du trimestre est déjà consommé, Firestore rejette la
+// transaction (permission-denied) — cette fonction laisse alors l'erreur
+// remonter telle quelle à l'appelant (profil.html), qui doit distinguer
+// ce cas pour afficher un message clair plutôt qu'une erreur générique.
 export async function createArticleCreateur({
   uid, soumission_id, outil_slug, titre, categorie, extrait, banniere_url,
-  auteur_nom, auteur_bio, sources, mots_cles, trimestre, nb_mots, contenu
+  auteur_nom, auteur_bio, sources, mots_cles, cta_text, trimestre, nb_mots, contenu
 }) {
-  const ref = collection(db, 'articles_createurs');
-  const docRef = await addDoc(ref, {
-    uid,
-soumission_id: soumission_id || null,
-outil_slug: outil_slug || null,
+  const userRef = doc(db, 'users', uid);
+  const articleRef = doc(collection(db, 'articles_createurs'));
+  const fenetreDebut = Timestamp.fromDate(debutTrimestreUTC(new Date()));
+
+  await runTransaction(db, async (tx) => {
+    // Lecture AVANT toute écriture — obligatoire dans une transaction
+    // Firestore (toutes les lectures doivent précéder les écritures).
+    const userSnap = await tx.get(userRef);
+    const dejaConsomme = userSnap.exists()
+      && userSnap.data().quota_articles_fenetre
+      && userSnap.data().quota_articles_fenetre.isEqual(fenetreDebut);
+
+    if (dejaConsomme) {
+      // On échoue nous-mêmes ici plutôt que de laisser les règles renvoyer
+      // un "permission-denied" générique — message clair et immédiat côté
+      // client, sans aller-retour réseau inutile. Les règles restent
+      // quand même la vraie barrière de sécurité si ce contrôle client
+      // était contourné.
+      throw new Error('QUOTA_TRIMESTRE_ATTEINT');
+    }
+
+    tx.set(articleRef, {
+      uid,
+      soumission_id: soumission_id || null,
+      outil_slug: outil_slug || null,
+      titre,
+      categorie: categorie || '',
+      extrait: extrait || '',
+      banniere_url: banniere_url || '',
+      auteur_nom: auteur_nom || '',
+      auteur_bio: auteur_bio || '',
+      sources: sources || [],
+      mots_cles: (mots_cles || []).slice(0, 5),
+      cta_text: cta_text || '',
+      trimestre, // affichage seulement — jamais utilisé pour vérifier le quota
+      nb_mots,
+      statut: 'en_relecture',
+      contenu,
+      vues: 0,
+      liked_by: [],
+      rejection_reasons: [],
+      admin_comment: '',
+      created_at: serverTimestamp(),
+      updated_at: serverTimestamp()
+    });
+
+    tx.set(userRef, { quota_articles_fenetre: fenetreDebut }, { merge: true });
+  });
+
+  return articleRef.id;
+}
+
+// ── Reprise après "modifications demandées" ──
+// Ne consomme PAS de nouveau quota (l'article existe déjà, on le corrige
+// simplement) — donc pas de transaction ici, un simple updateDoc suffit.
+// Remet toujours statut à 'en_relecture' : la reprise renvoie
+// systématiquement l'article en file de validation admin, jamais en
+// publication directe. Les champs modifiables ici correspondent
+// exactement à la liste autorisée par les security rules pour l'auteur
+// (voir /articles_createurs/{articleId} → allow update, condition
+// hasOnly) — toute divergence entre les deux serait rejetée par
+// Firestore, pas seulement ignorée.
+export async function updateArticleCreateur(articleId, {
+  soumission_id, outil_slug, titre, categorie, extrait, banniere_url,
+  auteur_nom, auteur_bio, sources, mots_cles, cta_text, trimestre, nb_mots, contenu
+}) {
+  const ref = doc(db, 'articles_createurs', articleId);
+  await updateDoc(ref, {
+    soumission_id: soumission_id || null,
+    outil_slug: outil_slug || null,
     titre,
     categorie: categorie || '',
     extrait: extrait || '',
@@ -342,17 +505,16 @@ outil_slug: outil_slug || null,
     auteur_bio: auteur_bio || '',
     sources: sources || [],
     mots_cles: (mots_cles || []).slice(0, 5),
+    cta_text: cta_text || '',
     trimestre,
     nb_mots,
-    statut: 'en_relecture',
     contenu,
-    vues: 0,
-    liked_by: [],
-    created_at: serverTimestamp(),
+    statut: 'en_relecture',
     updated_at: serverTimestamp()
   });
-  return docRef.id;
 }
+
+
 
 // ── Vues ──
 // Incrémentée une fois par chargement de page (voir le script inline

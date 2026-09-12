@@ -2932,8 +2932,9 @@
     getSavedVideos, unsaveVideo,
     updatePublicProfile,
     createSoumission, getUserSoumissions,
-    submitRevendication as submitRevendication_,
-    cancelRevendication as cancelRevendication_,
+    createClaim as createClaim_,
+    getUserClaims as getUserClaims_,
+    annulerClaim as annulerClaim_,
     getArticlesForSoumission as getArticlesForSoumission_,
     createArticleCreateur as createArticleCreateur_,
     updateArticleCreateur as updateArticleCreateur_,
@@ -3984,9 +3985,13 @@
     };
   }
 
+  let userClaimsParOutilId = new Map();
+
   async function loadSoumissions() {
     try {
       userSoumissions = await getUserSoumissions(currentUser.uid);
+      const claims = await getUserClaims_(currentUser.uid);
+      userClaimsParOutilId = new Map(claims.map(c => [c.outil_id, c]));
     } catch(e) {
       userSoumissions = [];
       console.error('[Mes soumissions] Erreur de chargement :', e);
@@ -4249,63 +4254,75 @@
     //    correctif : avant, seul le rejet donnait accès à la revendication,
     //    ce qui n'a pas de sens) ;
     //  - l'outil a été REJETÉ en tant que doublon d'un outil déjà existant
-    //    (outil_existant_slug renseigné par l'admin) — l'utilisateur peut
-    //    alors revendiquer l'outil déjà présent plutôt que ressoumettre.
-    // Dans les deux cas, le rendu du bloc "revendication" est identique ;
-    // seul contexteRejete change l'affichage du motif de rejet et du lien
-    // vers l'outil existant.
+    //    (outil_existant_slug renseigné par l'admin, sous forme de SLUG —
+    //    pas d'outil_id directement exploitable pour l'instant, voir note
+    //    dans revendicationExtraHTML ci-dessous).
     if (s.status === 'approved') return cardHead + revendicationExtraHTML(s, langue, false);
     if (s.status !== 'rejected') return cardHead;
     return cardHead + revendicationExtraHTML(s, langue, true);
   }
 
   function revendicationExtraHTML(s, langue, contexteRejete) {
-    const rev = s.revendication || { statut: 'aucune' };
     const lienExistant = (contexteRejete && s.outil_existant_slug)
       ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 ${t('profil.viewExistingSheet', langue)}</a>`
       : '';
 
-    if (rev.statut === 'aucune' || !rev.statut) {
-      // Revendication jamais demandée — bouton disponible.
+    // Cas doublon (rejeté) : outil_existant_slug est un SLUG, pas l'id
+    // Firestore requis pour créer un claim — la résolution slug→id sera
+    // couverte par la recherche d'outil à venir. En attendant, on affiche
+    // le lien vers la fiche existante mais pas de bouton de revendication
+    // ici, plutôt qu'un bouton qui échouerait silencieusement.
+    if (contexteRejete) {
       return `
         <div class="soum-card-extra">
-          ${contexteRejete && s.motif_rejet ? `<p class="soum-motif">⚠️ ${t('profil.rejectReason', langue)} : ${escHtml(s.motif_rejet)}</p>` : ''}
+          ${s.motif_rejet ? `<p class="soum-motif">⚠️ ${t('profil.rejectReason', langue)} : ${escHtml(s.motif_rejet)}</p>` : ''}
+          <div class="soum-actions-row">${lienExistant}</div>
+        </div>`;
+    }
+
+    // Cas normal : outil accepté, on connaît son vrai outil_id — on
+    // consulte la revendication éventuelle de l'utilisateur pour CET outil
+    // (userClaimsParOutilId, chargée par loadSoumissions() depuis la
+    // collection claims — plus jamais depuis s.revendication, qui
+    // n'existe plus dans le nouveau modèle).
+    const claim = s.outil_id ? userClaimsParOutilId.get(s.outil_id) : null;
+
+    if (!claim) {
+      return `
+        <div class="soum-card-extra">
           <div class="soum-actions-row">
-            ${lienExistant}
-            <button class="btn-sm btn-outline" onclick="openRevendiquerModal('${s.id}', '${escHtml(s.nom_outil)}')">🚩 ${t('profil.claimThisTool', langue)}</button>
+            <button class="btn-sm btn-outline" onclick="openRevendiquerModal('${s.outil_id}', '${escHtml(s.nom_outil)}')">🚩 ${t('profil.claimThisTool', langue)}</button>
           </div>
         </div>`;
     }
-    if (rev.statut === 'en_attente') {
-      const dateDemande = rev.date_demande?.seconds
-        ? new Date(rev.date_demande.seconds * 1000).toLocaleDateString(LOCALE_MAP[langue] || 'fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
+    if (claim.status === 'pending' || claim.status === 'additional_verification') {
+      const dateDemande = claim.submittedAt?.seconds
+        ? new Date(claim.submittedAt.seconds * 1000).toLocaleDateString(LOCALE_MAP[langue] || 'fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
         : '';
+      const noteVerifSupp = claim.status === 'additional_verification' && claim.additionalVerificationNote
+        ? `<p style="font-size:.8rem;color:var(--muted)">📋 ${escHtml(claim.additionalVerificationNote)}</p>` : '';
       return `
         <div class="soum-card-extra">
           <p>⏳ ${t('profil.claimSentOn', langue)} ${dateDemande} <span class="status-pill status-pending">${t('profil.underReview', langue)}</span></p>
           <p style="font-size:.8rem;color:var(--muted)">${t('profil.claimReviewDelay', langue)}</p>
+          ${noteVerifSupp}
           <div class="soum-actions-row">
-            ${lienExistant}
-            <button class="btn-sm btn-outline" onclick="annulerRevendication('${s.id}')">🗑️ ${t('profil.cancelClaim', langue)}</button>
+            <button class="btn-sm btn-outline" onclick="annulerRevendication('${claim.id}')">🗑️ ${t('profil.cancelClaim', langue)}</button>
           </div>
         </div>`;
     }
-    if (rev.statut === 'validee') {
+    if (claim.status === 'approved') {
       // Revendiqué — AUCUN bouton "Rédiger un article" ici (voir point 4) :
       // le seul point d'entrée pour rédiger un article reste
       // "+ Nouvel article" → modale de choix → sélecteur d'outil dans
       // l'éditeur, qui liste tous les outils revendiqués d'un coup.
-      return `
-        <div class="soum-card-extra">
-          <p>✔️ ${t('profil.toolClaimed', langue)}</p>
-          ${lienExistant}
-        </div>`;
+      return `<div class="soum-card-extra"><p>✔️ ${t('profil.toolClaimed', langue)}</p></div>`;
     }
-    if (rev.statut === 'refusee') {
-      return `
-        <div class="soum-card-extra">
-          <p style="color:var(--danger)">❌ ${t('profil.claimRefused', langue)}${rev.motif_refus ? ' — ' + escHtml(rev.motif_refus) : ''}</p>
-        </div>`;
+    if (claim.status === 'rejected') {
+      return `<div class="soum-card-extra"><p style="color:var(--danger)">❌ ${t('profil.claimRefused', langue)}${claim.rejectionReason ? ' — ' + escHtml(claim.rejectionReason) : ''}</p></div>`;
+    }
+    if (claim.status === 'revoked') {
+      return `<div class="soum-card-extra"><p style="color:var(--danger)">🚫 Statut créateur révoqué${claim.revocationReason ? ' — ' + escHtml(claim.revocationReason) : ''}</p></div>`;
     }
     return '';
   }
@@ -4341,10 +4358,12 @@
   // ═══════════════════════════════════════════════════════
   //  MODALE REVENDICATION
   // ═══════════════════════════════════════════════════════
-  let _revTargetId = null;
+  let _revTargetOutilId = null;
+  let _revTargetOutilNom = null;
 
-  window.openRevendiquerModal = function(soumissionId, nomOutil) {
-    _revTargetId = soumissionId;
+  window.openRevendiquerModal = function(outilId, nomOutil) {
+    _revTargetOutilId = outilId;
+    _revTargetOutilNom = nomOutil;
     document.getElementById('revendiquer-titre').textContent = `Revendiquer la propriété : ${nomOutil}`;
     document.getElementById('form-revendiquer').reset();
     document.getElementById('modal-revendiquer').classList.add('open');
@@ -4352,11 +4371,12 @@
 
   window.closeRevendiquerModal = function() {
     document.getElementById('modal-revendiquer').classList.remove('open');
-    _revTargetId = null;
+    _revTargetOutilId = null;
+    _revTargetOutilNom = null;
   };
 
   window.submitRevendication = async function() {
-    if (!_revTargetId) return;
+    if (!_revTargetOutilId) return;
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const role = document.getElementById('rev-role').value;
     const email = document.getElementById('rev-email').value.trim();
@@ -4369,7 +4389,12 @@
     btn.disabled = true;
     btn.textContent = t('profil.sending', langue);
     try {
-      await submitRevendication_(_revTargetId, { role, email_pro: email, preuve_url: preuve });
+      await createClaim_(currentUser.uid, {
+        outil_id: _revTargetOutilId,
+        outil_slug: slugifyClient(_revTargetOutilNom || ''),
+        outil_nom: _revTargetOutilNom || '',
+        role, email_pro: email, preuve_url: preuve
+      });
       closeRevendiquerModal();
       showToast('✅ ' + t('profil.claimSentToast', langue));
       await loadSoumissions();
@@ -4381,11 +4406,11 @@
     }
   };
 
-  window.annulerRevendication = async function(soumissionId) {
+  window.annulerRevendication = async function(claimId) {
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     if (!confirm(t('profil.confirmCancelClaim', langue))) return;
     try {
-      await cancelRevendication_(soumissionId);
+      await annulerClaim_(claimId);
       showToast(t('profil.claimCancelled', langue));
       await loadSoumissions();
     } catch (e) {
@@ -4396,7 +4421,7 @@
   // ═══════════════════════════════════════════════════════
   //  ÉDITEUR ARTICLE PLEIN ÉCRAN — blocs structurés (JAMAIS de HTML brut)
   // ═══════════════════════════════════════════════════════
-  let _artTargetSoumissionId = null;
+  let _artTargetClaimId = null;
   let _artOutilSlug = null;
   let _artBlocs = [];
   let _artSources = [];
@@ -4444,10 +4469,10 @@
       console.error('[outils créateur] erreur de chargement :', e);
     }
     if (!_artOutilChoisi && _artOutilsDisponibles.length) {
-      // Présélection : par soumission_id (reprise/rédaction depuis une
+      // Présélection : par claim_id (reprise/rédaction depuis une
       // fiche précise) sinon par outil_slug, sinon rien — le créateur
       // choisit alors explicitement.
-      _artOutilChoisi = _artOutilsDisponibles.find(o => _artTargetSoumissionId && o.soumission_id === _artTargetSoumissionId)
+      _artOutilChoisi = _artOutilsDisponibles.find(o => _artTargetClaimId && o.claim_id === _artTargetClaimId)
         || _artOutilsDisponibles.find(o => _artOutilSlug && o.outil_slug === _artOutilSlug)
         || null;
     }
@@ -4466,16 +4491,16 @@
     }
     if (emptyEl) emptyEl.style.display = 'none';
     listEl.innerHTML = _artOutilsDisponibles.map(o => `
-      <label class="art-outil-pick-card${_artOutilChoisi && _artOutilChoisi.soumission_id === o.soumission_id ? ' selected' : ''}">
-        <input type="radio" name="art-outil-pick" ${_artOutilChoisi && _artOutilChoisi.soumission_id === o.soumission_id ? 'checked' : ''}
-               onchange="artChoisirOutil('${o.soumission_id}')">
+      <label class="art-outil-pick-card${_artOutilChoisi && _artOutilChoisi.claim_id === o.claim_id ? ' selected' : ''}">
+        <input type="radio" name="art-outil-pick" ${_artOutilChoisi && _artOutilChoisi.claim_id === o.claim_id ? 'checked' : ''}
+               onchange="artChoisirOutil('${o.claim_id}')">
         <img src="${escHtmlStrict(o.favicon)}" alt="" onerror="this.style.display='none'">
         <div><div class="aopc-nom">${escHtmlStrict(o.nom)}</div><div class="aopc-cat">${escHtmlStrict(o.categorie)} · Revendiqué</div></div>
       </label>`).join('');
   }
 
-  window.artChoisirOutil = function(soumissionId) {
-    _artOutilChoisi = _artOutilsDisponibles.find(o => o.soumission_id === soumissionId) || null;
+  window.artChoisirOutil = function(claimId) {
+    _artOutilChoisi = _artOutilsDisponibles.find(o => o.claim_id === claimId) || null;
     renderArtOutilPicker();
     renderArtCtaPicker();
     updateArtSubmitState();
@@ -4559,7 +4584,7 @@
   };
 
   window.openArticleModal = async function(soumissionId, nomOutil) {
-    _artTargetSoumissionId = soumissionId || null;
+    _artTargetClaimId = soumissionId || null;
     _artOutilSlug = nomOutil ? slugifyClient(nomOutil) : null;
     _artEditingArticleId = null; // nouvel article, jamais une reprise
     _artOutilChoisi = null;
@@ -4568,7 +4593,7 @@
     document.getElementById('article-titre-modal').textContent = nomOutil
       ? nomOutil : 'Nouvel article';
 
-    const draftKey = _artTargetSoumissionId ? ('art-brouillon-' + _artTargetSoumissionId) : ART_DRAFT_KEY;
+    const draftKey = _artTargetClaimId ? ('art-brouillon-' + _artTargetClaimId) : ART_DRAFT_KEY;
     const brouillon = localStorage.getItem(draftKey);
     if (brouillon) {
       try {
@@ -4655,7 +4680,7 @@
   // ("Voir", lectureSeule=true → ouvre directement en aperçu, bouton de
   // soumission masqué).
   async function ouvrirEditeurPourArticleExistant(a, lectureSeule) {
-    _artTargetSoumissionId = a.soumission_id || null;
+    _artTargetClaimId = a.claim_id || null;
     _artOutilSlug = a.outil_slug || null;
     _artEditingArticleId = a.id;
     _artOutilChoisi = null; // résolu par chargerOutilsCreateurDansEditeur() ci-dessous
@@ -4719,7 +4744,7 @@
       if (!confirm(t('profil.confirmCloseEditor', langue))) return;
     }
     document.getElementById('editor-article').classList.remove('open');
-    _artTargetSoumissionId = null;
+    _artTargetClaimId = null;
     _artOutilSlug = null;
     _artOutilsDisponibles = [];
     _artOutilChoisi = null;
@@ -4863,7 +4888,7 @@
     const statusEl = document.getElementById('art-autosave-status');
     if (statusEl) statusEl.textContent = '…';
     const run = () => {
-      const draftKey = _artTargetSoumissionId ? ('art-brouillon-' + _artTargetSoumissionId) : ART_DRAFT_KEY;
+      const draftKey = _artTargetClaimId ? ('art-brouillon-' + _artTargetClaimId) : ART_DRAFT_KEY;
       const data = {
         titre: document.getElementById('art-titre').value,
         categorie: document.getElementById('art-categorie').value,
@@ -5660,7 +5685,7 @@
     const ctaText = calculerCtaTexteFinal();
 
     const payload = {
-      soumission_id: _artOutilChoisi.soumission_id,
+      claim_id: _artOutilChoisi.claim_id,
       outil_slug: _artOutilChoisi.outil_slug,
       titre,
       categorie,
@@ -5692,12 +5717,12 @@
         // que la case de quota affiche "1 / 1" immédiatement.
         try { userProfile = await getUserProfile(currentUser.uid); renderMcQuotaBox(); } catch {}
       }
-      const draftKey = _artTargetSoumissionId ? ('art-brouillon-' + _artTargetSoumissionId) : ART_DRAFT_KEY;
+      const draftKey = _artTargetClaimId ? ('art-brouillon-' + _artTargetClaimId) : ART_DRAFT_KEY;
       localStorage.removeItem(draftKey);
       document.getElementById('editor-article').classList.remove('open');
       showToast('✅ ' + (_artEditingArticleId ? 'Article renvoyé pour validation.' : t('profil.articleSentToast', langue)));
       await loadMesArticles();
-      if (_artTargetSoumissionId) await loadSoumissions();
+      if (_artTargetClaimId) await loadSoumissions();
     } catch (e) {
       // Message clair et spécifique pour le cas de quota trimestriel déjà
       // consommé (voir createArticleCreateur() dans firestore.js) plutôt

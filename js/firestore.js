@@ -7,7 +7,7 @@ import {
   db, doc, setDoc, getDoc, updateDoc,
   collection, addDoc, getDocs, deleteDoc, query, orderBy,
   where, serverTimestamp, increment, arrayUnion, arrayRemove,
-  runTransaction, Timestamp
+  runTransaction, Timestamp, writeBatch
 } from './firebase-config.js';
 
 // ══════════════════════════════════════
@@ -302,6 +302,140 @@ export async function cancelRevendication(soumissionId) {
 }
 
 // ══════════════════════════════════════
+// REVENDICATIONS D'OUTILS — collection "claims" indépendante
+// ══════════════════════════════════════
+// Remplace l'ancien système où la revendication vivait comme sous-objet
+// sur le document "soumissions" (une seule revendication possible par
+// soumission → structurellement impossible que deux personnes différentes
+// réclament le même outil en parallèle). "claims" est désormais la SEULE
+// source de vérité pour le statut créateur d'un outil.
+//
+// Choix de confidentialité important : cette collection n'est JAMAIS
+// lisible publiquement, même pour connaître juste le statut — elle
+// contient des preuves personnelles (email professionnel, URL de preuve).
+// Pour savoir publiquement "cet outil a-t-il un créateur vérifié", on lit
+// un champ minimal dénormalisé sur le document "outils" lui-même
+// (verified_creator_uid), déjà public en lecture — jamais la collection
+// claims. approuverClaim()/revoquerClaim() maintiennent ce champ à jour.
+//
+// Invariant "au plus un créateur vérifié actif par outil" : appliqué au
+// niveau applicatif (approuverClaim() vérifie et refuse si un autre
+// créateur est déjà actif) plutôt que dans les security rules — parce que
+// seul un admin peut de toute façon écrire ces statuts (isAdmin() dans les
+// règles), et les règles servent à se défendre contre un client
+// adversaire, pas contre une erreur d'un admin de confiance.
+
+export async function createClaim(uid, { outil_id, outil_slug, outil_nom, role, email_pro, preuve_url }) {
+  const ref = collection(db, 'claims');
+  const docRef = await addDoc(ref, {
+    uid,
+    outil_id,
+    outil_slug,
+    outil_nom,
+    status: 'pending',
+    submittedAt: serverTimestamp(),
+    verification: { role, email_pro, preuve_url }
+  });
+  return docRef.id;
+}
+
+export async function getUserClaims(uid) {
+  const ref = collection(db, 'claims');
+  const snap = await getDocs(query(ref, where('uid', '==', uid)));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// Annulation par l'auteur — uniquement tant que la demande est encore
+// "pending" (voir security rules : même contrainte imposée côté serveur).
+export async function annulerClaim(claimId) {
+  await deleteDoc(doc(db, 'claims', claimId));
+}
+
+// Créateur vérifié actif pour un outil (au plus un), ou null — lecture
+// publique via le champ dénormalisé, jamais via "claims".
+export async function getCreateurVerifie(outilId) {
+  const snap = await getDoc(doc(db, 'outils', outilId));
+  return snap.exists() ? (snap.data().verified_creator_uid || null) : null;
+}
+
+// ── Admin ──
+
+export async function getClaimsEnAttente() {
+  const ref = collection(db, 'claims');
+  const snap = await getDocs(query(ref, where('status', 'in', ['pending', 'additional_verification'])));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// Tous les claims pour un même outil — permet à l'admin de comparer
+// plusieurs demandeurs concurrents (voir point 6 de la spec : "Nouvelle
+// revendication d'un outil déjà attribué").
+export async function getClaimsPourOutil(outilId) {
+  const ref = collection(db, 'claims');
+  const snap = await getDocs(query(ref, where('outil_id', '==', outilId)));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function approuverClaim(claimId, adminUid) {
+  const ref = doc(db, 'claims', claimId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) throw new Error('Revendication introuvable.');
+  const claim = snap.data();
+
+  // Jamais de remplacement automatique et silencieux : si un autre claim
+  // est déjà le créateur vérifié actif de cet outil, il faut d'abord le
+  // révoquer explicitement (voir revoquerClaim) avant d'en approuver un
+  // nouveau.
+  const creatorActuel = await getCreateurVerifie(claim.outil_id);
+  if (creatorActuel && creatorActuel !== claim.uid) {
+    throw new Error('CREATEUR_DEJA_ACTIF');
+  }
+
+  const batch = writeBatch(db);
+  batch.update(ref, { status: 'approved', verifiedAt: serverTimestamp(), verifiedBy: adminUid });
+  batch.update(doc(db, 'outils', claim.outil_id), { verified_creator_uid: claim.uid });
+  await batch.commit();
+}
+
+export async function rejeterClaim(claimId, adminUid, motif) {
+  await updateDoc(doc(db, 'claims', claimId), {
+    status: 'rejected', rejectedAt: serverTimestamp(), rejectedBy: adminUid, rejectionReason: motif
+  });
+}
+
+// Révoque un créateur vérifié — le motif est obligatoire (imposé aussi
+// côté appelant/UI admin). Ne touche JAMAIS aux autres claims "pending"
+// pour ce même outil : l'admin doit prendre une décision séparée et
+// explicite pour chacun (point 10 de la spec) — jamais d'approbation
+// automatique en cascade.
+export async function revoquerClaim(claimId, adminUid, motif) {
+  const ref = doc(db, 'claims', claimId);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) throw new Error('Revendication introuvable.');
+  const claim = snap.data();
+
+  const batch = writeBatch(db);
+  batch.update(ref, { status: 'revoked', revokedAt: serverTimestamp(), revokedBy: adminUid, revocationReason: motif });
+
+  // Ne retire le créateur vérifié de la fiche outil QUE si c'était bien ce
+  // claim qui y était associé — évite d'écraser par erreur un autre
+  // créateur actif si les données étaient déjà dans un état incohérent.
+  const outilSnap = await getDoc(doc(db, 'outils', claim.outil_id));
+  if (outilSnap.exists() && outilSnap.data().verified_creator_uid === claim.uid) {
+    batch.update(doc(db, 'outils', claim.outil_id), { verified_creator_uid: null });
+  }
+  await batch.commit();
+}
+
+export async function demanderVerificationSupplementaire(claimId, adminUid, note) {
+  await updateDoc(doc(db, 'claims', claimId), {
+    status: 'additional_verification',
+    additionalVerificationRequestedAt: serverTimestamp(),
+    additionalVerificationBy: adminUid,
+    additionalVerificationNote: note || ''
+  });
+}
+
+// ══════════════════════════════════════
 // ARTICLES CRÉATEURS
 // ══════════════════════════════════════
 // Contenu stocké en blocs structurés (jamais de HTML brut) — voir
@@ -318,27 +452,27 @@ function slugifyLocal(str) {
 }
 
 // Outils qu'un utilisateur peut légitimement associer à un article
-// créateur : ses soumissions dont la revendication est validée ET qui
-// pointent vers un outil réellement indexé (outil_id). Les données
-// affichées (nom, catégorie, favicon) viennent TOUJOURS du document
-// "outils" officiel — jamais des champs saisis dans la soumission
-// d'origine, qui peuvent dater d'avant validation/modification de la
-// fiche par l'admin.
+// créateur : ses claims approuvés, résolus contre le document "outils"
+// officiel — jamais depuis des champs saisis par l'utilisateur. On
+// revérifie aussi que le claim est bien TOUJOURS le créateur vérifié actif
+// de cette fiche (verified_creator_uid) : si l'admin a changé de créateur
+// entre-temps sans que ce claim particulier ait été explicitement
+// révoqué (ne devrait pas arriver, mais on ne fait pas confiance
+// uniquement au statut local du claim), il n'apparaît plus ici.
 export async function getOutilsCreateur(uid) {
-  const ref = collection(db, 'soumissions');
-  const snap = await getDocs(query(ref, where('uid', '==', uid), where('revendication.statut', '==', 'validee')));
-  const candidats = snap.docs
-    .map(d => ({ soumission_id: d.id, ...d.data() }))
-    .filter(s => s.outil_id);
+  const ref = collection(db, 'claims');
+  const snap = await getDocs(query(ref, where('uid', '==', uid), where('status', '==', 'approved')));
+  const claims = snap.docs.map(d => ({ claim_id: d.id, ...d.data() }));
 
-  const resolus = await Promise.all(candidats.map(async (s) => {
+  const resolus = await Promise.all(claims.map(async (c) => {
     try {
-      const outilSnap = await getDoc(doc(db, 'outils', String(s.outil_id)));
+      const outilSnap = await getDoc(doc(db, 'outils', c.outil_id));
       if (!outilSnap.exists()) return null;
       const o = outilSnap.data();
+      if (o.verified_creator_uid !== c.uid) return null;
       return {
-        soumission_id: s.soumission_id,
-        outil_id: String(s.outil_id),
+        claim_id: c.claim_id,
+        outil_id: c.outil_id,
         outil_slug: slugifyLocal(o.name),
         nom: o.name,
         categorie: o.category || '',
@@ -424,7 +558,7 @@ function debutTrimestreUTC(date) {
 // remonter telle quelle à l'appelant (profil.html), qui doit distinguer
 // ce cas pour afficher un message clair plutôt qu'une erreur générique.
 export async function createArticleCreateur({
-  uid, soumission_id, outil_slug, titre, categorie, extrait, banniere_url,
+  uid, claim_id, outil_slug, titre, categorie, extrait, banniere_url,
   auteur_nom, auteur_bio, sources, mots_cles, cta_text, trimestre, nb_mots, contenu
 }) {
   const userRef = doc(db, 'users', uid);
@@ -450,7 +584,7 @@ export async function createArticleCreateur({
 
     tx.set(articleRef, {
       uid,
-      soumission_id: soumission_id || null,
+      claim_id: claim_id || null,
       outil_slug: outil_slug || null,
       titre,
       categorie: categorie || '',
@@ -490,12 +624,12 @@ export async function createArticleCreateur({
 // hasOnly) — toute divergence entre les deux serait rejetée par
 // Firestore, pas seulement ignorée.
 export async function updateArticleCreateur(articleId, {
-  soumission_id, outil_slug, titre, categorie, extrait, banniere_url,
+  claim_id, outil_slug, titre, categorie, extrait, banniere_url,
   auteur_nom, auteur_bio, sources, mots_cles, cta_text, trimestre, nb_mots, contenu
 }) {
   const ref = doc(db, 'articles_createurs', articleId);
   await updateDoc(ref, {
-    soumission_id: soumission_id || null,
+    claim_id: claim_id || null,
     outil_slug: outil_slug || null,
     titre,
     categorie: categorie || '',

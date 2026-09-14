@@ -20,6 +20,17 @@ export async function getCollections(uid) {
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
+// Liste des outils publiés — lecture directe de la collection "outils",
+// utilisée par la recherche de revendication dans profil.html. Même
+// source que l'accueil (index.html/app.js), filtrée par langue pour
+// éviter les doublons fr/en/ht (un outil = plusieurs documents, un par
+// langue, comme sur l'accueil).
+export async function getOutilsPublics(langue) {
+  const snap = await getDocs(collection(db, 'outils'));
+  const tous = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  return tous.filter(o => !o.langue || o.langue === (langue || 'fr'));
+}
+
 export async function createCollection(uid, name) {
   const ref = collection(db, 'users', uid, 'collections');
   const doc = await addDoc(ref, {

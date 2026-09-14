@@ -2956,7 +2956,8 @@
     updateArticleCreateur as updateArticleCreateur_,
     getOutilsCreateur as getOutilsCreateur_,
     getArticlesCreateurUtilisateur as getArticlesCreateurUtilisateur_,
-    getArticleCreateur as getArticleCreateur_
+    getArticleCreateur as getArticleCreateur_,
+    getOutilsPublics as getOutilsPublics_
   } from './js/firestore.js';
   import { getUserReviews, deleteUserReview } from './js/reviews.js';
 
@@ -4402,6 +4403,8 @@
     _revSearchTimer = setTimeout(_revRenderSearchResults, 220);
   };
 
+  let _revOutilsCache = null;
+
   async function _revRenderSearchResults() {
     const resEl = document.getElementById('rev-search-results');
     const q = document.getElementById('rev-search-input').value.trim().toLowerCase();
@@ -4412,7 +4415,10 @@
     resEl.innerHTML = '<div class="skeleton-block" style="height:60px;border-radius:10px;background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>';
     let tools;
     try {
-      tools = await getQuizTools();
+      if (!_revOutilsCache) {
+        _revOutilsCache = await getOutilsPublics_(window.detecterLangue ? window.detecterLangue() : 'fr');
+      }
+      tools = _revOutilsCache;
     } catch (e) {
       resEl.innerHTML = '<p style="text-align:center;color:var(--danger);font-size:.85rem;padding:12px 0">Erreur de chargement du catalogue.</p>';
       return;

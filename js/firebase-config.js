@@ -11,7 +11,9 @@ import { getAuth, GoogleAuthProvider, signInWithPopup,
 import { getFirestore, doc, setDoc, getDoc, updateDoc,
          collection, addDoc, getDocs, deleteDoc, query, orderBy,
          where, increment, arrayUnion, arrayRemove, serverTimestamp, writeBatch,
-         runTransaction, Timestamp }
+         runTransaction, Timestamp,
+         // ── Nouveaux exports pour les alertes/notifications (firestore.js) ──
+         collectionGroup, onSnapshot }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 const firebaseConfig = {
@@ -40,5 +42,7 @@ export {
   // ── Nouveaux exports pour les likes d'articles créateurs (firestore.js) ──
   arrayUnion, arrayRemove,
   // ── Nouveaux exports pour le quota transactionnel d'articles (firestore.js) ──
-  runTransaction, Timestamp
+  runTransaction, Timestamp,
+  // ── Nouveaux exports pour les alertes/notifications (firestore.js) ──
+  collectionGroup, onSnapshot
 };

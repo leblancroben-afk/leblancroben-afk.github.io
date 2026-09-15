@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon Profil — Albexia</title>
+  <title data-i18n="profil.pageTitle">Mon Profil — Albexia</title>
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1987,7 +1987,7 @@
 <!-- ── LOADER Firebase (masqué dès que l'état auth est connu) ── -->
 <div id="auth-loader">
   <div class="loader-spinner"></div>
-  <div class="loader-text">Chargement…</div>
+  <div class="loader-text" data-i18n="profil.loading">Chargement…</div>
 </div>
 
 <div id="auth-wall">
@@ -2004,19 +2004,19 @@
 
     <!-- Formulaire connexion -->
     <div id="form-login" class="auth-form">
-      <input id="login-email"    type="email"    placeholder="Email" autocomplete="email">
-      <input id="login-password" type="password" placeholder="Mot de passe" autocomplete="current-password">
+      <input id="login-email"    type="email"    placeholder="Email" data-i18n-placeholder="profil.emailPlaceholder" autocomplete="email">
+      <input id="login-password" type="password" placeholder="Mot de passe" data-i18n-placeholder="profil.passwordPlaceholder" autocomplete="current-password">
       <div class="auth-error" id="login-error"></div>
-      <button class="btn-primary" id="btn-login" onclick="handleLogin()">Se connecter</button>
+      <button class="btn-primary" id="btn-login" onclick="handleLogin()"><span data-i18n="profil.loginBtn">Se connecter</span></button>
     </div>
 
     <!-- Formulaire inscription -->
     <div id="form-register" class="auth-form" style="display:none">
-      <input id="reg-name"     type="text"     placeholder="Ton prénom ou pseudo">
-      <input id="reg-email"    type="email"    placeholder="Email" autocomplete="email">
-      <input id="reg-password" type="password" placeholder="Mot de passe (6+ caractères)" autocomplete="new-password">
+      <input id="reg-name"     type="text"     placeholder="Ton prénom ou pseudo" data-i18n-placeholder="profil.displayNamePlaceholder">
+      <input id="reg-email"    type="email"    placeholder="Email" data-i18n-placeholder="profil.emailPlaceholder" autocomplete="email">
+      <input id="reg-password" type="password" placeholder="Mot de passe (6+ caractères)" data-i18n-placeholder="profil.passwordMinPlaceholder" autocomplete="new-password">
       <div class="auth-error" id="reg-error"></div>
-      <button class="btn-primary" id="btn-register" onclick="handleRegister()">Créer mon compte</button>
+      <button class="btn-primary" id="btn-register" onclick="handleRegister()"><span data-i18n="profil.registerBtn">Créer mon compte</span></button>
     </div>
 
     <div class="auth-divider">ou</div>
@@ -2100,14 +2100,14 @@
         <div class="sidebar-avatar-zone">
           <div class="sidebar-avatar" id="user-avatar"
                onclick="document.getElementById('avatar-file-input').click()"
-               title="Changer ma photo">?</div>
+               title="Changer ma photo" data-i18n-title="profil.changePhoto">?</div>
           <input type="file" id="avatar-file-input" accept="image/*" onchange="handleAvatarUpload(event)" style="display:none">
           <div class="sidebar-user-info">
             <div class="sidebar-user-name" id="user-name">—</div>
             <div class="sidebar-user-email" id="user-email">—</div>
           </div>
         </div>
-        <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Réduire">‹</button>
+        <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Réduire" data-i18n-title="profil.collapseTitle">‹</button>
       </div>
 
             <!-- Navigation -->
@@ -2276,13 +2276,13 @@
             </svg>
             <span data-i18n="profil.sectionSubmissions">Mes contributions</span>
           </div>
-          <button class="btn-sm btn-primary" id="btn-open-article-libre" onclick="ouvrirChoixTypeArticle()">+ Nouvel article</button>
+          <button class="btn-sm btn-primary" id="btn-open-article-libre" onclick="ouvrirChoixTypeArticle()" data-i18n="profil.newArticleBtn">+ Nouvel article</button>
         </div>
 
         <div class="mc-quota-box" id="mc-quota-box" style="display:none">
           <div>
-            <div class="mc-quota-label">Quota d'articles créateur</div>
-            <div class="mc-quota-info">1 article créateur par trimestre, tous outils confondus.</div>
+            <div class="mc-quota-label" data-i18n="profil.articleQuotaTitle">Quota d'articles créateur</div>
+            <div class="mc-quota-info" data-i18n="profil.articleQuotaDesc">1 article créateur par trimestre, tous outils confondus.</div>
           </div>
           <div class="mc-quota-count" id="mc-quota-count">—</div>
         </div>
@@ -2294,8 +2294,8 @@
         <div class="mc-section">
           <div class="mc-section-header">
             <div>
-              <h2 class="mc-section-title" id="mc-tools-title">Mes outils</h2>
-              <p class="mc-section-subtitle">Outils soumis ou associés à votre compte.</p>
+              <h2 class="mc-section-title" id="mc-tools-title" data-i18n="profil.myToolsTitle">Mes outils</h2>
+              <p class="mc-section-subtitle" data-i18n="profil.myToolsDesc">Outils soumis ou associés à votre compte.</p>
             </div>
           </div>
 
@@ -2312,7 +2312,7 @@
             </div>
 
             <div id="profil-plans-cards-container">
-              <p style="text-align:center;color:var(--muted);padding:1rem 0;font-size:.85rem;">Chargement des formules…</p>
+              <p style="text-align:center;color:var(--muted);padding:1rem 0;font-size:.85rem;" data-i18n="profil.loadingPlans">Chargement des formules…</p>
             </div>
 
             <form id="form-soum-outil">
@@ -2323,7 +2323,7 @@
                 </div>
                 <div class="form-group">
                   <label for="soum-url"><span data-i18n="submit.labelUrl">URL officielle</span> <span>*</span></label>
-                  <input type="url" id="soum-url" placeholder="https://…" required>
+                  <input type="url" id="soum-url" placeholder="https://…" data-i18n-placeholder="profil.urlPlaceholderGeneric" required>
                 </div>
                 <div class="form-group">
                   <label for="soum-cat"><span data-i18n="submit.labelCat">Catégorie</span> <span>*</span></label>
@@ -2383,28 +2383,28 @@
 
         <div class="mc-section">
           <div class="mc-creator-box">
-            <div class="mc-creator-label">Espace créateur</div>
-            <h3>Vous avez créé ou gérez un outil sur Albexia ?</h3>
-            <p>Soumettez votre outil ou revendiquez un outil déjà présent pour accéder aux fonctionnalités créateur.</p>
+            <div class="mc-creator-label" data-i18n="profil.creatorSpaceTitle">Espace créateur</div>
+            <h3 data-i18n="profil.creatorSpaceHeading">Vous avez créé ou gérez un outil sur Albexia ?</h3>
+            <p data-i18n="profil.creatorSpaceDesc">Soumettez votre outil ou revendiquez un outil déjà présent pour accéder aux fonctionnalités créateur.</p>
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
-              <button class="btn-outline btn-sm" onclick="toggleSoumForm();document.getElementById('mc-tools-title').scrollIntoView({behavior:'smooth', block:'start'})">＋ Soumettre un outil</button>
-              <button class="btn-primary btn-sm" onclick="ouvrirRevendiquerSearch()">Revendiquer un outil</button>
+              <button class="btn-outline btn-sm" onclick="toggleSoumForm();document.getElementById('mc-tools-title').scrollIntoView({behavior:'smooth', block:'start'})" data-i18n="profil.submitNewTool">＋ Soumettre un outil</button>
+              <button class="btn-primary btn-sm" onclick="ouvrirRevendiquerSearch()" data-i18n="profil.claimToolBtn">Revendiquer un outil</button>
             </div>
           </div>
         </div>
 
         <div class="mc-section">
           <div class="mc-rules-box">
-            <div class="mc-rules-title">Règles d'acceptation</div>
-            <p class="mc-rules-subtitle">Consultez les règles essentielles avant de soumettre un article.</p>
+            <div class="mc-rules-title" data-i18n="profil.rulesTitle">Règles d'acceptation</div>
+            <p class="mc-rules-subtitle" data-i18n="profil.rulesDesc">Consultez les règles essentielles avant de soumettre un article.</p>
 
             <div class="mc-rules-list">
-              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong>Contenu original.</strong> L'article doit apporter une réelle valeur et ne pas être copié ou fortement reproduit depuis une autre source.</div></div>
-              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong>Minimum 500 mots.</strong> L'article doit être suffisamment développé pour apporter des informations utiles au lecteur.</div></div>
-              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong>Informations vérifiables.</strong> Les informations importantes doivent être fiables et vérifiables lorsque cela est nécessaire.</div></div>
-              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong>Pas de spam ni de bourrage de mots-clés.</strong> Les techniques destinées à manipuler artificiellement le référencement ne sont pas acceptées.</div></div>
-              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong>Promotion raisonnable.</strong> Un article créateur peut présenter son outil associé, mais doit rester informatif et utile.</div></div>
-              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong>Respect des droits et de la communauté.</strong> Les contenus et images doivent respecter les droits applicables et les règles d'Albexia.</div></div>
+              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong data-i18n="profil.rule1Title">Contenu original.</strong> <span data-i18n="profil.rule1Text">L'article doit apporter une réelle valeur et ne pas être copié ou fortement reproduit depuis une autre source.</span></div></div>
+              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong data-i18n="profil.rule2Title">Minimum 500 mots.</strong> <span data-i18n="profil.rule2Text">L'article doit être suffisamment développé pour apporter des informations utiles au lecteur.</span></div></div>
+              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong data-i18n="profil.rule3Title">Informations vérifiables.</strong> <span data-i18n="profil.rule3Text">Les informations importantes doivent être fiables et vérifiables lorsque cela est nécessaire.</span></div></div>
+              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong data-i18n="profil.rule4Title">Pas de spam ni de bourrage de mots-clés.</strong> <span data-i18n="profil.rule4Text">Les techniques destinées à manipuler artificiellement le référencement ne sont pas acceptées.</span></div></div>
+              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong data-i18n="profil.rule5Title">Promotion raisonnable.</strong> <span data-i18n="profil.rule5Text">Un article créateur peut présenter son outil associé, mais doit rester informatif et utile.</span></div></div>
+              <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong data-i18n="profil.rule6Title">Respect des droits et de la communauté.</strong> <span data-i18n="profil.rule6Text">Les contenus et images doivent respecter les droits applicables et les règles d'Albexia.</span></div></div>
             </div>
 
             <div class="mc-rules-details" id="mcRulesDetails">
@@ -2412,13 +2412,13 @@
                 Voir les règles complètes <span class="mc-arrow">↓</span>
               </button>
               <div class="mc-rules-extra" id="mcRulesExtra">
-                <div class="mc-admin-note"><strong>Contrôle de l'administration :</strong> chaque article est relu avant publication. La soumission ne garantit donc pas la publication. L'administration peut demander des modifications, modifier certains éléments ou refuser l'article.</div>
-                <div class="mc-admin-note"><strong>Modifications demandées :</strong> lorsqu'un article nécessite des corrections, l'administration peut demander à l'auteur de le modifier. L'article reste conservé et peut être resoumis après correction.</div>
-                <div class="mc-admin-note"><strong>Refus :</strong> un article peut être refusé notamment en cas de contenu insuffisant, copié, trompeur, trop promotionnel, non vérifiable, spam, liens non pertinents ou non-respect des règles.</div>
-                <div class="mc-admin-note"><strong>Article créateur :</strong> le créateur peut sélectionner son outil associé et proposer le texte du CTA. L'URL du CTA est automatiquement récupérée depuis la fiche officielle Albexia de l'outil et ne peut pas être définie ou remplacée par le créateur.</div>
-                <div class="mc-admin-note"><strong>Article communauté :</strong> aucune association à un outil ou à un CTA n'est garantie. L'administration décide lors de la relecture si un outil ou un CTA doit être associé.</div>
-                <div class="mc-admin-note"><strong>Liens et images :</strong> les liens doivent être pertinents pour le lecteur. Les images utilisées doivent pouvoir être utilisées légalement et respecter les droits de leurs auteurs.</div>
-                <div class="mc-admin-note"><strong>Contenu trompeur ou abusif :</strong> les fausses promesses, les informations volontairement trompeuses, les contenus abusifs et les tentatives de contournement des règles d'Albexia peuvent entraîner le refus de l'article.</div>
+                <div class="mc-admin-note"><strong data-i18n="profil.adminControlTitle">Contrôle de l'administration :</strong> <span data-i18n="profil.adminControlText">chaque article est relu avant publication. La soumission ne garantit donc pas la publication. L'administration peut demander des modifications, modifier certains éléments ou refuser l'article.</span></div>
+                <div class="mc-admin-note"><strong data-i18n="profil.modifRequestedTitle">Modifications demandées :</strong> <span data-i18n="profil.modifRequestedText">lorsqu'un article nécessite des corrections, l'administration peut demander à l'auteur de le modifier. L'article reste conservé et peut être resoumis après correction.</span></div>
+                <div class="mc-admin-note"><strong data-i18n="profil.refusalTitle">Refus :</strong> <span data-i18n="profil.refusalText">un article peut être refusé notamment en cas de contenu insuffisant, copié, trompeur, trop promotionnel, non vérifiable, spam, liens non pertinents ou non-respect des règles.</span></div>
+                <div class="mc-admin-note"><strong data-i18n="profil.creatorArticleRuleTitle">Article créateur :</strong> <span data-i18n="profil.creatorArticleRuleText">le créateur peut sélectionner son outil associé et proposer le texte du CTA. L'URL du CTA est automatiquement récupérée depuis la fiche officielle Albexia de l'outil et ne peut pas être définie ou remplacée par le créateur.</span></div>
+                <div class="mc-admin-note"><strong data-i18n="profil.communityArticleRuleTitle">Article communauté :</strong> <span data-i18n="profil.communityArticleRuleText">aucune association à un outil ou à un CTA n'est garantie. L'administration décide lors de la relecture si un outil ou un CTA doit être associé.</span></div>
+                <div class="mc-admin-note"><strong data-i18n="profil.linksImagesTitle">Liens et images :</strong> <span data-i18n="profil.linksImagesText">les liens doivent être pertinents pour le lecteur. Les images utilisées doivent pouvoir être utilisées légalement et respecter les droits de leurs auteurs.</span></div>
+                <div class="mc-admin-note"><strong data-i18n="profil.misleadingTitle">Contenu trompeur ou abusif :</strong> <span data-i18n="profil.misleadingText">les fausses promesses, les informations volontairement trompeuses, les contenus abusifs et les tentatives de contournement des règles d'Albexia peuvent entraîner le refus de l'article.</span></div>
               </div>
             </div>
           </div>
@@ -2461,9 +2461,9 @@
           <div class="pub-field">
             <div class="pub-label" data-i18n="profil.socialLinks">Liens sociaux</div>
             <div class="social-fields">
-              <input type="url" id="pub-linkedin" placeholder="linkedin.com/in/…">
-              <input type="url" id="pub-twitter"  placeholder="x.com/…">
-              <input type="url" id="pub-website"  placeholder="monsite.com">
+              <input type="url" id="pub-linkedin" placeholder="linkedin.com/in/…" data-i18n-placeholder="profil.linkedinPlaceholder">
+              <input type="url" id="pub-twitter"  placeholder="x.com/…" data-i18n-placeholder="profil.xPlaceholder">
+              <input type="url" id="pub-website"  placeholder="monsite.com" data-i18n-placeholder="profil.websitePlaceholder">
             </div>
           </div>
 
@@ -2477,7 +2477,7 @@
           <div class="section-title" style="font-size:.95rem;margin-bottom:4px;display:flex;align-items:center;gap:8px">
             <span data-i18n="profil.myBadges">Mes badges</span>
             <span style="position:relative;display:inline-flex" id="badges-info-wrap">
-              <button onclick="toggleBadgesInfo()" aria-label="Comment gagner les badges ?"
+              <button onclick="toggleBadgesInfo()" aria-label="Comment gagner les badges ?" data-i18n-aria-label="profil.howToEarnBadgesAria"
                 style="width:18px;height:18px;border-radius:50%;border:1px solid var(--border);
                        background:var(--surface);color:var(--muted);font-size:11px;font-weight:700;
                        display:flex;align-items:center;justify-content:center;cursor:pointer;
@@ -2524,9 +2524,9 @@
           <div class="pref-card">
             <div class="pref-label" data-i18n="profil.interfaceLanguage">Langue de l'interface</div>
             <select id="pref-langue">
-              <option value="fr">🇫🇷 Français</option>
-              <option value="en">🇬🇧 English</option>
-              <option value="es">🇪🇸 Español</option>
+              <option value="fr" data-i18n="profil.langFrLabel">🇫🇷 Français</option>
+              <option value="en" data-i18n="profil.langEnLabel">🇬🇧 English</option>
+              <option value="es" data-i18n="profil.langEsLabel">🇪🇸 Español</option>
             </select>
             <button class="btn-save-pref" onclick="saveLangue()" data-i18n="profil.save">Enregistrer</button>
           </div>
@@ -2559,11 +2559,11 @@
       </svg>
       Nouvelle collection
     </h3>
-    <input type="text" id="new-col-name" placeholder="Ex : Outils pour le SEO" maxlength="40"
+    <input type="text" id="new-col-name" placeholder="Ex : Outils pour le SEO" data-i18n-placeholder="profil.collectionNamePlaceholder" maxlength="40"
            onkeydown="if(event.key==='Enter') confirmNewCollection()">
     <div class="modal-actions">
-      <button class="btn-sm btn-outline" onclick="closeColModal()">Annuler</button>
-      <button class="btn-primary btn-sm" onclick="confirmNewCollection()">Créer</button>
+      <button class="btn-sm btn-outline" onclick="closeColModal()" data-i18n="profil.cancel">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="confirmNewCollection()" data-i18n="profil.create">Créer</button>
     </div>
   </div>
 </div>
@@ -2577,11 +2577,11 @@
       </svg>
       Renommer la collection
     </h3>
-    <input type="text" id="rename-col-name" placeholder="Nouveau nom" maxlength="40"
+    <input type="text" id="rename-col-name" placeholder="Nouveau nom" data-i18n-placeholder="profil.newNamePlaceholder" maxlength="40"
            onkeydown="if(event.key==='Enter') confirmRename()">
     <div class="modal-actions">
-      <button class="btn-sm btn-outline" onclick="closeRenameModal()">Annuler</button>
-      <button class="btn-primary btn-sm" onclick="confirmRename()">Renommer</button>
+      <button class="btn-sm btn-outline" onclick="closeRenameModal()" data-i18n="profil.cancel">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="confirmRename()" data-i18n="profil.rename">Renommer</button>
     </div>
   </div>
 </div>
@@ -2606,8 +2606,8 @@
       Ne plus afficher ce message
     </label>
     <div class="modal-actions">
-      <button class="btn-sm btn-outline" onclick="closeExitModal()">Annuler</button>
-      <button class="btn-primary btn-sm" onclick="confirmExit()">Continuer →</button>
+      <button class="btn-sm btn-outline" onclick="closeExitModal()" data-i18n="profil.cancel">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="confirmExit()" data-i18n="profil.continueBtn">Continuer →</button>
     </div>
   </div>
 </div>
@@ -2615,20 +2615,20 @@
 <!-- MODALE : Revendiquer un outil -->
 <div class="modal-overlay" id="modal-revendiquer-search">
   <div class="modal">
-    <h3 style="display:flex;align-items:center;gap:8px;">🚩 Revendiquer un outil</h3>
+    <h3 style="display:flex;align-items:center;gap:8px;" data-i18n="profil.claimSearchTitle">🚩 Revendiquer un outil</h3>
     <p style="color:var(--text-muted);font-size:.9rem;line-height:1.6;margin:8px 0 16px">
-      Recherchez votre outil dans la base Albexia, puis cliquez sur « Revendiquer ».
+      <span data-i18n="profil.claimSearchIntro">Recherchez votre outil dans la base Albexia, puis cliquez sur « Revendiquer ».</span>
     </p>
     <div class="form-group full" style="margin-bottom:14px">
-      <input type="text" id="rev-search-input" placeholder="🔎 Nom de l'outil…" autocomplete="off"
+      <input type="text" id="rev-search-input" placeholder="🔎 Nom de l'outil…" data-i18n-placeholder="profil.claimSearchPlaceholder" autocomplete="off"
              oninput="_revSearchDebounce()"
              style="width:100%;box-sizing:border-box">
     </div>
     <div id="rev-search-results" style="max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px">
-      <p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px 0">Commencez à taper pour rechercher un outil.</p>
+      <p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px 0" data-i18n="profil.claimSearchHint">Commencez à taper pour rechercher un outil.</p>
     </div>
     <div class="modal-actions">
-      <button class="btn-sm btn-outline" onclick="fermerRevendiquerSearch()">Fermer</button>
+      <button class="btn-sm btn-outline" onclick="fermerRevendiquerSearch()" data-i18n="profil.closeBtn">Fermer</button>
     </div>
   </div>
 </div>
@@ -2653,11 +2653,11 @@
       </div>
       <div class="form-group full">
         <label data-i18n="profil.claimEmailLabel">Email professionnel du domaine officiel</label>
-        <input type="email" id="rev-email" placeholder="contact@monoutil.com" required>
+        <input type="email" id="rev-email" placeholder="contact@monoutil.com" data-i18n-placeholder="profil.claimEmailPlaceholder" required>
       </div>
       <div class="form-group full">
         <label data-i18n="profil.claimProofLabel">Preuve complémentaire (lien réseau social officiel)</label>
-        <input type="url" id="rev-preuve" placeholder="https://x.com/monoutil" required>
+        <input type="url" id="rev-preuve" placeholder="https://x.com/monoutil" data-i18n-placeholder="profil.claimProofPlaceholder" required>
       </div>
     </form>
     <div class="modal-actions">
@@ -2668,25 +2668,25 @@
 </div>
 
 <!-- MODALE : Choix du type d'article — point d'entrée unique -->
-<div class="mc-type-modal" id="mc-type-modal" role="dialog" aria-modal="true" aria-label="Choisir le type d'article">
+<div class="mc-type-modal" id="mc-type-modal" role="dialog" aria-modal="true" aria-label="Choisir le type d'article" data-i18n-aria-label="profil.chooseArticleTypeAria">
   <div class="mc-type-modal-inner">
-    <button type="button" class="mc-type-modal-close" onclick="fermerChoixTypeArticle()" aria-label="Fermer">
+    <button type="button" class="mc-type-modal-close" onclick="fermerChoixTypeArticle()" aria-label="Fermer" data-i18n-aria-label="profil.closeBtn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <h2 class="mc-type-modal-title">Quel type d'article souhaitez-vous rédiger ?</h2>
+    <h2 class="mc-type-modal-title" data-i18n="profil.chooseArticleTypeTitle">Quel type d'article souhaitez-vous rédiger ?</h2>
 
     <div class="mc-type-cards">
       <div class="mc-type-card">
-        <div class="mc-type-card-title">Article communauté</div>
-        <p class="mc-type-card-desc">Partagez un tutoriel, une analyse, une découverte ou une information utile sur l'IA.</p>
-        <button type="button" class="btn-sm btn-outline" id="mc-type-btn-communaute" disabled title="Le circuit article communauté n'est pas encore développé">Bientôt disponible</button>
+        <div class="mc-type-card-title" data-i18n="profil.communityArticleLabel">Article communauté</div>
+        <p class="mc-type-card-desc" data-i18n="profil.communityArticleDesc">Partagez un tutoriel, une analyse, une découverte ou une information utile sur l'IA.</p>
+        <button type="button" class="btn-sm btn-outline" id="mc-type-btn-communaute" disabled title="Le circuit article communauté n'est pas encore développé" data-i18n="profil.comingSoon">Bientôt disponible</button>
       </div>
 
       <div class="mc-type-card">
-        <div class="mc-type-card-title">Article créateur</div>
-        <p class="mc-type-card-desc">Publiez un article associé à l'un de vos outils revendiqués et validés.</p>
-        <button type="button" class="btn-sm btn-primary" id="mc-type-btn-createur" onclick="choisirTypeArticle('createur')">Rédiger un article</button>
-        <p class="mc-type-card-note" id="mc-type-note-createur" style="display:none">Vous n'avez pas encore d'outil revendiqué. <a href="#" onclick="fermerChoixTypeArticle();ouvrirRevendiquerSearch();return false;">Revendiquer un outil</a></p>
+        <div class="mc-type-card-title" data-i18n="profil.creatorArticleLabel">Article créateur</div>
+        <p class="mc-type-card-desc" data-i18n="profil.creatorArticleCardDesc">Publiez un article associé à l'un de vos outils revendiqués et validés.</p>
+        <button type="button" class="btn-sm btn-primary" id="mc-type-btn-createur" onclick="choisirTypeArticle('createur')" data-i18n="profil.writeArticleBtn">Rédiger un article</button>
+        <p class="mc-type-card-note" id="mc-type-note-createur" style="display:none">Vous n'avez pas encore d'outil revendiqué. <a href="#" onclick="fermerChoixTypeArticle();ouvrirRevendiquerSearch();return false;"><span data-i18n="profil.claimToolBtn">Revendiquer un outil</span></a></p>
       </div>
     </div>
   </div>
@@ -2696,13 +2696,13 @@
 <div class="fullscreen-editor" id="editor-article">
   <div class="fe-topbar">
     <button class="fe-back" onclick="closeArticleModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span data-i18n="profil.articleBack">Retour</span></button>
-    <div class="fe-topbar-title" id="article-titre-modal">Nouvel article</div>
+    <div class="fe-topbar-title" id="article-titre-modal" data-i18n="profil.newArticleTitle">Nouvel article</div>
     <div class="fe-autosave" id="art-autosave-status"></div>
-    <button type="button" id="art-undo-btn" class="fe-pm-btn" onclick="artUndo()" title="Annuler" disabled>↶</button>
-    <button type="button" id="art-redo-btn" class="fe-pm-btn" onclick="artRedo()" title="Rétablir" disabled>↷</button>
+    <button type="button" id="art-undo-btn" class="fe-pm-btn" onclick="artUndo()" title="Annuler" data-i18n-title="profil.undoTitle" disabled>↶</button>
+    <button type="button" id="art-redo-btn" class="fe-pm-btn" onclick="artRedo()" title="Rétablir" data-i18n-title="profil.redoTitle" disabled>↷</button>
     <div class="fe-preview-modes" id="fe-preview-modes" style="display:none">
-      <button type="button" class="fe-pm-btn active" id="fe-pm-desktop" onclick="setArtPreviewDevice('desktop')" title="Aperçu desktop"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
-      <button type="button" class="fe-pm-btn" id="fe-pm-mobile" onclick="setArtPreviewDevice('mobile')" title="Aperçu mobile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></button>
+      <button type="button" class="fe-pm-btn active" id="fe-pm-desktop" onclick="setArtPreviewDevice('desktop')" title="Aperçu desktop" data-i18n-title="profil.previewDesktopTitle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+      <button type="button" class="fe-pm-btn" id="fe-pm-mobile" onclick="setArtPreviewDevice('mobile')" title="Aperçu mobile" data-i18n-title="profil.previewMobileTitle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></button>
     </div>
     <button class="fe-preview-toggle" id="btn-toggle-preview" onclick="toggleArtPreview()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg><span data-i18n="profil.articlePreview">Aperçu</span></button>
   </div>
@@ -2711,35 +2711,35 @@
     <div class="fe-header">
       <div class="fe-header-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
       <div>
-        <div class="fe-header-title">Soumettre un article</div>
-        <div class="fe-header-sub">Partagez vos connaissances et découvrez l'IA avec la communauté Albexia.</div>
+        <div class="fe-header-title" data-i18n="profil.submitArticleTitle">Soumettre un article</div>
+        <div class="fe-header-sub" data-i18n="profil.submitArticleSubtitle">Partagez vos connaissances et découvrez l'IA avec la communauté Albexia.</div>
       </div>
     </div>
     <p class="fe-hint"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="profil.articleHint">Relecture sous 24h/48h · Sans code HTML · Minimum 500 mots</span></p>
 
     <div class="fe-card">
-      <div class="fe-card-title">Outil concerné <span class="fe-req">*</span></div>
-      <p class="fe-hint">Choisissez l'outil revendiqué auquel cet article est consacré.</p>
+      <div class="fe-card-title"><span data-i18n="profil.relatedToolLabel">Outil concerné</span> <span class="fe-req">*</span></div>
+      <p class="fe-hint" data-i18n="profil.relatedToolDesc">Choisissez l'outil revendiqué auquel cet article est consacré.</p>
       <div id="art-outil-picker-list"></div>
-      <p class="fe-hint" id="art-outil-picker-empty" style="display:none">Vous n'avez pas encore d'outil revendiqué — un article créateur doit être associé à un outil que vous possédez. <a href="#" onclick="closeArticleModal();document.querySelector('[data-tooltip=\'Mes soumissions\']')?.click();return false;">Revendiquer un outil</a></p>
+      <p class="fe-hint" id="art-outil-picker-empty" style="display:none"><span data-i18n="profil.noToolClaimedLong">Vous n'avez pas encore d'outil revendiqué — un article créateur doit être associé à un outil que vous possédez.</span> <a href="#" onclick="closeArticleModal();document.querySelector('[data-tooltip=\'Mes soumissions\']')?.click();return false;"><span data-i18n="profil.claimToolBtn">Revendiquer un outil</span></a></p>
     </div>
 
     <div class="fe-card" id="art-cta-card" style="display:none">
-      <div class="fe-card-title">CTA</div>
-      <p class="fe-hint">Le lien du bouton pointe toujours automatiquement vers la fiche officielle de l'outil — vous ne choisissez que le texte affiché.</p>
+      <div class="fe-card-title" data-i18n="profil.ctaLabel">CTA</div>
+      <p class="fe-hint" data-i18n="profil.ctaDesc">Le lien du bouton pointe toujours automatiquement vers la fiche officielle de l'outil — vous ne choisissez que le texte affiché.</p>
       <select id="art-cta-preset" class="form-input" onchange="artOnCtaPresetChange()"></select>
-      <input type="text" id="art-cta-custom" class="form-input" maxlength="60" placeholder="Votre texte personnalisé" style="display:none;margin-top:8px" oninput="_artCtaCustom=this.value;scheduleArtAutosave()">
+      <input type="text" id="art-cta-custom" class="form-input" maxlength="60" placeholder="Votre texte personnalisé" data-i18n-placeholder="profil.ctaPlaceholder" style="display:none;margin-top:8px" oninput="_artCtaCustom=this.value;scheduleArtAutosave()">
     </div>
 
     <div class="fe-card">
-      <div class="fe-card-title">Informations de l'article</div>
+      <div class="fe-card-title" data-i18n="profil.articleInfoTitle">Informations de l'article</div>
       <div class="fe-field-row">
         <div class="form-group full">
           <label class="form-label" data-i18n="profil.articleTitleLabel">Titre de l'article <span class="fe-req">*</span></label>
           <input type="text" id="art-titre" class="form-input" maxlength="200" placeholder="ex. Notre outil V7 est disponible !" data-i18n-placeholder="profil.articleTitlePlaceholder" oninput="scheduleArtAutosave()">
         </div>
         <div class="form-group full">
-          <label class="form-label">Catégorie <span class="fe-req">*</span></label>
+          <label class="form-label"><span data-i18n="profil.categoryLabel">Catégorie</span> <span class="fe-req">*</span></label>
           <select id="art-categorie" class="form-input" onchange="scheduleArtAutosave()">
             <option value="" disabled selected data-i18n="submit.optChooseCat">Choisir une catégorie</option>
             <option data-i18n="submit.catWriting">Rédaction & Contenu</option>
@@ -2758,37 +2758,37 @@
 
       <div class="fe-field-row">
         <div class="form-group full">
-          <label class="form-label">Image de couverture <span class="fe-req">*</span></label>
+          <label class="form-label"><span data-i18n="profil.coverImageLabel">Image de couverture</span> <span class="fe-req">*</span></label>
           <div class="art-img-upload">
             <div class="art-img-preview" id="art-banniere-preview" style="display:none">
               <img id="art-banniere-preview-img" src="" alt="">
-              <button type="button" class="art-img-remove" onclick="artRemoveBanniere()" title="Retirer l'image"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
+              <button type="button" class="art-img-remove" onclick="artRemoveBanniere()" title="Retirer l'image" data-i18n-title="profil.removeImageTitle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
             </div>
             <div class="fe-dropzone" id="art-banniere-dropzone" onclick="document.getElementById('art-banniere-file').click()" ondragover="artDropzoneOver(event)" ondragleave="artDropzoneLeave()" ondrop="artDropzoneDrop(event)">
               <span class="fe-dropzone-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>
-              <span class="fe-dropzone-text">Glissez votre image ici</span>
+              <span class="fe-dropzone-text" data-i18n="profil.dragImageHere">Glissez votre image ici</span>
               <span class="fe-dropzone-or">ou</span>
-              <button type="button" class="art-img-upload-btn" id="art-banniere-upload-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Choisir une image</button>
+              <button type="button" class="art-img-upload-btn" id="art-banniere-upload-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span data-i18n="profil.chooseImageBtn">Choisir une image</span></button>
             </div>
             <input type="file" id="art-banniere-file" accept="image/*" style="display:none" onchange="artUploadBanniere(event)">
             <span class="art-img-status" id="art-banniere-status"></span>
           </div>
           <input type="hidden" id="art-banniere-url">
-          <span style="display:block;font-size:.75rem;color:var(--muted);margin-top:4px">Format recommandé : 1200 × 630 px.</span>
+          <span style="display:block;font-size:.75rem;color:var(--muted);margin-top:4px" data-i18n="profil.recommendedFormat">Format recommandé : 1200 × 630 px.</span>
         </div>
         <div class="form-group full">
-          <label class="form-label">Extrait <span class="fe-req">*</span></label>
-          <textarea id="art-extrait" class="form-input" rows="4" maxlength="250" placeholder="Présentez brièvement votre article…" oninput="updateArtExtraitCount();scheduleArtAutosave()"></textarea>
+          <label class="form-label"><span data-i18n="profil.excerptLabel">Extrait</span> <span class="fe-req">*</span></label>
+          <textarea id="art-extrait" class="form-input" rows="4" maxlength="250" placeholder="Présentez brièvement votre article…" data-i18n-placeholder="profil.excerptPlaceholder" oninput="updateArtExtraitCount();scheduleArtAutosave()"></textarea>
           <div class="soum-char-count"><span id="art-extrait-count">0</span> / 250</div>
         </div>
       </div>
     </div>
 
     <div class="fe-card">
-      <div class="fe-card-title">Contenu de l'article</div>
+      <div class="fe-card-title" data-i18n="profil.articleContentLabel">Contenu de l'article</div>
       <div id="art-block-picker" class="fe-block-picker">
-        <button type="button" onclick="artAjouterBloc('heading')"><span class="fe-bp-ico">H2</span><span class="fe-bp-label">Titre H2</span></button>
-        <button type="button" onclick="artAjouterBloc('subheading')"><span class="fe-bp-ico">H3</span><span class="fe-bp-label">Titre H3</span></button>
+        <button type="button" onclick="artAjouterBloc('heading')"><span class="fe-bp-ico">H2</span><span class="fe-bp-label" data-i18n="profil.h2Label">Titre H2</span></button>
+        <button type="button" onclick="artAjouterBloc('subheading')"><span class="fe-bp-ico">H3</span><span class="fe-bp-label" data-i18n="profil.h3Label">Titre H3</span></button>
         <button type="button" onclick="artAjouterBloc('paragraph')"><span class="fe-bp-ico">¶</span><span class="fe-bp-label" data-i18n="profil.blockParagraph">Paragraphe</span></button>
         <button type="button" onclick="artAjouterBloc('list')"><span class="fe-bp-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span><span class="fe-bp-label" data-i18n="profil.blockList">Liste</span></button>
         <button type="button" onclick="artAjouterBloc('image')"><span class="fe-bp-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span><span class="fe-bp-label" data-i18n="profil.blockImage">Image</span></button>
@@ -2798,7 +2798,7 @@
       </div>
 
       <div id="art-blocs-container"></div>
-      <p class="fe-blocs-empty" id="art-blocs-empty">Commencez à écrire votre article… Utilisez les blocs ci-dessus pour structurer votre contenu.</p>
+      <p class="fe-blocs-empty" id="art-blocs-empty" data-i18n="profil.articleContentPlaceholder">Commencez à écrire votre article… Utilisez les blocs ci-dessus pour structurer votre contenu.</p>
 
       <div class="soum-char-count">
         <span id="art-word-count">0</span> <span data-i18n="profil.articleWordsRequired">/ 500 mots requis</span>
@@ -2807,32 +2807,32 @@
     </div>
 
     <div class="fe-card">
-      <div class="fe-card-title">Sources et références</div>
-      <p class="fe-hint" style="margin-top:-4px">Ajoutez les sources utilisées pour votre article (facultatif).</p>
+      <div class="fe-card-title" data-i18n="profil.sourcesTitle">Sources et références</div>
+      <p class="fe-hint" style="margin-top:-4px" data-i18n="profil.sourcesDesc">Ajoutez les sources utilisées pour votre article (facultatif).</p>
       <div id="art-sources-container"></div>
-      <button type="button" class="fe-add-block-btn" onclick="artAjouterSource()">+ Ajouter une source</button>
+      <button type="button" class="fe-add-block-btn" onclick="artAjouterSource()" data-i18n="profil.addSourceBtn">+ Ajouter une source</button>
     </div>
 
     <div class="fe-card">
-      <div class="fe-card-title">Mots-clés</div>
-      <p class="fe-hint" style="margin-top:-4px">5 mots-clés maximum — ils aident à relier votre article à des sujets et outils similaires (facultatif).</p>
+      <div class="fe-card-title" data-i18n="profil.keywordsLabel">Mots-clés</div>
+      <p class="fe-hint" style="margin-top:-4px" data-i18n="profil.keywordsDesc">5 mots-clés maximum — ils aident à relier votre article à des sujets et outils similaires (facultatif).</p>
       <div class="art-tags-input-row">
-        <input type="text" id="art-mot-cle-input" class="form-input" maxlength="30" placeholder="ex. productivité" onkeydown="if(event.key==='Enter'){event.preventDefault();artAjouterMotCle();}">
-        <button type="button" class="art-tags-add-btn" id="art-mot-cle-add-btn" onclick="artAjouterMotCle()">+ Ajouter</button>
+        <input type="text" id="art-mot-cle-input" class="form-input" maxlength="30" placeholder="ex. productivité" data-i18n-placeholder="profil.keywordPlaceholder" onkeydown="if(event.key==='Enter'){event.preventDefault();artAjouterMotCle();}">
+        <button type="button" class="art-tags-add-btn" id="art-mot-cle-add-btn" onclick="artAjouterMotCle()" data-i18n="profil.addBtn">+ Ajouter</button>
       </div>
       <div id="art-mots-cles-container" class="art-tags-chips"></div>
     </div>
 
     <div class="fe-card">
-      <div class="fe-card-title">Auteur</div>
+      <div class="fe-card-title" data-i18n="profil.authorLabel">Auteur</div>
       <div class="fe-field-row">
         <div class="form-group full">
-          <label class="form-label">Nom affiché <span class="fe-req">*</span></label>
-          <input type="text" id="art-auteur-nom" class="form-input" maxlength="60" placeholder="Votre nom ou nom de créateur" oninput="scheduleArtAutosave()">
+          <label class="form-label"><span data-i18n="profil.displayName">Nom affiché</span> <span class="fe-req">*</span></label>
+          <input type="text" id="art-auteur-nom" class="form-input" maxlength="60" placeholder="Votre nom ou nom de créateur" data-i18n-placeholder="profil.authorNamePlaceholder" oninput="scheduleArtAutosave()">
         </div>
         <div class="form-group full">
-          <label class="form-label">Bio courte</label>
-          <textarea id="art-auteur-bio" class="form-input" rows="2" maxlength="160" placeholder="Présentez-vous en quelques mots…" oninput="updateArtBioCount();scheduleArtAutosave()"></textarea>
+          <label class="form-label" data-i18n="profil.shortBio">Bio courte</label>
+          <textarea id="art-auteur-bio" class="form-input" rows="2" maxlength="160" placeholder="Présentez-vous en quelques mots…" data-i18n-placeholder="profil.authorBioPlaceholder" oninput="updateArtBioCount();scheduleArtAutosave()"></textarea>
           <div class="soum-char-count"><span id="art-bio-count">0</span> / 160</div>
         </div>
       </div>
@@ -2841,14 +2841,14 @@
     <div class="fe-notice">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
       <div class="fe-notice-body">
-      <strong>Avant de soumettre votre article</strong>
-      <p>Votre article sera vérifié et mis en forme par l'équipe Albexia avant publication.</p>
-      <p>Albexia peut ajouter des éléments éditoriaux, notamment un bouton CTA en rapport avec l'outil présenté dans votre article.</p>
-      <p><strong>Si votre article présente un outil, le CTA sera associé à cet outil et ne pourra pas rediriger les lecteurs vers un outil concurrent.</strong></p>
-      <p>Les modifications importantes du contenu pourront vous être signalées avant publication.</p>
+      <strong data-i18n="profil.beforeSubmitTitle">Avant de soumettre votre article</strong>
+      <p data-i18n="profil.beforeSubmitText1">Votre article sera vérifié et mis en forme par l'équipe Albexia avant publication.</p>
+      <p data-i18n="profil.beforeSubmitText2">Albexia peut ajouter des éléments éditoriaux, notamment un bouton CTA en rapport avec l'outil présenté dans votre article.</p>
+      <p><strong data-i18n="profil.beforeSubmitText3">Si votre article présente un outil, le CTA sera associé à cet outil et ne pourra pas rediriger les lecteurs vers un outil concurrent.</strong></p>
+      <p data-i18n="profil.beforeSubmitText4">Les modifications importantes du contenu pourront vous être signalées avant publication.</p>
       <label class="fe-consent">
         <input type="checkbox" id="art-consent" onchange="updateArtSubmitState()">
-        <span>J'ai lu et j'accepte ces conditions.</span>
+        <span data-i18n="profil.acceptConditions">J'ai lu et j'accepte ces conditions.</span>
       </label>
       </div>
     </div>
@@ -2860,7 +2860,7 @@
 
   <div class="fe-bottombar">
     <button class="btn-sm btn-outline" onclick="closeArticleModal()" data-i18n="profil.cancel">Annuler</button>
-    <button class="btn-sm btn-outline" onclick="scheduleArtAutosave(true)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Enregistrer le brouillon</button>
+    <button class="btn-sm btn-outline" onclick="scheduleArtAutosave(true)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg><span data-i18n="profil.saveDraftBtn">Enregistrer le brouillon</span></button>
     <button class="btn-primary btn-sm" id="btn-submit-article" onclick="submitArticle()" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span data-i18n="profil.claimSubmitArticle">Envoyer pour relecture</span></button>
   </div>
 </div>
@@ -2877,7 +2877,7 @@
         </svg>
         Trouver mon outil IA
       </h3>
-      <button class="modal-close" onclick="closeQuiz()" aria-label="Fermer">✕</button>
+      <button class="modal-close" onclick="closeQuiz()" aria-label="Fermer" data-i18n-aria-label="profil.closeBtn">✕</button>
     </div>
 
     <div class="quiz-body" id="quiz-body">
@@ -2921,7 +2921,7 @@
           WhatsApp
         </button>
       </div>
-      <div class="quiz-copy-confirm" id="quiz-copy-confirm" style="display:none">✓ Lien copié !</div>
+      <div class="quiz-copy-confirm" id="quiz-copy-confirm" style="display:none" data-i18n="quiz.linkCopied">✓ Lien copié !</div>
     </div>
 
   </div>
@@ -3183,7 +3183,7 @@
     const total = QUIZ_QUESTIONS.length;
     const pct   = (quizState.step / total) * 100;
     document.getElementById('quiz-progress-bar').style.width = pct + '%';
-    document.getElementById('quiz-step-label').textContent   = `Question ${quizState.step + 1} sur ${total}`;
+    document.getElementById('quiz-step-label').textContent   = t('quiz.questionOf', window.detecterLangue ? window.detecterLangue() : 'fr').replace('{n}', quizState.step + 1).replace('{total}', total);
     document.getElementById('quiz-question').textContent     = q.question;
     document.getElementById('quiz-options').innerHTML = q.options.map(o =>
       `<button class="quiz-option" onclick="selectQuizOption('${q.id}','${o.value}')">${o.label}</button>`
@@ -3299,6 +3299,7 @@
     const url   = `${window.location.origin}/index.html?quiz=${param}`;
     navigator.clipboard.writeText(url).then(() => {
       const el = document.getElementById('quiz-copy-confirm');
+      el.textContent = t('quiz.linkCopied', window.detecterLangue ? window.detecterLangue() : 'fr');
       el.style.display = 'block';
       setTimeout(() => { el.style.display = 'none'; }, 2500);
     });
@@ -4434,6 +4435,12 @@
       const id = o.id || o.slug || '';
       const nom = o.nom || o.name || 'Sans nom';
       const cat = o.categorie || o.category || 'Albexia';
+      const iconHtml = o.favicon
+        ? `<img src="${escHtml(o.favicon)}" alt="${escHtml(nom)}" style="width:100%;height:100%;object-fit:contain;border-radius:6px"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                onload="this.nextElementSibling.style.display='none'">
+           <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.1rem">${o.emoji || '🔧'}</span>`
+        : `<span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.1rem">${o.emoji || '🔧'}</span>`;
       const claim = userClaimsParOutilId ? userClaimsParOutilId.get(id) : null;
       let actionHTML;
       if (claim && claim.status === 'approved') {
@@ -4445,9 +4452,12 @@
       }
       return `
         <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm,8px)">
-          <div>
-            <div style="font-weight:600;font-size:.9rem">${escHtml(nom)}</div>
-            <div style="font-size:.78rem;color:var(--text-muted)">${escHtml(cat)} · Albexia</div>
+          <div style="display:flex;align-items:center;gap:10px;min-width:0">
+            <div style="flex-shrink:0;width:32px;height:32px;border-radius:6px;overflow:hidden;background:var(--surface2)">${iconHtml}</div>
+            <div style="min-width:0">
+              <div style="font-weight:600;font-size:.9rem">${escHtml(nom)}</div>
+              <div style="font-size:.78rem;color:var(--text-muted)">${escHtml(cat)} · Albexia</div>
+            </div>
           </div>
           ${actionHTML}
         </div>`;

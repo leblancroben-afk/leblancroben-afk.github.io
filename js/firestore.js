@@ -788,6 +788,35 @@ export async function markAllNotificationsRead(uid) {
   if (snap.docs.length) await batch.commit();
 }
 
+// La suppression d'une notification ne supprime JAMAIS l'alerte qui l'a
+// générée — seule la trace/l'historique disparaît, l'alerte reste active
+// et continuera à générer de nouvelles notifs à l'avenir.
+
+export async function deleteNotification(uid, notifId) {
+  const ref = doc(db, 'notifications', uid, 'items', notifId);
+  await deleteDoc(ref);
+}
+
+export async function deleteAllNotifications(uid) {
+  const ref  = collection(db, 'notifications', uid, 'items');
+  const snap = await getDocs(ref);
+  const batch = writeBatch(db);
+  snap.docs.forEach(d => batch.delete(d.ref));
+  if (snap.docs.length) await batch.commit();
+}
+
+// ══════════════════════════════════════
+// PRÉFÉRENCES DE NOTIFICATIONS (Paramètres → Notifications)
+// ══════════════════════════════════════
+// Ce que l'utilisateur AUTORISE à recevoir — distinct des alertes
+// personnalisées (ce qu'il SURVEILLE). Sauvegarde automatique, pas de
+// bouton "Enregistrer". Stocké dans users/{uid}.settings.notifications.
+
+export async function updateNotificationSetting(uid, key, value) {
+  const ref = doc(db, 'users', uid);
+  await updateDoc(ref, { [`settings.notifications.${key}`]: value });
+}
+
 // ══════════════════════════════════════
 // MATCHING — SEUL POINT D'ENTRÉE : appelé depuis admin-index__3_.html,
 // dans le handler de form-outils, juste après la création d'un nouvel

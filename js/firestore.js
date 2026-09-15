@@ -7,8 +7,13 @@ import {
   db, doc, setDoc, getDoc, updateDoc,
   collection, addDoc, getDocs, deleteDoc, query, orderBy,
   where, serverTimestamp, increment, arrayUnion, arrayRemove,
-  runTransaction, Timestamp, writeBatch
+  runTransaction, Timestamp, writeBatch,
+  collectionGroup, onSnapshot
 } from './firebase-config.js';
+// ⚠️ Si firebase-config.js ne réexporte pas encore collectionGroup et
+// onSnapshot depuis le SDK Firestore, il faut les y ajouter — sinon cet
+// import échoue silencieusement (undefined) plutôt que de lever une
+// erreur claire.
 
 // ══════════════════════════════════════
 // COLLECTIONS D'OUTILS
@@ -705,4 +710,133 @@ export async function getArticleCreateurStats(articleId, uid) {
     likesCount: likedBy.length,
     likedByCurrentUser: uid ? likedBy.includes(uid) : false,
   };
+}
+
+// ══════════════════════════════════════
+// MES ALERTES (déclenchées uniquement depuis l'admin — option 3,
+// voir matchAgainstAlerts() plus bas, appelée dans form-outils)
+// ══════════════════════════════════════
+// Une alerte = un critère de veille défini par l'utilisateur (catégorie +
+// éventuellement types de prix / tags). Stockée en sous-collection
+// users/{uid}/alerts, jamais lisible/écrivable par un autre utilisateur.
+
+export async function getUserAlerts(uid) {
+  const ref  = collection(db, 'users', uid, 'alerts');
+  const snap = await getDocs(query(ref, orderBy('createdAt', 'desc')));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function createAlert(uid, { name, category, priceTypes, tags }) {
+  const ref = collection(db, 'users', uid, 'alerts');
+  const docRef = await addDoc(ref, {
+    name:       name || '',
+    category:   category || '',
+    priceTypes: priceTypes && priceTypes.length ? priceTypes : ['free', 'freemium', 'paid'],
+    tags:       tags || [],
+    active:     true,
+    createdAt:  serverTimestamp(),
+  });
+  return docRef.id;
+}
+
+export async function toggleAlertActive(uid, alertId, active) {
+  const ref = doc(db, 'users', uid, 'alerts', alertId);
+  await updateDoc(ref, { active });
+}
+
+export async function deleteAlert(uid, alertId) {
+  const ref = doc(db, 'users', uid, 'alerts', alertId);
+  await deleteDoc(ref);
+}
+
+// ══════════════════════════════════════
+// NOTIFICATIONS
+// ══════════════════════════════════════
+// Générées automatiquement par matchAgainstAlerts() (voir plus bas),
+// elle-même appelée UNIQUEMENT depuis l'admin (form-outils, à la
+// création d'un nouvel outil) — voir Option 3 discutée : pas de Cloud
+// Function, pas de trigger Firestore, tout part d'un point de contrôle
+// unique et connu (l'admin).
+
+export async function getNotifications(uid, max = 20) {
+  const ref  = collection(db, 'notifications', uid, 'items');
+  const snap = await getDocs(query(ref, orderBy('createdAt', 'desc')));
+  return snap.docs.slice(0, max).map(d => ({ id: d.id, ...d.data() }));
+}
+
+// Écoute temps réel pour le badge/panel de notifications (cloche).
+// Retourne la fonction unsubscribe (à appeler si le composant se démonte).
+export function listenNotifications(uid, callback, max = 20) {
+  const ref = collection(db, 'notifications', uid, 'items');
+  const q   = query(ref, orderBy('createdAt', 'desc'));
+  return onSnapshot(q, snap => {
+    const items = snap.docs.slice(0, max).map(d => ({ id: d.id, ...d.data() }));
+    callback(items);
+  });
+}
+
+export async function markNotificationRead(uid, notifId) {
+  const ref = doc(db, 'notifications', uid, 'items', notifId);
+  await updateDoc(ref, { read: true });
+}
+
+export async function markAllNotificationsRead(uid) {
+  const ref  = collection(db, 'notifications', uid, 'items');
+  const snap = await getDocs(query(ref, where('read', '==', false)));
+  const batch = writeBatch(db);
+  snap.docs.forEach(d => batch.update(d.ref, { read: true }));
+  if (snap.docs.length) await batch.commit();
+}
+
+// ══════════════════════════════════════
+// MATCHING — SEUL POINT D'ENTRÉE : appelé depuis admin-index__3_.html,
+// dans le handler de form-outils, juste après la création d'un nouvel
+// outil (jamais sur une simple modification — voir !editingTool côté
+// admin). Aucune Cloud Function, aucun trigger serveur : c'est un choix
+// assumé pour rester 100% gratuit (plan Spark), le point de contrôle
+// étant que Damon est seul à ajouter des outils, via l'admin.
+// ══════════════════════════════════════
+
+export async function matchAgainstAlerts(tool) {
+  if (!tool || !tool.category) return;
+
+  const q = query(
+    collectionGroup(db, 'alerts'),
+    where('active', '==', true),
+    where('category', '==', tool.category)
+  );
+  const snap = await getDocs(q);
+  if (snap.empty) return;
+
+  const batch = writeBatch(db);
+  let count = 0;
+
+  for (const docSnap of snap.docs) {
+    const alert = docSnap.data();
+    const uid   = docSnap.ref.parent.parent.id; // users/{uid}/alerts/{alertId} → uid
+
+    const priceOk = !alert.priceTypes?.length || alert.priceTypes.includes(tool.price);
+    const tagsOk  = !alert.tags?.length || alert.tags.every(t => (tool.tags || []).includes(t));
+    if (!priceOk || !tagsOk) continue;
+
+    const notifRef = doc(collection(db, 'notifications', uid, 'items'));
+    batch.set(notifRef, {
+      type:      'alert_match',
+      alertId:   docSnap.id,
+      alertName: alert.name || '',
+      toolId:    tool.id,
+      toolName:  tool.name,
+      favicon:   tool.favicon || '',
+      message:   alert.name
+        ? `Nouvel outil correspondant à votre alerte « ${alert.name} »`
+        : `Nouvel outil ${tool.name} ajouté en ${tool.category}`,
+      link:      `/${tool.page || ''}`,
+      read:      false,
+      createdAt: serverTimestamp(),
+    });
+    count++;
+  }
+
+  if (count) await batch.commit();
+  return count;
 }

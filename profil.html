@@ -887,9 +887,7 @@
       font-size:.8rem; padding:7px 12px; border-radius:8px; cursor:pointer; white-space:nowrap;
     }
     .fe-preview-toggle.active { background:var(--accent); border-color:var(--accent); color:#fff; }
-    
-    .fe-body { flex:1; overflow-y:auto; padding:20px 16px 100px; max-width:900px; margin:0 auto; width:100%; box-sizing:border-box; }
-
+    .fe-body { flex:1; overflow-y:auto; padding:20px 16px 100px; max-width:640px; margin:0 auto; width:100%; box-sizing:border-box; }
     .fe-hint { color:var(--muted); font-size:.8rem; line-height:1.5; margin:0 0 20px; display:flex; align-items:center; gap:6px; }
 
     /* Sélecteur d'outil revendiqué (article créateur) */
@@ -2109,6 +2107,28 @@
             <div class="sidebar-user-email" id="user-email">—</div>
           </div>
         </div>
+        <div style="position:relative">
+          <button class="sidebar-toggle" id="notif-bell-btn" onclick="toggleNotifPanel(event)"
+                  title="Notifications" style="position:relative">
+            🔔
+            <span id="notif-badge" style="display:none;position:absolute;top:-2px;right:-2px;
+                  background:var(--accent2, #e04);color:#fff;border-radius:50%;
+                  min-width:16px;height:16px;font-size:.65rem;line-height:16px;
+                  text-align:center;padding:0 3px">0</span>
+          </button>
+          <div id="notif-panel" style="display:none;position:absolute;top:110%;right:0;width:300px;
+                max-height:380px;overflow-y:auto;background:var(--bg-elev, #1a1a2e);
+                border:1px solid var(--border, #333);border-radius:10px;z-index:50;
+                box-shadow:0 8px 24px rgba(0,0,0,.4)">
+            <div style="display:flex;justify-content:space-between;align-items:center;
+                        padding:10px 12px;border-bottom:1px solid var(--border,#333)">
+              <strong style="font-size:.85rem">Notifications</strong>
+              <button class="btn-icon" onclick="handleMarkAllRead()" title="Tout marquer comme lu"
+                      style="font-size:.7rem">Tout lire</button>
+            </div>
+            <div id="notif-list"></div>
+          </div>
+        </div>
         <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Réduire" data-i18n-title="profil.collapseTitle">‹</button>
       </div>
 
@@ -2161,6 +2181,16 @@
           </span>
           <span class="sidebar-item-label" data-i18n="profil.navSubmissions">Mes soumissions</span>
           <span class="sidebar-badge" id="soum-count">0</span>
+        </button>
+        <button class="sidebar-item" data-section="alertes" data-tooltip="Mes alertes" onclick="switchSection('alertes')">
+          <span class="sidebar-item-icon">
+            <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
+              <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="9" cy="9" r="2" stroke="currentColor" stroke-width="1.4"/>
+            </svg>
+          </span>
+          <span class="sidebar-item-label" data-i18n="profil.navAlerts">Mes alertes</span>
+          <span class="sidebar-badge" id="alertes-count">0</span>
         </button>
         <button class="sidebar-item" data-section="profil-public" data-tooltip="Profil public" onclick="switchSection('profil-public')">
           <span class="sidebar-item-icon">
@@ -2217,6 +2247,52 @@
         </div>
         <div id="collections-container">
           <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+        </div>
+      </div>
+
+      <!-- 1bis. MES ALERTES -->
+      <div class="profile-section" id="section-alertes">
+        <div class="section-header">
+          <div class="section-title">
+            <svg viewBox="0 0 20 20" fill="none" width="18" height="18" style="display:inline-block;vertical-align:middle">
+              <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="10" cy="10" r="2.3" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <span>Mes alertes</span>
+          </div>
+          <button class="btn-sm btn-outline" onclick="openNewAlerteModal()">+ Créer une alerte</button>
+        </div>
+        <div id="alertes-container">
+          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+        </div>
+      </div>
+
+      <!-- Modale : créer une alerte -->
+      <div class="modal-overlay" id="modal-new-alerte">
+        <div class="modal">
+          <h3 style="display:flex;align-items:center;gap:8px;">
+            <svg viewBox="0 0 24 24" fill="none" width="18" height="18" stroke="currentColor" stroke-width="1.8" style="color:var(--accent2)">
+              <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
+            </svg>
+            Créer une alerte
+          </h3>
+          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:6px 0 2px">Nom (optionnel)</label>
+          <input type="text" id="alerte-name" placeholder="Ex : Génération d'images gratuite" maxlength="60">
+          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:10px 0 2px">Catégorie</label>
+          <select id="alerte-category" style="width:100%;padding:8px 10px;border-radius:8px"></select>
+          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:10px 0 4px">Types de prix à surveiller</label>
+          <div style="display:flex;gap:12px;margin-bottom:6px">
+            <label style="display:flex;align-items:center;gap:4px;font-weight:400;font-size:.85rem">
+              <input type="checkbox" id="alerte-price-free" checked> Gratuit</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:400;font-size:.85rem">
+              <input type="checkbox" id="alerte-price-freemium" checked> Freemium</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:400;font-size:.85rem">
+              <input type="checkbox" id="alerte-price-paid" checked> Payant</label>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-sm btn-outline" onclick="closeNewAlerteModal()">Annuler</button>
+            <button class="btn-primary btn-sm" onclick="confirmNewAlerte()">Créer</button>
+          </div>
         </div>
       </div>
 
@@ -2959,7 +3035,9 @@
     getOutilsCreateur as getOutilsCreateur_,
     getArticlesCreateurUtilisateur as getArticlesCreateurUtilisateur_,
     getArticleCreateur as getArticleCreateur_,
-    getOutilsPublics as getOutilsPublics_
+    getOutilsPublics as getOutilsPublics_,
+    getUserAlerts, createAlert, deleteAlert, toggleAlertActive,
+    listenNotifications, markNotificationRead, markAllNotificationsRead
   } from './js/firestore.js';
   import { getUserReviews, deleteUserReview } from './js/reviews.js';
 
@@ -3462,6 +3540,8 @@
       // erreur non catchée dans renderCollections() gelait tout l'écran
       // sur "Chargement..." sans jamais afficher les sections suivantes.
       try { await loadCollections(); } catch (err) { console.error('Erreur loadCollections:', err); }
+      try { await loadAlertes(); } catch (err) { console.error('Erreur loadAlertes:', err); }
+      try { startNotifListener(); } catch (err) { console.error('Erreur startNotifListener:', err); }
       try { await loadQuizHistory(); } catch (err) { console.error('Erreur loadQuizHistory:', err); }
       try { await loadAvis(); } catch (err) { console.error('Erreur loadAvis:', err); }
       try { await loadSavedVideos(); } catch (err) { console.error('Erreur loadSavedVideos:', err); }
@@ -3740,6 +3820,155 @@
     await removeToolFromCollection(currentUser.uid, colId, toolId);
     await loadCollections();
     showToast(t('profil.toastToolRemoved', langue));
+  };
+
+  // ══════════════════════════════════════════════
+  // MES ALERTES
+  // ══════════════════════════════════════════════
+
+  let alertes = [];
+
+  async function loadAlertes() {
+    alertes = await getUserAlerts(currentUser.uid);
+    document.getElementById('alertes-count').textContent = alertes.length;
+    renderAlertes();
+  }
+
+  function renderAlertes() {
+    const container = document.getElementById('alertes-container');
+    if (alertes.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="icon">🎯</div>
+          <p>Vous n'avez pas encore créé d'alerte.</p>
+          <button class="btn-primary btn-sm" onclick="openNewAlerteModal()">+ Créer une alerte</button>
+        </div>`;
+      return;
+    }
+    container.innerHTML = alertes.map(a => {
+      const prixLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
+      const prixTxt = (a.priceTypes || []).map(p => prixLabel[p] || p).join(' · ');
+      return `
+        <div class="collection-card" data-id="${a.id}">
+          <div class="collection-top">
+            <div class="collection-name">${a.name || a.category}</div>
+            <div style="display:flex;gap:4px">
+              <button class="btn-icon" onclick="handleToggleAlerte('${a.id}',${a.active !== false})"
+                      title="${a.active !== false ? 'Désactiver' : 'Activer'}">
+                ${a.active !== false ? '🔔' : '🔕'}
+              </button>
+              <button class="btn-icon" onclick="handleDeleteAlerte('${a.id}','${escHtml(a.name || a.category)}')" title="Supprimer">🗑️</button>
+            </div>
+          </div>
+          <div class="collection-meta">Catégorie : ${a.category} · ${prixTxt}</div>
+        </div>`;
+    }).join('');
+  }
+
+  window.openNewAlerteModal = async function() {
+    const select = document.getElementById('alerte-category');
+    if (!select.options.length) {
+      select.innerHTML = '<option>Chargement…</option>';
+      try {
+        const outils = await getOutilsPublics_(window.detecterLangue ? window.detecterLangue() : 'fr');
+        const cats = [...new Set(outils.map(o => o.category).filter(Boolean))].sort();
+        select.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
+      } catch (e) {
+        select.innerHTML = '<option value="">Erreur de chargement</option>';
+      }
+    }
+    document.getElementById('alerte-name').value = '';
+    document.getElementById('modal-new-alerte').classList.add('open');
+  };
+  window.closeNewAlerteModal = function() {
+    document.getElementById('modal-new-alerte').classList.remove('open');
+  };
+  window.confirmNewAlerte = async function() {
+    const name = document.getElementById('alerte-name').value.trim();
+    const category = document.getElementById('alerte-category').value;
+    if (!category) return;
+    const priceTypes = ['free', 'freemium', 'paid'].filter(
+      p => document.getElementById(`alerte-price-${p}`).checked
+    );
+    closeNewAlerteModal();
+    await createAlert(currentUser.uid, { name, category, priceTypes, tags: [] });
+    await loadAlertes();
+    showToast('Alerte créée ✓');
+  };
+
+  window.handleToggleAlerte = async function(id, currentActive) {
+    await toggleAlertActive(currentUser.uid, id, !currentActive);
+    await loadAlertes();
+  };
+
+  window.handleDeleteAlerte = async function(id, name) {
+    if (!confirm(`Supprimer l'alerte « ${name} » ?`)) return;
+    await deleteAlert(currentUser.uid, id);
+    await loadAlertes();
+    showToast('Alerte supprimée');
+  };
+
+  // ══════════════════════════════════════════════
+  // NOTIFICATIONS (cloche)
+  // ══════════════════════════════════════════════
+
+  let notifItems = [];
+  let notifUnsub = null;
+
+  function startNotifListener() {
+    if (notifUnsub) notifUnsub();
+    notifUnsub = listenNotifications(currentUser.uid, items => {
+      notifItems = items;
+      renderNotifPanel();
+    });
+  }
+
+  function renderNotifPanel() {
+    const unread = notifItems.filter(n => !n.read).length;
+    const badge = document.getElementById('notif-badge');
+    badge.style.display = unread ? 'block' : 'none';
+    badge.textContent = unread > 9 ? '9+' : unread;
+
+    const list = document.getElementById('notif-list');
+    if (!notifItems.length) {
+      list.innerHTML = `<p style="text-align:center;color:var(--text-muted);font-size:.8rem;padding:20px 12px">Aucune notification pour le moment.</p>`;
+      return;
+    }
+    list.innerHTML = notifItems.map(n => {
+      const when = n.createdAt?.toDate ? n.createdAt.toDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
+      return `
+        <div onclick="handleNotifClick('${n.id}','${n.link || '#'}')"
+             style="padding:10px 12px;border-bottom:1px solid var(--border,#2a2a3a);cursor:pointer;
+                    display:flex;gap:8px;align-items:flex-start;
+                    background:${n.read ? 'transparent' : 'rgba(124,92,255,.08)'}">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:.8rem;line-height:1.3">${n.message || ''}</div>
+            <div style="font-size:.7rem;color:var(--text-muted);margin-top:2px">${when}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  window.toggleNotifPanel = function(e) {
+    e.stopPropagation();
+    const panel = document.getElementById('notif-panel');
+    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  };
+  document.addEventListener('click', (e) => {
+    const panel = document.getElementById('notif-panel');
+    const btn = document.getElementById('notif-bell-btn');
+    if (panel && panel.style.display === 'block' && !panel.contains(e.target) && e.target !== btn) {
+      panel.style.display = 'none';
+    }
+  });
+
+  window.handleNotifClick = async function(notifId, link) {
+    await markNotificationRead(currentUser.uid, notifId);
+    if (link && link !== '#') location.href = link;
+  };
+
+  window.handleMarkAllRead = async function() {
+    await markAllNotificationsRead(currentUser.uid);
   };
 
   // ══════════════════════════════════════════════

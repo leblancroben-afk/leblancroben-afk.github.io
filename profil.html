@@ -2121,10 +2121,14 @@
                 border:1px solid var(--border, #333);border-radius:10px;z-index:50;
                 box-shadow:0 8px 24px rgba(0,0,0,.4)">
             <div style="display:flex;justify-content:space-between;align-items:center;
-                        padding:10px 12px;border-bottom:1px solid var(--border,#333)">
+                        padding:10px 12px;border-bottom:1px solid var(--border,#333);gap:8px">
               <strong style="font-size:.85rem">Notifications</strong>
-              <button class="btn-icon" onclick="handleMarkAllRead()" title="Tout marquer comme lu"
-                      style="font-size:.7rem">Tout lire</button>
+              <div style="display:flex;gap:8px">
+                <button class="btn-icon" onclick="handleMarkAllRead()" title="Tout marquer comme lu"
+                        style="font-size:.7rem">Tout lire</button>
+                <button class="btn-icon" onclick="handleClearAllNotifs()" title="Tout effacer"
+                        style="font-size:.7rem">Tout effacer</button>
+              </div>
             </div>
             <div id="notif-list"></div>
           </div>
@@ -2618,6 +2622,22 @@
           </div>
 
           <div class="pref-card">
+            <div class="pref-label">🔔 Notifications</div>
+            <div class="toggle-row">
+              <p>Nouveaux outils</p>
+              <div class="toggle" id="notif-pref-newTools" onclick="toggleNotifPref('newTools')"></div>
+            </div>
+            <div class="toggle-row">
+              <p>Changements de prix</p>
+              <div class="toggle" id="notif-pref-priceChanges" onclick="toggleNotifPref('priceChanges')"></div>
+            </div>
+            <div class="toggle-row">
+              <p>Mises à jour des outils</p>
+              <div class="toggle" id="notif-pref-updates" onclick="toggleNotifPref('updates')"></div>
+            </div>
+          </div>
+
+          <div class="pref-card">
             <div class="pref-label" data-i18n="profil.memberSince">Membre depuis</div>
             <div style="font-size:.9rem;color:var(--muted);margin-top:4px" id="user-since">—</div>
           </div>
@@ -3037,7 +3057,8 @@
     getArticleCreateur as getArticleCreateur_,
     getOutilsPublics as getOutilsPublics_,
     getUserAlerts, createAlert, deleteAlert, toggleAlertActive,
-    listenNotifications, markNotificationRead, markAllNotificationsRead
+    listenNotifications, markNotificationRead, markAllNotificationsRead,
+    deleteNotification, deleteAllNotifications, updateNotificationSetting
   } from './js/firestore.js';
   import { getUserReviews, deleteUserReview } from './js/reviews.js';
 
@@ -3934,19 +3955,56 @@
       list.innerHTML = `<p style="text-align:center;color:var(--text-muted);font-size:.8rem;padding:20px 12px">Aucune notification pour le moment.</p>`;
       return;
     }
-    list.innerHTML = notifItems.map(n => {
-      const when = n.createdAt?.toDate ? n.createdAt.toDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '';
-      return `
-        <div onclick="handleNotifClick('${n.id}','${n.link || '#'}')"
-             style="padding:10px 12px;border-bottom:1px solid var(--border,#2a2a3a);cursor:pointer;
-                    display:flex;gap:8px;align-items:flex-start;
-                    background:${n.read ? 'transparent' : 'rgba(124,92,255,.08)'}">
-          <div style="flex:1;min-width:0">
-            <div style="font-size:.8rem;line-height:1.3">${n.message || ''}</div>
-            <div style="font-size:.7rem;color:var(--text-muted);margin-top:2px">${when}</div>
-          </div>
-        </div>`;
-    }).join('');
+
+    // Regroupement Aujourd'hui / Hier / Plus ancien
+    const now = new Date();
+    const todayStr = now.toDateString();
+    const yesterdayStr = new Date(now - 86400000).toDateString();
+    const groups = { "Aujourd'hui": [], "Hier": [], "Plus ancien": [] };
+    notifItems.forEach(n => {
+      const d = n.createdAt?.toDate ? n.createdAt.toDate() : null;
+      const label = !d ? "Plus ancien"
+        : d.toDateString() === todayStr ? "Aujourd'hui"
+        : d.toDateString() === yesterdayStr ? "Hier"
+        : "Plus ancien";
+      groups[label].push(n);
+    });
+
+    const icons = { new_tool: '🆕', alert_match: '🆕', price_change: '🏷️', update: '✓' };
+
+    list.innerHTML = Object.entries(groups).filter(([, items]) => items.length).map(([label, items]) => `
+      <div style="padding:6px 12px 2px;font-size:.7rem;color:var(--text-muted);
+                  text-transform:uppercase;letter-spacing:.03em">${label}</div>
+      ${items.map(n => {
+        const when = n.createdAt?.toDate ? relTime(n.createdAt.toDate()) : '';
+        const icon = icons[n.type] || '🔔';
+        return `
+          <div style="padding:10px 12px;border-bottom:1px solid var(--border,#2a2a3a);
+                      display:flex;gap:8px;align-items:flex-start;
+                      background:${n.read ? 'transparent' : 'rgba(124,92,255,.08)'}">
+            <div onclick="handleNotifClick('${n.id}','${n.link || '#'}')"
+                 style="flex:1;min-width:0;cursor:pointer;display:flex;gap:8px">
+              <span style="flex-shrink:0">${icon}</span>
+              <div style="min-width:0">
+                <div style="font-size:.8rem;line-height:1.3">${n.message || ''}</div>
+                <div style="font-size:.7rem;color:var(--text-muted);margin-top:2px">${when}</div>
+              </div>
+            </div>
+            <button onclick="handleDeleteNotif('${n.id}')" title="Supprimer"
+                    style="flex-shrink:0;background:none;border:none;color:var(--text-muted);
+                           cursor:pointer;font-size:.9rem;line-height:1;padding:2px">×</button>
+          </div>`;
+      }).join('')}
+    `).join('');
+  }
+
+  function relTime(date) {
+    const diffMin = Math.round((Date.now() - date.getTime()) / 60000);
+    if (diffMin < 1) return "À l'instant";
+    if (diffMin < 60) return `Il y a ${diffMin} min`;
+    const diffH = Math.round(diffMin / 60);
+    if (diffH < 24) return `Il y a ${diffH} h`;
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
   }
 
   window.toggleNotifPanel = function(e) {
@@ -3969,6 +4027,18 @@
 
   window.handleMarkAllRead = async function() {
     await markAllNotificationsRead(currentUser.uid);
+  };
+
+  // Supprime uniquement la notif (l'historique) — l'alerte qui l'a générée
+  // reste active et continuera à notifier sur de futurs changements.
+  window.handleDeleteNotif = async function(notifId) {
+    await deleteNotification(currentUser.uid, notifId);
+  };
+
+  window.handleClearAllNotifs = async function() {
+    if (!notifItems.length) return;
+    if (!confirm('Effacer toutes les notifications ? Vos alertes restent actives.')) return;
+    await deleteAllNotifications(currentUser.uid);
   };
 
   // ══════════════════════════════════════════════
@@ -6261,6 +6331,15 @@
     const toggle = document.getElementById('newsletter-toggle');
     toggle.classList.toggle('on', !!userProfile?.newsletterOk);
 
+    // Préférences de notifications — activées par défaut (true) si jamais
+    // enregistrées, pour ne pas couper les notifs silencieusement sur les
+    // comptes existants qui n'ont pas encore ce champ.
+    const notifPrefs = userProfile?.settings?.notifications || {};
+    ['newTools', 'priceChanges', 'updates'].forEach(key => {
+      const t = document.getElementById(`notif-pref-${key}`);
+      if (t) t.classList.toggle('on', notifPrefs[key] !== false);
+    });
+
     // Champs profil public
     const bioEl = document.getElementById('pub-bio');
     const roleEl = document.getElementById('pub-role');
@@ -6322,6 +6401,21 @@
     toggle.classList.toggle('on', newVal);
     await updateNewsletter(currentUser.uid, newVal);
     showToast(newVal ? '✅ Newsletter activée !' : 'Newsletter désactivée.');
+  };
+
+  // Sauvegarde automatique, sans bouton "Enregistrer" — dès qu'on clique,
+  // c'est enregistré (voir topo : Paramètres = ce qu'on autorise à recevoir).
+  window.toggleNotifPref = async function(key) {
+    const toggle = document.getElementById(`notif-pref-${key}`);
+    const newVal = !toggle.classList.contains('on');
+    toggle.classList.toggle('on', newVal);
+    try {
+      await updateNotificationSetting(currentUser.uid, key, newVal);
+    } catch (err) {
+      toggle.classList.toggle('on', !newVal); // rollback visuel si l'écriture échoue
+      console.error('updateNotificationSetting a échoué:', err);
+      showToast('⚠ Erreur, réessaie.');
+    }
   };
 
   // ─── HELPER ───────────────────────────────────

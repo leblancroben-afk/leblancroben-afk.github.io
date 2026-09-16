@@ -506,47 +506,55 @@
     }
     .submitted-empty .empty-icon { font-size: 2rem; margin-bottom: 8px; }
 
-    /* ── PRÉFÉRENCES ─────────────────────────────── */
-    .prefs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
+    /* ── PARAMÈTRES (v2 — sections groupées, sauvegarde auto) ────── */
+    .settings-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 640px;
     }
-    .pref-card {
+    .settings-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 6px 20px;
     }
-    .pref-label {
-      font-size: .8rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      margin-bottom: 10px;
+    .settings-card-title {
+      font-size: .95rem;
+      font-weight: 600;
+      padding: 14px 0 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
     }
-    .pref-card select,
-    .pref-card input[type="text"] {
-      width: 100%;
-      padding: 10px 12px;
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-row-name { font-size: .875rem; }
+    .settings-row select,
+    .settings-row input[type="text"] {
+      padding: 8px 10px;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text);
       font-family: inherit;
-      font-size: .9rem;
+      font-size: .875rem;
       outline: none;
+      max-width: 200px;
     }
-    .pref-card select:focus,
-    .pref-card input[type="text"]:focus { border-color: var(--accent); }
+    .settings-row select:focus,
+    .settings-row input[type="text"]:focus { border-color: var(--accent); }
+    @media (max-width: 640px) {
+      .settings-row input[type="text"] { max-width: 140px; }
+    }
 
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .toggle-row p { font-size: .875rem; }
-    .toggle {
+
       width: 44px;
       height: 24px;
       background: var(--surface2);
@@ -1310,7 +1318,8 @@
     @media (max-width: 600px) {
       .auth-card { padding: 28px 20px; }
       .collections-grid { grid-template-columns: 1fr; }
-      .prefs-grid { grid-template-columns: 1fr; }
+      .settings-row { flex-wrap: wrap; }
+      .settings-card { padding: 4px 16px; }
     }
 
 
@@ -2588,58 +2597,74 @@
         <div class="section-header">
           <div class="section-title">⚙️ <span data-i18n="profil.settingsTitle">Paramètres</span></div>
         </div>
-        <div class="prefs-grid">
+        <div class="settings-stack">
 
-          <div class="pref-card">
-            <div class="pref-label" data-i18n="profil.profilePhoto">Photo de profil</div>
-            <button class="btn-sm btn-outline" onclick="document.getElementById('avatar-file-input').click()" style="margin-top:4px">
-              📷 <span data-i18n="profil.changePhoto">Changer la photo</span>
-            </button>
+          <!-- PROFIL -->
+          <div class="settings-card">
+            <div class="settings-card-title">👤 <span data-i18n="profil.sectionProfile">Profil</span></div>
+            <div class="settings-row">
+              <div class="settings-row-name" data-i18n="profil.profilePhoto">Photo de profil</div>
+              <button class="btn-sm btn-outline" onclick="document.getElementById('avatar-file-input').click()">
+                📷 <span data-i18n="profil.changePhoto">Changer</span>
+              </button>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-name" data-i18n="profil.displayName">Nom d'affichage</div>
+              <input type="text" id="pref-name" placeholder="Ton prénom ou pseudo"
+                     data-i18n-placeholder="profil.displayNamePlaceholder" onblur="saveName()">
+            </div>
           </div>
 
-          <div class="pref-card">
-            <div class="pref-label" data-i18n="profil.displayName">Nom d'affichage</div>
-            <input type="text" id="pref-name" placeholder="Ton prénom ou pseudo" data-i18n-placeholder="profil.displayNamePlaceholder">
-            <button class="btn-save-pref" onclick="saveName()" data-i18n="profil.save">Enregistrer</button>
-          </div>
-
-          <div class="pref-card">
-            <div class="pref-label" data-i18n="profil.interfaceLanguage">Langue de l'interface</div>
-            <select id="pref-langue">
-              <option value="fr" data-i18n="profil.langFrLabel">🇫🇷 Français</option>
-              <option value="en" data-i18n="profil.langEnLabel">🇬🇧 English</option>
-              <option value="es" data-i18n="profil.langEsLabel">🇪🇸 Español</option>
-            </select>
-            <button class="btn-save-pref" onclick="saveLangue()" data-i18n="profil.save">Enregistrer</button>
-          </div>
-
-          <div class="pref-card">
-            <div class="pref-label" data-i18n="profil.newsletter">Newsletter Albexia</div>
-            <div class="toggle-row">
-              <p data-i18n="profil.newsletterDesc">Recevoir les nouveautés par email</p>
+          <!-- PRÉFÉRENCES -->
+          <div class="settings-card">
+            <div class="settings-card-title">🌐 <span data-i18n="profil.sectionPreferences">Préférences</span></div>
+            <div class="settings-row">
+              <div class="settings-row-name" data-i18n="profil.interfaceLanguage">Langue de l'interface</div>
+              <select id="pref-langue" onchange="saveLangue()">
+                <option value="fr" data-i18n="profil.langFrLabel">🇫🇷 Français</option>
+                <option value="en" data-i18n="profil.langEnLabel">🇬🇧 English</option>
+                <option value="es" data-i18n="profil.langEsLabel">🇪🇸 Español</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-name" data-i18n="profil.newsletter">Newsletter Albexia</div>
               <div class="toggle" id="newsletter-toggle" onclick="toggleNewsletter()"></div>
             </div>
           </div>
 
-          <div class="pref-card">
-            <div class="pref-label">🔔 Notifications</div>
-            <div class="toggle-row">
-              <p>Nouveaux outils</p>
+          <!-- NOTIFICATIONS — préférences générales de réception uniquement,
+               pas de "Mes alertes" ici (elle reste dans le menu principal) -->
+          <div class="settings-card">
+            <div class="settings-card-title">🔔 <span data-i18n="profil.sectionNotifications">Notifications</span></div>
+            <div class="settings-row">
+              <div class="settings-row-name">Nouveaux outils</div>
               <div class="toggle" id="notif-pref-newTools" onclick="toggleNotifPref('newTools')"></div>
             </div>
-            <div class="toggle-row">
-              <p>Changements de prix</p>
+            <div class="settings-row">
+              <div class="settings-row-name">Changements de prix</div>
               <div class="toggle" id="notif-pref-priceChanges" onclick="toggleNotifPref('priceChanges')"></div>
             </div>
-            <div class="toggle-row">
-              <p>Mises à jour des outils</p>
+            <div class="settings-row">
+              <div class="settings-row-name">Mises à jour des outils</div>
               <div class="toggle" id="notif-pref-updates" onclick="toggleNotifPref('updates')"></div>
             </div>
           </div>
 
-          <div class="pref-card">
-            <div class="pref-label" data-i18n="profil.memberSince">Membre depuis</div>
-            <div style="font-size:.9rem;color:var(--muted);margin-top:4px" id="user-since">—</div>
+          <!-- COMPTE — pas de "Sécurité" : Albexia n'utilise pas de mot de
+               passe local, seulement l'auth Google. -->
+          <div class="settings-card">
+            <div class="settings-card-title">👤 <span data-i18n="profil.sectionAccount">Compte</span></div>
+            <div class="settings-row">
+              <div class="settings-row-name">🔗 <span data-i18n="profil.connectedWithGoogle">Connecté avec Google</span></div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-name" data-i18n="profil.memberSince">Membre depuis</div>
+              <div style="font-size:.875rem;color:var(--muted)" id="user-since">—</div>
+            </div>
+            <div class="settings-row">
+              <button class="btn-sm" style="color:#e04;border:1px solid #e04;background:transparent;border-radius:var(--radius-sm);padding:8px 14px;cursor:pointer"
+                      onclick="handleLogout()" data-i18n="profil.navLogout">Déconnexion</button>
+            </div>
           </div>
 
         </div>

@@ -77,6 +77,14 @@ export async function addToolToCollection(uid, colId, tool) {
     addedAt:  new Date().toISOString(),
   });
   await updateDoc(ref, { tools });
+
+  // Index inverse sur la fiche outil (outils/{id}.saved_by) — c'est ce qui
+  // permet à notifyToolChange() de savoir, sans Cloud Function, quels
+  // utilisateurs ont cet outil en collection et doivent recevoir une
+  // notification "collection_update" quand l'admin le modifie.
+  try {
+    await updateDoc(doc(db, 'outils', String(tool.id)), { saved_by: arrayUnion(uid) });
+  } catch (_) { /* la fiche peut ne pas exister (données de test) — pas bloquant */ }
 }
 
 export async function removeToolFromCollection(uid, colId, toolId) {
@@ -86,6 +94,14 @@ export async function removeToolFromCollection(uid, colId, toolId) {
 
   const tools = (snap.data().tools || []).filter(t => String(t.id) !== String(toolId));
   await updateDoc(ref, { tools });
+
+  // Ne retire l'utilisateur de l'index inverse que s'il n'a plus AUCUNE
+  // collection contenant cet outil (il peut l'avoir sauvegardé ailleurs).
+  try {
+    const autres = await getDocs(collection(db, 'users', uid, 'collections'));
+    const encoreLa = autres.docs.some(d => d.id !== colId && (d.data().tools || []).some(t => String(t.id) === String(toolId)));
+    if (!encoreLa) await updateDoc(doc(db, 'outils', String(toolId)), { saved_by: arrayRemove(uid) });
+  } catch (_) { /* pas bloquant */ }
 }
 
 // ══════════════════════════════════════
@@ -818,6 +834,29 @@ export async function updateNotificationSetting(uid, key, value) {
 }
 
 // ══════════════════════════════════════
+// NOTIFICATIONS LIÉES AU COMPTE (soumission / revendication / article
+// créateur) — indépendantes des alertes, voir mission refonte. Appelées
+// UNIQUEMENT depuis l'admin, aux points de décision existants (approuver/
+// refuser une soumission, une revendication, un article). uid manquant
+// (ex. soumission anonyme via soumettre.html) → no-op silencieux.
+// ══════════════════════════════════════
+
+export async function createAccountNotification(uid, { type, title, message, link, meta }) {
+  if (!uid) return;
+  const ref = collection(db, 'notifications', uid, 'items');
+  await addDoc(ref, {
+    type,
+    title:     title || '',
+    message:   message || '',
+    link:      link || '#',
+    read:      false,
+    createdAt: serverTimestamp(),
+    source:    { type: 'account' },
+    ...(meta ? { action: meta } : {}),
+  });
+}
+
+// ══════════════════════════════════════
 // MATCHING — SEUL POINT D'ENTRÉE : appelé depuis admin-index__3_.html,
 // dans le handler de form-outils, juste après la création d'un nouvel
 // outil (jamais sur une simple modification — voir !editingTool côté
@@ -863,10 +902,107 @@ export async function matchAgainstAlerts(tool) {
       link:      `/${tool.page || ''}`,
       read:      false,
       createdAt: serverTimestamp(),
+      source:    { type: 'alert', alert_id: docSnap.id },
     });
     count++;
   }
 
   if (count) await batch.commit();
   return count;
+}
+
+// ══════════════════════════════════════
+// NOTIFICATIONS SUR MODIFICATION D'UN OUTIL EXISTANT — appelée depuis
+// l'admin uniquement sur une VRAIE modification (editingTool truthy),
+// jamais sur une création (matchAgainstAlerts s'en charge déjà). Deux
+// familles distinctes, cumulables pour un même utilisateur :
+//  A. alertes actives qui matchent la catégorie/prix de l'outil modifié
+//     → price_change / free_offer / tool_updated
+//  B. utilisateurs ayant sauvegardé cet outil dans une collection
+//     (outils/{id}.saved_by, tenu à jour par add/removeToolFromCollection)
+//     → collection_update, quelle que soit une alerte ou non
+// ══════════════════════════════════════
+
+export async function notifyToolChange(oldTool, newTool) {
+  if (!oldTool || !newTool || !newTool.category) return { alerts: 0, collections: 0 };
+
+  const priceChanged = oldTool.price !== newTool.price;
+  const becameFree    = priceChanged && newTool.price === 'free';
+
+  let type, title, message;
+  if (becameFree) {
+    type = 'free_offer';
+    title = 'Offre gratuite disponible';
+    message = `${newTool.name} est désormais disponible gratuitement.`;
+  } else if (priceChanged) {
+    type = 'price_change';
+    title = 'Changement de prix';
+    message = `Le prix de ${newTool.name} a changé.`;
+  } else {
+    type = 'tool_updated';
+    title = 'Outil mis à jour';
+    message = `Les informations de ${newTool.name} ont été mises à jour.`;
+  }
+
+  let alertsCount = 0;
+  const q = query(
+    collectionGroup(db, 'alerts'),
+    where('active', '==', true),
+    where('category', '==', newTool.category)
+  );
+  const snap = await getDocs(q);
+
+  if (!snap.empty) {
+    const batch = writeBatch(db);
+    for (const docSnap of snap.docs) {
+      const alert = docSnap.data();
+      const uid   = docSnap.ref.parent.parent.id;
+      const priceOk = !alert.priceTypes?.length || alert.priceTypes.includes(newTool.price);
+      if (!priceOk) continue;
+
+      const notifRef = doc(collection(db, 'notifications', uid, 'items'));
+      batch.set(notifRef, {
+        type, title, message,
+        toolId:    newTool.id,
+        toolName:  newTool.name,
+        favicon:   newTool.favicon || '',
+        link:      `/${newTool.page || ''}`,
+        read:      false,
+        createdAt: serverTimestamp(),
+        source:    { type: 'alert', alert_id: docSnap.id },
+      });
+      alertsCount++;
+    }
+    if (alertsCount) await batch.commit();
+  }
+
+  // Notifications "collection" — un ensemble d'utilisateurs distinct
+  // (dédoublonné contre les uid déjà notifiés via une alerte, pour ne
+  // jamais envoyer deux notifications pour le même événement).
+  let collectionsCount = 0;
+  const savedBy = newTool.saved_by || oldTool.saved_by || [];
+  if (savedBy.length) {
+    const alreadyNotified = new Set(snap.docs.map(d => d.ref.parent.parent.id));
+    const batch2 = writeBatch(db);
+    for (const uid of savedBy) {
+      if (alreadyNotified.has(uid)) continue;
+      const notifRef = doc(collection(db, 'notifications', uid, 'items'));
+      batch2.set(notifRef, {
+        type: 'collection_update',
+        title: 'Mise à jour d\'un outil sauvegardé',
+        message: `Un outil de votre collection (${newTool.name}) a été mis à jour.`,
+        toolId:    newTool.id,
+        toolName:  newTool.name,
+        favicon:   newTool.favicon || '',
+        link:      `/${newTool.page || ''}`,
+        read:      false,
+        createdAt: serverTimestamp(),
+        source:    { type: 'collection' },
+      });
+      collectionsCount++;
+    }
+    if (collectionsCount) await batch2.commit();
+  }
+
+  return { alerts: alertsCount, collections: collectionsCount };
 }

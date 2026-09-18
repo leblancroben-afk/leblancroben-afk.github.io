@@ -851,6 +851,7 @@ export async function matchAgainstAlerts(tool) {
     const notifRef = doc(collection(db, 'notifications', uid, 'items'));
     batch.set(notifRef, {
       type:      'alert_match',
+      title:     'Nouvel outil ajouté',
       alertId:   docSnap.id,
       alertName: alert.name || '',
       toolId:    tool.id,

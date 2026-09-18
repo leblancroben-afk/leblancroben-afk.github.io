@@ -4081,12 +4081,61 @@
 
     const { icon, label: typeLabel } = notifTypeInfo(n.type);
     const when = n.createdAt?.toDate ? relTime(n.createdAt.toDate()) : '';
+    const prixLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
+
+    // Carte outil + encart "pourquoi cette notification" — seulement pour
+    // les notifs liées à un outil (alerte ou collection). Les notifs
+    // "compte" (submission/claim/creator_article) restent au format simple.
+    let toolCardHtml = '';
+    if (n.toolName && n.source?.type !== 'account') {
+      const logo = n.favicon
+        ? `<img src="${n.favicon}" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:contain;background:#fff;padding:6px">`
+        : `<div style="width:44px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem">🤖</div>`;
+      const badgeStyle = 'padding:4px 10px;border-radius:20px;font-size:.75rem;font-weight:600';
+      const badges = [
+        n.category ? `<span style="${badgeStyle};background:rgba(124,92,255,.18);color:#b9a8ff">${n.category}</span>` : '',
+        n.price ? `<span style="${badgeStyle};background:rgba(90,120,255,.18);color:#9cb2ff">${prixLabel[n.price] || n.price}</span>` : '',
+      ].join('');
+      const extLink = n.toolUrl
+        ? `<a href="${n.toolUrl}" target="_blank" rel="noopener" title="Visiter le site" style="color:var(--muted);text-decoration:none;margin-left:6px">🔗</a>` : '';
+
+      toolCardHtml = `
+        <div style="margin-top:20px;padding:16px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2,rgba(255,255,255,.02))">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            ${logo}
+            <div>
+              <div style="font-weight:700">${n.toolName}</div>
+              ${n.offre ? `<div style="font-size:.85rem;color:var(--muted);margin-top:2px">${n.offre}</div>` : ''}
+              <div style="margin-top:8px;display:flex;align-items:center;gap:6px">${badges}${extLink}</div>
+            </div>
+          </div>
+          ${n.link && n.link !== '#' ? `<a href="${n.link}" class="btn-primary" style="display:block;text-align:center;margin-top:14px;text-decoration:none">Découvrir l'outil →</a>` : ''}
+        </div>`;
+
+      let raison = '';
+      if (n.source?.type === 'alert') {
+        const cat = n.alertCategory || n.category || '';
+        const prixTxt = (n.alertPriceTypes || []).map(p => prixLabel[p] || p).join(' et ');
+        raison = `Cette notification vous a été envoyée car vous avez activé ${n.alertName ? `l'alerte « ${n.alertName} »` : 'une alerte'} pour la catégorie ${cat}${prixTxt ? ` et le type de prix ${prixTxt}` : ''}.`;
+      } else if (n.source?.type === 'collection') {
+        raison = `Cette notification vous a été envoyée car « ${n.toolName} » fait partie d'une de vos collections.`;
+      }
+      if (raison) {
+        toolCardHtml += `
+          <div style="margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(90,140,255,.08);display:flex;gap:10px;align-items:flex-start">
+            <span>ℹ️</span>
+            <span style="font-size:.82rem;color:var(--muted);line-height:1.45">${raison}</span>
+          </div>`;
+      }
+    }
+
     detail.innerHTML = `
       <div style="font-size:2.2rem;margin-bottom:12px">${icon}</div>
       <h2 style="font-size:1.2rem;margin-bottom:10px">${n.title || typeLabel}</h2>
       <p style="font-size:.95rem;color:var(--muted);line-height:1.5">${n.message || ''}</p>
       <p style="font-size:.8rem;color:var(--muted);margin-top:14px">${when}</p>
-      ${n.link && n.link !== '#' ? `<a href="${n.link}" class="btn-primary" style="display:inline-block;margin-top:20px;text-decoration:none">Découvrir l'outil →</a>` : ''}
+      ${toolCardHtml}
+      ${!toolCardHtml && n.link && n.link !== '#' ? `<a href="${n.link}" class="btn-primary" style="display:inline-block;margin-top:20px;text-decoration:none">Découvrir l'outil →</a>` : ''}
     `;
 
     if (!n.read) {

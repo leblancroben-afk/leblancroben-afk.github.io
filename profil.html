@@ -3986,14 +3986,27 @@
     badge.textContent = unread > 9 ? '9+' : unread;
   }
 
-  // Icône + libellé de type de notif.
+  // Icône + libellé de type de notif — couvre les 2 familles :
+  // A. déclenchées par une alerte (new_tool, tool_updated, price_change,
+  //    free_offer, new_article) et B. liées au compte, indépendantes des
+  //    alertes (submission, claim, creator_article, collection_update).
   function notifTypeInfo(type) {
     const map = {
-      alert_match:  { icon: '🆕', label: 'Nouvel outil ajouté' },
-      new_tool:     { icon: '🆕', label: 'Nouvel outil ajouté' },
-      price_change: { icon: '🏷️', label: 'Changement de prix' },
-      update:       { icon: '🔄', label: 'Mise à jour' },
-      article:      { icon: '📝', label: 'Nouvel article' },
+      // A. Alertes
+      alert_match:      { icon: '🆕', label: 'Nouvel outil ajouté' },
+      new_tool:         { icon: '🆕', label: 'Nouvel outil ajouté' },
+      tool_updated:     { icon: '🔄', label: 'Outil mis à jour' },
+      update:           { icon: '🔄', label: 'Outil mis à jour' },
+      price_change:     { icon: '💰', label: 'Changement de prix' },
+      free_offer:       { icon: '🆓', label: 'Offre gratuite' },
+      new_article:      { icon: '📝', label: 'Nouvel article' },
+      article:          { icon: '📝', label: 'Nouvel article' },
+      // B. Compte
+      submission:       { icon: '✍️', label: 'Soumission' },
+      claim:            { icon: '👤', label: 'Revendication' },
+      creator_article:  { icon: '📄', label: 'Article créateur' },
+      // C. Collection
+      collection_update:{ icon: '📌', label: 'Mise à jour de collection' },
     };
     return map[type] || { icon: '🔔', label: 'Notification' };
   }

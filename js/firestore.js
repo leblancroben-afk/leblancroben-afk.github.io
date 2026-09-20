@@ -911,7 +911,6 @@ export async function matchAgainstAlerts(tool) {
     const notifRef = doc(collection(db, 'notifications', uid, 'items'));
     batch.set(notifRef, {
       type:      'alert_match',
-      title:     'Nouvel outil ajouté',
       alertId:   docSnap.id,
       alertName: alert.name || '',
       alertCategory:   alert.category || tool.category || '',
@@ -923,9 +922,12 @@ export async function matchAgainstAlerts(tool) {
       price:     tool.price || '',
       offre:     tool.offre || '',
       toolUrl:   tool.url || '',
-      message:   alert.name
-        ? `Nouvel outil correspondant à votre alerte « ${alert.name} »`
-        : `Nouvel outil ${tool.name} ajouté en ${tool.category}`,
+      // "params" = ce dont profil.html a besoin pour reconstruire le titre
+      // et le message dans la langue de l'utilisateur via i18n.js, au lieu
+      // d'une phrase figée en français écrite ici. Ne pas écrire "title"/
+      // "message" ici : leur présence signale à profil.html une ancienne
+      // notification (pré-i18n) à afficher telle quelle, en français.
+      params:    { tool: tool.name, category: tool.category || '', alert: alert.name || '' },
       link:      buildToolPageUrl(tool) || tool.url || '#',
       read:      false,
       createdAt: serverTimestamp(),
@@ -956,20 +958,8 @@ export async function notifyToolChange(oldTool, newTool) {
   const priceChanged = oldTool.price !== newTool.price;
   const becameFree    = priceChanged && newTool.price === 'free';
 
-  let type, title, message;
-  if (becameFree) {
-    type = 'free_offer';
-    title = 'Offre gratuite disponible';
-    message = `${newTool.name} est désormais disponible gratuitement.`;
-  } else if (priceChanged) {
-    type = 'price_change';
-    title = 'Changement de prix';
-    message = `Le prix de ${newTool.name} a changé.`;
-  } else {
-    type = 'tool_updated';
-    title = 'Outil mis à jour';
-    message = `Les informations de ${newTool.name} ont été mises à jour.`;
-  }
+  const type = becameFree ? 'free_offer' : priceChanged ? 'price_change' : 'tool_updated';
+  const params = { tool: newTool.name };
 
   let alertsCount = 0;
   const q = query(
@@ -989,7 +979,7 @@ export async function notifyToolChange(oldTool, newTool) {
 
       const notifRef = doc(collection(db, 'notifications', uid, 'items'));
       batch.set(notifRef, {
-        type, title, message,
+        type, params,
         toolId:    newTool.id,
         toolName:  newTool.name,
         favicon:   newTool.favicon || '',
@@ -1024,8 +1014,7 @@ export async function notifyToolChange(oldTool, newTool) {
       const notifRef = doc(collection(db, 'notifications', uid, 'items'));
       batch2.set(notifRef, {
         type: 'collection_update',
-        title: 'Mise à jour d\'un outil sauvegardé',
-        message: `Un outil de votre collection (${newTool.name}) a été mis à jour.`,
+        params: { tool: newTool.name },
         toolId:    newTool.id,
         toolName:  newTool.name,
         favicon:   newTool.favicon || '',

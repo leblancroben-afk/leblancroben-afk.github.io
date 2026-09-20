@@ -2117,7 +2117,7 @@
           </div>
         </div>
         <button class="sidebar-toggle" id="notif-bell-btn" onclick="openNotifModal(event)"
-                title="Notifications" style="position:relative">
+                title="Notifications" data-i18n-title="profil.notifBellTitle" style="position:relative">
           🔔
           <span id="notif-badge" style="display:none;position:absolute;top:-2px;right:-2px;
                 background:var(--accent2, #e04);color:#fff;border-radius:50%;
@@ -2129,7 +2129,7 @@
 
             <!-- Navigation -->
       <nav class="sidebar-nav">
-        <button class="sidebar-item active" data-section="collections" data-tooltip="Collections" onclick="switchSection('collections')">
+        <button class="sidebar-item active" data-section="collections" data-tooltip="Collections" data-i18n-tooltip="profil.navCollections" onclick="switchSection('collections')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <path d="M2 4.5C2 3.67 2.67 3 3.5 3H6.5L8.5 5H14.5C15.33 5 16 5.67 16 6.5V13.5C16 14.33 15.33 15 14.5 15H3.5C2.67 15 2 14.33 2 13.5V4.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -2138,7 +2138,7 @@
           <span class="sidebar-item-label" data-i18n="profil.navCollections">Collections</span>
           <span class="sidebar-badge" id="col-count">0</span>
         </button>
-        <button class="sidebar-item" data-section="quiz" data-tooltip="Quiz" onclick="switchSection('quiz')">
+        <button class="sidebar-item" data-section="quiz" data-tooltip="Quiz" data-i18n-tooltip="profil.tooltipQuiz" onclick="switchSection('quiz')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <path d="M9 3L3 6L9 9L15 6L9 3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -2149,7 +2149,7 @@
           <span class="sidebar-item-label" data-i18n="profil.navQuiz">Historique quiz</span>
           <span class="sidebar-badge" id="quiz-count">0</span>
         </button>
-        <button class="sidebar-item" data-section="avis" data-tooltip="Mes Avis" onclick="switchSection('avis')">
+        <button class="sidebar-item" data-section="avis" data-tooltip="Mes Avis" data-i18n-tooltip="profil.navReviews" onclick="switchSection('avis')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <path d="M15.5 9C15.5 12.1 12.6 14.5 9 14.5C7.8 14.5 6.7 14.2 5.7 13.7L2.5 14.5L3.5 11.6C2.8 10.9 2.5 10 2.5 9C2.5 5.9 5.4 3.5 9 3.5C12.6 3.5 15.5 5.9 15.5 9Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2158,7 +2158,7 @@
           <span class="sidebar-item-label" data-i18n="profil.navReviews">Mes Avis</span>
           <span class="sidebar-badge" id="avis-count">0</span>
         </button>
-        <button class="sidebar-item" data-section="videos" data-tooltip="Vidéos sauvegardées" onclick="switchSection('videos')">
+        <button class="sidebar-item" data-section="videos" data-tooltip="Vidéos sauvegardées" data-i18n-tooltip="profil.navVideos" onclick="switchSection('videos')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <path d="M4 3C4 2.45 4.45 2 5 2H13C13.55 2 14 2.45 14 3V16L9 12.5L4 16V3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -2168,7 +2168,7 @@
           <span class="sidebar-item-label" data-i18n="profil.navVideos">Vidéos sauvegardées</span>
           <span class="sidebar-badge" id="videos-count">0</span>
         </button>
-        <button class="sidebar-item" data-section="soumissions" data-tooltip="Mes soumissions" onclick="switchSection('soumissions')">
+        <button class="sidebar-item" data-section="soumissions" data-tooltip="Mes soumissions" data-i18n-tooltip="profil.navSubmissions" onclick="switchSection('soumissions')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <path d="M2.5 9L15.5 2.5L13.5 15L9 12L6.5 14.5V11.5L2.5 9Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -2177,7 +2177,7 @@
           <span class="sidebar-item-label" data-i18n="profil.navSubmissions">Mes soumissions</span>
           <span class="sidebar-badge" id="soum-count">0</span>
         </button>
-        <button class="sidebar-item" data-section="alertes" data-tooltip="Mes alertes" onclick="switchSection('alertes')">
+        <button class="sidebar-item" data-section="alertes" data-tooltip="Mes alertes" data-i18n-tooltip="profil.navAlerts" onclick="switchSection('alertes')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.4"/>
@@ -2187,13 +2187,13 @@
           <span class="sidebar-item-label" data-i18n="profil.navAlerts">Mes alertes</span>
           <span class="sidebar-badge" id="alertes-count">0</span>
         </button>
-        <button class="sidebar-item" data-section="profil-public" data-tooltip="Profil public" onclick="switchSection('profil-public')">
+        <button class="sidebar-item" data-section="profil-public" data-tooltip="Profil public" data-i18n-tooltip="profil.navPublicProfile" onclick="switchSection('profil-public')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle"><circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M3 15c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
           </span>
           <span class="sidebar-item-label" data-i18n="profil.navPublicProfile">Profil public</span>
         </button>
-        <button class="sidebar-item" data-section="parametres" data-tooltip="Paramètres" onclick="switchSection('parametres')">
+        <button class="sidebar-item" data-section="parametres" data-tooltip="Paramètres" data-i18n-tooltip="profil.navSettings" onclick="switchSection('parametres')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <circle cx="9" cy="9" r="2.5" stroke="currentColor" stroke-width="1.4"/>
@@ -2206,7 +2206,7 @@
 
       <!-- Footer : partager + déconnexion -->
       <div class="sidebar-footer">
-        <button class="sidebar-item" data-tooltip="Mon profil public" onclick="sharePublicProfile()" style="color:var(--accent2)">
+        <button class="sidebar-item" data-tooltip="Mon profil public" data-i18n-tooltip="profil.tooltipShare" onclick="sharePublicProfile()" style="color:var(--accent2)">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <path d="M6.5 11.5L11.5 6.5M8.5 5.5L6.5 3.5C5.1 2.1 2.9 2.1 1.5 3.5C0.1 4.9 0.1 7.1 1.5 8.5L3.5 10.5M14.5 7.5L16.5 9.5C17.9 10.9 17.9 13.1 16.5 14.5C15.1 15.9 12.9 15.9 11.5 14.5L9.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
@@ -2214,7 +2214,7 @@
           </span>
           <span class="sidebar-item-label" data-i18n="profil.navShare">Partager mon profil</span>
         </button>
-        <button class="sidebar-item sidebar-item-logout" data-tooltip="Déconnexion" onclick="handleLogout()">
+        <button class="sidebar-item sidebar-item-logout" data-tooltip="Déconnexion" data-i18n-tooltip="profil.navLogout" onclick="handleLogout()">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
               <path d="M7 3H3C2.45 3 2 3.45 2 4V14C2 14.55 2.45 15 3 15H7M11 5L15 9L11 13M15 9H6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -2253,9 +2253,9 @@
               <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/>
               <circle cx="10" cy="10" r="2.3" stroke="currentColor" stroke-width="1.5"/>
             </svg>
-            <span>Mes alertes</span>
+            <span data-i18n="profil.navAlerts">Mes alertes</span>
           </div>
-          <button class="btn-sm btn-outline" onclick="openNewAlerteModal()">+ Créer une alerte</button>
+          <button class="btn-sm btn-outline" onclick="openNewAlerteModal()" data-i18n="alertes.create">+ Créer une alerte</button>
         </div>
         <div id="alertes-container">
           <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
@@ -2269,24 +2269,24 @@
             <svg viewBox="0 0 24 24" fill="none" width="18" height="18" stroke="currentColor" stroke-width="1.8" style="color:var(--accent2)">
               <path d="M12 5v14M5 12h14" stroke-linecap="round"/>
             </svg>
-            Créer une alerte
+            <span data-i18n="alertes.newTitle">Créer une alerte</span>
           </h3>
-          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:6px 0 2px">Nom (optionnel)</label>
-          <input type="text" id="alerte-name" placeholder="Ex : Génération d'images gratuite" maxlength="60">
-          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:10px 0 2px">Catégorie</label>
+          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:6px 0 2px" data-i18n="alertes.nameLabel">Nom (optionnel)</label>
+          <input type="text" id="alerte-name" placeholder="Ex : Génération d'images gratuite" data-i18n-placeholder="alertes.namePlaceholder" maxlength="60">
+          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:10px 0 2px" data-i18n="alertes.categoryLabel">Catégorie</label>
           <select id="alerte-category" style="width:100%;padding:8px 10px;border-radius:8px"></select>
-          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:10px 0 4px">Types de prix à surveiller</label>
+          <label style="font-size:.8rem;color:var(--text-muted);display:block;margin:10px 0 4px" data-i18n="alertes.priceTypesLabel">Types de prix à surveiller</label>
           <div style="display:flex;gap:12px;margin-bottom:6px">
             <label style="display:flex;align-items:center;gap:4px;font-weight:400;font-size:.85rem">
-              <input type="checkbox" id="alerte-price-free" checked> Gratuit</label>
+              <input type="checkbox" id="alerte-price-free" checked> <span data-i18n="alertes.priceFree">Gratuit</span></label>
             <label style="display:flex;align-items:center;gap:4px;font-weight:400;font-size:.85rem">
-              <input type="checkbox" id="alerte-price-freemium" checked> Freemium</label>
+              <input type="checkbox" id="alerte-price-freemium" checked> <span data-i18n="alertes.priceFreemium">Freemium</span></label>
             <label style="display:flex;align-items:center;gap:4px;font-weight:400;font-size:.85rem">
-              <input type="checkbox" id="alerte-price-paid" checked> Payant</label>
+              <input type="checkbox" id="alerte-price-paid" checked> <span data-i18n="alertes.pricePaid">Payant</span></label>
           </div>
           <div class="modal-actions">
-            <button class="btn-sm btn-outline" onclick="closeNewAlerteModal()">Annuler</button>
-            <button class="btn-primary btn-sm" onclick="confirmNewAlerte()">Créer</button>
+            <button class="btn-sm btn-outline" onclick="closeNewAlerteModal()" data-i18n="profil.cancel">Annuler</button>
+            <button class="btn-primary btn-sm" onclick="confirmNewAlerte()" data-i18n="alertes.createBtn">Créer</button>
           </div>
         </div>
       </div>
@@ -2302,10 +2302,10 @@
                     padding:16px 20px;border-bottom:1px solid var(--border);
                     position:sticky;top:0;background:var(--bg,#0d0d17);z-index:1">
           <div style="display:flex;align-items:center;gap:14px;min-width:0">
-            <button id="notif-modal-back" onclick="showNotifList()"
+            <button id="notif-modal-back" onclick="showNotifList()" data-i18n="notif.back"
                     style="display:none;background:none;border:none;color:var(--accent);
                            font-size:.9rem;cursor:pointer;flex-shrink:0;padding:0">← Retour</button>
-            <strong style="font-size:1rem">🔔 Notifications</strong>
+            <strong style="font-size:1rem" data-i18n="notif.title">🔔 Notifications</strong>
           </div>
           <button onclick="closeNotifModal()"
                   style="background:none;border:none;color:var(--muted);font-size:1.3rem;
@@ -2808,7 +2808,7 @@
       <div class="mc-type-card">
         <div class="mc-type-card-title" data-i18n="profil.communityArticleLabel">Article communauté</div>
         <p class="mc-type-card-desc" data-i18n="profil.communityArticleDesc">Partagez un tutoriel, une analyse, une découverte ou une information utile sur l'IA.</p>
-        <button type="button" class="btn-sm btn-outline" id="mc-type-btn-communaute" disabled title="Le circuit article communauté n'est pas encore développé" data-i18n="profil.comingSoon">Bientôt disponible</button>
+        <button type="button" class="btn-sm btn-outline" id="mc-type-btn-communaute" disabled title="Le circuit article communauté n'est pas encore développé" data-i18n-title="profil.communityCircuitTitle" data-i18n="profil.comingSoon">Bientôt disponible</button>
       </div>
 
       <div class="mc-type-card">
@@ -3510,6 +3510,7 @@
     const email = document.getElementById('login-email').value.trim();
     const pass  = document.getElementById('login-password').value;
     const errEl = document.getElementById('login-error');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     errEl.style.display = 'none';
     btn.disabled = true; btn.textContent = '…';
     const res = await loginWithEmail(email, pass);
@@ -3517,7 +3518,7 @@
       errEl.textContent = res.error;
       errEl.style.display = 'block';
     }
-    btn.disabled = false; btn.textContent = 'Se connecter';
+    btn.disabled = false; btn.textContent = t('profil.loginBtn', langue);
   };
 
   // ─── REGISTER EMAIL ───────────────────────────
@@ -3527,15 +3528,16 @@
     const email = document.getElementById('reg-email').value.trim();
     const pass  = document.getElementById('reg-password').value;
     const errEl = document.getElementById('reg-error');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     errEl.style.display = 'none';
-    if (!name) { errEl.textContent = 'Entre ton prénom ou pseudo.'; errEl.style.display = 'block'; return; }
+    if (!name) { errEl.textContent = t('profil.errNameRequired', langue); errEl.style.display = 'block'; return; }
     btn.disabled = true; btn.textContent = '…';
     const res = await registerWithEmail(name, email, pass);
     if (!res.ok) {
       errEl.textContent = res.error;
       errEl.style.display = 'block';
     }
-    btn.disabled = false; btn.textContent = 'Créer mon compte';
+    btn.disabled = false; btn.textContent = t('profil.registerBtn', langue);
   };
 
   // ─── LOGIN GOOGLE ─────────────────────────────
@@ -3547,7 +3549,7 @@
   // ─── LOGOUT ───────────────────────────────────
   window.handleLogout = async function() {
     await logout();
-    showToast('À bientôt !');
+    showToast(t('profil.toastByeBye', window.detecterLangue ? window.detecterLangue() : 'fr'));
   };
 
   // ─── AUTH STATE OBSERVER ──────────────────────
@@ -3662,10 +3664,10 @@
     if (!file) return;
 
     // Vérifications basiques
-    if (!file.type.startsWith('image/')) { showToast('⚠ Fichier image requis.'); return; }
-    if (file.size > 2 * 1024 * 1024) { showToast('⚠ Image trop lourde (max 2 Mo).'); return; }
+    if (!file.type.startsWith('image/')) { showToast(t('profil.toastImageRequired', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
+    if (file.size > 2 * 1024 * 1024) { showToast(t('profil.toastImageTooLarge', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
 
-    showToast('⏳ Mise à jour de la photo…');
+    showToast(t('profil.toastPhotoUpdating', window.detecterLangue ? window.detecterLangue() : 'fr'));
 
     const reader = new FileReader();
     reader.onload = async (e) => {
@@ -3676,9 +3678,9 @@
         userProfile.photoURL = base64;
         const name = userProfile?.displayName || currentUser.displayName || 'Utilisateur';
         refreshAvatar(base64, name);
-        showToast('✅ Photo de profil mise à jour !');
+        showToast(t('profil.toastPhotoUpdated', window.detecterLangue ? window.detecterLangue() : 'fr'));
       } catch (err) {
-        showToast('⚠ Erreur lors de la mise à jour.');
+        showToast(t('profil.toastPhotoError', window.detecterLangue ? window.detecterLangue() : 'fr'));
         console.error(err);
       }
     };
@@ -3888,17 +3890,18 @@
 
   function renderAlertes() {
     const container = document.getElementById('alertes-container');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     if (alertes.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
           <div class="icon">🎯</div>
-          <p>Vous n'avez pas encore créé d'alerte.</p>
-          <button class="btn-primary btn-sm" onclick="openNewAlerteModal()">+ Créer une alerte</button>
+          <p>${t('alertes.emptyText', langue)}</p>
+          <button class="btn-primary btn-sm" onclick="openNewAlerteModal()">${t('alertes.create', langue)}</button>
         </div>`;
       return;
     }
     container.innerHTML = alertes.map(a => {
-      const prixLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
+      const prixLabel = { free: t('alertes.priceFree', langue), freemium: t('alertes.priceFreemium', langue), paid: t('alertes.pricePaid', langue) };
       const prixTxt = (a.priceTypes || []).map(p => prixLabel[p] || p).join(' · ');
       return `
         <div class="collection-card" data-id="${a.id}">
@@ -3906,27 +3909,28 @@
             <div class="collection-name">${a.name || a.category}</div>
             <div style="display:flex;gap:4px">
               <button class="btn-icon" onclick="handleToggleAlerte('${a.id}',${a.active !== false})"
-                      title="${a.active !== false ? 'Désactiver' : 'Activer'}">
+                      title="${a.active !== false ? t('alertes.disable', langue) : t('alertes.enable', langue)}">
                 ${a.active !== false ? '🔔' : '🔕'}
               </button>
-              <button class="btn-icon" onclick="handleDeleteAlerte('${a.id}','${escHtml(a.name || a.category)}')" title="Supprimer">🗑️</button>
+              <button class="btn-icon" onclick="handleDeleteAlerte('${a.id}','${escHtml(a.name || a.category)}')" title="${t('alertes.deleteTitle', langue)}">🗑️</button>
             </div>
           </div>
-          <div class="collection-meta">Catégorie : ${a.category} · ${prixTxt}</div>
+          <div class="collection-meta">${t('alertes.categoryPrefix', langue).replace('{category}', a.category)} · ${prixTxt}</div>
         </div>`;
     }).join('');
   }
 
   window.openNewAlerteModal = async function() {
     const select = document.getElementById('alerte-category');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     if (!select.options.length) {
-      select.innerHTML = '<option>Chargement…</option>';
+      select.innerHTML = `<option>${t('profil.loading', langue)}</option>`;
       try {
-        const outils = await getOutilsPublics_(window.detecterLangue ? window.detecterLangue() : 'fr');
+        const outils = await getOutilsPublics_(langue);
         const cats = [...new Set(outils.map(o => o.category).filter(Boolean))].sort();
         select.innerHTML = cats.map(c => `<option value="${c}">${c}</option>`).join('');
       } catch (e) {
-        select.innerHTML = '<option value="">Erreur de chargement</option>';
+        select.innerHTML = `<option value="">${t('alertes.loadError', langue)}</option>`;
       }
     }
     document.getElementById('alerte-name').value = '';
@@ -3945,7 +3949,7 @@
     closeNewAlerteModal();
     await createAlert(currentUser.uid, { name, category, priceTypes, tags: [] });
     await loadAlertes();
-    showToast('Alerte créée ✓');
+    showToast(t('alertes.createdToast', window.detecterLangue ? window.detecterLangue() : 'fr'));
   };
 
   window.handleToggleAlerte = async function(id, currentActive) {
@@ -3954,10 +3958,11 @@
   };
 
   window.handleDeleteAlerte = async function(id, name) {
-    if (!confirm(`Supprimer l'alerte « ${name} » ?`)) return;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    if (!confirm(t('alertes.confirmDelete', langue).replace('{name}', name))) return;
     await deleteAlert(currentUser.uid, id);
     await loadAlertes();
-    showToast('Alerte supprimée');
+    showToast(t('alertes.deletedToast', langue));
   };
 
   // ══════════════════════════════════════════════
@@ -3990,37 +3995,65 @@
   // A. déclenchées par une alerte (new_tool, tool_updated, price_change,
   //    free_offer, new_article) et B. liées au compte, indépendantes des
   //    alertes (submission, claim, creator_article, collection_update).
+  // Alias legacy → clé i18n canonique (anciens noms de type déjà en base).
+  const NOTIF_TYPE_ALIAS = { new_tool: 'alert_match', update: 'tool_updated', article: 'new_article' };
+  const NOTIF_TYPE_ICON = {
+    alert_match: '🆕', tool_updated: '🔄', price_change: '💰', free_offer: '🆓',
+    new_article: '📝', submission: '✍️', claim: '👤', creator_article: '📄',
+    collection_update: '📌',
+  };
   function notifTypeInfo(type) {
-    const map = {
-      // A. Alertes
-      alert_match:      { icon: '🆕', label: 'Nouvel outil ajouté' },
-      new_tool:         { icon: '🆕', label: 'Nouvel outil ajouté' },
-      tool_updated:     { icon: '🔄', label: 'Outil mis à jour' },
-      update:           { icon: '🔄', label: 'Outil mis à jour' },
-      price_change:     { icon: '💰', label: 'Changement de prix' },
-      free_offer:       { icon: '🆓', label: 'Offre gratuite' },
-      new_article:      { icon: '📝', label: 'Nouvel article' },
-      article:          { icon: '📝', label: 'Nouvel article' },
-      // B. Compte
-      submission:       { icon: '✍️', label: 'Soumission' },
-      claim:            { icon: '👤', label: 'Revendication' },
-      creator_article:  { icon: '📄', label: 'Article créateur' },
-      // C. Collection
-      collection_update:{ icon: '📌', label: 'Mise à jour de collection' },
-    };
-    return map[type] || { icon: '🔔', label: 'Notification' };
+    const canon = NOTIF_TYPE_ALIAS[type] || type;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const icon = NOTIF_TYPE_ICON[canon] || '🔔';
+    const label = t('notif.type.' + canon, langue);
+    return { icon, label: label === 'notif.type.' + canon ? 'Notification' : label };
+  }
+
+  // Reconstruit titre + message dans la langue courante à partir de
+  // n.type + n.params (nouveau format). Si n.params est absent (anciennes
+  // notifications, pré-i18n, ou notifs "compte" écrites avec un texte
+  // libre par l'admin), affiche tel quel n.title/n.message — toujours en
+  // français pour ces cas-là, par choix assumé (voir discussion i18n).
+  function resolveNotifText(n) {
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const { label: typeLabel } = notifTypeInfo(n.type);
+    if (!n.params) return { title: n.title || typeLabel, message: n.message || '' };
+
+    const title = typeLabel;
+    const p = n.params;
+    let message = '';
+    switch (NOTIF_TYPE_ALIAS[n.type] || n.type) {
+      case 'alert_match':
+        message = p.alert
+          ? t('notif.msg.alertMatchNamed', langue).replace('{alert}', p.alert)
+          : t('notif.msg.alertMatchGeneric', langue).replace('{tool}', p.tool).replace('{category}', p.category);
+        break;
+      case 'tool_updated':
+      case 'price_change':
+      case 'free_offer':
+      case 'collection_update':
+        message = t('notif.msg.' + (NOTIF_TYPE_ALIAS[n.type] || n.type), langue).replace('{tool}', p.tool || '');
+        break;
+      default:
+        message = n.message || '';
+    }
+    return { title, message };
   }
 
   function relTime(date) {
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const diffMin = Math.round((Date.now() - date.getTime()) / 60000);
-    if (diffMin < 1) return "À l'instant";
-    if (diffMin < 60) return `Il y a ${diffMin} min`;
+    if (diffMin < 1) return t('notif.timeJustNow', langue);
+    if (diffMin < 60) return t('notif.timeMinAgo', langue).replace('{n}', diffMin);
     const diffH = Math.round(diffMin / 60);
-    if (diffH < 24) return `Il y a ${diffH} h`;
+    if (diffH < 24) return t('notif.timeHoursAgo', langue).replace('{n}', diffH);
     const diffJ = Math.round(diffH / 24);
-    if (diffJ < 7) return `Il y a ${diffJ} j`;
-    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+    if (diffJ < 7) return t('notif.timeDaysAgo', langue).replace('{n}', diffJ);
+    const locale = { fr: 'fr-FR', en: 'en-US', es: 'es-ES' }[langue] || 'fr-FR';
+    return date.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
   }
+
 
   // 1 seule notif au total → va directement au détail (pas d'écran liste).
   // 2+ → la liste s'affiche d'abord. Ouvrir la liste ne marque rien comme lu.
@@ -4047,22 +4080,24 @@
 
   function renderNotifModalList() {
     const list = document.getElementById('notif-modal-list');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     if (!notifItems.length) {
-      list.innerHTML = `<div class="empty-state"><div class="icon">🔔</div><p>Aucune notification pour le moment.</p></div>`;
+      list.innerHTML = `<div class="empty-state"><div class="icon">🔔</div><p>${t('notif.empty', langue)}</p></div>`;
       return;
     }
     list.innerHTML = notifItems.map(n => {
       const when = n.createdAt?.toDate ? relTime(n.createdAt.toDate()) : '';
-      const { icon, label: typeLabel } = notifTypeInfo(n.type);
+      const { icon } = notifTypeInfo(n.type);
+      const { title, message } = resolveNotifText(n);
       return `
         <div onclick="showNotifDetail('${n.id}')"
              style="display:flex;gap:12px;align-items:flex-start;padding:14px 4px;
                     border-bottom:1px solid var(--border);cursor:pointer">
           <span style="font-size:1.2rem;flex-shrink:0">${icon}</span>
           <div style="min-width:0">
-            <div style="font-size:.9rem;font-weight:${n.read ? '400' : '700'}">${n.title || typeLabel}</div>
+            <div style="font-size:.9rem;font-weight:${n.read ? '400' : '700'}">${title}</div>
             <div style="font-size:.83rem;color:var(--muted);margin-top:2px;
-                        font-weight:${n.read ? '400' : '600'}">${n.message || ''}</div>
+                        font-weight:${n.read ? '400' : '600'}">${message}</div>
             <div style="font-size:.73rem;color:var(--muted);margin-top:4px">${when}</div>
           </div>
         </div>`;
@@ -4073,15 +4108,18 @@
   window.showNotifDetail = async function(notifId) {
     const n = notifItems.find(x => x.id === notifId);
     if (!n) return;
+    window.__currentNotifDetailId = notifId;
 
     document.getElementById('notif-modal-list').style.display = 'none';
     document.getElementById('notif-modal-back').style.display = notifItems.length > 1 ? 'inline-flex' : 'none';
     const detail = document.getElementById('notif-modal-detail');
     detail.style.display = 'block';
 
-    const { icon, label: typeLabel } = notifTypeInfo(n.type);
+    const { icon } = notifTypeInfo(n.type);
+    const { title, message } = resolveNotifText(n);
     const when = n.createdAt?.toDate ? relTime(n.createdAt.toDate()) : '';
-    const prixLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const prixLabel = { free: t('alertes.priceFree', langue), freemium: t('alertes.priceFreemium', langue), paid: t('alertes.pricePaid', langue) };
 
     // Carte outil + encart "pourquoi cette notification" — seulement pour
     // les notifs liées à un outil (alerte ou collection). Les notifs
@@ -4097,7 +4135,7 @@
         n.price ? `<span style="${badgeStyle};background:rgba(90,120,255,.18);color:#9cb2ff">${prixLabel[n.price] || n.price}</span>` : '',
       ].join('');
       const extLink = n.toolUrl
-        ? `<a href="${n.toolUrl}" target="_blank" rel="noopener" title="Visiter le site" style="color:var(--muted);text-decoration:none;margin-left:6px">🔗</a>` : '';
+        ? `<a href="${n.toolUrl}" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;margin-left:6px">🔗</a>` : '';
 
       toolCardHtml = `
         <div style="margin-top:20px;padding:16px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2,rgba(255,255,255,.02))">
@@ -4109,16 +4147,19 @@
               <div style="margin-top:8px;display:flex;align-items:center;gap:6px">${badges}${extLink}</div>
             </div>
           </div>
-          ${n.link && n.link !== '#' ? `<a href="${n.link}" class="btn-primary" style="display:block;text-align:center;margin-top:14px;text-decoration:none">Découvrir l'outil →</a>` : ''}
+          ${n.link && n.link !== '#' ? `<a href="${n.link}" class="btn-primary" style="display:block;text-align:center;margin-top:14px;text-decoration:none">${t('notif.discoverTool', langue)}</a>` : ''}
         </div>`;
 
       let raison = '';
       if (n.source?.type === 'alert') {
         const cat = n.alertCategory || n.category || '';
-        const prixTxt = (n.alertPriceTypes || []).map(p => prixLabel[p] || p).join(' et ');
-        raison = `Cette notification vous a été envoyée car vous avez activé ${n.alertName ? `l'alerte « ${n.alertName} »` : 'une alerte'} pour la catégorie ${cat}${prixTxt ? ` et le type de prix ${prixTxt}` : ''}.`;
+        const prixTxt = (n.alertPriceTypes || []).map(p => prixLabel[p] || p).join(' · ');
+        const pricePart = prixTxt ? t('notif.reason.andPrice', langue).replace('{price}', prixTxt) : '';
+        raison = n.alertName
+          ? t('notif.reason.alertNamed', langue).replace('{alert}', n.alertName).replace('{category}', cat).replace('{price}', pricePart)
+          : t('notif.reason.alertGeneric', langue).replace('{category}', cat).replace('{price}', pricePart);
       } else if (n.source?.type === 'collection') {
-        raison = `Cette notification vous a été envoyée car « ${n.toolName} » fait partie d'une de vos collections.`;
+        raison = t('notif.reason.collection', langue).replace('{tool}', n.toolName);
       }
       if (raison) {
         toolCardHtml += `
@@ -4131,11 +4172,11 @@
 
     detail.innerHTML = `
       <div style="font-size:2.2rem;margin-bottom:12px">${icon}</div>
-      <h2 style="font-size:1.2rem;margin-bottom:10px">${n.title || typeLabel}</h2>
-      <p style="font-size:.95rem;color:var(--muted);line-height:1.5">${n.message || ''}</p>
+      <h2 style="font-size:1.2rem;margin-bottom:10px">${title}</h2>
+      <p style="font-size:.95rem;color:var(--muted);line-height:1.5">${message}</p>
       <p style="font-size:.8rem;color:var(--muted);margin-top:14px">${when}</p>
       ${toolCardHtml}
-      ${!toolCardHtml && n.link && n.link !== '#' ? `<a href="${n.link}" class="btn-primary" style="display:inline-block;margin-top:20px;text-decoration:none">Découvrir l'outil →</a>` : ''}
+      ${!toolCardHtml && n.link && n.link !== '#' ? `<a href="${n.link}" class="btn-primary" style="display:inline-block;margin-top:20px;text-decoration:none">${t('notif.discoverTool', langue)}</a>` : ''}
     `;
 
     if (!n.read) {
@@ -4577,7 +4618,7 @@
   window.ouvrirRepriseArticle = async function(articleId) {
     try {
       const a = await getArticleCreateur_(articleId);
-      if (!a) { showToast('❌ Article introuvable.'); return; }
+      if (!a) { showToast(t('profil.toastArticleNotFound', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
       await ouvrirEditeurPourArticleExistant(a);
     } catch (e) {
       showToast('❌ ' + (e.message || e));
@@ -4587,7 +4628,7 @@
   window.voirDetailArticle = async function(articleId) {
     try {
       const a = await getArticleCreateur_(articleId);
-      if (!a) { showToast('❌ Article introuvable.'); return; }
+      if (!a) { showToast(t('profil.toastArticleNotFound', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
       await ouvrirEditeurPourArticleExistant(a, true);
     } catch (e) {
       showToast('❌ ' + (e.message || e));
@@ -5049,7 +5090,7 @@
 
   function artBlockLabels(langue) {
     return {
-      heading: t('profil.blockHeading', langue), subheading: 'H3 — Sous-titre',
+      heading: t('profil.blockHeading', langue), subheading: t('profil.blockSubheading', langue),
       paragraph: t('profil.blockParagraph', langue),
       list: t('profil.blockListLabel', langue), link: t('profil.blockLink', langue),
       image: t('profil.blockImage', langue), callout: t('profil.blockCallout', langue),
@@ -5310,7 +5351,7 @@
     if (!file) return;
     const statusEl = document.getElementById('art-banniere-status');
     const btn = document.getElementById('art-banniere-upload-btn');
-    statusEl.textContent = '⏳ Envoi…';
+    statusEl.textContent = t('profil.uploadingEllipsis', window.detecterLangue ? window.detecterLangue() : 'fr');
     btn.disabled = true;
     try {
       const url = await uploadArticleImage(file);
@@ -5363,7 +5404,7 @@
     if (!file) return;
     const statusEl = document.getElementById('art-bloc-status-' + id);
     const btn = document.getElementById('art-bloc-upload-btn-' + id);
-    statusEl.textContent = '⏳ Envoi…';
+    statusEl.textContent = t('profil.uploadingEllipsis', window.detecterLangue ? window.detecterLangue() : 'fr');
     btn.disabled = true;
     try {
       const url = await uploadArticleImage(file);
@@ -5421,8 +5462,8 @@
       };
       localStorage.setItem(draftKey, JSON.stringify(data));
       const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
-      if (statusEl) statusEl.textContent = 'Enregistré ✓';
-      if (immediat) showToast('✅ Brouillon enregistré.');
+      if (statusEl) statusEl.textContent = t('profil.savedCheck', langue);
+      if (immediat) showToast(t('profil.toastDraftSaved', window.detecterLangue ? window.detecterLangue() : 'fr'));
     };
     if (immediat) run(); else _artAutosaveTimer = setTimeout(run, 600);
   };
@@ -5646,7 +5687,7 @@
       scheduleArtAutosave();
     };
     if (perteImage) {
-      if (confirm('Cette conversion fera perdre le contenu actuel de ce bloc (image ou texte). Continuer ?')) appliquer();
+      if (confirm(t('profil.confirmBlockConversion', window.detecterLangue ? window.detecterLangue() : 'fr'))) appliquer();
       else renderArtBlocs();
     } else {
       appliquer();
@@ -5662,7 +5703,8 @@
   window.artAjouterCommentaire = function(id) {
     const b = _artBlocs.find(x => x.id === id);
     if (!b) return;
-    const note = prompt('Note personnelle sur ce bloc (visible seulement par vous, jamais publiée) :', b.note || '');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const note = prompt(t('profil.promptBlockNote', langue), b.note || '');
     if (note === null) return;
     pushUndoSnapshot();
     b.note = note.trim();
@@ -5711,9 +5753,9 @@
     const start = textarea.selectionStart, end = textarea.selectionEnd;
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     if (start === end) { showToast(t('profil.selectTextFirst', langue)); return; }
-    const url = (prompt('URL du lien (doit commencer par https://)') || '').trim();
+    const url = (prompt(t('profil.promptLinkUrl', langue)) || '').trim();
     if (!url) return;
-    if (!/^https?:\/\//i.test(url)) { showToast('⚠️ URL invalide — doit commencer par http:// ou https://'); return; }
+    if (!/^https?:\/\//i.test(url)) { showToast(t('profil.toastInvalidUrl', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
     appliquerFormatSelection(id, '[', '](' + url + ')');
   };
 
@@ -5820,11 +5862,12 @@
   // référence apresIndex tel qu'attendu par artAjouterBloc().
   function insertPointHTML(apresIndex) {
     const ouvert = _artInsertOpenPour === apresIndex;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const picker = ART_TYPES_CONVERTIBLES
-      .map(ty => `<button type="button" onclick="artAjouterBloc('${ty}', ${apresIndex})">${artBlockLabels(window.detecterLangue ? window.detecterLangue() : 'fr')[ty] || ty}</button>`)
+      .map(ty => `<button type="button" onclick="artAjouterBloc('${ty}', ${apresIndex})">${artBlockLabels(langue)[ty] || ty}</button>`)
       .join('');
     return `<div class="art-insert-point${ouvert ? ' open' : ''}">
-      <button type="button" class="art-insert-point-btn" onclick="artToggleInsertPoint(${apresIndex})" title="Insérer un bloc ici">+</button>
+      <button type="button" class="art-insert-point-btn" onclick="artToggleInsertPoint(${apresIndex})" title="${t('profil.blockInsertHere', langue)}">+</button>
       <div class="art-insert-picker">${picker}</div>
     </div>`;
   }
@@ -5835,9 +5878,9 @@
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const items = autresTypes.map(ty => `<button type="button" onclick="artConvertirBloc('${b.id}','${ty}')">${artBlockLabels(langue)[ty] || ty}</button>`).join('');
     return `<div class="art-bloc-menu-wrap">
-      <button type="button" onclick="artToggleBlocMenu('${b.id}')" title="Plus d'options">⋮</button>
+      <button type="button" onclick="artToggleBlocMenu('${b.id}')" title="${t('profil.blockMoreOptions', langue)}">⋮</button>
       <div class="art-bloc-menu-panel${ouvert ? ' open' : ''}">
-        <div class="amp-title">Changer le type</div>
+        <div class="amp-title">${t('profil.blockChangeType', langue)}</div>
         ${items}
       </div>
     </div>`;
@@ -5850,14 +5893,14 @@
     container.innerHTML = insertPointHTML(-1) + _artBlocs.map((b, i) => {
       const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
       const label = artBlockLabels(langue)[b.type] || b.type;
-      const noteBadge = b.note ? `<span class="art-bloc-note-badge" onclick="artAjouterCommentaire('${b.id}')" title="Note personnelle : ${escHtmlStrict(b.note)}">💬</span>` : '';
+      const noteBadge = b.note ? `<span class="art-bloc-note-badge" onclick="artAjouterCommentaire('${b.id}')" title="${t('profil.blockNoteTooltip', langue).replace('{note}', escHtmlStrict(b.note))}">💬</span>` : '';
       const controls = `
         <div class="art-bloc-controls">
-          <span class="art-bloc-draghandle" title="Glisser pour réordonner" onpointerdown="artDragStart(event,'${b.id}')">⠿</span>
-          ${i > 0 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',-1)" title="Monter"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>` : ''}
-          ${i < _artBlocs.length - 1 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',1)" title="Descendre"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></button>` : ''}
-          <button type="button" onclick="artDupliquerBloc('${b.id}')" title="Dupliquer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
-          <button type="button" onclick="artSupprimerBloc('${b.id}')" title="Supprimer">${icoTrash(14)}</button>
+          <span class="art-bloc-draghandle" title="${t('profil.blockDragReorder', langue)}" onpointerdown="artDragStart(event,'${b.id}')">⠿</span>
+          ${i > 0 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',-1)" title="${t('profil.blockMoveUp', langue)}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></button>` : ''}
+          ${i < _artBlocs.length - 1 ? `<button type="button" onclick="artDeplacerBloc('${b.id}',1)" title="${t('profil.blockMoveDown', langue)}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></button>` : ''}
+          <button type="button" onclick="artDupliquerBloc('${b.id}')" title="${t('profil.blockDuplicate', langue)}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+          <button type="button" onclick="artSupprimerBloc('${b.id}')" title="${t('profil.blockDelete', langue)}">${icoTrash(14)}</button>
           ${blocMenuHTML(b)}
         </div>`;
 
@@ -5867,15 +5910,15 @@
           <div class="art-img-upload">
             <div class="art-img-preview" id="art-bloc-preview-${b.id}" style="display:${b.url ? '' : 'none'}">
               <img id="art-bloc-preview-img-${b.id}" src="${escHtmlStrict(b.url)}" alt="">
-              <button type="button" class="art-img-remove" onclick="artRemoveBlocImage('${b.id}')" title="Retirer l'image">${icoTrash(12)}</button>
+              <button type="button" class="art-img-remove" onclick="artRemoveBlocImage('${b.id}')" title="${t('profil.blockRemoveImage', langue)}">${icoTrash(12)}</button>
             </div>
             <button type="button" class="art-img-upload-btn" id="art-bloc-upload-btn-${b.id}" onclick="document.getElementById('art-bloc-file-${b.id}').click()" style="display:${b.url ? 'none' : ''}">
-              ${icoUpload()} Choisir une image
+              ${icoUpload()} ${t('profil.blockChooseImage', langue)}
             </button>
             <input type="file" id="art-bloc-file-${b.id}" accept="image/*" style="display:none" onchange="artUploadBlocImage('${b.id}', event)">
             <span class="art-img-status" id="art-bloc-status-${b.id}"></span>
           </div>
-          <input type="text" placeholder="Légende de l'image (facultatif)" value="${escHtmlStrict(b.caption)}"
+          <input type="text" placeholder="${t('profil.blockImageCaptionPlaceholder', langue)}" value="${escHtmlStrict(b.caption)}"
                  oninput="artUpdateBlocChamp('${b.id}','caption', this.value)" onblur="artResetSnapshotCoalesce('${b.id}:caption')" class="art-image-caption"></div>`;
       } else if (b.type === 'divider') {
         blocHTML = `<div class="art-bloc-divider" data-bloc-id="${b.id}">${controls}${noteBadge}<hr></div>`;
@@ -5885,26 +5928,26 @@
           <div class="art-list-items">
             ${items.map((val, idx) => `
               <div class="art-list-item">
-                <input type="text" placeholder="Élément de la liste" value="${escHtmlStrict(val)}"
+                <input type="text" placeholder="${t('profil.blockListItemPlaceholder', langue)}" value="${escHtmlStrict(val)}"
                        oninput="artUpdateListItem('${b.id}', ${idx}, this.value)" onblur="artResetSnapshotCoalesce('${b.id}:${idx}')">
-                <button type="button" class="art-list-remove" onclick="artSupprimerListItem('${b.id}', ${idx})" title="Retirer">×</button>
+                <button type="button" class="art-list-remove" onclick="artSupprimerListItem('${b.id}', ${idx})" title="${t('profil.blockRemoveItem', langue)}">×</button>
               </div>`).join('')}
           </div>
-          <button type="button" class="fe-add-block-btn" style="margin-top:0" onclick="artAjouterListItem('${b.id}')">+ Ajouter un élément</button>
+          <button type="button" class="fe-add-block-btn" style="margin-top:0" onclick="artAjouterListItem('${b.id}')">+ ${t('profil.blockAddListItem', langue)}</button>
         </div>`;
       } else if (b.type === 'callout') {
         blocHTML = `<div class="art-bloc-callout" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
-          <input type="text" class="art-box-title" placeholder="Titre de l'encadré" value="${escHtmlStrict(b.titre)}"
+          <input type="text" class="art-box-title" placeholder="${t('profil.blockCalloutTitlePlaceholder', langue)}" value="${escHtmlStrict(b.titre)}"
                  oninput="artUpdateBlocChamp('${b.id}','titre', this.value)" onblur="artResetSnapshotCoalesce('${b.id}:titre')">
           ${miniToolbarHTML(b.id)}
-          <textarea rows="3" id="ta-${b.id}" placeholder="Ajoutez votre conseil ou information."
+          <textarea rows="3" id="ta-${b.id}" placeholder="${t('profil.blockCalloutTextPlaceholder', langue)}"
                     oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';artUpdateBlocTexte('${b.id}', this.value)"
                     onblur="artResetSnapshotCoalesce('${b.id}')">${escHtmlStrict(b.text)}</textarea>
         </div>`;
       } else if (b.type === 'quote') {
         blocHTML = `<div class="art-bloc-quote" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
           ${miniToolbarHTML(b.id)}
-          <textarea class="art-quote-editor" id="ta-${b.id}" rows="3" placeholder="Votre citation ou témoignage…"
+          <textarea class="art-quote-editor" id="ta-${b.id}" rows="3" placeholder="${t('profil.blockQuotePlaceholder', langue)}"
                     oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';artUpdateBlocTexte('${b.id}', this.value)"
                     onblur="artResetSnapshotCoalesce('${b.id}')">${escHtmlStrict(b.text)}</textarea>
         </div>`;
@@ -5915,12 +5958,12 @@
         if (estTitre) {
           blocHTML = `<div class="art-bloc" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
             <input type="text" class="${inputClass}" id="ta-${b.id}" value="${escHtmlStrict(b.text)}"
-                   placeholder="${b.type === 'heading' ? "Écrivez votre titre H2…" : "Écrivez votre titre H3…"}"
+                   placeholder="${b.type === 'heading' ? t('profil.blockH2Placeholder', langue) : t('profil.blockH3Placeholder', langue)}"
                    oninput="artUpdateBlocTexte('${b.id}', this.value)" onblur="artResetSnapshotCoalesce('${b.id}')"></div>`;
         } else {
           blocHTML = `<div class="art-bloc" data-bloc-id="${b.id}">${controls}${noteBadge}<span class="art-bloc-label">${label}</span>
             ${miniToolbarHTML(b.id)}
-            <textarea class="${inputClass}" id="ta-${b.id}" rows="3" placeholder="Écrivez votre paragraphe ici…"
+            <textarea class="${inputClass}" id="ta-${b.id}" rows="3" placeholder="${t('profil.blockParagraphPlaceholder', langue)}"
                       oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';artUpdateBlocTexte('${b.id}', this.value)"
                       onblur="artResetSnapshotCoalesce('${b.id}')">${escHtmlStrict(b.text)}</textarea></div>`;
         }
@@ -5932,18 +5975,19 @@
 
   // Barre de formatage complète — partagée par paragraphe/citation/encadré.
   function miniToolbarHTML(blocId) {
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const couleurs = PALETTE_COULEURS_EDITEUR.map(c =>
-      `<button type="button" class="fe-color-dot" style="background:${c.hex}" onclick="artFormaterCouleur('${blocId}','${c.id}')" title="Couleur"></button>`
+      `<button type="button" class="fe-color-dot" style="background:${c.hex}" onclick="artFormaterCouleur('${blocId}','${c.id}')" title="${t('profil.toolbarColor', langue)}"></button>`
     ).join('');
     return `<div class="fe-mini-toolbar">
-      <button type="button" onclick="artFormaterGras('${blocId}')" title="Gras"><b>G</b></button>
-      <button type="button" onclick="artFormaterItalique('${blocId}')" title="Italique"><i>I</i></button>
-      <button type="button" onclick="artFormaterBarre('${blocId}')" title="Barré"><s>S</s></button>
-      <button type="button" onclick="artFormaterCode('${blocId}')" title="Code">&lt;/&gt;</button>
-      <button type="button" onclick="artFormaterSurligne('${blocId}')" title="Surligner">◐</button>
+      <button type="button" onclick="artFormaterGras('${blocId}')" title="${t('profil.toolbarBold', langue)}"><b>G</b></button>
+      <button type="button" onclick="artFormaterItalique('${blocId}')" title="${t('profil.toolbarItalic', langue)}"><i>I</i></button>
+      <button type="button" onclick="artFormaterBarre('${blocId}')" title="${t('profil.toolbarStrike', langue)}"><s>S</s></button>
+      <button type="button" onclick="artFormaterCode('${blocId}')" title="${t('profil.toolbarCode', langue)}">&lt;/&gt;</button>
+      <button type="button" onclick="artFormaterSurligne('${blocId}')" title="${t('profil.toolbarHighlight', langue)}">◐</button>
       <span class="fe-mini-toolbar-couleurs">${couleurs}</span>
-      <button type="button" onclick="artInsererLien('${blocId}')" title="Lien">🔗</button>
-      <button type="button" onclick="artAjouterCommentaire('${blocId}')" title="Note personnelle (jamais publiée)">💬</button>
+      <button type="button" onclick="artInsererLien('${blocId}')" title="${t('profil.toolbarLink', langue)}">🔗</button>
+      <button type="button" onclick="artAjouterCommentaire('${blocId}')" title="${t('profil.toolbarNote', langue)}">💬</button>
     </div>`;
   }
 
@@ -6098,11 +6142,11 @@
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     container.innerHTML = _artSources.map(s => `
       <div class="art-source-row">
-        <input type="text" class="form-input" placeholder="Nom de la source"
+        <input type="text" class="form-input" placeholder="${t('profil.sourceNamePlaceholder', langue)}"
                value="${escHtmlStrict(s.texte)}" oninput="artUpdateSource('${s.id}','texte', this.value)">
         <input type="url" class="form-input" placeholder="https://…" value="${escHtmlStrict(s.url)}"
                oninput="artUpdateSource('${s.id}','url', this.value)">
-        <button type="button" class="art-source-remove" onclick="artSupprimerSource('${s.id}')" title="Retirer">${icoTrash()}</button>
+        <button type="button" class="art-source-remove" onclick="artSupprimerSource('${s.id}')" title="${t('profil.blockRemoveItem', langue)}">${icoTrash()}</button>
       </div>`).join('');
   }
 
@@ -6111,7 +6155,7 @@
     const input = document.getElementById('art-mot-cle-input');
     const val = input.value.trim();
     if (!val) return;
-    if (_artMotsCles.length >= ART_MOTS_CLES_MAX) { showToast(`⚠️ ${ART_MOTS_CLES_MAX} mots-clés maximum.`); return; }
+    if (_artMotsCles.length >= ART_MOTS_CLES_MAX) { showToast(t('profil.toastMaxKeywords', window.detecterLangue ? window.detecterLangue() : 'fr').replace('{n}', ART_MOTS_CLES_MAX)); return; }
     // Évite les doublons (comparaison insensible à la casse) sans bloquer la
     // saisie de mots-clés visuellement proches mais distincts.
     const normalise = s => s.trim().toLowerCase();
@@ -6131,8 +6175,9 @@
   function renderArtMotsCles() {
     const container = document.getElementById('art-mots-cles-container');
     if (!container) return;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     container.innerHTML = _artMotsCles.map((m, i) => `
-      <span class="art-tag-chip">${escHtmlStrict(m)}<button type="button" onclick="artSupprimerMotCle(${i})" title="Retirer" aria-label="Retirer ${escHtmlStrict(m)}">✕</button></span>`
+      <span class="art-tag-chip">${escHtmlStrict(m)}<button type="button" onclick="artSupprimerMotCle(${i})" title="${t('profil.blockRemoveItem', langue)}" aria-label="${t('profil.removeKeywordAriaLabel', langue).replace('{name}', escHtmlStrict(m))}">✕</button></span>`
     ).join('');
     const addBtn = document.getElementById('art-mot-cle-add-btn');
     const input = document.getElementById('art-mot-cle-input');
@@ -6169,17 +6214,17 @@
     const consent = document.getElementById('art-consent').checked;
     const nbMots = updateArtWordCount();
     if (!titre) { showToast('⚠️ ' + t('profil.titleRequired', langue)); return; }
-    if (!categorie) { showToast('⚠️ Choisissez une catégorie.'); return; }
-    if (!extrait) { showToast('⚠️ Ajoutez un extrait.'); return; }
-    if (!banniereUrl) { showToast('⚠️ Ajoutez une image de couverture.'); return; }
-    if (!auteurNom) { showToast('⚠️ Indiquez un nom affiché.'); return; }
+    if (!categorie) { showToast(t('profil.toastChooseCategory', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
+    if (!extrait) { showToast(t('profil.toastAddExcerpt', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
+    if (!banniereUrl) { showToast(t('profil.toastAddCover', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
+    if (!auteurNom) { showToast(t('profil.toastAddDisplayName', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
     if (nbMots < 500) { showToast('⚠️ ' + t('profil.min500Words', langue)); return; }
     if (_artBlocs.length === 0) { showToast(t('profil.addAtLeastOneBlock', langue)); return; }
-    if (!consent) { showToast('⚠️ Acceptez les conditions avant d\'envoyer.'); return; }
+    if (!consent) { showToast(t('profil.toastAcceptTerms', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
     if (!_artOutilChoisi) {
       showToast(_artOutilsDisponibles.length
-        ? '⚠️ Choisissez l\'outil concerné par cet article.'
-        : '⚠️ Vous devez revendiquer un outil avant de pouvoir rédiger un article créateur.');
+        ? t('profil.toastChooseTool', window.detecterLangue ? window.detecterLangue() : 'fr')
+        : t('profil.toastClaimToolFirst', window.detecterLangue ? window.detecterLangue() : 'fr'));
       return;
     }
 
@@ -6237,7 +6282,7 @@
       const draftKey = _artTargetClaimId ? ('art-brouillon-' + _artTargetClaimId) : ART_DRAFT_KEY;
       localStorage.removeItem(draftKey);
       document.getElementById('editor-article').classList.remove('open');
-      showToast('✅ ' + (_artEditingArticleId ? 'Article renvoyé pour validation.' : t('profil.articleSentToast', langue)));
+      showToast('✅ ' + (_artEditingArticleId ? t('profil.toastArticleResent', langue) : t('profil.articleSentToast', langue)));
       await loadMesArticles();
       if (_artTargetClaimId) await loadSoumissions();
     } catch (e) {
@@ -6245,7 +6290,7 @@
       // consommé (voir createArticleCreateur() dans firestore.js) plutôt
       // que l'erreur générique — c'est un refus attendu, pas un bug.
       if (e.message === 'QUOTA_TRIMESTRE_ATTEINT') {
-        showToast('⚠️ Vous avez déjà utilisé votre quota d\'article créateur pour ce trimestre. Revenez au prochain trimestre.');
+        showToast(t('profil.toastQuotaReached', langue));
         // Le cache local était visiblement désynchronisé (une autre session
         // a consommé le quota entre-temps) — on le rafraîchit pour que la
         // case de quota reflète la réalité sans attendre un rechargement.
@@ -6289,6 +6334,17 @@
     if (typeof precedentOnLangueChangeProfil === 'function') precedentOnLangueChangeProfil(code);
     if (plansCartesChargees) {
       afficherCartesPlans('profil-plans-cards-container', 'choisirFormuleProfil', code);
+    }
+    // Contenu généré en JS (pas de data-i18n) : re-rendu manuel au switch
+    // de langue, sinon "Mes alertes" et la cloche restent figés dans
+    // l'ancienne langue jusqu'au prochain rechargement.
+    if (typeof alertes !== 'undefined' && alertes.length) renderAlertes();
+    if (document.getElementById('notif-modal')?.style.display !== 'none') {
+      if (document.getElementById('notif-modal-detail')?.style.display !== 'none' && window.__currentNotifDetailId) {
+        showNotifDetail(window.__currentNotifDetailId);
+      } else {
+        renderNotifModalList();
+      }
     }
   };
 
@@ -6477,9 +6533,9 @@
       if (!userProfile) userProfile = {};
       userProfile.bio = bio; userProfile.role = role;
       userProfile.linkedin = linkedin; userProfile.twitter = twitter; userProfile.website = website;
-      showToast('✅ Profil public mis à jour !');
+      showToast(t('profil.toastPublicProfileUpdated', window.detecterLangue ? window.detecterLangue() : 'fr'));
     } catch(e) {
-      showToast('⚠ Erreur lors de la sauvegarde.');
+      showToast(t('profil.toastSaveError', window.detecterLangue ? window.detecterLangue() : 'fr'));
       console.error(e);
     }
   };
@@ -6490,7 +6546,7 @@
     await updateDisplayName(currentUser.uid, name);
     userProfile.displayName = name;
     document.getElementById('user-name').textContent = name;
-    showToast('✅ Nom mis à jour !');
+    showToast(t('profil.toastNameUpdated', window.detecterLangue ? window.detecterLangue() : 'fr'));
   };
 
   window.saveLangue = async function() {
@@ -6500,7 +6556,7 @@
     // par toutes les pages du site — et réapplique immédiatement les
     // traductions statiques sur cette page (nav, sidebar, paramètres...).
     window.changerLangueGlobale(langue);
-    showToast('✅ Langue enregistrée !');
+    showToast(t('profil.toastLangSaved', window.detecterLangue ? window.detecterLangue() : 'fr'));
   };
 
   window.toggleNewsletter = async function() {
@@ -6508,7 +6564,7 @@
     const newVal = !toggle.classList.contains('on');
     toggle.classList.toggle('on', newVal);
     await updateNewsletter(currentUser.uid, newVal);
-    showToast(newVal ? '✅ Newsletter activée !' : 'Newsletter désactivée.');
+    showToast(newVal ? t('profil.toastNewsletterOn', window.detecterLangue ? window.detecterLangue() : 'fr') : t('profil.toastNewsletterOff', window.detecterLangue ? window.detecterLangue() : 'fr'));
   };
 
   // Sauvegarde automatique, sans bouton "Enregistrer" — dès qu'on clique,
@@ -6522,7 +6578,7 @@
     } catch (err) {
       toggle.classList.toggle('on', !newVal); // rollback visuel si l'écriture échoue
       console.error('updateNotificationSetting a échoué:', err);
-      showToast('⚠ Erreur, réessaie.');
+      showToast(t('profil.toastRetryError', window.detecterLangue ? window.detecterLangue() : 'fr'));
     }
   };
 
@@ -6607,7 +6663,7 @@
         src=""
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-        title="Tutoriel vidéo">
+        title="Tutoriel vidéo" data-i18n-title="profil.videoTutorialTitle">
       </iframe>
     </div>
   </div>

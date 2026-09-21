@@ -52,6 +52,98 @@
     z-index: 1;
   }
 
+  /* ── Sélecteur de langue ── */
+.lang-switch {
+  position: relative;
+  margin-left: 12px;
+}
+
+.lang-current {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.lang-current:hover {
+  background: rgba(255,255,255,0.07);
+}
+
+.lang-globe {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.lang-arrow {
+  font-size: 12px;
+  opacity: .65;
+  line-height: 1;
+}
+
+.lang-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 7px);
+  right: 0;
+  min-width: 145px;
+  padding: 5px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.3);
+  z-index: 300;
+}
+
+.lang-switch.open .lang-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lang-menu .lang-btn {
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lang-menu .lang-btn:hover {
+  color: var(--text);
+  background: rgba(255,255,255,.06);
+}
+
+.lang-menu .lang-btn.active {
+  color: var(--text);
+  background: rgba(255,107,157,.12);
+}
+
+@media (max-width: 768px) {
+  .lang-switch {
+    margin-left: 6px;
+  }
+
+  .lang-current {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+}
+
   /* ── NAV AVATAR (connecté) ── */
   .nav-avatar-link { display: inline-flex; align-items: center; text-decoration: none; }
   .nav-avatar {
@@ -418,11 +510,34 @@
     <button class="nav-link" onclick="window.location.href='/index.html#blog'" data-i18n="nav.blog">Blog</button>
     </div>
 
-    <div class="lang-switch" style="display:flex;gap:4px;margin-left:12px;">
-      <button class="lang-btn" data-lang="fr" onclick="changerLanguePage('fr')" style="background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;">FR</button>
-      <button class="lang-btn" data-lang="en" onclick="changerLanguePage('en')" style="background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;">EN</button>
-      <button class="lang-btn" data-lang="es" onclick="changerLanguePage('es')" style="background:none;border:1px solid var(--border);color:var(--text-muted);border-radius:6px;padding:3px 8px;font-size:12px;cursor:pointer;">ES</button>
-    </div>
+      <div class="lang-switch">
+  <button
+    class="lang-current"
+    id="lang-current"
+    type="button"
+    aria-expanded="false"
+    aria-haspopup="true"
+    aria-label="Choisir la langue"
+  >
+    <span class="lang-globe">🌐</span>
+    <span id="lang-current-label">FR</span>
+    <span class="lang-arrow">⌄</span>
+  </button>
+
+  <div class="lang-menu" id="lang-menu">
+    <button class="lang-btn active" data-lang="fr" type="button">
+      🇫🇷 Français
+    </button>
+
+    <button class="lang-btn" data-lang="en" type="button">
+      🇬🇧 English
+    </button>
+
+    <button class="lang-btn" data-lang="es" type="button">
+      🇪🇸 Español
+    </button>
+  </div>
+</div>
 
     <div class="nav-profile-slot">
       <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
@@ -831,6 +946,53 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') document.getElementById('modal-don').classList.remove('open');
   });
+
+    /* ── Sélecteur de langue ── */
+  const langSwitch = document.querySelector('.lang-switch');
+  const langCurrent = document.getElementById('lang-current');
+  const langLabel = document.getElementById('lang-current-label');
+
+  if (langSwitch && langCurrent) {
+
+    langCurrent.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      const open = langSwitch.classList.toggle('open');
+
+      langCurrent.setAttribute(
+        'aria-expanded',
+        open ? 'true' : 'false'
+      );
+    });
+
+    langSwitch.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        const code = btn.dataset.lang;
+
+        if (langLabel && code) {
+          langLabel.textContent = code.toUpperCase();
+        }
+
+        langSwitch.querySelectorAll('.lang-btn').forEach(item => {
+          item.classList.remove('active');
+        });
+
+        btn.classList.add('active');
+
+        langSwitch.classList.remove('open');
+        langCurrent.setAttribute('aria-expanded', 'false');
+
+        changerLanguePage(code);
+      });
+    });
+
+    document.addEventListener('click', () => {
+      langSwitch.classList.remove('open');
+      langCurrent.setAttribute('aria-expanded', 'false');
+    });
+  }
 </script>
 
 <!-- ═══ Étapes du formulaire + Prix (pill) + Firestore ═══ -->

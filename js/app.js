@@ -866,14 +866,20 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
 function renderCatConfirmBar(cat, count) {
   const bar = document.getElementById('cat-confirm-bar');
   if (!bar) return;
-  if (cat === 'Tous') { bar.hidden = true; bar.innerHTML = ''; return; }
 
-  const icon = catIcons[cat] || catIcons._default;
+  if (cat === 'Tous') {
+    bar.hidden = true;
+    bar.innerHTML = '';
+    return;
+  }
+
   const slug = slugify(cat);
+
   bar.innerHTML = `
-    <a class="cat-confirm-cta"
-    href="/categorie/${state.langue}/${slug}/">Explorer la catégorie →</a> `;
-   bar.hidden = false;
+    <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">Explorer la catégorie →</a>
+  `;
+
+  bar.hidden = false;
 }
 
 // ═══════════════════════════════════════

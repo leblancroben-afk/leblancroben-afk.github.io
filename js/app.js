@@ -871,9 +871,7 @@ function renderCatConfirmBar(cat, count) {
   const icon = catIcons[cat] || catIcons._default;
   const slug = slugify(cat);
   bar.innerHTML = `
-    <span class="cat-confirm-icon">${icon}</span>
-    <span class="cat-confirm-text">${cat} — ${count} outils</span>
-    <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">Explorer la catégorie →</a>`;
+  <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">Explorer la catégorie →</a>`;
   bar.hidden = false;
 }
 

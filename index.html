@@ -178,11 +178,26 @@
       <button class="nav-link" data-page="gallery" data-i18n="nav.gallery">Galerie</button>
     </div>
     <!-- Sélecteur de langue — caché jusqu'à l'ajout de contenu EN/ES -->
-    <div class="lang-selector" id="lang-selector" style="display:flex">
-      <button class="lang-btn active" data-lang="fr" onclick="changerLangue('fr')">FR</button>
-      <button class="lang-btn" data-lang="en" onclick="changerLangue('en')">EN</button>
-      <button class="lang-btn" data-lang="es" onclick="changerLangue('es')">ES</button>
-    </div>
+    <!-- Sélecteur de langue -->
+<div class="lang-selector" id="lang-selector">
+  <button class="lang-current" id="lang-current" type="button" aria-expanded="false">
+    <span>🌐</span>
+    <span id="lang-current-label">FR</span>
+    <span class="lang-arrow">⌄</span>
+  </button>
+
+  <div class="lang-menu" id="lang-menu">
+    <button class="lang-btn active" data-lang="fr" onclick="changerLangue('fr')">
+      🇫🇷 Français
+    </button>
+    <button class="lang-btn" data-lang="en" onclick="changerLangue('en')">
+      🇬🇧 English
+    </button>
+    <button class="lang-btn" data-lang="es" onclick="changerLangue('es')">
+      🇪🇸 Español
+    </button>
+  </div>
+</div>
     <div class="nav-profile-slot">
   <!-- Avatar connecté — caché par défaut -->
   <a href="profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
@@ -883,6 +898,37 @@ function handleFooterNewsletter(e) {
     if (fb) { fb.textContent = '✓ Inscription confirmée !'; fb.style.color = '#00d4aa'; }
   });
 }
+</script>
+
+  <script>
+(function () {
+  const selector = document.getElementById('lang-selector');
+  const current = document.getElementById('lang-current');
+  const label = document.getElementById('lang-current-label');
+
+  if (!selector || !current) return;
+
+  current.addEventListener('click', function (e) {
+    e.stopPropagation();
+
+    const isOpen = selector.classList.toggle('open');
+    current.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  document.addEventListener('click', function () {
+    selector.classList.remove('open');
+    current.setAttribute('aria-expanded', 'false');
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      if (label) label.textContent = this.dataset.lang.toUpperCase();
+
+      selector.classList.remove('open');
+      current.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 </script>
 
 

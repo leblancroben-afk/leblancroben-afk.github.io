@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C'est quoi l'Apprentissage automatique ? Définition IA | Albexia</title>
+  <meta name="description" content="Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient pré" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://albexia.com/glossaire/apprentissage-automatique/" />
+  <meta property="og:title" content="Apprentissage automatique — Glossaire IA Albexia" />
+  <meta property="og:description" content="Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient pré" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://albexia.com/glossaire/apprentissage-automatique/" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"DefinedTerm","name":"Apprentissage automatique","description":"Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient précis.","inDefinedTermSet":{"@type":"DefinedTermSet","name":"Glossaire IA Albexia","url":"https://albexia.com/glossaire/"},"url":"https://albexia.com/glossaire/apprentissage-automatique/"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quelle est la différence entre l'apprentissage supervisé et non supervisé ?","acceptedAnswer":{"@type":"Answer","text":"Dans l'apprentissage supervisé, les données d'entraînement contiennent déjà les réponses attendues. Dans l'apprentissage non supervisé, l'algorithme doit trouver lui-même des structures ou des groupes logiques sans aide préalable."}},{"@type":"Question","name":"De combien de données a-t-on besoin pour faire de l'apprentissage automatique ?","acceptedAnswer":{"@type":"Answer","text":"Cela dépend de la complexité du problème. Pour des tâches simples, quelques centaines d'exemples bien ciblés peuvent suffire, tandis que les modèles complexes de vision ou de langage nécessitent des millions de données."}}]}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/niche.css" />
+  <style>
+    .glossaire-niveau-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:14px;border:1px solid;margin-bottom:16px}
+    .glossaire-erreur-box{background:rgba(255,107,157,0.06);border:1px solid rgba(255,107,157,0.25);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.7;color:var(--text)}
+    .glossaire-erreur-box strong{color:#ff6b9d}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+  </div>
+  <div class="kebab-wrap" id="kebab-wrap">
+    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="kebab-menu" id="kebab-menu" role="menu">
+      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
+      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
+      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
+      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <div class="kebab-divider"></div>
+      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+    </div>
+  </div>
+</nav>
+
+<section class="niche-hero">
+  <div class="niche-hero-glow"></div>
+  <span class="glossaire-niveau-badge" style="color:#00d4aa;border-color:#00d4aa66;background:#00d4aa1a">🌱 Débutant</span>
+  <h1>Apprentissage automatique</h1>
+  <p style="font-size:17px">Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient précis.</p>
+</section>
+
+<div class="niche-section">
+  <div class="niche-section-title">🎯 Pourquoi c'est important</div>
+  <div class="niche-conseils">Ce concept est le moteur fondamental de presque toutes les technologies d'IA actuelles. Comprendre qu'un système apprend par l'exemple plutôt que par des règles figées permet de saisir pourquoi la qualité des données est cruciale. Cela aide aussi à accepter qu'un système d'IA puisse faire des erreurs, tout comme un humain en phase d'apprentissage.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">💡 Exemple concret</div>
+  <div class="niche-conseils" style="font-style:italic">Un filtre anti-spam apprend à reconnaître les emails indésirables en analysant des milliers d'exemples.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">⚙️ En pratique</div>
+  <div class="niche-conseils">En pratique, le processus commence par la collecte et le nettoyage d'un jeu de données, divisé en données d'entraînement et de test. On choisit ensuite un algorithme que l'on entraîne à repérer des motifs récurrents. Une fois le modèle entraîné, on évalue ses performances sur les données de test pour s'assurer qu'il est capable de généraliser ses prédictions à de nouvelles situations réelles.</div>
+</div>
+<div class="niche-section">
+  <div class="glossaire-erreur-box"><strong>Erreur fréquente :</strong> Croire que l'apprentissage automatique produit des résultats infaillibles. En réalité, un modèle ne sera jamais plus intelligent ou impartial que les données qui ont servi à l'entraîner.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">❓ Questions fréquentes</div>
+  <div class="niche-faq">
+    <div class="niche-faq-item" id="gfaq-0">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(0)">
+        <span>Quelle est la différence entre l'apprentissage supervisé et non supervisé ?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">Dans l'apprentissage supervisé, les données d'entraînement contiennent déjà les réponses attendues. Dans l'apprentissage non supervisé, l'algorithme doit trouver lui-même des structures ou des groupes logiques sans aide préalable.</div>
+    </div><div class="niche-faq-item" id="gfaq-1">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(1)">
+        <span>De combien de données a-t-on besoin pour faire de l'apprentissage automatique ?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">Cela dépend de la complexité du problème. Pour des tâches simples, quelques centaines d'exemples bien ciblés peuvent suffire, tandis que les modèles complexes de vision ou de langage nécessitent des millions de données.</div>
+    </div>
+  </div>
+</div>
+
+<div class="niche-section">
+  <div class="niche-section-title">🔗 Termes connexes</div>
+  <div class="niche-related">
+    <a href="/glossaire/agent-ia/" class="niche-related-link">Agent IA</a><a href="/glossaire/api/" class="niche-related-link">API</a>
+  </div>
+</div>
+
+<a href="/glossaire/" class="niche-back">← Retour au glossaire complet</a>
+
+<footer>
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>
+<script>
+  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
+  if (kb && km) {
+    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
+    km.addEventListener('click', e => e.stopPropagation());
+  }
+</script>
+</body>
+</html>

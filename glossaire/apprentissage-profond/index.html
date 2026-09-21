@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C'est quoi l'Apprentissage profond ? Définition IA | Albexia</title>
+  <meta name="description" content="Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les image" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://albexia.com/glossaire/apprentissage-profond/" />
+  <meta property="og:title" content="Apprentissage profond — Glossaire IA Albexia" />
+  <meta property="og:description" content="Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les image" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://albexia.com/glossaire/apprentissage-profond/" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"DefinedTerm","name":"Apprentissage profond","description":"Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les images, le son ou le texte.","inDefinedTermSet":{"@type":"DefinedTermSet","name":"Glossaire IA Albexia","url":"https://albexia.com/glossaire/"},"url":"https://albexia.com/glossaire/apprentissage-profond/"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Pourquoi l'apprentissage profond est-il souvent qualifié de boîte noire ?","acceptedAnswer":{"@type":"Answer","text":"En raison du nombre immense de connexions internes, il est extrêmement difficile pour les humains de comprendre précisément comment et pourquoi le modèle est parvenu à une décision spécifique."}},{"@type":"Question","name":"Faut-il toujours privilégier l'apprentissage profond par rapport à l'apprentissage classique ?","acceptedAnswer":{"@type":"Answer","text":"Non, l'apprentissage profond est gourmand en données et en calculs. Pour des données tabulaires simples ou des ressources limitées, les algorithmes classiques restent souvent plus rapides et plus faciles à interpréter."}}]}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/niche.css" />
+  <style>
+    .glossaire-niveau-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:14px;border:1px solid;margin-bottom:16px}
+    .glossaire-erreur-box{background:rgba(255,107,157,0.06);border:1px solid rgba(255,107,157,0.25);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.7;color:var(--text)}
+    .glossaire-erreur-box strong{color:#ff6b9d}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
+    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+  </div>
+  <div class="kebab-wrap" id="kebab-wrap">
+    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="kebab-menu" id="kebab-menu" role="menu">
+      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
+      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
+      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
+      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <div class="kebab-divider"></div>
+      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+    </div>
+  </div>
+</nav>
+
+<section class="niche-hero">
+  <div class="niche-hero-glow"></div>
+  <span class="glossaire-niveau-badge" style="color:#f5a623;border-color:#f5a62366;background:#f5a6231a">🌿 Intermédiaire</span>
+  <h1>Apprentissage profond</h1>
+  <p style="font-size:17px">Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les images, le son ou le texte.</p>
+</section>
+
+<div class="niche-section">
+  <div class="niche-section-title">🎯 Pourquoi c'est important</div>
+  <div class="niche-conseils">C'est cette technologie précise qui a permis les percées spectaculaires de ces dernières années, de la reconnaissance faciale à la génération de textes réalistes. Comprendre l'apprentissage profond permet de distinguer les IA statistiques simples des systèmes avancés capables de traiter des données non structurées. C'est la clé de voûte de la révolution de l'IA générative.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">💡 Exemple concret</div>
+  <div class="niche-conseils" style="font-style:italic">Midjourney utilise le deep learning pour générer des images à partir de descriptions textuelles.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">⚙️ En pratique</div>
+  <div class="niche-conseils">L'apprentissage profond repose sur des architectures de réseaux de neurones artificiels comportant de nombreuses couches cachées. Chaque couche extrait des caractéristiques de plus en plus abstraites de la donnée d'entrée : pour une image, les premières couches détectent des lignes, les suivantes des formes, et les dernières identifient un objet complet. L'entraînement de ces modèles nécessite une puissance de calcul colossale, généralement fournie par des cartes graphiques (GPU), et des algorithmes d'optimisation pour ajuster des milliards de paramètres.</div>
+</div>
+<div class="niche-section">
+  <div class="glossaire-erreur-box"><strong>Erreur fréquente :</strong> Confondre l'apprentissage automatique et l'apprentissage profond. L'apprentissage profond est une sous-catégorie du premier, caractérisée par l'utilisation de réseaux de neurones complexes qui éliminent le besoin d'extraire manuellement les caractéristiques des données.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">❓ Questions fréquentes</div>
+  <div class="niche-faq">
+    <div class="niche-faq-item" id="gfaq-0">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(0)">
+        <span>Pourquoi l'apprentissage profond est-il souvent qualifié de boîte noire ?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">En raison du nombre immense de connexions internes, il est extrêmement difficile pour les humains de comprendre précisément comment et pourquoi le modèle est parvenu à une décision spécifique.</div>
+    </div><div class="niche-faq-item" id="gfaq-1">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(1)">
+        <span>Faut-il toujours privilégier l'apprentissage profond par rapport à l'apprentissage classique ?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">Non, l'apprentissage profond est gourmand en données et en calculs. Pour des données tabulaires simples ou des ressources limitées, les algorithmes classiques restent souvent plus rapides et plus faciles à interpréter.</div>
+    </div>
+  </div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">🛠️ Outils IA pour pratiquer</div>
+  <div class="niche-tools-grid">
+    <a href="/tools/featured/fr/midjourney/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=midjourney.com" alt="Midjourney" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Midjourney</span>
+    
+  </div>
+  <span class="ntc-cat">Design 3D</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+  </div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">🔗 Termes connexes</div>
+  <div class="niche-related">
+    <a href="/glossaire/agent-ia/" class="niche-related-link">Agent IA</a><a href="/glossaire/apprentissage-automatique/" class="niche-related-link">Apprentissage automatique</a>
+  </div>
+</div>
+
+<a href="/glossaire/" class="niche-back">← Retour au glossaire complet</a>
+
+<footer>
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>
+<script>
+  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
+  if (kb && km) {
+    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
+    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
+    km.addEventListener('click', e => e.stopPropagation());
+  }
+</script>
+</body>
+</html>

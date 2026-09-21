@@ -2506,7 +2506,7 @@
 
             <div class="mc-rules-details" id="mcRulesDetails">
               <button type="button" class="mc-rules-toggle" onclick="toggleMcRules()" aria-expanded="false" aria-controls="mcRulesExtra">
-                Voir les règles complètes <span class="mc-arrow">↓</span>
+                <span data-i18n="profil.showRulesText">Voir les règles complètes </span><span class="mc-arrow">↓</span>
               </button>
               <div class="mc-rules-extra" id="mcRulesExtra">
                 <div class="mc-admin-note"><strong data-i18n="profil.adminControlTitle">Contrôle de l'administration :</strong> <span data-i18n="profil.adminControlText">chaque article est relu avant publication. La soumission ne garantit donc pas la publication. L'administration peut demander des modifications, modifier certains éléments ou refuser l'article.</span></div>
@@ -2704,7 +2704,7 @@
         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Renommer la collection
+      <span data-i18n="profil.renameCollectionTitle">Renommer la collection</span>
     </h3>
     <input type="text" id="rename-col-name" placeholder="Nouveau nom" data-i18n-placeholder="profil.newNamePlaceholder" maxlength="40"
            onkeydown="if(event.key==='Enter') confirmRename()">
@@ -2721,18 +2721,18 @@
       <svg viewBox="0 0 24 24" fill="none" width="18" height="18" stroke="currentColor" stroke-width="1.8" style="color:var(--danger)">
         <path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5M17 16l4-4-4-4M21 12H9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Vous quittez Albexia
+      <span data-i18n="profil.exitToolTitle">Vous quittez Albexia</span>
     </h3>
     <p style="color:#aaa;font-size:.9rem;line-height:1.6;margin:8px 0 20px">
-      Vous allez être redirigé vers le site officiel de
+      <span data-i18n="profil.exitToolDescription">Vous allez être redirigé vers le site officiel de</span>
       <strong id="exit-tool-name" style="color:#f0f0f5"></strong>.<br>
-      Albexia n'est pas responsable du contenu externe.
+      <span data-i18n="profil.externalContentWarning">Albexia n'est pas responsable du contenu externe.</span>
     </p>
     <label style="display:flex;align-items:center;gap:10px;cursor:pointer;
                   font-size:.875rem;color:#aaa;margin-bottom:24px">
       <input type="checkbox" id="exit-skip-checkbox"
              style="width:16px;height:16px;cursor:pointer;accent-color:#6c63ff">
-      Ne plus afficher ce message
+      <span data-i18n="profil.dontShowAgain">Ne plus afficher ce message</span>
     </label>
     <div class="modal-actions">
       <button class="btn-sm btn-outline" onclick="closeExitModal()" data-i18n="profil.cancel">Annuler</button>
@@ -2815,7 +2815,7 @@
         <div class="mc-type-card-title" data-i18n="profil.creatorArticleLabel">Article créateur</div>
         <p class="mc-type-card-desc" data-i18n="profil.creatorArticleCardDesc">Publiez un article associé à l'un de vos outils revendiqués et validés.</p>
         <button type="button" class="btn-sm btn-primary" id="mc-type-btn-createur" onclick="choisirTypeArticle('createur')" data-i18n="profil.writeArticleBtn">Rédiger un article</button>
-        <p class="mc-type-card-note" id="mc-type-note-createur" style="display:none">Vous n'avez pas encore d'outil revendiqué. <a href="#" onclick="fermerChoixTypeArticle();ouvrirRevendiquerSearch();return false;"><span data-i18n="profil.claimToolBtn">Revendiquer un outil</span></a></p>
+        <p class="mc-type-card-note" id="mc-type-note-createur" style="display:none"><span data-i18n="profil.noToolClaimedYet">Vous n'avez pas encore d'outil revendiqué.</span> <a href="#" onclick="fermerChoixTypeArticle();ouvrirRevendiquerSearch();return false;"><span data-i18n="profil.claimToolBtn">Revendiquer un outil</span></a></p>
       </div>
     </div>
   </div>
@@ -3004,7 +3004,7 @@
           <circle cx="12" cy="12" r="6"/>
           <circle cx="12" cy="12" r="2"/>
         </svg>
-        Trouver mon outil IA
+        <span data-i18n="quiz.title">Trouver mon outil IA</span>
       </h3>
       <button class="modal-close" onclick="closeQuiz()" aria-label="Fermer" data-i18n-aria-label="profil.closeBtn">✕</button>
     </div>
@@ -3025,7 +3025,7 @@
           <circle cx="12" cy="12" r="6"/>
           <circle cx="12" cy="12" r="2"/>
         </svg>
-        Vos 3 outils recommandés
+        <span data-i18n="quiz.resultsTitle">Vos 3 outils recommandés</span>
       </div>
       <div class="quiz-results-sub" id="quiz-results-sub"></div>
       <div class="quiz-results-grid" id="quiz-results-grid"></div>
@@ -3034,14 +3034,14 @@
           <svg viewBox="0 0 24 24" fill="none" width="14" height="14" stroke="currentColor" stroke-width="2">
             <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l.73-1.19" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Recommencer
+          <span data-i18n="quiz.restart">Recommencer</span>
         </button>
         <button class="btn-quiz-share" onclick="copyQuizLink()" style="display:inline-flex;align-items:center;gap:6px;">
           <svg viewBox="0 0 24 24" fill="none" width="14" height="14" stroke="currentColor" stroke-width="2">
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Copier le lien
+          <span data-i18n="quiz.copyLink">Copier le lien</span>
         </button>
         <button class="btn-quiz-whatsapp" onclick="shareWhatsApp()" style="display:inline-flex;align-items:center;gap:6px;">
           <svg viewBox="0 0 24 24" fill="none" width="14" height="14" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
@@ -3113,13 +3113,20 @@
   };
 
   const BADGE_META = [
-    { key:"curateur-actif", label:"Curateur Actif", condition:"1 collection publique", color:"#c8a04a" },
-    { key:"top-curateur", label:"Top Curateur", condition:"3+ collections · 50+ abonnés", color:"#b87a4a" },
-    { key:"critique-fiable", label:"Critique Fiable", condition:"5+ avis rédigés", color:"#5aab9a" },
-    { key:"expert-communaute", label:"Expert Communauté", condition:"15+ avis · score élevé", color:"#a0845a" },
-    { key:"pionnier", label:"Pionnier", condition:"Parmi les premiers membres", color:"#7c5fc0" },
-    { key:"verifie", label:"Vérifié", condition:"Attribué manuellement", color:"#b0b0c0" },
+    { key:"curateur-actif", i18n:"CurateurActif", color:"#c8a04a" },
+    { key:"top-curateur", i18n:"TopCurateur", color:"#b87a4a" },
+    { key:"critique-fiable", i18n:"CritiqueFiable", color:"#5aab9a" },
+    { key:"expert-communaute", i18n:"ExpertCommunaute", color:"#a0845a" },
+    { key:"pionnier", i18n:"Pionnier", color:"#7c5fc0" },
+    { key:"verifie", i18n:"Verifie", color:"#b0b0c0" },
   ];
+
+  function badgeLabel(meta, langue) {
+    return t(`profil.badge${meta.i18n}Label`, langue);
+  }
+  function badgeCondition(meta, langue) {
+    return t(`profil.badge${meta.i18n}Condition`, langue);
+  }
 
   function computeEarnedBadges(profile, cols, reviewCount) {
     const earned = [];
@@ -3140,6 +3147,7 @@
     if (!earnedKeys.length) return;
     const sidebar = document.getElementById('sidebar');
     const nav = sidebar.querySelector('.sidebar-nav');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
 
     const zone = document.createElement('div');
     zone.className = 'sidebar-badges';
@@ -3147,9 +3155,10 @@
     zone.innerHTML = earnedKeys.map(key => {
       const meta = BADGE_META.find(b => b.key === key);
       if (!meta) return '';
+      const label = badgeLabel(meta, langue);
       return `<span class="sb-badge" onclick="switchSection('profil-public')" style="cursor:pointer">
-        <img src="${BADGE_IMGS[key]}" alt="${meta.label}" />
-        <span class="sb-badge-tip">${meta.label}</span>
+        <img src="${BADGE_IMGS[key]}" alt="${label}" />
+        <span class="sb-badge-tip">${label}</span>
       </span>`;
     }).join('');
 
@@ -3161,15 +3170,20 @@
   function renderBadgesInParams(earnedKeys, cols, reviewCount) {
     const container = document.getElementById('badges-preview-container');
     if (!container) return;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const earnedText = t('profil.badgeUnlocked', langue);
+    const lockedText = t('profil.badgeLocked', langue);
 
     container.innerHTML = BADGE_META.map(b => {
       const earned = earnedKeys.includes(b.key);
+      const label = badgeLabel(b, langue);
+      const condition = badgeCondition(b, langue);
       return `<div class="bm-card ${earned ? 'earned' : 'locked'}" style="--bm-color:${b.color}">
         ${!earned ? `<svg class="bm-lock-icon" viewBox="0 0 16 16" fill="none"><rect x="4" y="7" width="8" height="6" rx="1.2" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 7V5C5.5 3.6 6.6 2.5 8 2.5C9.4 2.5 10.5 3.6 10.5 5V7" stroke="currentColor" stroke-width="1.2"/></svg>` : ''}
-        <div class="bm-img-wrap"><img src="${BADGE_IMGS[b.key]}" alt="${b.label}" /></div>
-        <div class="bm-name">${b.label}</div>
-        <div class="bm-condition">${b.condition}</div>
-        <span class="bm-status ${earned ? 'earned-tag' : 'locked-tag'}">${earned ? 'Débloqué' : 'À débloquer'}</span>
+        <div class="bm-img-wrap"><img src="${BADGE_IMGS[b.key]}" alt="${label}" /></div>
+        <div class="bm-name">${label}</div>
+        <div class="bm-condition">${condition}</div>
+        <span class="bm-status ${earned ? 'earned-tag' : 'locked-tag'}">${earned ? earnedText : lockedText}</span>
       </div>`;
     }).join('');
   }
@@ -3202,59 +3216,173 @@
   let toastTimer     = null;
 
   // ══ QUIZ ══════════════════════════════════════
+  // Questions traduites FR/EN/ES — mêmes ids/values que la version du quiz
+  // sur index.html (js/app.js → QUIZ_QUESTIONS_I18N) afin de rester
+  // cohérent si les deux implémentations doivent un jour être fusionnées.
 
-  const QUIZ_QUESTIONS = [
-    {
-      id: 'metier',
-      question: 'Tu es plutôt…',
-      options: [
-        { label: '✍️ Rédacteur / Copywriter',   value: 'redacteur'    },
-        { label: '🎨 Designer / Créatif',        value: 'designer'     },
-        { label: '💻 Développeur',               value: 'developpeur'  },
-        { label: '🚀 Entrepreneur / Freelance',  value: 'entrepreneur' },
-        { label: '🎓 Étudiant',                  value: 'etudiant'     },
-        { label: '👤 Autre',                     value: 'autre'        },
-      ]
-    },
-    {
-      id: 'objectif',
-      question: "Ton objectif principal avec l'IA…",
-      options: [
-        { label: '⚡ Gagner du temps',           value: 'temps'     },
-        { label: '✏️ Créer du contenu',          value: 'contenu'   },
-        { label: '📚 Apprendre',                 value: 'apprendre' },
-        { label: '💰 Générer des revenus',       value: 'revenus'   },
-        { label: "📋 M'organiser",               value: 'organiser' },
-      ]
-    },
-    {
-      id: 'budget',
-      question: 'Ton budget mensuel pour un outil IA…',
-      options: [
-        { label: '🆓 Gratuit uniquement',        value: 'free'     },
-        { label: '💳 Moins de 20$/mois',         value: 'freemium' },
-        { label: '💎 Plus de 20$/mois',          value: 'paid'     },
-      ]
-    },
-    {
-      id: 'connexion',
-      question: 'Ta connexion internet est…',
-      options: [
-        { label: '🚀 Rapide et stable',          value: 'rapide'  },
-        { label: '📶 Correcte',                  value: 'moyenne' },
-        { label: '🐢 Lente ou instable',         value: 'lente'   },
-      ]
-    },
-    {
-      id: 'niveau',
-      question: 'Ton niveau avec les outils IA…',
-      options: [
-        { label: '🌱 Débutant complet',          value: 'debutant'      },
-        { label: '🌿 Quelques expériences',      value: 'intermediaire' },
-        { label: '🌳 Utilisateur régulier',      value: 'avance'        },
-      ]
-    }
-  ];
+  const QUIZ_QUESTIONS_I18N = {
+    fr: [
+      {
+        id: 'metier',
+        question: 'Tu es plutôt…',
+        options: [
+          { label: '✍️ Rédacteur / Copywriter',   value: 'redacteur'    },
+          { label: '🎨 Designer / Créatif',        value: 'designer'     },
+          { label: '💻 Développeur',               value: 'developpeur'  },
+          { label: '🚀 Entrepreneur / Freelance',  value: 'entrepreneur' },
+          { label: '🎓 Étudiant',                  value: 'etudiant'     },
+          { label: '👤 Autre',                     value: 'autre'        },
+        ]
+      },
+      {
+        id: 'objectif',
+        question: "Ton objectif principal avec l'IA…",
+        options: [
+          { label: '⚡ Gagner du temps',           value: 'temps'     },
+          { label: '✏️ Créer du contenu',          value: 'contenu'   },
+          { label: '📚 Apprendre',                 value: 'apprendre' },
+          { label: '💰 Générer des revenus',       value: 'revenus'   },
+          { label: "📋 M'organiser",               value: 'organiser' },
+        ]
+      },
+      {
+        id: 'budget',
+        question: 'Ton budget mensuel pour un outil IA…',
+        options: [
+          { label: '🆓 Gratuit uniquement',        value: 'free'     },
+          { label: '💳 Moins de 20$/mois',         value: 'freemium' },
+          { label: '💎 Plus de 20$/mois',          value: 'paid'     },
+        ]
+      },
+      {
+        id: 'connexion',
+        question: 'Ta connexion internet est…',
+        options: [
+          { label: '🚀 Rapide et stable',          value: 'rapide'  },
+          { label: '📶 Correcte',                  value: 'moyenne' },
+          { label: '🐢 Lente ou instable',         value: 'lente'   },
+        ]
+      },
+      {
+        id: 'niveau',
+        question: 'Ton niveau avec les outils IA…',
+        options: [
+          { label: '🌱 Débutant complet',          value: 'debutant'      },
+          { label: '🌿 Quelques expériences',      value: 'intermediaire' },
+          { label: '🌳 Utilisateur régulier',      value: 'avance'        },
+        ]
+      }
+    ],
+    en: [
+      {
+        id: 'metier',
+        question: 'You are more of a…',
+        options: [
+          { label: '✍️ Writer / Copywriter',       value: 'redacteur'    },
+          { label: '🎨 Designer / Creative',        value: 'designer'     },
+          { label: '💻 Developer',                  value: 'developpeur'  },
+          { label: '🚀 Entrepreneur / Freelancer',  value: 'entrepreneur' },
+          { label: '🎓 Student',                    value: 'etudiant'     },
+          { label: '👤 Other',                      value: 'autre'        },
+        ]
+      },
+      {
+        id: 'objectif',
+        question: 'Your main goal with AI…',
+        options: [
+          { label: '⚡ Save time',                  value: 'temps'     },
+          { label: '✏️ Create content',             value: 'contenu'   },
+          { label: '📚 Learn',                      value: 'apprendre' },
+          { label: '💰 Generate income',            value: 'revenus'   },
+          { label: '📋 Get organized',              value: 'organiser' },
+        ]
+      },
+      {
+        id: 'budget',
+        question: 'Your monthly budget for an AI tool…',
+        options: [
+          { label: '🆓 Free only',                  value: 'free'     },
+          { label: '💳 Under $20/month',            value: 'freemium' },
+          { label: '💎 Over $20/month',             value: 'paid'     },
+        ]
+      },
+      {
+        id: 'connexion',
+        question: 'Your internet connection is…',
+        options: [
+          { label: '🚀 Fast and stable',            value: 'rapide'  },
+          { label: '📶 Decent',                     value: 'moyenne' },
+          { label: '🐢 Slow or unstable',           value: 'lente'   },
+        ]
+      },
+      {
+        id: 'niveau',
+        question: 'Your level with AI tools…',
+        options: [
+          { label: '🌱 Complete beginner',          value: 'debutant'      },
+          { label: '🌿 Some experience',            value: 'intermediaire' },
+          { label: '🌳 Regular user',               value: 'avance'        },
+        ]
+      }
+    ],
+    es: [
+      {
+        id: 'metier',
+        question: 'Eres más bien…',
+        options: [
+          { label: '✍️ Redactor / Copywriter',      value: 'redacteur'    },
+          { label: '🎨 Diseñador / Creativo',        value: 'designer'     },
+          { label: '💻 Desarrollador',               value: 'developpeur'  },
+          { label: '🚀 Emprendedor / Freelance',     value: 'entrepreneur' },
+          { label: '🎓 Estudiante',                  value: 'etudiant'     },
+          { label: '👤 Otro',                        value: 'autre'        },
+        ]
+      },
+      {
+        id: 'objectif',
+        question: 'Tu objetivo principal con la IA…',
+        options: [
+          { label: '⚡ Ahorrar tiempo',              value: 'temps'     },
+          { label: '✏️ Crear contenido',             value: 'contenu'   },
+          { label: '📚 Aprender',                    value: 'apprendre' },
+          { label: '💰 Generar ingresos',            value: 'revenus'   },
+          { label: '📋 Organizarme',                 value: 'organiser' },
+        ]
+      },
+      {
+        id: 'budget',
+        question: 'Tu presupuesto mensual para una herramienta IA…',
+        options: [
+          { label: '🆓 Solo gratis',                 value: 'free'     },
+          { label: '💳 Menos de 20$/mes',            value: 'freemium' },
+          { label: '💎 Más de 20$/mes',              value: 'paid'     },
+        ]
+      },
+      {
+        id: 'connexion',
+        question: 'Tu conexión a internet es…',
+        options: [
+          { label: '🚀 Rápida y estable',            value: 'rapide'  },
+          { label: '📶 Correcta',                    value: 'moyenne' },
+          { label: '🐢 Lenta o inestable',           value: 'lente'   },
+        ]
+      },
+      {
+        id: 'niveau',
+        question: 'Tu nivel con las herramientas IA…',
+        options: [
+          { label: '🌱 Principiante total',          value: 'debutant'      },
+          { label: '🌿 Algo de experiencia',         value: 'intermediaire' },
+          { label: '🌳 Usuario habitual',            value: 'avance'        },
+        ]
+      }
+    ],
+  };
+
+  // Retourne les questions du quiz dans la langue courante (repli FR).
+  function getProfilQuizQuestions(langue) {
+    return QUIZ_QUESTIONS_I18N[langue] || QUIZ_QUESTIONS_I18N.fr;
+  }
 
   const METIER_CATS = {
     redacteur:    ['Texte', 'Productivité'],
@@ -3311,11 +3439,13 @@
   };
 
   function renderQuizStep() {
-    const q     = QUIZ_QUESTIONS[quizState.step];
-    const total = QUIZ_QUESTIONS.length;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const questions = getProfilQuizQuestions(langue);
+    const q     = questions[quizState.step];
+    const total = questions.length;
     const pct   = (quizState.step / total) * 100;
     document.getElementById('quiz-progress-bar').style.width = pct + '%';
-    document.getElementById('quiz-step-label').textContent   = t('quiz.questionOf', window.detecterLangue ? window.detecterLangue() : 'fr').replace('{n}', quizState.step + 1).replace('{total}', total);
+    document.getElementById('quiz-step-label').textContent   = t('quiz.questionOf', langue).replace('{n}', quizState.step + 1).replace('{total}', total);
     document.getElementById('quiz-question').textContent     = q.question;
     document.getElementById('quiz-options').innerHTML = q.options.map(o =>
       `<button class="quiz-option" onclick="selectQuizOption('${q.id}','${o.value}')">${o.label}</button>`
@@ -3324,15 +3454,17 @@
 
   window.selectQuizOption = function(questionId, value) {
     quizState.answers[questionId] = value;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const questions = getProfilQuizQuestions(langue);
     document.querySelectorAll('.quiz-option').forEach(btn => {
       if (btn.textContent.trim() ===
-          QUIZ_QUESTIONS[quizState.step].options.find(o => o.value === value)?.label.trim()) {
+          questions[quizState.step].options.find(o => o.value === value)?.label.trim()) {
         btn.classList.add('selected');
       }
     });
     setTimeout(async () => {
       quizState.step++;
-      if (quizState.step < QUIZ_QUESTIONS.length) {
+      if (quizState.step < questions.length) {
         renderQuizStep();
       } else {
         await showQuizResultsInProfil();
@@ -3375,11 +3507,21 @@
       if (!selected.find(t => t.id === item.tool.id)) selected.push(item.tool);
     }
 
-    const metierLabel = QUIZ_QUESTIONS[0].options.find(o => o.value === answers.metier)?.label || '';
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const questions = getProfilQuizQuestions(langue);
+    const metierLabel = questions[0].options.find(o => o.value === answers.metier)?.label || '';
     document.getElementById('quiz-results-sub').textContent =
-      `Profil : ${metierLabel} · Budget ${answers.budget} · Connexion ${answers.connexion}`;
+      t('quiz.profileSummary', langue)
+        .replace('{metier}', metierLabel)
+        .replace('{budget}', answers.budget)
+        .replace('{connexion}', answers.connexion);
 
-    const priceLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
+    const priceLabel = {
+      free: t('alertes.priceFree', langue),
+      freemium: t('alertes.priceFreemium', langue),
+      paid: t('alertes.pricePaid', langue),
+    };
+    const viewSheetLabel = t('quiz.viewSheet', langue);
     document.getElementById('quiz-results-grid').innerHTML = selected.map(t => {
       const href = t.page ? t.page : t.url;
       const target = t.page ? '_self' : '_blank';
@@ -3397,7 +3539,7 @@
             <span class="price-tag price-${t.price}">${priceLabel[t.price] || ''}</span>
           </div>
           <p class="quiz-result-desc">${t.description}</p>
-          <div class="quiz-result-cta">Voir la fiche →</div>
+          <div class="quiz-result-cta">${viewSheetLabel}</div>
         </div>`;
     }).join('');
 
@@ -3443,7 +3585,10 @@
     const a    = quizState.answers;
     const param = [a.metier, a.objectif, a.budget, a.connexion, a.niveau].join('-');
     const url  = `${window.location.origin}/index.html?quiz=${param}`;
-    const msg  = encodeURIComponent(`J'ai testé le quiz Albexia et voici mes 3 outils IA recommandés :\n${noms}\n\nTeste-le toi aussi → ${url}`);
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const msg  = encodeURIComponent(
+      t('quiz.shareMessage', langue).replace('{list}', noms).replace('{link}', url)
+    );
     window.open(`https://wa.me/?text=${msg}`, '_blank');
   };
 
@@ -4513,7 +4658,8 @@
       const fenetreStockee = q.toDate ? q.toDate().getTime() : (q.seconds ? q.seconds * 1000 : null);
       if (fenetreStockee !== null) consomme = fenetreStockee === debutTrimestreUTC_Client(new Date());
     }
-    countEl.textContent = consomme ? '1 / 1 utilisé' : '0 / 1 utilisé';
+    const langueQuota = window.detecterLangue ? window.detecterLangue() : 'fr';
+    countEl.textContent = t('profil.quotaUsed', langueQuota).replace('{used}', consomme ? '1' : '0').replace('{total}', '1');
     box.style.display = '';
   }
 
@@ -4521,8 +4667,9 @@
     const details = document.getElementById('mcRulesDetails');
     const button = details.querySelector('.mc-rules-toggle');
     const isOpen = details.classList.toggle('open');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    button.childNodes[0].textContent = isOpen ? 'Masquer les règles complètes ' : 'Voir les règles complètes ';
+    button.childNodes[0].textContent = isOpen ? t('profil.hideRulesText', langue) : t('profil.showRulesText', langue);
   };
 
   async function loadMesArticles() {
@@ -4540,7 +4687,8 @@
       const faviconParSlug = new Map(outils.map(o => [o.outil_slug, o.favicon]));
 
       if (!articles.length) {
-        container.innerHTML = `<div class="mc-section"><h2 class="mc-section-title">Mes articles</h2><p class="mc-section-subtitle">Vous n'avez pas encore d'article. Cliquez sur "+ Nouvel article" pour commencer.</p></div>`;
+        const langueEmpty = window.detecterLangue ? window.detecterLangue() : 'fr';
+        container.innerHTML = `<div class="mc-section"><h2 class="mc-section-title">${t('profil.myArticlesTitle', langueEmpty)}</h2><p class="mc-section-subtitle">${t('profil.myArticlesEmpty', langueEmpty).replace('{btn}', t('profil.newArticleBtn', langueEmpty))}</p></div>`;
         return;
       }
 
@@ -4548,8 +4696,8 @@
       container.innerHTML = `
         <div class="mc-section-header">
           <div>
-            <h2 class="mc-section-title">Mes articles · ${articles.length}</h2>
-            <p class="mc-section-subtitle">Retrouvez vos articles créateurs et vos contributions à la communauté.</p>
+            <h2 class="mc-section-title">${t('profil.myArticlesTitle', langue)} · ${articles.length}</h2>
+            <p class="mc-section-subtitle">${t('profil.myArticlesSubtitle', langue)}</p>
           </div>
         </div>
         <div class="mc-articles">${articles.map(a => renderArticleCard(a, langue, faviconParSlug)).join('')}</div>`;
@@ -4578,19 +4726,19 @@
 
     let badgeHTML = '', actionHTML = '';
     if (a.statut === 'modifications_demandees') {
-      badgeHTML = `<span class="mc-badge changes">Modifications demandées</span>`;
-      actionHTML = `<button class="action-btn" onclick="ouvrirRepriseArticle('${a.id}')">Modifier</button>`;
+      badgeHTML = `<span class="mc-badge changes">${t('profil.articleStatutChangesRequested', langue)}</span>`;
+      actionHTML = `<button class="action-btn" onclick="ouvrirRepriseArticle('${a.id}')">${t('profil.actionModify', langue)}</button>`;
     } else if (a.statut === 'publie') {
-      badgeHTML = `<span class="mc-badge published">Publié</span>`;
-      actionHTML = `<a class="action-btn" href="${urlPubliqueArticle(a)}" target="_blank" rel="noopener">Voir l'article</a>`;
+      badgeHTML = `<span class="mc-badge published">${t('profil.articleStatutPublished', langue)}</span>`;
+      actionHTML = `<a class="action-btn" href="${urlPubliqueArticle(a)}" target="_blank" rel="noopener">${t('profil.actionViewArticle', langue)}</a>`;
     } else {
-      badgeHTML = `<span class="mc-badge pending">En attente</span>`;
-      actionHTML = `<button class="action-btn" onclick="voirDetailArticle('${a.id}')">Voir</button>`;
+      badgeHTML = `<span class="mc-badge pending">${t('profil.articleStatutPending', langue)}</span>`;
+      actionHTML = `<button class="action-btn" onclick="voirDetailArticle('${a.id}')">${t('profil.actionView', langue)}</button>`;
     }
     const motifsHTML = (a.statut === 'modifications_demandees' && (a.rejection_reasons || []).length) ? `
       <div style="font-size:.72rem;color:var(--muted);margin-top:6px;width:100%">
-        <strong>Motifs :</strong> ${a.rejection_reasons.map(escHtmlStrict).join(', ')}
-        ${a.admin_comment ? `<br><strong>Commentaire :</strong> ${escHtmlStrict(a.admin_comment)}` : ''}
+        <strong>${t('profil.reasonsLabel', langue)}</strong> ${a.rejection_reasons.map(escHtmlStrict).join(', ')}
+        ${a.admin_comment ? `<br><strong>${t('profil.commentLabel', langue)}</strong> ${escHtmlStrict(a.admin_comment)}` : ''}
       </div>` : '';
 
     return `
@@ -4599,7 +4747,7 @@
         <div class="mc-article-main">
           <h3 class="mc-article-title">${escHtmlStrict(a.titre || 'Sans titre')}</h3>
           <div class="mc-article-meta">
-            <span class="mc-article-type">ARTICLE CRÉATEUR</span>
+            <span class="mc-article-type">${t('profil.creatorArticleLabel', langue).toUpperCase()}</span>
             ${a.categorie ? `<span>${escHtmlStrict(a.categorie)}</span><span>·</span>` : ''}
             <span>${date}</span>
           </div>
@@ -4790,7 +4938,7 @@
       return `<div class="soum-card-extra"><p style="color:var(--danger)">❌ ${t('profil.claimRefused', langue)}${claim.rejectionReason ? ' — ' + escHtml(claim.rejectionReason) : ''}</p></div>`;
     }
     if (claim.status === 'revoked') {
-      return `<div class="soum-card-extra"><p style="color:var(--danger)">🚫 Statut créateur révoqué${claim.revocationReason ? ' — ' + escHtml(claim.revocationReason) : ''}</p></div>`;
+      return `<div class="soum-card-extra"><p style="color:var(--danger)">🚫 ${t('profil.claimRevoked', langue)}${claim.revocationReason ? ' — ' + escHtml(claim.revocationReason) : ''}</p></div>`;
     }
     return '';
   }
@@ -4838,9 +4986,10 @@
   let _revSearchTimer = null;
 
   window.ouvrirRevendiquerSearch = function() {
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     document.getElementById('rev-search-input').value = '';
     document.getElementById('rev-search-results').innerHTML =
-      '<p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px 0">Commencez à taper pour rechercher un outil.</p>';
+      `<p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px 0">${t('profil.claimSearchHint', langue)}</p>`;
     document.getElementById('modal-revendiquer-search').classList.add('open');
     setTimeout(() => document.getElementById('rev-search-input')?.focus(), 50);
   };
@@ -4858,27 +5007,28 @@
 
   async function _revRenderSearchResults() {
     const resEl = document.getElementById('rev-search-results');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const q = document.getElementById('rev-search-input').value.trim().toLowerCase();
     if (!q) {
-      resEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px 0">Commencez à taper pour rechercher un outil.</p>';
+      resEl.innerHTML = `<p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px 0">${t('profil.claimSearchHint', langue)}</p>`;
       return;
     }
     resEl.innerHTML = '<div class="skeleton-block" style="height:60px;border-radius:10px;background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite"></div>';
     let tools;
     try {
       if (!_revOutilsCache) {
-        _revOutilsCache = await getOutilsPublics_(window.detecterLangue ? window.detecterLangue() : 'fr');
+        _revOutilsCache = await getOutilsPublics_(langue);
       }
       tools = _revOutilsCache;
     } catch (e) {
-      resEl.innerHTML = '<p style="text-align:center;color:var(--danger);font-size:.85rem;padding:12px 0">Erreur de chargement du catalogue.</p>';
+      resEl.innerHTML = `<p style="text-align:center;color:var(--danger);font-size:.85rem;padding:12px 0">${t('profil.claimSearchError', langue)}</p>`;
       return;
     }
     const matches = tools
       .filter(o => ((o.nom || o.name || '') + ' ' + (o.categorie || o.category || '')).toLowerCase().includes(q))
       .slice(0, 20);
     if (!matches.length) {
-      resEl.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px 0">Aucun outil trouvé pour « ' + escHtml(q) + ' ».</p>';
+      resEl.innerHTML = `<p style="text-align:center;color:var(--text-muted);font-size:.85rem;padding:12px 0">${t('profil.claimSearchNoResults', langue).replace('{query}', escHtml(q))}</p>`;
       return;
     }
     resEl.innerHTML = matches.map(o => {
@@ -4894,11 +5044,11 @@
       const claim = userClaimsParOutilId ? userClaimsParOutilId.get(id) : null;
       let actionHTML;
       if (claim && claim.status === 'approved') {
-        actionHTML = '<span style="font-size:.8rem;color:var(--accent2)">✔️ Déjà revendiqué</span>';
+        actionHTML = `<span style="font-size:.8rem;color:var(--accent2)">✔️ ${t('profil.claimAlreadyDone', langue)}</span>`;
       } else if (claim && (claim.status === 'pending' || claim.status === 'additional_verification')) {
-        actionHTML = '<span style="font-size:.8rem;color:var(--text-muted)">⏳ En attente</span>';
+        actionHTML = `<span style="font-size:.8rem;color:var(--text-muted)">⏳ ${t('profil.claimPendingShort', langue)}</span>`;
       } else {
-        actionHTML = `<button class="btn-sm btn-outline" onclick="fermerRevendiquerSearch();openRevendiquerModal('${escJs(id)}','${escJs(nom)}')">Revendiquer</button>`;
+        actionHTML = `<button class="btn-sm btn-outline" onclick="fermerRevendiquerSearch();openRevendiquerModal('${escJs(id)}','${escJs(nom)}')">${t('profil.claimShortBtn', langue)}</button>`;
       }
       return `
         <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm,8px)">
@@ -4922,7 +5072,8 @@
   window.openRevendiquerModal = function(outilId, nomOutil) {
     _revTargetOutilId = outilId;
     _revTargetOutilNom = nomOutil;
-    document.getElementById('revendiquer-titre').textContent = `Revendiquer la propriété : ${nomOutil}`;
+    const langueRev = window.detecterLangue ? window.detecterLangue() : 'fr';
+    document.getElementById('revendiquer-titre').textContent = t('profil.claimTitleWithName', langueRev).replace('{name}', nomOutil);
     document.getElementById('form-revendiquer').reset();
     document.getElementById('modal-revendiquer').classList.add('open');
   };
@@ -4999,12 +5150,12 @@
   let _artCtaCustom = '';
 
   const CTA_PRESETS = [
-    { id: 'decouvrir',    label: (nom) => `Découvrir ${nom}` },
-    { id: 'essayer',      label: (nom) => `Essayer ${nom}` },
-    { id: 'voir',         label: (nom) => `Voir ${nom}` },
-    { id: 'tester',       label: (nom) => `Tester ${nom}` },
-    { id: 'generique',    label: () => `Découvrir l'outil` },
-    { id: 'personnalise', label: () => 'Personnalisé' },
+    { id: 'decouvrir',    label: (nom) => t('profil.ctaDiscover', window.detecterLangue ? window.detecterLangue() : 'fr').replace('{name}', nom) },
+    { id: 'essayer',      label: (nom) => t('profil.ctaTry', window.detecterLangue ? window.detecterLangue() : 'fr').replace('{name}', nom) },
+    { id: 'voir',         label: (nom) => t('profil.ctaView', window.detecterLangue ? window.detecterLangue() : 'fr').replace('{name}', nom) },
+    { id: 'tester',       label: (nom) => t('profil.ctaTest', window.detecterLangue ? window.detecterLangue() : 'fr').replace('{name}', nom) },
+    { id: 'generique',    label: () => t('profil.ctaGeneric', window.detecterLangue ? window.detecterLangue() : 'fr') },
+    { id: 'personnalise', label: () => t('profil.ctaCustom', window.detecterLangue ? window.detecterLangue() : 'fr') },
   ];
 
   function calculerCtaTexteFinal() {
@@ -5019,7 +5170,7 @@
   async function chargerOutilsCreateurDansEditeur() {
     const listEl = document.getElementById('art-outil-picker-list');
     const emptyEl = document.getElementById('art-outil-picker-empty');
-    if (listEl) listEl.innerHTML = '<p class="fe-hint">Chargement de vos outils revendiqués…</p>';
+    if (listEl) listEl.innerHTML = `<p class="fe-hint">${t('profil.loadingClaimedTools', window.detecterLangue ? window.detecterLangue() : 'fr')}</p>`;
     try {
       _artOutilsDisponibles = await getOutilsCreateur_(currentUser.uid);
     } catch (e) {
@@ -5048,12 +5199,13 @@
       return;
     }
     if (emptyEl) emptyEl.style.display = 'none';
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     listEl.innerHTML = _artOutilsDisponibles.map(o => `
       <label class="art-outil-pick-card${_artOutilChoisi && _artOutilChoisi.claim_id === o.claim_id ? ' selected' : ''}">
         <input type="radio" name="art-outil-pick" ${_artOutilChoisi && _artOutilChoisi.claim_id === o.claim_id ? 'checked' : ''}
                onchange="artChoisirOutil('${o.claim_id}')">
         <img src="${escHtmlStrict(o.favicon)}" alt="" onerror="this.style.display='none'">
-        <div><div class="aopc-nom">${escHtmlStrict(o.nom)}</div><div class="aopc-cat">${escHtmlStrict(o.categorie)} · Revendiqué</div></div>
+        <div><div class="aopc-nom">${escHtmlStrict(o.nom)}</div><div class="aopc-cat">${escHtmlStrict(o.categorie)} · ${t('profil.claimedTag', langue)}</div></div>
       </label>`).join('');
   }
 
@@ -6645,13 +6797,13 @@
 <!-- ── MODAL PLAYER VIDÉO (profil) ── -->
 <div id="profil-player-modal"
      class="tuto-player-modal"
-     role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+     role="dialog" aria-modal="true" aria-label="Lecteur vidéo" data-i18n-aria-label="profil.videoPlayerLabel">
   <div class="tuto-player-inner">
     <div class="tuto-player-top">
       <p id="profil-player-titre" class="tuto-player-titre"></p>
       <button class="tuto-player-close"
               onclick="fermerPlayerProfil()"
-              aria-label="Fermer le lecteur">
+              aria-label="Fermer le lecteur" data-i18n-aria-label="profil.closeVideoPlayer">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <line x1="18" y1="6" x2="6" y2="18"/>
           <line x1="6" y1="6" x2="18" y2="18"/>

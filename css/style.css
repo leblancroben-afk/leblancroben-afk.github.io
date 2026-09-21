@@ -333,6 +333,7 @@ nav {
   background: rgba(255,107,157,0.12); border: 1px solid rgba(255,107,157,0.3);
   color: var(--accent2); font-size: 13px; font-weight: 600;
   font-family: 'DM Sans', sans-serif; text-decoration: none; white-space: nowrap;
+  margin-left: auto;
   transition: all .15s;
 }
 .cat-confirm-cta:hover { background: rgba(255,107,157,0.2); }

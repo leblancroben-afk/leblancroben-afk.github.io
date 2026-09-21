@@ -947,52 +947,70 @@
     if (e.key === 'Escape') document.getElementById('modal-don').classList.remove('open');
   });
 
-    /* ── Sélecteur de langue ── */
-  const langSwitch = document.querySelector('.lang-switch');
-  const langCurrent = document.getElementById('lang-current');
-  const langLabel = document.getElementById('lang-current-label');
+const langSwitch = document.querySelector('.lang-switch');
+const langCurrent = document.getElementById('lang-current');
+const langLabel = document.getElementById('lang-current-label');
 
-  if (langSwitch && langCurrent) {
+if (langSwitch && langCurrent) {
 
-    langCurrent.addEventListener('click', (e) => {
+  // Récupère la langue actuellement enregistrée
+  const savedLang =
+    localStorage.getItem('lang') ||
+    localStorage.getItem('language') ||
+    'fr';
+
+  // Affiche la langue actuelle
+  if (langLabel) {
+    langLabel.textContent = savedLang.toUpperCase();
+  }
+
+  // Marque le bon bouton comme actif
+  langSwitch.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle(
+      'active',
+      btn.dataset.lang === savedLang
+    );
+  });
+
+  langCurrent.addEventListener('click', function (e) {
+    e.stopPropagation();
+
+    const open = langSwitch.classList.toggle('open');
+
+    langCurrent.setAttribute(
+      'aria-expanded',
+      open ? 'true' : 'false'
+    );
+  });
+
+  langSwitch.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', function (e) {
       e.stopPropagation();
 
-      const open = langSwitch.classList.toggle('open');
+      const code = this.dataset.lang;
 
-      langCurrent.setAttribute(
-        'aria-expanded',
-        open ? 'true' : 'false'
-      );
-    });
+      if (langLabel) {
+        langLabel.textContent = code.toUpperCase();
+      }
 
-    langSwitch.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-
-        const code = btn.dataset.lang;
-
-        if (langLabel && code) {
-          langLabel.textContent = code.toUpperCase();
-        }
-
-        langSwitch.querySelectorAll('.lang-btn').forEach(item => {
-          item.classList.remove('active');
-        });
-
-        btn.classList.add('active');
-
-        langSwitch.classList.remove('open');
-        langCurrent.setAttribute('aria-expanded', 'false');
-
-        changerLanguePage(code);
+      langSwitch.querySelectorAll('.lang-btn').forEach(item => {
+        item.classList.remove('active');
       });
-    });
 
-    document.addEventListener('click', () => {
+      this.classList.add('active');
+
       langSwitch.classList.remove('open');
       langCurrent.setAttribute('aria-expanded', 'false');
+
+      changerLanguePage(code);
     });
-  }
+  });
+
+  document.addEventListener('click', function () {
+    langSwitch.classList.remove('open');
+    langCurrent.setAttribute('aria-expanded', 'false');
+  });
+}
 </script>
 
 <!-- ═══ Étapes du formulaire + Prix (pill) + Firestore ═══ -->

@@ -835,14 +835,13 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
   const badge = document.getElementById('cat-count-badge');
   if (badge) badge.textContent = `${cats.length} catégories`;
 
-  const selectedTag = `<span class="home-cat-selected">✓ Sélectionné</span>`;
-
+  
   const tousTile = `
     <button class="home-cat-tile${activeCat === 'Tous' ? ' active' : ''}" onclick="${onSelectFn}('Tous')">
       <span class="home-cat-icon">🗂️</span>
       <span class="home-cat-name">Tous</span>
       <span class="home-cat-count">${total} outils</span>
-      ${activeCat === 'Tous' ? selectedTag : ''}
+      
     </button>`;
 
   const tiles = cats.map(c => {
@@ -853,7 +852,7 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
         <span class="home-cat-icon">${icon}</span>
         <span class="home-cat-name">${c}</span>
         <span class="home-cat-count">${counts.get(c)} outils</span>
-        ${isActive ? selectedTag : ''}
+        
       </button>`;
   }).join('');
 
@@ -874,7 +873,7 @@ function renderCatConfirmBar(cat, count) {
   bar.innerHTML = `
     <span class="cat-confirm-icon">${icon}</span>
     <span class="cat-confirm-text">${cat} — ${count} outils</span>
-    <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">Voir la page ${cat} →</a>`;
+    <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">Explorer la catégorie →</a>`;
   bar.hidden = false;
 }
 

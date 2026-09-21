@@ -863,14 +863,22 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
 function renderCatConfirmBar(cat, count) {
   const bar = document.getElementById('cat-confirm-bar');
   if (!bar) return;
-  if (cat === 'Tous') { bar.hidden = true; bar.innerHTML = ''; return; }
+
+  if (cat === 'Tous') {
+    bar.hidden = true;
+    bar.innerHTML = '';
+    return;
+  }
 
   const icon = catIcons[cat] || catIcons._default;
   const slug = slugify(cat);
+
   bar.innerHTML = `
     <span class="cat-confirm-icon">${icon}</span>
     <span class="cat-confirm-text">${cat} — ${count} outils</span>
     <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">Explorer la catégorie →</a>
+  `;
+
   bar.hidden = false;
 }
 

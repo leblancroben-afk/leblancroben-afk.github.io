@@ -517,7 +517,7 @@
     type="button"
     aria-expanded="false"
     aria-haspopup="true"
-    aria-label="Choisir la langue"
+    aria-label="Choisir la langue" data-i18n-aria-label="nav.chooseLangAria"
   >
     <span class="lang-globe">🌐</span>
     <span id="lang-current-label">FR</span>
@@ -589,24 +589,24 @@
 
   <div class="page-header">
     <div>
-      <h1>Soumettre un outil</h1>
-      <p>Partagez votre outil IA avec la communauté et gagnez en visibilité.</p>
+      <h1 data-i18n="soum.title">Soumettre un outil</h1>
+      <p data-i18n="soum.subtitle">Partagez votre outil IA avec la communauté et gagnez en visibilité.</p>
     </div>
     <div class="info-card">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      Notre équipe vérifie chaque soumission avant publication.
+      <span data-i18n="soum.infoReview">Notre équipe vérifie chaque soumission avant publication.</span>
     </div>
   </div>
 
   <div class="stepper" id="stepper">
     <div class="step active" id="step1">
       <div class="step-num">1</div>
-      <div class="step-label">Informations générales</div>
+      <div class="step-label" data-i18n="soum.step1Label">Informations générales</div>
     </div>
     <div class="step-line" id="stepLine"></div>
     <div class="step pending" id="step2">
       <div class="step-num">2</div>
-      <div class="step-label">Choisissez votre visibilité</div>
+      <div class="step-label" data-i18n="soum.step2Label">Choisissez votre visibilité</div>
     </div>
   </div>
 
@@ -617,154 +617,154 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M8 16h5"/></svg>
       </div>
       <div class="panel-title-group">
-        <h2><span class="panel-num">1</span>Informations générales</h2>
-        <p>Renseignez les informations principales de votre outil.</p>
+        <h2><span class="panel-num">1</span><span data-i18n="soum.step1Label">Informations générales</span></h2>
+        <p data-i18n="soum.step1Sub">Renseignez les informations principales de votre outil.</p>
       </div>
     </div>
 
     <form id="form-step1">
       <div class="form-grid">
         <div class="field">
-          <label>URL de l'outil <span class="req">*</span></label>
+          <label><span data-i18n="soum.labelUrl">URL de l'outil</span> <span class="req">*</span></label>
           <div class="input-wrap">
             <svg class="leading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.07 0l1.93-1.93a5 5 0 00-7.07-7.07L10.5 5"/><path d="M14 11a5 5 0 00-7.07 0L5 12.93a5 5 0 007.07 7.07L13.5 19"/></svg>
-            <input type="url" id="tool-url" placeholder="https://exemple.com" required>
+            <input type="url" id="tool-url" placeholder="https://exemple.com" data-i18n-placeholder="soum.urlPlaceholder" required>
           </div>
-          <div class="hint">Entrez l'URL officielle de l'outil</div>
+          <div class="hint" data-i18n="soum.urlHint">Entrez l'URL officielle de l'outil</div>
         </div>
 
         <div class="field">
-          <label>Nom de l'outil <span class="req">*</span></label>
-          <input type="text" id="tool-name" placeholder="Nom de l'outil" required>
-          <div class="hint">Le nom officiel de votre outil</div>
+          <label><span data-i18n="submit.labelName">Nom de l'outil</span> <span class="req">*</span></label>
+          <input type="text" id="tool-name" placeholder="Nom de l'outil" data-i18n-placeholder="soum.namePlaceholder" required>
+          <div class="hint" data-i18n="soum.nameHint">Le nom officiel de votre outil</div>
         </div>
 
         <div class="field">
-          <label>Catégorie <span class="req">*</span></label>
+          <label><span data-i18n="soum.labelCat">Catégorie</span> <span class="req">*</span></label>
           <select id="tool-cat" required>
-            <option value="" disabled selected>— Choisir —</option>
-            <option>Rédaction & Contenu</option>
-            <option>Image & Design</option>
-            <option>Vidéo & Audio</option>
-            <option>Code & Développement</option>
-            <option>Productivité</option>
-            <option>Marketing & SEO</option>
-            <option>Éducation</option>
-            <option>Santé & Bien-être</option>
-            <option>Finance & Business</option>
-            <option>Autre</option>
+            <option value="" disabled selected data-i18n="soum.chooseCat">— Choisir —</option>
+            <option data-i18n="submit.catWriting">Rédaction & Contenu</option>
+            <option data-i18n="submit.catImage">Image & Design</option>
+            <option data-i18n="submit.catVideo">Vidéo & Audio</option>
+            <option data-i18n="submit.catCode">Code & Développement</option>
+            <option data-i18n="submit.catProductivity">Productivité</option>
+            <option data-i18n="submit.catMarketing">Marketing & SEO</option>
+            <option data-i18n="submit.catEducation">Éducation</option>
+            <option data-i18n="submit.catHealth">Santé & Bien-être</option>
+            <option data-i18n="submit.catFinance">Finance & Business</option>
+            <option data-i18n="submit.catOther">Autre</option>
           </select>
         </div>
 
         <div class="field">
-          <label>Emoji</label>
+          <label data-i18n="soum.labelEmoji">Emoji</label>
           <div class="input-wrap">
             <svg class="leading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
-            <input type="text" id="tool-emoji" maxlength="4" placeholder="Choisir un emoji">
+            <input type="text" id="tool-emoji" maxlength="4" placeholder="Choisir un emoji" data-i18n-placeholder="soum.emojiPlaceholder">
           </div>
         </div>
 
         <div class="field full">
-          <label>Prix</label>
+          <label data-i18n="soum.labelPrice">Prix</label>
           <div class="pill-group" id="prix-group">
             <div class="pill selected" data-value="gratuit">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
-              Gratuit
+              <span data-i18n="submit.priceFree">Gratuit</span>
             </div>
             <div class="pill" data-value="freemium">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z"/></svg>
-              Freemium
+              <span data-i18n="submit.priceFreemium">Freemium</span>
             </div>
             <div class="pill" data-value="payant">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-1.4 1.3-2.5 3-2.5s3 1.1 3 2.5-1.3 2-3 2.5-3 1.1-3 2.5 1.3 2.5 3 2.5 3-1.1 3-2.5"/></svg>
-              Payant
+              <span data-i18n="submit.pricePaid">Payant</span>
             </div>
           </div>
         </div>
 
         <div class="field">
-          <label>Tags (séparés par virgules)</label>
-          <input type="text" id="tool-tags" placeholder="ex: productivité, écriture, ia, marketing">
-          <div class="hint">Ajoutez des tags pour aider les utilisateurs à vous trouver</div>
+          <label data-i18n="soum.labelTags">Tags (séparés par virgules)</label>
+          <input type="text" id="tool-tags" placeholder="ex: productivité, écriture, ia, marketing" data-i18n-placeholder="soum.tagsPlaceholder">
+          <div class="hint" data-i18n="soum.tagsHint">Ajoutez des tags pour aider les utilisateurs à vous trouver</div>
         </div>
 
         <div class="field">
-          <label>Langues disponibles</label>
-          <input type="text" id="tool-langues" placeholder="ex: Français, Anglais, Espagnol">
-          <div class="hint">Séparées par des virgules</div>
+          <label data-i18n="soum.labelLangues">Langues disponibles</label>
+          <input type="text" id="tool-langues" placeholder="ex: Français, Anglais, Espagnol" data-i18n-placeholder="soum.languesPlaceholder">
+          <div class="hint" data-i18n="soum.languesHint">Séparées par des virgules</div>
         </div>
 
         <div class="field">
-          <label>Essai gratuit</label>
+          <label data-i18n="soum.labelEssai">Essai gratuit</label>
           <div class="radio-row">
-            <label class="radio-opt checked"><input type="radio" name="essai" value="" checked> — Non renseigné —</label>
-            <label class="radio-opt"><input type="radio" name="essai" value="oui"> Oui</label>
-            <label class="radio-opt"><input type="radio" name="essai" value="non"> Non</label>
+            <label class="radio-opt checked"><input type="radio" name="essai" value="" checked> <span data-i18n="soum.notSpecified">— Non renseigné —</span></label>
+            <label class="radio-opt"><input type="radio" name="essai" value="oui"> <span data-i18n="soum.yes">Oui</span></label>
+            <label class="radio-opt"><input type="radio" name="essai" value="non"> <span data-i18n="soum.no">Non</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>Durée essai</label>
-          <input type="text" id="tool-duree-essai" placeholder="ex: 7 jours, 14 jours, 1 mois">
-          <div class="hint">Précisez la durée de la période d'essai</div>
+          <label data-i18n="soum.labelDureeEssai">Durée essai</label>
+          <input type="text" id="tool-duree-essai" placeholder="ex: 7 jours, 14 jours, 1 mois" data-i18n-placeholder="soum.dureeEssaiPlaceholder">
+          <div class="hint" data-i18n="soum.dureeEssaiHint">Précisez la durée de la période d'essai</div>
         </div>
 
         <div class="field">
-          <label>Accès web (interface navigateur)</label>
+          <label data-i18n="soum.labelAcces">Accès web (interface navigateur)</label>
           <div class="radio-row">
-            <label class="radio-opt checked"><input type="radio" name="acces" value="" checked> — Non renseigné —</label>
-            <label class="radio-opt"><input type="radio" name="acces" value="oui"> Oui</label>
-            <label class="radio-opt"><input type="radio" name="acces" value="non"> Non</label>
+            <label class="radio-opt checked"><input type="radio" name="acces" value="" checked> <span data-i18n="soum.notSpecified">— Non renseigné —</span></label>
+            <label class="radio-opt"><input type="radio" name="acces" value="oui"> <span data-i18n="soum.yes">Oui</span></label>
+            <label class="radio-opt"><input type="radio" name="acces" value="non"> <span data-i18n="soum.no">Non</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>Génération d'images</label>
+          <label data-i18n="soum.labelGenImg">Génération d'images</label>
           <div class="radio-row">
-            <label class="radio-opt checked"><input type="radio" name="genimg" value="" checked> — Non renseigné —</label>
-            <label class="radio-opt"><input type="radio" name="genimg" value="oui"> Oui</label>
-            <label class="radio-opt"><input type="radio" name="genimg" value="non"> Non</label>
+            <label class="radio-opt checked"><input type="radio" name="genimg" value="" checked> <span data-i18n="soum.notSpecified">— Non renseigné —</span></label>
+            <label class="radio-opt"><input type="radio" name="genimg" value="oui"> <span data-i18n="soum.yes">Oui</span></label>
+            <label class="radio-opt"><input type="radio" name="genimg" value="non"> <span data-i18n="soum.no">Non</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>Téléchargement de fichiers</label>
+          <label data-i18n="soum.labelUpload">Téléchargement de fichiers</label>
           <div class="radio-row">
-            <label class="radio-opt checked"><input type="radio" name="upload" value="" checked> — Non renseigné —</label>
-            <label class="radio-opt"><input type="radio" name="upload" value="oui"> Oui</label>
-            <label class="radio-opt"><input type="radio" name="upload" value="non"> Non</label>
+            <label class="radio-opt checked"><input type="radio" name="upload" value="" checked> <span data-i18n="soum.notSpecified">— Non renseigné —</span></label>
+            <label class="radio-opt"><input type="radio" name="upload" value="oui"> <span data-i18n="soum.yes">Oui</span></label>
+            <label class="radio-opt"><input type="radio" name="upload" value="non"> <span data-i18n="soum.no">Non</span></label>
           </div>
         </div>
 
         <div class="field full">
-          <label>Intégrations (séparées par virgules)</label>
-          <input type="text" id="tool-integrations" placeholder="ex: Slack, Google Drive, Zapier, Notion">
-          <div class="hint">Listez les intégrations prises en charge</div>
+          <label data-i18n="soum.labelIntegrations">Intégrations (séparées par virgules)</label>
+          <input type="text" id="tool-integrations" placeholder="ex: Slack, Google Drive, Zapier, Notion" data-i18n-placeholder="soum.integrationsPlaceholder">
+          <div class="hint" data-i18n="soum.integrationsHint">Listez les intégrations prises en charge</div>
         </div>
 
         <div class="field">
-          <label>Description <span class="req">*</span></label>
-          <textarea id="tool-desc" minlength="30" maxlength="900" placeholder="Décrivez votre outil, ses fonctionnalités principales, ses avantages..." required></textarea>
-          <div class="hint">Soyez clair et précis (minimum 30 caractères)</div>
+          <label><span data-i18n="soum.labelDesc">Description</span> <span class="req">*</span></label>
+          <textarea id="tool-desc" minlength="30" maxlength="900" placeholder="Décrivez votre outil, ses fonctionnalités principales, ses avantages..." data-i18n-placeholder="soum.descPlaceholder" required></textarea>
+          <div class="hint" data-i18n="soum.descHint">Soyez clair et précis (minimum 30 caractères)</div>
         </div>
 
         <div class="field">
-          <label>Idéal pour</label>
-          <textarea id="tool-ideal" placeholder="À qui s'adresse cet outil ? Quels sont les cas d'usage parfaits ?"></textarea>
-          <div class="hint">Décrivez les utilisateurs ou situations idéales</div>
+          <label data-i18n="soum.labelIdeal">Idéal pour</label>
+          <textarea id="tool-ideal" placeholder="À qui s'adresse cet outil ? Quels sont les cas d'usage parfaits ?" data-i18n-placeholder="soum.idealPlaceholder"></textarea>
+          <div class="hint" data-i18n="soum.idealHint">Décrivez les utilisateurs ou situations idéales</div>
         </div>
 
         <!-- Ajouté par rapport à la maquette : nécessaire pour que l'équipe Albexia puisse recontacter le créateur -->
         <div class="field full">
-          <label>Votre email <span class="req">*</span></label>
-          <input type="email" id="tool-email" placeholder="contact@votreoutil.com" required>
-          <div class="hint">Utilisé uniquement pour vous contacter au sujet de votre soumission</div>
+          <label><span data-i18n="submit.labelEmail">Votre email</span> <span class="req">*</span></label>
+          <input type="email" id="tool-email" placeholder="contact@votreoutil.com" data-i18n-placeholder="soum.emailPlaceholder" required>
+          <div class="hint" data-i18n="soum.emailHint">Utilisé uniquement pour vous contacter au sujet de votre soumission</div>
         </div>
       </div>
 
       <div class="actions">
-        <button type="button" class="btn btn-ghost" id="btnCancel">Annuler</button>
-        <button type="button" class="btn btn-primary" id="btnContinue">Continuer
+        <button type="button" class="btn btn-ghost" id="btnCancel" data-i18n="soum.cancelBtn">Annuler</button>
+        <button type="button" class="btn btn-primary" id="btnContinue"><span data-i18n="soum.continueBtn">Continuer</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
       </div>
@@ -778,13 +778,13 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2L12 16.4 5.7 20.8 8 13.6 2 9.2h7.6z"/></svg>
       </div>
       <div class="panel-title-group">
-        <h2><span class="panel-num" style="background:var(--accent2); color:#0a0a0f;">2</span>Choisissez votre visibilité</h2>
-        <p>Sélectionnez le plan qui correspond le mieux à vos objectifs.</p>
+        <h2><span class="panel-num" style="background:var(--accent2); color:#0a0a0f;">2</span><span data-i18n="soum.step2Label">Choisissez votre visibilité</span></h2>
+        <p data-i18n="soum.step2Sub">Sélectionnez le plan qui correspond le mieux à vos objectifs.</p>
       </div>
     </div>
 
     <div id="zone-login-requis">
-      <p>Les formules Starter et Featured nécessitent un compte — c'est ce qui te permet de suivre le paiement et le statut de ta soumission depuis ton profil.</p>
+      <p data-i18n="soum.loginRequiredText">Les formules Starter et Featured nécessitent un compte — c'est ce qui te permet de suivre le paiement et le statut de ta soumission depuis ton profil.</p>
       <button type="button" class="btn-google" id="btnGoogleLogin">
         <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -792,19 +792,19 @@
           <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
           <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
         </svg>
-        Continuer avec Google
+        <span data-i18n="soum.googleLoginBtn">Continuer avec Google</span>
       </button>
       <p id="zone-login-erreur"></p>
     </div>
 
     <div id="plans-cards-container">
-      <p style="text-align:center;color:var(--text-muted);padding:2rem 0; position:relative; z-index:1;">Chargement des formules…</p>
+      <p style="text-align:center;color:var(--text-muted);padding:2rem 0; position:relative; z-index:1;" data-i18n="soum.loadingPlans">Chargement des formules…</p>
     </div>
 
     <div class="actions">
       <button class="btn btn-ghost" id="btnBack">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-        Retour
+        <span data-i18n="soum.backBtn">Retour</span>
       </button>
     </div>
   </div>
@@ -815,11 +815,11 @@
 <div class="support-strip">
   <div class="support-card">
     <div class="support-text">
-      <strong>Soutenir Albexia</strong>
-      <p>Albexia est un projet indépendant construit pour la communauté IA francophone et au-delà. Si cet annuaire vous est utile, vous pouvez soutenir son développement via un don en crypto.</p>
+      <strong data-i18n="submit.supportTitle">Soutenir Albexia</strong>
+      <p data-i18n="submit.supportText">Albexia est un projet indépendant construit pour la communauté IA francophone et au-delà. Si cet annuaire vous est utile, vous pouvez soutenir son développement via un don en crypto.</p>
     </div>
     <button class="btn-support" onclick="document.getElementById('modal-don').classList.add('open')">
-      ☕ Soutenir Albexia
+      ☕ <span data-i18n="submit.supportBtn">Soutenir Albexia</span>
     </button>
   </div>
 </div>
@@ -828,22 +828,22 @@
 <div class="modal-overlay" id="modal-don" onclick="closeModal(event)">
   <div class="modal">
     <button class="modal-close" onclick="document.getElementById('modal-don').classList.remove('open')">✕</button>
-    <h2>Soutenir Albexia</h2>
-    <p>Chaque contribution, petite ou grande, aide à maintenir et développer cet annuaire pour toute la communauté.</p>
-    <div class="network-tag">Réseau TRC20 — USDT</div>
+    <h2 data-i18n="submit.supportTitle">Soutenir Albexia</h2>
+    <p data-i18n="submit.modalText">Chaque contribution, petite ou grande, aide à maintenir et développer cet annuaire pour toute la communauté.</p>
+    <div class="network-tag" data-i18n="soum.networkTag">Réseau TRC20 — USDT</div>
     <div class="qr-placeholder">
       <img src="/medias/images/qr-code-usdt.png" alt="QR Code USDT TRC20" width="120" height="120" />
     </div>
     <div class="address-box">
       <code id="crypto-address">TUPPmBVXPTvMBHMBtKzuNP6Kz6HBnqkZJJ</code>
-      <button class="btn-copy" onclick="copyAddress()">Copier</button>
+      <button class="btn-copy" onclick="copyAddress()" data-i18n="submit.copyBtn">Copier</button>
     </div>
-    <p class="modal-note">Aucun montant minimum. Chaque contribution compte. Merci. 🙏</p>
+    <p class="modal-note" data-i18n="submit.modalNote">Aucun montant minimum. Chaque contribution compte. Merci. 🙏</p>
   </div>
 </div>
 
 <!-- FOOTER -->
-<footer><div style="text-align:center;padding:24px 0;font-size:13px;color:#4a4a6a;">&copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> — <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> · <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> · <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a></div></footer>
+<footer><div style="text-align:center;padding:24px 0;font-size:13px;color:#4a4a6a;">&copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> — <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none" data-i18n="footer.legalNotice">Mentions légales</a> · <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none" data-i18n="soum.footerPrivacy">Confidentialité</a> · <a href="/contact.html" style="color:#7a7a9a;text-decoration:none" data-i18n="footer.contactTitle">Contact</a></div></footer>
 
 <script src="/js/i18n.js"></script>
 
@@ -924,13 +924,14 @@
 
   function copyAddress() {
     const addr = document.getElementById('crypto-address').textContent;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     navigator.clipboard.writeText(addr).then(() => {
       const btn = document.querySelector('.btn-copy');
-      btn.textContent = 'Copié ✓';
+      btn.textContent = t('soum.copiedBtn', langue);
       btn.style.color = '#4ade80';
       btn.style.borderColor = '#4ade80';
       setTimeout(() => {
-        btn.textContent = 'Copier';
+        btn.textContent = t('submit.copyBtn', langue);
         btn.style.color = '';
         btn.style.borderColor = '';
       }, 2000);
@@ -953,11 +954,9 @@ const langLabel = document.getElementById('lang-current-label');
 
 if (langSwitch && langCurrent) {
 
-  // Récupère la langue actuellement enregistrée
-  const savedLang =
-    localStorage.getItem('lang') ||
-    localStorage.getItem('language') ||
-    'fr';
+  // Récupère la langue actuellement enregistrée (clé partagée albexia_langue,
+  // via i18n.js — utilisée par index.html, profil.html et toutes les pages)
+  const savedLang = window.detecterLangue ? window.detecterLangue() : 'fr';
 
   // Affiche la langue actuelle
   if (langLabel) {
@@ -1067,10 +1066,11 @@ if (langSwitch && langCurrent) {
   let tierEnAttente = null;
   document.getElementById('btnGoogleLogin').addEventListener('click', async () => {
     const err = document.getElementById('zone-login-erreur');
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     err.style.display = 'none';
     const res = await loginWithGoogle();
     if (!res.ok) {
-      err.textContent = res.error || 'Connexion impossible, réessaie.';
+      err.textContent = res.error || t('soum.loginError', langue);
       err.style.display = 'block';
       return;
     }
@@ -1110,22 +1110,23 @@ if (langSwitch && langCurrent) {
   }
 
   async function soumettre(tier, btn) {
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const original = btn ? btn.textContent : '';
     document.querySelectorAll('#plans-cards-container .btn-plan').forEach(b => b.disabled = true);
-    if (btn) btn.textContent = 'Envoi en cours…';
+    if (btn) btn.textContent = t('soum.sendingBtn', langue);
 
     try {
       await addDoc(collection(db, 'soumissions'), ramasserDonnees(tier));
       panel2.innerHTML = `
         <div style="text-align:center;padding:2rem 0; position:relative; z-index:1;">
           <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
-          <h3 style="color:#00d4aa;margin-bottom:.5rem;">Soumission envoyée !</h3>
-          <p style="color:#a8a3ff;">Votre outil sera examiné par l'équipe Albexia sous 48h.</p>
+          <h3 style="color:#00d4aa;margin-bottom:.5rem;">${t('soum.successTitle', langue)}</h3>
+          <p style="color:#a8a3ff;">${t('soum.successText', langue)}</p>
         </div>`;
     } catch (err) {
       document.querySelectorAll('#plans-cards-container .btn-plan').forEach(b => b.disabled = false);
       if (btn) btn.textContent = original;
-      alert("Erreur lors de l'envoi. Veuillez réessayer. (" + err.message + ")");
+      alert(t('soum.submitError', langue) + ' (' + err.message + ')');
     }
   }
 
@@ -1161,6 +1162,11 @@ if (langSwitch && langCurrent) {
   window.onLangueChange = function(code) {
     if (typeof precedentOnLangueChange === 'function') precedentOnLangueChange(code);
     afficherCartesPlans('plans-cards-container', 'choisirFormuleSoumission', code);
+    const label = document.getElementById('lang-current-label');
+    if (label) label.textContent = code.toUpperCase();
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === code);
+    });
   };
 </script>
 

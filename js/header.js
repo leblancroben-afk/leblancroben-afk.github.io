@@ -27,11 +27,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       'function'
     ) {
 
-      window.appliquerTraductionsStatiques(
+      const lang =
         typeof window.detecterLangue === 'function'
           ? window.detecterLangue()
-          : 'fr'
-      );
+          : (
+              localStorage.getItem('albexia_langue') ||
+              'fr'
+            );
+
+      window.appliquerTraductionsStatiques(lang);
 
     }
 
@@ -149,9 +153,6 @@ function initHeaderLanguage() {
   if (!selector || !current) return;
 
 
-  /*
-   * Langue utilisée par ton système i18n.js.
-   */
   const STORAGE_KEY = 'albexia_langue';
 
 
@@ -176,8 +177,10 @@ function initHeaderLanguage() {
   function updateLanguageButton(lang) {
 
     if (label) {
+
       label.textContent =
         lang.toUpperCase();
+
     }
 
     selector
@@ -238,8 +241,8 @@ function initHeaderLanguage() {
 
 
           /*
-           * On utilise la fonction existante
-           * de i18n.js.
+           * Change réellement la langue
+           * avec le système i18n.js.
            */
           if (
             typeof window.changerLangue ===
@@ -248,29 +251,8 @@ function initHeaderLanguage() {
 
             window.changerLangue(lang);
 
-            /*
-             * Réapplique immédiatement la traduction
-             * après le changement de langue.
-             */
-            setTimeout(() => {
-
-              if (
-                typeof window.appliquerTraductionsStatiques ===
-                'function'
-              ) {
-
-                window.appliquerTraductionsStatiques(lang);
-
-              }
-
-            }, 0);
-
           } else {
 
-            /*
-             * Sécurité : mémorisation locale
-             * si i18n.js n'est pas encore prêt.
-             */
             try {
 
               localStorage.setItem(
@@ -283,7 +265,26 @@ function initHeaderLanguage() {
           }
 
 
+          /*
+           * Met à jour immédiatement
+           * le bouton du sélecteur.
+           */
           updateLanguageButton(lang);
+
+
+          /*
+           * Réapplique immédiatement les traductions
+           * au header déjà injecté dans le DOM.
+           */
+          if (
+            typeof window.appliquerTraductionsStatiques ===
+            'function'
+          ) {
+
+            window.appliquerTraductionsStatiques(lang);
+
+          }
+
 
           closeLanguageMenu();
 
@@ -296,7 +297,9 @@ function initHeaderLanguage() {
   document.addEventListener('click', event => {
 
     if (!selector.contains(event.target)) {
+
       closeLanguageMenu();
+
     }
 
   });
@@ -305,14 +308,16 @@ function initHeaderLanguage() {
   document.addEventListener('keydown', event => {
 
     if (event.key === 'Escape') {
+
       closeLanguageMenu();
+
     }
 
   });
 
 
   /*
-   * Afficher la langue actuellement enregistrée.
+   * Affiche la langue actuellement enregistrée.
    */
   updateLanguageButton(
     getCurrentLanguage()

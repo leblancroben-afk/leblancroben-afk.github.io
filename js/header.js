@@ -316,3 +316,38 @@ function initHeaderLanguage() {
   );
 
 }
+
+window.addEventListener('storage', event => {
+
+  if (event.key !== 'albexia_langue') return;
+
+  const lang = event.newValue || 'fr';
+
+  if (
+    typeof window.appliquerTraductionsStatiques ===
+    'function'
+  ) {
+
+    window.appliquerTraductionsStatiques(lang);
+
+  }
+
+  const label =
+    document.getElementById('lang-current-label');
+
+  if (label) {
+    label.textContent = lang.toUpperCase();
+  }
+
+  document
+    .querySelectorAll('.lang-btn')
+    .forEach(button => {
+
+      button.classList.toggle(
+        'active',
+        button.dataset.lang === lang
+      );
+
+    });
+
+});

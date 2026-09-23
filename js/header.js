@@ -248,6 +248,23 @@ function initHeaderLanguage() {
 
             window.changerLangue(lang);
 
+            /*
+             * Réapplique immédiatement la traduction
+             * après le changement de langue.
+             */
+            setTimeout(() => {
+
+              if (
+                typeof window.appliquerTraductionsStatiques ===
+                'function'
+              ) {
+
+                window.appliquerTraductionsStatiques(lang);
+
+              }
+
+            }, 0);
+
           } else {
 
             /*

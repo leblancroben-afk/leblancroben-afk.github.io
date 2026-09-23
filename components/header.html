@@ -1,0 +1,294 @@
+<nav>
+
+  <div class="logo">
+    <svg viewBox="0 0 130 36"
+         xmlns="http://www.w3.org/2000/svg"
+         height="32"
+         aria-label="Albexia">
+
+      <polygon class="poly-part part-1"
+               points="2,10 14,32 10,32"
+               fill="#ff6b9d"/>
+
+      <polygon class="poly-part part-2"
+               points="14,2 18,12 10,12"
+               fill="#ff6b9d"
+               opacity="0.6"/>
+
+      <polygon class="poly-part part-3"
+               points="26,10 14,32 18,32"
+               fill="#ff6b9d"/>
+
+      <text class="logo-text"
+            x="36"
+            y="26"
+            font-family="Georgia, serif"
+            font-size="20"
+            font-weight="700"
+            fill="#f0f0f5"
+            letter-spacing="-0.5">
+        Albe<tspan fill="#ff6b9d">x</tspan>ia
+      </text>
+
+    </svg>
+  </div>
+
+
+  <div class="nav-links">
+
+    <button
+      class="nav-link active"
+      data-page="home"
+      data-i18n="nav.home">
+      Accueil
+    </button>
+
+    <button
+      class="nav-link"
+      data-page="tools"
+      data-i18n="nav.tools">
+      Outils
+    </button>
+
+    <button
+      class="nav-link"
+      data-page="blog"
+      data-i18n="nav.blog">
+      Blog
+    </button>
+
+    <button
+      class="nav-link"
+      data-page="gallery"
+      data-i18n="nav.gallery">
+      Galerie
+    </button>
+
+  </div>
+
+
+  <!-- LANGUE -->
+
+  <div class="lang-selector" id="lang-selector">
+
+    <button
+      class="lang-current"
+      id="lang-current"
+      type="button"
+      aria-expanded="false">
+
+      <span>🌐</span>
+      <span id="lang-current-label">FR</span>
+      <span class="lang-arrow">⌄</span>
+
+    </button>
+
+    <div
+      class="lang-menu"
+      id="lang-menu">
+
+      <button
+        class="lang-btn active"
+        data-lang="fr">
+        🇫🇷 Français
+      </button>
+
+      <button
+        class="lang-btn"
+        data-lang="en">
+        🇬🇧 English
+      </button>
+
+      <button
+        class="lang-btn"
+        data-lang="es">
+        🇪🇸 Español
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROFIL -->
+
+  <div class="nav-profile-slot">
+
+    <a
+      href="/profil.html"
+      id="nav-profile-btn"
+      class="nav-avatar-link"
+      style="display:none"
+      title="Mon profil">
+
+      <div
+        class="nav-avatar"
+        id="nav-avatar">
+        ?
+      </div>
+
+    </a>
+
+    <a
+      href="/profil.html"
+      id="nav-login-btn"
+      class="nav-link"
+      data-i18n="nav.login">
+      Connexion
+    </a>
+
+  </div>
+
+
+  <!-- SOUMETTRE -->
+
+  <button
+    class="nav-cta"
+    id="open-submit-btn"
+    data-i18n="nav.submit">
+    Soumettre un outil +
+  </button>
+
+
+  <!-- MENU KEBAB -->
+
+  <div
+    class="kebab-wrap"
+    id="kebab-wrap">
+
+    <button
+      class="kebab-btn"
+      id="kebab-btn"
+      aria-label="Plus de pages"
+      aria-expanded="false">
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </button>
+
+
+    <div
+      class="kebab-menu"
+      id="kebab-menu"
+      role="menu">
+
+      <div
+        class="kebab-label"
+        data-i18n="kebab.mustHave">
+        Incontournables
+      </div>
+
+
+      <a
+        href="/glossaire/"
+        class="kebab-item"
+        role="menuitem">
+
+        <span class="kebab-ico">📖</span>
+
+        <div>
+
+          <div
+            class="kebab-item-name"
+            data-i18n="kebab.glossary">
+            Glossaire IA
+          </div>
+
+          <div
+            class="kebab-item-sub"
+            data-i18n="kebab.glossarySub">
+            Tous les termes en français
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a
+        href="/comparateur/"
+        class="kebab-item"
+        role="menuitem">
+
+        <span class="kebab-ico">⚖️</span>
+
+        <div>
+
+          <div
+            class="kebab-item-name"
+            data-i18n="kebab.compare">
+            Comparateur
+          </div>
+
+          <div
+            class="kebab-item-sub"
+            data-i18n="kebab.compareSub">
+            Comparer les outils côte à côte
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <a
+        href="/deals/"
+        class="kebab-item"
+        role="menuitem">
+
+        <span class="kebab-ico">🔥</span>
+
+        <div>
+
+          <div
+            class="kebab-item-name"
+            data-i18n="kebab.deals">
+            Deals &amp; Promos
+          </div>
+
+          <div
+            class="kebab-item-sub"
+            data-i18n="kebab.dealsSub">
+            Essais gratuits · Offres exclusives
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <div class="kebab-divider"></div>
+
+
+      <a
+        href="/hub.html"
+        class="kebab-item kebab-hub-link"
+        role="menuitem">
+
+        <span class="kebab-ico">📂</span>
+
+        <div>
+
+          <div
+            class="kebab-item-name"
+            data-i18n="kebab.hub">
+            Voir toutes les sections
+          </div>
+
+          <div
+            class="kebab-item-sub"
+            data-i18n="kebab.hubSub">
+            Carte complète d'Albexia →
+          </div>
+
+        </div>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</nav>

@@ -18,6 +18,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     container.innerHTML = await response.text();
 
+    /*
+     * Le header vient d'être injecté dans le DOM.
+     * On applique immédiatement la langue enregistrée.
+     */
+    if (
+      typeof window.appliquerTraductionsStatiques ===
+      'function'
+    ) {
+
+      window.appliquerTraductionsStatiques(
+        typeof window.detecterLangue === 'function'
+          ? window.detecterLangue()
+          : 'fr'
+      );
+
+    }
+
     initHeaderKebab();
     initHeaderLanguage();
 

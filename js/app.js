@@ -411,12 +411,73 @@ function filtrerParLangue(items) {
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+
   document.getElementById(pageId).classList.add('active');
-  const btn = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+
+  const btn = document.querySelector(
+    `.nav-link[data-nav-page="${pageId}"]`
+  );
+
   if (btn) btn.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (pageId === 'profile') window.location.href = 'profil.html';
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+  if (pageId === 'profile') {
+    window.location.href = 'profil.html';
+  }
 }
+
+/* =========================================================
+   NAVIGATION DU HEADER PARTAGÉ
+   ========================================================= */
+
+function handleHeaderAnchor() {
+
+  const hash = window.location.hash;
+
+  if (!hash) {
+    showPage('home');
+    return;
+  }
+
+  const pageId = hash.substring(1);
+
+  const page = document.getElementById(pageId);
+
+  if (!page || !page.classList.contains('page')) {
+    showPage('home');
+    return;
+  }
+
+  showPage(pageId);
+}
+
+
+if (
+  window.location.pathname === '/' ||
+  window.location.pathname.endsWith('/index.html')
+) {
+
+  handleHeaderAnchor();
+
+}
+
+
+window.addEventListener('hashchange', () => {
+
+  if (
+    window.location.pathname === '/' ||
+    window.location.pathname.endsWith('/index.html')
+  ) {
+
+    handleHeaderAnchor();
+
+  }
+
+});
 
 // ═══════════════════════════════════════
 // HELPERS

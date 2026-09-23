@@ -153,6 +153,9 @@ function initHeaderLanguage() {
   if (!selector || !current) return;
 
 
+  /*
+   * Langue utilisée par ton système i18n.js.
+   */
   const STORAGE_KEY = 'albexia_langue';
 
 
@@ -241,18 +244,22 @@ function initHeaderLanguage() {
 
 
           /*
-           * Change réellement la langue
-           * avec le système i18n.js.
+           * Utilise la fonction globale
+           * réellement fournie par i18n.js.
            */
           if (
-            typeof window.changerLangue ===
+            typeof window.changerLangueGlobale ===
             'function'
           ) {
 
-            window.changerLangue(lang);
+            window.changerLangueGlobale(lang);
 
           } else {
 
+            /*
+             * Sécurité : mémorisation locale
+             * si i18n.js n'est pas encore prêt.
+             */
             try {
 
               localStorage.setItem(
@@ -266,25 +273,10 @@ function initHeaderLanguage() {
 
 
           /*
-           * Met à jour immédiatement
+           * Met immédiatement à jour
            * le bouton du sélecteur.
            */
           updateLanguageButton(lang);
-
-
-          /*
-           * Réapplique immédiatement les traductions
-           * au header déjà injecté dans le DOM.
-           */
-          if (
-            typeof window.appliquerTraductionsStatiques ===
-            'function'
-          ) {
-
-            window.appliquerTraductionsStatiques(lang);
-
-          }
-
 
           closeLanguageMenu();
 
@@ -317,7 +309,7 @@ function initHeaderLanguage() {
 
 
   /*
-   * Affiche la langue actuellement enregistrée.
+   * Afficher la langue actuellement enregistrée.
    */
   updateLanguageButton(
     getCurrentLanguage()

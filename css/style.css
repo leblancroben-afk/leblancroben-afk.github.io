@@ -219,7 +219,7 @@ nav {
 
 .hero h1 {
   font-size: clamp(36px, 6vw, 64px);
-  font-weight: 800; line-height: 1.05;
+  font-weight: 600; line-height: 1.05;
   margin-bottom: 20px;
 }
 .hero h1 .grad {
@@ -258,7 +258,7 @@ nav {
   border-top: 1px solid var(--border);
 }
 .stat-n {
-  font-size: 32px; font-weight: 800; letter-spacing: -1px;
+  font-size: 32px; font-weight: 600; letter-spacing: -1px;
 }
 .stat-l { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 .stat-blue .stat-n  { color: var(--accent); }
@@ -267,7 +267,7 @@ nav {
 
 /* ─── PAGE HEADER ─── */
 .page-header { padding: 40px 0 24px; }
-.page-title { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+.page-title { font-size: 28px; font-weight: 600; margin-bottom: 6px; }
 .page-sub { font-size: 14px; color: var(--text-muted); }
 
 /* ─── SEARCH ─── */
@@ -305,7 +305,7 @@ nav {
   display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;
 }
 .home-cat-title {
-  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-family: 'Syne', sans-serif; font-weight: 600;
   font-size: 26px; letter-spacing: -0.03em; margin-bottom: 6px;
 }
 .home-cat-sub { font-size: 14px; color: var(--text-muted); font-weight: 300; }
@@ -371,7 +371,7 @@ nav {
 }
 .cat-confirm-icon { font-size: 20px; }
 .cat-confirm-text {
-  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; flex: 1;
+  font-family: 'Syne', sans-serif; font-weight: 600; font-size: 14px; flex: 1;
 }
 .cat-confirm-cta {
   padding: 9px 16px; border-radius: 10px;

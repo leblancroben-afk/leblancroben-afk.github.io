@@ -501,28 +501,45 @@ function showEmpty(containerId, msg = 'Aucun résultat trouvé.') {
 // CARTE OUTIL — source unique de vérité
 // ═══════════════════════════════════════
 
-function buildToolCard(t, direct = false) {
-  const priceLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
-  const col  = catColors[t.category] || { bg: 'rgba(255,255,255,0.08)' };
-  const pageUrl = buildToolPageUrl(t);
-  const plan = t.plan || (pageUrl ? 'gratuit' : null);
+function buildToolCard(tool, direct = false) {
+  // Traductions provenant de /js/i18n.js
+  const langue = state.langue || detecterLangue();
 
-  const iconHtml = t.favicon
-    ? `<img src="${t.favicon}" alt="${t.name}" class="tool-favicon"
+  const priceLabel = {
+    free: window.t('alertes.priceFree', langue),
+    freemium: window.t('alertes.priceFreemium', langue),
+    paid: window.t('alertes.pricePaid', langue)
+  };
+
+  const collectionLabel = window.t('profil.createCollection', langue);
+
+  const col = catColors[tool.category] || {
+    bg: 'rgba(255,255,255,0.08)'
+  };
+
+  const pageUrl = buildToolPageUrl(tool);
+  const plan = tool.plan || (pageUrl ? 'gratuit' : null);
+
+  const iconHtml = tool.favicon
+    ? `<img src="${tool.favicon}"
+           alt="${tool.name}"
+           class="tool-favicon"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
            onload="this.nextElementSibling.style.display='none'">
-       <span class="tool-ico-fallback" style="display:none">${t.emoji}</span>`
-    : `<span class="tool-ico-fallback">${t.emoji}</span>`;
+       <span class="tool-ico-fallback" style="display:none">${tool.emoji || '🤖'}</span>`
+    : `<span class="tool-ico-fallback">${tool.emoji || '🤖'}</span>`;
 
-  // direct=true : l'utilisateur vient d'un CTA article (?tools=... via
-  // checkToolsParam → renderSpotlight). L'article a déjà convaincu — on
-  // saute la fiche et on envoie directement vers le site officiel de l'outil.
-  // direct=false (défaut) : comportement habituel, fiche → site officiel.
-  const cardAction = (direct && t.url)
-    ? `onclick="window.open('${t.url}','_blank')"`
+  // direct=true :
+  // l'utilisateur vient d'un CTA article et doit aller directement
+  // sur le site officiel de l'outil.
+  //
+  // direct=false :
+  // comportement normal : fiche Albexia → site officiel.
+  const cardAction = (direct && tool.url)
+    ? `onclick="window.open('${tool.url}','_blank')"`
     : pageUrl
       ? `onclick="window.location.href='${pageUrl}'"`
-      : `onclick="window.open('${t.url}','_blank')"`;
+      : `onclick="window.open('${tool.url}','_blank')"`;
 
   let planBadge = '';
   let cardClass = 'tool-card';
@@ -535,48 +552,96 @@ function buildToolCard(t, direct = false) {
     cardClass = 'tool-card tool-card-plan-gratuit';
   }
 
+  // Textes des badges selon la langue actuelle.
+  // Ces textes restent dans app.js pour l'instant car ils ne possèdent
+  // pas encore de clés dédiées dans i18n.js.
   const BADGE_LABELS = {
-    fr: { direct: 'Aller sur le site officiel →', guide: 'Guide complet →' },
-    en: { direct: 'Go to official website →',     guide: 'Full guide →' },
-    es: { direct: 'Ir al sitio oficial →',         guide: 'Guía completa →' },
+    fr: {
+      direct: 'Aller sur le site officiel →',
+      guide: 'Guide complet →'
+    },
+    en: {
+      direct: 'Go to official website →',
+      guide: 'Full guide →'
+    },
+    es: {
+      direct: 'Ir al sitio oficial →',
+      guide: 'Guía completa →'
+    }
   };
-  const badgeT9n = BADGE_LABELS[state.langue] || BADGE_LABELS.fr;
 
-  if (direct && t.url) {
-    planBadge = `<span class="tool-plan-badge tool-plan-badge-direct">${badgeT9n.direct}</span>`;
+  const badgeT9n = BADGE_LABELS[langue] || BADGE_LABELS.fr;
+
+  if (direct && tool.url) {
+    planBadge = `
+      <span class="tool-plan-badge tool-plan-badge-direct">
+        ${badgeT9n.direct}
+      </span>`;
   } else if (pageUrl) {
-    planBadge = `<span class="tool-plan-badge tool-plan-badge-gratuit">${badgeT9n.guide}</span>`;
+    planBadge = `
+      <span class="tool-plan-badge tool-plan-badge-gratuit">
+        ${badgeT9n.guide}
+      </span>`;
   }
 
-  const toolJson = JSON.stringify(t)
+  const toolJson = JSON.stringify(tool)
     .replace(/\\/g, '\\\\')
     .replace(/'/g, '&#39;')
     .replace(/"/g, '&quot;');
 
-  // Slug pour Firestore ratings — même logique que gen-fiches.js (slugify du nom)
-  const slug = slugify(t.name) || String(t.id);
+  // Slug pour Firestore ratings
+  const slug = slugify(tool.name) || String(tool.id);
 
   return `
-    <article class="${cardClass}" ${cardAction} data-tool-slug="${slug}">
+    <article
+      class="${cardClass}"
+      ${cardAction}
+      data-tool-slug="${slug}"
+    >
+
       <div class="tool-head">
-        <div class="tool-ico" style="background:${col.bg}">${iconHtml}</div>
-        <div style="flex:1">
-          <div class="tool-name">${t.name}</div>
-          <div class="tool-cat">${t.category}</div>
+
+        <div class="tool-ico" style="background:${col.bg}">
+          ${iconHtml}
         </div>
-        <button class="fav-btn"
+
+        <div style="flex:1">
+          <div class="tool-name">${tool.name}</div>
+          <div class="tool-cat">${tool.category}</div>
+        </div>
+
+        <button
+          class="fav-btn"
           onclick="openCollectionPicker(event, ${toolJson})"
-          title="Ajouter à une collection">♡</button>
+          title="${collectionLabel}"
+        >♡</button>
+
       </div>
-      <p class="tool-desc">${t.description}</p>
+
+      <p class="tool-desc">${tool.description}</p>
+
       <div class="tool-foot">
-        <span class="price-tag price-${t.price}">${priceLabel[t.price]}</span>
-        <span class="tool-rating-badge" data-slug="${slug}"></span>
+
+        <span class="price-tag price-${tool.price}">
+          ${priceLabel[tool.price] || tool.price || '—'}
+        </span>
+
+        <span
+          class="tool-rating-badge"
+          data-slug="${slug}"
+        ></span>
+
       </div>
+
       ${planBadge}
+
     </article>`;
 }
+
 window.buildToolCard = buildToolCard;
+
+  
+  
 
 // ════════════════════════════════════════
 // RATINGS FIRESTORE — enrichir les cartes

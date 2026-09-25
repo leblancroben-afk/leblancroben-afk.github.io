@@ -172,19 +172,17 @@ const catIcons = {
 // Descriptions affichées dans l'entête dynamique de la page Outils.
 // À ajuster/compléter par Damon — texte générique en repli pour toute
 // catégorie non listée ici.
-const catDescriptions = {
-  Tous:            "Découvre tous les outils d'intelligence artificielle disponibles.",
-  Juridique:       "Outils IA pour la recherche juridique, l'analyse de contrats et la conformité.",
-  Marketing:       "Outils IA pour automatiser vos campagnes et personnaliser vos contenus marketing.",
-  SEO:             "Outils IA pour améliorer ton référencement, analyser et optimiser ton contenu.",
-  Contenu:         "Outils IA pour générer et éditer du texte, des visuels et des vidéos.",
-  Code:            "Outils IA pour écrire, corriger et accélérer le développement logiciel.",
-  'Design 3D':     "Outils IA pour créer des visuels, modèles et rendus 3D.",
-  Automatisation:  "Outils IA pour connecter vos applications et automatiser vos workflows.",
-  Recherche:       "Outils IA pour explorer, synthétiser et vérifier l'information.",
-  Vidéo:           "Outils IA pour générer, monter et éditer des vidéos.",
-  Productivité:    "Outils IA pour gagner du temps sur vos tâches quotidiennes.",
+const catDescriptionKeys = {
+  Tous: 'Tous', Juridique: 'Juridique', Marketing: 'Marketing', SEO: 'SEO',
+  Contenu: 'Contenu', Code: 'Code', 'Design 3D': 'Design3D',
+  Automatisation: 'Automatisation', Recherche: 'Recherche', Vidéo: 'Video',
+  Productivité: 'Productivite',
 };
+function getCatDescription(cat, langue) {
+  const suffix = catDescriptionKeys[cat];
+  if (suffix) return t(`idx.catDesc${suffix}`, langue);
+  return t('idx.catDescFallback', langue).replace('{cat}', cat);
+}
 
 const blogColors = {
   Guide:      { bg: 'rgba(108,99,255,0.2)',  tagBg: 'rgba(108,99,255,0.15)',  tagColor: '#a8a3ff' },
@@ -243,22 +241,24 @@ function resetForm() {
 }
 
 function validateForm() {
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
   const name  = document.getElementById('f-name').value.trim();
   const url   = document.getElementById('f-url').value.trim();
   const cat   = document.getElementById('f-cat').value;
   const price = document.getElementById('f-price').value;
   const desc  = document.getElementById('f-desc').value.trim();
-  if (!name)  return "Le nom de l'outil est requis.";
-  if (!url)   return "L'URL officielle est requise.";
-  if (!url.startsWith('http')) return "L'URL doit commencer par http:// ou https://";
-  if (!cat)   return 'Veuillez choisir une catégorie.';
-  if (!price) return 'Veuillez indiquer la tarification.';
-  if (!desc)  return 'La description est requise.';
-  if (desc.length < 20) return 'La description doit faire au moins 20 caractères.';
+  if (!name)  return t('idx.errNameRequired', langue);
+  if (!url)   return t('idx.errUrlRequired', langue);
+  if (!url.startsWith('http')) return t('idx.errUrlFormat', langue);
+  if (!cat)   return t('idx.errCatRequired', langue);
+  if (!price) return t('idx.errPriceRequired', langue);
+  if (!desc)  return t('idx.errDescRequired', langue);
+  if (desc.length < 20) return t('idx.errDescMinLength', langue);
   return null;
 }
 
 function handleSubmit() {
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
   const errMsg = validateForm();
   const errEl  = document.getElementById('form-error');
 
@@ -281,26 +281,27 @@ function handleSubmit() {
   formData.append('email',        document.getElementById('f-email').value.trim());
 
   const submitBtn = document.querySelector('.modal-footer .btn-main');
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Envoi…'; }
+  const submitBtnOriginal = t('idx.modalSubmitBtn', langue);
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = t('idx.sendingShort', langue); }
 
   fetch('https://formspree.io/f/xaqkgqlr', {
     method:  'POST',
     body:    formData,
     headers: { 'Accept': 'application/json' }
   }).then(() => {
+    const successText = t('idx.modalSuccessText', langue).replace('{name}', `<strong>${nomOutil}</strong>`);
     document.querySelector('.modal-body').innerHTML = `
       <div class="form-success">
         <div class="success-icon">✅</div>
-        <h4>Soumission envoyée !</h4>
-        <p>Merci pour votre contribution. L'outil <strong>${nomOutil}</strong>
-        sera examiné par notre équipe et ajouté sous 48h si approuvé.</p>
+        <h4>${t('soum.successTitle', langue)}</h4>
+        <p>${successText}</p>
       </div>`;
     document.querySelector('.modal-footer').innerHTML =
-      `<button class="btn-main" onclick="closeModal()">Fermer</button>`;
+      `<button class="btn-main" onclick="closeModal()">${t('profil.closeBtn', langue)}</button>`;
   }).catch(() => {
-    errEl.textContent = 'Erreur réseau. Réessayez dans quelques instants.';
+    errEl.textContent = t('idx.networkError', langue);
     errEl.style.display = 'block';
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Soumettre'; }
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtnOriginal; }
   });
 }
 
@@ -411,73 +412,12 @@ function filtrerParLangue(items) {
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
-
   document.getElementById(pageId).classList.add('active');
-
-  const btn = document.querySelector(
-    `.nav-link[data-nav-page="${pageId}"]`
-  );
-
+  const btn = document.querySelector(`.nav-link[data-page="${pageId}"]`);
   if (btn) btn.classList.add('active');
-
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-
-  if (pageId === 'profile') {
-    window.location.href = 'profil.html';
-  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (pageId === 'profile') window.location.href = 'profil.html';
 }
-
-/* =========================================================
-   NAVIGATION DU HEADER PARTAGÉ
-   ========================================================= */
-
-function handleHeaderAnchor() {
-
-  const hash = window.location.hash;
-
-  if (!hash) {
-    showPage('home');
-    return;
-  }
-
-  const pageId = hash.substring(1);
-
-  const page = document.getElementById(pageId);
-
-  if (!page || !page.classList.contains('page')) {
-    showPage('home');
-    return;
-  }
-
-  showPage(pageId);
-}
-
-
-if (
-  window.location.pathname === '/' ||
-  window.location.pathname.endsWith('/index.html')
-) {
-
-  handleHeaderAnchor();
-
-}
-
-
-window.addEventListener('hashchange', () => {
-
-  if (
-    window.location.pathname === '/' ||
-    window.location.pathname.endsWith('/index.html')
-  ) {
-
-    handleHeaderAnchor();
-
-  }
-
-});
 
 // ═══════════════════════════════════════
 // HELPERS
@@ -492,54 +432,43 @@ function showError(containerId, msg) {
   if (el) el.innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div>${msg}</div>`;
 }
 
-function showEmpty(containerId, msg = 'Aucun résultat trouvé.') {
+function showEmpty(containerId, msg) {
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const message = msg !== undefined ? msg : t('idx.emptyResults', langue);
   const el = document.getElementById(containerId);
-  if (el) el.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div>${msg}</div>`;
+  if (el) el.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div>${message}</div>`;
 }
 
 // ═══════════════════════════════════════
 // CARTE OUTIL — source unique de vérité
 // ═══════════════════════════════════════
 
-function buildToolCard(tool, direct = false) {
-  // Traductions provenant de /js/i18n.js
-  const langue = state.langue || detecterLangue();
-
+function buildToolCard(t, direct = false) {
   const priceLabel = {
-    free: window.t('alertes.priceFree', langue),
-    freemium: window.t('alertes.priceFreemium', langue),
-    paid: window.t('alertes.pricePaid', langue)
+    free: window.t('alertes.priceFree', state.langue),
+    freemium: window.t('alertes.priceFreemium', state.langue),
+    paid: window.t('alertes.pricePaid', state.langue),
   };
+  const col  = catColors[t.category] || { bg: 'rgba(255,255,255,0.08)' };
+  const pageUrl = buildToolPageUrl(t);
+  const plan = t.plan || (pageUrl ? 'gratuit' : null);
 
-  const collectionLabel = window.t('profil.createCollection', langue);
-
-  const col = catColors[tool.category] || {
-    bg: 'rgba(255,255,255,0.08)'
-  };
-
-  const pageUrl = buildToolPageUrl(tool);
-  const plan = tool.plan || (pageUrl ? 'gratuit' : null);
-
-  const iconHtml = tool.favicon
-    ? `<img src="${tool.favicon}"
-           alt="${tool.name}"
-           class="tool-favicon"
+  const iconHtml = t.favicon
+    ? `<img src="${t.favicon}" alt="${t.name}" class="tool-favicon"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
            onload="this.nextElementSibling.style.display='none'">
-       <span class="tool-ico-fallback" style="display:none">${tool.emoji || '🤖'}</span>`
-    : `<span class="tool-ico-fallback">${tool.emoji || '🤖'}</span>`;
+       <span class="tool-ico-fallback" style="display:none">${t.emoji}</span>`
+    : `<span class="tool-ico-fallback">${t.emoji}</span>`;
 
-  // direct=true :
-  // l'utilisateur vient d'un CTA article et doit aller directement
-  // sur le site officiel de l'outil.
-  //
-  // direct=false :
-  // comportement normal : fiche Albexia → site officiel.
-  const cardAction = (direct && tool.url)
-    ? `onclick="window.open('${tool.url}','_blank')"`
+  // direct=true : l'utilisateur vient d'un CTA article (?tools=... via
+  // checkToolsParam → renderSpotlight). L'article a déjà convaincu — on
+  // saute la fiche et on envoie directement vers le site officiel de l'outil.
+  // direct=false (défaut) : comportement habituel, fiche → site officiel.
+  const cardAction = (direct && t.url)
+    ? `onclick="window.open('${t.url}','_blank')"`
     : pageUrl
       ? `onclick="window.location.href='${pageUrl}'"`
-      : `onclick="window.open('${tool.url}','_blank')"`;
+      : `onclick="window.open('${t.url}','_blank')"`;
 
   let planBadge = '';
   let cardClass = 'tool-card';
@@ -552,96 +481,48 @@ function buildToolCard(tool, direct = false) {
     cardClass = 'tool-card tool-card-plan-gratuit';
   }
 
-  // Textes des badges selon la langue actuelle.
-  // Ces textes restent dans app.js pour l'instant car ils ne possèdent
-  // pas encore de clés dédiées dans i18n.js.
   const BADGE_LABELS = {
-    fr: {
-      direct: 'Aller sur le site officiel →',
-      guide: 'Guide complet →'
-    },
-    en: {
-      direct: 'Go to official website →',
-      guide: 'Full guide →'
-    },
-    es: {
-      direct: 'Ir al sitio oficial →',
-      guide: 'Guía completa →'
-    }
+    fr: { direct: 'Aller sur le site officiel →', guide: 'Guide complet →' },
+    en: { direct: 'Go to official website →',     guide: 'Full guide →' },
+    es: { direct: 'Ir al sitio oficial →',         guide: 'Guía completa →' },
   };
+  const badgeT9n = BADGE_LABELS[state.langue] || BADGE_LABELS.fr;
 
-  const badgeT9n = BADGE_LABELS[langue] || BADGE_LABELS.fr;
-
-  if (direct && tool.url) {
-    planBadge = `
-      <span class="tool-plan-badge tool-plan-badge-direct">
-        ${badgeT9n.direct}
-      </span>`;
+  if (direct && t.url) {
+    planBadge = `<span class="tool-plan-badge tool-plan-badge-direct">${badgeT9n.direct}</span>`;
   } else if (pageUrl) {
-    planBadge = `
-      <span class="tool-plan-badge tool-plan-badge-gratuit">
-        ${badgeT9n.guide}
-      </span>`;
+    planBadge = `<span class="tool-plan-badge tool-plan-badge-gratuit">${badgeT9n.guide}</span>`;
   }
 
-  const toolJson = JSON.stringify(tool)
+  const toolJson = JSON.stringify(t)
     .replace(/\\/g, '\\\\')
     .replace(/'/g, '&#39;')
     .replace(/"/g, '&quot;');
 
-  // Slug pour Firestore ratings
-  const slug = slugify(tool.name) || String(tool.id);
+  // Slug pour Firestore ratings — même logique que gen-fiches.js (slugify du nom)
+  const slug = slugify(t.name) || String(t.id);
 
   return `
-    <article
-      class="${cardClass}"
-      ${cardAction}
-      data-tool-slug="${slug}"
-    >
-
+    <article class="${cardClass}" ${cardAction} data-tool-slug="${slug}">
       <div class="tool-head">
-
-        <div class="tool-ico" style="background:${col.bg}">
-          ${iconHtml}
-        </div>
-
+        <div class="tool-ico" style="background:${col.bg}">${iconHtml}</div>
         <div style="flex:1">
-          <div class="tool-name">${tool.name}</div>
-          <div class="tool-cat">${tool.category}</div>
+          <div class="tool-name">${t.name}</div>
+          <div class="tool-cat">${t.category}</div>
         </div>
-
-        <button
-          class="fav-btn"
+        <button class="fav-btn"
           onclick="openCollectionPicker(event, ${toolJson})"
-          title="${collectionLabel}"
-        >♡</button>
-
+          title="${window.t('idx.addToCollectionTitle', state.langue)}">♡</button>
       </div>
-
-      <p class="tool-desc">${tool.description}</p>
-
+      <p class="tool-desc">${t.description}</p>
       <div class="tool-foot">
-
-        <span class="price-tag price-${tool.price}">
-          ${priceLabel[tool.price] || tool.price || '—'}
-        </span>
-
-        <span
-          class="tool-rating-badge"
-          data-slug="${slug}"
-        ></span>
-
+        <span class="price-tag price-${t.price}">${priceLabel[t.price]}</span>
+        <span class="tool-rating-badge" data-slug="${slug}"></span>
       </div>
-
       ${planBadge}
-
     </article>`;
 }
-
 window.buildToolCard = buildToolCard;
-
-  
-  
 
 // ════════════════════════════════════════
 // RATINGS FIRESTORE — enrichir les cartes
@@ -736,6 +617,7 @@ function renderTools() {
 
 function updateToolsPageHeader(toolsLangue) {
   const cat = state.activeToolCat;
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
   const count = cat === 'Tous'
     ? toolsLangue.filter(t => t.status !== 'offline').length
     : toolsLangue.filter(t => t.status !== 'offline' && t.category === cat).length;
@@ -743,18 +625,18 @@ function updateToolsPageHeader(toolsLangue) {
   const titleEl = document.getElementById('tools-page-title');
   const subEl   = document.getElementById('tools-page-sub');
   if (titleEl) {
-    const title = cat === 'Tous' ? 'Tous les outils IA' : cat;
-    titleEl.innerHTML = `${title} <span class="tools-page-count">${count} outils</span>`;
+    const title = cat === 'Tous' ? t('idx.allToolsTitle', langue) : cat;
+    titleEl.innerHTML = `${title} <span class="tools-page-count">${count} ${t('idx.toolsCountSuffix', langue)}</span>`;
   }
   if (subEl) {
-    subEl.textContent = catDescriptions[cat] || `Outils IA classés dans la catégorie ${cat}.`;
+    subEl.textContent = getCatDescription(cat, langue);
   }
 
   const search = document.getElementById('tool-search');
   if (search && document.activeElement !== search) {
     search.placeholder = cat === 'Tous'
-      ? 'Rechercher un outil, une catégorie, un tag...'
-      : `Rechercher un outil ${cat}...`;
+      ? t('tools.searchPlaceholder', langue)
+      : t('idx.searchPlaceholderCat', langue).replace('{cat}', cat);
   }
 
   return count;
@@ -771,8 +653,14 @@ function renderSecondaryFilters() {
   // visibles mais désactivés (évite un filtre qui renverrait toujours 0 résultat).
   const hasApiField   = state.tools.some(t => typeof t.api === 'boolean');
   const hasTrialField = state.tools.some(t => typeof t.essaiGratuit === 'boolean');
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
 
-  const priceOpts = [['tous', 'Tous'], ['freemium', 'Freemium'], ['gratuit', 'Gratuit'], ['payant', 'Payant']];
+  const priceOpts = [
+    ['tous', t('idx.galleryTypeAll', langue)],
+    ['freemium', t('submit.priceFreemium', langue)],
+    ['gratuit', t('submit.priceFree', langue)],
+    ['payant', t('submit.pricePaid', langue)],
+  ];
 
   el.innerHTML = `
     <div class="tool-filter-row">
@@ -781,32 +669,32 @@ function renderSecondaryFilters() {
       ).join('')}
       <details class="star-filter" id="star-filter-details">
         <summary class="filter star-filter-summary${state.minRating > 0 ? ' active' : ''}">
-          ★ ${state.minRating > 0 ? state.minRating + '+ étoiles' : 'Note'}
+          ★ ${state.minRating > 0 ? t('idx.ratingStars', langue).replace('{n}', state.minRating) : t('idx.ratingFilterDefault', langue)}
         </summary>
         <div class="star-menu">
           ${[5, 4, 3, 2, 1].map(n => `
             <label class="star-menu-option">
               <input type="radio" name="star-rating" value="${n}" ${state.minRating === n ? 'checked' : ''} onchange="setMinRating(${n})">
-              <span>${'★'.repeat(n)}${'☆'.repeat(5 - n)} ${n}+ étoiles</span>
+              <span>${'★'.repeat(n)}${'☆'.repeat(5 - n)} ${t('idx.ratingStars', langue).replace('{n}', n)}</span>
             </label>`).join('')}
           <label class="star-menu-option star-menu-clear">
             <input type="radio" name="star-rating" value="0" ${state.minRating === 0 ? 'checked' : ''} onchange="setMinRating(0)">
-            <span>Toutes les notes</span>
+            <span>${t('idx.allRatings', langue)}</span>
           </label>
         </div>
       </details>
       <button class="filter${state.apiOnly ? ' active' : ''}${hasApiField ? '' : ' filter-disabled'}"
-        ${hasApiField ? `onclick="toggleApiOnly()"` : `title="Champ 'api' pas encore renseigné en base"`}>API disponible</button>
+        ${hasApiField ? `onclick="toggleApiOnly()"` : `title="${t('idx.apiFieldMissing', langue)}"`}>${t('idx.apiAvailable', langue)}</button>
       <button class="filter${state.trialOnly ? ' active' : ''}${hasTrialField ? '' : ' filter-disabled'}"
-        ${hasTrialField ? `onclick="toggleTrialOnly()"` : `title="Champ 'essaiGratuit' pas encore renseigné en base"`}>Essai gratuit</button>
-      <button class="filter filter-reset" onclick="resetToolFilters()">↻ Réinitialiser</button>
+        ${hasTrialField ? `onclick="toggleTrialOnly()"` : `title="${t('idx.trialFieldMissing', langue)}"`}>${t('soum.labelEssai', langue)}</button>
+      <button class="filter filter-reset" onclick="resetToolFilters()">${t('idx.resetFilters', langue)}</button>
     </div>
     <div class="tool-sort-row">
-      <label for="tool-sort-select">Trier par</label>
+      <label for="tool-sort-select">${t('idx.sortBy', langue)}</label>
       <select id="tool-sort-select" onchange="setToolsSort(this.value)">
-        <option value="popularite" ${state.toolsSort === 'popularite' ? 'selected' : ''}>Popularité</option>
-        <option value="note" ${state.toolsSort === 'note' ? 'selected' : ''}>Note</option>
-        <option value="nom" ${state.toolsSort === 'nom' ? 'selected' : ''}>Nom A-Z</option>
+        <option value="popularite" ${state.toolsSort === 'popularite' ? 'selected' : ''}>${t('idx.sortPopularity', langue)}</option>
+        <option value="note" ${state.toolsSort === 'note' ? 'selected' : ''}>${t('idx.ratingFilterDefault', langue)}</option>
+        <option value="nom" ${state.toolsSort === 'nom' ? 'selected' : ''}>${t('idx.sortNameAZ', langue)}</option>
       </select>
     </div>`;
 }
@@ -884,7 +772,7 @@ function finalizeAndRenderTools(base) {
   const shownEnd = start + paged.length;
 
   document.getElementById('tools-grid').innerHTML = paged.map(t => buildToolCard(t)).join('');
-  setPaginationEl('tools-grid', buildPaginationHTML(state.toolsPage, totalPages, total, start + 1, shownEnd, 'tools', 'outils'));
+  setPaginationEl('tools-grid', buildPaginationHTML(state.toolsPage, totalPages, total, start + 1, shownEnd, 'tools', t('idx.toolsCountSuffix', (window.detecterLangue ? window.detecterLangue() : 'fr'))));
 
   // Ratings Firestore (badges visuels) après chaque rendu
   renderRatingsOnCards();
@@ -892,6 +780,7 @@ function finalizeAndRenderTools(base) {
 
 function buildPaginationHTML(current, totalPages, totalItems, shownStart, shownEnd, section, label) {
   if (totalPages <= 1) return '';
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
   let pages = '';
   for (let i = 1; i <= totalPages; i++) {
     if (i === 1 || i === totalPages || (i >= current - 1 && i <= current + 1)) {
@@ -900,9 +789,12 @@ function buildPaginationHTML(current, totalPages, totalItems, shownStart, shownE
       pages += `<span class="pg-dots">…</span>`;
     }
   }
+  const info = t('idx.paginationInfo', langue)
+    .replace('{start}', shownStart).replace('{end}', shownEnd)
+    .replace('{total}', totalItems).replace('{unit}', label);
   return `
     <div class="pagination">
-      <span class="pg-info">${shownStart}–${shownEnd} sur ${totalItems} ${label}</span>
+      <span class="pg-info">${info}</span>
       <div class="pg-controls">
         <button class="pg-btn pg-arrow" onclick="goToPage('${section}',${current - 1})" ${current === 1 ? 'disabled' : ''}>‹</button>
         ${pages}
@@ -959,14 +851,15 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
   const cats  = [...counts.keys()];
 
   const badge = document.getElementById('cat-count-badge');
-  if (badge) badge.textContent = `${cats.length} catégories`;
+  const langueCats = window.detecterLangue ? window.detecterLangue() : 'fr';
+  if (badge) badge.textContent = t('idx.categoriesCount', langueCats).replace('{n}', cats.length);
 
   
   const tousTile = `
     <button class="home-cat-tile${activeCat === 'Tous' ? ' active' : ''}" onclick="${onSelectFn}('Tous')">
       <span class="home-cat-icon">🗂️</span>
-      <span class="home-cat-name">Tous</span>
-      <span class="home-cat-count">${total} outils</span>
+      <span class="home-cat-name">${t('idx.galleryTypeAll', langueCats)}</span>
+      <span class="home-cat-count">${total} ${t('idx.toolsCountSuffix', langueCats)}</span>
       
     </button>`;
 
@@ -977,7 +870,7 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
       <button class="home-cat-tile${isActive ? ' active' : ''}" onclick="${onSelectFn}('${c.replace(/'/g, "\\'")}')">
         <span class="home-cat-icon">${icon}</span>
         <span class="home-cat-name">${c}</span>
-        <span class="home-cat-count">${counts.get(c)} outils</span>
+        <span class="home-cat-count">${counts.get(c)} ${t('idx.toolsCountSuffix', langueCats)}</span>
         
       </button>`;
   }).join('');
@@ -1000,9 +893,10 @@ function renderCatConfirmBar(cat, count) {
   }
 
   const slug = slugify(cat);
+  const langueBar = window.detecterLangue ? window.detecterLangue() : 'fr';
 
   bar.innerHTML = `
-    <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">Explorer la catégorie →</a>
+    <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">${t('idx.exploreCategory', langueBar)}</a>
   `;
 
   bar.hidden = false;
@@ -1016,6 +910,7 @@ function renderBlog() {
   const filtersEl = document.getElementById('blog-filters');
   if (!filtersEl) return; // page sans section blog (ex: page catégorie statique)
 
+  const langueBlog = window.detecterLangue ? window.detecterLangue() : 'fr';
   const blogLangue = filtrerParLangue(state.blog);
   const cats = ['Tous', ...new Set(blogLangue.map(p => p.category))];
   filtersEl.innerHTML = cats.map(c =>
@@ -1054,12 +949,12 @@ function renderBlog() {
             <p class="blog-excerpt">${p.excerpt}</p>
             <span class="blog-tag" style="background:${col.tagBg};color:${col.tagColor}">${p.category}</span>
           </div>
-          <div class="blog-mins">⏱ ${p.readTime} de lecture</div>
+          <div class="blog-mins">⏱ ${p.readTime} ${t('idx.readTimeSuffix', langueBlog)}</div>
         </article>
       </a>`;
   }).join('');
 
-  setPaginationEl('blog-list', buildPaginationHTML(state.blogPage, totalPages, total, start + 1, shownEnd, 'blog', 'articles'));
+  setPaginationEl('blog-list', buildPaginationHTML(state.blogPage, totalPages, total, start + 1, shownEnd, 'blog', t('idx.articlesUnit', (window.detecterLangue ? window.detecterLangue() : 'fr'))));
 }
 
 function setBlogCat(cat) {
@@ -1076,13 +971,19 @@ function renderGallery() {
   const filtersEl = document.getElementById('gallery-filters');
   if (!filtersEl) return; // page sans galerie (ex: page catégorie statique)
 
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
   const types = ['Tous', 'image', 'vidéo', 'musique'];
-  const typeLabels = { Tous: 'Tous', image: 'Image', vidéo: 'Vidéo', musique: 'Musique' };
+  const typeLabels = {
+    Tous: t('idx.galleryTypeAll', langue),
+    image: t('idx.galleryTypeImage', langue),
+    vidéo: t('idx.galleryTypeVideo', langue),
+    musique: t('idx.galleryTypeMusic', langue),
+  };
   const typeIcons  = { image: '🖼', vidéo: '▶', musique: '♪' };
 
-  filtersEl.innerHTML = types.map(t =>
-    `<button class="filter${t === state.activeGalleryCat ? ' active' : ''}"
-      onclick="setGalleryCat('${t}')">${typeLabels[t]}</button>`
+  filtersEl.innerHTML = types.map(ty =>
+    `<button class="filter${ty === state.activeGalleryCat ? ' active' : ''}"
+      onclick="setGalleryCat('${ty}')">${typeLabels[ty]}</button>`
   ).join('');
 
   const filtered = state.gallery.filter(g =>
@@ -1115,13 +1016,13 @@ function renderGallery() {
         <div class="gallery-info">
           <div class="gallery-title">${g.title}</div>
           <div class="gallery-tool">${g.tool}</div>
-          <div class="gallery-likes"><span>♥</span> ${g.likes} likes</div>
+          <div class="gallery-likes"><span>♥</span> ${g.likes} ${t('idx.likesLabel', langue)}</div>
         </div>
       </article>`;
   }).join('');
 
   state.filteredGallery = filtered;
-  setPaginationEl('gallery-grid', buildPaginationHTML(state.galleryPage, totalPages, total, start + 1, shownEnd, 'gallery', 'œuvres'));
+  setPaginationEl('gallery-grid', buildPaginationHTML(state.galleryPage, totalPages, total, start + 1, shownEnd, 'gallery', t('idx.galleryWorksUnit', (window.detecterLangue ? window.detecterLangue() : 'fr'))));
 }
 
 function openGalleryItem(index) {
@@ -1151,6 +1052,7 @@ function initNewsletter() {
     if (!email) return;
     btn.textContent = '...';
     btn.disabled = true;
+    const langueNews = window.detecterLangue ? window.detecterLangue() : 'fr';
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -1158,15 +1060,15 @@ function initNewsletter() {
         body: JSON.stringify({ email }),
       });
       if (res.ok) {
-        feedback.textContent = '✓ Inscription confirmée ! Merci ' + email.split('@')[0] + ' !';
+        feedback.textContent = t('idx.newsletterSuccess', langueNews).replace('{name}', email.split('@')[0]);
         feedback.style.color = '#00d4aa';
         form.reset();
       } else {
-        feedback.textContent = '⚠ Erreur. Réessayez dans un instant.';
+        feedback.textContent = t('idx.newsletterErrorGeneric', langueNews);
         feedback.style.color = '#f5a623';
       }
     } catch {
-      feedback.textContent = '⚠ Erreur réseau. Réessayez.';
+      feedback.textContent = t('idx.newsletterErrorNetwork', langueNews);
       feedback.style.color = '#f5a623';
     }
     btn.textContent = 'S\'abonner';
@@ -1583,7 +1485,11 @@ function showQuizResults() {
       .replace('{budget}', answers.budget)
       .replace('{connexion}', answers.connexion);
 
-  const priceLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
+  const priceLabel = {
+    free: t('alertes.priceFree', state.langue),
+    freemium: t('alertes.priceFreemium', state.langue),
+    paid: t('alertes.pricePaid', state.langue),
+  };
   document.getElementById('quiz-results-grid').innerHTML = selected.map(t => {
     const quizPageUrl = buildToolPageUrl(t);
     const action = quizPageUrl
@@ -1642,7 +1548,9 @@ function shareWhatsApp() {
   const a    = quizState.answers;
   const param = [a.metier, a.objectif, a.budget, a.connexion, a.niveau].join('-');
   const url  = `${window.location.origin}${window.location.pathname}?quiz=${param}`;
-  const msg  = encodeURIComponent(`J'ai testé le quiz Albexia et voici mes 3 outils IA recommandés :\n${noms}\n\nTeste-le toi aussi → ${url}`);
+  const msg  = encodeURIComponent(
+    t('quiz.shareMessage', state.langue).replace('{list}', noms).replace('{link}', url)
+  );
   window.open(`https://wa.me/?text=${msg}`, '_blank');
 }
 

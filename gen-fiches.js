@@ -2629,6 +2629,8 @@ function generateGlossaireHub(termes, tools) {
       exemple_es: t.exemple_es || '',
       outils: outilsResolus,
       publie: t.status === 'publie',
+      publie_en: t.status === 'publie' && !!t.terme_en && !!t.definitionFlash_en,
+      publie_es: t.status === 'publie' && !!t.terme_es && !!t.definitionFlash_es,
     };
   });
 
@@ -2907,14 +2909,21 @@ function renderGlossaire() {
     });
   });
 }
+function ficheHref(t, langue) {
+  return langue === 'fr' ? '/glossaire/'+t.slug+'/' : '/glossaire/'+t.slug+'/'+langue+'/';
+}
+function estPubliePourLangue(t, langue) {
+  return langue === 'fr' ? t.publie : (langue === 'en' ? t.publie_en : t.publie_es);
+}
 function termCardHTML(t) {
   const nomTxt = champ(t, 'terme', langueActive);
   const defTxt = champ(t, 'definition', langueActive);
   const exTxt  = champ(t, 'exemple', langueActive);
+  const dispoDansLangue = estPubliePourLangue(t, langueActive);
+  const href = ficheHref(t, langueActive);
   const outilsHTML = t.outils.length ? '<div class="term-outils">'+t.outils.map(o => '<a href="'+o.url+'" class="term-outil-tag">'+o.nom+'</a>').join('')+'</div>' : '';
-  // La fiche détaillée /glossaire/{slug}/ reste FR uniquement (décision produit).
-  const ficheLink = t.publie ? '<a href="/glossaire/'+t.slug+'/" class="term-fiche-link">Voir la fiche complète →</a>' : '<span class="term-brouillon-tag">Fiche détaillée bientôt disponible</span>';
-  const nomHTML = t.publie ? '<a href="/glossaire/'+t.slug+'/" class="term-nom-link">'+nomTxt+'</a>' : nomTxt;
+  const ficheLink = dispoDansLangue ? '<a href="'+href+'" class="term-fiche-link">Voir la fiche complète →</a>' : '<span class="term-brouillon-tag">Fiche détaillée bientôt disponible</span>';
+  const nomHTML = dispoDansLangue ? '<a href="'+href+'" class="term-nom-link">'+nomTxt+'</a>' : nomTxt;
   const exempleHTML = exTxt
     ? '<button class="term-toggle">▼ Voir exemple</button><div class="term-extra"><div class="term-exemple">'+exTxt+'</div>'+outilsHTML+ficheLink+'</div>'
     : (outilsHTML + ficheLink);
@@ -2976,49 +2985,80 @@ ${sharedJS()}
 </html>`;
 }
 
-function generateGlossaireTermePage(terme, tools, allTermes) {
-  const langue = 'fr';
+const GLOSSAIRE_TERME_LABELS = {
+  fr: { outils:"🛠️ Outils IA pour pratiquer", pourquoi:"🎯 Pourquoi c'est important", enPratique:"⚙️ En pratique", exemple:"💡 Exemple concret", erreur:"Erreur fréquente :", faq:"❓ Questions fréquentes", connexes:"🔗 Termes connexes", retour:"← Retour au glossaire complet", ogSuffix:"Glossaire IA Albexia" },
+  en: { outils:"🛠️ AI tools to practice with", pourquoi:"🎯 Why it matters", enPratique:"⚙️ In practice", exemple:"💡 Concrete example", erreur:"Common mistake:", faq:"❓ Frequently asked questions", connexes:"🔗 Related terms", retour:"← Back to the full glossary", ogSuffix:"Albexia AI Glossary" },
+  es: { outils:"🛠️ Herramientas IA para practicar", pourquoi:"🎯 Por qué es importante", enPratique:"⚙️ En la práctica", exemple:"💡 Ejemplo concreto", erreur:"Error frecuente:", faq:"❓ Preguntas frecuentes", connexes:"🔗 Términos relacionados", retour:"← Volver al glosario completo", ogSuffix:"Glosario IA Albexia" },
+};
+
+// Lit un champ traduit avec repli FR : le FR n'a pas de suffixe dans
+// Firestore (terme.terme, terme.definitionFlash...), EN/ES sont
+// suffixés (terme.terme_en, terme.definitionFlash_es...).
+function champTerme(terme, base, langue) {
+  if (langue === 'fr') return terme[base] || '';
+  return terme[base + '_' + langue] || terme[base] || '';
+}
+
+function generateGlossaireTermePage(terme, tools, allTermes, langue = 'fr') {
   const slug = terme.slug;
   if (!slug) return null;
+  const L = GLOSSAIRE_TERME_LABELS[langue] || GLOSSAIRE_TERME_LABELS.fr;
 
-  const canonicalUrl = `${SITE_ORIGIN}/glossaire/${slug}/`;
-  const titleTag = `C'est quoi ${/^[aeiouhAEIOUH]/.test(terme.terme) ? "l'" : "un "}${terme.terme} ? Définition IA | Albexia`;
-  const defFlash = terme.definitionFlash || terme.definition || '';
+  const nomTerme = champTerme(terme, 'terme', langue);
+  const defFlash = champTerme(terme, 'definitionFlash', langue) || champTerme(terme, 'definition', langue);
+  const exemple = champTerme(terme, 'exemple', langue);
+  const pourquoiImportant = champTerme(terme, 'pourquoiImportant', langue);
+  const enPratique = champTerme(terme, 'enPratique', langue);
+  const erreurFrequente = champTerme(terme, 'erreurFrequente', langue);
+  const faqItems = (langue !== 'fr' && terme[`faq_${langue}`]?.length) ? terme[`faq_${langue}`] : (terme.faq || []);
+
+  // URLs par langue disponibles pour ce terme — FR toujours à la racine
+  // du slug (URL historique inchangée), EN/ES en sous-dossier, seulement
+  // si la traduction existe (mêmes conditions que dataJS.publie_en/es).
+  const langueUrls = { fr: `${SITE_ORIGIN}/glossaire/${slug}/` };
+  if (terme.terme_en && terme.definitionFlash_en) langueUrls.en = `${SITE_ORIGIN}/glossaire/${slug}/en/`;
+  if (terme.terme_es && terme.definitionFlash_es) langueUrls.es = `${SITE_ORIGIN}/glossaire/${slug}/es/`;
+  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, langueUrls);
+
+  const titleTag = langue === 'en'
+    ? `What is ${nomTerme}? AI Definition | Albexia`
+    : langue === 'es'
+    ? `¿Qué es ${nomTerme}? Definición IA | Albexia`
+    : `C'est quoi ${/^[aeiouhAEIOUH]/.test(nomTerme) ? "l'" : "un "}${nomTerme} ? Définition IA | Albexia`;
   const metaDesc = defFlash.slice(0, 155);
 
   const outilsSlugs = [...new Set(terme.outils || [])];
   const outilsMatches = outilsSlugs.map(s => tools.find(t => slugify(t.name) === s)).filter(Boolean);
   const outilsHTML = outilsMatches.length
     ? `<div class="niche-section">
-  <div class="niche-section-title">🛠️ Outils IA pour pratiquer</div>
+  <div class="niche-section-title">${L.outils}</div>
   <div class="niche-tools-grid">
     ${outilsMatches.map(nicheToolCardHTML).join('\n    ')}
   </div>
 </div>`
     : '';
 
-  const pourquoiHTML = terme.pourquoiImportant ? `<div class="niche-section">
-  <div class="niche-section-title">🎯 Pourquoi c'est important</div>
-  <div class="niche-conseils">${terme.pourquoiImportant}</div>
+  const pourquoiHTML = pourquoiImportant ? `<div class="niche-section">
+  <div class="niche-section-title">${L.pourquoi}</div>
+  <div class="niche-conseils">${pourquoiImportant}</div>
 </div>` : '';
 
-  const enPratiqueHTML = terme.enPratique ? `<div class="niche-section">
-  <div class="niche-section-title">⚙️ En pratique</div>
-  <div class="niche-conseils">${terme.enPratique}</div>
+  const enPratiqueHTML = enPratique ? `<div class="niche-section">
+  <div class="niche-section-title">${L.enPratique}</div>
+  <div class="niche-conseils">${enPratique}</div>
 </div>` : '';
 
-  const exempleHTML = terme.exemple ? `<div class="niche-section">
-  <div class="niche-section-title">💡 Exemple concret</div>
-  <div class="niche-conseils" style="font-style:italic">${terme.exemple}</div>
+  const exempleHTML = exemple ? `<div class="niche-section">
+  <div class="niche-section-title">${L.exemple}</div>
+  <div class="niche-conseils" style="font-style:italic">${exemple}</div>
 </div>` : '';
 
-  const erreurHTML = terme.erreurFrequente ? `<div class="niche-section">
-  <div class="glossaire-erreur-box"><strong>Erreur fréquente :</strong> ${terme.erreurFrequente}</div>
+  const erreurHTML = erreurFrequente ? `<div class="niche-section">
+  <div class="glossaire-erreur-box"><strong>${L.erreur}</strong> ${erreurFrequente}</div>
 </div>` : '';
 
-  const faqItems = terme.faq || [];
   const faqHTML = faqItems.length ? `<div class="niche-section">
-  <div class="niche-section-title">❓ Questions fréquentes</div>
+  <div class="niche-section-title">${L.faq}</div>
   <div class="niche-faq">
     ${faqItems.map((f, i) => `<div class="niche-faq-item" id="gfaq-${i}">
       <button class="niche-faq-question" onclick="toggleGlossaireFAQ(${i})">
@@ -3034,17 +3074,23 @@ function generateGlossaireTermePage(terme, tools, allTermes) {
   const connexesMatches = connexesSlugs
     .map(s => allTermes.find(t => t.slug === s && t.status === 'publie'))
     .filter(Boolean);
+  // Les termes connexes renvoient vers leur fiche dans la même langue si
+  // elle existe, sinon vers la fiche FR (mieux qu'un lien mort).
   const connexesHTML = connexesMatches.length ? `<div class="niche-section">
-  <div class="niche-section-title">🔗 Termes connexes</div>
+  <div class="niche-section-title">${L.connexes}</div>
   <div class="niche-related">
-    ${connexesMatches.map(t => `<a href="${R}glossaire/${t.slug}/" class="niche-related-link">${t.terme}</a>`).join('')}
+    ${connexesMatches.map(t => {
+      const dispo = langue === 'fr' || (langue === 'en' && t.terme_en && t.definitionFlash_en) || (langue === 'es' && t.terme_es && t.definitionFlash_es);
+      const href = dispo ? `${R}glossaire/${t.slug}/${langue === 'fr' ? '' : langue + '/'}` : `${R}glossaire/${t.slug}/`;
+      return `<a href="${href}" class="niche-related-link">${champTerme(t, 'terme', langue)}</a>`;
+    }).join('')}
   </div>
 </div>` : '';
 
   const jsonLdGraph = [
     {
       '@type': 'DefinedTerm',
-      name: terme.terme,
+      name: nomTerme,
       description: defFlash,
       inDefinedTermSet: { '@type': 'DefinedTermSet', name: 'Glossaire IA Albexia', url: `${SITE_ORIGIN}/glossaire/` },
       url: canonicalUrl,
@@ -3071,10 +3117,13 @@ function generateGlossaireTermePage(terme, tools, allTermes) {
   <meta name="description" content="${metaDesc}" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="${canonicalUrl}" />
-  <meta property="og:title" content="${terme.terme} — Glossaire IA Albexia" />
+${hreflangTags}
+  <meta property="og:title" content="${nomTerme} — ${L.ogSuffix}" />
   <meta property="og:description" content="${metaDesc}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="${canonicalUrl}" />
+  <meta property="og:locale" content="${ogLocale}" />
+${ogLocaleAlternates}
   ${jsonLdHTML}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -3094,7 +3143,7 @@ ${navHTML(langue)}
 <section class="niche-hero">
   <div class="niche-hero-glow"></div>
   ${glossaireNiveauBadgeHTML(terme.niveau)}
-  <h1>${terme.terme}</h1>
+  <h1>${nomTerme}</h1>
   <p style="font-size:17px">${defFlash}</p>
 </section>
 
@@ -3106,7 +3155,7 @@ ${faqHTML}
 ${outilsHTML}
 ${connexesHTML}
 
-<a href="${R}glossaire/" class="niche-back">← Retour au glossaire complet</a>
+<a href="${R}glossaire/${langue === 'fr' ? '' : langue + '/'}" class="niche-back">${L.retour}</a>
 
 ${footerHTML()}
 ${faqHTML ? '<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>' : ''}
@@ -4331,27 +4380,41 @@ async function main() {
 
     if (!ownHasChanged && referencedToolChanged) glossCascade++;
 
+    // Langues à générer pour ce terme : FR toujours, EN/ES seulement si
+    // traduites (mêmes conditions que dataJS.publie_en/publie_es plus haut).
+    const langues = ['fr'];
+    if (terme.terme_en && terme.definitionFlash_en) langues.push('en');
+    if (terme.terme_es && terme.definitionFlash_es) langues.push('es');
+
     if (!hasChanged && fs.existsSync(filePath)) { glossUnchanged++; continue; }
 
-    const html = generateGlossaireTermePage(terme, toolsUniques, termesGlossaire);
-    if (!html) { glossSkippedNoSlug++; continue; }
-
-    fs.mkdirSync(folder, { recursive: true });
-    fs.writeFileSync(filePath, html, 'utf8');
+    for (const langue of langues) {
+      const langFolder = langue === 'fr' ? folder : path.join(folder, langue);
+      const langFilePath = path.join(langFolder, 'index.html');
+      const html = generateGlossaireTermePage(terme, toolsUniques, termesGlossaire, langue);
+      if (!html) continue;
+      fs.mkdirSync(langFolder, { recursive: true });
+      fs.writeFileSync(langFilePath, html, 'utf8');
+    }
     glossGenerated++;
   }
 
   console.log(`\n✅ Glossaire — ${glossGenerated} régénéré(s) (dont ${glossCascade} via cascade outil modifié), ${glossUnchanged} inchangé(s) (skip), ${glossSkippedBrouillon} en brouillon (non générés), ${glossSkippedNoSlug} ignoré(s) (slug vide).`);
   console.log(`\nStructure :`);
-  console.log(`  glossaire/{slug}/index.html`);
+  console.log(`  glossaire/{slug}/index.html (FR)`);
+  console.log(`  glossaire/{slug}/en/index.html (EN, si traduit)`);
+  console.log(`  glossaire/{slug}/es/index.html (ES, si traduit)`);
   console.log(`  glossaire/index.html (hub)`);
 
   // ─── NETTOYAGE DES PAGES GLOSSAIRE ORPHELINES OU DÉPUBLIÉES ───
   console.log(`\n🧹 Nettoyage des pages glossaire orphelines ou dépubliées...`);
   const validGlossairePaths = new Set();
+  const validGlossaireLangPaths = new Set();
   for (const terme of termesGlossaire) {
     if (!terme.slug || terme.status !== 'publie') continue;
     validGlossairePaths.add(path.join('glossaire', terme.slug));
+    if (terme.terme_en && terme.definitionFlash_en) validGlossaireLangPaths.add(path.join('glossaire', terme.slug, 'en'));
+    if (terme.terme_es && terme.definitionFlash_es) validGlossaireLangPaths.add(path.join('glossaire', terme.slug, 'es'));
   }
   let removedGlossaire = 0;
   if (fs.existsSync('glossaire')) {
@@ -4362,6 +4425,15 @@ async function main() {
         fs.rmSync(fullPath, { recursive: true, force: true });
         console.log(`  🗑️  Supprimé : ${fullPath}`);
         removedGlossaire++;
+        continue;
+      }
+      // Le dossier slug est valide (FR publié) — vérifie ses sous-dossiers en/es
+      for (const langDir of ['en', 'es']) {
+        const langPath = path.join(fullPath, langDir);
+        if (fs.existsSync(langPath) && !validGlossaireLangPaths.has(langPath)) {
+          fs.rmSync(langPath, { recursive: true, force: true });
+          console.log(`  🗑️  Supprimé (traduction retirée) : ${langPath}`);
+        }
       }
     }
   }

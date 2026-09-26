@@ -211,12 +211,33 @@ async function traduireOutils() {
 
 const MAX_TERMES_PAR_RUN = 15;
 
+// faq glossaire : [{question, reponse}] — même logique que translateFaq
+// (outils) mais noms de champs différents (français, pas q/a).
+async function translateGlossaireFaq(items, targetLang) {
+  const resultats = [];
+  for (const f of items || []) {
+    const questionT = await translateText((f.question || '').trim(), targetLang);
+    await pause(400);
+    const reponseT = (f.reponse || '').trim() ? await translateText(f.reponse.trim(), targetLang) : '';
+    await pause(400);
+    resultats.push({ question: questionT, reponse: reponseT });
+  }
+  return resultats;
+}
+
 async function traduireTerme(terme, langueCible) {
-  const t = await translateText(terme.terme || '', langueCible); await pause(400);
-  const d = await translateText(terme.definitionFlash || '', langueCible); await pause(400);
-  const e = terme.exemple ? await translateText(terme.exemple, langueCible) : '';
+  const t   = await translateText(terme.terme || '', langueCible); await pause(400);
+  const d   = await translateText(terme.definitionFlash || '', langueCible); await pause(400);
+  const e   = terme.exemple ? await translateText(terme.exemple, langueCible) : '';
   if (terme.exemple) await pause(400);
-  return { terme: t, definitionFlash: d, exemple: e };
+  const p   = terme.pourquoiImportant ? await translateText(terme.pourquoiImportant, langueCible) : '';
+  if (terme.pourquoiImportant) await pause(400);
+  const ep  = terme.enPratique ? await translateText(terme.enPratique, langueCible) : '';
+  if (terme.enPratique) await pause(400);
+  const err = terme.erreurFrequente ? await translateText(terme.erreurFrequente, langueCible) : '';
+  if (terme.erreurFrequente) await pause(400);
+  const faq = await translateGlossaireFaq(terme.faq, langueCible);
+  return { terme: t, definitionFlash: d, exemple: e, pourquoiImportant: p, enPratique: ep, erreurFrequente: err, faq };
 }
 
 async function traduireGlossaire() {
@@ -245,6 +266,10 @@ async function traduireGlossaire() {
         maj[`terme_${langue}`] = traduit.terme;
         maj[`definitionFlash_${langue}`] = traduit.definitionFlash;
         maj[`exemple_${langue}`] = traduit.exemple;
+        maj[`pourquoiImportant_${langue}`] = traduit.pourquoiImportant;
+        maj[`enPratique_${langue}`] = traduit.enPratique;
+        maj[`erreurFrequente_${langue}`] = traduit.erreurFrequente;
+        maj[`faq_${langue}`] = traduit.faq;
         console.log(`  ✓ ${terme.terme} → ${langue.toUpperCase()}`);
       } catch (err) {
         console.error(`  ✗ ${terme.terme} → ${langue.toUpperCase()} : ${err.message}`);

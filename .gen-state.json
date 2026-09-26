@@ -727,48 +727,48 @@
       "updatedAtMs": 1790461782708
     },
     "rlhf": {
-      "hash": "474eb273ed730bc0a63ec26f12152ad2b5a35a62803ea677a64ebe60521a84c0",
-      "updatedAtMs": 1786118623714
+      "hash": "23887b82d6f140fca4eea9a5ab97749d877006562fe63c67804480e99dea568c",
+      "updatedAtMs": 1790462690193
     },
     "stable-diffusion": {
-      "hash": "cfeae5070f4385e3603385f5929aafdf2a1bd3ed55bac5bfd2d54d6e58a8c77d",
-      "updatedAtMs": 1786118653736
+      "hash": "278ce1ea331aaea2c34856355d317877a7b8a5b042c0c9942e77001d2ee7b5e6",
+      "updatedAtMs": 1790462708658
     },
     "systeme-recommandation": {
-      "hash": "036cb3d9cbd267fb4aabf6949df5317dc894d7463768d8bf290c66e324144a98",
-      "updatedAtMs": 1786118654144
+      "hash": "52e174d6ba16a3730398fe140f6e645a7dec7deaf5fefacd5a8bef36acad9b85",
+      "updatedAtMs": 1790462726222
     },
     "temperature": {
-      "hash": "4f3ea2d9fcdd7f8d33cbd1b59576e1744a394f89d90e55a899c499697d4ed62f",
-      "updatedAtMs": 1786118654322
+      "hash": "662035c2f46711feb70fdbada1e0393d26b933ee2d5a518df1aaaad7e2b127e9",
+      "updatedAtMs": 1790462744399
     },
     "text-to-image": {
-      "hash": "ffc529a666792d0a13d7f5c49e00846a2eb7c2fee17fa61170d69c88bbf30826",
-      "updatedAtMs": 1786118654476
+      "hash": "b2e858bae03a0391ce4aaba64f5d438c25a93b224f3837b94d4ce19ae2b36718",
+      "updatedAtMs": 1790462763072
     },
     "text-to-speech": {
-      "hash": "978aef06873c9873a58773544f452960d0928495c78de0d79b00503506fbfe87",
-      "updatedAtMs": 1786118654871
+      "hash": "27961d8d052e370088094d43a2c0da1eb05b647b69e94450ff7a7a332e15e095",
+      "updatedAtMs": 1790462781522
     },
     "text-to-video": {
-      "hash": "ddc8dd3cd73c0079f9f3218c1227e2da88bc9258d6dea8d8ab6cf0fb7ab9fe4b",
-      "updatedAtMs": 1786118655038
+      "hash": "54c7a48353fe8cb696875179e6e5237a9bce994617521aa850200c35413dae39",
+      "updatedAtMs": 1790462799835
     },
     "token": {
-      "hash": "c448e3e6b4b336632cb354646ca530a1bf14d28600916e6476c82be6f781e30d",
-      "updatedAtMs": 1786118675533
+      "hash": "04b3591f2f79694cda7f186cdf1f9e6f4ca2e06524888d89e078c2fa1630f2a3",
+      "updatedAtMs": 1790462818237
     },
     "transformer": {
-      "hash": "edfc5d9c097887999b3d592489e4502867d317036e5fe3d8f7b928a9254cff7b",
-      "updatedAtMs": 1786118675927
+      "hash": "75456982bfa2b88c7706becabf0e0908460add9ed9c11de4f01bd7a337daaf97",
+      "updatedAtMs": 1790462836562
     },
     "vision-ordinateur": {
-      "hash": "3184814e3bdb72f399cec1fdd571a45b1d5540838e708464af9c10caed2cd360",
-      "updatedAtMs": 1786118676064
+      "hash": "e80c516fbb6a60dda0b10dd62bfbeb649963db1965af98885b156543ce9bef31",
+      "updatedAtMs": 1790462854363
     },
     "zero-shot": {
-      "hash": "8f49c612c387f609aff50d5dfc339b35143659d6eefb94c7a5f7eec03229f025",
-      "updatedAtMs": 1786118676466
+      "hash": "3d94e1c23421ca02ca50590afa6017fd654681ef2dd813d38dce2d0ac6576221",
+      "updatedAtMs": 1790462872431
     }
   }
 }

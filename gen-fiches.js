@@ -2615,12 +2615,18 @@ function generateGlossaireHub(termes, tools) {
         return { nom: tool.name, url: `${R}tools/${plan}/${tool.langue||'fr'}/${slugify(tool.name)}/` };
       });
     return {
-      terme: t.terme,
+      terme_fr: t.terme,
+      terme_en: t.terme_en || '',
+      terme_es: t.terme_es || '',
       slug: t.slug,
       lettre: (t.lettre || t.terme?.[0] || '').toUpperCase(),
       niveau: t.niveau || 'debutant',
-      definition: t.definitionFlash || '',
-      exemple: t.exemple || '',
+      definition_fr: t.definitionFlash || '',
+      definition_en: t.definitionFlash_en || '',
+      definition_es: t.definitionFlash_es || '',
+      exemple_fr: t.exemple || '',
+      exemple_en: t.exemple_en || '',
+      exemple_es: t.exemple_es || '',
       outils: outilsResolus,
       publie: t.status === 'publie',
     };
@@ -2729,22 +2735,35 @@ function generateGlossaireHub(termes, tools) {
 
 ${navHTML(langue)}
 
+<script src="${R}js/i18n.js"></script>
+
+<div class="lang-selector" id="lang-selector" style="position:fixed;top:14px;right:66px;z-index:150">
+  <button class="lang-current" id="lang-current" type="button" aria-expanded="false">
+    <span>🌐</span><span id="lang-current-label">FR</span><span class="lang-arrow">⌄</span>
+  </button>
+  <div class="lang-menu" id="lang-menu">
+    <button class="lang-btn active" data-lang="fr" onclick="changerLangueGlobale('fr')">🇫🇷 Français</button>
+    <button class="lang-btn" data-lang="en" onclick="changerLangueGlobale('en')">🇬🇧 English</button>
+    <button class="lang-btn" data-lang="es" onclick="changerLangueGlobale('es')">🇪🇸 Español</button>
+  </div>
+</div>
+
 <section class="glossaire-hero">
-  <div class="glossaire-badge">📖 Référence francophone</div>
-  <h1>Glossaire de <span class="grad-purple">l'IA</span></h1>
-  <p>Tous les termes de l'intelligence artificielle expliqués simplement en français — pour débutants et professionnels.</p>
+  <div class="glossaire-badge" data-i18n="glossaire.badge">📖 Référence IA</div>
+  <h1 data-i18n-html="glossaire.title">Glossaire de <span class="grad-purple">l'IA</span></h1>
+  <p data-i18n="glossaire.subtitle">Tous les termes de l'intelligence artificielle expliqués simplement — pour débutants et professionnels.</p>
   <div style="display:flex;gap:32px;justify-content:center;margin-top:32px;padding-top:28px;border-top:1px solid var(--border)">
     <div>
       <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#6c63ff">${dataJS.length}</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">termes définis</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px" data-i18n="glossaire.statTerms">termes définis</div>
     </div>
     <div>
       <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#00d4aa">3</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">niveaux</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px" data-i18n="glossaire.statLevels">niveaux</div>
     </div>
     <div>
-      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#ff6b9d">FR</div>
-      <div style="font-size:12px;color:var(--text-muted);margin-top:2px">100% en français</div>
+      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#ff6b9d" id="glossaire-lang-badge">FR</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:2px" data-i18n="glossaire.statLang">3 langues</div>
     </div>
   </div>
 </section>
@@ -2753,7 +2772,7 @@ ${navHTML(langue)}
   <div class="terme-jour" id="terme-jour">
     <div class="terme-jour-ico">💡</div>
     <div>
-      <div class="terme-jour-label">Terme du jour</div>
+      <div class="terme-jour-label" data-i18n="glossaire.termOfDay">Terme du jour</div>
       <div class="terme-jour-nom" id="tdj-nom">Chargement…</div>
       <div class="terme-jour-def" id="tdj-def"></div>
     </div>
@@ -2763,22 +2782,22 @@ ${navHTML(langue)}
 <div class="glossaire-controls">
   <div class="glossaire-search-wrap">
     <span class="glossaire-search-icon">🔍</span>
-    <input type="text" class="glossaire-search" id="glossaire-search" placeholder="Rechercher un terme… (ex: LLM, prompt, token)">
+    <input type="text" class="glossaire-search" id="glossaire-search" placeholder="Rechercher un terme… (ex: LLM, prompt, token)" data-i18n-placeholder="glossaire.searchPlaceholder">
   </div>
   <div class="alpha-nav" id="alpha-nav"></div>
   <div class="niveau-filters">
-    <button class="niveau-filter active" data-niveau="Tous">Tous les niveaux</button>
-    <button class="niveau-filter" data-niveau="debutant">🌱 Débutant</button>
-    <button class="niveau-filter" data-niveau="intermediaire">🌿 Intermédiaire</button>
-    <button class="niveau-filter" data-niveau="avance">🌳 Avancé</button>
+    <button class="niveau-filter active" data-niveau="Tous" data-i18n="glossaire.levelAll">Tous les niveaux</button>
+    <button class="niveau-filter" data-niveau="debutant" data-i18n="glossaire.levelBeginner">🌱 Débutant</button>
+    <button class="niveau-filter" data-niveau="intermediaire" data-i18n="glossaire.levelIntermediate">🌿 Intermédiaire</button>
+    <button class="niveau-filter" data-niveau="avance" data-i18n="glossaire.levelAdvanced">🌳 Avancé</button>
   </div>
 </div>
 
 <div class="glossaire-cta">
   <div class="glossaire-cta-card">
     <div class="glossaire-cta-text">
-      Vous découvrez l'IA ? Commencez gratuitement.
-      <span>Ces outils ont un plan gratuit — aucune carte requise.</span>
+      <span data-i18n="glossaire.ctaText">Vous découvrez l'IA ? Commencez gratuitement.</span>
+      <span data-i18n="glossaire.ctaSub">Ces outils ont un plan gratuit — aucune carte requise.</span>
     </div>
     <div class="glossaire-cta-tools">
       <a class="cta-tool-btn" href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT →</a>
@@ -2798,13 +2817,18 @@ const allTermes = ${JSON.stringify(dataJS)};
 let activeNiveau = 'Tous';
 let activeLettre = null;
 let searchQuery = '';
+let langueActive = (typeof detecterLangue === 'function') ? detecterLangue() : 'fr';
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+function champ(t, base, langue) {
+  return t[base + '_' + langue] || t[base + '_fr'];
+}
 
 function initTermeDuJour() {
   const idx = new Date().getDate() % allTermes.length;
   const t = allTermes[idx];
-  document.getElementById('tdj-nom').textContent = t.terme;
-  document.getElementById('tdj-def').textContent = t.definition;
+  document.getElementById('tdj-nom').textContent = champ(t, 'terme', langueActive);
+  document.getElementById('tdj-def').textContent = champ(t, 'definition', langueActive);
 }
 function initAlpha() {
   const lettresPresentes = new Set(allTermes.map(t => t.lettre));
@@ -2848,10 +2872,20 @@ function filtrerTermes() {
   let termes = [...allTermes];
   if (activeNiveau !== 'Tous') termes = termes.filter(t => t.niveau === activeNiveau);
   if (activeLettre) termes = termes.filter(t => t.lettre === activeLettre);
-  if (searchQuery) termes = termes.filter(t => normaliser(t.terme).includes(searchQuery) || normaliser(t.definition).includes(searchQuery));
+  if (searchQuery) termes = termes.filter(t =>
+    normaliser(champ(t, 'terme', langueActive)).includes(searchQuery) ||
+    normaliser(champ(t, 'definition', langueActive)).includes(searchQuery)
+  );
   return termes;
 }
-function niveauLabel(n) { return { debutant:'Débutant', intermediaire:'Intermédiaire', avance:'Avancé' }[n] || n; }
+function niveauLabel(n) {
+  const labels = {
+    fr: { debutant:'Débutant', intermediaire:'Intermédiaire', avance:'Avancé' },
+    en: { debutant:'Beginner', intermediaire:'Intermediate', avance:'Advanced' },
+    es: { debutant:'Principiante', intermediaire:'Intermedio', avance:'Avanzado' },
+  };
+  return (labels[langueActive] && labels[langueActive][n]) || labels.fr[n] || n;
+}
 function renderGlossaire() {
   const termes = filtrerTermes();
   const body = document.getElementById('glossaire-body');
@@ -2874,13 +2908,17 @@ function renderGlossaire() {
   });
 }
 function termCardHTML(t) {
+  const nomTxt = champ(t, 'terme', langueActive);
+  const defTxt = champ(t, 'definition', langueActive);
+  const exTxt  = champ(t, 'exemple', langueActive);
   const outilsHTML = t.outils.length ? '<div class="term-outils">'+t.outils.map(o => '<a href="'+o.url+'" class="term-outil-tag">'+o.nom+'</a>').join('')+'</div>' : '';
+  // La fiche détaillée /glossaire/{slug}/ reste FR uniquement (décision produit).
   const ficheLink = t.publie ? '<a href="/glossaire/'+t.slug+'/" class="term-fiche-link">Voir la fiche complète →</a>' : '<span class="term-brouillon-tag">Fiche détaillée bientôt disponible</span>';
-  const nomHTML = t.publie ? '<a href="/glossaire/'+t.slug+'/" class="term-nom-link">'+t.terme+'</a>' : t.terme;
-  const exempleHTML = t.exemple
-    ? '<button class="term-toggle">▼ Voir exemple</button><div class="term-extra"><div class="term-exemple">'+t.exemple+'</div>'+outilsHTML+ficheLink+'</div>'
+  const nomHTML = t.publie ? '<a href="/glossaire/'+t.slug+'/" class="term-nom-link">'+nomTxt+'</a>' : nomTxt;
+  const exempleHTML = exTxt
+    ? '<button class="term-toggle">▼ Voir exemple</button><div class="term-extra"><div class="term-exemple">'+exTxt+'</div>'+outilsHTML+ficheLink+'</div>'
     : (outilsHTML + ficheLink);
-  return '<div class="term-card"><div class="term-head"><div class="term-nom">'+nomHTML+'</div><span class="term-niveau niveau-'+t.niveau+'">'+niveauLabel(t.niveau)+'</span></div><p class="term-def">'+t.definition+'</p>'+exempleHTML+'</div>';
+  return '<div class="term-card"><div class="term-head"><div class="term-nom">'+nomHTML+'</div><span class="term-niveau niveau-'+t.niveau+'">'+niveauLabel(t.niveau)+'</span></div><p class="term-def">'+defTxt+'</p>'+exempleHTML+'</div>';
 }
 function resetFilters() {
   activeNiveau='Tous'; activeLettre=null; searchQuery='';
@@ -2891,7 +2929,47 @@ function resetFilters() {
   renderGlossaire();
 }
 window.resetFilters = resetFilters;
+
+// Crochet appelé par changerLangueGlobale() (js/i18n.js) après avoir
+// appliqué les traductions statiques (data-i18n) — régénère le contenu
+// dynamique (terme du jour + cartes) dans la nouvelle langue.
+window.onLangueChange = function(code) {
+  langueActive = code;
+  const badge = document.getElementById('glossaire-lang-badge');
+  if (badge) badge.textContent = code.toUpperCase();
+  initTermeDuJour();
+  renderGlossaire();
+};
+
+const badgeInit = document.getElementById('glossaire-lang-badge');
+if (badgeInit) badgeInit.textContent = langueActive.toUpperCase();
 initTermeDuJour(); initAlpha(); initNiveaux(); initSearch(); renderGlossaire();
+</script>
+<script>
+  // Ouverture/fermeture du sélecteur de langue — identique à index.html
+  (function () {
+    const selector = document.getElementById('lang-selector');
+    const current = document.getElementById('lang-current');
+    const label = document.getElementById('lang-current-label');
+    if (!selector || !current) return;
+    current.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const isOpen = selector.classList.toggle('open');
+      current.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    document.addEventListener('click', function () {
+      selector.classList.remove('open');
+      current.setAttribute('aria-expanded', 'false');
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        if (label) label.textContent = this.dataset.lang.toUpperCase();
+        selector.classList.remove('open');
+        current.setAttribute('aria-expanded', 'false');
+      });
+    });
+    if (label) label.textContent = langueActive.toUpperCase();
+  })();
 </script>
 ${sharedJS()}
 </body>

@@ -153,7 +153,7 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
 // SCRIPT PRINCIPAL
 // ══════════════════════════════════════
 
-async function main() {
+async function traduireOutils() {
   const snap = await db.collection('outils').where('langue', '==', 'fr').get();
   const tousLesOutils = snap.docs.map(d => ({ ref: d.ref, id: d.id, ...d.data() }));
 
@@ -196,8 +196,81 @@ async function main() {
     if (erreursOutil.length) echecs++;
   }
 
-  console.log(`\nTerminé — ${succes} outil(s) mis à jour, ${echecs} avec au moins une erreur.`);
-  console.log('⚠️  Relance gen-fiches.js pour publier les nouvelles fiches EN/ES en HTML statique.');
+  console.log(`\nOutils — ${succes} mis à jour, ${echecs} avec au moins une erreur.`);
+}
+
+// ══════════════════════════════════════
+// GLOSSAIRE — traduction inline sur le MÊME document Firestore
+// (contrairement aux outils : pas de docs séparés par langue, car la
+// page glossaire/index.html affiche les 3 langues depuis un seul
+// tableau généré par gen-fiches.js, avec bascule côté client).
+// Champs traduits : terme, definitionFlash, exemple (les 3 seuls
+// utilisés sur les cartes du hub). Écrits sous la forme
+// terme_en/terme_es, definitionFlash_en/es, exemple_en/es.
+// ══════════════════════════════════════
+
+const MAX_TERMES_PAR_RUN = 15;
+
+async function traduireTerme(terme, langueCible) {
+  const t = await translateText(terme.terme || '', langueCible); await pause(400);
+  const d = await translateText(terme.definitionFlash || '', langueCible); await pause(400);
+  const e = terme.exemple ? await translateText(terme.exemple, langueCible) : '';
+  if (terme.exemple) await pause(400);
+  return { terme: t, definitionFlash: d, exemple: e };
+}
+
+async function traduireGlossaire() {
+  const snap = await db.collection('glossaire').get();
+  const tousLesTermes = snap.docs.map(d => ({ ref: d.ref, id: d.id, ...d.data() }));
+
+  const aTraiter = tousLesTermes.filter(t => {
+    const manqueEn = !t.terme_en || !t.definitionFlash_en;
+    const manqueEs = !t.terme_es || !t.definitionFlash_es;
+    return manqueEn || manqueEs;
+  }).slice(0, MAX_TERMES_PAR_RUN);
+
+  console.log(`\n${tousLesTermes.length} terme(s) glossaire au total, ${aTraiter.length} à traduire ce run.`);
+
+  let succes = 0, echecs = 0;
+
+  for (const terme of aTraiter) {
+    const maj = {};
+    const erreursTerme = [];
+
+    for (const langue of ['en', 'es']) {
+      if (terme[`terme_${langue}`] && terme[`definitionFlash_${langue}`]) continue; // déjà traduit
+
+      try {
+        const traduit = await traduireTerme(terme, langue);
+        maj[`terme_${langue}`] = traduit.terme;
+        maj[`definitionFlash_${langue}`] = traduit.definitionFlash;
+        maj[`exemple_${langue}`] = traduit.exemple;
+        console.log(`  ✓ ${terme.terme} → ${langue.toUpperCase()}`);
+      } catch (err) {
+        console.error(`  ✗ ${terme.terme} → ${langue.toUpperCase()} : ${err.message}`);
+        erreursTerme.push(langue);
+      }
+    }
+
+    if (Object.keys(maj).length) {
+      maj.updatedAt = FieldValue.serverTimestamp();
+      await terme.ref.set(maj, { merge: true });
+      succes++;
+    }
+    if (erreursTerme.length) echecs++;
+  }
+
+  console.log(`Glossaire — ${succes} terme(s) mis à jour, ${echecs} avec au moins une erreur.`);
+}
+
+// ══════════════════════════════════════
+// SCRIPT PRINCIPAL
+// ══════════════════════════════════════
+
+async function main() {
+  await traduireOutils();
+  await traduireGlossaire();
+  console.log('\n⚠️  Relance gen-fiches.js pour publier les nouvelles fiches EN/ES en HTML statique.');
 }
 
 main().catch(err => {

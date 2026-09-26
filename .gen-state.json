@@ -607,64 +607,64 @@
   },
   "glossaire": {
     "agent-ia": {
-      "hash": "29ac1ea906eb5e53bdae382cb3ca83b98368d30e1eedf5a4e3f066b2fbd0a4b5",
-      "updatedAtMs": 1786120690547
+      "hash": "f3ac7ddb9131b8c6c753fdaea5eab34c3503d11ce52dbac8d8d07c1b21707bf8",
+      "updatedAtMs": 1790459676486
     },
     "api": {
-      "hash": "aa31e5e7494ac477e6cfb238350d2c7e245d6e25c2bedb6a2c8fe971486dadff",
-      "updatedAtMs": 1790017877623
+      "hash": "30f0c98758b55925d7fa84ba39be5a830c4bc9bd4e6d48cabb2190d2fba69533",
+      "updatedAtMs": 1790459681031
     },
     "apprentissage-automatique": {
-      "hash": "0c3061e9aa8e075d0578bb21d534223ba528490feb11d649110e0e5483ea5080",
-      "updatedAtMs": 1790018091054
+      "hash": "a99bba752353f859f2bebffd71ddf08cb1daf865c354e4d14bb88dcadab3f655",
+      "updatedAtMs": 1790459685365
     },
     "apprentissage-profond": {
-      "hash": "182778993539cc54567e431414b92f056e11cad80d6bb211a332e90198ca6674",
-      "updatedAtMs": 1790018171637
+      "hash": "b7ca349bfa73753b41fd3b3ae09b9add2ff913ae30530d7f09f141875bb338cd",
+      "updatedAtMs": 1790459689869
     },
     "chatbot": {
-      "hash": "3fb07cd89dd990233b4c0cbb9aa79d575df91e952243cb6f62f2a072dfcf143f",
-      "updatedAtMs": 1786119177307
+      "hash": "ada5537425d461f4658bcb149dc70afc0c56fb608991af9a225e4727014d1927",
+      "updatedAtMs": 1790459694490
     },
     "context-window": {
-      "hash": "48c207517990459853e10cb13f3c0688bd0f281f4455e57643614c1010eb003a",
-      "updatedAtMs": 1786119177512
+      "hash": "89c922e093d4d65f45814ad522001c629fc9ce311f72407a4f17d6431986e0be",
+      "updatedAtMs": 1790459699286
     },
     "contexte": {
-      "hash": "254a19053a5736b727acca9c8ba82531145ffc1fe836053b2883352af808dfdd",
-      "updatedAtMs": 1786062364134
+      "hash": "943bf4bc27316688362aa80d0d4d546ade3b44dde3de755559e2e09f77dce91e",
+      "updatedAtMs": 1790459703916
     },
     "diffusion": {
-      "hash": "8f64c71bc662e9439decfc5c83b35605c8c0a78a5bad699dc469129f87d7c21e",
-      "updatedAtMs": 1786118568627
+      "hash": "15d521270975115728dffc45a15f34dc6bf81b772871dd296561368b4db23f63",
+      "updatedAtMs": 1790459708675
     },
     "embeddings": {
-      "hash": "e85b5ef3ffc1221f8f114fda7a3e97d5561e715fc91eaacc6603917b611a8c34",
-      "updatedAtMs": 1786118569040
+      "hash": "102bbbae240a62be3843d45fe61fbbf19b0eb04cd53091cae3b40730f1b825ec",
+      "updatedAtMs": 1790459713607
     },
     "few-shot": {
-      "hash": "58be47e6a2842b2a81e0a26b95f23efc23542114d32bfffe9a6e68fabc029009",
-      "updatedAtMs": 1786118569203
+      "hash": "a9d8c2cf0c009cb45bbeb7397519cea1065139cc2f40c9974c1d72b6fdd5dc23",
+      "updatedAtMs": 1790459718046
     },
     "fine-tuning": {
-      "hash": "6b732970ce8b68f714547b9d011336e53a295289edd10f74973b8a9e4a43bddb",
-      "updatedAtMs": 1786118569597
+      "hash": "82eac59203300f98c154eb77431abf7f28f104a45a9f7dd7dd431a285973813f",
+      "updatedAtMs": 1790459722316
     },
     "gpt": {
-      "hash": "4b1f647591d25e816aeda39d23104ce658ca5ff5bc38655927731b13a1d60a3f",
-      "updatedAtMs": 1786118569843
+      "hash": "03c4c44cc08c4b5bd01be3aa4e781cef34ca7a003ac814c4de21398416cb694e",
+      "updatedAtMs": 1790459726823
     },
     "hallucination": {
-      "hash": "cc5e8287361a28424ca85bea726e8bc1b6a29cb4b7a440d0f6430e962ad2c1aa",
-      "updatedAtMs": 1786062530722
+      "hash": "29f94de44af5366ffa656fc2feccbe98609f8b1d616793239b7894958fef18d5",
+      "updatedAtMs": 1790459731931
     },
     "ia-generative": {
-      "hash": "57eb63b78d7672959bed63a46bfee5130f170a83c05150eaec4ee5778138a76d",
-      "updatedAtMs": 1786062543358
+      "hash": "4644c7e4c40085f419106dd0566b61073f2738562e1b99e66eae8e070caf4a7c",
+      "updatedAtMs": 1790459736484
     },
     "inference": {
-      "hash": "4ef5e03dd2e85db037c4bb202212a10256dcdd3b9dcd6514b87870e0c7b77a4e",
-      "updatedAtMs": 1786118570071
+      "hash": "50ef1cd2f33b58f6fdbf2cd99b64a2e579017ed3d32c519b184620cc8a41225e",
+      "updatedAtMs": 1790459741170
     },
     "invite-systeme": {
       "hash": "a5621c72b1da84767966d7ba85785f8f6a0ca76bc04a2d3863ddfbdcb9ba6ea7",

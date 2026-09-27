@@ -102,6 +102,23 @@ function deduplicateParNom(tools) {
   return [...parNom.values()];
 }
 
+// Comme deduplicateParNom, mais préfère la langue demandée quand elle
+// existe, avec repli sur la version FR si cette traduction n'existe
+// pas encore pour cet outil (jamais de trou dans TOOLS_DATA).
+function deduplicateParNomLangue(tools, langueCible) {
+  const parNom = new Map();
+  for (const t of tools) {
+    const key = slugify(t.name);
+    if (!key) continue;
+    const existant = parNom.get(key);
+    if (!existant) { parNom.set(key, t); continue; }
+    const existantMatch = (existant.langue || 'fr') === langueCible;
+    const candidatMatch = (t.langue || 'fr') === langueCible;
+    if (!existantMatch && candidatMatch) parNom.set(key, t);
+  }
+  return [...parNom.values()];
+}
+
 function badgePrice(price, langue) {
   const labels = {
     fr: { gratuit:'Gratuit', freemium:'Freemium', payant:'Payant' },
@@ -1702,9 +1719,9 @@ function triEtat(val) {
   return null; // jamais renseigné
 }
 
-function buildToolsDataJSON(tools) {
-  const fr = deduplicateParNom(tools.filter(t => t.name));
-  const data = fr.map(t => ({
+function buildToolsDataJSON(tools, langue = 'fr') {
+  const parLangue = deduplicateParNomLangue(tools.filter(t => t.name), langue);
+  const data = parLangue.map(t => ({
     id: t.id,
     name: t.name,
     emoji: t.emoji || '🤖',
@@ -1819,73 +1836,85 @@ function generateComparateurIndexPage(comparaisonsTriees, tools, pageNum, totalP
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
+  <script src="${R}js/i18n.js"></script>
 </head>
 <body>
 
 ${navHTML(langue)}
 
+<div class="lang-selector" id="lang-selector" style="position:fixed;top:14px;right:66px;z-index:150">
+  <button class="lang-current" id="lang-current" type="button" aria-expanded="false">
+    <span>🌐</span><span id="lang-current-label">FR</span><span class="lang-arrow">⌄</span>
+  </button>
+  <div class="lang-menu" id="lang-menu">
+    <button class="lang-btn active" data-lang="fr" onclick="changerLangueGlobale('fr')">🇫🇷 Français</button>
+    <button class="lang-btn" data-lang="en" onclick="changerLangueGlobale('en')">🇬🇧 English</button>
+    <button class="lang-btn" data-lang="es" onclick="changerLangueGlobale('es')">🇪🇸 Español</button>
+  </div>
+</div>
+
 <section class="comp-hero comp-hero--sober">
-  <h1>Comparateur d'outils IA</h1>
-  <p>Comparez jusqu'à 4 outils IA pour trouver celui qui correspond le mieux à vos besoins.</p>
+  <h1 data-i18n="comparateur.title">Comparateur d'outils IA</h1>
+  <p data-i18n="comparateur.subtitle">Comparez jusqu'à 4 outils IA pour trouver celui qui correspond le mieux à vos besoins.</p>
 </section>
 
 <div class="comp-layout">
 
   <button class="comp-filters-btn" id="comp-filters-btn" aria-expanded="false">
-    <span>⚙️ Filtres &amp; outils</span>
+    <span data-i18n="comparateur.filtersBtn">⚙️ Filtres &amp; outils</span>
     <span class="cfb-right"><span class="cfb-count" id="cfb-count"></span><span class="cfb-chevron">˅</span></span>
   </button>
 
   <aside class="comp-sidebar" id="comp-sidebar">
    <div class="sidebar-inner">
     <div class="sidebar-block">
-      <div class="sidebar-block-title">Ajouter des outils</div>
+      <div class="sidebar-block-title" data-i18n="comparateur.addTools">Ajouter des outils</div>
       <div class="comp-search">
         <span class="comp-search-icon">🔍</span>
-        <input type="text" id="comp-search-input" placeholder="Rechercher un outil…">
+        <input type="text" id="comp-search-input" placeholder="Rechercher un outil…" data-i18n-placeholder="comparateur.searchPlaceholder">
       </div>
       <div class="tools-picker tools-picker--sidebar" id="tools-picker"></div>
     </div>
 
     <div class="sidebar-block">
-      <div class="sidebar-block-title">Filtres rapides</div>
+      <div class="sidebar-block-title" data-i18n="comparateur.quickFilters">Filtres rapides</div>
 
       <div class="filter-group">
-        <div class="filter-label">Catégories</div>
+        <div class="filter-label" data-i18n="comparateur.categories">Catégories</div>
         <div class="select-wrap"><select id="f-cat" onchange="applyFilters()"></select></div>
       </div>
 
       <div class="filter-group">
-        <div class="filter-label">Tarification</div>
-        <label class="filter-check"><input type="checkbox" id="f-gratuit" onchange="applyFilters()"> Gratuit</label>
-        <label class="filter-check"><input type="checkbox" id="f-freemium" onchange="applyFilters()"> Freemium</label>
-        <label class="filter-check"><input type="checkbox" id="f-paid" onchange="applyFilters()"> Payant</label>
+        <div class="filter-label" data-i18n="comparateur.pricing">Tarification</div>
+        <label class="filter-check"><input type="checkbox" id="f-gratuit" onchange="applyFilters()"> <span data-i18n="comparateur.free">Gratuit</span></label>
+        <label class="filter-check"><input type="checkbox" id="f-freemium" onchange="applyFilters()"> <span data-i18n="comparateur.freemium">Freemium</span></label>
+        <label class="filter-check"><input type="checkbox" id="f-paid" onchange="applyFilters()"> <span data-i18n="comparateur.paid">Payant</span></label>
       </div>
 
       <div class="filter-group">
-        <div class="filter-label">Langue</div>
+        <div class="filter-label" data-i18n="comparateur.language">Langue</div>
         <div class="select-wrap">
           <select id="f-lang" onchange="applyFilters()">
-            <option value="toutes">Toutes</option>
-            <option value="fr">Français disponible</option>
-            <option value="en">Anglais</option>
+            <option value="toutes" data-i18n="comparateur.allLangs">Toutes</option>
+            <option value="fr" data-i18n="comparateur.frAvailable">Français disponible</option>
+            <option value="en" data-i18n="comparateur.english">Anglais</option>
           </select>
         </div>
       </div>
 
       <div class="filter-group">
-        <div class="filter-label">Intégrations</div>
+        <div class="filter-label" data-i18n="comparateur.integrations">Intégrations</div>
         <div class="select-wrap">
-          <select id="f-integrations" onchange="applyFilters()"><option value="toutes">Toutes</option></select>
+          <select id="f-integrations" onchange="applyFilters()"><option value="toutes" data-i18n="comparateur.allLangs">Toutes</option></select>
         </div>
       </div>
 
-      <button class="filter-reset" onclick="resetFilters()">Réinitialiser les filtres</button>
+      <button class="filter-reset" onclick="resetFilters()" data-i18n="comparateur.resetFilters">Réinitialiser les filtres</button>
     </div>
 
     <div class="sidebar-block sidebar-block--toggle">
       <label class="toggle-switch-wrap">
-        <span class="toggle-label">Voir uniquement les différences</span>
+        <span class="toggle-label" data-i18n="comparateur.diffOnly">Voir uniquement les différences</span>
         <span class="toggle-switch">
           <input type="checkbox" id="diff-toggle" onchange="toggleDiffOnly()">
           <span class="toggle-track"><span class="toggle-thumb"></span></span>
@@ -1900,33 +1929,33 @@ ${navHTML(langue)}
     <div class="selected-bar">
       <div class="selected-bar-inner">
         <div class="selected-chips" id="selected-chips">
-          <span class="selected-hint" id="selected-hint">Sélectionnez 2 à 4 outils</span>
+          <span class="selected-hint" id="selected-hint" data-i18n="comparateur.selectHint">Sélectionnez 2 à 4 outils</span>
         </div>
-        <button class="comp-btn" id="comp-btn" disabled onclick="afficherComparaison()">Comparer →</button>
+        <button class="comp-btn" id="comp-btn" disabled onclick="afficherComparaison()" data-i18n="comparateur.compareBtn">Comparer →</button>
       </div>
     </div>
 
     <div class="comp-result" id="comp-result">
       <div class="comp-cards-row" id="comp-cards-row"></div>
       <div class="comp-table-wrap"><table class="comp-table" id="comp-table"></table></div>
-      <span class="comp-reset" onclick="resetComparaison()">← Nouvelle comparaison</span>
+      <span class="comp-reset" onclick="resetComparaison()" data-i18n="comparateur.newComparison">← Nouvelle comparaison</span>
     </div>
 
     <div class="paires-section">
-      <div class="paires-title">Duels populaires</div>
+      <div class="paires-title" data-i18n="comparateur.popularDuels">Duels populaires</div>
       <div class="duel-carousel" id="paires-grid">
-${duelsCarouselHTML || '<div class="comp-empty">Aucun duel publié pour le moment.</div>'}
+${duelsCarouselHTML || '<div class="comp-empty" data-i18n="comparateur.noDuels">Aucun duel publié pour le moment.</div>'}
       </div>
     </div>
 
     <div class="reco-section">
-      <div class="reco-title">Notre recommandation</div>
-      <div class="reco-sub">Basée sur nos critères et les avis de la communauté.</div>
+      <div class="reco-title" data-i18n="comparateur.ourReco">Notre recommandation</div>
+      <div class="reco-sub" data-i18n="comparateur.recoSub">Basée sur nos critères et les avis de la communauté.</div>
       <div class="reco-grid" id="reco-grid"></div>
     </div>
 
     <div class="paires-section">
-      <div class="paires-title">${pageNum === 1 ? 'Toutes les comparaisons' : `Toutes les comparaisons — Page ${pageNum}`} (${comparaisonsTriees.length})</div>
+      <div class="paires-title"><span data-i18n="comparateur.allComparisons">Toutes les comparaisons</span>${pageNum === 1 ? '' : ` — Page ${pageNum}`} (${comparaisonsTriees.length})</div>
       <div class="paires-grid-seo">
 ${listHTML}
       </div>
@@ -1938,8 +1967,17 @@ ${listHTML}
 
 ${footerHTML()}
 <script>
-const TOOLS_DATA = ${buildToolsDataJSON(tools)};
-const PRICE_LABELS = { freemium:'Freemium', paid:'Payant', free:'Gratuit' };
+const TOOLS_DATA_BY_LANG = { fr: ${buildToolsDataJSON(tools,'fr')}, en: ${buildToolsDataJSON(tools,'en')}, es: ${buildToolsDataJSON(tools,'es')} };
+let langueActive = (typeof detecterLangue === 'function') ? detecterLangue() : 'fr';
+let TOOLS_DATA = TOOLS_DATA_BY_LANG[langueActive] || TOOLS_DATA_BY_LANG.fr;
+function PRICE_LABEL(price){
+  const labels = { fr:{freemium:'Freemium',paid:'Payant',free:'Gratuit'}, en:{freemium:'Freemium',paid:'Paid',free:'Free'}, es:{freemium:'Freemium',paid:'De pago',free:'Gratis'} };
+  return (labels[langueActive]||labels.fr)[price] || price || '—';
+}
+// Alias de t(key, langueActive) : beaucoup de callbacks plus bas utilisent
+// déjà "t" comme nom de paramètre (l'outil courant), ce qui masquerait la
+// fonction i18n globale du même nom si on l'appelait directement dedans.
+function tr(key){ return t(key, langueActive); }
 const MAX_SELECTION = 4;
 let selected = [], filteredTools = [...TOOLS_DATA];
 
@@ -1952,33 +1990,34 @@ function logoOrFallback(t, cls, fbCls){
 }
 
 function initFilters(){
-  const cats = ['Tous', ...new Set(TOOLS_DATA.map(t=>t.category).filter(Boolean))];
+  const cats = [tr('comparateur.allCategories'), ...new Set(TOOLS_DATA.map(t=>t.category).filter(Boolean))];
   document.getElementById('f-cat').innerHTML = cats.map(c=>\`<option value="\${c}">\${c}</option>\`).join('');
 }
 
 function applyFilters(){
   const q = normaliser(document.getElementById('comp-search-input').value);
-  const cat = document.getElementById('f-cat').value || 'Tous';
+  const cat = document.getElementById('f-cat').value || tr('comparateur.allCategories');
   const lang = document.getElementById('f-lang').value;
   const wantGratuit = document.getElementById('f-gratuit').checked;
   const wantFreemium = document.getElementById('f-freemium').checked;
   const wantPaid = document.getElementById('f-paid').checked;
   const anyPrice = wantGratuit || wantFreemium || wantPaid;
-  filteredTools = TOOLS_DATA.filter(t=>{
-    const matchCat = cat==='Tous' || t.category===cat;
-    const matchQ = !q || normaliser(t.name).includes(q) || normaliser(t.category).includes(q);
-    const matchLang = lang==='toutes' || (lang==='fr' && t.langue_fr===true) || (lang==='en');
+  const allCatLabel = tr('comparateur.allCategories');
+  filteredTools = TOOLS_DATA.filter(x=>{
+    const matchCat = cat===allCatLabel || x.category===cat;
+    const matchQ = !q || normaliser(x.name).includes(q) || normaliser(x.category).includes(q);
+    const matchLang = lang==='toutes' || (lang==='fr' && x.langue_fr===true) || (lang==='en');
     const matchPrice = !anyPrice
-      || (wantGratuit && t.price==='free')
-      || (wantFreemium && t.price==='freemium')
-      || (wantPaid && t.price==='paid');
+      || (wantGratuit && x.price==='free')
+      || (wantFreemium && x.price==='freemium')
+      || (wantPaid && x.price==='paid');
     return matchCat && matchQ && matchLang && matchPrice;
   });
   renderPicker();
 }
 
 function resetFilters(){
-  document.getElementById('f-cat').value = 'Tous';
+  document.getElementById('f-cat').value = tr('comparateur.allCategories');
   document.getElementById('f-lang').value = 'toutes';
   document.getElementById('f-integrations').value = 'toutes';
   document.getElementById('f-gratuit').checked = false;
@@ -2023,24 +2062,26 @@ function renderChips(){
   document.getElementById('cfb-count').textContent = selected.length>0 ? selected.length : '';
 }
 
-const CRITERES = [
-  ['Description',            t=>t.description||'—',                  false],
-  ['Catégorie',               t=>t.category||'—',                     false],
-  ['Prix',                    t=>PRICE_LABELS[t.price]||t.price||'—', false],
-  ['Modèle gratuit',          t=>t.modele_gratuit,                    true],
-  ['Essai gratuit',           t=>t.essai_gratuit,                     true],
-  ["Durée d'essai",           t=>t.duree_essai||'—',                  false],
-  ['Langues',                 t=>t.langues||'—',                      false],
-  ['Support français',        t=>t.langue_fr,                         true],
-  ['Accès web',                t=>t.acces_web,                        true],
-  ["Génération d'images",     t=>t.generation_images,                 true],
-  ['Téléchargement fichiers', t=>t.telechargement_fichiers,           true],
-  ['API',                     t=>t.api,                               true],
-  ['Intégrations',            t=>t.integrations||'—',                 false],
-  ['Application mobile',      t=>t.mobile,                            true],
-  ['Idéal pour',              t=>t.ideal_pour||'—',                   false],
-  ['Note Albexia',            t=>t.note?t.note+'/5':'—',              false],
-];
+function CRITERES_LIST(){
+  return [
+    [tr('comparateur.crit.description'),      x=>x.description||'—',                false],
+    [tr('comparateur.crit.categorie'),        x=>x.category||'—',                   false],
+    [tr('comparateur.crit.prix'),             x=>PRICE_LABEL(x.price),              false],
+    [tr('comparateur.crit.modeleGratuit'),    x=>x.modele_gratuit,                  true],
+    [tr('comparateur.crit.essaiGratuit'),     x=>x.essai_gratuit,                   true],
+    [tr('comparateur.crit.dureeEssai'),       x=>x.duree_essai||'—',                false],
+    [tr('comparateur.crit.langues'),          x=>x.langues||'—',                    false],
+    [tr('comparateur.crit.supportFr'),        x=>x.langue_fr,                       true],
+    [tr('comparateur.crit.accesWeb'),         x=>x.acces_web,                       true],
+    [tr('comparateur.crit.generationImages'), x=>x.generation_images,               true],
+    [tr('comparateur.crit.telechargement'),   x=>x.telechargement_fichiers,         true],
+    [tr('comparateur.crit.api'),              x=>x.api,                             true],
+    [tr('comparateur.crit.integrations'),     x=>x.integrations||'—',               false],
+    [tr('comparateur.crit.mobile'),           x=>x.mobile,                          true],
+    [tr('comparateur.crit.idealPour'),        x=>x.ideal_pour||'—',                 false],
+    [tr('comparateur.crit.note'),             x=>x.note?x.note+'/5':'—',            false],
+  ];
+}
 
 function afficherComparaison(){
   const outils=selected.map(id=>TOOLS_DATA.find(t=>t.id===id)).filter(Boolean);
@@ -2049,25 +2090,25 @@ function afficherComparaison(){
 
   document.getElementById('comp-cards-row').style.setProperty('--n-tools', outils.length);
   document.getElementById('comp-cards-row').innerHTML = outils.map(t=>{
-    const note = t.note && t.note>0 ? \`<div class="ct-note">★ \${t.note}/5</div>\` : \`<div class="ct-note empty">Pas encore noté</div>\`;
+    const note = t.note && t.note>0 ? \`<div class="ct-note">★ \${t.note}/5</div>\` : \`<div class="ct-note empty">\${tr('comparateur.notRated')}</div>\`;
     return \`<div class="comp-tool-card">
       \${logoOrFallback(t,'ct-logo','ct-logo-fallback')}
       <div class="ct-name">\${t.name}</div>
       <div class="ct-cat">\${t.category||''}</div>
       \${note}
       <div class="ct-actions">
-        <a href="\${t.lien_affilie}" target="_blank" rel="noopener sponsored" class="ct-btn ct-btn-primary">Visiter le site</a>
-        <a href="\${t.fiche_url}" class="ct-btn ct-btn-secondary">Voir la fiche</a>
+        <a href="\${t.lien_affilie}" target="_blank" rel="noopener sponsored" class="ct-btn ct-btn-primary">\${tr('comparateur.visitSite')}</a>
+        <a href="\${t.fiche_url}" class="ct-btn ct-btn-secondary">\${tr('comparateur.seeSheet')}</a>
       </div>
     </div>\`;
   }).join('');
 
-  let thead='<thead><tr><th>Critère</th>';
+  let thead=\`<thead><tr><th>\${tr('comparateur.critColumn')}</th>\`;
   outils.forEach(t=>{ thead+=\`<th class="tool-col">\${logoOrFallback(t,'th-logo','th-logo-fallback')}\${t.name}</th>\`; });
   thead+='</tr></thead>';
 
   let tbody='<tbody>';
-  CRITERES.forEach(([label,fn,isBool])=>{
+  CRITERES_LIST().forEach(([label,fn,isBool])=>{
     const vals = outils.map(fn);
     const allSame = vals.every(v => String(v)===String(vals[0]));
     tbody+=\`<tr data-diff="\${allSame?0:1}"><td class="crit-col">\${label}</td>\`;
@@ -2100,7 +2141,7 @@ function resetComparaison(){
 function renderReco(){
   const notes = TOOLS_DATA.filter(t=>t.note && t.note>0);
   if(notes.length===0){
-    document.getElementById('reco-grid').innerHTML = '<div class="comp-empty">Recommandations bientôt disponibles.</div>';
+    document.getElementById('reco-grid').innerHTML = \`<div class="comp-empty">\${tr('comparateur.recoSoon')}</div>\`;
     return;
   }
   const used = new Set();
@@ -2110,10 +2151,10 @@ function renderReco(){
     return c;
   }
   const slots = [
-    { icon:'🏆', label:'Meilleur rapport qualité/prix', cls:'gold',   tool: pickBest(t=>t.price==='freemium') },
-    { icon:'⭐', label:'Meilleure note globale',         cls:'mint',   tool: pickBest(()=>true) },
-    { icon:'🔗', label:'Meilleure intégration (API)',    cls:'purple', tool: pickBest(t=>t.api) },
-    { icon:'🇫🇷', label:'Meilleur en français',          cls:'pink',   tool: pickBest(t=>t.langue_fr) },
+    { icon:'🏆', label:tr('comparateur.reco.qualitePrix'), cls:'gold',   tool: pickBest(t=>t.price==='freemium') },
+    { icon:'⭐', label:tr('comparateur.reco.noteGlobale'),  cls:'mint',   tool: pickBest(()=>true) },
+    { icon:'🔗', label:tr('comparateur.reco.integrationApi'), cls:'purple', tool: pickBest(t=>t.api) },
+    { icon:'🇫🇷', label:tr('comparateur.reco.meilleurFr'),  cls:'pink',   tool: pickBest(t=>t.langue_fr) },
   ].filter(s => s.tool);
 
   document.getElementById('reco-grid').innerHTML = slots.map(s=>\`
@@ -2137,6 +2178,47 @@ document.getElementById('comp-filters-btn').addEventListener('click', toggleSide
 
 document.getElementById('comp-search-input').addEventListener('input',applyFilters);
 initFilters(); applyFilters(); renderReco();
+
+// Crochet appelé par changerLangueGlobale() (js/i18n.js) après application
+// des traductions statiques — bascule TOOLS_DATA vers l'autre langue et
+// réinitialise la sélection : les IDs des outils EN/ES sont des documents
+// Firestore distincts de leurs équivalents FR, donc une sélection faite
+// dans une langue ne correspond à rien de fiable dans une autre.
+window.onLangueChange = function(code){
+  langueActive = code;
+  TOOLS_DATA = TOOLS_DATA_BY_LANG[langueActive] || TOOLS_DATA_BY_LANG.fr;
+  selected = [];
+  document.getElementById('comp-result').classList.remove('show');
+  initFilters();
+  resetFilters();
+  renderChips();
+  renderReco();
+};
+</script>
+<script>
+  (function () {
+    const selector = document.getElementById('lang-selector');
+    const current = document.getElementById('lang-current');
+    const label = document.getElementById('lang-current-label');
+    if (!selector || !current) return;
+    current.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const isOpen = selector.classList.toggle('open');
+      current.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    document.addEventListener('click', function () {
+      selector.classList.remove('open');
+      current.setAttribute('aria-expanded', 'false');
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        if (label) label.textContent = this.dataset.lang.toUpperCase();
+        selector.classList.remove('open');
+        current.setAttribute('aria-expanded', 'false');
+      });
+    });
+    if (label) label.textContent = langueActive.toUpperCase();
+  })();
 </script>
 ${sharedJS()}
 </body>

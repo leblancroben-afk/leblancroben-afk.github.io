@@ -240,14 +240,28 @@ async function traduireTerme(terme, langueCible) {
   return { terme: t, definitionFlash: d, exemple: e, pourquoiImportant: p, enPratique: ep, erreurFrequente: err, faq };
 }
 
+// Un terme est "complet" dans une langue seulement si TOUS ses champs
+// source (ceux qui existent en FR) ont bien une contrepartie traduite —
+// pas juste terme/definitionFlash. Sinon un terme déjà traduit avec
+// l'ancienne version du script (avant l'ajout de pourquoiImportant/
+// enPratique/erreurFrequente/faq) reste bloqué à mi-chemin pour
+// toujours, puisque le check "déjà traduit" le considérait satisfait.
+function estCompletDansLangue(t, langue) {
+  if (!t[`terme_${langue}`] || !t[`definitionFlash_${langue}`]) return false;
+  if (t.exemple && !t[`exemple_${langue}`]) return false;
+  if (t.pourquoiImportant && !t[`pourquoiImportant_${langue}`]) return false;
+  if (t.enPratique && !t[`enPratique_${langue}`]) return false;
+  if (t.erreurFrequente && !t[`erreurFrequente_${langue}`]) return false;
+  if (t.faq?.length && (t[`faq_${langue}`]?.length || 0) < t.faq.length) return false;
+  return true;
+}
+
 async function traduireGlossaire() {
   const snap = await db.collection('glossaire').get();
   const tousLesTermes = snap.docs.map(d => ({ ref: d.ref, id: d.id, ...d.data() }));
 
   const aTraiter = tousLesTermes.filter(t => {
-    const manqueEn = !t.terme_en || !t.definitionFlash_en;
-    const manqueEs = !t.terme_es || !t.definitionFlash_es;
-    return manqueEn || manqueEs;
+    return !estCompletDansLangue(t, 'en') || !estCompletDansLangue(t, 'es');
   }).slice(0, MAX_TERMES_PAR_RUN);
 
   console.log(`\n${tousLesTermes.length} terme(s) glossaire au total, ${aTraiter.length} à traduire ce run.`);
@@ -259,7 +273,7 @@ async function traduireGlossaire() {
     const erreursTerme = [];
 
     for (const langue of ['en', 'es']) {
-      if (terme[`terme_${langue}`] && terme[`definitionFlash_${langue}`]) continue; // déjà traduit
+      if (estCompletDansLangue(terme, langue)) continue; // déjà traduit intégralement
 
       try {
         const traduit = await traduireTerme(terme, langue);

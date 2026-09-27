@@ -2704,7 +2704,7 @@ function generateGlossaireHub(termes, tools) {
     .term-extra{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
     .term-extra.open{display:block}
     .term-exemple{font-size:12px;color:var(--text-dim);line-height:1.6;font-style:italic;margin-bottom:10px;padding:10px 14px;background:var(--bg3);border-radius:8px;border-left:2px solid rgba(108,99,255,0.4)}
-    .term-exemple::before{content:'💡 Exemple : ';font-style:normal;font-weight:500;color:#a8a3ff}
+    .term-exemple strong{font-weight:500;color:#a8a3ff}
     .term-outils{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
     .term-outil-tag{font-size:11px;padding:3px 10px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:6px;color:#ff6b9d;text-decoration:none;transition:all .15s}
     .term-outil-tag:hover{background:rgba(255,107,157,0.15)}
@@ -2825,6 +2825,12 @@ const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 function champ(t, base, langue) {
   return t[base + '_' + langue] || t[base + '_fr'];
 }
+const CARD_LABELS = {
+  fr: { voirExemple:'▼ Voir exemple', masquerExemple:'▲ Masquer l\\'exemple', fiche:'Voir la fiche complète →', bientot:'Fiche détaillée bientôt disponible', exemple:'💡 Exemple :', aucun:'Aucun terme trouvé pour', essayez:'Essayez un autre mot-clé ou', reinit:'réinitialisez les filtres' },
+  en: { voirExemple:'▼ See example', masquerExemple:'▲ Hide example', fiche:'See full entry →', bientot:'Detailed entry coming soon', exemple:'💡 Example:', aucun:'No term found for', essayez:'Try another keyword or', reinit:'reset the filters' },
+  es: { voirExemple:'▼ Ver ejemplo', masquerExemple:'▲ Ocultar ejemplo', fiche:'Ver ficha completa →', bientot:'Ficha detallada próximamente', exemple:'💡 Ejemplo:', aucun:'Ningún término encontrado para', essayez:'Prueba otra palabra clave o', reinit:'reinicia los filtros' },
+};
+function cardLabel(key, langue) { return (CARD_LABELS[langue] && CARD_LABELS[langue][key]) || CARD_LABELS.fr[key]; }
 
 function initTermeDuJour() {
   const idx = new Date().getDate() % allTermes.length;
@@ -2892,7 +2898,7 @@ function renderGlossaire() {
   const termes = filtrerTermes();
   const body = document.getElementById('glossaire-body');
   if (!termes.length) {
-    body.innerHTML = '<div class="no-results"><div class="no-results-ico">🔍</div><p>Aucun terme trouvé pour "<strong>'+(searchQuery||activeLettre||activeNiveau)+'</strong>".</p><p style="margin-top:8px;font-size:13px">Essayez un autre mot-clé ou <a href="#" onclick="resetFilters();return false;" style="color:#a8a3ff">réinitialisez les filtres</a>.</p></div>';
+    body.innerHTML = '<div class="no-results"><div class="no-results-ico">🔍</div><p>'+cardLabel('aucun',langueActive)+' "<strong>'+(searchQuery||activeLettre||activeNiveau)+'</strong>".</p><p style="margin-top:8px;font-size:13px">'+cardLabel('essayez',langueActive)+' <a href="#" onclick="resetFilters();return false;" style="color:#a8a3ff">'+cardLabel('reinit',langueActive)+'</a>.</p></div>';
     return;
   }
   const byLetter = {};
@@ -2905,7 +2911,7 @@ function renderGlossaire() {
       e.stopPropagation();
       const extra = btn.nextElementSibling;
       const isOpen = extra.classList.toggle('open');
-      btn.textContent = isOpen ? '▲ Masquer l\\'exemple' : '▼ Voir exemple';
+      btn.textContent = isOpen ? cardLabel('masquerExemple',langueActive) : cardLabel('voirExemple',langueActive);
     });
   });
 }
@@ -2922,10 +2928,10 @@ function termCardHTML(t) {
   const dispoDansLangue = estPubliePourLangue(t, langueActive);
   const href = ficheHref(t, langueActive);
   const outilsHTML = t.outils.length ? '<div class="term-outils">'+t.outils.map(o => '<a href="'+o.url+'" class="term-outil-tag">'+o.nom+'</a>').join('')+'</div>' : '';
-  const ficheLink = dispoDansLangue ? '<a href="'+href+'" class="term-fiche-link">Voir la fiche complète →</a>' : '<span class="term-brouillon-tag">Fiche détaillée bientôt disponible</span>';
+  const ficheLink = dispoDansLangue ? '<a href="'+href+'" class="term-fiche-link">'+cardLabel('fiche',langueActive)+'</a>' : '<span class="term-brouillon-tag">'+cardLabel('bientot',langueActive)+'</span>';
   const nomHTML = dispoDansLangue ? '<a href="'+href+'" class="term-nom-link">'+nomTxt+'</a>' : nomTxt;
   const exempleHTML = exTxt
-    ? '<button class="term-toggle">▼ Voir exemple</button><div class="term-extra"><div class="term-exemple">'+exTxt+'</div>'+outilsHTML+ficheLink+'</div>'
+    ? '<button class="term-toggle">'+cardLabel('voirExemple',langueActive)+'</button><div class="term-extra"><div class="term-exemple"><strong>'+cardLabel('exemple',langueActive)+'</strong> '+exTxt+'</div>'+outilsHTML+ficheLink+'</div>'
     : (outilsHTML + ficheLink);
   return '<div class="term-card"><div class="term-head"><div class="term-nom">'+nomHTML+'</div><span class="term-niveau niveau-'+t.niveau+'">'+niveauLabel(t.niveau)+'</span></div><p class="term-def">'+defTxt+'</p>'+exempleHTML+'</div>';
 }

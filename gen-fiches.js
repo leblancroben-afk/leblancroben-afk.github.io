@@ -102,23 +102,6 @@ function deduplicateParNom(tools) {
   return [...parNom.values()];
 }
 
-// Comme deduplicateParNom, mais préfère la langue demandée quand elle
-// existe, avec repli sur la version FR si cette traduction n'existe
-// pas encore pour cet outil (jamais de trou dans TOOLS_DATA).
-function deduplicateParNomLangue(tools, langueCible) {
-  const parNom = new Map();
-  for (const t of tools) {
-    const key = slugify(t.name);
-    if (!key) continue;
-    const existant = parNom.get(key);
-    if (!existant) { parNom.set(key, t); continue; }
-    const existantMatch = (existant.langue || 'fr') === langueCible;
-    const candidatMatch = (t.langue || 'fr') === langueCible;
-    if (!existantMatch && candidatMatch) parNom.set(key, t);
-  }
-  return [...parNom.values()];
-}
-
 function badgePrice(price, langue) {
   const labels = {
     fr: { gratuit:'Gratuit', freemium:'Freemium', payant:'Payant' },
@@ -161,19 +144,19 @@ function navHTML(langue) {
     </svg>
   </div>
   <div class="nav-links">
-    <button class="nav-link" onclick="window.location.href='${R}index.html'">${homeLabel}</button>
-    <button class="nav-link" onclick="window.location.href='${R}index.html#tools'">${toolLabel}</button>
-    <button class="nav-link" onclick="window.location.href='${R}index.html#blog'">${blogLabel}</button>
+    <button class="nav-link" data-i18n="nav.home" onclick="window.location.href='${R}index.html'">${homeLabel}</button>
+    <button class="nav-link" data-i18n="nav.tools" onclick="window.location.href='${R}index.html#tools'">${toolLabel}</button>
+    <button class="nav-link" data-i18n="nav.blog" onclick="window.location.href='${R}index.html#blog'">${blogLabel}</button>
   </div>
   <div class="kebab-wrap" id="kebab-wrap">
     <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="${R}glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
-      <a href="${R}tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
-      <a href="${R}comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
-      <a href="${R}deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <a href="${R}glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div></div></a>
+      <a href="${R}tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name" data-i18n="kebab.tutorials">Tutoriels vidéo</div></div></a>
+      <a href="${R}comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div></div></a>
+      <a href="${R}deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div></div></a>
       <div class="kebab-divider"></div>
-      <a href="${R}hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+      <a href="${R}hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name" data-i18n="kebab.hub">Toutes les sections →</div></div></a>
     </div>
   </div>
 </nav>`;
@@ -183,9 +166,9 @@ function footerHTML() {
   return `<footer>
   <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
     &copy; 2025-2026 <a href="${R}index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="${R}mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="${R}politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="${R}contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+    <a href="${R}mentions-legales.html" data-i18n="footer.legalNotice" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="${R}politique-confidentialite.html" data-i18n="footer.privacy" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="${R}contact.html" data-i18n="footer.contactUs" style="color:#7a7a9a;text-decoration:none">Contact</a>
   </div>
 </footer>`;
 }
@@ -1614,8 +1597,21 @@ function resoudreOutilComparaison(side, comp, tools, langue) {
 
   let found = null;
   if (slugRef) {
-    found = tools.find(t => slugify(t.name) === slugRef && (t.langue || 'fr') === langue)
-         || tools.find(t => slugify(t.name) === slugRef);
+    // slugRef est toujours dérivé du nom FR (saisi une fois dans l'admin au
+    // moment de choisir l'outil A/B) — jamais du nom traduit. On retrouve
+    // donc d'abord la fiche FR par ce slug, puis on suit sa traduction pour
+    // la langue voulue via l'id (traductions), jamais en re-slugifiant un
+    // nom qui a pu changer après traduction.
+    const foundFr = tools.find(t => (!t.langue || t.langue === 'fr') && slugify(t.name) === slugRef);
+    if (foundFr) {
+      const relId = langue !== 'fr' ? foundFr.traductions?.[langue] : null;
+      const rel = relId != null ? tools.find(t => String(t.id) === String(relId)) : null;
+      found = rel || foundFr;
+    } else {
+      // Fiche FR introuvable (rare) : dernier recours, n'importe quelle
+      // langue portant ce même slug.
+      found = tools.find(t => slugify(t.name) === slugRef);
+    }
   }
 
   if (found) {
@@ -1720,33 +1716,52 @@ function triEtat(val) {
 }
 
 function buildToolsDataJSON(tools, langue = 'fr') {
-  const parLangue = deduplicateParNomLangue(tools.filter(t => t.name), langue);
-  const data = parLangue.map(t => ({
-    id: t.id,
-    name: t.name,
-    emoji: t.emoji || '🤖',
-    favicon: `https://www.google.com/s2/favicons?sz=64&domain=${(t.url||'').replace(/^https?:\/\//,'').split('/')[0]}`,
-    category: t.category || '',
-    description: t.description || '',
-    price: t.price || '',
-    modele_gratuit: t.price ? t.price === 'free' : null,
-    essai_gratuit: triEtat(t.essai_gratuit),
-    duree_essai: t.duree_essai || null,
-    langues: t.langues_disponibles || null,
-    langue_fr: triEtat(t.interface_fr),
-    acces_web: triEtat(t.acces_web),
-    generation_images: triEtat(t.generation_images),
-    telechargement_fichiers: triEtat(t.telechargement_fichiers),
-    api: triEtat(t.api),
-    integrations: t.integrations || null,
-    mobile: triEtat(t.mobile),
-    ideal_pour: t.ideal_pour || '',
-    note: typeof t.note === 'number' ? t.note : (typeof t.rating === 'number' ? t.rating : null),
-    lien_affilie: t.url || '#',
-    // Réutilise exactement la même logique que toolFicheUrl() (définie plus
-    // haut dans ce fichier) plutôt que de dupliquer un pattern d'URL séparé.
-    fiche_url: toolFicheUrl(t),
-  }));
+  const byId = new Map(tools.filter(t => t.name).map(t => [String(t.id), t]));
+  // Source = toujours les fiches FR (jamais les docs EN/ES eux-mêmes), pour
+  // que le sélecteur ait une ligne par outil, quelle que soit la langue
+  // active, avec un id STABLE (celui du doc FR) — indispensable pour que
+  // la sélection en cours survive à un changement de langue.
+  const sourcesFr = tools.filter(t => t.name && (!t.langue || t.langue === 'fr'));
+
+  const data = sourcesFr.map(fr => {
+    // Cible = le doc traduit lié via fr.traductions[langue] (référence par
+    // id, jamais par nom — un nom traduit ne doit PAS casser le lien).
+    // Repli automatique sur le doc FR si cette langue n'a pas encore de
+    // traduction pour cet outil (jamais de trou dans TOOLS_DATA_BY_LANG).
+    const relId = langue !== 'fr' ? fr.traductions?.[langue] : null;
+    const rel = relId != null ? byId.get(String(relId)) : null;
+    const t = rel || fr;
+    return {
+      id: fr.id, // toujours l'id FR, stable entre les 3 langues
+      name: t.name,
+      emoji: t.emoji || fr.emoji || '🤖',
+      favicon: `https://www.google.com/s2/favicons?sz=64&domain=${(t.url||fr.url||'').replace(/^https?:\/\//,'').split('/')[0]}`,
+      category: t.category || fr.category || '',
+      description: t.description || fr.description || '',
+      price: t.price || fr.price || '',
+      modele_gratuit: (t.price||fr.price) ? (t.price||fr.price) === 'free' : null,
+      essai_gratuit: triEtat(t.essai_gratuit ?? fr.essai_gratuit),
+      duree_essai: t.duree_essai || fr.duree_essai || null,
+      langues: t.langues_disponibles || fr.langues_disponibles || null,
+      langue_fr: triEtat(t.interface_fr ?? fr.interface_fr),
+      acces_web: triEtat(t.acces_web ?? fr.acces_web),
+      generation_images: triEtat(t.generation_images ?? fr.generation_images),
+      telechargement_fichiers: triEtat(t.telechargement_fichiers ?? fr.telechargement_fichiers),
+      api: triEtat(t.api ?? fr.api),
+      integrations: t.integrations || fr.integrations || null,
+      mobile: triEtat(t.mobile ?? fr.mobile),
+      ideal_pour: t.ideal_pour || fr.ideal_pour || '',
+      note: typeof t.note === 'number' ? t.note
+          : typeof t.rating === 'number' ? t.rating
+          : typeof fr.note === 'number' ? fr.note
+          : typeof fr.rating === 'number' ? fr.rating
+          : null,
+      lien_affilie: t.url || fr.url || '#',
+      // Réutilise exactement la même logique que toolFicheUrl() (définie plus
+      // haut dans ce fichier) plutôt que de dupliquer un pattern d'URL séparé.
+      fiche_url: toolFicheUrl(t),
+    };
+  });
   return JSON.stringify(data);
 }
 
@@ -1800,7 +1815,7 @@ function generateComparateurIndexPage(comparaisonsTriees, tools, pageNum, totalP
         <span class="duel-vs">VS</span>
         <div class="duel-tool">${logo(b)}<span class="duel-tool-name">${b.nom}</span></div>
       </div>
-      <span class="duel-cta">Voir le duel →</span>
+      <span class="duel-cta" data-i18n="comparateur.seeDuel">Voir le duel →</span>
     </a>`;
   }).join('\n');
 
@@ -1808,7 +1823,7 @@ function generateComparateurIndexPage(comparaisonsTriees, tools, pageNum, totalP
   // affichée sous le carousel plutôt qu'à sa place.
   const listHTML = pageItems.length
     ? pageItems.map(c => comparateurItemHTML(c, tools)).join('\n')
-    : `<div class="cpl-empty">Aucune comparaison publiée pour le moment.</div>`;
+    : `<div class="cpl-empty" data-i18n="comparateur.noDuels">Aucune comparaison publiée pour le moment.</div>`;
 
   const robotsTag = pageNum === 1 ? 'index, follow' : 'noindex, follow';
   const prevUrl = pageNum === 2 ? `${SITE_ORIGIN}/comparateur/index.html` : `${SITE_ORIGIN}/comparateur/page/${pageNum-1}/index.html`;
@@ -2230,6 +2245,12 @@ function generateComparaison(comp, tools, allComparaisons) {
   const slug   = comp.slug;
   if (!slug) return null;
 
+  const L = {
+    fr: { pros: 'Points forts', cons: 'Limites', choose: 'Choisissez', verdictLabel: 'Notre verdict Albexia', recommended: 'recommandé', try: 'Essayer' },
+    en: { pros: 'Strengths',    cons: 'Limitations', choose: 'Choose', verdictLabel: 'Our Albexia verdict', recommended: 'recommended', try: 'Try' },
+    es: { pros: 'Puntos fuertes', cons: 'Límites', choose: 'Elige', verdictLabel: 'Nuestro veredicto Albexia', recommended: 'recomendado', try: 'Probar' },
+  }[langue] || { pros: 'Points forts', cons: 'Limites', choose: 'Choisissez', verdictLabel: 'Notre verdict Albexia', recommended: 'recommandé', try: 'Essayer' };
+
   const a = resoudreOutilComparaison('a', comp, tools, langue);
   const b = resoudreOutilComparaison('b', comp, tools, langue);
 
@@ -2323,19 +2344,19 @@ function generateComparaison(comp, tools, allComparaisons) {
 
   const avantagesHTML = `<div class="cp-pros-cons">
   <div class="cp-pros-card">
-    <div class="cp-pros-card-title">${logoInlineComp(a)} ${a.nom} — Points forts</div>
+    <div class="cp-pros-card-title">${logoInlineComp(a)} ${a.nom} — ${L.pros}</div>
     ${listeHTML(avA, true)}
   </div>
   <div class="cp-pros-card">
-    <div class="cp-pros-card-title">${logoInlineComp(b)} ${b.nom} — Points forts</div>
+    <div class="cp-pros-card-title">${logoInlineComp(b)} ${b.nom} — ${L.pros}</div>
     ${listeHTML(avB, true)}
   </div>
   <div class="cp-pros-card">
-    <div class="cp-pros-card-title" style="color:var(--text-muted)">${a.nom} — Limites</div>
+    <div class="cp-pros-card-title" style="color:var(--text-muted)">${a.nom} — ${L.cons}</div>
     ${listeHTML(incA, false)}
   </div>
   <div class="cp-pros-card">
-    <div class="cp-pros-card-title" style="color:var(--text-muted)">${b.nom} — Limites</div>
+    <div class="cp-pros-card-title" style="color:var(--text-muted)">${b.nom} — ${L.cons}</div>
     ${listeHTML(incB, false)}
   </div>
 </div>`;
@@ -2343,12 +2364,12 @@ function generateComparaison(comp, tools, allComparaisons) {
   // ── Cas d'usage ──
   const casUsageHTML = comp.cas_usage ? `<div class="cp-cas-grid">
   <div class="cp-cas-card card-a">
-    <div class="cp-cas-label">Choisissez</div>
+    <div class="cp-cas-label">${L.choose}</div>
     <div class="cp-cas-title">${logoInlineComp(a)} ${a.nom}</div>
     <p class="cp-cas-text">${comp.cas_usage.choisir_a || ''}</p>
   </div>
   <div class="cp-cas-card card-b">
-    <div class="cp-cas-label">Choisissez</div>
+    <div class="cp-cas-label">${L.choose}</div>
     <div class="cp-cas-title">${logoInlineComp(b)} ${b.nom}</div>
     <p class="cp-cas-text">${comp.cas_usage.choisir_b || ''}</p>
   </div>
@@ -2358,8 +2379,8 @@ function generateComparaison(comp, tools, allComparaisons) {
   const gagnantNom = comp.verdict?.gagnant || a.nom;
   const gagnantObj = gagnantNom === b.nom ? b : a;
   const verdictHTML = comp.verdict ? `<div class="cp-verdict-card">
-  <div class="cp-verdict-label">Notre verdict Albexia</div>
-  <div class="cp-verdict-title">${logoInlineComp(gagnantObj)} 🏆 ${gagnantNom} recommandé</div>
+  <div class="cp-verdict-label">${L.verdictLabel}</div>
+  <div class="cp-verdict-title">${logoInlineComp(gagnantObj)} 🏆 ${gagnantNom} ${L.recommended}</div>
   <p class="cp-verdict-text">${comp.verdict.texte || ''}</p>
 </div>` : '';
 
@@ -2393,10 +2414,10 @@ ${faqItems.map(f => `      {
   // ── CTA ──
   const ctaHTML = `<div class="cp-cta-wrap">
   <a href="${a.lien}" target="_blank" rel="noopener" class="cp-cta-btn cp-cta-a">
-    ${a.favicon ? `<img src="${a.favicon}" alt="${a.nom}" onerror="this.style.display='none'">` : ''}<span>Essayer ${a.nom}</span><span>→</span>
+    ${a.favicon ? `<img src="${a.favicon}" alt="${a.nom}" onerror="this.style.display='none'">` : ''}<span>${L.try} ${a.nom}</span><span>→</span>
   </a>
   <a href="${b.lien}" target="_blank" rel="noopener" class="cp-cta-btn cp-cta-b">
-    ${b.favicon ? `<img src="${b.favicon}" alt="${b.nom}" onerror="this.style.display='none'">` : ''}<span>Essayer ${b.nom}</span><span>→</span>
+    ${b.favicon ? `<img src="${b.favicon}" alt="${b.nom}" onerror="this.style.display='none'">` : ''}<span>${L.try} ${b.nom}</span><span>→</span>
   </a>
 </div>`;
 
@@ -2486,6 +2507,7 @@ ${faqHTML ? `<div class="cp-section">
 ${footerHTML()}
 ${faqHTML ? '<script>function toggleFAQ(i){document.getElementById("faq-"+i).classList.toggle("open");}</script>' : ''}
 ${sharedJS()}
+<script src="${R}js/i18n.js"></script>
 </body>
 </html>`;
 }

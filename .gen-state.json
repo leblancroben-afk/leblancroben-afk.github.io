@@ -477,16 +477,28 @@
   },
   "comparaisons": {
     "chatgpt-vs-gemini-ai": {
-      "hash": "2f62c47548a5003a0b78aeb2fbcae960a42f9804799574bbb6d467de840a7981",
-      "updatedAtMs": 1788294202470
+      "hash": "c8d1dcba41eb823ebbe7b3db76f4154507d6fe8ca08a3e97757d7fc7d44208eb",
+      "updatedAtMs": 1790638198544
     },
-    "claude-vs-chatgpt": {
-      "hash": "426785d4d72b43e0aca9a4de24df646846a55a86ae715541b58804be5498a8bf",
-      "updatedAtMs": 1788293046293
+    "chatgpt-vs-gemini-ai-en": {
+      "hash": "d4a200fa1e38764eba037882fb834038b2a27288c18281a1a0098131de2262cc",
+      "updatedAtMs": 1790638198799
+    },
+    "chatgpt-vs-gemini-ai-es": {
+      "hash": "41843fccdb8749bbc3bb23ca40a68e302236b5b53c51bc7d8edb82330c9fbbc1",
+      "updatedAtMs": 1790638199069
     },
     "zapier-vs-make": {
-      "hash": "7053a031186cbbc3d7bef967ddbfd0b3e8d74c837331509a405ab924d2c78a58",
-      "updatedAtMs": 0
+      "hash": "1ace57076a3da29ce0f6c0f505444b4a50f13092a5973a0dcc115390b667050b",
+      "updatedAtMs": 1790638460668
+    },
+    "zapier-vs-make-en": {
+      "hash": "0ca40a8a5c2beef6b1017dbd370827fbb5e1acf644e7b229839d299441e9cf7f",
+      "updatedAtMs": 1790638460967
+    },
+    "zapier-vs-make-es": {
+      "hash": "411b867a6305a7db0a2eeebbd98b10d2e9ee539a2647604f5b0d7f657d32ef06",
+      "updatedAtMs": 1790638461281
     }
   },
   "niches": {

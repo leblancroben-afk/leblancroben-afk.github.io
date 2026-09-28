@@ -1078,6 +1078,70 @@ Support français|oui|non|bool"></textarea>
             <textarea id="cp-faq" style="min-height:100px;"></textarea>
           </fieldset>
 
+          <button type="button" class="accordion-toggle" data-target="cp-acc-en">+ Ajouter EN (optionnel)</button>
+          <div class="accordion-body" id="cp-acc-en">
+            <fieldset>
+              <legend>Contenu EN</legend>
+              <button type="button" class="btn-translate" data-source="fr" data-target-lang="en" data-form="comparateur">🌐 Traduire depuis le FR</button>
+              <label>Résumé EN</label>
+              <textarea id="cp-resume-en"></textarea>
+              <label>Critères EN (mêmes lignes, libellés et valeurs texte traduits)</label>
+              <textarea id="cp-criteres-en" style="min-height:120px;"></textarea>
+              <label>Points forts Outil A EN</label>
+              <textarea id="cp-avantages-a-en" style="min-height:80px;"></textarea>
+              <label>Points forts Outil B EN</label>
+              <textarea id="cp-avantages-b-en" style="min-height:80px;"></textarea>
+              <label>Limites Outil A EN</label>
+              <textarea id="cp-inconvenients-a-en" style="min-height:80px;"></textarea>
+              <label>Limites Outil B EN</label>
+              <textarea id="cp-inconvenients-b-en" style="min-height:80px;"></textarea>
+              <label>Cas d'usage — Choisir Outil A EN</label>
+              <textarea id="cp-cas-a-en"></textarea>
+              <label>Cas d'usage — Choisir Outil B EN</label>
+              <textarea id="cp-cas-b-en"></textarea>
+              <label>Texte du verdict EN</label>
+              <textarea id="cp-verdict-texte-en"></textarea>
+              <label>FAQ EN</label>
+              <textarea id="cp-faq-en" style="min-height:100px;"></textarea>
+              <label>Titre SEO EN</label>
+              <input type="text" id="cp-meta-title-en">
+              <label>Meta description SEO EN (155 car. max)</label>
+              <input type="text" id="cp-meta-description-en" maxlength="155">
+            </fieldset>
+          </div>
+
+          <button type="button" class="accordion-toggle" data-target="cp-acc-es">+ Ajouter ES (optionnel)</button>
+          <div class="accordion-body" id="cp-acc-es">
+            <fieldset>
+              <legend>Contenu ES</legend>
+              <button type="button" class="btn-translate" data-source="fr" data-target-lang="es" data-form="comparateur">🌐 Traduire depuis le FR</button>
+              <label>Resumen ES</label>
+              <textarea id="cp-resume-es"></textarea>
+              <label>Criterios ES (mêmes lignes, libellés et valeurs texte traduits)</label>
+              <textarea id="cp-criteres-es" style="min-height:120px;"></textarea>
+              <label>Puntos fuertes Outil A ES</label>
+              <textarea id="cp-avantages-a-es" style="min-height:80px;"></textarea>
+              <label>Puntos fuertes Outil B ES</label>
+              <textarea id="cp-avantages-b-es" style="min-height:80px;"></textarea>
+              <label>Límites Outil A ES</label>
+              <textarea id="cp-inconvenients-a-es" style="min-height:80px;"></textarea>
+              <label>Límites Outil B ES</label>
+              <textarea id="cp-inconvenients-b-es" style="min-height:80px;"></textarea>
+              <label>Caso de uso — Elegir Outil A ES</label>
+              <textarea id="cp-cas-a-es"></textarea>
+              <label>Caso de uso — Elegir Outil B ES</label>
+              <textarea id="cp-cas-b-es"></textarea>
+              <label>Texto del veredicto ES</label>
+              <textarea id="cp-verdict-texte-es"></textarea>
+              <label>FAQ ES</label>
+              <textarea id="cp-faq-es" style="min-height:100px;"></textarea>
+              <label>Título SEO ES</label>
+              <input type="text" id="cp-meta-title-es">
+              <label>Meta descripción SEO ES (155 car. max)</label>
+              <input type="text" id="cp-meta-description-es" maxlength="155">
+            </fieldset>
+          </div>
+
           <button type="submit" class="btn-submit" id="cp-submit-btn" style="background:var(--accent2);">Publier la comparaison</button>
           <button type="button" class="btn-danger" id="cp-delete-btn" style="display:none;">🗑 Supprimer cette comparaison</button>
         </form>
@@ -3259,6 +3323,40 @@ Support français|oui|non|bool"></textarea>
     ];
   }
 
+  async function translateCriteres(text, targetLang) {
+    const lignes = (text || '').split('\n').map(l => l.trim()).filter(Boolean);
+    const resultats = [];
+    for (const ligne of lignes) {
+      const [label, a, b, type] = ligne.split('|').map(s => (s||'').trim());
+      const labelT = await translateText(label, targetLang, 'text');
+      await pause(400);
+      const bool = (type||'').toLowerCase() === 'bool';
+      const aT = bool ? a : (a ? await translateText(a, targetLang, 'text') : a);
+      if (!bool) await pause(400);
+      const bT = bool ? b : (b ? await translateText(b, targetLang, 'text') : b);
+      if (!bool) await pause(400);
+      resultats.push(`${labelT}|${aT}|${bT}|${type||'texte'}`);
+    }
+    return resultats.join('\n');
+  }
+
+  function cpFieldsToTranslate(targetLang) {
+    return [
+      ['cp-resume',            `cp-resume-${targetLang}`,            'text'],
+      ['cp-criteres',          `cp-criteres-${targetLang}`,          'criteres'],
+      ['cp-avantages-a',       `cp-avantages-a-${targetLang}`,       'lignes'],
+      ['cp-avantages-b',       `cp-avantages-b-${targetLang}`,       'lignes'],
+      ['cp-inconvenients-a',   `cp-inconvenients-a-${targetLang}`,   'lignes'],
+      ['cp-inconvenients-b',   `cp-inconvenients-b-${targetLang}`,   'lignes'],
+      ['cp-cas-a',             `cp-cas-a-${targetLang}`,             'text'],
+      ['cp-cas-b',             `cp-cas-b-${targetLang}`,             'text'],
+      ['cp-verdict-texte',     `cp-verdict-texte-${targetLang}`,     'text'],
+      ['cp-faq',               `cp-faq-${targetLang}`,               'faq'],
+      ['cp-meta-title',        `cp-meta-title-${targetLang}`,        'text'],
+      ['cp-meta-description',  `cp-meta-description-${targetLang}`,  'text'],
+    ];
+  }
+
   async function translateLignes(text, targetLang) {
     const lignes = (text || '').split('\n').map(l => l.trim()).filter(Boolean);
     const resultats = [];
@@ -3286,6 +3384,8 @@ Support français|oui|non|bool"></textarea>
         ? articleFieldsToTranslate(targetLang)
         : formType === 'plans'
         ? plansFieldsToTranslate(targetLang)
+        : formType === 'comparateur'
+        ? cpFieldsToTranslate(targetLang)
         : outilFieldsToTranslate(targetLang);
 
       btn.disabled = true;
@@ -3308,6 +3408,8 @@ Support français|oui|non|bool"></textarea>
             destEl.value = await translateFaq(srcText, targetLang);
           } else if (format === 'lignes') {
             destEl.value = await translateLignes(srcText, targetLang);
+          } else if (format === 'criteres') {
+            destEl.value = await translateCriteres(srcText, targetLang);
           } else {
             destEl.value = await translateText(srcText, targetLang, format);
           }
@@ -3667,6 +3769,7 @@ Support français|oui|non|bool"></textarea>
   let cpResolvedA = null;
   let cpResolvedB = null;
   let editingComparaison = null;
+  let editingComparaisonRelated = [];
   let allComparaisonsCache = null;
 
   async function fetchAllComparaisons() {
@@ -3826,7 +3929,16 @@ Support français|oui|non|bool"></textarea>
     const comp = list.find(c => c.slug === slug);
     if (!comp) return;
     editingComparaison = comp;
+    editingComparaisonRelated = [];
     cpResolvedA = null; cpResolvedB = null;
+
+    for (const lang of ['en', 'es']) {
+      const relId = comp.traductions?.[lang];
+      if (relId) {
+        const rel = list.find(c => String(c.id) === String(relId)) || (await fetchAllComparaisons()).find(c => String(c.id) === String(relId));
+        if (rel) editingComparaisonRelated.push(rel);
+      }
+    }
 
     const tools = await fetchAllTools();
     if (comp.outil_a_slug) {
@@ -3868,6 +3980,22 @@ Support français|oui|non|bool"></textarea>
     setVal('cp-verdict-texte', comp.verdict?.texte);
     setVal('cp-faq', (comp.faq||[]).map(faqToLine).join('\n'));
 
+    for (const lang of ['en', 'es']) {
+      const t = editingComparaisonRelated.find(c => c.langue === lang) || {};
+      setVal(`cp-resume-${lang}`, t.resume);
+      setVal(`cp-criteres-${lang}`, (t.criteres||[]).map(critereToLine).join('\n'));
+      setVal(`cp-avantages-a-${lang}`, joinLines(t.avantages?.a, '\n'));
+      setVal(`cp-avantages-b-${lang}`, joinLines(t.avantages?.b, '\n'));
+      setVal(`cp-inconvenients-a-${lang}`, joinLines(t.inconvenients?.a, '\n'));
+      setVal(`cp-inconvenients-b-${lang}`, joinLines(t.inconvenients?.b, '\n'));
+      setVal(`cp-cas-a-${lang}`, t.cas_usage?.choisir_a);
+      setVal(`cp-cas-b-${lang}`, t.cas_usage?.choisir_b);
+      setVal(`cp-verdict-texte-${lang}`, t.verdict?.texte);
+      setVal(`cp-faq-${lang}`, (t.faq||[]).map(faqToLine).join('\n'));
+      setVal(`cp-meta-title-${lang}`, t.meta_title);
+      setVal(`cp-meta-description-${lang}`, t.meta_description);
+    }
+
     updateComparaisonPreview();
 
     document.getElementById('cp-editing-banner').classList.add('open');
@@ -3879,6 +4007,7 @@ Support français|oui|non|bool"></textarea>
 
   function exitComparaisonEditMode() {
     editingComparaison = null;
+    editingComparaisonRelated = [];
     cpResolvedA = null; cpResolvedB = null;
     document.getElementById('form-comparateur').reset();
     document.getElementById('cp-a-resolved-hint').style.display='none';
@@ -3895,8 +4024,9 @@ Support français|oui|non|bool"></textarea>
     if (!confirm(`Supprimer définitivement la comparaison "${editingComparaison.slug}" ? Cette action est irréversible (la page sera retirée au prochain gen-fiches.js).`)) return;
     try {
       await deleteDoc(doc(db, 'comparaisons', String(editingComparaison.id || editingComparaison.slug)));
+      for (const rel of editingComparaisonRelated) await deleteDoc(doc(db, 'comparaisons', String(rel.id)));
       invalidateComparaisonsCache();
-      showMsg('warn-comparateur','ok-comparateur','ok', `✓ Comparaison supprimée. Relancez gen-fiches.js pour retirer la page HTML.`);
+      showMsg('warn-comparateur','ok-comparateur','ok', `✓ Comparaison supprimée (${1 + editingComparaisonRelated.length} document(s)). Relancez gen-fiches.js pour retirer la page HTML.`);
       exitComparaisonEditMode();
     } catch(err) { showMsg('warn-comparateur','ok-comparateur','warn','Erreur : '+err.message); }
   });
@@ -3985,10 +4115,69 @@ Support français|oui|non|bool"></textarea>
           texte: document.getElementById('cp-verdict-texte').value.trim(),
         },
         faq: parseFAQ(document.getElementById('cp-faq').value),
+        traductions: {},
       };
+
+      const existingRelEn = editingComparaisonRelated.find(c => c.langue === 'en');
+      const existingRelEs = editingComparaisonRelated.find(c => c.langue === 'es');
+      const toWrite = [];
+
+      for (const [lang, existingRel] of [['en', existingRelEn], ['es', existingRelEs]]) {
+        const resumeT = document.getElementById(`cp-resume-${lang}`).value.trim();
+        const critT   = document.getElementById(`cp-criteres-${lang}`).value.trim();
+        const aAvT    = document.getElementById(`cp-avantages-a-${lang}`).value.trim();
+        const bAvT    = document.getElementById(`cp-avantages-b-${lang}`).value.trim();
+        const aIncT   = document.getElementById(`cp-inconvenients-a-${lang}`).value.trim();
+        const bIncT   = document.getElementById(`cp-inconvenients-b-${lang}`).value.trim();
+        const casAT   = document.getElementById(`cp-cas-a-${lang}`).value.trim();
+        const casBT   = document.getElementById(`cp-cas-b-${lang}`).value.trim();
+        const verdictT= document.getElementById(`cp-verdict-texte-${lang}`).value.trim();
+        const faqT    = document.getElementById(`cp-faq-${lang}`).value.trim();
+        const titleT  = document.getElementById(`cp-meta-title-${lang}`).value.trim();
+        const descT   = document.getElementById(`cp-meta-description-${lang}`).value.trim();
+
+        const hasContent = resumeT && critT;
+        if (!hasContent) continue;
+
+        const relId   = existingRel ? existingRel.id : `${id}-${lang}`;
+        const relSlug = existingRel ? existingRel.slug : `${slug}-${lang}`;
+        docData.traductions[lang] = relId;
+
+        toWrite.push({
+          id: relId, slug: relSlug, langue: lang,
+          traductions: { fr: id },
+          outil_a_slug: outilASlug, outil_a_nom_fallback: nomFallbackA,
+          outil_a_emoji_fallback: docData.outil_a_emoji_fallback,
+          outil_a_categorie_fallback: docData.outil_a_categorie_fallback,
+          outil_a_note_fallback: docData.outil_a_note_fallback,
+          outil_a_lien_fallback: docData.outil_a_lien_fallback,
+          outil_a_prix_fallback: docData.outil_a_prix_fallback,
+          outil_b_slug: outilBSlug, outil_b_nom_fallback: nomFallbackB,
+          outil_b_emoji_fallback: docData.outil_b_emoji_fallback,
+          outil_b_categorie_fallback: docData.outil_b_categorie_fallback,
+          outil_b_note_fallback: docData.outil_b_note_fallback,
+          outil_b_lien_fallback: docData.outil_b_lien_fallback,
+          outil_b_prix_fallback: docData.outil_b_prix_fallback,
+          gagnant_slug: gagnantSlug,
+          meta_title: titleT, meta_description: descT,
+          resume: resumeT,
+          criteres: parseCriteres(critT),
+          avantages: { a: parseLines(aAvT), b: parseLines(bAvT) },
+          inconvenients: { a: parseLines(aIncT), b: parseLines(bIncT) },
+          cas_usage: { choisir_a: casAT, choisir_b: casBT },
+          verdict: { gagnant: docData.verdict.gagnant, texte: verdictT },
+          faq: parseFAQ(faqT),
+        });
+      }
+
+      if (editingComparaison) {
+        if (existingRelEn && !docData.traductions.en) await deleteDoc(doc(db, 'comparaisons', String(existingRelEn.id)));
+        if (existingRelEs && !docData.traductions.es) await deleteDoc(doc(db, 'comparaisons', String(existingRelEs.id)));
+      }
 
       docData.updatedAt = serverTimestamp();
       await setDoc(doc(db, 'comparaisons', String(id)), docData);
+      for (const d of toWrite) await setDoc(doc(db, 'comparaisons', String(d.id)), {...d, updatedAt: serverTimestamp()});
       invalidateComparaisonsCache();
 
       const action = editingComparaison ? 'mise à jour' : 'publiée';

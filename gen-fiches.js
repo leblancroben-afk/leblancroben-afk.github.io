@@ -3396,6 +3396,25 @@ function tutoNavHTML(outilId, outilNom) {
 </nav>`;
 }
 
+// ── Nav minimale de la page hub /tutoriels/ : Albexia | Accueil | Outils | Blog ──
+function tutoHubNavHTML() {
+  return `<nav>
+  <a href="${R}index.html" class="logo" style="text-decoration:none;color:inherit;">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a>
+  <div class="nav-links">
+    <a href="${R}index.html" class="nav-link" data-i18n="nav.home" style="text-decoration:none;">Accueil</a>
+    <a href="${R}index.html#tools" class="nav-link" data-i18n="nav.tools" style="text-decoration:none;">Outils</a>
+    <a href="${R}index.html#blog" class="nav-link" data-i18n="nav.blog" style="text-decoration:none;">Blog</a>
+  </div>
+</nav>`;
+}
+
 // ── Footer propre à ces deux pages (identique à l'original, pas footerHTML() du reste du site) ──
 function tutoFooterHTML() {
   return `<footer style="border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-dim);font-size:12px;margin-top:auto;">
@@ -3473,25 +3492,28 @@ function tutoSoumissionModalHTML(toolsAvecVideo) {
 function tutoFaqHTML() {
   const items = VIDEOTHEQUE_FAQ.map((f, i) => `<div class="faq-item" id="faq-${i}">
       <button class="faq-question" onclick="toggleFAQ(${i})" aria-expanded="false">
-        <span>${f.q}</span>
+        <span data-i18n="tuto.faq.q${i+1}">${f.q}</span>
         <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="faq-reponse" id="faq-rep-${i}">
-        <p>${f.a}</p>
+        <p data-i18n="tuto.faq.a${i+1}">${f.a}</p>
       </div>
     </div>`).join('\n');
   return `<section class="tuto-faq-wrap">
-  <div class="tuto-faq-head"><h2>Questions fréquentes</h2></div>
+  <div class="tuto-faq-head"><h2 data-i18n="tuto.faqTitle">Questions fréquentes</h2></div>
   <div class="faq-list" id="tuto-faq-list">${items}</div>
 </section>`;
 }
 
 function tutoEditorialHTML() {
+  // Chaque <h3>/<p> reçoit une clé i18n (tuto.ed.1 … tuto.ed.7) dans l'ordre du texte FR
+  let n = 0;
+  const body = VIDEOTHEQUE_EDITORIAL.replace(/<(h3|p)>/g, (m, tag) => `<${tag} data-i18n="tuto.ed.${++n}">`);
   return `<section class="tuto-editorial-wrap">
   <div class="tuto-editorial-head">
-    <h2>Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
+    <h2 data-i18n="tuto.ed.title">Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
   </div>
-  <div class="tuto-editorial-body">${VIDEOTHEQUE_EDITORIAL}</div>
+  <div class="tuto-editorial-body">${body}</div>
 </section>`;
 }
 
@@ -3532,11 +3554,14 @@ function miniatureHTML(v, tool) {
 function tutoCardHTML(tool, allTools) {
   const info = toolVideothequeFolder(tool);
   if (!info) return '';
-  const outilId = String(tool.id || info.slug);
   const videos = tool.videotheque || [];
   const pageUrl = `${R}tools/${info.plan}/${info.langue}/${info.slug}/tutoriels/`;
   const apercu = videos.slice(0, 5).map(v => miniatureHTML(v, tool)).join('');
   const tags = (tool.tags||[]).map(t => `<span class="tuto-tag">${t}</span>`).join('');
+  const attrVars = o => JSON.stringify(o).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  const nomVars = attrVars({ tool: tool.name });
+  const nbKey = videos.length > 1 ? 'tuto.videoMany' : 'tuto.videoOne';
+  const nbTxt = `${videos.length} vidéo${videos.length>1?'s':''}`;
 
   return `<article class="tuto-card" id="carte-${info.slug}" data-id="${info.slug}">
     <div class="tuto-card-header">
@@ -3552,7 +3577,7 @@ function tutoCardHTML(tool, allTools) {
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-${info.slug}"></div>
         <span class="tuto-card-avis" id="avis-${info.slug}"></span>
-        <span class="tuto-card-badge-count">${videos.length} vidéo${videos.length>1?'s':''}</span>
+        <span class="tuto-card-badge-count" data-i18n="${nbKey}" data-vars="${attrVars({ n: videos.length })}">${nbTxt}</span>
       </div>
     </div>
 
@@ -3563,24 +3588,19 @@ function tutoCardHTML(tool, allTools) {
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="${info.slug}" onclick="toggleCarte('${info.slug}')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('${outilId}','${tool.name.replace(/'/g,"&#39;")}')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-${info.slug}">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">${tool.presentation||tool.description||''}</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser ${tool.name}
+          <span data-i18n="tuto.sectionLabel" data-vars="${nomVars}">Tutoriels vidéo pour comprendre et utiliser ${tool.name}</span>
         </div>
         <div class="tuto-video-grid">${apercu}</div>
         <a href="${pageUrl}" class="tuto-voir-tout">
-          Voir tous les tutoriels pour ${tool.name}
+          <span data-i18n="tuto.seeAll" data-vars="${nomVars}">Voir tous les tutoriels pour ${tool.name}</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -3635,7 +3655,7 @@ function tutoFirestoreModuleHTML(mode) {
       const plein = Math.floor(ratingAverage), demi = (ratingAverage % 1) >= 0.5 ? 1 : 0, vide = 5 - plein - demi;
       const etoiles = '★'.repeat(plein) + (demi?'½':'') + '☆'.repeat(vide);
       if (noteEl) noteEl.innerHTML = \`\${etoiles} <span>\${ratingAverage}</span>\`;
-      if (avisEl) avisEl.textContent = \`\${ratingCount} avis\`;
+      if (avisEl) { avisEl.setAttribute('data-i18n','tuto.reviewsN'); avisEl.setAttribute('data-vars', JSON.stringify({n: ratingCount})); window.tutoApplyVars && window.tutoApplyVars(); }
     } catch { if (noteEl) noteEl.style.display='none'; if (avisEl) avisEl.style.display='none'; }
   };
   document.querySelectorAll('[id^="carte-"]').forEach(carte => {
@@ -3725,26 +3745,20 @@ function generateVideothequeHub(toolsAvecVideos) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
+  <link rel="stylesheet" href="${R}css/tutoriels-hub.css" />
 </head>
-<body>
+<body class="tuto-hub">
 
-${tutoNavHTML("","")}
+${tutoHubNavHTML()}
 
 <section class="tuto-hero">
-  <div class="tuto-badge"><span class="pulse"></span>Vidéothèque francophone</div>
-  <h1>Explorez le futur de l'IA<br>avec nos <span class="grad-pink">tutoriels experts</span></h1>
-  <p>Plus de ${toolsAvecVideos.length} outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
-  <div class="tuto-hero-actions">
-    <button class="btn-main" onclick="document.getElementById('tuto-grille').scrollIntoView({behavior:'smooth'})">Explorer les tutoriels</button>
-    <button class="tuto-btn-hero-soumettre" onclick="ouvrirModalSoumission('','')">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Soumettre un tutoriel
-    </button>
-  </div>
+  <div class="tuto-badge"><span class="pulse"></span><span data-i18n="tuto.badge">Vidéothèque francophone</span></div>
+  <h1 data-i18n-html="tuto.heroTitle">Explorez le futur de l'IA<br>avec nos <span class="grad-pink">tutoriels experts</span></h1>
+  <p data-i18n="tuto.heroDesc" data-vars='{"n":${toolsAvecVideos.length}}'>Plus de ${toolsAvecVideos.length} outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
   <div id="tuto-hero-stats" class="tuto-hero-stats">
-    <div class="tuto-stat"><span class="tuto-stat-n">${toolsAvecVideos.length}</span><span class="tuto-stat-l">Outils référencés</span></div>
-    <div class="tuto-stat"><span class="tuto-stat-n">${totalVideos}</span><span class="tuto-stat-l">Tutoriels sélectionnés</span></div>
-    <div class="tuto-stat"><span class="tuto-stat-n">100%</span><span class="tuto-stat-l">Accès gratuit</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">${toolsAvecVideos.length}</span><span class="tuto-stat-l" data-i18n="tuto.statTools">Outils référencés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">${totalVideos}</span><span class="tuto-stat-l" data-i18n="tuto.statVideos">Tutoriels sélectionnés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">100%</span><span class="tuto-stat-l" data-i18n="tuto.statFree">Accès gratuit</span></div>
   </div>
 </section>
 
@@ -3757,11 +3771,27 @@ ${cartesHTML}
 ${tutoEditorialHTML()}
 ${tutoFaqHTML()}
 ${tutoPlayerModalHTML()}
-${tutoSoumissionModalHTML(toolsAvecVideos)}
 
 ${tutoFooterHTML()}
 ${sharedJS()}
 ${tutoFirestoreModuleHTML('hub')}
+<script src="${R}js/i18n.js"></script>
+<script>
+  /* Substitue {n} / {tool} dans les textes i18n marqués data-vars (après i18n.js) */
+  window.tutoApplyVars = function (lang) {
+    lang = lang || (window.detecterLangue ? window.detecterLangue() : 'fr');
+    document.querySelectorAll('[data-vars]').forEach(function (el) {
+      var s = window.t(el.getAttribute('data-i18n'), lang);
+      try {
+        var v = JSON.parse(el.getAttribute('data-vars'));
+        Object.keys(v).forEach(function (k) { s = s.split('{' + k + '}').join(v[k]); });
+      } catch (e) {}
+      el.textContent = s;
+    });
+  };
+  window.onLangueChange = window.tutoApplyVars;
+  document.addEventListener('DOMContentLoaded', function () { window.tutoApplyVars(); });
+</script>
 <script src="${R}js/tutoriels.js"></script>
 </body>
 </html>`;

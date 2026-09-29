@@ -1680,6 +1680,11 @@ const COMPARATEUR_PAR_PAGE = 12;
 // css/style.css (existantes sur le site depuis l'ancien comparateur.html) —
 // pas de CSS à dupliquer pour cette partie. Repli emoji si aucun favicon
 // n'est disponible (ex: comparaison créée via secours sans lien renseigné).
+function comparateurDuelUrl(comp) {
+  const lang = comp.langue || 'fr';
+  return lang === 'fr' ? `${R}comparateur/${comp.slug}/index.html` : `${R}comparateur/${lang}/${comp.slug}/index.html`;
+}
+
 function comparateurItemHTML(comp, tools) {
   const langue = comp.langue || 'fr';
   const a = resoudreOutilComparaison('a', comp, tools, langue);
@@ -1687,7 +1692,7 @@ function comparateurItemHTML(comp, tools) {
   const logo = (outil) => outil.favicon
     ? `<img src="${outil.favicon}" alt="${outil.nom}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span style="display:none">${outil.emoji}</span>`
     : `<span>${outil.emoji}</span>`;
-  return `<a href="${R}comparateur/${comp.slug}/index.html" class="paire-link">
+  return `<a href="${comparateurDuelUrl(comp)}" class="paire-link">
     <div class="paire-logos">
       ${logo(a)}
       <span class="paire-vs">VS</span>
@@ -1801,15 +1806,23 @@ function generateComparateurIndexPage(comparaisonsTriees, tools, pageNum, totalP
     : `Comparateur d'outils IA — Page ${pageNum} | Albexia`;
   const metaDesc = `Comparez jusqu'à 4 outils IA côte à côte : fonctionnalités, prix, avis. ${comparaisonsTriees.length} comparaisons détaillées sur Albexia.`;
 
-  // Carousel "Duels populaires" : les 10 premiers de la page courante (déjà
-  // triés par date par l'appelant) — pas de requête ni de données séparées.
-  const duelsCarouselHTML = pageItems.slice(0, 10).map(c => {
-    const a = resoudreOutilComparaison('a', c, tools, langue);
-    const b = resoudreOutilComparaison('b', c, tools, langue);
-    const logo = (outil) => outil.favicon
-      ? `<img src="${outil.favicon}" alt="${outil.nom}" class="duel-logo" onerror="this.style.display='none'">`
-      : `<span class="duel-logo" style="display:flex;align-items:center;justify-content:center;font-size:16px;">${outil.emoji}</span>`;
-    return `<a href="${R}comparateur/${c.slug}/index.html" class="duel-card">
+  // Carousel "Duels populaires" et liste "Toutes les comparaisons" : générés
+  // en 3 versions (fr/en/es), une par langue présente dans pageItems, chacune
+  // dans un bloc <div data-lang-block="xx">. Un seul bloc est visible à la
+  // fois (JS, cf. applyComparateurLangBlocks plus bas) — sans ça les 3
+  // versions d'un même duel (docs Firestore distincts) s'affichaient toutes
+  // en même temps, quelle que soit la langue choisie dans le sélecteur.
+  const LANGS = ['fr', 'en', 'es'];
+
+  function buildCarouselForLang(lang) {
+    const items = pageItems.filter(c => (c.langue || 'fr') === lang);
+    const html = items.slice(0, 10).map(c => {
+      const a = resoudreOutilComparaison('a', c, tools, lang);
+      const b = resoudreOutilComparaison('b', c, tools, lang);
+      const logo = (outil) => outil.favicon
+        ? `<img src="${outil.favicon}" alt="${outil.nom}" class="duel-logo" onerror="this.style.display='none'">`
+        : `<span class="duel-logo" style="display:flex;align-items:center;justify-content:center;font-size:16px;">${outil.emoji}</span>`;
+      return `<a href="${comparateurDuelUrl(c)}" class="duel-card">
       <div class="duel-tools">
         <div class="duel-tool">${logo(a)}<span class="duel-tool-name">${a.nom}</span></div>
         <span class="duel-vs">VS</span>
@@ -1817,13 +1830,34 @@ function generateComparateurIndexPage(comparaisonsTriees, tools, pageNum, totalP
       </div>
       <span class="duel-cta" data-i18n="comparateur.seeDuel">Voir le duel →</span>
     </a>`;
-  }).join('\n');
+    }).join('\n');
+    return html || '<div class="comp-empty" data-i18n="comparateur.noDuels">Aucun duel publié pour le moment.</div>';
+  }
 
-  // Liste complète paginée — conservée pour le SEO (contenu index/follow),
-  // affichée sous le carousel plutôt qu'à sa place.
-  const listHTML = pageItems.length
-    ? pageItems.map(c => comparateurItemHTML(c, tools)).join('\n')
-    : `<div class="cpl-empty" data-i18n="comparateur.noDuels">Aucune comparaison publiée pour le moment.</div>`;
+  function buildListForLang(lang) {
+    const items = pageItems.filter(c => (c.langue || 'fr') === lang);
+    return items.length
+      ? items.map(c => comparateurItemHTML(c, tools)).join('\n')
+      : `<div class="cpl-empty" data-i18n="comparateur.noDuels">Aucune comparaison publiée pour le moment.</div>`;
+  }
+
+  const duelsCarouselBlocksHTML = LANGS.map(lang =>
+    `<div class="duel-carousel" data-lang-block="${lang}" style="${lang === 'fr' ? '' : 'display:none'}">
+${buildCarouselForLang(lang)}
+      </div>`
+  ).join('\n');
+
+  const listBlocksHTML = LANGS.map(lang =>
+    `<div class="paires-grid-seo" data-lang-block="${lang}" style="${lang === 'fr' ? '' : 'display:none'}">
+${buildListForLang(lang)}
+      </div>`
+  ).join('\n');
+
+  // Compte par langue pour le libellé "Toutes les comparaisons (N)",
+  // recalculé côté client au changement de langue (COMPARISON_COUNTS
+  // ci-dessous, injecté avec TOOLS_DATA_BY_LANG).
+  const comparisonCounts = {};
+  for (const lang of LANGS) comparisonCounts[lang] = comparaisonsTriees.filter(c => (c.langue || 'fr') === lang).length;
 
   const robotsTag = pageNum === 1 ? 'index, follow' : 'noindex, follow';
   const prevUrl = pageNum === 2 ? `${SITE_ORIGIN}/comparateur/index.html` : `${SITE_ORIGIN}/comparateur/page/${pageNum-1}/index.html`;
@@ -1958,8 +1992,8 @@ ${navHTML(langue)}
 
     <div class="paires-section">
       <div class="paires-title" data-i18n="comparateur.popularDuels">Duels populaires</div>
-      <div class="duel-carousel" id="paires-grid">
-${duelsCarouselHTML || '<div class="comp-empty" data-i18n="comparateur.noDuels">Aucun duel publié pour le moment.</div>'}
+      <div class="duel-carousel-wrap" id="paires-grid">
+${duelsCarouselBlocksHTML}
       </div>
     </div>
 
@@ -1970,10 +2004,8 @@ ${duelsCarouselHTML || '<div class="comp-empty" data-i18n="comparateur.noDuels">
     </div>
 
     <div class="paires-section">
-      <div class="paires-title"><span data-i18n="comparateur.allComparisons">Toutes les comparaisons</span>${pageNum === 1 ? '' : ` — Page ${pageNum}`} (${comparaisonsTriees.length})</div>
-      <div class="paires-grid-seo">
-${listHTML}
-      </div>
+      <div class="paires-title"><span data-i18n="comparateur.allComparisons">Toutes les comparaisons</span>${pageNum === 1 ? '' : ` — Page ${pageNum}`} (<span id="cpl-count">${comparisonCounts.fr}</span>)</div>
+${listBlocksHTML}
       ${paginationHTML(pageNum, totalPages)}
     </div>
 
@@ -1983,8 +2015,17 @@ ${listHTML}
 ${footerHTML()}
 <script>
 const TOOLS_DATA_BY_LANG = { fr: ${buildToolsDataJSON(tools,'fr')}, en: ${buildToolsDataJSON(tools,'en')}, es: ${buildToolsDataJSON(tools,'es')} };
+const COMPARISON_COUNTS = ${JSON.stringify(comparisonCounts)};
+function applyComparateurLangBlocks(code) {
+  document.querySelectorAll('[data-lang-block]').forEach(el => {
+    el.style.display = (el.getAttribute('data-lang-block') === code) ? '' : 'none';
+  });
+  const countEl = document.getElementById('cpl-count');
+  if (countEl) countEl.textContent = (COMPARISON_COUNTS[code] ?? COMPARISON_COUNTS.fr ?? 0);
+}
 let langueActive = (typeof detecterLangue === 'function') ? detecterLangue() : 'fr';
 let TOOLS_DATA = TOOLS_DATA_BY_LANG[langueActive] || TOOLS_DATA_BY_LANG.fr;
+applyComparateurLangBlocks(langueActive);
 function PRICE_LABEL(price){
   const labels = { fr:{freemium:'Freemium',paid:'Payant',free:'Gratuit'}, en:{freemium:'Freemium',paid:'Paid',free:'Free'}, es:{freemium:'Freemium',paid:'De pago',free:'Gratis'} };
   return (labels[langueActive]||labels.fr)[price] || price || '—';
@@ -2204,6 +2245,7 @@ window.onLangueChange = function(code){
   TOOLS_DATA = TOOLS_DATA_BY_LANG[langueActive] || TOOLS_DATA_BY_LANG.fr;
   selected = [];
   document.getElementById('comp-result').classList.remove('show');
+  applyComparateurLangBlocks(langueActive);
   initFilters();
   resetFilters();
   renderChips();
@@ -2254,16 +2296,21 @@ function generateComparaison(comp, tools, allComparaisons) {
   const a = resoudreOutilComparaison('a', comp, tools, langue);
   const b = resoudreOutilComparaison('b', comp, tools, langue);
 
-  const canonicalUrl = `${SITE_ORIGIN}/comparateur/${slug}/index.html`;
+  // FR reste à la racine (URLs historiques, pas de rupture SEO) ; EN/ES
+  // passent en sous-dossier de langue, comme pour les fiches outils —
+  // plus besoin de suffixer le slug (chatgpt-vs-gemini-es), le dossier
+  // suffit à distinguer les langues.
+  const langPrefix = (l) => (l === 'fr' || !l) ? '' : `${l}/`;
+  const canonicalUrl = `${SITE_ORIGIN}/comparateur/${langPrefix(langue)}${slug}/index.html`;
   const titleTag = comp.meta_title || `${a.nom} vs ${b.nom} — Comparaison complète | Albexia`;
   const metaDesc = comp.meta_description || comp.resume?.slice(0, 155) || `${a.nom} ou ${b.nom} ? Comparaison détaillée. Notre verdict Albexia.`;
 
   // Hreflang : uniquement les langues où une traduction existe réellement
   const langueUrls = { [langue]: canonicalUrl };
-  for (const [langCode, relSlug] of Object.entries(comp.traductions || {})) {
-    const rel = allComparaisons.find(c => c.slug === relSlug || String(c.id) === String(relSlug));
+  for (const [langCode, relRef] of Object.entries(comp.traductions || {})) {
+    const rel = allComparaisons.find(c => String(c.id) === String(relRef) || c.slug === relRef);
     if (rel && rel.slug) {
-      langueUrls[langCode] = `${SITE_ORIGIN}/comparateur/${rel.slug}/index.html`;
+      langueUrls[langCode] = `${SITE_ORIGIN}/comparateur/${langPrefix(langCode)}${rel.slug}/index.html`;
     }
   }
   const xDefaultUrl = langueUrls.fr || canonicalUrl;
@@ -4231,7 +4278,9 @@ async function main() {
     const slug = comp.slug;
     if (!slug) { compSkippedNoSlug++; continue; }
 
-    const folder   = path.join('comparateur', slug);
+    // FR à la racine (historique) ; EN/ES en sous-dossier de langue.
+    const compLangue = comp.langue || 'fr';
+    const folder   = compLangue === 'fr' ? path.join('comparateur', slug) : path.join('comparateur', compLangue, slug);
     const filePath = path.join(folder, 'index.html');
 
     if (!hasChanged && fs.existsSync(filePath)) { compUnchanged++; continue; }
@@ -4246,7 +4295,9 @@ async function main() {
 
   console.log(`\n✅ Comparateur — ${compGenerated} régénérée(s) (dont ${compCascade} via cascade outil modifié), ${compUnchanged} inchangée(s) (skip), ${compSkippedNoSlug} ignorée(s) (slug vide).`);
   console.log(`\nStructure :`);
-  console.log(`  comparateur/{slug}/index.html`);
+  console.log(`  comparateur/{slug}/index.html            (FR)`);
+  console.log(`  comparateur/en/{slug}/index.html         (EN)`);
+  console.log(`  comparateur/es/{slug}/index.html         (ES)`);
 
   // ─── NETTOYAGE DES COMPARAISONS ORPHELINES ───
   console.log(`\n🧹 Nettoyage des pages comparateur orphelines...`);
@@ -4254,19 +4305,36 @@ async function main() {
   const validComparaisonPaths = new Set();
   for (const comp of comparaisons) {
     if (!comp.slug) continue;
-    validComparaisonPaths.add(path.join('comparateur', comp.slug));
+    const compLangue = comp.langue || 'fr';
+    validComparaisonPaths.add(compLangue === 'fr' ? path.join('comparateur', comp.slug) : path.join('comparateur', compLangue, comp.slug));
   }
 
   let removedComparaisons = 0;
   if (fs.existsSync('comparateur')) {
+    // Racine : comparaisons FR (dossiers slug directs). 'page', 'en' et 'es'
+    // sont des dossiers réservés (pagination / langues), jamais une comparaison.
     for (const slugDir of fs.readdirSync('comparateur')) {
-      if (slugDir === 'page') continue; // dossier de pagination, pas une comparaison
+      if (slugDir === 'page' || slugDir === 'en' || slugDir === 'es') continue;
       const fullPath = path.join('comparateur', slugDir);
       if (!fs.statSync(fullPath).isDirectory()) continue;
       if (!validComparaisonPaths.has(fullPath)) {
         fs.rmSync(fullPath, { recursive: true, force: true });
         console.log(`  🗑️  Supprimé : ${fullPath}`);
         removedComparaisons++;
+      }
+    }
+    // Sous-dossiers de langue : chaque slug à l'intérieur est une traduction.
+    for (const lang of ['en', 'es']) {
+      const langDir = path.join('comparateur', lang);
+      if (!fs.existsSync(langDir)) continue;
+      for (const slugDir of fs.readdirSync(langDir)) {
+        const fullPath = path.join(langDir, slugDir);
+        if (!fs.statSync(fullPath).isDirectory()) continue;
+        if (!validComparaisonPaths.has(fullPath)) {
+          fs.rmSync(fullPath, { recursive: true, force: true });
+          console.log(`  🗑️  Supprimé : ${fullPath}`);
+          removedComparaisons++;
+        }
       }
     }
   }

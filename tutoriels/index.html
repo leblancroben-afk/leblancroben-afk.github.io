@@ -18,8 +18,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/tutoriels-hub.css" />
 </head>
-<body>
+<body class="tuto-hub">
 
 <nav>
   <a href="/index.html" class="logo" style="text-decoration:none;color:inherit;">
@@ -31,31 +32,20 @@
     </svg>
   </a>
   <div class="nav-links">
-    <a href="/index.html#tools" class="nav-link" style="text-decoration:none;">Outils</a>
-    <a href="/index.html#blog" class="nav-link" style="text-decoration:none;">Blog</a>
-    <a href="/index.html#gallery" class="nav-link" style="text-decoration:none;">Galerie</a>
-    <a href="/tutoriels/index.html" class="nav-link active" style="text-decoration:none;">Tutoriels</a>
-    <a href="/comparateur/" class="nav-link" style="text-decoration:none;">Comparateur</a>
-    <a href="/ressources.html" class="nav-link" style="text-decoration:none;">Ressources</a>
+    <a href="/index.html" class="nav-link" data-i18n="nav.home" style="text-decoration:none;">Accueil</a>
+    <a href="/index.html#tools" class="nav-link" data-i18n="nav.tools" style="text-decoration:none;">Outils</a>
+    <a href="/index.html#blog" class="nav-link" data-i18n="nav.blog" style="text-decoration:none;">Blog</a>
   </div>
-  <button class="nav-cta" onclick="ouvrirModalSoumission('','')">↑ Soumettre un tutoriel</button>
 </nav>
 
 <section class="tuto-hero">
-  <div class="tuto-badge"><span class="pulse"></span>Vidéothèque francophone</div>
-  <h1>Explorez le futur de l'IA<br>avec nos <span class="grad-pink">tutoriels experts</span></h1>
-  <p>Plus de 25 outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
-  <div class="tuto-hero-actions">
-    <button class="btn-main" onclick="document.getElementById('tuto-grille').scrollIntoView({behavior:'smooth'})">Explorer les tutoriels</button>
-    <button class="tuto-btn-hero-soumettre" onclick="ouvrirModalSoumission('','')">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Soumettre un tutoriel
-    </button>
-  </div>
+  <div class="tuto-badge"><span class="pulse"></span><span data-i18n="tuto.badge">Vidéothèque francophone</span></div>
+  <h1 data-i18n-html="tuto.heroTitle">Explorez le futur de l'IA<br>avec nos <span class="grad-pink">tutoriels experts</span></h1>
+  <p data-i18n="tuto.heroDesc" data-vars='{"n":25}'>Plus de 25 outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
   <div id="tuto-hero-stats" class="tuto-hero-stats">
-    <div class="tuto-stat"><span class="tuto-stat-n">25</span><span class="tuto-stat-l">Outils référencés</span></div>
-    <div class="tuto-stat"><span class="tuto-stat-n">114</span><span class="tuto-stat-l">Tutoriels sélectionnés</span></div>
-    <div class="tuto-stat"><span class="tuto-stat-n">100%</span><span class="tuto-stat-l">Accès gratuit</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">25</span><span class="tuto-stat-l" data-i18n="tuto.statTools">Outils référencés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">114</span><span class="tuto-stat-l" data-i18n="tuto.statVideos">Tutoriels sélectionnés</span></div>
+    <div class="tuto-stat"><span class="tuto-stat-n">100%</span><span class="tuto-stat-l" data-i18n="tuto.statFree">Accès gratuit</span></div>
   </div>
 </section>
 
@@ -75,7 +65,7 @@
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-harvey"></div>
         <span class="tuto-card-avis" id="avis-harvey"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -86,20 +76,15 @@
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="harvey" onclick="toggleCarte('harvey')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('1','Harvey')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-harvey">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Harvey est une IA juridique conçue pour les cabinets d'avocats et directions juridiques d'entreprise. Elle assiste la recherche réglementaire, l'analyse de contrats et le due diligence complexe.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Harvey
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Harvey&quot;}">Tutoriels vidéo pour comprendre et utiliser Harvey</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Harvey AI - Tutoriel complet">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('W4yFzi5DwdE','Harvey AI - Tutoriel complet')">
@@ -193,7 +178,7 @@
     </div>
   </div></div>
         <a href="/tools/starter/fr/harvey/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Harvey
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Harvey&quot;}">Voir tous les tutoriels pour Harvey</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -213,7 +198,7 @@
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-se-ranking"></div>
         <span class="tuto-card-avis" id="avis-se-ranking"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -224,20 +209,15 @@
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="se-ranking" onclick="toggleCarte('se-ranking')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('13','SE Ranking')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-se-ranking">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">SE Ranking est une plateforme SEO tout-en-un combinant suivi de position, audit technique et recherche de mots-clés. Sa fonctionnalité SE Visible ajoute le suivi de la visibilité de marque dans ChatGPT, Gemini et Perplexity.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser SE Ranking
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;SE Ranking&quot;}">Tutoriels vidéo pour comprendre et utiliser SE Ranking</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Avis SE Ranking : Comment utiliser cet outil SEO tout-en-un 🚀">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('UyHcl5FvjZM','Avis SE Ranking : Comment utiliser cet outil SEO tout-en-un 🚀')">
@@ -331,7 +311,7 @@
     </div>
   </div></div>
         <a href="/tools/starter/fr/se-ranking/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour SE Ranking
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;SE Ranking&quot;}">Voir tous les tutoriels pour SE Ranking</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -351,7 +331,7 @@
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-marketmuse"></div>
         <span class="tuto-card-avis" id="avis-marketmuse"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -362,20 +342,15 @@
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="marketmuse" onclick="toggleCarte('marketmuse')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('16','MarketMuse')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-marketmuse">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">MarketMuse analyse l'ensemble d'un site pour identifier les lacunes de contenu par rapport aux concurrents et bâtir l'autorité thématique. Il génère des briefs détaillés basés sur son modélisation de sujets propriétaire.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser MarketMuse
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;MarketMuse&quot;}">Tutoriels vidéo pour comprendre et utiliser MarketMuse</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="MarketMuse - Tutoriel complet">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('bivpgyEYsKY','MarketMuse - Tutoriel complet')">
@@ -469,7 +444,7 @@
     </div>
   </div></div>
         <a href="/tools/starter/fr/marketmuse/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour MarketMuse
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;MarketMuse&quot;}">Voir tous les tutoriels pour MarketMuse</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -489,7 +464,7 @@
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-chatgpt"></div>
         <span class="tuto-card-avis" id="avis-chatgpt"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -500,24 +475,15 @@
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="chatgpt" onclick="toggleCarte('chatgpt')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('17','ChatGPT')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-chatgpt">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">ChatGPT est l'agent conversationnel développé par OpenAI qui a démocratisé l'intelligence artificielle générative. Conçu pour comprendre et générer du langage naturel, il s'adapte à une infinité de cas d'usage professionnels et personnels.
-
-Que vous ayez besoin de rédiger un e-mail professionnel, de déboguer un script de programmation, de synthétiser un long rapport ou de brainstormer des idées marketing, l'outil s'exécute en quelques secondes. Il intègre désormais les modèles de raisonnement avancés (série o) pour résoudre des problèmes logiques complexes.
-
-En plus du texte, ChatGPT est multimodal : il entend votre voix, analyse vos images et génère des visuels uniques grâce à l'intégration de DALL-E. Son interface épurée cache un outil de productivité redoutable qui s'intègre dans le quotidien de millions de professionnels.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser ChatGPT
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;ChatGPT&quot;}">Tutoriels vidéo pour comprendre et utiliser ChatGPT</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="ChatGPT : Le Guide Ultime GRATUIT pour Débutants - Edition 2026">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('cjLT7mmY0VU','ChatGPT : Le Guide Ultime GRATUIT pour Débutants - Edition 2026')">
@@ -611,7 +577,7 @@ En plus du texte, ChatGPT est multimodal : il entend votre voix, analyse vos ima
     </div>
   </div></div>
         <a href="/tools/featured/fr/chatgpt/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour ChatGPT
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;ChatGPT&quot;}">Voir tous les tutoriels pour ChatGPT</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -631,7 +597,7 @@ En plus du texte, ChatGPT est multimodal : il entend votre voix, analyse vos ima
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-claude"></div>
         <span class="tuto-card-avis" id="avis-claude"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -642,24 +608,15 @@ En plus du texte, ChatGPT est multimodal : il entend votre voix, analyse vos ima
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="claude" onclick="toggleCarte('claude')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('18','Claude')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-claude">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Développé par Anthropic, Claude s'est imposé comme le principal rival de ChatGPT en misant sur une IA éthique, sécurisée et profondément performante. La famille de modèles Claude 3 et 3.5 brille particulièrement par ses capacités de raisonnement supérieures.
-
-L'un des plus grands atouts de Claude réside dans sa maîtrise du langage. Ses textes sont plus nuancés, moins stéréotypés et s'adaptent parfaitement aux chartes éditoriales complexes. Pour les développeurs, ses compétences en programmation rivalisent avec les meilleurs outils du marché.
-
-L'interface se distingue par l'introduction des "Artifacts", qui transforment le simple chat en un environnement de co-création. Vous pouvez voir un site web ou un mini-jeu se construire sous vos yeux et interagir avec le résultat en temps réel, sans quitter l'application.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Claude
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Claude&quot;}">Tutoriels vidéo pour comprendre et utiliser Claude</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Claude IA : Formation Ultime | Tutoriel Complet pour débutants">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('DxzPdoK_Awg','Claude IA : Formation Ultime | Tutoriel Complet pour débutants')">
@@ -753,7 +710,7 @@ L'interface se distingue par l'introduction des "Artifacts", qui transforment le
     </div>
   </div></div>
         <a href="/tools/featured/fr/claude/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Claude
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Claude&quot;}">Voir tous les tutoriels pour Claude</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -773,7 +730,7 @@ L'interface se distingue par l'introduction des "Artifacts", qui transforment le
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-midjourney"></div>
         <span class="tuto-card-avis" id="avis-midjourney"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -784,24 +741,15 @@ L'interface se distingue par l'introduction des "Artifacts", qui transforment le
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="midjourney" onclick="toggleCarte('midjourney')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('19','Midjourney')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-midjourney">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Midjourney est le laboratoire de recherche indépendant qui a révolutionné le monde du graphisme. Réputé pour son sens artistique unique, cet outil transforme vos idées textuelles en œuvres d'art visuelles, en maquettes d'applications, en logos ou en photographies d'un réalisme bluffant.
-
-Initialement accessible uniquement via l'application Discord, Midjourney propose désormais une plateforme web dédiée claire et ergonomique. Cette mise à jour facilite grandement l'exploration des créations de la communauté et la gestion de vos propres projets.
-
-L'outil offre des fonctionnalités avancées pour les professionnels de l'image : cohérence des personnages d'une image à l'autre (--cref), uniformité des styles visuels (--sref) et contrôle total du format d'image (--ar). C'est l'outil indispensable pour le prototypage visuel et le marketing de contenu.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Midjourney
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Midjourney&quot;}">Tutoriels vidéo pour comprendre et utiliser Midjourney</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('h-54HxTNb-k','1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr')">
@@ -895,7 +843,7 @@ L'outil offre des fonctionnalités avancées pour les professionnels de l'image 
     </div>
   </div></div>
         <a href="/tools/featured/fr/midjourney/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Midjourney
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Midjourney&quot;}">Voir tous les tutoriels pour Midjourney</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -915,7 +863,7 @@ L'outil offre des fonctionnalités avancées pour les professionnels de l'image 
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-make"></div>
         <span class="tuto-card-avis" id="avis-make"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -926,24 +874,15 @@ L'outil offre des fonctionnalités avancées pour les professionnels de l'image 
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="make" onclick="toggleCarte('make')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('20','Make')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-make">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Anciennement connu sous le nom d'Integromat, Make est devenu le standard de l'automatisation de processus sans code (No-Code). Son interface visuelle unique permet de concevoir, de construire et d'automatiser des flux de travail en liant des applications entre elles comme des briques de Lego.
-
-Contrairement aux solutions linéaires basiques, Make excelle dans la complexité. Vous pouvez créer des embranchements infinis, itérer sur des listes d'éléments, transformer des formats de texte ou de date à la volée et configurer des systèmes de secours en cas d'erreur de réseau.
-
-Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des agents autonomes. Vous pouvez par exemple écouter l'arrivée d'un nouvel avis client, demander à ChatGPT d'en analyser le sentiment, puis rédiger et envoyer une réponse personnalisée automatiquement par e-mail ou Slack.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Make
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Make&quot;}">Tutoriels vidéo pour comprendre et utiliser Make</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Formation Make.com 2025 🚀 Tutoriel Complet + AI Agents">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('fJIT3ix4X6k','Formation Make.com 2025 🚀 Tutoriel Complet + AI Agents')">
@@ -1037,7 +976,7 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
     </div>
   </div></div>
         <a href="/tools/featured/fr/make/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Make
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Make&quot;}">Voir tous les tutoriels pour Make</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -1057,7 +996,7 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-perplexity-ai"></div>
         <span class="tuto-card-avis" id="avis-perplexity-ai"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -1068,20 +1007,15 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="perplexity-ai" onclick="toggleCarte('perplexity-ai')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('21','perplexity.ai')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-perplexity-ai">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser perplexity.ai
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;perplexity.ai&quot;}">Tutoriels vidéo pour comprendre et utiliser perplexity.ai</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Perplexity AI : Le Tuto Complet (cette IA est PHÉNOMÉNALE)">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('dnmcZ1KIhUU','Perplexity AI : Le Tuto Complet (cette IA est PHÉNOMÉNALE)')">
@@ -1175,7 +1109,7 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
     </div>
   </div></div>
         <a href="/tools/standard/fr/perplexity-ai/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour perplexity.ai
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;perplexity.ai&quot;}">Voir tous les tutoriels pour perplexity.ai</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -1195,7 +1129,7 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-runway"></div>
         <span class="tuto-card-avis" id="avis-runway"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -1206,20 +1140,15 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="runway" onclick="toggleCarte('runway')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('22','Runway')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-runway">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">La suite créative leader pour la génération et l' édition de vidéos par IA. Donnez vie à vos textes et images avec les modèles cinématiques Gen-2 et Gen-3 Alpha.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Runway
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Runway&quot;}">Tutoriels vidéo pour comprendre et utiliser Runway</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Devenez cinéaste avec RunwayML : TUTO complet Gen-3">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('9uCmdWYgY3s','Devenez cinéaste avec RunwayML : TUTO complet Gen-3')">
@@ -1313,7 +1242,7 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
     </div>
   </div></div>
         <a href="/tools/standard/fr/runway/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Runway
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Runway&quot;}">Voir tous les tutoriels pour Runway</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -1333,7 +1262,7 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-gamma"></div>
         <span class="tuto-card-avis" id="avis-gamma"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -1344,24 +1273,15 @@ Avec l'avènement de l'IA générative, Make est l'outil parfait pour créer des
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="gamma" onclick="toggleCarte('gamma')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('24','Gamma')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-gamma">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Gamma réinvente la création de supports visuels en combinant la puissance de l'intelligence artificielle avec un éditeur de documents moderne. Contrairement aux logiciels de présentation traditionnels qui imposent de concevoir chaque diapositive manuellement, Gamma permet de générer des présentations, des pages web ou des documents structurés en quelques secondes à partir d'une simple consigne.
-
-Une fois le premier jet généré par l'IA, l'utilisateur dispose d'une interface d'édition fluide. Il est possible de modifier la structure, d'ajouter des blocs interactifs (vidéos, formulaires, applications intégrées) et de changer de thème graphique en un clic sans jamais déformer la mise en page globale.
-
-Cet outil s'adresse particulièrement aux professionnels, formateurs et créateurs de contenu qui souhaitent gagner du temps dans la préparation de leurs réunions ou de leurs cours, tout en garantissant un rendu esthétique et moderne sans compétences de design.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Gamma
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Gamma&quot;}">Tutoriels vidéo pour comprendre et utiliser Gamma</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Comment utiliser GAMMA IA ? - TUTORIEL">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('XkhN1eqSeec','Comment utiliser GAMMA IA ? - TUTORIEL')">
@@ -1455,7 +1375,7 @@ Cet outil s'adresse particulièrement aux professionnels, formateurs et créateu
     </div>
   </div></div>
         <a href="/tools/featured/fr/gamma/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Gamma
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Gamma&quot;}">Voir tous les tutoriels pour Gamma</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -1475,7 +1395,7 @@ Cet outil s'adresse particulièrement aux professionnels, formateurs et créateu
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-gemini-ai"></div>
         <span class="tuto-card-avis" id="avis-gemini-ai"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -1486,22 +1406,15 @@ Cet outil s'adresse particulièrement aux professionnels, formateurs et créateu
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="gemini-ai" onclick="toggleCarte('gemini-ai')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('25','Gemini ai')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-gemini-ai">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Développé par Google, Gemini est un assistant d'intelligence artificielle de premier plan qui remplace l'ancien modèle Bard. Conçu dès le départ pour être multimodal, il est capable de traiter et de combiner de manière fluide différents types d'informations, notamment du texte, du code, des images, de l'audio et de la vidéo. Cette polyvalence en fait un outil de choix pour les professionnels et les particuliers cherchant à automatiser des tâches quotidiennes ou à stimuler leur créativité.
-
-L'un des plus grands atouts de Gemini réside dans son intégration native avec l'écosystème Google Workspace. Vous pouvez l'utiliser pour analyser des documents stockés sur Google Drive, rédiger des brouillons dans Gmail ou extraire des données depuis Google Docs. La version Advanced, accessible via l'abonnement Google One AI Premium, offre quant à elle des performances accrues grâce au modèle Gemini Pro et à une fenêtre de contexte exceptionnellement large pour traiter de gros volumes de données.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Gemini ai
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Gemini ai&quot;}">Tutoriels vidéo pour comprendre et utiliser Gemini ai</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Tuto : simplifiez-vous la vie avec Gemini !">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('DbcGMKx3Iyo','Tuto : simplifiez-vous la vie avec Gemini !')">
@@ -1595,7 +1508,7 @@ L'un des plus grands atouts de Gemini réside dans son intégration native avec 
     </div>
   </div></div>
         <a href="/tools/featured/fr/gemini-ai/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Gemini ai
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Gemini ai&quot;}">Voir tous les tutoriels pour Gemini ai</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -1615,7 +1528,7 @@ L'un des plus grands atouts de Gemini réside dans son intégration native avec 
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-canva"></div>
         <span class="tuto-card-avis" id="avis-canva"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -1626,20 +1539,15 @@ L'un des plus grands atouts de Gemini réside dans son intégration native avec 
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="canva" onclick="toggleCarte('canva')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('26','Canva')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-canva">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Canva est une plateforme de design graphique en ligne intuitive permettant de créer des visuels, présentations, vidéos et documents grâce à des milliers de modèles personnalisables.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Canva
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Canva&quot;}">Tutoriels vidéo pour comprendre et utiliser Canva</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="15 fonctionnalités d’IA incroyables sur Canva">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('_kPE0yJ0SEg','15 fonctionnalités d’IA incroyables sur Canva')">
@@ -1733,7 +1641,7 @@ L'un des plus grands atouts de Gemini réside dans son intégration native avec 
     </div>
   </div></div>
         <a href="/tools/featured/fr/canva/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Canva
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Canva&quot;}">Voir tous les tutoriels pour Canva</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -1753,7 +1661,7 @@ L'un des plus grands atouts de Gemini réside dans son intégration native avec 
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-elevenlabs"></div>
         <span class="tuto-card-avis" id="avis-elevenlabs"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -1764,22 +1672,15 @@ L'un des plus grands atouts de Gemini réside dans son intégration native avec 
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="elevenlabs" onclick="toggleCarte('elevenlabs')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('27','ElevenLabs')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-elevenlabs">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">ElevenLabs est une plateforme audio IA complète, allant de la synthèse vocale à la création d’agents conversationnels. Elle sert aussi bien les créateurs individuels que les grandes entreprises.
-La plateforme propose des modèles de voix expressifs, un clonage vocal instantané ou professionnel, un doublage automatique en 90+ langues, et une transcription haute précision. Elle inclut aussi la génération de musique et d’effets sonores.
-Pour les développeurs, ElevenLabs expose des API REST et des SDK Python/TypeScript pour intégrer la voix dans des applications. Les entreprises peuvent déployer en cloud privé avec des options de conformité (HIPAA, SSO, zéro rétention).</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser ElevenLabs
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;ElevenLabs&quot;}">Tutoriels vidéo pour comprendre et utiliser ElevenLabs</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Comment Utiliser Eleven Labs ( Tuto Complet )">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('Usp_SibVHdI','Comment Utiliser Eleven Labs ( Tuto Complet )')">
@@ -1873,7 +1774,7 @@ Pour les développeurs, ElevenLabs expose des API REST et des SDK Python/TypeScr
     </div>
   </div></div>
         <a href="/tools/featured/fr/elevenlabs/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour ElevenLabs
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;ElevenLabs&quot;}">Voir tous les tutoriels pour ElevenLabs</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -1893,7 +1794,7 @@ Pour les développeurs, ElevenLabs expose des API REST et des SDK Python/TypeScr
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-murf-ai"></div>
         <span class="tuto-card-avis" id="avis-murf-ai"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -1904,21 +1805,15 @@ Pour les développeurs, ElevenLabs expose des API REST et des SDK Python/TypeScr
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="murf-ai" onclick="toggleCarte('murf-ai')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('29','Murf AI')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-murf-ai">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Murf AI est un studio de voix off IA conçu pour les professionnels. Il combine 200+ voix, un éditeur vidéo intégré et des outils de doublage automatique.
-La plateforme cible l’e-learning, le marketing vidéo et les podcasts. Les intégrations Canva et PowerPoint facilitent l’usage en entreprise.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Murf AI
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Murf AI&quot;}">Tutoriels vidéo pour comprendre et utiliser Murf AI</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="GUIDE COMPLET de MURF AI : GÉNÉRER et TRADUIRE DES VOIX avec l'IA">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('u3r4jvlkI60','GUIDE COMPLET de MURF AI : GÉNÉRER et TRADUIRE DES VOIX avec l&#39;IA')">
@@ -2012,7 +1907,7 @@ La plateforme cible l’e-learning, le marketing vidéo et les podcasts. Les int
     </div>
   </div></div>
         <a href="/tools/featured/fr/murf-ai/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Murf AI
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Murf AI&quot;}">Voir tous les tutoriels pour Murf AI</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -2032,7 +1927,7 @@ La plateforme cible l’e-learning, le marketing vidéo et les podcasts. Les int
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-jasper"></div>
         <span class="tuto-card-avis" id="avis-jasper"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -2043,24 +1938,15 @@ La plateforme cible l’e-learning, le marketing vidéo et les podcasts. Les int
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="jasper" onclick="toggleCarte('jasper')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('31','Jasper')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-jasper">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Jasper est la plateforme IA de référence pour les équipes marketing et les agences. Elle combine rédaction IA, brand voice personnalisable, workflows et agents spécialisés.
-
-Le plan Creator ($59/mo en annuel) offre 2 brand voices, 5 knowledge assets, l'éditeur Canvas et les agents marketing. Les plans Teams ($99-125/mo) ajoutent la collaboration, les analytics et la gouvernance.
-
-Jasper s'intègre avec Slack, Notion, Google Docs, WordPress, Shopify, HubSpot et Surfer SEO. Il excelle dans le copywriting publicitaire, les emails, les landing pages et les contenus de marque cohérents</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Jasper
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Jasper&quot;}">Tutoriels vidéo pour comprendre et utiliser Jasper</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Jasper AI : Tutoriel complet de l'IA de copywriting la plus puissante !">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('AjIjt9wb8A4','Jasper AI : Tutoriel complet de l&#39;IA de copywriting la plus puissante !')">
@@ -2154,7 +2040,7 @@ Jasper s'intègre avec Slack, Notion, Google Docs, WordPress, Shopify, HubSpot e
     </div>
   </div></div>
         <a href="/tools/featured/fr/jasper/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Jasper
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Jasper&quot;}">Voir tous les tutoriels pour Jasper</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -2174,7 +2060,7 @@ Jasper s'intègre avec Slack, Notion, Google Docs, WordPress, Shopify, HubSpot e
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-writesonic"></div>
         <span class="tuto-card-avis" id="avis-writesonic"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -2185,24 +2071,15 @@ Jasper s'intègre avec Slack, Notion, Google Docs, WordPress, Shopify, HubSpot e
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="writesonic" onclick="toggleCarte('writesonic')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('32','Writesonic')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-writesonic">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Writesonic est une plateforme IA complète combinant rédaction d'articles longs, optimisation SEO et tracking de visibilité GEO (ChatGPT, Gemini, Google AI Overviews).
-
-Le plan gratuit offre 10K mots/mois avec GPT-3.5. Les plans Standard ($79/mo annuel), Basic ($199/mo) et Growth ($399/mo) offrent 15-50 articles/mois, des audits SEO et le tracking GEO sur plusieurs plateformes IA.
-
-Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images, et des intégrations WordPress, Shopify, Webflow, Zapier et Surfer SEO. Ideal pour les rédacteurs SEO et les agences.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Writesonic
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Writesonic&quot;}">Tutoriels vidéo pour comprendre et utiliser Writesonic</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="This AI Tool Writes SEO Optimized Article in Minutes | Writesonic Review (2025)">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('PRz2jYD7-xc','This AI Tool Writes SEO Optimized Article in Minutes | Writesonic Review (2025)')">
@@ -2296,7 +2173,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     </div>
   </div></div>
         <a href="/tools/featured/fr/writesonic/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Writesonic
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Writesonic&quot;}">Voir tous les tutoriels pour Writesonic</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -2316,7 +2193,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-notion-ai"></div>
         <span class="tuto-card-avis" id="avis-notion-ai"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -2327,20 +2204,15 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="notion-ai" onclick="toggleCarte('notion-ai')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('33','Notion AI')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-notion-ai">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">IA intégrée à Notion pour rédaction, résumé, traduction, agents et meeting notes. Inclus dans le plan Business ($20/membre/mo). Essai gratuit sur Free et Plus.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Notion AI
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Notion AI&quot;}">Tutoriels vidéo pour comprendre et utiliser Notion AI</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Getting started with Notion AI">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('Y5FvtQomPh8','Getting started with Notion AI')">
@@ -2434,7 +2306,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     </div>
   </div></div>
         <a href="/tools/standard/fr/notion-ai/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Notion AI
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Notion AI&quot;}">Voir tous les tutoriels pour Notion AI</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -2454,7 +2326,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-gumloop"></div>
         <span class="tuto-card-avis" id="avis-gumloop"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -2465,20 +2337,15 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="gumloop" onclick="toggleCarte('gumloop')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('6','Gumloop')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-gumloop">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Gumloop est une plateforme d'automatisation no-code propulsée par l'IA. Elle permet de créer des workflows agentiques complexes par glisser-déposer, sans écrire de code.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Gumloop
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Gumloop&quot;}">Tutoriels vidéo pour comprendre et utiliser Gumloop</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Gumloop vs Make : l’IA qui crée des workflows en langage naturel !">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('tQ4oT9H3o1c','Gumloop vs Make : l’IA qui crée des workflows en langage naturel !')">
@@ -2572,7 +2439,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     </div>
   </div></div>
         <a href="/tools/starter/fr/gumloop/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Gumloop
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Gumloop&quot;}">Voir tous les tutoriels pour Gumloop</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -2592,7 +2459,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-adcreative-ai"></div>
         <span class="tuto-card-avis" id="avis-adcreative-ai"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -2603,20 +2470,15 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="adcreative-ai" onclick="toggleCarte('adcreative-ai')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('7','AdCreative.ai')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-adcreative-ai">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">AdCreative.ai génère des bannières et visuels publicitaires optimisés pour la conversion à partir de vos données de marque. Plus de 4,2 millions d'utilisateurs s'appuient sur ses algorithmes entraînés sur des performances publicitaires réelles.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser AdCreative.ai
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;AdCreative.ai&quot;}">Tutoriels vidéo pour comprendre et utiliser AdCreative.ai</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Tutoriel complet & Avis sur AdCreative AI 2024 (Guide pour débutants)">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('_P4Igx2gWi8','Tutoriel complet & Avis sur AdCreative AI 2024 (Guide pour débutants)')">
@@ -2710,7 +2572,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     </div>
   </div></div>
         <a href="/tools/starter/fr/adcreative-ai/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour AdCreative.ai
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;AdCreative.ai&quot;}">Voir tous les tutoriels pour AdCreative.ai</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -2730,7 +2592,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-brand24"></div>
         <span class="tuto-card-avis" id="avis-brand24"></span>
-        <span class="tuto-card-badge-count">5 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:5}">5 vidéos</span>
       </div>
     </div>
 
@@ -2741,20 +2603,15 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="brand24" onclick="toggleCarte('brand24')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('9','Brand24')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-brand24">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Brand24 surveille en temps réel les mentions de votre marque sur les réseaux sociaux, forums, blogs et sites d'actualité. Son analyse de sentiment dopée à l'IA aide à protéger la réputation et détecter les signaux faibles.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Brand24
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Brand24&quot;}">Tutoriels vidéo pour comprendre et utiliser Brand24</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Brand24 : Surveille ta marque et développe ton entreprise !">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('chtlWe-PiuA','Brand24 : Surveille ta marque et développe ton entreprise !')">
@@ -2848,7 +2705,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     </div>
   </div></div>
         <a href="/tools/starter/fr/brand24/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Brand24
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Brand24&quot;}">Voir tous les tutoriels pour Brand24</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -2868,7 +2725,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-cocounsel"></div>
         <span class="tuto-card-avis" id="avis-cocounsel"></span>
-        <span class="tuto-card-badge-count">4 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:4}">4 vidéos</span>
       </div>
     </div>
 
@@ -2879,20 +2736,15 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="cocounsel" onclick="toggleCarte('cocounsel')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('3','CoCounsel')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-cocounsel">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">CoCounsel (ex-Casetext) est l'assistant de recherche juridique de Thomson Reuters. Adossé à Westlaw, il prépare des dossiers de plaidoirie, vérifie la jurisprudence et accélère la revue documentaire.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser CoCounsel
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;CoCounsel&quot;}">Tutoriels vidéo pour comprendre et utiliser CoCounsel</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="How to use CoCounsel for Legal Collaboration - Step By Step">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('KAe0DVEJqnk','How to use CoCounsel for Legal Collaboration - Step By Step')">
@@ -2968,7 +2820,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     </div>
   </div></div>
         <a href="/tools/starter/fr/cocounsel/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour CoCounsel
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;CoCounsel&quot;}">Voir tous les tutoriels pour CoCounsel</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -2988,7 +2840,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-juri-predis"></div>
         <span class="tuto-card-avis" id="avis-juri-predis"></span>
-        <span class="tuto-card-badge-count">4 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:4}">4 vidéos</span>
       </div>
     </div>
 
@@ -2999,20 +2851,15 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="juri-predis" onclick="toggleCarte('juri-predis')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('5','Juri&#39;Predis')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-juri-predis">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Juri'Predis est une plateforme française de recherche jurisprudentielle et de justice prédictive. Elle analyse plus de 8 millions de décisions de justice en langage naturel pour anticiper les tendances des tribunaux.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Juri'Predis
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Juri'Predis&quot;}">Tutoriels vidéo pour comprendre et utiliser Juri'Predis</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="JuriPredis, le nouveau moteur de recherche juridique intelligent sur BFM TV">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('3ToCF-3XtyM','JuriPredis, le nouveau moteur de recherche juridique intelligent sur BFM TV')">
@@ -3088,7 +2935,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     </div>
   </div></div>
         <a href="/tools/starter/fr/juri-predis/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Juri'Predis
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Juri'Predis&quot;}">Voir tous les tutoriels pour Juri'Predis</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -3108,7 +2955,7 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-grammarly"></div>
         <span class="tuto-card-avis" id="avis-grammarly"></span>
-        <span class="tuto-card-badge-count">3 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:3}">3 vidéos</span>
       </div>
     </div>
 
@@ -3119,24 +2966,15 @@ Writesonic inclut Chatsonic (chatbot avec accès web), un générateur d'images,
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="grammarly" onclick="toggleCarte('grammarly')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('30','grammarly')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-grammarly">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Grammarly est l'assistant d'écriture IA le plus utilisé au monde, avec plus de 40 millions d'utilisateurs et 50 000 entreprises. Il corrige grammaire, style, ton et détecte le plagiat.
-
-Le plan gratuit offre des corrections de base et 100 prompts IA par mois. Le plan Pro ($12/mo en annuel) ajoute les réécritures complètes, les ajustements de ton, la détection de plagiat et d'IA, et 2 000 prompts IA/mois.
-
-Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion, navigateurs (Chrome, Safari, Edge) et apps desktop (Windows, macOS). Le plan Business ($15/membre/mo) inclut des analytics d'équipe et des guides de style.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser grammarly
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;grammarly&quot;}">Tutoriels vidéo pour comprendre et utiliser grammarly</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="AI App of the Day: Grammarly AI Review | Best AI Writing & Grammar Assistant #aitools #aiapps">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('GqJWE5tb3o4','AI App of the Day: Grammarly AI Review | Best AI Writing & Grammar Assistant #aitools #aiapps')">
@@ -3194,7 +3032,7 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
     </div>
   </div></div>
         <a href="/tools/featured/fr/grammarly/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour grammarly
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;grammarly&quot;}">Voir tous les tutoriels pour grammarly</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -3214,7 +3052,7 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-wordlift"></div>
         <span class="tuto-card-avis" id="avis-wordlift"></span>
-        <span class="tuto-card-badge-count">2 vidéos</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoMany" data-vars="{&quot;n&quot;:2}">2 vidéos</span>
       </div>
     </div>
 
@@ -3225,20 +3063,15 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="wordlift" onclick="toggleCarte('wordlift')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('15','WordLift')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-wordlift">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">WordLift automatise le balisage Schema.org et construit un graphe de connaissances à partir de votre contenu WordPress. L'outil connecte vos entités à des sources externes comme Wikidata pour renforcer la compréhension par les moteurs et les IA.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser WordLift
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;WordLift&quot;}">Tutoriels vidéo pour comprendre et utiliser WordLift</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="WooCommerce SEO by WordLift Guide - Ep. 1">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('om8wgy7IXfk','WooCommerce SEO by WordLift Guide - Ep. 1')">
@@ -3278,7 +3111,7 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
     </div>
   </div></div>
         <a href="/tools/standard/fr/wordlift/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour WordLift
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;WordLift&quot;}">Voir tous les tutoriels pour WordLift</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -3298,7 +3131,7 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
       <div class="tuto-card-meta">
         <div class="tuto-card-note" id="note-kira-systems"></div>
         <span class="tuto-card-avis" id="avis-kira-systems"></span>
-        <span class="tuto-card-badge-count">1 vidéo</span>
+        <span class="tuto-card-badge-count" data-i18n="tuto.videoOne" data-vars="{&quot;n&quot;:1}">1 vidéo</span>
       </div>
     </div>
 
@@ -3309,20 +3142,15 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
     <div class="tuto-card-actions">
       <button class="tuto-card-btn tuto-btn-voir" data-id="kira-systems" onclick="toggleCarte('kira-systems')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        Voir les tutoriels
-      </button>
-      <button class="tuto-btn-soumettre" onclick="ouvrirModalSoumission('4','Kira Systems')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Soumettre
+        <span data-i18n="tuto.seeTutorials">Voir les tutoriels</span>
       </button>
     </div>
 
     <div class="tuto-card-expand" id="expand-kira-systems">
       <div class="tuto-expand-inner">
-        <p class="tuto-desc-longue">Kira Systems, propriété de Litera, est une plateforme d'intelligence contractuelle spécialisée dans l'extraction de clauses lors des due diligence M&A. Plus de 1400 champs prédéfinis identifient automatiquement les points critiques.</p>
         <div class="tuto-section-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-          Tutoriels vidéo pour comprendre et utiliser Kira Systems
+          <span data-i18n="tuto.sectionLabel" data-vars="{&quot;tool&quot;:&quot;Kira Systems&quot;}">Tutoriels vidéo pour comprendre et utiliser Kira Systems</span>
         </div>
         <div class="tuto-video-grid"><div class="tuto-thumb" title="Best AI Tools for Lawyers & Legal Professionals in 2026 – Work Smarter & Faster">
     <div class="tuto-thumb-img" onclick="ouvrirPlayer('hMp2OQ1Z1GU','Best AI Tools for Lawyers & Legal Professionals in 2026 – Work Smarter & Faster')">
@@ -3344,7 +3172,7 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
     </div>
   </div></div>
         <a href="/tools/standard/fr/kira-systems/tutoriels/" class="tuto-voir-tout">
-          Voir tous les tutoriels pour Kira Systems
+          <span data-i18n="tuto.seeAll" data-vars="{&quot;tool&quot;:&quot;Kira Systems&quot;}">Voir tous les tutoriels pour Kira Systems</span>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
@@ -3355,71 +3183,71 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
 
 <section class="tuto-editorial-wrap">
   <div class="tuto-editorial-head">
-    <h2>Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
+    <h2 data-i18n="tuto.ed.title">Pourquoi la vidéo est-elle le meilleur moyen de maîtriser l'IA&nbsp;?</h2>
   </div>
   <div class="tuto-editorial-body">
-<h3>La vidéo : le support ultime de l'apprentissage technologique</h3>
-<p>Pourquoi avoir choisi de placer la vidéo au cœur de notre annuaire ? Parce que dans le domaine de l'IA, une image vaut réellement mille mots. Lire une documentation technique sur un nouveau modèle de génération d'images comme Midjourney ou un outil d'automatisation comme Make peut s'avérer fastidieux. À l'inverse, regarder un expert manipuler l'interface, ajuster ses prompts et montrer les erreurs à éviter offre une courbe d'apprentissage fulgurante.</p>
-<p>La vidéo permet de capturer la subtilité du « flux de travail » (workflow). Elle montre le temps de rendu réel, la réactivité de l'interface et, surtout, le résultat concret. En intégrant des tutoriels YouTube directement sous nos fiches outils, nous créons un écosystème d'apprentissage immédiat.</p>
-<h3>Une diversité de formats pour tous les besoins</h3>
-<p>Nous avons structuré notre vidéothèque pour répondre à la diversité des usages modernes. Nos filtres de durée vous permettent d'accéder à de véritables formations gratuites : une vidéo de 40 ou 50 minutes n'est pas qu'une simple démo, c'est un cours magistral où le créateur prend le temps de creuser les paramètres avancés. En filtrant les vidéos par durée, nous vous redonnons le contrôle sur votre temps de formation.</p>
-<h3>Le soutien aux créateurs : une relation gagnant-gagnant</h3>
-<p>Notre plateforme repose sur un principe éthique fondamental : le respect du droit d'auteur et le soutien aux créateurs de contenu. En utilisant l'intégration officielle via le lecteur YouTube, nous garantissons que chaque vue générée sur notre annuaire compte pour le créateur original. Nous encourageons les auteurs de vidéos à soumettre eux-mêmes leurs contenus pour renforcer leur autorité auprès d'un public qualifié.</p></div>
+<h3 data-i18n="tuto.ed.1">La vidéo : le support ultime de l'apprentissage technologique</h3>
+<p data-i18n="tuto.ed.2">Pourquoi avoir choisi de placer la vidéo au cœur de notre annuaire ? Parce que dans le domaine de l'IA, une image vaut réellement mille mots. Lire une documentation technique sur un nouveau modèle de génération d'images comme Midjourney ou un outil d'automatisation comme Make peut s'avérer fastidieux. À l'inverse, regarder un expert manipuler l'interface, ajuster ses prompts et montrer les erreurs à éviter offre une courbe d'apprentissage fulgurante.</p>
+<p data-i18n="tuto.ed.3">La vidéo permet de capturer la subtilité du « flux de travail » (workflow). Elle montre le temps de rendu réel, la réactivité de l'interface et, surtout, le résultat concret. En intégrant des tutoriels YouTube directement sous nos fiches outils, nous créons un écosystème d'apprentissage immédiat.</p>
+<h3 data-i18n="tuto.ed.4">Une diversité de formats pour tous les besoins</h3>
+<p data-i18n="tuto.ed.5">Nous avons structuré notre vidéothèque pour répondre à la diversité des usages modernes. Nos filtres de durée vous permettent d'accéder à de véritables formations gratuites : une vidéo de 40 ou 50 minutes n'est pas qu'une simple démo, c'est un cours magistral où le créateur prend le temps de creuser les paramètres avancés. En filtrant les vidéos par durée, nous vous redonnons le contrôle sur votre temps de formation.</p>
+<h3 data-i18n="tuto.ed.6">Le soutien aux créateurs : une relation gagnant-gagnant</h3>
+<p data-i18n="tuto.ed.7">Notre plateforme repose sur un principe éthique fondamental : le respect du droit d'auteur et le soutien aux créateurs de contenu. En utilisant l'intégration officielle via le lecteur YouTube, nous garantissons que chaque vue générée sur notre annuaire compte pour le créateur original. Nous encourageons les auteurs de vidéos à soumettre eux-mêmes leurs contenus pour renforcer leur autorité auprès d'un public qualifié.</p></div>
 </section>
 <section class="tuto-faq-wrap">
-  <div class="tuto-faq-head"><h2>Questions fréquentes</h2></div>
+  <div class="tuto-faq-head"><h2 data-i18n="tuto.faqTitle">Questions fréquentes</h2></div>
   <div class="faq-list" id="tuto-faq-list"><div class="faq-item" id="faq-0">
       <button class="faq-question" onclick="toggleFAQ(0)" aria-expanded="false">
-        <span>Est-il légal de visionner ces vidéos sur votre site ?</span>
+        <span data-i18n="tuto.faq.q1">Est-il légal de visionner ces vidéos sur votre site ?</span>
         <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="faq-reponse" id="faq-rep-0">
-        <p>Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur.</p>
+        <p data-i18n="tuto.faq.a1">Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur.</p>
       </div>
     </div>
 <div class="faq-item" id="faq-1">
       <button class="faq-question" onclick="toggleFAQ(1)" aria-expanded="false">
-        <span>Comment sont sélectionnées les vidéos pour chaque outil ?</span>
+        <span data-i18n="tuto.faq.q2">Comment sont sélectionnées les vidéos pour chaque outil ?</span>
         <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="faq-reponse" id="faq-rep-1">
-        <p>Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire.</p>
+        <p data-i18n="tuto.faq.a2">Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire.</p>
       </div>
     </div>
 <div class="faq-item" id="faq-2">
       <button class="faq-question" onclick="toggleFAQ(2)" aria-expanded="false">
-        <span>Pourquoi filtrer par durée ?</span>
+        <span data-i18n="tuto.faq.q3">Pourquoi filtrer par durée ?</span>
         <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="faq-reponse" id="faq-rep-2">
-        <p>Tout le monde n'a pas le même besoin ni le même temps disponible. Si vous voulez juste un aperçu, une vidéo de 5 minutes suffit. Si vous souhaitez configurer l'outil pour votre entreprise, vous aurez besoin d'une formation de 30 à 40 minutes. Le filtre vous permet de trouver exactement le contenu adapté à votre situation.</p>
+        <p data-i18n="tuto.faq.a3">Tout le monde n'a pas le même besoin ni le même temps disponible. Si vous voulez juste un aperçu, une vidéo de 5 minutes suffit. Si vous souhaitez configurer l'outil pour votre entreprise, vous aurez besoin d'une formation de 30 à 40 minutes. Le filtre vous permet de trouver exactement le contenu adapté à votre situation.</p>
       </div>
     </div>
 <div class="faq-item" id="faq-3">
       <button class="faq-question" onclick="toggleFAQ(3)" aria-expanded="false">
-        <span>Je suis YouTubeur, pourquoi soumettre ma vidéo ?</span>
+        <span data-i18n="tuto.faq.q4">Je suis YouTubeur, pourquoi soumettre ma vidéo ?</span>
         <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="faq-reponse" id="faq-rep-3">
-        <p>Soumettre votre vidéo vous permet d'apparaître devant une audience ultra-ciblée. Un utilisateur qui consulte la fiche d'une IA est déjà convaincu d'utiliser cet outil — c'est l'endroit idéal pour gagner des abonnés qualifiés et renforcer votre autorité dans le domaine de l'IA francophone.</p>
+        <p data-i18n="tuto.faq.a4">Soumettre votre vidéo vous permet d'apparaître devant une audience ultra-ciblée. Un utilisateur qui consulte la fiche d'une IA est déjà convaincu d'utiliser cet outil — c'est l'endroit idéal pour gagner des abonnés qualifiés et renforcer votre autorité dans le domaine de l'IA francophone.</p>
       </div>
     </div>
 <div class="faq-item" id="faq-4">
       <button class="faq-question" onclick="toggleFAQ(4)" aria-expanded="false">
-        <span>Que se passe-t-il si un outil change d'interface ?</span>
+        <span data-i18n="tuto.faq.q5">Que se passe-t-il si un outil change d'interface ?</span>
         <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="faq-reponse" id="faq-rep-4">
-        <p>C'est l'avantage de notre système communautaire. Si une vidéo devient obsolète suite à une mise à jour, la communauté peut en signaler de plus récentes. Nous actualisons régulièrement les tutoriels pour qu'ils correspondent aux versions actuelles des logiciels.</p>
+        <p data-i18n="tuto.faq.a5">C'est l'avantage de notre système communautaire. Si une vidéo devient obsolète suite à une mise à jour, la communauté peut en signaler de plus récentes. Nous actualisons régulièrement les tutoriels pour qu'ils correspondent aux versions actuelles des logiciels.</p>
       </div>
     </div>
 <div class="faq-item" id="faq-5">
       <button class="faq-question" onclick="toggleFAQ(5)" aria-expanded="false">
-        <span>Est-ce gratuit d'utiliser l'annuaire et de regarder les vidéos ?</span>
+        <span data-i18n="tuto.faq.q6">Est-ce gratuit d'utiliser l'annuaire et de regarder les vidéos ?</span>
         <svg class="faq-icone" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div class="faq-reponse" id="faq-rep-5">
-        <p>Oui, l'accès à notre plateforme et le visionnage des vidéos sont entièrement gratuits. Nous nous finançons par des partenariats affiliés avec les outils référencés pour garantir que l'apprentissage de l'IA reste accessible à tous, en particulier dans les pays francophones.</p>
+        <p data-i18n="tuto.faq.a6">Oui, l'accès à notre plateforme et le visionnage des vidéos sont entièrement gratuits. Nous nous finançons par des partenariats affiliés avec les outils référencés pour garantir que l'apprentissage de l'IA reste accessible à tous, en particulier dans les pays francophones.</p>
       </div>
     </div></div>
 </section>
@@ -3434,65 +3262,6 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
     <div class="tuto-player-frame">
       <iframe id="tuto-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
     </div>
-  </div>
-</div>
-<div id="tuto-modal-soumission" class="tuto-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
-  <div class="tuto-modal-inner">
-    <button class="tuto-modal-close" id="soumission-fermer" aria-label="Fermer">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-    <div class="tuto-modal-ico">🎬</div>
-    <h2 class="tuto-modal-titre">Soumettre un tutoriel</h2>
-    <p class="tuto-modal-sub">Proposez une vidéo pour <strong id="soumission-outil-nom">cet outil</strong>. Notre équipe éditoriale l'examinera sous 48h.</p>
-    <form id="form-soumission" novalidate>
-      <input type="hidden" id="soumission-outil-id" name="outil_id" value="">
-      <div class="tuto-form-field">
-        <label class="tuto-form-label" for="s-url">URL de la vidéo YouTube *</label>
-        <input class="tuto-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
-      </div>
-      <div class="tuto-form-field">
-        <label class="tuto-form-label" for="s-outil">Outil concerné</label>
-        <select class="tuto-form-select" id="s-outil" name="outil">
-          <option value="">Sélectionner un outil…</option>
-          <option value="1">Harvey</option>
-          <option value="13">SE Ranking</option>
-          <option value="16">MarketMuse</option>
-          <option value="17">ChatGPT</option>
-          <option value="18">Claude</option>
-          <option value="19">Midjourney</option>
-          <option value="20">Make</option>
-          <option value="21">perplexity.ai</option>
-          <option value="22">Runway</option>
-          <option value="24">Gamma</option>
-          <option value="25">Gemini ai</option>
-          <option value="26">Canva</option>
-          <option value="27">ElevenLabs</option>
-          <option value="29">Murf AI</option>
-          <option value="31">Jasper</option>
-          <option value="32">Writesonic</option>
-          <option value="33">Notion AI</option>
-          <option value="6">Gumloop</option>
-          <option value="7">AdCreative.ai</option>
-          <option value="9">Brand24</option>
-          <option value="3">CoCounsel</option>
-          <option value="5">Juri'Predis</option>
-          <option value="30">grammarly</option>
-          <option value="15">WordLift</option>
-          <option value="4">Kira Systems</option>
-          <option value="autre">Autre outil IA</option>
-        </select>
-      </div>
-      <div class="tuto-form-field">
-        <label class="tuto-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
-        <input class="tuto-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
-      </div>
-      <div class="tuto-form-field">
-        <label class="tuto-form-label" for="s-email">Votre email (pour notification)</label>
-        <input class="tuto-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
-      </div>
-      <button type="submit" class="tuto-form-submit" id="soumission-submit">Soumettre la vidéo →</button>
-      <p class="tuto-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
-    </form>
   </div>
 </div>
 
@@ -3540,7 +3309,7 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
       const plein = Math.floor(ratingAverage), demi = (ratingAverage % 1) >= 0.5 ? 1 : 0, vide = 5 - plein - demi;
       const etoiles = '★'.repeat(plein) + (demi?'½':'') + '☆'.repeat(vide);
       if (noteEl) noteEl.innerHTML = `${etoiles} <span>${ratingAverage}</span>`;
-      if (avisEl) avisEl.textContent = `${ratingCount} avis`;
+      if (avisEl) { avisEl.setAttribute('data-i18n','tuto.reviewsN'); avisEl.setAttribute('data-vars', JSON.stringify({n: ratingCount})); window.tutoApplyVars && window.tutoApplyVars(); }
     } catch { if (noteEl) noteEl.style.display='none'; if (avisEl) avisEl.style.display='none'; }
   };
   document.querySelectorAll('[id^="carte-"]').forEach(carte => {
@@ -3567,6 +3336,23 @@ Grammarly s'intègre partout : Gmail, Google Docs, Microsoft Word, Slack, Notion
       btn.title = saved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
     });
   };
+</script>
+<script src="/js/i18n.js"></script>
+<script>
+  /* Substitue {n} / {tool} dans les textes i18n marqués data-vars (après i18n.js) */
+  window.tutoApplyVars = function (lang) {
+    lang = lang || (window.detecterLangue ? window.detecterLangue() : 'fr');
+    document.querySelectorAll('[data-vars]').forEach(function (el) {
+      var s = window.t(el.getAttribute('data-i18n'), lang);
+      try {
+        var v = JSON.parse(el.getAttribute('data-vars'));
+        Object.keys(v).forEach(function (k) { s = s.split('{' + k + '}').join(v[k]); });
+      } catch (e) {}
+      el.textContent = s;
+    });
+  };
+  window.onLangueChange = window.tutoApplyVars;
+  document.addEventListener('DOMContentLoaded', function () { window.tutoApplyVars(); });
 </script>
 <script src="/js/tutoriels.js"></script>
 </body>

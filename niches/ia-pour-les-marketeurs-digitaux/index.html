@@ -74,19 +74,19 @@
     </svg>
   </div>
   <div class="nav-links">
-    <button class="nav-link" onclick="window.location.href='/index.html'">Accueil</button>
-    <button class="nav-link" onclick="window.location.href='/index.html#tools'">Outils</button>
-    <button class="nav-link" onclick="window.location.href='/index.html#blog'">Blog</button>
+    <button class="nav-link" data-i18n="nav.home" onclick="window.location.href='/index.html'">Accueil</button>
+    <button class="nav-link" data-i18n="nav.tools" onclick="window.location.href='/index.html#tools'">Outils</button>
+    <button class="nav-link" data-i18n="nav.blog" onclick="window.location.href='/index.html#blog'">Blog</button>
   </div>
   <div class="kebab-wrap" id="kebab-wrap">
     <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name">Glossaire IA</div></div></a>
-      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name">Tutoriels vidéo</div></div></a>
-      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name">Comparateur</div></div></a>
-      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name">Deals &amp; Promos</div></div></a>
+      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div></div></a>
+      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name" data-i18n="kebab.tutorials">Tutoriels vidéo</div></div></a>
+      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div></div></a>
+      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div></div></a>
       <div class="kebab-divider"></div>
-      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name">Toutes les sections →</div></div></a>
+      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name" data-i18n="kebab.hub">Toutes les sections →</div></div></a>
     </div>
   </div>
 </nav>
@@ -99,7 +99,7 @@
 </section>
 
 <div class="niche-section">
-  <div class="niche-section-title">Notre sélection (8)</div>
+  <div class="niche-section-title">Notre sélection (6)</div>
   <div class="niche-tools-grid">
 <a href="/tools/standard/fr/phrasee/" class="niche-tool-card">
   <div class="ntc-top">
@@ -136,26 +136,6 @@
     <img src="https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai" alt="AdCreative.ai" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <span class="ntc-logo-fallback" style="display:none">🎨</span>
     <span class="ntc-name">AdCreative.ai</span>
-    
-  </div>
-  <span class="ntc-cat">Marketing</span>
-  <span class="ntc-cta">Voir la fiche →</span>
-</a>
-<a href="/tools/starter/en/creative-a/" class="niche-tool-card">
-  <div class="ntc-top">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai" alt="Creative. a" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="ntc-logo-fallback" style="display:none">🎨</span>
-    <span class="ntc-name">Creative. a</span>
-    
-  </div>
-  <span class="ntc-cat">Marketing</span>
-  <span class="ntc-cta">Voir la fiche →</span>
-</a>
-<a href="/tools/starter/es/creativo-a/" class="niche-tool-card">
-  <div class="ntc-top">
-    <img src="https://www.google.com/s2/favicons?sz=64&domain=www.adcreative.ai" alt="Creativo. a" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <span class="ntc-logo-fallback" style="display:none">🎨</span>
-    <span class="ntc-name">Creativo. a</span>
     
   </div>
   <span class="ntc-cat">Marketing</span>
@@ -231,9 +211,9 @@
 <footer>
   <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
     &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+    <a href="/mentions-legales.html" data-i18n="footer.legalNotice" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" data-i18n="footer.privacy" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" data-i18n="footer.contactUs" style="color:#7a7a9a;text-decoration:none">Contact</a>
   </div>
 </footer>
 <script>function toggleNicheFAQ(i){document.getElementById("nfaq-"+i).classList.toggle("open");}</script>

@@ -1039,7 +1039,7 @@
             <legend>Champs communs</legend>
             <label>Slug (URL) — laisser vide pour générer depuis les deux outils</label>
             <input type="text" id="cp-slug" placeholder="chatgpt-vs-gemini">
-            <p class="field-hint">La comparaison sera publiée à <code>/comparateur/{slug}/index.html</code>.</p>
+            <p class="field-hint">La comparaison sera publiée à <code>/comparateur/{slug}/index.html</code> (FR). Les traductions EN/ES, si renseignées plus bas, seront publiées à <code>/comparateur/en/{slug}/</code> et <code>/comparateur/es/{slug}/</code>, sous le même slug.</p>
             <label>Titre SEO (meta title — optionnel)</label>
             <input type="text" id="cp-meta-title" placeholder="ChatGPT vs Gemini — Comparaison complète | Albexia">
             <label>Meta description SEO (155 car. max)</label>
@@ -4140,7 +4140,10 @@ Support français|oui|non|bool"></textarea>
         if (!hasContent) continue;
 
         const relId   = existingRel ? existingRel.id : `${id}-${lang}`;
-        const relSlug = existingRel ? existingRel.slug : `${slug}-${lang}`;
+        // Même slug que le FR (plus de suffixe -en/-es) : EN/ES vivent
+        // maintenant dans comparateur/en/{slug}/ et comparateur/es/{slug}/,
+        // le dossier de langue suffit à éviter toute collision d'URL.
+        const relSlug = existingRel ? existingRel.slug : slug;
         docData.traductions[lang] = relId;
 
         toWrite.push({

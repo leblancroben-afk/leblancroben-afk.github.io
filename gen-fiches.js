@@ -4205,7 +4205,12 @@ async function main() {
   console.log(`✅ Page vitrine — tutoriels/index.html (${toolsAvecVideosUniques.length} outils, régénérée à chaque run).`);
 
   // ── Nettoyage des vidéothèques orphelines (outil supprimé ou vidéos retirées) ──
-  const validVideothequePaths = new Set(toolsAvecVideos.map(t => toolVideothequeFolder(t)?.folder).filter(Boolean));
+  // Dossiers valides = ceux des documents qui ont leur propre vidéothèque + ceux générés
+  // pour les autres langues (EN/ES) à partir d'une vidéothèque FR (writtenFolders).
+  const validVideothequePaths = new Set([
+    ...toolsAvecVideos.map(t => toolVideothequeFolder(t)?.folder).filter(Boolean),
+    ...writtenFolders,
+  ]);
   let removedVideotheques = 0;
   for (const plan of ['featured', 'starter', 'standard']) {
     const planDir = path.join('tools', plan);

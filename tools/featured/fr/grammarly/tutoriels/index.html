@@ -7,6 +7,13 @@
   <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser grammarly. 3 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://albexia.com/tools/featured/fr/grammarly/tutoriels/" />
+  <link rel="alternate" hreflang="fr" href="https://albexia.com/tools/featured/fr/grammarly/tutoriels/" />
+  <link rel="alternate" hreflang="en" href="https://albexia.com/tools/featured/en/grammarly/tutoriels/" />
+  <link rel="alternate" hreflang="es" href="https://albexia.com/tools/featured/es/grammarly/tutoriels/" />
+  <link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/featured/fr/grammarly/tutoriels/" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="es_ES" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Maîtrisez grammarly : La vidéothèque complète | Albexia" />
@@ -28,8 +35,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/tutoriels-hub.css" />
 </head>
-<body>
+<body class="tuto-outil">
 
 <nav>
   <a href="/index.html" class="logo" style="text-decoration:none;color:inherit;">
@@ -41,14 +49,10 @@
     </svg>
   </a>
   <div class="nav-links">
+    <a href="/index.html" class="nav-link" style="text-decoration:none;">Accueil</a>
     <a href="/index.html#tools" class="nav-link" style="text-decoration:none;">Outils</a>
     <a href="/index.html#blog" class="nav-link" style="text-decoration:none;">Blog</a>
-    <a href="/index.html#gallery" class="nav-link" style="text-decoration:none;">Galerie</a>
-    <a href="/tutoriels/index.html" class="nav-link active" style="text-decoration:none;">Tutoriels</a>
-    <a href="/comparateur/" class="nav-link" style="text-decoration:none;">Comparateur</a>
-    <a href="/ressources.html" class="nav-link" style="text-decoration:none;">Ressources</a>
   </div>
-  <button class="nav-cta" onclick="ouvrirModalSoumission('30','grammarly')">↑ Soumettre un tutoriel</button>
 </nav>
 
 <div class="outil-breadcrumb">
@@ -73,7 +77,6 @@
     <div class="outil-hero-infos">
       <div class="outil-hero-top">
         <span id="outil-cat" class="outil-cat-badge">Texte</span>
-        <span id="outil-count" class="outil-count-badge">3 tutoriels</span>
       </div>
       <h1 id="outil-h1" class="outil-h1">Maîtrisez grammarly : La vidéothèque complète</h1>
       <p id="outil-sous-titre" class="outil-sous-titre">Assistant d'écriture IA pour correction, grammaire, style et ton. 40M+ utilisateurs. Plans Gratuit (100 prompts/mois) et Pro ($12/mo) avec détection plagiat et IA.</p>
@@ -85,17 +88,7 @@
 
 <div class="outil-filtres-wrap">
   <div class="outil-filtres-bar">
-    <div class="filtres-groupe">
-      <button id="filtre-tout" class="filtre-btn actif" onclick="setFiltreType('tout')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Tout
-      </button>
-      <button id="filtre-video" class="filtre-btn" onclick="setFiltreType('video')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-        Vidéos
-      </button>
-    </div>
-    <div id="wrap-duree" class="filtres-duree-wrap" style="display:none;">
+    <div id="wrap-duree" class="filtres-duree-wrap">
       <div class="duree-container">
         <button id="btn-duree-dropdown" class="filtre-btn filtre-btn-duree" onclick="toggleDureeDropdown()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -104,7 +97,7 @@
         </button>
         <div id="duree-dropdown" class="duree-dropdown">
           <button class="duree-option actif" data-min="0" data-max="999999" onclick="setFiltreDuree(0,999999,this,'Tout')">Tout</button>
-          <button class="duree-option" data-min="0" data-max="600" onclick="setFiltreDuree(0,600,this,'&lt; 10 min')">&lt; 10 min</button>
+          <button class="duree-option" data-min="0" data-max="600" onclick="setFiltreDuree(0,600,this,'< 10 min')">&lt; 10 min</button>
           <button class="duree-option" data-min="600" data-max="1200" onclick="setFiltreDuree(600,1200,this,'10 – 20 min')">10 – 20 min</button>
           <button class="duree-option" data-min="1200" data-max="1800" onclick="setFiltreDuree(1200,1800,this,'20 – 30 min')">20 – 30 min</button>
           <button class="duree-option" data-min="1800" data-max="2700" onclick="setFiltreDuree(1800,2700,this,'30 – 45 min')">30 – 45 min</button>
@@ -129,7 +122,6 @@
       <div class="outil-thumb-overlay">
         <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
       </div>
-      <span class="thumb-badge badge-video">▶ Vidéo</span>
       <span class="thumb-duree">5:46</span>
     </div>
     <div class="outil-video-info">
@@ -152,7 +144,6 @@
       <div class="outil-thumb-overlay">
         <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
       </div>
-      <span class="thumb-badge badge-video">▶ Vidéo</span>
       <span class="thumb-duree">2:30</span>
     </div>
     <div class="outil-video-info">
@@ -175,7 +166,6 @@
       <div class="outil-thumb-overlay">
         <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
       </div>
-      <span class="thumb-badge badge-video">▶ Vidéo</span>
       <span class="thumb-duree">2:51</span>
     </div>
     <div class="outil-video-info">
@@ -195,15 +185,6 @@
   </div>
   </div>
 </div>
-
-<section class="outil-cta-section">
-  <div class="outil-cta-inner">
-    <div class="outil-cta-ico">🎬</div>
-    <h2 class="outil-cta-titre">Vous connaissez un excellent tutoriel&nbsp;?</h2>
-    <p class="outil-cta-sub">Enrichissez la bibliothèque de la communauté francophone. Soumettez une vidéo et atteignez une audience ultra-ciblée.</p>
-    <button class="btn-main" onclick="ouvrirModalSoumission('30','grammarly')">Soumettre un tutoriel →</button>
-  </div>
-</section>
 
 <div id="tuto-player-modal" class="tuto-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
   <div class="tuto-player-inner">
@@ -334,8 +315,8 @@
     const saving = !_savedVideoIds.has(videoId);
     btn.disabled = true;
     try {
-      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title='Retirer des vidéos sauvegardées'; }
-      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title='Sauvegarder cette vidéo'; }
+      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title="Retirer des vidéos sauvegardées"; }
+      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title="Sauvegarder cette vidéo"; }
     } catch (e) { console.error('[Albexia] save vidéo :', e); }
     btn.disabled = false;
   };
@@ -344,7 +325,7 @@
     document.querySelectorAll('.btn-save-video[data-video-id]').forEach(btn => {
       const saved = _savedVideoIds.has(btn.dataset.videoId);
       btn.classList.toggle('saved', saved);
-      btn.title = saved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
+      btn.title = saved ? "Retirer des vidéos sauvegardées" : "Sauvegarder cette vidéo";
     });
   };
 </script>

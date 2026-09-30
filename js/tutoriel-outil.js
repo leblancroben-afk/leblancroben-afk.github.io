@@ -14,8 +14,18 @@
 
 'use strict';
 
+/* Textes dynamiques : la page est statique dans une langue (<html lang>) */
+const LANG = (document.documentElement.lang || 'fr').slice(0, 2);
+const TXT = {
+  fr: { resOne: '{n} résultat', resMany: '{n} résultats', empty: 'Aucune vidéo ne correspond à ce filtre.', showAll: 'Voir toutes les vidéos', thisTool: 'cet outil', sending: 'Envoi…', error: 'Erreur — Réessayez' },
+  en: { resOne: '{n} result', resMany: '{n} results', empty: 'No video matches this filter.', showAll: 'Show all videos', thisTool: 'this tool', sending: 'Sending…', error: 'Error — Try again' },
+  es: { resOne: '{n} resultado', resMany: '{n} resultados', empty: 'Ningún vídeo coincide con este filtro.', showAll: 'Ver todos los vídeos', thisTool: 'esta herramienta', sending: 'Enviando…', error: 'Error — Inténtalo de nuevo' },
+}[LANG] || null;
+const T = TXT || {
+  resOne: '{n} résultat', resMany: '{n} résultats', empty: 'Aucune vidéo ne correspond à ce filtre.', showAll: 'Voir toutes les vidéos', thisTool: 'cet outil', sending: 'Envoi…', error: 'Erreur — Réessayez',
+};
+
 const OUTIL = {
-  filtreType: 'tout',          // 'tout' | 'video'
   filtreDureeMin: 0,
   filtreDureeMax: 999999,
   dropdownOuvert: false,
@@ -27,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   bindFiltres();
   bindSoumission();
   bindEscape();
+  OUTIL.dureeLabelDefaut = document.getElementById('btn-duree-label')?.textContent || '';
   appliquerFiltres();
 });
 
@@ -59,24 +70,13 @@ function toggleDureeDropdown() {
   btn?.classList.toggle('actif', OUTIL.dropdownOuvert);
 }
 
-function setFiltreType(type) {
-  OUTIL.filtreType = type;
-
-  ['tout', 'video'].forEach(t => {
-    document.getElementById(`filtre-${t}`)?.classList.toggle('actif', t === type);
-  });
-
-  const wrapDuree = document.getElementById('wrap-duree');
-  if (wrapDuree) wrapDuree.style.display = type === 'video' ? 'flex' : 'none';
-
-  if (type !== 'video') {
-    OUTIL.filtreDureeMin = 0;
-    OUTIL.filtreDureeMax = 999999;
-    const labelEl = document.getElementById('btn-duree-label');
-    if (labelEl) labelEl.textContent = 'Durée';
-    document.querySelectorAll('.duree-option').forEach((el, i) => el.classList.toggle('actif', i === 0));
-  }
-
+/* Remet le filtre de durée à « Tout » (bouton de l'état vide) */
+function reinitialiserFiltres() {
+  OUTIL.filtreDureeMin = 0;
+  OUTIL.filtreDureeMax = 999999;
+  const labelEl = document.getElementById('btn-duree-label');
+  if (labelEl) labelEl.textContent = OUTIL.dureeLabelDefaut;
+  document.querySelectorAll('.duree-option').forEach((el, i) => el.classList.toggle('actif', i === 0));
   appliquerFiltres();
 }
 
@@ -87,7 +87,7 @@ function setFiltreDuree(min, max, el, label) {
   document.querySelectorAll('.duree-option').forEach(o => o.classList.remove('actif'));
   el.classList.add('actif');
   const labelEl = document.getElementById('btn-duree-label');
-  if (labelEl) labelEl.textContent = (label === 'Tout') ? 'Durée' : label;
+  if (labelEl) labelEl.textContent = (min === 0 && max === 999999) ? OUTIL.dureeLabelDefaut : label;
 
   OUTIL.dropdownOuvert = false;
   document.getElementById('duree-dropdown')?.classList.remove('open');
@@ -105,14 +105,12 @@ function appliquerFiltres() {
 
   cartes.forEach(carte => {
     const secondes = Number(carte.dataset.secondes);
-    const ok = OUTIL.filtreType === 'video'
-      ? (secondes >= OUTIL.filtreDureeMin && secondes <= OUTIL.filtreDureeMax)
-      : true;
+    const ok = secondes >= OUTIL.filtreDureeMin && secondes <= OUTIL.filtreDureeMax;
     carte.style.display = ok ? '' : 'none';
     if (ok) visibles++;
   });
 
-  if (compteur) compteur.textContent = `${visibles} résultat${visibles > 1 ? 's' : ''}`;
+  if (compteur) compteur.textContent = (visibles > 1 ? T.resMany : T.resOne).replace('{n}', visibles);
 
   const grille = document.getElementById('outil-video-grille');
   let videEl = document.getElementById('outil-vide');
@@ -123,8 +121,8 @@ function appliquerFiltres() {
       videEl.className = 'outil-vide';
       videEl.innerHTML = `
         <span class="outil-vide-ico">🎬</span>
-        <p>Aucune vidéo ne correspond à ce filtre.</p>
-        <button class="tuto-card-btn" onclick="setFiltreType('tout')">Voir toutes les vidéos</button>`;
+        <p>${T.empty}</p>
+        <button class="tuto-card-btn" onclick="reinitialiserFiltres()">${T.showAll}</button>`;
       grille?.appendChild(videEl);
     }
     videEl.style.display = '';
@@ -175,7 +173,7 @@ function ouvrirModalSoumission(outilId, outilNom) {
   const nomEl = document.getElementById('soumission-outil-nom');
   const idEl  = document.getElementById('soumission-outil-id');
   if (!modal) return;
-  if (nomEl) nomEl.textContent = outilNom || 'cet outil';
+  if (nomEl) nomEl.textContent = outilNom || T.thisTool;
   if (idEl)  idEl.value = outilId || '';
   const sel = document.getElementById('s-outil');
   if (sel && outilId) sel.value = outilId;
@@ -195,7 +193,7 @@ function bindSoumission() {
     e.preventDefault();
     const btn  = document.getElementById('soumission-submit');
     const form = document.getElementById('form-soumission');
-    if (btn) { btn.textContent = 'Envoi…'; btn.disabled = true; }
+    if (btn) { btn.textContent = T.sending; btn.disabled = true; }
 
     fetch('https://formspree.io/f/xvzyjkaa', {
       method:  'POST',
@@ -209,7 +207,7 @@ function bindSoumission() {
         form.reset();
       }, 2000);
     }).catch(() => {
-      if (btn) { btn.textContent = 'Erreur — Réessayez'; btn.disabled = false; }
+      if (btn) { btn.textContent = T.error; btn.disabled = false; }
     });
   });
 }
@@ -219,6 +217,6 @@ window.ouvrirPlayer          = ouvrirPlayer;
 window.fermerPlayer          = fermerPlayer;
 window.ouvrirModalSoumission = ouvrirModalSoumission;
 window.fermerModalSoumission = fermerModalSoumission;
-window.setFiltreType         = setFiltreType;
+window.reinitialiserFiltres   = reinitialiserFiltres;
 window.setFiltreDuree        = setFiltreDuree;
 window.toggleDureeDropdown   = toggleDureeDropdown;

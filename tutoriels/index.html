@@ -3275,8 +3275,6 @@
   </p>
   <p>© 2025-2026 Albexia · L'annuaire IA francophone de référence</p>
 </footer>
-
-  <script src="/js/i18n.js"></script>
 <script>
   const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
   if (kb && km) {
@@ -3325,8 +3323,8 @@
     const saving = !_savedVideoIds.has(videoId);
     btn.disabled = true;
     try {
-      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title='Retirer des vidéos sauvegardées'; }
-      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title='Sauvegarder cette vidéo'; }
+      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title="Retirer des vidéos sauvegardées"; }
+      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title="Sauvegarder cette vidéo"; }
     } catch (e) { console.error('[Albexia] save vidéo :', e); }
     btn.disabled = false;
   };
@@ -3335,7 +3333,7 @@
     document.querySelectorAll('.btn-save-video[data-video-id]').forEach(btn => {
       const saved = _savedVideoIds.has(btn.dataset.videoId);
       btn.classList.toggle('saved', saved);
-      btn.title = saved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
+      btn.title = saved ? "Retirer des vidéos sauvegardées" : "Sauvegarder cette vidéo";
     });
   };
 </script>

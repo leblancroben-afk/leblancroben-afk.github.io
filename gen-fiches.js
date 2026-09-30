@@ -3334,6 +3334,68 @@ ${sharedJS()}
 // plus aucune logique de fetch/render — ils sont 100% génériques et
 // partagés par toutes les pages générées.
 
+// ── Textes statiques des pages d'outil (/tools/.../tutoriels/) : 3 langues figées dans le HTML ──
+const TUTO_OUTIL_I18N = {
+  fr: {
+    home: 'Accueil', tools: 'Outils', blog: 'Blog', tutorials: 'Tutoriels', legal: 'Mentions légales', privacy: 'Confidentialité',
+    copyright: "© 2025-2026 Albexia · L'annuaire IA francophone de référence",
+    back: 'Voir la fiche complète de {tool}',
+    h1: 'Maîtrisez {tool} : La vidéothèque complète',
+    title: 'Maîtrisez {tool} : La vidéothèque complète | Albexia',
+    meta: 'Tous les tutoriels vidéo pour apprendre et maîtriser {tool}. {n} vidéos sélectionnées, filtrables par durée. Gratuit, en français.',
+    ld: 'Tutoriels vidéo {tool}',
+    duration: 'Durée', all: 'Tout', lt10: '< 10 min', r1020: '10 – 20 min', r2030: '20 – 30 min', r3045: '30 – 45 min', r4560: '45 min – 1h', gt1h: '1h+',
+    resOne: '{n} résultat', resMany: '{n} résultats',
+    submitVideo: 'Soumettre une vidéo',
+    save: 'Sauvegarder cette vidéo', unsave: 'Retirer des vidéos sauvegardées',
+    playerAria: 'Lecteur vidéo', closePlayer: 'Fermer le lecteur', iframeTitle: 'Tutoriel vidéo', close: 'Fermer',
+    mAria: 'Soumettre un tutoriel', mTitle: 'Soumettre un tutoriel', mThisTool: 'cet outil',
+    mSub1: 'Proposez une vidéo pour ', mSub2: ". Notre équipe éditoriale l'examinera sous 48h.",
+    mUrl: 'URL de la vidéo YouTube *', mTool: 'Outil concerné', mSelect: 'Sélectionner un outil…', mOther: 'Autre outil IA',
+    mName: 'Votre nom ou pseudo (optionnel)', mNamePh: 'Jean-Michel ou @MonCanal', mEmail: 'Votre email (pour notification)', mEmailPh: 'vous@exemple.com',
+    mSubmit: 'Soumettre la vidéo →', mNote: "Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté",
+  },
+  en: {
+    home: 'Home', tools: 'Tools', blog: 'Blog', tutorials: 'Tutorials', legal: 'Legal notice', privacy: 'Privacy',
+    copyright: '© 2025-2026 Albexia · The reference francophone AI directory',
+    back: 'View the full {tool} page',
+    h1: 'Master {tool}: the complete video library',
+    title: 'Master {tool}: the complete video library | Albexia',
+    meta: 'All the video tutorials to learn and master {tool}. {n} selected videos, filterable by duration. Free.',
+    ld: '{tool} video tutorials',
+    duration: 'Duration', all: 'All', lt10: '< 10 min', r1020: '10 – 20 min', r2030: '20 – 30 min', r3045: '30 – 45 min', r4560: '45 min – 1 h', gt1h: '1 h+',
+    resOne: '{n} result', resMany: '{n} results',
+    submitVideo: 'Submit a video',
+    save: 'Save this video', unsave: 'Remove from saved videos',
+    playerAria: 'Video player', closePlayer: 'Close player', iframeTitle: 'Video tutorial', close: 'Close',
+    mAria: 'Submit a tutorial', mTitle: 'Submit a tutorial', mThisTool: 'this tool',
+    mSub1: 'Suggest a video for ', mSub2: '. Our editorial team will review it within 48 hours.',
+    mUrl: 'YouTube video URL *', mTool: 'Related tool', mSelect: 'Select a tool…', mOther: 'Other AI tool',
+    mName: 'Your name or handle (optional)', mNamePh: 'John or @MyChannel', mEmail: 'Your email (for notification)', mEmailPh: 'you@example.com',
+    mSubmit: 'Submit the video →', mNote: 'Free submission · Reply within 48h · Copyright respected',
+  },
+  es: {
+    home: 'Inicio', tools: 'Herramientas', blog: 'Blog', tutorials: 'Tutoriales', legal: 'Aviso legal', privacy: 'Privacidad',
+    copyright: '© 2025-2026 Albexia · El directorio de IA francófono de referencia',
+    back: 'Ver la ficha completa de {tool}',
+    h1: 'Domina {tool}: la videoteca completa',
+    title: 'Domina {tool}: la videoteca completa | Albexia',
+    meta: 'Todos los tutoriales en vídeo para aprender y dominar {tool}. {n} vídeos seleccionados, filtrables por duración. Gratis.',
+    ld: 'Tutoriales en vídeo de {tool}',
+    duration: 'Duración', all: 'Todo', lt10: '< 10 min', r1020: '10 – 20 min', r2030: '20 – 30 min', r3045: '30 – 45 min', r4560: '45 min – 1 h', gt1h: '1 h+',
+    resOne: '{n} resultado', resMany: '{n} resultados',
+    submitVideo: 'Enviar un vídeo',
+    save: 'Guardar este vídeo', unsave: 'Quitar de los vídeos guardados',
+    playerAria: 'Reproductor de vídeo', closePlayer: 'Cerrar el reproductor', iframeTitle: 'Tutorial en vídeo', close: 'Cerrar',
+    mAria: 'Enviar un tutorial', mTitle: 'Enviar un tutorial', mThisTool: 'esta herramienta',
+    mSub1: 'Propón un vídeo para ', mSub2: '. Nuestro equipo editorial lo revisará en 48 h.',
+    mUrl: 'URL del vídeo de YouTube *', mTool: 'Herramienta relacionada', mSelect: 'Seleccionar una herramienta…', mOther: 'Otra herramienta de IA',
+    mName: 'Tu nombre o alias (opcional)', mNamePh: 'Juan o @MiCanal', mEmail: 'Tu correo (para notificarte)', mEmailPh: 'tu@ejemplo.com',
+    mSubmit: 'Enviar el vídeo →', mNote: 'Envío gratuito · Respuesta en 48 h · Derechos de autor respetados',
+  },
+};
+const tutoL = (langue) => TUTO_OUTIL_I18N[langue] || TUTO_OUTIL_I18N.fr;
+
 const VIDEOTHEQUE_FAQ = [
   { q: "Est-il légal de visionner ces vidéos sur votre site ?", a: "Oui, absolument. Nous utilisons le lecteur officiel de YouTube, en respectant les conditions d'utilisation de la plateforme. L'auteur original conserve tous ses droits, sa publicité et ses vues. Chaque visionnage depuis Albexia est comptabilisé dans les statistiques du créateur." },
   { q: "Comment sont sélectionnées les vidéos pour chaque outil ?", a: "Notre équipe éditoriale analyse chaque soumission. Nous vérifions la qualité du son, de l'image, mais surtout la pertinence pédagogique. Une vidéo doit apporter une réelle valeur ajoutée (tutoriel, cas pratique, comparatif) pour être validée et apparaître dans notre annuaire." },
@@ -3397,7 +3459,10 @@ function tutoNavHTML(outilId, outilNom) {
 }
 
 // ── Nav minimale de la page hub /tutoriels/ : Albexia | Accueil | Outils | Blog ──
-function tutoHubNavHTML() {
+function tutoHubNavHTML(langue) {
+  const st = !!langue;              // page d'outil : texte figé dans la langue ; hub : i18n runtime
+  const L = tutoL(langue);
+  const lien = (k, href) => `<a href="${href}" class="nav-link"${st ? '' : ` data-i18n="nav.${k}"`} style="text-decoration:none;">${L[k]}</a>`;
   return `<nav>
   <a href="${R}index.html" class="logo" style="text-decoration:none;color:inherit;">
     <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
@@ -3408,81 +3473,84 @@ function tutoHubNavHTML() {
     </svg>
   </a>
   <div class="nav-links">
-    <a href="${R}index.html" class="nav-link" data-i18n="nav.home" style="text-decoration:none;">Accueil</a>
-    <a href="${R}index.html#tools" class="nav-link" data-i18n="nav.tools" style="text-decoration:none;">Outils</a>
-    <a href="${R}index.html#blog" class="nav-link" data-i18n="nav.blog" style="text-decoration:none;">Blog</a>
+    ${lien('home', R + 'index.html')}
+    ${lien('tools', R + 'index.html#tools')}
+    ${lien('blog', R + 'index.html#blog')}
   </div>
 </nav>`;
 }
 
 // ── Footer propre à ces deux pages (identique à l'original, pas footerHTML() du reste du site) ──
-function tutoFooterHTML() {
+function tutoFooterHTML(langue) {
+  const L = tutoL(langue);
   return `<footer style="border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-dim);font-size:12px;margin-top:auto;">
   <p style="margin-bottom:8px;">
-    <a href="${R}index.html#tools" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Outils</a>
-    <a href="${R}index.html#blog" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Blog</a>
-    <a href="${R}tutoriels/index.html" style="color:var(--accent2);text-decoration:none;margin:0 10px;">Tutoriels</a>
-    <a href="${R}mentions-legales.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Mentions légales</a>
-    <a href="${R}politique-confidentialite.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Confidentialité</a>
+    <a href="${R}index.html#tools" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">${L.tools}</a>
+    <a href="${R}index.html#blog" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">${L.blog}</a>
+    <a href="${R}tutoriels/index.html" style="color:var(--accent2);text-decoration:none;margin:0 10px;">${L.tutorials}</a>
+    <a href="${R}mentions-legales.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">${L.legal}</a>
+    <a href="${R}politique-confidentialite.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">${L.privacy}</a>
   </p>
-  <p>© 2025-2026 Albexia · L'annuaire IA francophone de référence</p>
+  <p>${L.copyright}</p>
 </footer>`;
 }
 
 // ── Modal lecteur YouTube plein écran (identique à l'original) ──
-function tutoPlayerModalHTML() {
-  return `<div id="tuto-player-modal" class="tuto-player-modal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+function tutoPlayerModalHTML(langue) {
+  const L = tutoL(langue);
+  return `<div id="tuto-player-modal" class="tuto-player-modal" role="dialog" aria-modal="true" aria-label="${L.playerAria}">
   <div class="tuto-player-inner">
     <div class="tuto-player-top">
       <p id="tuto-player-titre" class="tuto-player-titre"></p>
-      <button class="tuto-player-close" onclick="fermerPlayer()" aria-label="Fermer le lecteur">
+      <button class="tuto-player-close" onclick="fermerPlayer()" aria-label="${L.closePlayer}">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="tuto-player-frame">
-      <iframe id="tuto-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutoriel vidéo"></iframe>
+      <iframe id="tuto-player-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="${L.iframeTitle}"></iframe>
     </div>
   </div>
 </div>`;
 }
 
 // ── Modal soumission d'une vidéo (identique à l'original, select peuplé au build) ──
-function tutoSoumissionModalHTML(toolsAvecVideo) {
+function tutoSoumissionModalHTML(toolsAvecVideo, langue) {
+  const L = tutoL(langue);
   const options = toolsAvecVideo.map(t =>
     `<option value="${String(t.id||slugify(t.name))}">${t.name}</option>`
   ).join('\n          ');
-  return `<div id="tuto-modal-soumission" class="tuto-modal-soumission" role="dialog" aria-modal="true" aria-label="Soumettre un tutoriel">
+  return `<div id="tuto-modal-soumission" class="tuto-modal-soumission" role="dialog" aria-modal="true" aria-label="${L.mAria}">
   <div class="tuto-modal-inner">
-    <button class="tuto-modal-close" id="soumission-fermer" aria-label="Fermer">
+    <button class="tuto-modal-close" id="soumission-fermer" aria-label="${L.close}">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <div class="tuto-modal-ico">🎬</div>
-    <h2 class="tuto-modal-titre">Soumettre un tutoriel</h2>
-    <p class="tuto-modal-sub">Proposez une vidéo pour <strong id="soumission-outil-nom">cet outil</strong>. Notre équipe éditoriale l'examinera sous 48h.</p>
+    <h2 class="tuto-modal-titre">${L.mTitle}</h2>
+    <p class="tuto-modal-sub">${L.mSub1}<strong id="soumission-outil-nom">${L.mThisTool}</strong>${L.mSub2}</p>
     <form id="form-soumission" novalidate>
       <input type="hidden" id="soumission-outil-id" name="outil_id" value="">
       <div class="tuto-form-field">
-        <label class="tuto-form-label" for="s-url">URL de la vidéo YouTube *</label>
+        <label class="tuto-form-label" for="s-url">${L.mUrl}</label>
         <input class="tuto-form-input" type="url" id="s-url" name="url" placeholder="https://www.youtube.com/watch?v=..." required>
       </div>
       <div class="tuto-form-field">
-        <label class="tuto-form-label" for="s-outil">Outil concerné</label>
+        <label class="tuto-form-label" for="s-outil">${L.mTool}</label>
         <select class="tuto-form-select" id="s-outil" name="outil">
-          <option value="">Sélectionner un outil…</option>
+          <option value="">${L.mSelect}</option>
           ${options}
-          <option value="autre">Autre outil IA</option>
+          <option value="autre">${L.mOther}</option>
         </select>
       </div>
       <div class="tuto-form-field">
-        <label class="tuto-form-label" for="s-nom">Votre nom ou pseudo (optionnel)</label>
-        <input class="tuto-form-input" type="text" id="s-nom" name="nom" placeholder="Jean-Michel ou @MonCanal">
+        <label class="tuto-form-label" for="s-nom">${L.mName}</label>
+        <input class="tuto-form-input" type="text" id="s-nom" name="nom" placeholder="${L.mNamePh}">
       </div>
       <div class="tuto-form-field">
-        <label class="tuto-form-label" for="s-email">Votre email (pour notification)</label>
-        <input class="tuto-form-input" type="email" id="s-email" name="email" placeholder="vous@exemple.com">
+        <label class="tuto-form-label" for="s-email">${L.mEmail}</label>
+        <input class="tuto-form-input" type="email" id="s-email" name="email" placeholder="${L.mEmailPh}">
       </div>
-      <button type="submit" class="tuto-form-submit" id="soumission-submit">Soumettre la vidéo →</button>
-      <p class="tuto-form-note">Soumission gratuite · Réponse sous 48h · Droit d'auteur respecté</p>
+      <button type="submit" class="tuto-form-submit" id="soumission-submit">${L.mSubmit}</button>
+      <p class="tuto-form-note">${L.mNote}</p>
     </form>
   </div>
 </div>`;
@@ -3609,7 +3677,8 @@ function tutoCardHTML(tool, allTools) {
 }
 
 // ── Carte vidéo (grille complète, page par outil) — identique à carteVideoHTML() ──
-function carteVideoHTML(v, tool) {
+function carteVideoHTML(v, tool, langue) {
+  const L = tutoL(langue);
   const outilId = String(tool.id || slugify(tool.name));
   const secondes = dureeVersSecondes(v.duree);
   const titreEsc = v.titre.replace(/'/g, "&#39;");
@@ -3624,7 +3693,6 @@ function carteVideoHTML(v, tool) {
       <div class="outil-thumb-overlay">
         <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
       </div>
-      <span class="thumb-badge badge-video">▶ Vidéo</span>
       <span class="thumb-duree">${v.duree||''}</span>
     </div>
     <div class="outil-video-info">
@@ -3634,7 +3702,7 @@ function carteVideoHTML(v, tool) {
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           ${v.canal||''}
         </p>
-        <button class="btn-save-video" data-video-id="${v.youtube_id}" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+        <button class="btn-save-video" data-video-id="${v.youtube_id}" title="${L.save}" aria-label="${L.save}"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="${videoData}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
@@ -3645,7 +3713,8 @@ function carteVideoHTML(v, tool) {
 }
 
 // ── Module Firestore inline (note réelle + save vidéo) — identique à l'original, juste des chemins absolus ──
-function tutoFirestoreModuleHTML(mode) {
+function tutoFirestoreModuleHTML(mode, langue) {
+  const SAVEL = tutoL(langue);
   const noteFn = mode === 'hub' ? `
   /* Charger la note réelle pour un outil — appelée pour chaque carte de la vitrine */
   window._chargerNoteOutil = async function(outilId, noteEl, avisEl) {
@@ -3701,8 +3770,8 @@ ${noteFn}
     const saving = !_savedVideoIds.has(videoId);
     btn.disabled = true;
     try {
-      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title='Retirer des vidéos sauvegardées'; }
-      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title='Sauvegarder cette vidéo'; }
+      if (saving) { await saveVideo(uid, videoData); _savedVideoIds.add(videoId); btn.classList.add('saved'); btn.title=${JSON.stringify(SAVEL.unsave)}; }
+      else { await unsaveVideo(uid, videoId); _savedVideoIds.delete(videoId); btn.classList.remove('saved'); btn.title=${JSON.stringify(SAVEL.save)}; }
     } catch (e) { console.error('[Albexia] save vidéo :', e); }
     btn.disabled = false;
   };
@@ -3711,7 +3780,7 @@ ${noteFn}
     document.querySelectorAll('.btn-save-video[data-video-id]').forEach(btn => {
       const saved = _savedVideoIds.has(btn.dataset.videoId);
       btn.classList.toggle('saved', saved);
-      btn.title = saved ? 'Retirer des vidéos sauvegardées' : 'Sauvegarder cette vidéo';
+      btn.title = saved ? ${JSON.stringify(SAVEL.unsave)} : ${JSON.stringify(SAVEL.save)};
     });
   };
 </script>`;
@@ -3798,7 +3867,7 @@ ${tutoFirestoreModuleHTML('hub')}
 }
 
 // ── Page dédiée : vidéothèque d'un outil (structure identique à tutoriel-outil.html) ──
-function generateVideothequePage(tool, allToolsAvecVideo) {
+function generateVideothequePage(tool, allToolsAvecVideo, opts = {}) {
   const info = toolVideothequeFolder(tool);
   if (!info) return null;
   const videos = tool.videotheque || [];
@@ -3806,18 +3875,21 @@ function generateVideothequePage(tool, allToolsAvecVideo) {
 
   const { plan, langue, slug } = info;
   const toolId = String(tool.id || slug);
-  const ficheUrl = `${R}tools/${plan}/${langue}/${slug}/`;
-  const canonicalUrl = `${SITE_ORIGIN}/tools/${plan}/${langue}/${slug}/tutoriels/`;
-  const titleTag = `Maîtrisez ${tool.name} : La vidéothèque complète | Albexia`;
-  const metaDesc = `Tous les tutoriels vidéo pour apprendre et maîtriser ${tool.name}. ${videos.length} vidéos sélectionnées, filtrables par durée. Gratuit, en français.`;
-  const videosHTML = videos.map(v => carteVideoHTML(v, tool)).join('');
+  const L = tutoL(langue);
+  const fill = (t) => t.replace(/\{tool\}/g, tool.name).replace(/\{n\}/g, videos.length);
+  const ficheUrl = opts.ficheUrl || `${R}tools/${plan}/${langue}/${slug}/`;
+  const langueUrls = opts.langueUrls || { [langue]: `${SITE_ORIGIN}/tools/${plan}/${langue}/${slug}/tutoriels/` };
+  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, langueUrls);
+  const titleTag = fill(L.title);
+  const metaDesc = fill(L.meta);
+  const videosHTML = videos.map(v => carteVideoHTML(v, tool, langue)).join('');
   const tagsHTML = (tool.tags||[]).map(t => `<span class="tuto-tag">${t}</span>`).join('');
 
   // Module Firestore : injecte l'id réel de l'outil dans _chargerNoteReelle()
-  const firestoreModule = tutoFirestoreModuleHTML('tool').replace('__OUTIL_ID__', toolId);
+  const firestoreModule = tutoFirestoreModuleHTML('tool', langue).replace('__OUTIL_ID__', toolId);
 
   return `<!DOCTYPE html>
-<html lang="fr">
+<html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -3825,6 +3897,9 @@ function generateVideothequePage(tool, allToolsAvecVideo) {
   <meta name="description" content="${metaDesc}" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="${canonicalUrl}" />
+${hreflangTags}
+  <meta property="og:locale" content="${ogLocale}" />
+${ogLocaleAlternates}
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="${titleTag}" />
@@ -3834,7 +3909,7 @@ function generateVideothequePage(tool, allToolsAvecVideo) {
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": ${JSON.stringify(`Tutoriels vidéo ${tool.name}`)},
+    "name": ${JSON.stringify(fill(L.ld))},
     "itemListElement": [
 ${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "name": ${JSON.stringify(v.titre)}, "thumbnailUrl": "https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/${v.youtube_id}" }`).join(',\n')}
     ]
@@ -3844,15 +3919,16 @@ ${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "nam
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
+  <link rel="stylesheet" href="${R}css/tutoriels-hub.css" />
 </head>
-<body>
+<body class="tuto-outil">
 
-${tutoNavHTML(toolId, tool.name)}
+${tutoHubNavHTML(langue)}
 
 <div class="outil-breadcrumb">
-  <a href="${R}index.html">Accueil</a>
+  <a href="${R}index.html">${L.home}</a>
   <span class="bc-sep">›</span>
-  <a href="${R}tutoriels/index.html">Tutoriels</a>
+  <a href="${R}tutoriels/index.html">${L.tutorials}</a>
   <span class="bc-sep">›</span>
   <span id="bc-outil">${tool.name}</span>
 </div>
@@ -3860,7 +3936,7 @@ ${tutoNavHTML(toolId, tool.name)}
 <section class="outil-hero">
   <a href="${ficheUrl}" id="lien-retour" class="outil-retour">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-    Voir la fiche complète de ${tool.name}
+    ${fill(L.back)}
   </a>
   <div class="outil-hero-inner">
     <div class="outil-logo-wrap">
@@ -3871,9 +3947,8 @@ ${tutoNavHTML(toolId, tool.name)}
     <div class="outil-hero-infos">
       <div class="outil-hero-top">
         <span id="outil-cat" class="outil-cat-badge">${tool.category||''}</span>
-        <span id="outil-count" class="outil-count-badge">${videos.length} tutoriel${videos.length>1?'s':''}</span>
       </div>
-      <h1 id="outil-h1" class="outil-h1">Maîtrisez ${tool.name} : La vidéothèque complète</h1>
+      <h1 id="outil-h1" class="outil-h1">${fill(L.h1)}</h1>
       <p id="outil-sous-titre" class="outil-sous-titre">${tool.description||''}</p>
       <div id="outil-note" class="outil-note"></div>
       <div id="outil-tags" class="tuto-card-tags" style="margin-top:14px;padding:0;">${tagsHTML}</div>
@@ -3883,38 +3958,22 @@ ${tutoNavHTML(toolId, tool.name)}
 
 <div class="outil-filtres-wrap">
   <div class="outil-filtres-bar">
-    <div class="filtres-groupe">
-      <button id="filtre-tout" class="filtre-btn actif" onclick="setFiltreType('tout')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Tout
-      </button>
-      <button id="filtre-video" class="filtre-btn" onclick="setFiltreType('video')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-        Vidéos
-      </button>
-    </div>
-    <div id="wrap-duree" class="filtres-duree-wrap" style="display:none;">
+    <div id="wrap-duree" class="filtres-duree-wrap">
       <div class="duree-container">
         <button id="btn-duree-dropdown" class="filtre-btn filtre-btn-duree" onclick="toggleDureeDropdown()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span id="btn-duree-label">Durée</span>
+          <span id="btn-duree-label">${L.duration}</span>
           <svg class="duree-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div id="duree-dropdown" class="duree-dropdown">
-          <button class="duree-option actif" data-min="0" data-max="999999" onclick="setFiltreDuree(0,999999,this,'Tout')">Tout</button>
-          <button class="duree-option" data-min="0" data-max="600" onclick="setFiltreDuree(0,600,this,'&lt; 10 min')">&lt; 10 min</button>
-          <button class="duree-option" data-min="600" data-max="1200" onclick="setFiltreDuree(600,1200,this,'10 – 20 min')">10 – 20 min</button>
-          <button class="duree-option" data-min="1200" data-max="1800" onclick="setFiltreDuree(1200,1800,this,'20 – 30 min')">20 – 30 min</button>
-          <button class="duree-option" data-min="1800" data-max="2700" onclick="setFiltreDuree(1800,2700,this,'30 – 45 min')">30 – 45 min</button>
-          <button class="duree-option" data-min="2700" data-max="3600" onclick="setFiltreDuree(2700,3600,this,'45 min – 1h')">45 min – 1h</button>
-          <button class="duree-option" data-min="3600" data-max="999999" onclick="setFiltreDuree(3600,999999,this,'1h+')">1h+</button>
+${[[0,999999,'all'],[0,600,'lt10'],[600,1200,'r1020'],[1200,1800,'r2030'],[1800,2700,'r3045'],[2700,3600,'r4560'],[3600,999999,'gt1h']].map(([mn,mx,k]) => `          <button class="duree-option${k==='all'?' actif':''}" data-min="${mn}" data-max="${mx}" onclick="setFiltreDuree(${mn},${mx},this,'${L[k]}')">${L[k].replace('<','&lt;')}</button>`).join('\n')}
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">${videos.length} résultat${videos.length>1?'s':''}</span>
+    <span id="outil-video-count" class="filtres-count">${(videos.length>1 ? L.resMany : L.resOne).replace('{n}', videos.length)}</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('${toolId}','${tool.name.replace(/'/g,"&#39;")}')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Soumettre une vidéo
+      ${L.submitVideo}
     </button>
   </div>
 </div>
@@ -3925,19 +3984,10 @@ ${videosHTML}
   </div>
 </div>
 
-<section class="outil-cta-section">
-  <div class="outil-cta-inner">
-    <div class="outil-cta-ico">🎬</div>
-    <h2 class="outil-cta-titre">Vous connaissez un excellent tutoriel&nbsp;?</h2>
-    <p class="outil-cta-sub">Enrichissez la bibliothèque de la communauté francophone. Soumettez une vidéo et atteignez une audience ultra-ciblée.</p>
-    <button class="btn-main" onclick="ouvrirModalSoumission('${toolId}','${tool.name.replace(/'/g,"&#39;")}')">Soumettre un tutoriel →</button>
-  </div>
-</section>
+${tutoPlayerModalHTML(langue)}
+${tutoSoumissionModalHTML(allToolsAvecVideo, langue)}
 
-${tutoPlayerModalHTML()}
-${tutoSoumissionModalHTML(allToolsAvecVideo)}
-
-${tutoFooterHTML()}
+${tutoFooterHTML(langue)}
 ${sharedJS()}
 ${firestoreModule}
 <script src="${R}js/tutoriel-outil.js"></script>
@@ -4090,28 +4140,59 @@ async function main() {
     toolsAvecVideos.push(tool);
   }
 
-  // Passe 2 — générer les pages
+  // Passe 2 — générer les pages, en 3 langues statiques (fr / en / es) par vidéothèque.
+  // Pour chaque langue : si une traduction de l'outil existe (tool.traductions), on utilise
+  // son nom / description / catégorie / tags ; sinon repli sur la langue source. Les vidéos
+  // sont les mêmes. Un dossier déjà « possédé » par un document qui a sa propre vidéothèque
+  // n'est jamais écrasé.
+  const VT_LANGS = ['fr', 'en', 'es'];
+  const ownedFolders = new Set(toolsAvecVideos.map(t => toolVideothequeFolder(t).folder));
+  const writtenFolders = new Set();
+  const urlOf = (v) => `${SITE_ORIGIN}/${toolVideothequeFolder(v).folder.replace(/\\/g, '/')}/`;
+  const ficheOf = (t, lang) => `${R}tools/${t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard'}/${t.langue || lang}/${slugify(t.name)}/`;
+
   for (const tool of toolsAvecVideos) {
     const toolId = String(tool.id || slugify(tool.name));
-    const info = toolVideothequeFolder(tool);
-
     newState.videotheques[toolId] = { hash: hashDoc(tool), updatedAtMs: updatedAtMs(tool) };
-
     const hasChanged = changedToolIds.has(toolId);
-    const filePath = path.join(info.folder, 'index.html');
+    const ownLang = tool.langue || 'fr';
 
-    if (!hasChanged && fs.existsSync(filePath)) { vtUnchanged++; continue; }
+    // Une « vue » par langue
+    const views = {};
+    for (const lang of VT_LANGS) {
+      if (lang === ownLang) { views[lang] = { view: tool, fiche: tool }; continue; }
+      const relId = (tool.traductions || {})[lang];
+      const rel = relId ? tools.find(t => String(t.id) === String(relId)) : null;
+      const base = rel && rel.name ? rel : null;
+      views[lang] = {
+        view: { ...tool, langue: lang, plan: base ? base.plan : tool.plan,
+                name: base?.name || tool.name, description: base?.description || tool.description,
+                category: base?.category || tool.category, tags: (base?.tags && base.tags.length) ? base.tags : tool.tags },
+        fiche: base || tool,
+      };
+    }
+    // hreflang : les 3 versions de cette vidéothèque
+    const langueUrls = {};
+    for (const lang of VT_LANGS) langueUrls[lang] = urlOf(views[lang].view);
 
-    const html = generateVideothequePage(tool, toolsAvecVideos);
-    if (!html) { vtSkipped++; continue; }
-
-    fs.mkdirSync(info.folder, { recursive: true });
-    fs.writeFileSync(filePath, html, 'utf8');
-    vtGenerated++;
+    for (const lang of VT_LANGS) {
+      const { view, fiche } = views[lang];
+      const info = toolVideothequeFolder(view);
+      if (!info) continue;
+      if (lang !== ownLang && (ownedFolders.has(info.folder) || writtenFolders.has(info.folder))) continue;
+      writtenFolders.add(info.folder);
+      const filePath = path.join(info.folder, 'index.html');
+      if (!hasChanged && fs.existsSync(filePath)) { vtUnchanged++; continue; }
+      const html = generateVideothequePage(view, toolsAvecVideos, { ficheUrl: ficheOf(fiche, lang), langueUrls });
+      if (!html) { vtSkipped++; continue; }
+      fs.mkdirSync(info.folder, { recursive: true });
+      fs.writeFileSync(filePath, html, 'utf8');
+      vtGenerated++;
+    }
   }
 
   console.log(`✅ Vidéothèques outil — ${vtGenerated} régénérée(s), ${vtUnchanged} inchangée(s) (skip), ${vtSkipped} ignorée(s).`);
-  console.log(`  tools/{plan}/{langue}/{slug}/tutoriels/index.html`);
+  console.log(`  tools/{plan}/{fr|en|es}/{slug}/tutoriels/index.html`);
 
   // ── Page vitrine (hub) — un seul fichier, régénéré à chaque run ──
   // Coût négligeable (une seule écriture) et évite de suivre un hash

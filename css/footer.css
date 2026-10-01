@@ -17,6 +17,12 @@
   line-height: 1.6;
 }
 
+#site-footer { max-width: 100%; overflow-x: clip; }
+#site-footer .footer-grid > * { min-width: 0; }
+#site-footer .footer-link,
+#site-footer .footer-col-title,
+#site-footer .footer-tagline { overflow-wrap: anywhere; }
+
 #site-footer .footer-wrap {
   max-width: 1200px;
   margin: 0 auto;

@@ -1,0 +1,171 @@
+/* =========================================================
+   FOOTER PARTAGÉ — Albexia
+   Tout est scopé sur #site-footer pour primer sur la règle
+   générique `footer {}` de style.css et sur les anciens .footer-*.
+   Aucune couleur en dur : uniquement les variables :root.
+   ========================================================= */
+
+#site-footer {
+  margin-top: 60px;
+  padding: 0;
+  text-align: left;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+#site-footer .footer-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── Haut : grille 4 parties ─── */
+#site-footer .footer-top {
+  background: var(--bg2);
+  padding: 56px 0 48px;
+}
+
+#site-footer .footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+/* ─── 1. Marque ─── */
+#site-footer .footer-logo {
+  display: inline-block;
+  margin-bottom: 14px;
+  text-decoration: none;
+}
+#site-footer .fl-outline {
+  fill: none;
+  stroke: var(--accent2);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+#site-footer .fl-fill { fill: var(--accent2); opacity: 0.2; }
+#site-footer .fl-dot  { fill: var(--accent2); }
+#site-footer .fl-text {
+  fill: var(--text);
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+#site-footer .fl-x { fill: var(--accent2); }
+
+#site-footer .footer-tagline {
+  max-width: 280px;
+  margin: 0 0 22px;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* Newsletter */
+#site-footer .footer-newsletter { max-width: 340px; }
+#site-footer .footer-nl-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+#site-footer .footer-nl-row { display: flex; gap: 6px; margin-bottom: 8px; }
+#site-footer .footer-nl-input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+#site-footer .footer-nl-input::placeholder { color: var(--text-dim); }
+#site-footer .footer-nl-input:focus { border-color: var(--accent); }
+#site-footer .footer-nl-btn {
+  padding: 9px 16px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+#site-footer .footer-nl-btn:hover { filter: brightness(1.15); }
+#site-footer .footer-nl-btn:disabled { opacity: 0.6; cursor: default; }
+#site-footer .footer-nl-badge { color: var(--accent3); font-size: 11px; }
+#site-footer .footer-nl-badge.is-success { color: var(--accent3); font-size: 12px; }
+#site-footer .footer-nl-badge.is-error   { color: var(--accent2); font-size: 12px; }
+
+/* ─── 2, 3, 4. Colonnes de liens ─── */
+#site-footer .footer-col { display: flex; flex-direction: column; }
+#site-footer .footer-col-title {
+  margin-bottom: 14px;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#site-footer .footer-link {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+#site-footer .footer-link:hover { color: var(--text); }
+#site-footer .footer-link:focus-visible,
+#site-footer .footer-logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Barre du bas ─── */
+#site-footer .footer-bottom {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 18px 0;
+}
+#site-footer .footer-bottom-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+#site-footer .footer-copy,
+#site-footer .footer-made { color: var(--text-dim); font-size: 12px; }
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  #site-footer .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  #site-footer .footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 600px) {
+  #site-footer { margin-top: 40px; }
+  #site-footer .footer-top { padding: 40px 0 32px; }
+  #site-footer .footer-wrap { padding: 0 16px; }
+  #site-footer .footer-grid { gap: 28px 20px; }
+  #site-footer .footer-col:last-child { grid-column: 1 / -1; }
+  #site-footer .footer-newsletter { max-width: none; }
+  #site-footer .footer-bottom-inner { flex-direction: column; align-items: flex-start; gap: 6px; }
+  #site-footer .footer-made { display: none; }
+}

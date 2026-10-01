@@ -1,145 +1,507 @@
 /* =========================================================
-   FOOTER PARTAGÉ — Albexia (/css/footer.css)
-   ========================================================= */
+FOOTER PARTAGÉ — Albexia
+CSS totalement isolé du reste du site.
+========================================================= */
+
+#site-footer,
+#site-footer *,
+#site-footer *::before,
+#site-footer *::after {
+box-sizing: border-box;
+}
+
+/* =========================================================
+FOOTER PRINCIPAL
+========================================================= */
 
 #site-footer {
-  margin-top: 60px;
-  padding: 40px 20px;
-  border-top: 1px solid var(--border, #222);
-  background: var(--bg, #0b0b10);
-  color: var(--text-muted, #999);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  line-height: 1.6;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-x: clip;
+width: 100%;
+max-width: 100%;
+margin: 60px 0 0;
+padding: 0 !important;
+
+background: var(--bg) !important;
+border-top: 1px solid var(--border);
+
+color: var(--text-muted);
+font-family: 'DM Sans', sans-serif;
+font-size: 13px;
+line-height: 1.6;
+text-align: left !important;
+
+overflow: hidden;
 }
+
+/* =========================================================
+ZONE SUPÉRIEURE
+========================================================= */
+
+#site-footer .footer-top {
+width: 100%;
+margin: 0;
+padding: 56px 0 48px;
+
+background: var(--bg2) !important;
+border: 0 !important;
+}
+
+/* =========================================================
+CONTENEUR
+========================================================= */
 
 #site-footer .footer-wrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+width: 100%;
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 24px;
 }
 
-/* --- ANNULATION TOTALE DES CARRES NOIRS & CARTE HÉRITÉS --- */
-/* Le selector " * " garantit qu'AUCUN sous-élément ne gardera un fond sombre ou un padding de carte */
-#site-footer .footer-grid,
-#site-footer .footer-grid *,
+/* =========================================================
+GRILLE
+========================================================= */
+
+#site-footer .footer-grid {
+width: 100%;
+max-width: 100%;
+
+display: grid;
+grid-template-columns:
+minmax(0, 2fr)
+minmax(0, 1fr)
+minmax(0, 1fr)
+minmax(0, 1fr);
+
+gap: 40px;
+
+margin: 0;
+padding: 0;
+}
+
+/*
+IMPORTANT :
+Les colonnes du footer ne sont PAS des cartes.
+On neutralise les éventuels styles globaux
+provenant de style.css.
+*/
+
+#site-footer .footer-grid > *,
 #site-footer .footer-brand,
 #site-footer .footer-col {
-  background: transparent !important;
-  background-color: transparent !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  min-width: 0; /* Anti-débordement universel pour Grid/Flex */
+min-width: 0;
+width: auto;
+max-width: none;
+
+margin: 0;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+border-radius: 0 !important;
+box-shadow: none !important;
 }
 
-/* On réinitialise les conteneurs de colonnes sans toucher aux inputs/boutons */
-#site-footer .footer-col,
-#site-footer .footer-brand {
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
+/* =========================================================
+LOGO
+========================================================= */
+
+#site-footer .footer-logo {
+display: inline-flex;
+align-items: center;
+
+margin: 0 0 14px;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+border-radius: 0;
+box-shadow: none !important;
+
+text-decoration: none;
 }
 
-/* --- STRUCTURE GRID RESPONSIVE --- */
-#site-footer .footer-grid {
-  display: grid;
-  grid-template-columns: 1fr; /* 1 colonne par défaut sur Mobile */
-  gap: 32px;
-  width: 100%;
+#site-footer .footer-logo svg {
+display: block;
+width: 160px;
+max-width: 100%;
+height: 30px;
 }
 
-@media (min-width: 768px) {
-  #site-footer .footer-grid {
-    grid-template-columns: 2fr 1fr 1fr 1fr; /* Layout multiniveau Desktop */
-    gap: 40px;
-  }
+#site-footer .fl-outline {
+fill: none;
+stroke: var(--accent2);
+stroke-width: 2;
+stroke-linejoin: round;
 }
 
-/* --- LIENS ET TYPOGRAPHIE --- */
-#site-footer .footer-col-title {
-  color: var(--text-main, #fff);
-  font-size: 11px;
-  font-weight: 600;
-  margin-bottom: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+#site-footer .fl-fill {
+fill: var(--accent2);
+opacity: 0.2;
 }
+
+#site-footer .fl-dot {
+fill: var(--accent2);
+}
+
+#site-footer .fl-text {
+fill: var(--text);
+font-family: Georgia, serif;
+font-size: 20px;
+font-weight: 700;
+letter-spacing: -0.5px;
+}
+
+#site-footer .fl-x {
+fill: var(--accent2);
+}
+
+/* =========================================================
+DESCRIPTION
+========================================================= */
 
 #site-footer .footer-tagline {
-  margin: 12px 0 20px 0;
-  overflow-wrap: anywhere;
+display: block;
+
+width: 100%;
+max-width: 280px;
+
+margin: 0 0 22px;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+box-shadow: none !important;
+
+color: var(--text-muted);
+font-weight: 300;
+
+overflow-wrap: anywhere;
 }
 
-#site-footer .footer-links {
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
+/* =========================================================
+NEWSLETTER
+========================================================= */
 
-#site-footer .footer-links li {
-  margin-bottom: 8px;
-  padding: 0 !important;
-}
-
-#site-footer .footer-link {
-  color: var(--text-muted, #999);
-  text-decoration: none;
-  display: inline-block;
-  transition: color 0.2s ease;
-  overflow-wrap: anywhere;
-}
-
-#site-footer .footer-link:hover {
-  color: var(--accent, #6366f1);
-}
-
-/* --- FORMULAIRE NEWSLETTER (Anti-débordement) --- */
 #site-footer .footer-newsletter {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
+display: block;
+
+width: 100%;
+max-width: 340px;
+
+margin: 0;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+box-shadow: none !important;
+}
+
+#site-footer .footer-nl-label {
+display: block;
+
+width: 100%;
+
+margin: 0 0 8px;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+
+color: var(--text-dim);
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 0.05em;
+text-transform: uppercase;
 }
 
 #site-footer .footer-nl-row {
-  display: flex;
-  flex-wrap: wrap; /* Retour à la ligne automatique si l'écran est trop étroit */
-  gap: 8px;
-  width: 100%;
+display: flex;
+
+width: 100%;
+max-width: 100%;
+min-width: 0;
+
+margin: 0 0 8px;
+padding: 0;
+
+gap: 6px;
+
+background: transparent !important;
+border: 0 !important;
 }
 
 #site-footer .footer-nl-input {
-  flex: 1 1 180px;
-  min-width: 0;
-  padding: 10px 14px;
-  border-radius: 8px !important;
-  border: 1px solid var(--border, #333) !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #fff;
-  outline: none;
-  font-size: 13px;
+flex: 1 1 auto;
+
+width: 1%;
+min-width: 0;
+max-width: 100%;
+
+padding: 9px 12px;
+
+background: var(--bg3);
+border: 1px solid var(--border);
+border-radius: 8px;
+
+color: var(--text);
+font-family: inherit;
+font-size: 13px;
+
+outline: none;
+}
+
+#site-footer .footer-nl-input::placeholder {
+color: var(--text-dim);
+}
+
+#site-footer .footer-nl-input:focus {
+border-color: var(--accent);
 }
 
 #site-footer .footer-nl-btn {
-  padding: 10px 18px;
-  border-radius: 8px !important;
-  border: none !important;
-  background: var(--accent, #6366f1) !important;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  flex-shrink: 0;
+flex: 0 0 auto;
+
+min-width: 0;
+
+padding: 9px 16px;
+
+background: var(--accent);
+border: 0 !important;
+border-radius: 8px;
+box-shadow: none !important;
+
+color: var(--text);
+font-family: inherit;
+font-size: 13px;
+font-weight: 500;
+
+white-space: nowrap;
+cursor: pointer;
+
+transition: filter 0.2s ease;
+}
+
+#site-footer .footer-nl-btn:hover {
+filter: brightness(1.15);
+}
+
+#site-footer .footer-nl-btn:disabled {
+opacity: 0.6;
+cursor: default;
 }
 
 #site-footer .footer-nl-badge {
-  font-size: 11px;
-  color: #10b981;
+margin: 0;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+box-shadow: none !important;
+
+color: var(--accent3);
+font-size: 11px;
+
+overflow-wrap: anywhere;
+}
+
+#site-footer .footer-nl-badge.is-success {
+color: var(--accent3);
+font-size: 12px;
 }
 
 #site-footer .footer-nl-badge.is-error {
-  color: #ef4444;
+color: var(--accent2);
+font-size: 12px;
+}
+
+/* =========================================================
+COLONNES DE LIENS
+========================================================= */
+
+#site-footer .footer-col {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+
+#site-footer .footer-col-title {
+display: block;
+
+width: 100%;
+
+margin: 0 0 14px;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+box-shadow: none !important;
+
+color: var(--text-dim);
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+
+overflow-wrap: anywhere;
+}
+
+#site-footer .footer-link {
+display: block;
+
+width: fit-content;
+max-width: 100%;
+
+margin: 0 0 10px;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+border-radius: 0;
+box-shadow: none !important;
+
+color: var(--text-muted);
+font-size: 13px;
+line-height: 1.5;
+
+text-decoration: none;
+
+overflow-wrap: anywhere;
+
+transition: color 0.15s ease;
+}
+
+#site-footer .footer-link:hover {
+color: var(--text);
+}
+
+/* =========================================================
+ACCESSIBILITÉ
+========================================================= */
+
+#site-footer .footer-link:focus-visible,
+#site-footer .footer-logo:focus-visible {
+outline: 2px solid var(--accent);
+outline-offset: 3px;
+border-radius: 4px;
+}
+
+/* =========================================================
+BARRE INFÉRIEURE
+========================================================= */
+
+#site-footer .footer-bottom {
+width: 100%;
+
+margin: 0;
+padding: 18px 0;
+
+background: var(--bg) !important;
+border-top: 1px solid var(--border);
+}
+
+#site-footer .footer-bottom-inner {
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+width: 100%;
+min-width: 0;
+
+margin: 0;
+padding: 0;
+
+gap: 16px;
+}
+
+#site-footer .footer-copy,
+#site-footer .footer-made {
+margin: 0;
+padding: 0;
+
+background: transparent !important;
+border: 0 !important;
+box-shadow: none !important;
+
+color: var(--text-dim);
+font-size: 12px;
+}
+
+/* =========================================================
+TABLETTE
+========================================================= */
+
+@media (max-width: 900px) {
+
+#site-footer .footer-grid {
+grid-template-columns:
+minmax(0, 1fr)
+minmax(0, 1fr);
+
+gap: 32px;
+
+}
+
+#site-footer .footer-brand {
+grid-column: 1 / -1;
+}
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+#site-footer {
+margin-top: 40px;
+}
+
+#site-footer .footer-top {
+padding: 40px 0 32px;
+}
+
+#site-footer .footer-wrap {
+padding: 0 16px;
+}
+
+#site-footer .footer-grid {
+grid-template-columns: minmax(0, 1fr);
+gap: 28px;
+}
+
+#site-footer .footer-brand,
+#site-footer .footer-col,
+#site-footer .footer-col:last-child {
+grid-column: auto;
+}
+
+#site-footer .footer-newsletter {
+max-width: 100%;
+}
+
+#site-footer .footer-bottom-inner {
+flex-direction: column;
+align-items: flex-start;
+gap: 6px;
+}
+
+#site-footer .footer-made {
+display: none;
+}
+}
+
+/* =========================================================
+TRÈS PETITS ÉCRANS
+========================================================= */
+
+@media (max-width: 380px) {
+
+#site-footer .footer-nl-row {
+flex-direction: column;
+gap: 8px;
+}
+
+#site-footer .footer-nl-input,
+#site-footer .footer-nl-btn {
+width: 100%;
+}
 }

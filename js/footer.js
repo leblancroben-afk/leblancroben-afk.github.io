@@ -46,18 +46,27 @@
     return list.length ? list[list.length - 1] : null;
   }
 
-  /* Traduit uniquement les éléments du footer (pas tout le document). */
+  /* Traduit uniquement les éléments du footer (pas tout le document).
+     Si une clé manque dans i18n.js, t() renvoie la clé elle-même :
+     dans ce cas on garde le texte français déjà présent dans le HTML. */
   function translateFooter(root) {
     if (typeof window.t !== 'function') return false;
     var lang = currentLang();
+    function val(key) {
+      var v = window.t(key, lang);
+      return v && v !== key ? v : null;
+    }
     root.querySelectorAll('[data-i18n]').forEach(function (el) {
-      el.textContent = window.t(el.getAttribute('data-i18n'), lang);
+      var v = val(el.getAttribute('data-i18n'));
+      if (v !== null) el.textContent = v;
     });
     root.querySelectorAll('[data-i18n-html]').forEach(function (el) {
-      el.innerHTML = window.t(el.getAttribute('data-i18n-html'), lang);
+      var v = val(el.getAttribute('data-i18n-html'));
+      if (v !== null) el.innerHTML = v;
     });
     root.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
-      el.setAttribute('placeholder', window.t(el.getAttribute('data-i18n-placeholder'), lang));
+      var v = val(el.getAttribute('data-i18n-placeholder'));
+      if (v !== null) el.setAttribute('placeholder', v);
     });
     return true;
   }
@@ -70,7 +79,10 @@
     function setFeedback(key, state) {
       feedback.setAttribute('data-i18n', key);
       var txt = tr(key);
-      if (txt) feedback.textContent = txt;
+      if (txt && txt !== key) feedback.textContent = txt;
+      else feedback.textContent = state === 'success'
+        ? '✓ Merci, vous êtes inscrit !'
+        : 'Une erreur est survenue, réessayez.';
       feedback.classList.remove('is-success', 'is-error');
       if (state) feedback.classList.add('is-' + state);
     }

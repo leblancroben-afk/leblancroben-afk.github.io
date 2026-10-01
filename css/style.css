@@ -3867,3 +3867,21 @@ nav .logo { display: flex; align-items: center; }
   margin-top: 80px;
 }
 
+/* ─── RESPIRATION DU HERO — ACCUEIL ─── */
+
+.home-hero {
+  padding-top: 96px;
+  padding-bottom: 80px;
+}
+
+.home-hero h1 {
+  margin-bottom: 28px;
+}
+
+.home-hero p {
+  margin-bottom: 36px;
+}
+
+.home-hero .hero-actions {
+  margin-top: 0;
+}

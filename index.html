@@ -509,49 +509,103 @@
   <!-- ─── PAGE : ACCUEIL ─── -->
   <section id="home" class="page active">
 
-    <!-- Hero -->
-    <div class="hero">
-      <div class="hero-badge">
-        <span class="pulse"></span>
-        <span data-i18n="hero.badge">Nouvelle plateforme · 2026</span>
-      </div>
-      <h1 data-i18n-html="hero.title">Explorez<br>l'univers de <span class="grad">l'IA</span></h1>
-      <p data-i18n="hero.subtitle">Outils, articles et œuvres générées par intelligence artificielle — tout en un seul endroit pour le grand public.</p>
-      <div class="hero-actions">
+    <!-- Hero (refonte accueil) -->
+    <div class="container home-hero">
+      <div class="home-hero-text">
+        <h1 data-i18n="home.heroTitle">Trouvez l’outil IA qu’il vous faut.</h1>
+        <p data-i18n="home.heroSub">Des outils IA classés par besoin, évalués par la communauté et présentés avec leurs tarifs.</p>
         <button class="btn-main" onclick="showPage('tools')" data-i18n="hero.ctaTools">Explorer les outils</button>
-        <button class="btn-outline" onclick="showPage('gallery')" data-i18n="hero.ctaGallery">Voir la galerie</button>
       </div>
-      <div class="hero-quiz-cta">
-        <button class="btn-quiz" onclick="openQuiz()">
-          🎯 <span data-i18n="hero.quizCta">Trouver mon outil IA en 30 secondes</span>
-        </button>
-        <span class="hero-quiz-sub" data-i18n="hero.quizSub">5 questions · Recommandations personnalisées · Gratuit</span>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-blue"><div class="stat-n">120+</div><div class="stat-l" data-i18n="hero.statTools">Outils IA</div></div>
-        <div class="stat-pink"><div class="stat-n">48</div><div class="stat-l" data-i18n="hero.statArticles">Articles</div></div>
-        <div class="stat-green"><div class="stat-n">300+</div><div class="stat-l" data-i18n="hero.statWorks">Œuvres créatives</div></div>
+      <div class="home-hero-visual" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%" focusable="false">
+          <defs>
+            <filter id="hv-shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35"/>
+            </filter>
+            <clipPath id="hv-win-chatgpt"><rect x="0" y="0" width="480" height="340" rx="12"/></clipPath>
+            <clipPath id="hv-win-midjourney"><rect x="0" y="0" width="440" height="380" rx="12"/></clipPath>
+            <clipPath id="hv-win-runway"><rect x="0" y="0" width="440" height="260" rx="12"/></clipPath>
+          </defs>
+
+          <!-- 1. ChatGPT -->
+          <g transform="translate(40 50)" filter="url(#hv-shadow)">
+            <rect x="0" y="0" width="480" height="340" rx="12" fill="#FFFFFF"/>
+            <g clip-path="url(#hv-win-chatgpt)">
+              <rect x="0" y="0" width="480" height="32" fill="#F3F4F6"/>
+              <circle cx="16" cy="16" r="5" fill="#EF4444"/>
+              <circle cx="32" cy="16" r="5" fill="#F59E0B"/>
+              <circle cx="48" cy="16" r="5" fill="#10B981"/>
+              <image href="https://commons.wikimedia.org/wiki/Special:Redirect/file/Chatgpt-screenshot.png" x="0" y="32" width="480" height="308" preserveAspectRatio="xMidYMin slice"/>
+            </g>
+          </g>
+
+          <!-- 2. Midjourney -->
+          <g transform="translate(320 80)" filter="url(#hv-shadow)">
+            <rect x="0" y="0" width="440" height="380" rx="12" fill="#FFFFFF"/>
+            <g clip-path="url(#hv-win-midjourney)">
+              <rect x="0" y="0" width="440" height="32" fill="#F3F4F6"/>
+              <circle cx="16" cy="16" r="5" fill="#EF4444"/>
+              <circle cx="32" cy="16" r="5" fill="#F59E0B"/>
+              <circle cx="48" cy="16" r="5" fill="#10B981"/>
+              <image href="https://commons.wikimedia.org/wiki/Special:Redirect/file/Midjourney_as_it_imagines_itself.png" x="0" y="32" width="440" height="348" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </g>
+
+          <!-- 3. Runway -->
+          <g transform="translate(180 330)" filter="url(#hv-shadow)">
+            <rect x="0" y="0" width="440" height="260" rx="12" fill="#FFFFFF"/>
+            <g clip-path="url(#hv-win-runway)">
+              <rect x="0" y="0" width="440" height="32" fill="#F3F4F6"/>
+              <circle cx="16" cy="16" r="5" fill="#EF4444"/>
+              <circle cx="32" cy="16" r="5" fill="#F59E0B"/>
+              <circle cx="48" cy="16" r="5" fill="#10B981"/>
+              <image href="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&amp;fit=crop&amp;w=900&amp;q=80" x="0" y="32" width="440" height="228" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </g>
+        </svg>
       </div>
     </div>
 
-    <!-- Texte éditorial -->
-    <div class="home-editorial">
-      <div class="container">
+    <!-- Bandeau outils sponsorisés -->
+    <div class="home-sponsors" id="home-sponsors" hidden>
+      <div class="home-sponsors-bar">
+        <span data-i18n="home.sponsored">Outils sponsorisés</span>
+        <button type="button" class="home-sponsors-pause" id="home-sponsors-pause">Pause</button>
+      </div>
+      <div class="home-marquee"><div class="home-marquee-track" id="home-marquee-1"></div></div>
+      <div class="home-marquee"><div class="home-marquee-track reverse" id="home-marquee-2"></div></div>
+    </div>
 
-        <div class="editorial-intro">
-          <h2 class="editorial-title" data-i18n-html="editorial.introTitle">L'intelligence artificielle, <span class="grad">enfin accessible à tous</span></h2>
-          <p class="editorial-lead" data-i18n-html="editorial.introLead">L'IA n'est plus réservée aux ingénieurs et aux grandes entreprises. Un chat, une phrase tapée au clavier suffisent aujourd'hui à générer une image, rédiger un texte ou automatiser une tâche répétitive. Pas besoin de coder, pas besoin de diplôme technique — juste une idée à formuler.</p>
-        </div>
+    <!-- Catégories -->
+    <div class="container home-block">
+      <div class="home-block-head">
+        <h2 data-i18n="home.catTitle">Parcourir les catégories</h2>
+        <a href="#" onclick="showPage('tools');return false;" data-i18n="home.seeAll">Voir tout</a>
+      </div>
+      <div class="home-cat-row" id="home-cat-row">
+        <div class="home-skel"></div><div class="home-skel"></div><div class="home-skel"></div>
+      </div>
+    </div>
 
-        <div class="editorial-grid">
+    <!-- Outils les mieux notés -->
+    <div class="container home-block">
+      <div class="home-block-head">
+        <h2 data-i18n="home.topTitle">Les outils les mieux notés</h2>
+        <a href="#" onclick="showPage('tools');return false;" data-i18n="home.allTools">Tous les outils</a>
+      </div>
+      <div class="home-top-grid" id="home-top-tools">
+        <div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div>
+      </div>
+    </div>
 
-          <div class="editorial-block">
-            <h3 data-i18n="editorial.block1Title">Un annuaire, un blog, une galerie</h3>
-            <p data-i18n-html="editorial.block1P1">Albexia réunit plus de 120 outils IA classés par catégorie, des articles pour s'y retrouver, et une galerie d'œuvres générées par IA. Chaque outil a une note et un prix clair, mis à jour à mesure que l'écosystème change. L'objectif est simple : rester un guide honnête sur l'IA, sans jargon ni promesse en l'air, pour que chacun puisse en tirer parti dès aujourd'hui.</p>
-          </div>
-
-        </div>
-
+    <!-- Derniers articles -->
+    <div class="container home-block">
+      <div class="home-block-head">
+        <h2 data-i18n="home.articlesTitle">Derniers articles</h2>
+        <a href="#" onclick="showPage('blog');return false;" data-i18n="home.allArticles">Tous les articles</a>
+      </div>
+      <div class="home-art-grid" id="home-latest-articles">
+        <div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div>
       </div>
     </div>
   </section>

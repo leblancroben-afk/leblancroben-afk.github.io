@@ -3844,3 +3844,26 @@ nav .logo { display: flex; align-items: center; }
   .home-marquee { overflow-x: auto; }
 }
 @media (max-width: 600px) { .home-sponsors-bar { padding: 0 16px; } }
+
+/* ─── ESPACEMENT VERTICAL — ACCUEIL ─── */
+
+/* Hero → Outils sponsorisés */
+.home-hero + .home-sponsors {
+  margin-top: 56px;
+}
+
+/* Outils sponsorisés → Catégories */
+.home-sponsors + .home-block {
+  margin-top: 72px;
+}
+
+/* Catégories → Outils les mieux notés */
+.home-block + .home-block {
+  margin-top: 72px;
+}
+
+/* Outils les mieux notés → Derniers articles */
+.home-block + .home-block:has(.home-art-grid) {
+  margin-top: 80px;
+}
+

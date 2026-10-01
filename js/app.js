@@ -91,6 +91,7 @@ function changerLangue(code) {
   renderTools();
   renderBlog();
   renderGallery();
+  renderHome();
 
   // Si un panneau spotlight (venant d'un CTA article) est affiché, on le
   // reconstruit dans la nouvelle langue en retrouvant les outils par slug
@@ -392,12 +393,15 @@ async function loadAllData() {
     renderTools();
     renderBlog();
     renderGallery();
+    renderHome();
     checkToolsParam();
   } catch (err) {
     console.error('Erreur chargement données:', err);
     showError('tools-grid',   'Impossible de charger les outils.');
     showError('blog-list',    'Impossible de charger les articles.');
     showError('gallery-grid', 'Impossible de charger la galerie.');
+    showError('home-top-tools', 'Impossible de charger les outils.');
+    showError('home-latest-articles', 'Impossible de charger les articles.');
   }
 }
 
@@ -956,6 +960,135 @@ function renderBlog() {
 
   setPaginationEl('blog-list', buildPaginationHTML(state.blogPage, totalPages, total, start + 1, shownEnd, 'blog', t('idx.articlesUnit', (window.detecterLangue ? window.detecterLangue() : 'fr'))));
 }
+
+// ═══════════════════════════════════════
+// ACCUEIL — catégories, outils les mieux notés, derniers articles
+// ═══════════════════════════════════════
+function renderHome() {
+  const catRow = document.getElementById('home-cat-row');
+  const topEl  = document.getElementById('home-top-tools');
+  const artEl  = document.getElementById('home-latest-articles');
+  if (!catRow && !topEl && !artEl) return; // page sans accueil (ex: page catégorie statique)
+
+  const lang  = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const tools = filtrerParLangue(state.tools).filter(x => x.status !== 'offline');
+  const empty = '<p class="home-empty">—</p>';
+
+  if (catRow) {
+    const counts = new Map();
+    tools.forEach(x => counts.set(x.category, (counts.get(x.category) || 0) + 1));
+    const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6);
+    catRow.innerHTML = top.length ? top.map(([c, n]) => `
+      <button type="button" class="home-cat-card" data-cat="${escHtmlBlog(c)}">
+        <span class="home-cat-card-name">${escHtmlBlog(c)}</span>
+        <span class="home-cat-card-count">${n} ${t('idx.toolsCountSuffix', lang)}</span>
+      </button>`).join('') : empty;
+    catRow.onclick = ev => {
+      const btn = ev.target.closest('[data-cat]');
+      if (!btn) return;
+      showPage('tools');
+      setToolCat(btn.dataset.cat);
+    };
+  }
+
+  // Bandeau « Outils sponsorisés » : 2 lignes défilantes (plan featured)
+  const spEl = document.getElementById('home-sponsors');
+  if (spEl) {
+    const sponsored = tools.filter(x => x.plan === 'featured');
+    const row1 = document.getElementById('home-marquee-1');
+    const row2 = document.getElementById('home-marquee-2');
+    const pauseBtn = document.getElementById('home-sponsors-pause');
+    if (!sponsored.length || !row1 || !row2) {
+      spEl.hidden = true;
+    } else {
+      const card = (x, clone) => {
+        const col  = catColors[x.category] || { bg: 'rgba(255,255,255,0.08)' };
+        const href = buildToolPageUrl(x) || x.url || '#';
+        const ext  = !buildToolPageUrl(x) && x.url ? ' target="_blank" rel="noopener sponsored"' : '';
+        const ico  = x.favicon
+          ? `<img src="${escHtmlBlog(x.favicon)}" alt="" loading="lazy"
+               onerror="this.replaceWith(document.createTextNode('${escHtmlBlog(x.emoji || '✨')}'))">`
+          : escHtmlBlog(x.emoji || '✨');
+        return `
+          <a class="home-sp-card" href="${escHtmlBlog(href)}"${ext}${clone ? ' aria-hidden="true" tabindex="-1"' : ''}>
+            <span class="home-sp-ico" style="background:${col.bg}">${ico}</span>
+            <span class="home-sp-txt"><strong>${escHtmlBlog(x.name)}</strong><small>${escHtmlBlog(x.category)}</small></span>
+          </a>`;
+      };
+      // Boucle sans saccade : les deux moitiés de la piste sont identiques
+      // (translateX 0 → -50 %). Nombre de copies pair, au moins 4.
+      const n = sponsored.length;
+      let copies = Math.max(4, Math.ceil(16 / n));
+      if (copies % 2) copies++;
+      const fill = list => Array.from({ length: copies }, (_, k) => list.map(x => card(x, k > 0)).join('')).join('');
+      row1.innerHTML = fill(sponsored);
+      row2.innerHTML = fill([...sponsored].reverse());
+      const dur = (copies / 2) * n * 5; // ~40 px/s
+      row1.style.setProperty('--marquee-dur', dur + 's');
+      row2.style.setProperty('--marquee-dur', dur + 's');
+      spEl.hidden = false;
+      if (pauseBtn) {
+        const setLabel = () => {
+          pauseBtn.textContent = t(spEl.classList.contains('is-paused') ? 'home.play' : 'home.pause', lang);
+        };
+        pauseBtn.onclick = () => { spEl.classList.toggle('is-paused'); setLabel(); };
+        setLabel();
+      }
+    }
+  }
+
+  if (topEl) {
+    const priceLabel = {
+      free: window.t('alertes.priceFree', lang),
+      freemium: window.t('alertes.priceFreemium', lang),
+      paid: window.t('alertes.pricePaid', lang),
+    };
+    const best = [...tools]
+      .sort((x, y) => (Number(y.note || y.rating) || 0) - (Number(x.note || x.rating) || 0))
+      .slice(0, 4);
+    topEl.innerHTML = best.length ? best.map(x => {
+      const col  = catColors[x.category] || { bg: 'rgba(255,255,255,0.08)' };
+      const href = buildToolPageUrl(x) || x.url || '#';
+      const note = Number(x.note || x.rating) || 0;
+      const noteTxt = lang === 'fr' ? note.toFixed(1).replace('.', ',') : note.toFixed(1);
+      const ico = x.favicon
+        ? `<img src="${escHtmlBlog(x.favicon)}" alt="" class="tool-favicon" loading="lazy"
+             onerror="this.replaceWith(document.createTextNode('${escHtmlBlog(x.emoji || '✨')}'))">`
+        : escHtmlBlog(x.emoji || '✨');
+      return `
+        <a class="home-top-card" href="${escHtmlBlog(href)}">
+          <div class="home-top-head">
+            <span class="home-top-ico" style="background:${col.bg}">${ico}</span>
+            <span class="home-top-name">${escHtmlBlog(x.name)}</span>
+          </div>
+          <p class="home-top-desc">${escHtmlBlog(x.description)}</p>
+          <div class="home-top-foot">
+            ${priceLabel[x.price] ? `<span class="price-tag price-${escHtmlBlog(x.price)}">${priceLabel[x.price]}</span>` : ''}
+            ${note ? `<span class="home-top-note">★ ${noteTxt}</span>` : ''}
+          </div>
+        </a>`;
+    }).join('') : empty;
+  }
+
+  if (artEl) {
+    const posts = filtrerParLangue(state.blog).slice(0, 4);
+    artEl.innerHTML = posts.length ? posts.map(p => {
+      const img = p.og_image || p.image;
+      const thumb = img
+        ? `<img src="${img}" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${p.emoji || '📝'}'))">`
+        : `<span>${p.emoji || '📝'}</span>`;
+      return `
+        <a class="home-art-card" href="${buildBlogPageUrl(p)}">
+          <div class="home-art-thumb">${thumb}</div>
+          <div class="home-art-body">
+            <div class="home-art-title">${p.title}</div>
+            <div class="home-art-meta">${p.category} · ${p.readTime}</div>
+          </div>
+        </a>`;
+    }).join('') : empty;
+  }
+}
+window.renderHome = renderHome;
 
 function setBlogCat(cat) {
   state.activeBlogCat = cat;

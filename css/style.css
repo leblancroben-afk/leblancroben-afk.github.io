@@ -3849,37 +3849,37 @@ nav .logo { display: flex; align-items: center; }
 
 /* Hero → Outils sponsorisés */
 .home-hero + .home-sponsors {
-  margin-top: 56px;
+  margin-top: 80px;
 }
 
 /* Outils sponsorisés → Catégories */
 .home-sponsors + .home-block {
-  margin-top: 72px;
+  margin-top: 100px;
 }
 
 /* Catégories → Outils les mieux notés */
 .home-block + .home-block {
-  margin-top: 72px;
+  margin-top: 100px;
 }
 
 /* Outils les mieux notés → Derniers articles */
 .home-block + .home-block:has(.home-art-grid) {
-  margin-top: 80px;
+  margin-top: 112px;
 }
 
-/* ─── RESPIRATION DU HERO — ACCUEIL ─── */
+/* ─── HERO — RESPIRATION RENFORCÉE ─── */
 
 .home-hero {
-  padding-top: 96px;
-  padding-bottom: 80px;
+  padding-top: 140px;
+  padding-bottom: 120px;
 }
 
 .home-hero h1 {
-  margin-bottom: 28px;
+  margin-bottom: 36px;
 }
 
 .home-hero p {
-  margin-bottom: 36px;
+  margin-bottom: 48px;
 }
 
 .home-hero .hero-actions {

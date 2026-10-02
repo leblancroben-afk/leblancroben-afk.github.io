@@ -38,20 +38,29 @@
 <body class="tuto-outil">
 
 <nav>
-  <a href="/index.html" class="logo" style="text-decoration:none;color:inherit;">
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
     <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-      <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
-      <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-      <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
-      <text x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
     </svg>
-  </a>
+  </a></div>
   <div class="nav-links">
-    <a href="/index.html" class="nav-link" style="text-decoration:none;">Accueil</a>
-    <a href="/index.html#tools" class="nav-link" style="text-decoration:none;">Outils</a>
-    <a href="/index.html#blog" class="nav-link" style="text-decoration:none;">Blog</a>
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Accueil</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <div class="nav-profile-slot">
+    <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+    </a>
+    <a href="/profil.html" id="nav-login-btn" class="nav-link" style="display:none">Connexion</a>
+  </div>
+  <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<script type="module" src="/js/auth-nav.js"></script>
 
 <div class="outil-breadcrumb">
   <a href="/index.html">Accueil</a>
@@ -213,16 +222,16 @@
   </div>
 </div>
 
-<footer style="border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--text-dim);font-size:12px;margin-top:auto;">
-  <p style="margin-bottom:8px;">
-    <a href="/index.html#tools" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Outils</a>
-    <a href="/index.html#blog" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Blog</a>
-    <a href="/tutoriels/index.html" style="color:var(--accent2);text-decoration:none;margin:0 10px;">Tutoriels</a>
-    <a href="/mentions-legales.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Mentions légales</a>
-    <a href="/politique-confidentialite.html" style="color:var(--text-dim);text-decoration:none;margin:0 10px;">Confidentialité</a>
-  </p>
-  <p>© 2025-2026 Albexia · L'annuaire IA francophone de référence</p>
+<link rel="stylesheet" href="/css/footer.css">
+<footer id="site-footer">
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
 </footer>
+<script src="/js/footer.js" defer></script>
 
 <script type="module">
   import { getRatingSummary } from '/js/reviews.js';

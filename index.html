@@ -350,89 +350,12 @@
     </div>
   </div>
 
-  <!-- ─── FOOTER ─── -->
-  <footer class="site-footer">
-    <div class="footer-top">
-      <div class="container">
-        <div class="footer-grid">
 
-          <!-- Colonne 1 : Brand + Newsletter + Réseaux -->
-          <div class="footer-brand">
-            <div class="footer-logo">
-              <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg" height="30" aria-label="Albexia">
-                <polygon points="14,2 24,32 4,32" fill="none" stroke="#ff6b9d" stroke-width="2" stroke-linejoin="round"/>
-                <polygon points="14,10 21,30 7,30" fill="#ff6b9d" opacity="0.2"/>
-                <circle cx="14" cy="24" r="2.5" fill="#ff6b9d"/>
-                <text x="32" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
-              </svg>
-            </div>
-            
-
-            <div class="footer-newsletter">
-              <div class="footer-nl-label" data-i18n="footer.newsletterLabel">Newsletter hebdomadaire</div>
-              <form class="footer-nl-row" action="https://formspree.io/f/xojbojld" method="POST" id="newsletter-form" onsubmit="handleFooterNewsletter(event)">
-                <input type="email" name="email" id="footer-email" class="footer-nl-input" placeholder="votre@email.com" required>
-                <input type="hidden" name="_subject" value="Nouvelle inscription newsletter Albexia">
-                <button type="submit" class="footer-nl-btn" data-i18n="footer.subscribe">S'abonner</button>
-              </form>
-              <div class="footer-nl-badge" id="nl-feedback" data-i18n="footer.newsletterBadge">✓ Gratuit · Sans spam · Désabonnement en 1 clic</div>
-            </div>
-
-            
-
-          <!-- Colonne 2 : Navigation -->
-          <div class="footer-col">
-            <div class="footer-col-title" data-i18n="footer.navTitle">Navigation</div>
-            <button class="footer-link" onclick="showPage('home')" data-i18n="nav.home">Accueil</button>
-            <button class="footer-link" onclick="showPage('tools')" data-i18n="footer.toolsLink">Outils IA</button>
-            <button class="footer-link" onclick="showPage('blog')" data-i18n="nav.blog">Blog</button>
-            <button class="footer-link" onclick="showPage('gallery')" data-i18n="nav.gallery">Galerie</button>
-            <a class="footer-link" href="profile.html#favorites" data-i18n="footer.favorites">Mes favoris</a>
-            <button class="footer-link" onclick="openModal()" data-i18n="footer.submitTool">Soumettre un outil</button>
-          </div>
-
-          <!-- Colonne 3 : Catégories -->
-          <div class="footer-col">
-            <div class="footer-col-title" data-i18n="footer.categoriesTitle">Catégories</div>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Texte')" data-i18n="footer.catText">Texte & Rédaction</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Image')" data-i18n="footer.catImage">Image & Design</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Vidéo')" data-i18n="footer.catVideo">Vidéo</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Musique')" data-i18n="footer.catMusic">Musique & Audio</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Code')" data-i18n="footer.catCode">Code</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Productivité')" data-i18n="footer.catProductivity">Productivité</button>
-          </div>
-
-          <!-- Colonne 4 : Légal + Contact -->
-          <div class="footer-col">
-            <div class="footer-col-title" data-i18n="footer.legalTitle">Légal</div>
-            <a href="mentions-legales.html" class="footer-link" data-i18n="footer.legalNotice">Mentions légales</a>
-            <a href="politique-confidentialite.html" class="footer-link" data-i18n="footer.privacyPolicy">Politique de confidentialité</a>
-            <a href="mentions-legales.html#cgu" class="footer-link" data-i18n="footer.terms">Conditions d'utilisation</a>
-            <a href="mentions-legales.html#cookies" class="footer-link" data-i18n="footer.cookies">Gestion des cookies</a>
-
-            <div class="footer-col-title" style="margin-top: 20px;" data-i18n="footer.contactTitle">Contact</div>
-            <a href="contact.html" class="footer-link" data-i18n="footer.contactUs">Nous contacter</a>
-            <a href="mailto:contact@annuaireia.com" class="footer-link">contact@annuaireia.com</a>
-            <a href="mailto:partenariats@annuaireia.com" class="footer-link" data-i18n="footer.partnerships">Partenariats</a>
-          </div>
-
-        </div>
-      </div>
-    </div>
+  
+      
+<script src="/js/header.js" defer></script>
 <script src="/js/footer.js" defer></script>
-    <!-- Barre de bas de footer -->
-    <div class="footer-bottom">
-      <div class="container footer-bottom-inner">
-        <span class="footer-copy" data-i18n="footer.copyright">&copy; 2025-2026 Albexia — Tous droits réservés</span>
-        <div class="footer-legal-links">
-          <a href="politique-confidentialite.html" class="footer-legal-link" data-i18n="footer.privacy">Vie privée</a>
-          <a href="mentions-legales.html#cgu" class="footer-legal-link">CGU</a>
-          <a href="mentions-legales.html#cookies" class="footer-legal-link">Cookies</a>
-        </div>
-        <span class="footer-made" data-i18n="footer.madeWith">Fait avec ❤️ pour la communauté IA</span>
-      </div>
-    </div>
-  </footer>
+
 
   <script src="js/notifications.js" defer></script>
   <!-- Script lecteur blog -->
@@ -498,7 +421,7 @@
 <script type="module" src="js/reviews.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/app.js"></script>
-<script src="/js/header.js" defer></script>
+
 <script type="module" src="js/collections-picker.js"></script>
 <script type="module">
   import { auth, db, doc, getDoc, onAuthStateChanged }

@@ -31,6 +31,12 @@ const LANGUES_SUPPORTEES = ['fr', 'en', 'es'];
 // choix déjà sauvegardé (localStorage, partagé entre toutes les pages
 // du site), puis repli sur la langue du navigateur, puis FR par défaut.
 function detecterLangue() {
+  // Pages générées statiquement (gen-fiches.js) : la langue est celle de la page,
+  // pas celle enregistrée par le visiteur (<html lang="…" data-static-lang>).
+  const root = document.documentElement;
+  if (root.hasAttribute('data-static-lang') && LANGUES_SUPPORTEES.includes(root.lang)) {
+    return root.lang;
+  }
   const saved = localStorage.getItem(LS_LANG_KEY);
   if (saved && LANGUES_SUPPORTEES.includes(saved)) return saved;
   const nav = (navigator.language || 'fr').slice(0, 2).toLowerCase();
@@ -2743,7 +2749,10 @@ function appliquerTraductionsStatiques(langue) {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === langue);
   });
-  document.documentElement.lang = langue;
+  // Une page statique garde sa langue déclarée (hreflang, SEO).
+  if (!document.documentElement.hasAttribute('data-static-lang')) {
+    document.documentElement.lang = langue;
+  }
 }
 window.appliquerTraductionsStatiques = appliquerTraductionsStatiques;
 

@@ -64,6 +64,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.dispatchEvent(new CustomEvent('albexia:header-ready'));
 
+    /* Avatar / Connexion : le module a besoin que le header existe déjà. */
+    import('/js/auth-nav.js').catch((e) => {
+      console.error('[Albexia] auth-nav.js : ', e);
+      const login = document.getElementById('nav-login-btn');
+      if (login) login.style.display = 'inline-flex';
+    });
+
   } catch (error) {
 
     console.error('[Albexia] Impossible de charger le header :', error);

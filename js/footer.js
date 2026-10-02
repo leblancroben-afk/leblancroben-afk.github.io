@@ -3,6 +3,10 @@
    Charge /components/footer.html et remplace le footer de la page
    (ou l'ajoute en fin de <body> s'il n'y en a pas).
    Si le chargement échoue, le footer d'origine reste en place.
+
+   MODE STATIQUE : si la page contient déjà <footer id="site-footer" data-static>
+   (pages générées par gen-fiches.js, déjà traduites), rien n'est chargé ni
+   traduit : le script se contente d'activer le formulaire newsletter.
    ========================================================= */
 (function () {
   'use strict';
@@ -77,14 +81,19 @@
     if (!form || !feedback) return;
 
     function setFeedback(key, state) {
+      feedback.classList.remove('is-success', 'is-error');
+      if (state) feedback.classList.add('is-' + state);
+
+      /* Mode statique : messages déjà traduits dans le HTML. */
+      var staticMsg = form.getAttribute(state === 'success' ? 'data-msg-success' : 'data-msg-error');
+      if (staticMsg) { feedback.textContent = staticMsg; return; }
+
       feedback.setAttribute('data-i18n', key);
       var txt = tr(key);
       if (txt && txt !== key) feedback.textContent = txt;
       else feedback.textContent = state === 'success'
         ? '✓ Merci, vous êtes inscrit !'
         : 'Une erreur est survenue, réessayez.';
-      feedback.classList.remove('is-success', 'is-error');
-      if (state) feedback.classList.add('is-' + state);
     }
 
     form.addEventListener('submit', function (e) {
@@ -112,6 +121,12 @@
   }
 
   async function loadFooter() {
+    var existing = document.getElementById('site-footer');
+    if (existing && existing.hasAttribute('data-static')) {
+      initNewsletter(existing);
+      document.dispatchEvent(new CustomEvent('albexia:footer-ready'));
+      return;
+    }
     try {
       var res = await fetch(FOOTER_URL, { cache: 'no-cache' });
       if (!res.ok) throw new Error('HTTP ' + res.status);

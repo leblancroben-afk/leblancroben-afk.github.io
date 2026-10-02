@@ -296,3 +296,55 @@ window.addEventListener('storage', event => {
     });
 
 });
+
+
+/* =========================================================
+   NAVIGATION INDEX — sections internes
+   Le header étant injecté dynamiquement, la navigation doit
+   être gérée après son injection.
+   ========================================================= */
+
+document.addEventListener('click', event => {
+
+  const link = event.target.closest(
+    '.nav-link[data-nav-page]'
+  );
+
+  if (!link) return;
+
+  const pageId = link.dataset.navPage;
+
+  if (!pageId) return;
+
+  const page = document.getElementById(pageId);
+
+  /*
+   * On n'intercepte le clic que si la section existe
+   * sur la page actuelle.
+   */
+  if (!page) return;
+
+  /*
+   * showPage() est fourni par app.js.
+   */
+  if (typeof window.showPage !== 'function') {
+    console.warn(
+      '[Albexia] showPage() est introuvable.'
+    );
+    return;
+  }
+
+  event.preventDefault();
+
+  window.showPage(pageId);
+
+  /*
+   * Met à jour l'URL sans recharger la page.
+   */
+  history.replaceState(
+    null,
+    '',
+    `/index.html#${pageId}`
+  );
+
+});

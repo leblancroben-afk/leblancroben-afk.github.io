@@ -77,40 +77,59 @@ function translateQuizViewSheet(langue) {
 
 function changerLangue(code) {
   if (!LANGUES_SUPPORTEES.includes(code)) return;
+
+  if (typeof window.changerLangueGlobale === 'function') {
+    return window.changerLangueGlobale(code);
+  }
+
   localStorage.setItem(LS_LANG_KEY, code);
   state.langue = code;
+
+  if (typeof window.onLangueChange === 'function') {
+    return window.onLangueChange(code);
+  }
+}
+
+// ─── RENDU DYNAMIQUE APRÈS CHANGEMENT DE LANGUE ───
+window.onLangueChange = function (code) {
+  if (!LANGUES_SUPPORTEES.includes(code)) return;
+
+  state.langue = code;
+
   state.activeToolCat    = 'Tous';
   state.activeBlogCat    = 'Tous';
   state.activeGalleryCat = 'Tous';
-  state.toolsPage  = 1;
-  state.blogPage   = 1;
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === code);
-  });
-  appliquerTraductionsStatiques(code);
+
+  state.toolsPage   = 1;
+  state.blogPage    = 1;
+  state.galleryPage = 1;
+
   renderTools();
   renderBlog();
   renderGallery();
   renderHome();
 
-  // Si un panneau spotlight (venant d'un CTA article) est affiché, on le
-  // reconstruit dans la nouvelle langue en retrouvant les outils par slug
-  // de nom (même logique que buildToolPageUrl), au lieu de le laisser
-  // dans l'ancienne langue ou de le perdre.
+  // Si un panneau spotlight est affiché, on le reconstruit
+  // avec la variante Firestore correspondant à la nouvelle langue.
   if (_spotlightSlugs && _spotlightSlugs.length) {
     const found = _spotlightSlugs
-      .map(slug => state.tools.find(t => t.langue === code && slugify(t.name) === slug))
+      .map(slug =>
+        state.tools.find(
+          t =>
+            t.langue === code &&
+            slugify(t.name) === slug
+        )
+      )
       .filter(Boolean);
+
     if (found.length) {
       renderSpotlight(found, true);
     } else {
-      // Pas de variante disponible dans cette langue : on retire le panneau
-      // plutôt que de laisser un panneau obsolète/incohérent affiché.
       const old = document.getElementById('notif-spotlight');
       if (old) old.remove();
     }
   }
-}
+};
 
 // ─── STATE ───────────────────────────────
 const state = {

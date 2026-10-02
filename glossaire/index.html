@@ -104,17 +104,6 @@
 
 <script src="/js/i18n.js"></script>
 
-<div class="lang-selector" id="lang-selector" style="position:fixed;top:14px;right:66px;z-index:150">
-  <button class="lang-current" id="lang-current" type="button" aria-expanded="false">
-    <span>🌐</span><span id="lang-current-label">FR</span><span class="lang-arrow">⌄</span>
-  </button>
-  <div class="lang-menu" id="lang-menu">
-    <button class="lang-btn active" data-lang="fr" onclick="changerLangueGlobale('fr')">🇫🇷 Français</button>
-    <button class="lang-btn" data-lang="en" onclick="changerLangueGlobale('en')">🇬🇧 English</button>
-    <button class="lang-btn" data-lang="es" onclick="changerLangueGlobale('es')">🇪🇸 Español</button>
-  </div>
-</div>
-
 <section class="glossaire-hero">
   <div class="glossaire-badge" data-i18n="glossaire.badge">📖 Référence IA</div>
   <h1 data-i18n-html="glossaire.title">Glossaire de <span class="grad-purple">l'IA</span></h1>
@@ -332,32 +321,6 @@ window.onLangueChange = function(code) {
 const badgeInit = document.getElementById('glossaire-lang-badge');
 if (badgeInit) badgeInit.textContent = langueActive.toUpperCase();
 initTermeDuJour(); initAlpha(); initNiveaux(); initSearch(); renderGlossaire();
-</script>
-<script>
-  // Ouverture/fermeture du sélecteur de langue — identique à index.html
-  (function () {
-    const selector = document.getElementById('lang-selector');
-    const current = document.getElementById('lang-current');
-    const label = document.getElementById('lang-current-label');
-    if (!selector || !current) return;
-    current.addEventListener('click', function (e) {
-      e.stopPropagation();
-      const isOpen = selector.classList.toggle('open');
-      current.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    document.addEventListener('click', function () {
-      selector.classList.remove('open');
-      current.setAttribute('aria-expanded', 'false');
-    });
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
-        if (label) label.textContent = this.dataset.lang.toUpperCase();
-        selector.classList.remove('open');
-        current.setAttribute('aria-expanded', 'false');
-      });
-    });
-    if (label) label.textContent = langueActive.toUpperCase();
-  })();
 </script>
 
 </body>

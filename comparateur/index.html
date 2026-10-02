@@ -27,17 +27,6 @@
 <div id="site-header" style="display:contents"></div>
 <script src="/js/header.js" defer></script>
 
-<div class="lang-selector" id="lang-selector" style="position:fixed;top:14px;right:66px;z-index:150">
-  <button class="lang-current" id="lang-current" type="button" aria-expanded="false">
-    <span>🌐</span><span id="lang-current-label">FR</span><span class="lang-arrow">⌄</span>
-  </button>
-  <div class="lang-menu" id="lang-menu">
-    <button class="lang-btn active" data-lang="fr" onclick="changerLangueGlobale('fr')">🇫🇷 Français</button>
-    <button class="lang-btn" data-lang="en" onclick="changerLangueGlobale('en')">🇬🇧 English</button>
-    <button class="lang-btn" data-lang="es" onclick="changerLangueGlobale('es')">🇪🇸 Español</button>
-  </div>
-</div>
-
 <section class="comp-hero comp-hero--sober">
   <h1 data-i18n="comparateur.title">Comparateur d'outils IA</h1>
   <p data-i18n="comparateur.subtitle">Comparez jusqu'à 4 outils IA pour trouver celui qui correspond le mieux à vos besoins.</p>
@@ -507,31 +496,6 @@ window.onLangueChange = function(code){
   renderChips();
   renderReco();
 };
-</script>
-<script>
-  (function () {
-    const selector = document.getElementById('lang-selector');
-    const current = document.getElementById('lang-current');
-    const label = document.getElementById('lang-current-label');
-    if (!selector || !current) return;
-    current.addEventListener('click', function (e) {
-      e.stopPropagation();
-      const isOpen = selector.classList.toggle('open');
-      current.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    document.addEventListener('click', function () {
-      selector.classList.remove('open');
-      current.setAttribute('aria-expanded', 'false');
-    });
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
-        if (label) label.textContent = this.dataset.lang.toUpperCase();
-        selector.classList.remove('open');
-        current.setAttribute('aria-expanded', 'false');
-      });
-    });
-    if (label) label.textContent = langueActive.toUpperCase();
-  })();
 </script>
 
 </body>

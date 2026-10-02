@@ -29,6 +29,7 @@ const LANGS = ['fr', 'en', 'es'];
 const LABELS = {
   fr: {
     home: 'Accueil', tools: 'Outils', blog: 'Blog',
+    login: 'Connexion', submitCta: 'Soumettre un outil +', profileTitle: 'Mon profil',
     tagline: "L'annuaire francophone des outils d'IA, classés par besoin et évalués par la communauté.",
     newsletter: 'Newsletter hebdomadaire', emailPlaceholder: 'votre@email.com', subscribe: "S'abonner",
     badge: '✓ Gratuit · Sans spam · Désabonnement en 1 clic',
@@ -43,6 +44,7 @@ const LABELS = {
   },
   en: {
     home: 'Home', tools: 'Tools', blog: 'Blog',
+    login: 'Log in', submitCta: 'Submit a tool +', profileTitle: 'My profile',
     tagline: 'The francophone AI tools directory, sorted by need and rated by the community.',
     newsletter: 'Weekly newsletter', emailPlaceholder: 'your@email.com', subscribe: 'Subscribe',
     badge: '✓ Free · No spam · Unsubscribe in 1 click',
@@ -57,6 +59,7 @@ const LABELS = {
   },
   es: {
     home: 'Inicio', tools: 'Herramientas', blog: 'Blog',
+    login: 'Iniciar sesión', submitCta: 'Enviar una herramienta +', profileTitle: 'Mi perfil',
     tagline: 'El directorio francófono de herramientas de IA, clasificadas por necesidad y valoradas por la comunidad.',
     newsletter: 'Boletín semanal', emailPlaceholder: 'tu@email.com', subscribe: 'Suscribirme',
     badge: '✓ Gratis · Sin spam · Cancela con un clic',
@@ -113,7 +116,15 @@ function navHTML(langue) {
     ${link('index.html#tools', t.tools)}
     ${link('index.html#blog', t.blog)}
   </div>
-</nav>`;
+  <div class="nav-profile-slot">
+    <a href="${R}profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="${esc(t.profileTitle)}">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+    </a>
+    <a href="${R}profil.html" id="nav-login-btn" class="nav-link" style="display:none">${esc(t.login)}</a>
+  </div>
+  <a href="${R}soumettre/" class="nav-cta">${esc(t.submitCta)}</a>
+</nav>
+<script type="module" src="${R}js/auth-nav.js"></script>`;
 }
 
 function footerHTML(langue) {

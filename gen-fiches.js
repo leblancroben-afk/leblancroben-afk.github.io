@@ -44,7 +44,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v1';
+const TEMPLATE_VERSION = 'layout-v2';
 
 function loadState() {
   try {
@@ -949,19 +949,6 @@ function articleCreateurSlug(article) {
 // doublon avec un breadcrumb. sharedJS() reste appelée normalement sur
 // cette page : son code kebab-menu vérifie déjà la présence des éléments
 // avant de s'attacher, donc leur absence ici ne casse rien.
-function navHTMLArticleCreateur() {
-  return `<nav>
-  <div class="logo">
-    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-      <polygon points="2,10 14,32 10,32" fill="#ff6b9d"/>
-      <polygon points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-      <polygon points="26,10 14,32 18,32" fill="#ff6b9d"/>
-      <text x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
-    </svg>
-  </div>
-</nav>`;
-}
-
 async function generateArticleCreateur(article, outilsMap, allArticlesCreateurs = []) {
   const {
     id, titre, categorie = '', extrait = '', outil_slug, contenu, created_at,
@@ -1200,7 +1187,7 @@ ${bannerTag}
 </head>
 <body>
 
-${navHTMLArticleCreateur()}
+${navHTML('fr')}
 
 <div class="pvac-breadcrumb">
   <a href="${R}index.html">Accueil</a><span class="sep">›</span>
@@ -1850,17 +1837,6 @@ ${buildListForLang(lang)}
 
 ${navDynamicHTML()}
 
-<div class="lang-selector" id="lang-selector" style="position:fixed;top:14px;right:66px;z-index:150">
-  <button class="lang-current" id="lang-current" type="button" aria-expanded="false">
-    <span>🌐</span><span id="lang-current-label">FR</span><span class="lang-arrow">⌄</span>
-  </button>
-  <div class="lang-menu" id="lang-menu">
-    <button class="lang-btn active" data-lang="fr" onclick="changerLangueGlobale('fr')">🇫🇷 Français</button>
-    <button class="lang-btn" data-lang="en" onclick="changerLangueGlobale('en')">🇬🇧 English</button>
-    <button class="lang-btn" data-lang="es" onclick="changerLangueGlobale('es')">🇪🇸 Español</button>
-  </div>
-</div>
-
 <section class="comp-hero comp-hero--sober">
   <h1 data-i18n="comparateur.title">Comparateur d'outils IA</h1>
   <p data-i18n="comparateur.subtitle">Comparez jusqu'à 4 outils IA pour trouver celui qui correspond le mieux à vos besoins.</p>
@@ -2210,31 +2186,6 @@ window.onLangueChange = function(code){
   renderChips();
   renderReco();
 };
-</script>
-<script>
-  (function () {
-    const selector = document.getElementById('lang-selector');
-    const current = document.getElementById('lang-current');
-    const label = document.getElementById('lang-current-label');
-    if (!selector || !current) return;
-    current.addEventListener('click', function (e) {
-      e.stopPropagation();
-      const isOpen = selector.classList.toggle('open');
-      current.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    document.addEventListener('click', function () {
-      selector.classList.remove('open');
-      current.setAttribute('aria-expanded', 'false');
-    });
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
-        if (label) label.textContent = this.dataset.lang.toUpperCase();
-        selector.classList.remove('open');
-        current.setAttribute('aria-expanded', 'false');
-      });
-    });
-    if (label) label.textContent = langueActive.toUpperCase();
-  })();
 </script>
 ${sharedJS()}
 </body>
@@ -2848,17 +2799,6 @@ ${navDynamicHTML()}
 
 <script src="${R}js/i18n.js"></script>
 
-<div class="lang-selector" id="lang-selector" style="position:fixed;top:14px;right:66px;z-index:150">
-  <button class="lang-current" id="lang-current" type="button" aria-expanded="false">
-    <span>🌐</span><span id="lang-current-label">FR</span><span class="lang-arrow">⌄</span>
-  </button>
-  <div class="lang-menu" id="lang-menu">
-    <button class="lang-btn active" data-lang="fr" onclick="changerLangueGlobale('fr')">🇫🇷 Français</button>
-    <button class="lang-btn" data-lang="en" onclick="changerLangueGlobale('en')">🇬🇧 English</button>
-    <button class="lang-btn" data-lang="es" onclick="changerLangueGlobale('es')">🇪🇸 Español</button>
-  </div>
-</div>
-
 <section class="glossaire-hero">
   <div class="glossaire-badge" data-i18n="glossaire.badge">📖 Référence IA</div>
   <h1 data-i18n-html="glossaire.title">Glossaire de <span class="grad-purple">l'IA</span></h1>
@@ -3068,32 +3008,6 @@ window.onLangueChange = function(code) {
 const badgeInit = document.getElementById('glossaire-lang-badge');
 if (badgeInit) badgeInit.textContent = langueActive.toUpperCase();
 initTermeDuJour(); initAlpha(); initNiveaux(); initSearch(); renderGlossaire();
-</script>
-<script>
-  // Ouverture/fermeture du sélecteur de langue — identique à index.html
-  (function () {
-    const selector = document.getElementById('lang-selector');
-    const current = document.getElementById('lang-current');
-    const label = document.getElementById('lang-current-label');
-    if (!selector || !current) return;
-    current.addEventListener('click', function (e) {
-      e.stopPropagation();
-      const isOpen = selector.classList.toggle('open');
-      current.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    document.addEventListener('click', function () {
-      selector.classList.remove('open');
-      current.setAttribute('aria-expanded', 'false');
-    });
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', function () {
-        if (label) label.textContent = this.dataset.lang.toUpperCase();
-        selector.classList.remove('open');
-        current.setAttribute('aria-expanded', 'false');
-      });
-    });
-    if (label) label.textContent = langueActive.toUpperCase();
-  })();
 </script>
 ${sharedJS()}
 </body>

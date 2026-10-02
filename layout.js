@@ -30,7 +30,7 @@ const LABELS = {
   fr: {
     home: 'Accueil', tools: 'Outils', blog: 'Blog',
     login: 'Connexion', submitCta: 'Soumettre un outil +', profileTitle: 'Mon profil',
-    tagline: "L'annuaire francophone des outils d'IA, classés par besoin et évalués par la communauté.",
+    tagline: " L’IA ouvre une nouvelle étape de notre histoire. Albexia veut contribuer à cette transformation en donnant à chacun les moyens de découvrir, comprendre et utiliser les nouvelles possibilités qu’elle crée, à travers ses outils, son blog, sa galerie, son comparateur, son glossaire et bien d’autres ressources.",
     newsletter: 'Newsletter hebdomadaire', emailPlaceholder: 'votre@email.com', subscribe: "S'abonner",
     badge: '✓ Gratuit · Sans spam · Désabonnement en 1 clic',
     success: '✓ Merci, vous êtes inscrit !', error: 'Une erreur est survenue, réessayez.',
@@ -45,7 +45,7 @@ const LABELS = {
   en: {
     home: 'Home', tools: 'Tools', blog: 'Blog',
     login: 'Log in', submitCta: 'Submit a tool +', profileTitle: 'My profile',
-    tagline: 'The francophone AI tools directory, sorted by need and rated by the community.',
+    tagline: 'AI is opening a new chapter in our history. Albexia wants to contribute to this transformation by giving everyone the means to discover, understand and use the new possibilities it creates, through its tools, blog, gallery, comparison tools, glossary and many other resources.',
     newsletter: 'Weekly newsletter', emailPlaceholder: 'your@email.com', subscribe: 'Subscribe',
     badge: '✓ Free · No spam · Unsubscribe in 1 click',
     success: '✓ Thanks, you are subscribed!', error: 'Something went wrong, please try again.',
@@ -60,7 +60,7 @@ const LABELS = {
   es: {
     home: 'Inicio', tools: 'Herramientas', blog: 'Blog',
     login: 'Iniciar sesión', submitCta: 'Enviar una herramienta +', profileTitle: 'Mi perfil',
-    tagline: 'El directorio francófono de herramientas de IA, clasificadas por necesidad y valoradas por la comunidad.',
+    tagline: 'La IA abre una nueva etapa de nuestra historia. Albexia quiere contribuir a esta transformación dando a todos los medios para descubrir, comprender y utilizar las nuevas posibilidades que crea, a través de sus herramientas, su blog, su galería, su comparador, su glosario y muchos otros recursos.',
     newsletter: 'Boletín semanal', emailPlaceholder: 'tu@email.com', subscribe: 'Suscribirme',
     badge: '✓ Gratis · Sin spam · Cancela con un clic',
     success: '✓ ¡Gracias, ya estás suscrito!', error: 'Ha ocurrido un error, inténtalo de nuevo.',

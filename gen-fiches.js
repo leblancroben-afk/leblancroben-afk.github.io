@@ -44,7 +44,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v2';
+const TEMPLATE_VERSION = 'layout-v4';
 
 function loadState() {
   try {
@@ -401,7 +401,7 @@ function generateStandard(tool, allTools=[]) {
   const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
 
   return `<!DOCTYPE html>
-<html lang="${langue}">
+<html lang="${langue}" data-static-lang>
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${titres[langue] || titres.fr}</title>
@@ -467,6 +467,7 @@ ${navHTML(langue)}
 ${footerHTML(langue)}
 ${sharedJS()}
 <script type="module" src="${R}js/reviews-widget.js"></script>
+<script src="${R}js/i18n.js"></script>
 </body>
 </html>`;
 }
@@ -520,7 +521,7 @@ function generateStarter(tool, allTools=[]) {
   const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
 
   return `<!DOCTYPE html>
-<html lang="${langue}">
+<html lang="${langue}" data-static-lang>
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${titres[langue]||titres.fr}</title>
@@ -598,6 +599,7 @@ ${faqHTML ? faqJS() : ''}
 ${sharedJS()}
 ${articlesScript}
 <script type="module" src="${R}js/reviews-widget.js"></script>
+<script src="${R}js/i18n.js"></script>
 </body>
 </html>`;
 }
@@ -696,7 +698,7 @@ function generateFeatured(tool, allTools=[]) {
   const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
 
   return `<!DOCTYPE html>
-<html lang="${langue}">
+<html lang="${langue}" data-static-lang>
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${titres[langue]||titres.fr}</title>
@@ -782,6 +784,7 @@ ${tutorielsHTML ? tutorialJS() : ''}
 ${sharedJS()}
 ${articlesScript}
 <script type="module" src="${R}js/reviews-widget.js"></script>
+<script src="${R}js/i18n.js"></script>
 </body>
 </html>`;
 }
@@ -3717,7 +3720,7 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
 </head>
 <body class="tuto-hub">
 
-${tutoHubNavHTML()}
+<div id="site-header"></div>
 
 <section class="tuto-hero">
   <div class="tuto-badge"><span class="pulse"></span><span data-i18n="tuto.badge">Vidéothèque francophone</span></div>
@@ -3740,9 +3743,11 @@ ${tutoEditorialHTML()}
 ${tutoFaqHTML()}
 ${tutoPlayerModalHTML()}
 
-${tutoFooterHTML()}
+
 ${sharedJS()}
 ${tutoFirestoreModuleHTML('hub')}
+<script src="${R}js/header.js" defer></script>
+<script src="${R}js/footer.js" defer></script>
 <script src="${R}js/i18n.js"></script>
 <script>
   /* Substitue {n} / {tool} dans les textes i18n marqués data-vars (après i18n.js) */
@@ -3830,7 +3835,7 @@ ${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "nam
 </head>
 <body class="tuto-outil">
 
-${tutoHubNavHTML(langue)}
+${navHTML(langue)}
 
 <div class="outil-breadcrumb">
   <a href="${R}index.html">${L.home}</a>
@@ -3894,7 +3899,7 @@ ${videosHTML}
 ${tutoPlayerModalHTML(langue)}
 ${tutoSoumissionModalHTML(allToolsAvecVideo, langue)}
 
-${tutoFooterHTML(langue)}
+${footerHTML(langue)}
 ${sharedJS()}
 ${firestoreModule}
 <script src="${R}js/tutoriel-outil.js"></script>

@@ -3,24 +3,20 @@
 /* =========================================================
    layout.js — header et footer d'Albexia (côté générateur)
 
-   DEUX SYSTÈMES DISTINCTS :
-
+   HEADER — deux systèmes distincts :
    1. Pages générées statiquement (fiches outils, articles, niches,
-      catégories, duels du comparateur, termes du glossaire…)
-      -> navHTML(langue) / footerHTML(langue)
-      Tout le texte est traduit ICI, au moment de la génération,
-      et écrit en dur dans le HTML. Aucune dépendance à i18n.js,
-      aucun sélecteur de langue. La langue de la page est celle de
-      sa version (fr / en / es), signalée aux moteurs par <html lang>
-      et par les balises hreflang.
+      catégories, duels, glossaire…) -> navHTML(langue)
+      Texte traduit ici, à la génération, écrit en dur dans le HTML.
+      Aucun sélecteur de langue, aucune dépendance à i18n.js.
+   2. Pages dynamiques qui chargent i18n.js -> navDynamicHTML()
+      Header (avec sélecteur de langue) chargé par js/header.js.
 
-   2. Pages dynamiques qui chargent i18n.js (accueil, hubs…)
-      -> navDynamicHTML() / footerDynamicHTML()
-      Le header (avec sélecteur de langue) et le footer sont chargés
-      par js/header.js et js/footer.js, traduits par i18n.js.
-
-   Les libellés ci-dessous (système 1) sont volontairement séparés
-   de js/i18n.js (système 2).
+   FOOTER — un seul fichier pour tout le site :
+      components/footer.html (3 langues dans le fichier), chargé par
+      js/footer.js sur toutes les pages. Pour le modifier : éditer ce
+      fichier, effet immédiat, sans régénération.
+      Ici, footerHTML() / footerDynamicHTML() ne produisent qu'un petit
+      footer de secours (copyright + liens légaux) remplacé par js/footer.js.
    ========================================================= */
 
 const R = '/';
@@ -30,72 +26,28 @@ const LABELS = {
   fr: {
     home: 'Accueil', tools: 'Outils', blog: 'Blog',
     login: 'Connexion', submitCta: 'Soumettre un outil +', profileTitle: 'Mon profil',
-    tagline: " L’IA ouvre une nouvelle étape de notre histoire. Albexia veut contribuer à cette transformation en donnant à chacun les moyens de découvrir, comprendre et utiliser les nouvelles possibilités qu’elle crée, à travers ses outils, son blog, sa galerie, son comparateur, son glossaire et bien d’autres ressources.",
-    newsletter: 'Newsletter hebdomadaire', emailPlaceholder: 'votre@email.com', subscribe: "S'abonner",
-    badge: '✓ Gratuit · Sans spam · Désabonnement en 1 clic',
-    success: '✓ Merci, vous êtes inscrit !', error: 'Une erreur est survenue, réessayez.',
-    exploreTitle: 'Explorer', communityTitle: 'Communauté', legalContactTitle: 'Légal & contact',
-    toolsLink: 'Outils IA', compare: 'Comparateur', tutorials: 'Tutoriels vidéo', glossary: 'Glossaire IA',
-    hub: 'Voir toutes les sections', gallery: 'Galerie', deals: 'Deals & Promos', resources: 'Ressources',
-    submit: 'Soumettre un outil', creator: 'Espace créateur',
-    legalNotice: 'Mentions légales', privacy: 'Politique de confidentialité', terms: "Conditions d'utilisation",
-    cookies: 'Gestion des cookies', contact: 'Nous contacter', partnerships: 'Partenariats',
-    rights: 'Tous droits réservés', made: 'Fait avec ❤️ pour la communauté IA'
+    legalNotice: 'Mentions légales', privacy: 'Confidentialité', contact: 'Contact',
+    rights: 'Tous droits réservés'
   },
   en: {
     home: 'Home', tools: 'Tools', blog: 'Blog',
     login: 'Log in', submitCta: 'Submit a tool +', profileTitle: 'My profile',
-    tagline: 'AI is opening a new chapter in our history. Albexia wants to contribute to this transformation by giving everyone the means to discover, understand and use the new possibilities it creates, through its tools, blog, gallery, comparison tools, glossary and many other resources.',
-    newsletter: 'Weekly newsletter', emailPlaceholder: 'your@email.com', subscribe: 'Subscribe',
-    badge: '✓ Free · No spam · Unsubscribe in 1 click',
-    success: '✓ Thanks, you are subscribed!', error: 'Something went wrong, please try again.',
-    exploreTitle: 'Explore', communityTitle: 'Community', legalContactTitle: 'Legal & contact',
-    toolsLink: 'AI tools', compare: 'Compare', tutorials: 'Video tutorials', glossary: 'AI glossary',
-    hub: 'See all sections', gallery: 'Gallery', deals: 'Deals & promos', resources: 'Resources',
-    submit: 'Submit a tool', creator: 'Creator space',
-    legalNotice: 'Legal notice', privacy: 'Privacy policy', terms: 'Terms of use',
-    cookies: 'Cookie settings', contact: 'Contact us', partnerships: 'Partnerships',
-    rights: 'All rights reserved', made: 'Made with ❤️ for the AI community'
+    legalNotice: 'Legal notice', privacy: 'Privacy', contact: 'Contact',
+    rights: 'All rights reserved'
   },
   es: {
     home: 'Inicio', tools: 'Herramientas', blog: 'Blog',
     login: 'Iniciar sesión', submitCta: 'Enviar una herramienta +', profileTitle: 'Mi perfil',
-    tagline: 'La IA abre una nueva etapa de nuestra historia. Albexia quiere contribuir a esta transformación dando a todos los medios para descubrir, comprender y utilizar las nuevas posibilidades que crea, a través de sus herramientas, su blog, su galería, su comparador, su glosario y muchos otros recursos.',
-    newsletter: 'Boletín semanal', emailPlaceholder: 'tu@email.com', subscribe: 'Suscribirme',
-    badge: '✓ Gratis · Sin spam · Cancela con un clic',
-    success: '✓ ¡Gracias, ya estás suscrito!', error: 'Ha ocurrido un error, inténtalo de nuevo.',
-    exploreTitle: 'Explorar', communityTitle: 'Comunidad', legalContactTitle: 'Legal y contacto',
-    toolsLink: 'Herramientas de IA', compare: 'Comparador', tutorials: 'Tutoriales en vídeo', glossary: 'Glosario de IA',
-    hub: 'Ver todas las secciones', gallery: 'Galería', deals: 'Ofertas y promociones', resources: 'Recursos',
-    submit: 'Enviar una herramienta', creator: 'Espacio creador',
-    legalNotice: 'Aviso legal', privacy: 'Política de privacidad', terms: 'Condiciones de uso',
-    cookies: 'Gestión de cookies', contact: 'Contáctanos', partnerships: 'Alianzas',
-    rights: 'Todos los derechos reservados', made: 'Hecho con ❤️ para la comunidad IA'
+    legalNotice: 'Aviso legal', privacy: 'Privacidad', contact: 'Contacto',
+    rights: 'Todos los derechos reservados'
   }
 };
-
-/* Colonnes du footer : [clé du libellé, chemin depuis la racine] */
-const FOOTER_COLUMNS = [
-  { title: 'exploreTitle', links: [
-    ['toolsLink', 'index.html#tools'], ['compare', 'comparateur/'], ['tutorials', 'tutoriels/index.html'],
-    ['glossary', 'glossaire/'], ['hub', 'hub.html']
-  ] },
-  { title: 'communityTitle', links: [
-    ['blog', 'index.html#blog'], ['gallery', 'index.html#gallery'], ['deals', 'deals/'],
-    ['resources', 'ressources.html'], ['submit', 'soumettre/index.html'], ['creator', 'profil.html']
-  ] },
-  { title: 'legalContactTitle', links: [
-    ['legalNotice', 'mentions-legales.html'], ['privacy', 'politique-confidentialite.html'],
-    ['terms', 'mentions-legales.html#cgu'], ['cookies', 'mentions-legales.html#cookies'],
-    ['contact', 'contact.html'], ['partnerships', null, 'mailto:partenariats@annuaireia.com']
-  ] }
-];
 
 const esc = s => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const pick = l => (LANGS.includes(l) ? l : 'fr');
 
-/* ─── SYSTÈME 1 : pages statiques ─── */
+/* ─── HEADER des pages statiques ─── */
 
 function navHTML(langue) {
   const t = LABELS[pick(langue)];
@@ -127,76 +79,35 @@ function navHTML(langue) {
 <script type="module" src="${R}js/auth-nav.js"></script>`;
 }
 
+/* ─── FOOTER : petit footer de secours (HTML) + footer unique (js/footer.js) ─── */
+
 function footerHTML(langue) {
   const t = LABELS[pick(langue)];
-  const cols = FOOTER_COLUMNS.map(col => `
-        <div class="footer-col" role="navigation" aria-label="${esc(t[col.title])}">
-          <div class="footer-col-title">${esc(t[col.title])}</div>
-${col.links.map(([key, path, href]) =>
-    `          <a class="footer-link" href="${href || R + path}">${esc(t[key])}</a>`).join('\n')}
-        </div>`).join('\n');
-
   return `<link rel="stylesheet" href="${R}css/footer.css">
-<footer class="site-footer" id="site-footer" data-static>
-  <div class="footer-top">
-    <div class="footer-wrap">
-      <div class="footer-grid">
-
-        <div class="footer-brand">
-          <a href="${R}index.html" class="footer-logo" aria-label="Albexia">
-            <svg viewBox="0 0 160 36" height="30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <polygon class="fl-outline" points="14,2 24,32 4,32"/>
-              <polygon class="fl-fill" points="14,10 21,30 7,30"/>
-              <circle class="fl-dot" cx="14" cy="24" r="2.5"/>
-              <text class="fl-text" x="32" y="26">Albe<tspan class="fl-x">x</tspan>ia</text>
-            </svg>
-          </a>
-          <p class="footer-tagline">${esc(t.tagline)}</p>
-          <form class="footer-newsletter" id="footer-nl-form" action="https://formspree.io/f/xojbojld" method="POST" data-msg-success="${esc(t.success)}" data-msg-error="${esc(t.error)}">
-            <label class="footer-nl-label" for="footer-nl-email">${esc(t.newsletter)}</label>
-            <div class="footer-nl-row">
-              <input type="email" name="email" id="footer-nl-email" class="footer-nl-input" placeholder="${esc(t.emailPlaceholder)}" autocomplete="email" required>
-              <input type="hidden" name="_subject" value="Nouvelle inscription newsletter Albexia">
-              <button type="submit" class="footer-nl-btn">${esc(t.subscribe)}</button>
-            </div>
-            <div class="footer-nl-badge" id="footer-nl-feedback" role="status" aria-live="polite">${esc(t.badge)}</div>
-          </form>
-        </div>
-${cols}
-
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-wrap footer-bottom-inner">
-      <span class="footer-copy">&copy; 2025-2026 Albexia — ${esc(t.rights)}</span>
-      <span class="footer-made">${esc(t.made)}</span>
-    </div>
+<footer id="site-footer">
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="${R}index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="${R}mentions-legales.html" style="color:#7a7a9a;text-decoration:none">${esc(t.legalNotice)}</a> ·
+    <a href="${R}politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">${esc(t.privacy)}</a> ·
+    <a href="${R}contact.html" style="color:#7a7a9a;text-decoration:none">${esc(t.contact)}</a>
   </div>
 </footer>
 <script src="${R}js/footer.js" defer></script>`;
 }
 
-/* ─── SYSTÈME 2 : pages dynamiques (i18n.js) ─── */
+/* Pages dynamiques : même footer de secours, en français (la langue est
+   ensuite choisie par js/footer.js). */
+function footerDynamicHTML() {
+  return footerHTML('fr');
+}
+
+/* ─── HEADER des pages dynamiques (i18n.js) ─── */
 
 /* display:contents : le <nav> sticky reste collé en haut de page
    (sinon il ne colle que dans la hauteur de son conteneur). */
 function navDynamicHTML() {
   return `<div id="site-header" style="display:contents"></div>
 <script src="${R}js/header.js" defer></script>`;
-}
-
-/* Petit footer de repli (si JS désactivé), remplacé par js/footer.js. */
-function footerDynamicHTML() {
-  return `<footer id="site-footer">
-  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
-    &copy; 2025-2026 <a href="${R}index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="${R}mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="${R}politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="${R}contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
-  </div>
-</footer>
-<script src="${R}js/footer.js" defer></script>`;
 }
 
 module.exports = { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML, LABELS };

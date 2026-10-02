@@ -234,7 +234,7 @@ function genererPageCategorie(cat, tools, opts = {}) {
   const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, langueUrls);
 
   return `<!DOCTYPE html>
-<html lang="${langue}">
+<html lang="${langue}" data-static-lang>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -348,6 +348,7 @@ ${sharedJS ? sharedJS() : ''}
     }
   }
 </script>
+<script src="${R}js/i18n.js"></script>
 <script src="${R}js/app.js"></script>
 </body>
 </html>`;
@@ -424,7 +425,7 @@ function genererPageHub(langue, categories, helpers) {
   }).join('');
 
   return `<!DOCTYPE html>
-<html lang="${langue}">
+<html lang="${langue}" data-static-lang>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

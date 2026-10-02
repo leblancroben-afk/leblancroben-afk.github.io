@@ -42,17 +42,27 @@ const db = getFirestore();
 // ── État de génération incrémentale ──────────────────────
 const STATE_PATH = '.gen-state.json';
 
+// Change cette valeur quand le gabarit des pages change (header, footer, nav…)
+// pour forcer la régénération de toutes les pages.
+const TEMPLATE_VERSION = 'layout-v1';
+
 function loadState() {
   try {
-    return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const s = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    if (s.templateVersion !== TEMPLATE_VERSION) throw new Error('gabarit modifié');
+    return s;
   } catch {
-    // Premier run, ou fichier absent/corrompu : état vide, tout sera généré.
+    // Premier run, fichier absent/corrompu ou gabarit modifié : tout est régénéré.
     return { outils: {}, articles: {}, comparaisons: {}, niches: {} };
   }
 }
 
 function saveState(state) {
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2), 'utf8');
+  fs.writeFileSync(
+    STATE_PATH,
+    JSON.stringify({ ...state, templateVersion: TEMPLATE_VERSION }, null, 2),
+    'utf8'
+  );
 }
 
 // Hash stable du contenu d'un doc (indépendant de l'ordre des clés).
@@ -129,59 +139,11 @@ function stars(note, langue = 'fr') {
 const R = '/';
 const SITE_ORIGIN = 'https://albexia.com';
 
-function navHTML(langue) {
-  const homeLabel = { fr:'Accueil', en:'Home',  es:'Inicio' }[langue] || 'Accueil';
-  const toolLabel = { fr:'Outils',  en:'Tools', es:'Herramientas' }[langue] || 'Outils';
-  const blogLabel = { fr:'Blog',    en:'Blog',  es:'Blog' }[langue] || 'Blog';
-  return `<nav>
-  <div class="logo">
-    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
-      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
-      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
-      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
-    </svg>
-  </div>
-  <div class="nav-links">
-    <button class="nav-link" data-i18n="nav.home" onclick="window.location.href='${R}index.html'">${homeLabel}</button>
-    <button class="nav-link" data-i18n="nav.tools" onclick="window.location.href='${R}index.html#tools'">${toolLabel}</button>
-    <button class="nav-link" data-i18n="nav.blog" onclick="window.location.href='${R}index.html#blog'">${blogLabel}</button>
-  </div>
-  <div class="kebab-wrap" id="kebab-wrap">
-    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="${R}glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div></div></a>
-      <a href="${R}tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name" data-i18n="kebab.tutorials">Tutoriels vidéo</div></div></a>
-      <a href="${R}comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div></div></a>
-      <a href="${R}deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div></div></a>
-      <div class="kebab-divider"></div>
-      <a href="${R}hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name" data-i18n="kebab.hub">Toutes les sections →</div></div></a>
-    </div>
-  </div>
-</nav>`;
-}
-
-function footerHTML() {
-  return `<footer>
-  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
-    &copy; 2025-2026 <a href="${R}index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="${R}mentions-legales.html" data-i18n="footer.legalNotice" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="${R}politique-confidentialite.html" data-i18n="footer.privacy" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="${R}contact.html" data-i18n="footer.contactUs" style="color:#7a7a9a;text-decoration:none">Contact</a>
-  </div>
-</footer>`;
-}
+// Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
+const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
 
 function sharedJS() {
-  return `<script>
-  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
-  if (kb && km) {
-    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
-    km.addEventListener('click', e => e.stopPropagation());
-  }
-</script>`;
+  return '';
 }
 
 function faqJS() {
@@ -408,7 +370,7 @@ ${navHTML(langue)}
     <p class="offline-foot">${t.foot} · <span>${name.toUpperCase()}</span></p>
   </div></div>
 </div></main>
-${footerHTML()}
+${footerHTML(langue)}
 ${sharedJS()}
 </body>
 </html>`;
@@ -502,9 +464,8 @@ ${navHTML(langue)}
     </aside>
   </div>
 </div></main>
-${footerHTML()}
+${footerHTML(langue)}
 ${sharedJS()}
-<script src="${R}js/i18n.js"></script>
 <script type="module" src="${R}js/reviews-widget.js"></script>
 </body>
 </html>`;
@@ -632,11 +593,10 @@ ${navHTML(langue)}
     </aside>
   </div>
 </div></main>
-${footerHTML()}
+${footerHTML(langue)}
 ${faqHTML ? faqJS() : ''}
 ${sharedJS()}
 ${articlesScript}
-<script src="${R}js/i18n.js"></script>
 <script type="module" src="${R}js/reviews-widget.js"></script>
 </body>
 </html>`;
@@ -816,12 +776,11 @@ ${navHTML(langue)}
     </aside>
   </div>
 </div></main>
-${footerHTML()}
+${footerHTML(langue)}
 ${faqHTML ? faqJS() : ''}
 ${tutorielsHTML ? tutorialJS() : ''}
 ${sharedJS()}
 ${articlesScript}
-<script src="${R}js/i18n.js"></script>
 <script type="module" src="${R}js/reviews-widget.js"></script>
 </body>
 </html>`;
@@ -1316,7 +1275,7 @@ ${bodyHTML}
 </div>
 </main>
 
-${footerHTML()}
+${footerHTML(langue)}
 ${sharedJS()}
 
 <script>
@@ -1565,7 +1524,7 @@ ${navBottomHTML}
 </div>
 </main>
 
-${footerHTML()}
+${footerHTML(langue)}
 ${sharedJS()}
 </body>
 </html>`;
@@ -1889,7 +1848,7 @@ ${buildListForLang(lang)}
 </head>
 <body>
 
-${navHTML(langue)}
+${navDynamicHTML()}
 
 <div class="lang-selector" id="lang-selector" style="position:fixed;top:14px;right:66px;z-index:150">
   <button class="lang-current" id="lang-current" type="button" aria-expanded="false">
@@ -2012,7 +1971,7 @@ ${listBlocksHTML}
   </main>
 </div>
 
-${footerHTML()}
+${footerDynamicHTML()}
 <script>
 const TOOLS_DATA_BY_LANG = { fr: ${buildToolsDataJSON(tools,'fr')}, en: ${buildToolsDataJSON(tools,'en')}, es: ${buildToolsDataJSON(tools,'es')} };
 const COMPARISON_COUNTS = ${JSON.stringify(comparisonCounts)};
@@ -2551,10 +2510,9 @@ ${faqHTML ? `<div class="cp-section">
 
 <a href="${R}comparateur/" class="cp-back">← ${{fr:'Retour au comparateur',en:'Back to comparator',es:'Volver al comparador'}[langue]||'Retour au comparateur'}</a>
 
-${footerHTML()}
+${footerHTML(langue)}
 ${faqHTML ? '<script>function toggleFAQ(i){document.getElementById("faq-"+i).classList.toggle("open");}</script>' : ''}
 ${sharedJS()}
-<script src="${R}js/i18n.js"></script>
 </body>
 </html>`;
 }
@@ -2723,7 +2681,7 @@ ${relatedHTML}
 
 <a href="${R}index.html#tools" class="niche-back">← Retour au catalogue</a>
 
-${footerHTML()}
+${footerHTML(langue)}
 ${faqHTML ? '<script>function toggleNicheFAQ(i){document.getElementById("nfaq-"+i).classList.toggle("open");}</script>' : ''}
 ${sharedJS()}
 </body>
@@ -2886,7 +2844,7 @@ function generateGlossaireHub(termes, tools) {
 </head>
 <body>
 
-${navHTML(langue)}
+${navDynamicHTML()}
 
 <script src="${R}js/i18n.js"></script>
 
@@ -2962,7 +2920,7 @@ ${navHTML(langue)}
 
 <div class="glossaire-body" id="glossaire-body"><!-- injecté par JS --></div>
 
-${footerHTML()}
+${footerDynamicHTML()}
 
 <script>
 'use strict';
@@ -3314,7 +3272,7 @@ ${connexesHTML}
 
 <a href="${R}glossaire/${langue === 'fr' ? '' : langue + '/'}" class="niche-back">${L.retour}</a>
 
-${footerHTML()}
+${footerHTML(langue)}
 ${faqHTML ? '<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>' : ''}
 ${sharedJS()}
 </body>

@@ -333,7 +333,7 @@ ${cartesInitiales || `<p class="cat-empty">${u('empty', langue)}</p>`}
   </div>
 </main>
 
-${footerHTML()}
+${footerHTML(langue)}
 ${sharedJS ? sharedJS() : ''}
 
 <script>
@@ -348,7 +348,6 @@ ${sharedJS ? sharedJS() : ''}
     }
   }
 </script>
-<script src="${R}js/i18n.js"></script>
 <script src="${R}js/app.js"></script>
 </body>
 </html>`;
@@ -475,7 +474,7 @@ ${navHTML(langue)}
   </div>
 </main>
 
-${footerHTML()}
+${footerHTML(langue)}
 ${sharedJS ? sharedJS() : ''}
 <script>
   const input = document.getElementById('hub-search');

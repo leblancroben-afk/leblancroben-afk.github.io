@@ -1,8 +1,21 @@
+/* =========================================================
+   HEADER DYNAMIQUE — pages qui utilisent i18n.js
+   Charge /components/header.html (logo, navigation, sélecteur de
+   langue, profil, bouton « Soumettre »).
+
+   Montage : sur <div id="site-header">, ou à défaut en remplaçant le
+   <nav> de haut de page. Les pages générées statiquement n'utilisent
+   PAS ce script : elles ont leur propre header traduit à la génération.
+
+   Règle de sécurité : si i18n.js n'est pas chargé sur la page, le
+   sélecteur de langue est retiré (il ne pourrait rien traduire).
+   ========================================================= */
 document.addEventListener('DOMContentLoaded', async () => {
 
-  const container = document.getElementById('site-header');
+  let container = document.getElementById('site-header');
+  const legacyNav = container ? null : document.querySelector('body > nav');
 
-  if (!container) return;
+  if (!container && !legacyNav) return;
 
   try {
 
@@ -11,128 +24,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     if (!response.ok) {
-      throw new Error(
-        `Erreur HTTP ${response.status}`
-      );
+      throw new Error(`Erreur HTTP ${response.status}`);
     }
 
-    container.innerHTML = await response.text();
+    const html = await response.text();
 
-    /*
-     * Le header vient d'être injecté dans le DOM.
-     * On applique immédiatement la langue enregistrée.
-     */
-    if (
-      typeof window.appliquerTraductionsStatiques ===
-      'function'
-    ) {
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'site-header';
+      legacyNav.replaceWith(container);
+    }
+
+    /* Le <nav> est sticky : le conteneur ne doit pas créer de boîte. */
+    container.style.display = 'contents';
+    container.innerHTML = html;
+
+    const i18nActif =
+      typeof window.detecterLangue === 'function' ||
+      typeof window.changerLangueGlobale === 'function';
+
+    if (!i18nActif) {
+      const selecteur = document.getElementById('lang-selector');
+      if (selecteur) selecteur.remove();
+    }
+
+    /* Applique la langue enregistrée au header qui vient d'arriver. */
+    if (typeof window.appliquerTraductionsStatiques === 'function') {
 
       const lang =
         typeof window.detecterLangue === 'function'
           ? window.detecterLangue()
-          : (
-              localStorage.getItem('albexia_langue') ||
-              'fr'
-            );
+          : (localStorage.getItem('albexia_langue') || 'fr');
 
       window.appliquerTraductionsStatiques(lang);
 
     }
 
-    initHeaderKebab();
     initHeaderLanguage();
 
-    /*
-     * Le header est maintenant présent dans le DOM.
-     * On informe les autres scripts.
-     */
-    document.dispatchEvent(
-      new CustomEvent('albexia:header-ready')
-    );
+    document.dispatchEvent(new CustomEvent('albexia:header-ready'));
 
   } catch (error) {
 
-    console.error(
-      '[Albexia] Impossible de charger le header :',
-      error
-    );
+    console.error('[Albexia] Impossible de charger le header :', error);
 
   }
 
 });
-
-
-/* =========================================================
-   MENU KEBAB
-   ========================================================= */
-
-function initHeaderKebab() {
-
-  const wrap =
-    document.getElementById('kebab-wrap');
-
-  const btn =
-    document.getElementById('kebab-btn');
-
-  const menu =
-    document.getElementById('kebab-menu');
-
-  if (!wrap || !btn || !menu) return;
-
-
-  btn.addEventListener('click', event => {
-
-    event.stopPropagation();
-
-    const isOpen =
-      menu.classList.toggle('open');
-
-    btn.classList.toggle('open', isOpen);
-
-    btn.setAttribute(
-      'aria-expanded',
-      isOpen ? 'true' : 'false'
-    );
-
-  });
-
-
-  document.addEventListener('click', event => {
-
-    if (!wrap.contains(event.target)) {
-
-      menu.classList.remove('open');
-
-      btn.classList.remove('open');
-
-      btn.setAttribute(
-        'aria-expanded',
-        'false'
-      );
-
-    }
-
-  });
-
-
-  document.addEventListener('keydown', event => {
-
-    if (event.key === 'Escape') {
-
-      menu.classList.remove('open');
-
-      btn.classList.remove('open');
-
-      btn.setAttribute(
-        'aria-expanded',
-        'false'
-      );
-
-    }
-
-  });
-
-}
 
 
 /* =========================================================

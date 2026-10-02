@@ -42,7 +42,7 @@
 <body>
 
 <nav>
-  <div class="logo">
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
     <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
       <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
       <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
@@ -50,22 +50,11 @@
       <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
       <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
     </svg>
-  </div>
+  </a></div>
   <div class="nav-links">
-    <button class="nav-link" data-i18n="nav.home" onclick="window.location.href='/index.html'">Inicio</button>
-    <button class="nav-link" data-i18n="nav.tools" onclick="window.location.href='/index.html#tools'">Herramientas</button>
-    <button class="nav-link" data-i18n="nav.blog" onclick="window.location.href='/index.html#blog'">Blog</button>
-  </div>
-  <div class="kebab-wrap" id="kebab-wrap">
-    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div></div></a>
-      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name" data-i18n="kebab.tutorials">Tutoriels vidéo</div></div></a>
-      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div></div></a>
-      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div></div></a>
-      <div class="kebab-divider"></div>
-      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name" data-i18n="kebab.hub">Toutes les sections →</div></div></a>
-    </div>
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Inicio</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
 </nav>
 
@@ -213,22 +202,74 @@
   </div>
 </main>
 
-<footer>
-  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
-    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="/mentions-legales.html" data-i18n="footer.legalNotice" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="/politique-confidentialite.html" data-i18n="footer.privacy" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="/contact.html" data-i18n="footer.contactUs" style="color:#7a7a9a;text-decoration:none">Contact</a>
+<link rel="stylesheet" href="/css/footer.css">
+<footer class="site-footer" id="site-footer" data-static>
+  <div class="footer-top">
+    <div class="footer-wrap">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <a href="/index.html" class="footer-logo" aria-label="Albexia">
+            <svg viewBox="0 0 160 36" height="30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <polygon class="fl-outline" points="14,2 24,32 4,32"/>
+              <polygon class="fl-fill" points="14,10 21,30 7,30"/>
+              <circle class="fl-dot" cx="14" cy="24" r="2.5"/>
+              <text class="fl-text" x="32" y="26">Albe<tspan class="fl-x">x</tspan>ia</text>
+            </svg>
+          </a>
+          <p class="footer-tagline">El directorio francófono de herramientas de IA, clasificadas por necesidad y valoradas por la comunidad.</p>
+          <form class="footer-newsletter" id="footer-nl-form" action="https://formspree.io/f/xojbojld" method="POST" data-msg-success="✓ ¡Gracias, ya estás suscrito!" data-msg-error="Ha ocurrido un error, inténtalo de nuevo.">
+            <label class="footer-nl-label" for="footer-nl-email">Boletín semanal</label>
+            <div class="footer-nl-row">
+              <input type="email" name="email" id="footer-nl-email" class="footer-nl-input" placeholder="tu@email.com" autocomplete="email" required>
+              <input type="hidden" name="_subject" value="Nouvelle inscription newsletter Albexia">
+              <button type="submit" class="footer-nl-btn">Suscribirme</button>
+            </div>
+            <div class="footer-nl-badge" id="footer-nl-feedback" role="status" aria-live="polite">✓ Gratis · Sin spam · Cancela con un clic</div>
+          </form>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Explorar">
+          <div class="footer-col-title">Explorar</div>
+          <a class="footer-link" href="/index.html#tools">Herramientas de IA</a>
+          <a class="footer-link" href="/comparateur/">Comparador</a>
+          <a class="footer-link" href="/tutoriels/index.html">Tutoriales en vídeo</a>
+          <a class="footer-link" href="/glossaire/">Glosario de IA</a>
+          <a class="footer-link" href="/hub.html">Ver todas las secciones</a>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Comunidad">
+          <div class="footer-col-title">Comunidad</div>
+          <a class="footer-link" href="/index.html#blog">Blog</a>
+          <a class="footer-link" href="/index.html#gallery">Galería</a>
+          <a class="footer-link" href="/deals/">Ofertas y promociones</a>
+          <a class="footer-link" href="/ressources.html">Recursos</a>
+          <a class="footer-link" href="/soumettre/index.html">Enviar una herramienta</a>
+          <a class="footer-link" href="/profil.html">Espacio creador</a>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Legal y contacto">
+          <div class="footer-col-title">Legal y contacto</div>
+          <a class="footer-link" href="/mentions-legales.html">Aviso legal</a>
+          <a class="footer-link" href="/politique-confidentialite.html">Política de privacidad</a>
+          <a class="footer-link" href="/mentions-legales.html#cgu">Condiciones de uso</a>
+          <a class="footer-link" href="/mentions-legales.html#cookies">Gestión de cookies</a>
+          <a class="footer-link" href="/contact.html">Contáctanos</a>
+          <a class="footer-link" href="mailto:partenariats@annuaireia.com">Alianzas</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-wrap footer-bottom-inner">
+      <span class="footer-copy">&copy; 2025-2026 Albexia — Todos los derechos reservados</span>
+      <span class="footer-made">Hecho con ❤️ para la comunidad IA</span>
+    </div>
   </div>
 </footer>
-<script>
-  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
-  if (kb && km) {
-    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
-    km.addEventListener('click', e => e.stopPropagation());
-  }
-</script>
+<script src="/js/footer.js" defer></script>
+
 
 <script>
   window.CATEGORY_TOOLS = [{"id":"30-es","name":"grammarly","category":"Texte","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.grammarly.com","description":"Asistente de escritura IA para corrección, gramática, estilo y tono. usuarios de 40M+. Planes gratuitos (100 solicitudes/mes) y Pro (12 dólares/mo) con plagio y detección de IA.","price":"freemium","rating":0,"url":"https://www.grammarly.com","tags":["correction","grammaire","style","ton","plagiat","productivité"],"page":"tools/featured/es/grammarly/index.html","plan":"featured","langue":"es","traductions":{"fr":30},"ideal_pour":"Editores, estudiantes, profesionales, equipos, empresas","fonctionnalites":[{"icon":"✅","titre":"Corrección","desc":"Gramática, ortografía, puntuación"},{"icon":"🎯","titre":"Estilo","desc":"Claridad, concisidad, tono, fluidez"},{"icon":"🔍","titre":"Plagiarismo","desc":"Detección de texto e IA incluida"},{"icon":"📊","titre":"Análisis","desc":"Equipo de estadística (Business)"}],"faq":[{"q":"¿Grammarly está libre?","a":"Sí, plan gratuito con correcciones básicas + 100 IA/mes. Pro a $12/mo."},{"q":"¿Grammarly trabaja en francés?","a":"En parte. Optimizado para inglés, correcciones limitadas en francés."}],"presentation":"Grammarly es el asistente de escritura más utilizado del mundo, con más de 40 millones de usuarios y 50.000 empresas. Corrige gramática, estilo, tono y detecta plagio.\n\nEl plan gratuito ofrece correcciones básicas y 100 solicitudes de IA mensuales. El Plan Pro (12/mo por año) añade reescrituras completas, ajustes de tono, plagio y detección de IA, y 2.000 solicitudes de IA/mes.\n\nGrammarly integra en todas partes: Gmail, Google Docs, Microsoft Word, Slack, Notion, navegadores (Chrome, Safari, Edge) y aplicaciones de escritorio (Windows, macOS). El Plan de Negocios (15/miembro/mo) incluye análisis de equipo y guías de estilo.","meta_description":"Gramáticamente: Asistente de escritura de IA con corrección, estilo, tono, plagio. Gratis + 100 IA prompts/mes. Pro $12/mo. 40M+ usuarios. Integraciones de Gmail, D","maker":"Grammarly Inc.","plateformes":"Web, Chrome, Firefox, Safari, Edge, Windows, macOS, iOS, Android, Google Docs, Word","url_tarifs":"https://www.grammarly.com/pricing","interface_fr":false,"api":false,"mobile":true,"stats":[{"valeur":"40M+","label":"utilisateurs"},{"valeur":"50 000","label":"entreprises"},{"valeur":"100","label":"prompts IA gratuits/mois"},{"valeur":"$12/mo","label":"plan Pro (annuel)"}],"tutoriels":[],"alternatives":["LanguageTool","QuillBot","DeepL Write"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1789582671,"_nanoseconds":172000000}},{"id":"31-es","name":"Jasper","category":"Texte","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.jasper.ai","description":"Plataforma de marketing IA para equipos. Voz de marca, flujos de trabajo, agentes de marketing.","price":"paid","rating":0,"url":"https://www.jasper.ai","tags":["marketing","copywriting","brand voice","équipes","workflows"],"page":"tools/featured/es/jasper/index.html","plan":"featured","langue":"es","traductions":{"fr":31},"ideal_pour":"Mercados, agencias, equipos de contenido, marcas, copywriters","fonctionnalites":[{"icon":"🎯","titre":"Brand Voice","desc":"Tono de marca personalizado y estilo"},{"icon":"📝","titre":"Edición","desc":"Publicidad, correos electrónicos, landing pages"},{"icon":"🤖","titre":"Agentes IA","desc":"Auxiliares de marketing especializados"},{"icon":"📊","titre":"Análisis","desc":"Rendimiento y optimización del contenido"}],"faq":[{"q":"¿Jasper ofrece un juicio gratis?","a":"Sí, siete días sin tarjeta bancaria. Planes desde $59/mo."},{"q":"¿Puede Jasper imitar mi marca?","a":"Sí, Brand Voice permite crear 2-5 voces de marca personalizadas."}],"presentation":"Jasper es la plataforma IA de referencia para equipos y agencias de marketing. Combina escritura IA, voz de marca personalizable, flujos de trabajo y agentes especializados.\n\nEl Plan del Creador ($59/mo anualmente) ofrece 2 voces de marca, 5 activos de conocimiento, editor de Canvas y agentes de marketing. Los planes de equipos (99-125/mo) añaden colaboración, análisis y gobernanza.\n\nJasper se integra con Slack, Concepto, Google Docs, WordPress, Shopify, HubSpot y Surfer SEO. Sobresale en publicidad de copywriting, correos electrónicos, landing pages y contenido de marca consistente","meta_description":"Jasper: IA marketing de equipo. Voz de marca, flujos de trabajo, agentes. Creador $59/mo, Equipos $99-125/mo. Prueba siete días. Edición, anuncios, correos electrónicos, landi","maker":"Jasper AI Inc","plateformes":"Web, API, Chrome Extension","url_tarifs":"https://www.jasper.ai/pricing","interface_fr":true,"api":true,"mobile":false,"stats":[{"valeur":"$59/mo","label":"plan Creator (annuel)"},{"valeur":"7 jours","label":"essai gratuit"},{"valeur":"2+","label":"brand voices (Creator)"},{"valeur":"30+","label":"langues supportées"}],"tutoriels":[],"alternatives":["Copy.ai","Writesonic","Anyword"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1789583234,"_nanoseconds":515000000}},{"id":"32-es","name":"Writesonic","category":"Texte","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=writesonic.com","description":"Plataforma IA SEO y GEO para artículos largos y visibilidad de la búsqueda.","price":"freemium","rating":0,"url":"https://writesonic.com","tags":["SEO","GEO","articles longs","tracking visibilité","chatbot"],"page":"tools/featured/es/writesonic/index.html","plan":"featured","langue":"es","traductions":{"fr":32},"ideal_pour":"Editores SEO, agencias, marketers, blogs, comercio electrónico","fonctionnalites":[{"icon":"📝","titre":"SEO articles","desc":"Auto-optimizada larga escritura"},{"icon":"🔍","titre":"GEO Tracking","desc":"Visibilidad ChatGPT, Gemini, AI Información general"},{"icon":"💬","titre":"Chatsonic","desc":"Chatbot con acceso web en tiempo real"},{"icon":"📊","titre":"Auditorías de la OSE","desc":"Análisis y recomendaciones por página"}],"faq":[{"q":"¿Es libre Writesonic?","a":"Sí, palabras de 10K/mes con GPT-3.5. Planes pagados a partir de $33-49/mo (Standard)."},{"q":"¿Puede la pista Writesonic mi visibilidad de IA?","a":"Sí, Basic+ pistas ChatGPT, Gemini, Google AI Resúmenes."}],"presentation":"Writesonic es una plataforma IA completa que combina la escritura de artículos largos, optimización SEO y seguimiento de visibilidad GEO (ChatGPT, Gemini, Google AI Resúmenes).\n\nEl plan gratuito ofrece 10K palabras/mes con GPT-3.5. Los planes estándar (79 dólares/mo por año), básicos (1999 dólares/mo) y crecimiento (399 dólares/mo) ofrecen 15-50 artículos/mes, auditorías de la SEO y seguimiento de la GEO en varias plataformas del IA.\n\nWritesonic incluye Chatsonic (chatbot con acceso web), un generador de imagen y integraciones de WordPress, Shopify, Webflow, Zapier y Surfer SEO. Ideal para editores y agencias de SEO.","meta_description":"Writesonic: IA SEO y GEO para artículos largos. Palabras/mes libres de 10K. Estándar $79/mo. Seguimiento de ChatGPT, Gemini, AI Resúmenes. Auditorías de Chatsonic, SEO, dentro","maker":"Writesonic Inc.","plateformes":"Web, API, Chrome Extension","url_tarifs":"https://writesonic.com/pricing","interface_fr":true,"api":true,"mobile":false,"stats":[{"valeur":"10K","label":"mots gratuits/mois"},{"valeur":"$33-49/mo","label":"plan Standard (annuel)"},{"valeur":"15-50","label":"articles/mois (selon plan)"},{"valeur":"25+","label":"langues supportées"}],"tutoriels":[{"youtube_id":"PRz2jYD7-xc","titre":"This AI Tool Writes SEO Optimized Article in Minutes","duree":"Writesonic Review (2025)"}],"alternatives":["Surfer AI","Frase","Jasper"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1789775630,"_nanoseconds":10000000}},{"id":"33-es","name":"Notion AI","category":"Texte","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.notion.ai","description":"IA integrado en Concepción para escritura, resumen, traducción, agentes y notas de reunión. Incluido en el plan de negocios (20 dólares/miembro/mo). Prueba gratuita en Free y Plus.","price":"freemium","rating":0,"url":"https://www.notion.ai","tags":["productivité","docs","wiki","agents","collaboration","équipes"],"page":"tools/standard/es/notion-ai/index.html","plan":"","langue":"es","traductions":{"fr":33},"ideal_pour":"Equipos, startups, wikis, docs, productividad, gestión del conocimiento","fonctionnalites":[],"faq":[],"presentation":"","meta_description":"","maker":"","plateformes":"","url_tarifs":"","stats":[{"valeur":"$20/membre/mo","label":"plan Business (annuel)"},{"valeur":"Gratuit","label":"essai (Free et Plus)"},{"valeur":"90 jours","label":"rétention données IA"},{"valeur":"SOC 2 Type 2","label":"certification"}],"tutoriels":[],"alternatives":["ChatGPT","Claude","Jasper"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1789592962,"_nanoseconds":808000000}}];
@@ -242,7 +283,6 @@
     }
   }
 </script>
-<script src="/js/i18n.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>

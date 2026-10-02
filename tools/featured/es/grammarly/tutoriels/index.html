@@ -269,14 +269,7 @@
   </p>
   <p>© 2025-2026 Albexia · El directorio de IA francófono de referencia</p>
 </footer>
-<script>
-  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
-  if (kb && km) {
-    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
-    km.addEventListener('click', e => e.stopPropagation());
-  }
-</script>
+
 <script type="module">
   import { getRatingSummary } from '/js/reviews.js';
   import { auth } from '/js/firebase-config.js';

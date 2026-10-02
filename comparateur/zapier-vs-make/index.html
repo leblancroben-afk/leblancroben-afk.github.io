@@ -70,7 +70,7 @@
 <body>
 
 <nav>
-  <div class="logo">
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
     <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
       <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
       <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
@@ -78,22 +78,11 @@
       <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
       <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
     </svg>
-  </div>
+  </a></div>
   <div class="nav-links">
-    <button class="nav-link" data-i18n="nav.home" onclick="window.location.href='/index.html'">Accueil</button>
-    <button class="nav-link" data-i18n="nav.tools" onclick="window.location.href='/index.html#tools'">Outils</button>
-    <button class="nav-link" data-i18n="nav.blog" onclick="window.location.href='/index.html#blog'">Blog</button>
-  </div>
-  <div class="kebab-wrap" id="kebab-wrap">
-    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div></div></a>
-      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name" data-i18n="kebab.tutorials">Tutoriels vidéo</div></div></a>
-      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div></div></a>
-      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div></div></a>
-      <div class="kebab-divider"></div>
-      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name" data-i18n="kebab.hub">Toutes les sections →</div></div></a>
-    </div>
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Accueil</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
 </nav>
 
@@ -254,23 +243,74 @@
 
 <a href="/comparateur/" class="cp-back">← Retour au comparateur</a>
 
-<footer>
-  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
-    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="/mentions-legales.html" data-i18n="footer.legalNotice" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="/politique-confidentialite.html" data-i18n="footer.privacy" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="/contact.html" data-i18n="footer.contactUs" style="color:#7a7a9a;text-decoration:none">Contact</a>
+<link rel="stylesheet" href="/css/footer.css">
+<footer class="site-footer" id="site-footer" data-static>
+  <div class="footer-top">
+    <div class="footer-wrap">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <a href="/index.html" class="footer-logo" aria-label="Albexia">
+            <svg viewBox="0 0 160 36" height="30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <polygon class="fl-outline" points="14,2 24,32 4,32"/>
+              <polygon class="fl-fill" points="14,10 21,30 7,30"/>
+              <circle class="fl-dot" cx="14" cy="24" r="2.5"/>
+              <text class="fl-text" x="32" y="26">Albe<tspan class="fl-x">x</tspan>ia</text>
+            </svg>
+          </a>
+          <p class="footer-tagline">L'annuaire francophone des outils d'IA, classés par besoin et évalués par la communauté.</p>
+          <form class="footer-newsletter" id="footer-nl-form" action="https://formspree.io/f/xojbojld" method="POST" data-msg-success="✓ Merci, vous êtes inscrit !" data-msg-error="Une erreur est survenue, réessayez.">
+            <label class="footer-nl-label" for="footer-nl-email">Newsletter hebdomadaire</label>
+            <div class="footer-nl-row">
+              <input type="email" name="email" id="footer-nl-email" class="footer-nl-input" placeholder="votre@email.com" autocomplete="email" required>
+              <input type="hidden" name="_subject" value="Nouvelle inscription newsletter Albexia">
+              <button type="submit" class="footer-nl-btn">S'abonner</button>
+            </div>
+            <div class="footer-nl-badge" id="footer-nl-feedback" role="status" aria-live="polite">✓ Gratuit · Sans spam · Désabonnement en 1 clic</div>
+          </form>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Explorer">
+          <div class="footer-col-title">Explorer</div>
+          <a class="footer-link" href="/index.html#tools">Outils IA</a>
+          <a class="footer-link" href="/comparateur/">Comparateur</a>
+          <a class="footer-link" href="/tutoriels/index.html">Tutoriels vidéo</a>
+          <a class="footer-link" href="/glossaire/">Glossaire IA</a>
+          <a class="footer-link" href="/hub.html">Voir toutes les sections</a>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Communauté">
+          <div class="footer-col-title">Communauté</div>
+          <a class="footer-link" href="/index.html#blog">Blog</a>
+          <a class="footer-link" href="/index.html#gallery">Galerie</a>
+          <a class="footer-link" href="/deals/">Deals &amp; Promos</a>
+          <a class="footer-link" href="/ressources.html">Ressources</a>
+          <a class="footer-link" href="/soumettre/index.html">Soumettre un outil</a>
+          <a class="footer-link" href="/profil.html">Espace créateur</a>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Légal &amp; contact">
+          <div class="footer-col-title">Légal &amp; contact</div>
+          <a class="footer-link" href="/mentions-legales.html">Mentions légales</a>
+          <a class="footer-link" href="/politique-confidentialite.html">Politique de confidentialité</a>
+          <a class="footer-link" href="/mentions-legales.html#cgu">Conditions d'utilisation</a>
+          <a class="footer-link" href="/mentions-legales.html#cookies">Gestion des cookies</a>
+          <a class="footer-link" href="/contact.html">Nous contacter</a>
+          <a class="footer-link" href="mailto:partenariats@annuaireia.com">Partenariats</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-wrap footer-bottom-inner">
+      <span class="footer-copy">&copy; 2025-2026 Albexia — Tous droits réservés</span>
+      <span class="footer-made">Fait avec ❤️ pour la communauté IA</span>
+    </div>
   </div>
 </footer>
+<script src="/js/footer.js" defer></script>
 <script>function toggleFAQ(i){document.getElementById("faq-"+i).classList.toggle("open");}</script>
-<script>
-  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
-  if (kb && km) {
-    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
-    km.addEventListener('click', e => e.stopPropagation());
-  }
-</script>
-<script src="/js/i18n.js"></script>
+
 </body>
 </html>

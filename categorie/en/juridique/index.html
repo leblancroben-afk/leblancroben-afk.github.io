@@ -42,7 +42,7 @@
 <body>
 
 <nav>
-  <div class="logo">
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
     <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
       <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
       <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
@@ -50,22 +50,11 @@
       <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
       <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
     </svg>
-  </div>
+  </a></div>
   <div class="nav-links">
-    <button class="nav-link" data-i18n="nav.home" onclick="window.location.href='/index.html'">Home</button>
-    <button class="nav-link" data-i18n="nav.tools" onclick="window.location.href='/index.html#tools'">Tools</button>
-    <button class="nav-link" data-i18n="nav.blog" onclick="window.location.href='/index.html#blog'">Blog</button>
-  </div>
-  <div class="kebab-wrap" id="kebab-wrap">
-    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div></div></a>
-      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name" data-i18n="kebab.tutorials">Tutoriels vidéo</div></div></a>
-      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div></div></a>
-      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div></div></a>
-      <div class="kebab-divider"></div>
-      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name" data-i18n="kebab.hub">Toutes les sections →</div></div></a>
-    </div>
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Home</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
 </nav>
 
@@ -227,22 +216,74 @@
   </div>
 </main>
 
-<footer>
-  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
-    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="/mentions-legales.html" data-i18n="footer.legalNotice" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="/politique-confidentialite.html" data-i18n="footer.privacy" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="/contact.html" data-i18n="footer.contactUs" style="color:#7a7a9a;text-decoration:none">Contact</a>
+<link rel="stylesheet" href="/css/footer.css">
+<footer class="site-footer" id="site-footer" data-static>
+  <div class="footer-top">
+    <div class="footer-wrap">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <a href="/index.html" class="footer-logo" aria-label="Albexia">
+            <svg viewBox="0 0 160 36" height="30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <polygon class="fl-outline" points="14,2 24,32 4,32"/>
+              <polygon class="fl-fill" points="14,10 21,30 7,30"/>
+              <circle class="fl-dot" cx="14" cy="24" r="2.5"/>
+              <text class="fl-text" x="32" y="26">Albe<tspan class="fl-x">x</tspan>ia</text>
+            </svg>
+          </a>
+          <p class="footer-tagline">The francophone AI tools directory, sorted by need and rated by the community.</p>
+          <form class="footer-newsletter" id="footer-nl-form" action="https://formspree.io/f/xojbojld" method="POST" data-msg-success="✓ Thanks, you are subscribed!" data-msg-error="Something went wrong, please try again.">
+            <label class="footer-nl-label" for="footer-nl-email">Weekly newsletter</label>
+            <div class="footer-nl-row">
+              <input type="email" name="email" id="footer-nl-email" class="footer-nl-input" placeholder="your@email.com" autocomplete="email" required>
+              <input type="hidden" name="_subject" value="Nouvelle inscription newsletter Albexia">
+              <button type="submit" class="footer-nl-btn">Subscribe</button>
+            </div>
+            <div class="footer-nl-badge" id="footer-nl-feedback" role="status" aria-live="polite">✓ Free · No spam · Unsubscribe in 1 click</div>
+          </form>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Explore">
+          <div class="footer-col-title">Explore</div>
+          <a class="footer-link" href="/index.html#tools">AI tools</a>
+          <a class="footer-link" href="/comparateur/">Compare</a>
+          <a class="footer-link" href="/tutoriels/index.html">Video tutorials</a>
+          <a class="footer-link" href="/glossaire/">AI glossary</a>
+          <a class="footer-link" href="/hub.html">See all sections</a>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Community">
+          <div class="footer-col-title">Community</div>
+          <a class="footer-link" href="/index.html#blog">Blog</a>
+          <a class="footer-link" href="/index.html#gallery">Gallery</a>
+          <a class="footer-link" href="/deals/">Deals &amp; promos</a>
+          <a class="footer-link" href="/ressources.html">Resources</a>
+          <a class="footer-link" href="/soumettre/index.html">Submit a tool</a>
+          <a class="footer-link" href="/profil.html">Creator space</a>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Legal &amp; contact">
+          <div class="footer-col-title">Legal &amp; contact</div>
+          <a class="footer-link" href="/mentions-legales.html">Legal notice</a>
+          <a class="footer-link" href="/politique-confidentialite.html">Privacy policy</a>
+          <a class="footer-link" href="/mentions-legales.html#cgu">Terms of use</a>
+          <a class="footer-link" href="/mentions-legales.html#cookies">Cookie settings</a>
+          <a class="footer-link" href="/contact.html">Contact us</a>
+          <a class="footer-link" href="mailto:partenariats@annuaireia.com">Partnerships</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-wrap footer-bottom-inner">
+      <span class="footer-copy">&copy; 2025-2026 Albexia — All rights reserved</span>
+      <span class="footer-made">Made with ❤️ for the AI community</span>
+    </div>
   </div>
 </footer>
-<script>
-  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
-  if (kb && km) {
-    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
-    km.addEventListener('click', e => e.stopPropagation());
-  }
-</script>
+<script src="/js/footer.js" defer></script>
+
 
 <script>
   window.CATEGORY_TOOLS = [{"id":"1-en","name":"Harvey","category":"Juridique","emoji":"⚖️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.harvey.ai","description":"Harvey is a legal AI designed for law firms and corporate legal branches. It assists in regulatory research, contract analysis and complex due diligence.","price":"paid","rating":0,"url":"https://www.harvey.ai","tags":["juridique","droit","cabinet-avocats","contrats","recherche-juridique","due-diligence"],"page":"tools/standard/en/harvey/index.html","plan":"starter","langue":"en","traductions":{"fr":1},"ideal_pour":"Law firms and corporate legal teams","fonctionnalites":[{"icon":"🔍","titre":"Legal research","desc":"Asks complex questions of law, regulation and taxation in several jurisdictions"},{"icon":"📄","titre":"Analysis of contracts","desc":"Re-read, summarize and report risk clauses in your documents"},{"icon":"🤝","titre":"Due diligence M&A","desc":"Automation of critical point extraction in M & A audits"}],"faq":[{"q":"Is Harvey accessible to small offices?","a":"No, Harvey targets major corporate law firms and branches with a generally high minimum of seats and a commercial purchasing process."},{"q":"How much does Harvey cost?","a":"No tariff is published; the price depends on a personalized quote depending on the size of the firm and the selected modules."}],"presentation":"","meta_description":"","maker":"Harvey AI","plateformes":"Web","url_tarifs":"https://www.harvey.ai/contact-sales","interface_fr":true,"api":true,"mobile":true,"stats":[{"valeur":"1000+","label":"Cabinets clients"},{"valeur":"60","label":"Pays couverts"},{"valeur":"11 Md$","label":"Valorisation 2026"}],"tutoriels":[],"alternatives":["CoCounsel","Legora","Spellbook"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1783958620,"_nanoseconds":103000000}},{"id":"2-en","name":"Luminance","category":"Juridique","emoji":"📄","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.luminance.com","description":"Luminance is a UK legal AI specializing in rereading and negotiating contracts. Its \"Panel of Judges\" architecture crosses several models to detect risk clauses with enhanced reliability.","price":"paid","rating":0,"url":"https://www.luminance.com","tags":["contrats","relecture-contrats","négociation","due-diligence","m&a","entreprise"],"page":"tools/standard/en/luminance/index.html","plan":"starter","langue":"en","traductions":{"fr":2},"ideal_pour":"Legal departments and firms with high volume contracts","fonctionnalites":[{"icon":"🤖","titre":"Autopilot","desc":"Negotiate and close routine NDAs alone, without human intervention"},{"icon":"💬","titre":"Legal chatbot","desc":"Answer questions and summarize contracts in plain language"},{"icon":"🔍","titre":"Contract intelligence","desc":"Ask the whole directory of contracts, not just a document"}],"faq":[{"q":"Does Luminance offer a free trial?","a":"No, the evaluation goes through a demonstration and then a proof of concept phase before personalized quotation."},{"q":"Does Luminance handle litigation?","a":"No, the tool is focused on the contractor (review, negotiation, due diligence) and does not cover the management of litigation files."}],"presentation":"","meta_description":"","maker":"Luminance","plateformes":"Web, Microsoft Word","url_tarifs":"","interface_fr":true,"api":false,"mobile":false,"stats":[{"valeur":"1000+","label":"Organisations clientes"},{"valeur":"70+","label":"Pays d'utilisation"},{"valeur":"80+","label":"Langues analysées"}],"tutoriels":[],"alternatives":["Harvey","Kira Systems","Robin AI"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1783968776,"_nanoseconds":230000000}},{"id":"3-en","name":"CoCounsel","category":"Juridique","emoji":"🔎","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.thomsonreuters.com","description":"CoCounsel (ex-Casetext) is Thomson Reuters' legal research assistant. Backed by Westlaw, he prepares pleading files, checks jurisprudence and speeds up the documentary review.","price":"paid","rating":0,"url":"https://www.thomsonreuters.com/en/cocounsel","tags":["recherche-juridique","plaidoirie","jurisprudence","westlaw","thomson-reuters"],"page":"tools/standard/en/cocounsel/index.html","plan":"starter","langue":"en","traductions":{"fr":3},"ideal_pour":"Lawyers and business legal teams in need of reliable case law research","fonctionnalites":[{"icon":"📚","titre":"Case law research","desc":"Research rooted in Westlaw and Practical Law with cited sources"},{"icon":"📝","titre":"Assisted writing","desc":"Generates first draft motions and legal letters"},{"icon":"🕵️","titre":"Document review","desc":"Analysis of large volumes of parts for preparation of litigation"}],"faq":[{"q":"Is CoCounsel Casetext's suite?","a":"Yes, Thomson Reuters acquired Casetext in 2023 and closed the standalone brand on March 31, 2025 to integrate its technology with CoCounsel."},{"q":"Is there a fixed tariff?","a":"No, prices go through an online configurator (up to 10 lawyers) or a commercial quote beyond."}],"presentation":"","meta_description":"","maker":"Thomson Reuters","plateformes":"Web, Microsoft 365, Outlook, Teams","url_tarifs":"https://sales.legalsolutions.thomsonreuters.com/en-us/products/cocounsel-essentials/plans-pricing","interface_fr":false,"api":false,"mobile":false,"stats":[{"valeur":"1M+","label":"Utilisateurs actifs"},{"valeur":"107","label":"Pays d'utilisation"},{"valeur":"175 ans","label":"D'archives de contenu juridique"}],"tutoriels":[],"alternatives":["Harvey","Luminance","Paxton AI"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1783970135,"_nanoseconds":858000000}},{"id":"4-en","name":"Kira Systems","category":"Juridique","emoji":"🧬","favicon":"https://www.google.com/s2/favicons?sz=64&domain=www.litera.com","description":"Kira Systems, owned by Litera, is a contractual intelligence platform specialized in extracting clauses during M&A due diligence. Over 1,400 predefined fields automatically identify critical points.","price":"paid","rating":0,"url":"https://www.litera.com/products/kira","tags":["due-diligence","m&a","extraction-clauses","audit","machine-learning"],"page":"tools/standard/en/kira-systems/index.html","plan":"","langue":"en","traductions":{"fr":4},"ideal_pour":"Major law firms and teams dealing with a high volume of due diligence","fonctionnalites":[],"faq":[],"presentation":"","meta_description":"","maker":"Litera","plateformes":"Web, Cloud, sur site","url_tarifs":"https://www.litera.com/products/kira","interface_fr":false,"api":true,"mobile":false,"stats":[],"tutoriels":[],"alternatives":["Luminance","eBrevia","Diligen"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1783972992,"_nanoseconds":678000000}},{"id":"5-en","name":"Juri'Predis","category":"Juridique","emoji":"⚖️","favicon":"https://www.google.com/s2/favicons?sz=64&domain=juripredis.com","description":"Juri'Predis is a French platform for judicial research and predictive justice. It analyses over 8 million court decisions in natural language to anticipate court trends.","price":"paid","rating":0,"url":"https://juripredis.com","tags":["jurisprudence","justice-prédictive","recherche-juridique","veille-juridique","france","avocats"],"page":"tools/standard/en/juri-predis/index.html","plan":"starter","langue":"en","traductions":{"fr":5},"ideal_pour":"French lawyers and law firms seeking strategic assistance in case law","fonctionnalites":[{"icon":"🔍","titre":"Natural language research","desc":"Asks case law by direct question rather than key words"},{"icon":"📈","titre":"Trend Detection","desc":"Identifies case-law guidelines to anticipate a decision"},{"icon":"✅","titre":"Juri'detect","desc":"Automatically checks the legal references cited in a document"}],"faq":[{"q":"Does Juri'Predis cover law outside France?","a":"No, the tool focuses on the decisions of French courts."},{"q":"Is Juri'Predis supported by institutions?","a":"Yes, it has been supported by the Conference of Batonniers since 2019 and partnerships with more than 60 bars."}],"presentation":"","meta_description":"","maker":"Juri'Predis","plateformes":"Web","url_tarifs":"https://juripredis.com","interface_fr":true,"api":false,"mobile":false,"stats":[{"valeur":"9000+","label":"Professionnels utilisateurs"},{"valeur":"60+","label":"Barreaux partenaires"},{"valeur":"8M+","label":"Décisions indexées"}],"tutoriels":[],"alternatives":["Doctrine","Predictice"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1783973700,"_nanoseconds":785000000}}];
@@ -256,7 +297,6 @@
     }
   }
 </script>
-<script src="/js/i18n.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>

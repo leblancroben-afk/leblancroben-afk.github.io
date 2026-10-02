@@ -42,7 +42,7 @@
 <body>
 
 <nav>
-  <div class="logo">
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
     <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
       <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
       <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
@@ -50,22 +50,11 @@
       <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
       <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
     </svg>
-  </div>
+  </a></div>
   <div class="nav-links">
-    <button class="nav-link" data-i18n="nav.home" onclick="window.location.href='/index.html'">Inicio</button>
-    <button class="nav-link" data-i18n="nav.tools" onclick="window.location.href='/index.html#tools'">Herramientas</button>
-    <button class="nav-link" data-i18n="nav.blog" onclick="window.location.href='/index.html#blog'">Blog</button>
-  </div>
-  <div class="kebab-wrap" id="kebab-wrap">
-    <button class="kebab-btn" id="kebab-btn" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <div class="kebab-menu" id="kebab-menu" role="menu">
-      <a href="/glossaire/" class="kebab-item" role="menuitem"><span class="kebab-ico">📖</span><div><div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div></div></a>
-      <a href="/tutoriels/index.html" class="kebab-item" role="menuitem"><span class="kebab-ico">🎬</span><div><div class="kebab-item-name" data-i18n="kebab.tutorials">Tutoriels vidéo</div></div></a>
-      <a href="/comparateur/" class="kebab-item" role="menuitem"><span class="kebab-ico">⚖️</span><div><div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div></div></a>
-      <a href="/deals/" class="kebab-item" role="menuitem"><span class="kebab-ico">🔥</span><div><div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div></div></a>
-      <div class="kebab-divider"></div>
-      <a href="/hub.html" class="kebab-item" role="menuitem"><span class="kebab-ico">📂</span><div><div class="kebab-item-name" data-i18n="kebab.hub">Toutes les sections →</div></div></a>
-    </div>
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Inicio</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
 </nav>
 
@@ -185,22 +174,74 @@
   </div>
 </main>
 
-<footer>
-  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
-    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
-    <a href="/mentions-legales.html" data-i18n="footer.legalNotice" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
-    <a href="/politique-confidentialite.html" data-i18n="footer.privacy" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
-    <a href="/contact.html" data-i18n="footer.contactUs" style="color:#7a7a9a;text-decoration:none">Contact</a>
+<link rel="stylesheet" href="/css/footer.css">
+<footer class="site-footer" id="site-footer" data-static>
+  <div class="footer-top">
+    <div class="footer-wrap">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <a href="/index.html" class="footer-logo" aria-label="Albexia">
+            <svg viewBox="0 0 160 36" height="30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <polygon class="fl-outline" points="14,2 24,32 4,32"/>
+              <polygon class="fl-fill" points="14,10 21,30 7,30"/>
+              <circle class="fl-dot" cx="14" cy="24" r="2.5"/>
+              <text class="fl-text" x="32" y="26">Albe<tspan class="fl-x">x</tspan>ia</text>
+            </svg>
+          </a>
+          <p class="footer-tagline">El directorio francófono de herramientas de IA, clasificadas por necesidad y valoradas por la comunidad.</p>
+          <form class="footer-newsletter" id="footer-nl-form" action="https://formspree.io/f/xojbojld" method="POST" data-msg-success="✓ ¡Gracias, ya estás suscrito!" data-msg-error="Ha ocurrido un error, inténtalo de nuevo.">
+            <label class="footer-nl-label" for="footer-nl-email">Boletín semanal</label>
+            <div class="footer-nl-row">
+              <input type="email" name="email" id="footer-nl-email" class="footer-nl-input" placeholder="tu@email.com" autocomplete="email" required>
+              <input type="hidden" name="_subject" value="Nouvelle inscription newsletter Albexia">
+              <button type="submit" class="footer-nl-btn">Suscribirme</button>
+            </div>
+            <div class="footer-nl-badge" id="footer-nl-feedback" role="status" aria-live="polite">✓ Gratis · Sin spam · Cancela con un clic</div>
+          </form>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Explorar">
+          <div class="footer-col-title">Explorar</div>
+          <a class="footer-link" href="/index.html#tools">Herramientas de IA</a>
+          <a class="footer-link" href="/comparateur/">Comparador</a>
+          <a class="footer-link" href="/tutoriels/index.html">Tutoriales en vídeo</a>
+          <a class="footer-link" href="/glossaire/">Glosario de IA</a>
+          <a class="footer-link" href="/hub.html">Ver todas las secciones</a>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Comunidad">
+          <div class="footer-col-title">Comunidad</div>
+          <a class="footer-link" href="/index.html#blog">Blog</a>
+          <a class="footer-link" href="/index.html#gallery">Galería</a>
+          <a class="footer-link" href="/deals/">Ofertas y promociones</a>
+          <a class="footer-link" href="/ressources.html">Recursos</a>
+          <a class="footer-link" href="/soumettre/index.html">Enviar una herramienta</a>
+          <a class="footer-link" href="/profil.html">Espacio creador</a>
+        </div>
+
+        <div class="footer-col" role="navigation" aria-label="Legal y contacto">
+          <div class="footer-col-title">Legal y contacto</div>
+          <a class="footer-link" href="/mentions-legales.html">Aviso legal</a>
+          <a class="footer-link" href="/politique-confidentialite.html">Política de privacidad</a>
+          <a class="footer-link" href="/mentions-legales.html#cgu">Condiciones de uso</a>
+          <a class="footer-link" href="/mentions-legales.html#cookies">Gestión de cookies</a>
+          <a class="footer-link" href="/contact.html">Contáctanos</a>
+          <a class="footer-link" href="mailto:partenariats@annuaireia.com">Alianzas</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-wrap footer-bottom-inner">
+      <span class="footer-copy">&copy; 2025-2026 Albexia — Todos los derechos reservados</span>
+      <span class="footer-made">Hecho con ❤️ para la comunidad IA</span>
+    </div>
   </div>
 </footer>
-<script>
-  const kb = document.getElementById('kebab-btn'), km = document.getElementById('kebab-menu');
-  if (kb && km) {
-    kb.addEventListener('click', e => { e.stopPropagation(); const o = km.classList.toggle('open'); kb.setAttribute('aria-expanded', o); });
-    document.addEventListener('click', () => { km.classList.remove('open'); kb.setAttribute('aria-expanded','false'); });
-    km.addEventListener('click', e => e.stopPropagation());
-  }
-</script>
+<script src="/js/footer.js" defer></script>
+
 
 <script>
   window.CATEGORY_TOOLS = [{"id":"27-es","name":"ElevenLabs","category":"Audio","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=elevenlabs.io","description":"Plataforma IA para síntesis de voz, clonación de voz, apropiación automática, transcripción y agentes conversacionales. Ideal para creadores, desarrolladores y empresas.","price":"freemium","rating":0,"url":"https://elevenlabs.io","tags":["voix synthétique","narration","doublage","clonage vocal","API audio","podcast","vidéo","accessibilité"],"page":"tools/featured/es/elevenlabs/index.html","plan":"featured","langue":"es","traductions":{"fr":27},"ideal_pour":"Creadores de contenidos, desarrolladores, empresas, educadores, podcasters, dubbing studios","fonctionnalites":[{"icon":"🎙️","titre":"Síntesis de voz","desc":"Generando voces naturales en más de 70 idiomas"},{"icon":"🔁","titre":"Cocción automática","desc":"Traducción de vídeos manteniendo la voz original"},{"icon":"🧠","titre":"Agentes vocales","desc":"Creación de auxiliares de conversación telefónica"},{"icon":"📡","titre":"Audio API","desc":"Integración TTS, STT, música y efectos de sonido"}],"faq":[{"q":"¿Es gratis?","a":"Sí, Plan gratuito con 10.000 créditos/mes, pero sin licencia comercial."},{"q":"¿Podemos clonar una voz?","a":"Sí, con consentimiento. Cloning Pro requiere verificación del propietario."}],"presentation":"EvenLabs es una plataforma de audio AI completa, que va desde la síntesis de voz hasta la creación de agentes conversacionales. Sirve tanto a creadores individuales como a grandes empresas.\nLa plataforma ofrece modelos de voz expresiva, clonación vocal instantánea o profesional, doblaje automático en 90 idiomas y transcripción de alta precisión. También incluye la generación de efectos de música y sonido.\nPara desarrolladores, ElevenLabs presenta APIs REST y SDKs Python/TypeScript para integrar la voz en aplicaciones. Las empresas pueden desplegar en la nube privada con opciones de cumplimiento (HIPAA, SSO, cero retención).","meta_description":"EvenLabs: IA síntesis de voz, clonación de voz, apropiación automática y agentes de conversación. Plan gratuito + API para desarrolladores. Calidad del estudio en 70+ lan","maker":"ElevenLabs Inc.","plateformes":"Web, API, Windows, macOS, Linux (via API)","url_tarifs":"https://elevenlabs.io/pricing","interface_fr":true,"api":true,"mobile":false,"stats":[{"valeur":"10 000","label":"crédits gratuits/mois"},{"valeur":"70+","label":"langues supportées"},{"valeur":"10 000+","label":"voix dans la bibliothèque"},{"valeur":"98%","label":"précision transcription (Scribe v2)"}],"tutoriels":[{"youtube_id":"2uLTMXG_Yco","titre":"Learn 97% of ElevenLabs in 20 minutes","duree":"20:00"}],"alternatives":["Murf","PlayHT","Resemble AI"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1789571633,"_nanoseconds":472000000}},{"id":"29-es","name":"Murf AI","category":"Audio","emoji":"🤖","favicon":"https://www.google.com/s2/favicons?sz=64&domain=murf.ai","description":"Estudio de voz de IA con 200+ voces, video dubbing, transcripción y editor integrado. Ideal para aprendizaje electrónico, marketing y podcasts.","price":"freemium","rating":0,"url":"https://murf.ai","tags":["voix off","narration","e-learning","vidéo","podcast","studio audio"],"page":"tools/featured/es/murf-ai/index.html","plan":"featured","langue":"es","traductions":{"fr":29},"ideal_pour":"Entrenadores, comercializadores, creadores de vídeo, equipos de RRH","fonctionnalites":[{"icon":"🎙️","titre":"Estudio de voz","desc":"200+ voces profesionales"},{"icon":"🎬","titre":"Grabación de vídeo","desc":"Sincronización de voz/vídeo"},{"icon":"📝","titre":"Transcripción","desc":"Conversión de audio → texto"},{"icon":"🔌","titre":"Integración","desc":"Canva, PowerPoint, Zapier"}],"faq":[{"q":"¿Hay un plan gratis?","a":"Sí, 10 minutos sin derechos comerciales."},{"q":"¿Podemos exportar a WAV?","a":"Sí, del plan Creador."}],"presentation":"Murf AI es un estudio de voz de IA diseñado para profesionales. Combina 200+ voces, un editor de vídeo integrado y herramientas automáticas de acaparamiento.\nLa plataforma se centra en el aprendizaje, la comercialización de vídeo y los podcasts. Las integraciones de Canva y PowerPoint facilitan el uso de negocios.","meta_description":"Murf AI: estudio de voz de IA, 200+ voces, video dubbing y transcripción. Plan libre + integraciones Canva y PowerPoint.","maker":"Murf AI Inc.","plateformes":"Web, API","url_tarifs":"https://murf.ai/pricing","interface_fr":true,"api":true,"mobile":true,"stats":[{"valeur":"200+","label":"voix disponibles"},{"valeur":"20+","label":"langues supportées"},{"valeur":"10 min","label":"génération gratuite"},{"valeur":"99%","label":"satisfaction clients"}],"tutoriels":[{"youtube_id":"xyz123","titre":"Murf AI Tutorial 2026","duree":"15:00"}],"alternatives":["ElevenLabs","PlayHT","WellSaid"],"screenshot_url":"","generer_fiche":true,"slug_articles":null,"updatedAt":{"_seconds":1789572243,"_nanoseconds":672000000}}];
@@ -214,7 +255,6 @@
     }
   }
 </script>
-<script src="/js/i18n.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>

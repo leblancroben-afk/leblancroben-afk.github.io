@@ -1,3 +1,16 @@
+<!--
+  FOOTER UNIQUE D'ALBEXIA — chargé par js/footer.js sur TOUTES les pages
+  (pages statiques générées et pages dynamiques).
+
+  Pour modifier le footer : éditer ce seul fichier, l'effet est immédiat
+  sur tout le site (aucune régénération nécessaire).
+
+  Traductions : chaque texte porte ses 3 versions
+    data-fr / data-en / data-es   (placeholder : data-ph-fr / -en / -es)
+  Le contenu écrit entre les balises est la version française par défaut.
+  La langue affichée est celle de la page : <html lang> pour les pages
+  statiques, langue choisie par le visiteur pour les pages i18n.js.
+-->
 <footer class="site-footer" id="site-footer">
   <div class="footer-top">
     <div class="footer-wrap">
@@ -44,7 +57,9 @@
           <!-- Vision Albexia -->
           <p
             class="footer-tagline"
-            data-i18n="footer.tagline">
+            data-fr="L’IA ouvre une nouvelle étape de notre histoire. Albexia veut contribuer à cette transformation en donnant à chacun les moyens de découvrir, comprendre et utiliser les nouvelles possibilités qu’elle crée, à travers ses outils, son blog, sa galerie, son comparateur, son glossaire et bien d’autres ressources."
+            data-en="AI is opening a new chapter in our history. Albexia wants to contribute to this transformation by giving everyone the means to discover, understand and use the new possibilities it creates, through its tools, blog, gallery, comparison tools, glossary and many other resources."
+            data-es="La IA abre una nueva etapa de nuestra historia. Albexia quiere contribuir a esta transformación dando a todos los medios para descubrir, comprender y utilizar las nuevas posibilidades que crea, a través de sus herramientas, su blog, su galería, su comparador, su glosario y muchos otros recursos.">
             L’IA ouvre une nouvelle étape de notre histoire. Albexia veut contribuer à cette transformation en donnant à chacun les moyens de découvrir, comprendre et utiliser les nouvelles possibilités qu’elle crée, à travers ses outils, son blog, sa galerie, son comparateur, son glossaire et bien d’autres ressources.
           </p>
 
@@ -53,12 +68,20 @@
             class="footer-newsletter"
             id="footer-nl-form"
             action="https://formspree.io/f/xojbojld"
-            method="POST">
+            method="POST"
+            data-ok-fr="✓ Merci, vous êtes inscrit !"
+            data-err-fr="Une erreur est survenue, réessayez."
+            data-ok-en="✓ Thanks, you are subscribed!"
+            data-err-en="Something went wrong, please try again."
+            data-ok-es="✓ ¡Gracias, ya estás suscrito!"
+            data-err-es="Ha ocurrido un error, inténtalo de nuevo.">
 
             <label
               class="footer-nl-label"
               for="footer-nl-email"
-              data-i18n="footer.newsletterLabel">
+              data-fr="Newsletter hebdomadaire"
+              data-en="Weekly newsletter"
+              data-es="Boletín semanal">
               Newsletter hebdomadaire
             </label>
 
@@ -70,7 +93,9 @@
                 id="footer-nl-email"
                 class="footer-nl-input"
                 placeholder="votre@email.com"
-                data-i18n-placeholder="footer.emailPlaceholder"
+                data-ph-fr="votre@email.com"
+                data-ph-en="your@email.com"
+                data-ph-es="tu@email.com"
                 autocomplete="email"
                 required>
 
@@ -82,7 +107,9 @@
               <button
                 type="submit"
                 class="footer-nl-btn"
-                data-i18n="footer.subscribe">
+                data-fr="S’abonner"
+                data-en="Subscribe"
+                data-es="Suscribirse">
                 S’abonner
               </button>
 
@@ -93,7 +120,9 @@
               id="footer-nl-feedback"
               role="status"
               aria-live="polite"
-              data-i18n="footer.newsletterBadge">
+              data-fr="✓ Gratuit · Sans spam · Désabonnement en 1 clic"
+              data-en="✓ Free · No spam · Unsubscribe in 1 click"
+              data-es="✓ Gratis · Sin spam · Cancela en 1 clic">
               ✓ Gratuit · Sans spam · Désabonnement en 1 clic
             </div>
 
@@ -110,42 +139,54 @@
 
           <div
             class="footer-col-title"
-            data-i18n="footer.exploreTitle">
+            data-fr="Explorer"
+            data-en="Explore"
+            data-es="Explorar">
             Explorer
           </div>
 
           <a
             class="footer-link"
             href="/index.html#tools"
-            data-i18n="footer.toolsLink">
+            data-fr="Outils IA"
+            data-en="AI Tools"
+            data-es="Herramientas IA">
             Outils IA
           </a>
 
           <a
             class="footer-link"
             href="/comparateur/"
-            data-i18n="kebab.compare">
+            data-fr="Comparateur"
+            data-en="Comparator"
+            data-es="Comparador">
             Comparateur
           </a>
 
           <a
             class="footer-link"
             href="/tutoriels/index.html"
-            data-i18n="kebab.tutorials">
+            data-fr="Tutoriels vidéo"
+            data-en="Video tutorials"
+            data-es="Tutoriales en vídeo">
             Tutoriels vidéo
           </a>
 
           <a
             class="footer-link"
             href="/glossaire/"
-            data-i18n="kebab.glossary">
+            data-fr="Glossaire IA"
+            data-en="AI Glossary"
+            data-es="Glosario IA">
             Glossaire IA
           </a>
 
           <a
             class="footer-link"
             href="/hub.html"
-            data-i18n="kebab.hub">
+            data-fr="Voir toutes les sections"
+            data-en="See all sections"
+            data-es="Ver todas las secciones">
             Voir toutes les sections
           </a>
 
@@ -160,49 +201,63 @@
 
           <div
             class="footer-col-title"
-            data-i18n="footer.communityTitle">
+            data-fr="Communauté"
+            data-en="Community"
+            data-es="Comunidad">
             Communauté
           </div>
 
           <a
             class="footer-link"
             href="/index.html#blog"
-            data-i18n="nav.blog">
+            data-fr="Blog"
+            data-en="Blog"
+            data-es="Blog">
             Blog
           </a>
 
           <a
             class="footer-link"
             href="/index.html#gallery"
-            data-i18n="nav.gallery">
+            data-fr="Galerie"
+            data-en="Gallery"
+            data-es="Galería">
             Galerie
           </a>
 
           <a
             class="footer-link"
             href="/deals/"
-            data-i18n="kebab.deals">
+            data-fr="Deals &amp; Promos"
+            data-en="Deals &amp; Promos"
+            data-es="Ofertas y promos">
             Deals &amp; Promos
           </a>
 
           <a
             class="footer-link"
             href="/ressources.html"
-            data-i18n="footer.resources">
+            data-fr="Ressources"
+            data-en="Resources"
+            data-es="Recursos">
             Ressources
           </a>
 
           <a
             class="footer-link"
             href="/soumettre/index.html"
-            data-i18n="footer.submitTool">
+            data-fr="Soumettre un outil"
+            data-en="Submit a tool"
+            data-es="Enviar una herramienta">
             Soumettre un outil
           </a>
 
           <a
             class="footer-link"
             href="/profil.html"
-            data-i18n="footer.creatorSpace">
+            data-fr="Espace créateur"
+            data-en="Creator space"
+            data-es="Espacio creador">
             Espace créateur
           </a>
 
@@ -217,49 +272,63 @@
 
           <div
             class="footer-col-title"
-            data-i18n="footer.legalContactTitle">
+            data-fr="Légal &amp; contact"
+            data-en="Legal &amp; contact"
+            data-es="Legal y contacto">
             Légal &amp; contact
           </div>
 
           <a
             class="footer-link"
             href="/mentions-legales.html"
-            data-i18n="footer.legalNotice">
+            data-fr="Mentions légales"
+            data-en="Legal notice"
+            data-es="Aviso legal">
             Mentions légales
           </a>
 
           <a
             class="footer-link"
             href="/politique-confidentialite.html"
-            data-i18n="footer.privacyPolicy">
+            data-fr="Politique de confidentialité"
+            data-en="Privacy policy"
+            data-es="Política de privacidad">
             Politique de confidentialité
           </a>
 
           <a
             class="footer-link"
             href="/mentions-legales.html#cgu"
-            data-i18n="footer.terms">
+            data-fr="Conditions d’utilisation"
+            data-en="Terms of use"
+            data-es="Condiciones de uso">
             Conditions d’utilisation
           </a>
 
           <a
             class="footer-link"
             href="/mentions-legales.html#cookies"
-            data-i18n="footer.cookies">
+            data-fr="Gestion des cookies"
+            data-en="Cookie settings"
+            data-es="Gestión de cookies">
             Gestion des cookies
           </a>
 
           <a
             class="footer-link"
             href="/contact.html"
-            data-i18n="footer.contactUs">
+            data-fr="Nous contacter"
+            data-en="Contact us"
+            data-es="Contáctanos">
             Nous contacter
           </a>
 
           <a
             class="footer-link"
             href="mailto:partenariats@annuaireia.com"
-            data-i18n="footer.partnerships">
+            data-fr="Partenariats"
+            data-en="Partnerships"
+            data-es="Colaboraciones">
             Partenariats
           </a>
 
@@ -276,7 +345,9 @@
 
       <span
         class="footer-copy"
-        data-i18n-html="footer.copyright">
+        data-fr="© 2025-2026 Albexia — Tous droits réservés"
+        data-en="© 2025-2026 Albexia — All rights reserved"
+        data-es="© 2025-2026 Albexia — Todos los derechos reservados">
         &copy; 2025-2026 Albexia — Tous droits réservés
       </span>
 

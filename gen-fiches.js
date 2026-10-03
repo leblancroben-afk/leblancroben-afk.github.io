@@ -3578,6 +3578,46 @@ function tutoCardHTML(tool, allTools, tousOutils) {
   </article>`;
 }
 
+// ── Lien « tutoriels de l'outil » par langue + textes traduits (hub vidéothèque) ──
+function vtLienOutil(tool, tousOutils) {
+  const info = toolVideothequeFolder(tool);
+  const pageUrl = `${R}tools/${info.plan}/${info.langue}/${info.slug}/tutoriels/`;
+  const vues = vtViewsFor(tool, tousOutils || []);
+  const h = {};
+  for (const l of VT_LANGS) { const i = toolVideothequeFolder(vues[l].view); h[l] = i ? `${R}${i.folder.replace(/\\/g, '/')}/` : pageUrl; }
+  const attrs = `href="${pageUrl}" ` + VT_LANGS.map(l => `data-href-${l}="${h[l]}"`).join(' ');
+  return { info, vues, attrs, pageUrl };
+}
+function vtAttrEsc(x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+function vtTxtAttrs(tool, vues, champ) {
+  return VT_LANGS.map(l => `data-txt-${l}="${vtAttrEsc(vues[l].view[champ] || tool[champ] || '')}"`).join(' ');
+}
+
+// ── Carte du catalogue (hub /tutoriels/) : sobre, une par outil ──
+function tutoCatalogCardHTML(tool, tousOutils, idx) {
+  const lien = vtLienOutil(tool, tousOutils);
+  const { info, vues } = lien;
+  const videos = tool.videotheque || [];
+  const domaine = (tool.url || '').replace(/^https?:\/\//, '').split('/')[0];
+  const lettre = ((tool.name || '?').match(/[A-Za-z0-9]/) || ['?'])[0].toUpperCase();
+  const nbKey = videos.length > 1 ? 'tuto.videoMany' : 'tuto.videoOne';
+  const nbTxt = `${videos.length} vidéo${videos.length > 1 ? 's' : ''}`;
+  const recherche = [tool.name, tool.category, tool.description, ...(tool.tags || [])].join(' ').toLowerCase();
+  return `<article class="th-card" id="carte-${info.slug}" data-id="${info.slug}" data-i="${idx}" data-cat="${slugify(tool.category || '')}" data-nom="${vtAttrEsc(recherche)}">
+    <div class="th-card-top">
+      <span class="th-logo">${domaine ? `<img src="https://www.google.com/s2/favicons?sz=64&domain=${domaine}" alt="" width="22" height="22" loading="lazy" onerror="this.replaceWith(document.createTextNode('${lettre}'))">` : lettre}</span>
+      <h3 class="th-card-name">${tool.name}</h3>
+      <span class="th-chip" ${vtTxtAttrs(tool, vues, 'category')}>${tool.category || ''}</span>
+    </div>
+    <p class="th-card-desc" ${vtTxtAttrs(tool, vues, 'description')}>${tool.description || ''}</p>
+    <div class="th-card-foot">
+      <span class="th-count" data-i18n="${nbKey}" data-vars="${vtAttrEsc(JSON.stringify({ n: videos.length }))}">${nbTxt}</span>
+      <span class="tuto-card-note" id="note-${info.slug}"></span><span class="tuto-card-avis" id="avis-${info.slug}"></span>
+      <a class="th-see" ${lien.attrs}><span data-i18n="tuto.see">Voir</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>`;
+}
+
 // ── Carte vidéo (grille complète, page par outil) — identique à carteVideoHTML() ──
 function carteVideoHTML(v, tool, langue) {
   const L = tutoL(langue);
@@ -3694,22 +3734,48 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
   const titleTag = `Tutoriels vidéo IA : apprendre ChatGPT, Midjourney et plus | Albexia`;
   const metaDesc = `Toute la vidéothèque Albexia : des tutoriels vidéo gratuits, en français, pour apprendre à utiliser les meilleurs outils IA.`;
   const totalVideos = toolsAvecVideos.reduce((s, t) => s + (t.videotheque||[]).length, 0);
-  const cartesHTML = toolsAvecVideos.map(t => tutoCardHTML(t, toolsAvecVideos, tousOutils)).join('\n');
+  const esc = vtAttrEsc;
+  const cartesHTML = toolsAvecVideos.map((t, i) => tutoCatalogCardHTML(t, tousOutils, i)).join('\n');
   const catMap = new Map();
   toolsAvecVideos.forEach(t => {
     const c = (t.category || '').trim(); if (!c) return;
     const k = slugify(c);
     catMap.set(k, { nom: c, n: (catMap.get(k)?.n || 0) + 1 });
   });
-  const catsHTML = [...catMap.entries()].sort((a, b) => b[1].n - a[1].n)
-    .map(([k, c]) => `<button type="button" class="tuto-cat" data-cat="${k}"><span>${c.nom}</span><span class="tuto-cat-n">${c.n}</span></button>`).join('');
-  const topHTML = [...toolsAvecVideos]
-    .sort((a, b) => (b.videotheque || []).length - (a.videotheque || []).length)
-    .slice(0, 5).map((t, i) => {
-      const inf = toolVideothequeFolder(t); if (!inf) return '';
-      const n = (t.videotheque || []).length;
-      return `<a class="tuto-top-item" href="#${inf.slug}"><span class="tuto-top-rank">${i + 1}</span><span class="tuto-top-nom">${t.name}</span><span class="tuto-top-n" data-i18n="${n > 1 ? 'tuto.videoMany' : 'tuto.videoOne'}" data-vars='{"n":${n}}'>${n} vidéo${n > 1 ? 's' : ''}</span></a>`;
-    }).join('');
+  const pillsHTML = [...catMap.entries()].sort((a, b) => b[1].n - a[1].n)
+    .map(([k, c]) => `<button type="button" class="th-pill" data-cat="${k}"><span>${esc(c.nom)}</span><span class="th-pill-n">${c.n}</span></button>`).join('');
+
+  // Tutoriel du jour : une vidéo réelle de la vidéothèque, qui change chaque jour (à chaque génération)
+  const tousVideos = toolsAvecVideos.flatMap(t => (t.videotheque || []).filter(v => v && v.youtube_id).map(v => ({ v, t })));
+  const choix = tousVideos.length ? tousVideos[Math.floor(Date.now() / 86400000) % tousVideos.length] : null;
+  let vedetteHTML = '';
+  if (choix) {
+    const { v, t } = choix;
+    const lien = vtLienOutil(t, tousOutils);
+    const yt = esc(v.youtube_id), titre = esc(v.titre);
+    vedetteHTML = `<section class="th-day" aria-labelledby="th-day-t">
+  <div class="th-day-head">
+    <div class="th-day-label"><span class="th-live"><span class="th-live-ping"></span><span class="th-live-dot"></span></span><h2 id="th-day-t" data-i18n="tuto.dayLabel">Tutoriel du jour</h2></div>
+    ${v.duree ? `<span class="th-mono">${esc(v.duree)} min</span>` : ''}
+  </div>
+  <div class="th-day-grid">
+    <div class="th-player">
+      <img src="https://img.youtube.com/vi/${yt}/hqdefault.jpg" alt="${titre}" loading="lazy">
+      <button type="button" id="th-play" class="th-play" data-yt="${yt}" data-titre="${titre}" aria-label="${titre}"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+      <div class="th-player-bar"><span data-i18n="tuto.preview">Aperçu vidéo</span>${v.duree ? `<span class="th-mono">00:00 / ${esc(v.duree)}</span>` : ''}<span class="th-ptags"><span>${esc(t.name)}</span><span ${vtTxtAttrs(t, lien.vues, 'category')}>${esc(t.category || '')}</span></span></div>
+    </div>
+    <div class="th-day-meta">
+      <p class="th-by"><strong>${v.canal ? `<span data-i18n="tuto.by">Par</span> ${esc(v.canal)}` : ''}</strong>${v.canal ? ' · ' : ''}<a ${lien.attrs}>${esc(t.name)}</a></p>
+      <h3 class="th-day-title">${esc(v.titre)}</h3>
+      <p class="th-day-desc" ${vtTxtAttrs(t, lien.vues, 'description')}>${esc(t.description || '')}</p>
+      <div class="th-actions">
+        <button type="button" id="th-watch" class="th-btn th-btn-main" data-yt="${yt}" data-titre="${titre}"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span data-i18n="tuto.watch">Regarder la vidéo</span></button>
+        <button type="button" id="th-save" class="th-btn" data-yt="${yt}" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg><span id="th-save-l">Enregistrer</span></button>
+      </div>
+    </div>
+  </div>
+</section>`;
+  }
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -3729,7 +3795,7 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/tutoriels-hub.css" />
 </head>
@@ -3737,50 +3803,69 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
 
 <div id="site-header"></div>
 
-<section class="tuto-hero">
-  <div class="tuto-badge"><span class="pulse"></span><span data-i18n="tuto.badge">Vidéothèque francophone</span></div>
-  <h1 data-i18n-html="tuto.heroTitle">Explorez le futur de l'IA<br>avec nos <span class="grad-pink">tutoriels experts</span></h1>
-  <p data-i18n="tuto.heroDesc" data-vars='{"n":${toolsAvecVideos.length}}'>Plus de ${toolsAvecVideos.length} outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
-  <div id="tuto-hero-stats" class="tuto-hero-stats">
-    <div class="tuto-stat"><span class="tuto-stat-n">${toolsAvecVideos.length}</span><span class="tuto-stat-l" data-i18n="tuto.statTools">Outils référencés</span></div>
-    <div class="tuto-stat"><span class="tuto-stat-n">${totalVideos}</span><span class="tuto-stat-l" data-i18n="tuto.statVideos">Tutoriels sélectionnés</span></div>
-    <div class="tuto-stat"><span class="tuto-stat-n">100%</span><span class="tuto-stat-l" data-i18n="tuto.statFree">Accès gratuit</span></div>
+<main class="th-page">
+
+<section class="th-hero">
+  <div class="th-hero-text">
+    <div>
+      <span class="th-badge"><span class="th-dot"></span><span data-i18n="tuto.badge">Vidéothèque francophone</span></span>
+      <h1 data-i18n="tuto.heroTitle2">Explorez le futur de l'IA avec nos tutoriels</h1>
+      <p data-i18n="tuto.heroDesc" data-vars='{"n":${toolsAvecVideos.length}}'>Plus de ${toolsAvecVideos.length} outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
+    </div>
+    <div id="tuto-hero-stats" class="th-stats">
+      <div class="th-stat"><b>${toolsAvecVideos.length}</b><span data-i18n="tuto.statTools">Outils référencés</span></div>
+      <div class="th-stat"><b>${totalVideos}</b><span data-i18n="tuto.statVideos">Tutoriels sélectionnés</span></div>
+      <div class="th-stat"><b>100%</b><span data-i18n="tuto.statFree">Accès gratuit</span></div>
+    </div>
+  </div>
+  <div class="th-hero-img"><img src="${R}medias/blog/1791036272614.jpg" alt="Tutoriels IA" fetchpriority="high" decoding="async"></div>
+</section>
+
+${vedetteHTML}
+
+<div class="th-search">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+  <input id="tuto-recherche" type="search" autocomplete="off" aria-label="Rechercher" placeholder="Rechercher un outil, une catégorie…" />
+</div>
+
+<section class="th-cats" aria-labelledby="th-cats-t">
+  <div class="th-cats-head">
+    <h2 id="th-cats-t" data-i18n="tuto.catsExplore">Explorer par catégorie</h2>
+    <span id="th-active" class="th-mono"></span>
+  </div>
+  <div class="th-pills" id="th-pills">
+    <button type="button" class="th-pill actif" data-cat="all"><span data-i18n="tuto.catAll">Toutes les catégories</span><span class="th-pill-n">${toolsAvecVideos.length}</span></button>
+    ${pillsHTML}
+    <button type="button" id="th-more" class="th-more" aria-expanded="false" hidden><span></span></button>
   </div>
 </section>
 
-<div class="tuto-layout">
-  <nav class="tuto-cats" aria-label="Catégories">
-    <p class="tuto-side-title" data-i18n="tuto.catsTitle">Catégories</p>
-    <button type="button" class="tuto-cat actif" data-cat="all"><span data-i18n="tuto.catAll">Toutes les catégories</span><span class="tuto-cat-n">${toolsAvecVideos.length}</span></button>
-    ${catsHTML}
-  </nav>
-
-  <div class="tuto-search-box">
-    <input id="tuto-recherche" type="search" autocomplete="off" aria-label="Rechercher" placeholder="Rechercher…" />
+<section id="catalogue-section" class="th-catalog">
+  <div class="th-catalog-head">
+    <h2 data-i18n="tuto.catalogTitle">Catalogue des outils</h2>
+    <span id="th-results" class="th-muted"></span>
   </div>
-
-  <main class="tuto-main">
-    <div id="tuto-grille" class="tuto-grille">
+  <div id="tuto-grille" class="th-grid">
 ${cartesHTML}
-    </div>
-    <p id="tuto-vide" class="tuto-vide" hidden data-i18n="tuto.empty">Aucun résultat.</p>
-  </main>
-
-  <div class="tuto-extra">
-    <section class="tuto-side-card">
-      <p class="tuto-side-title" data-i18n="tuto.topTitle">Les plus complets</p>
-      ${topHTML}
-    </section>
-    <section class="tuto-side-card">
-      <p class="tuto-side-title" data-i18n="tuto.suggestTitle">Une idée de tutoriel ?</p>
-      <p class="tuto-side-txt" data-i18n="tuto.suggestDesc">Dites-nous quel outil ou sujet vous aimeriez voir en guide !</p>
-      <a class="tuto-side-btn" href="${R}contact.html" data-i18n="tuto.suggestBtn">Proposer un tutoriel</a>
-    </section>
   </div>
-</div>
+  <div id="th-pager" class="th-pager">
+    <div id="th-info" class="th-mono"></div>
+    <div class="th-pager-btns">
+      <button type="button" id="th-less" class="th-btn" hidden><span></span></button>
+      <button type="button" id="th-loadmore" class="th-btn th-btn-main"><span></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg></button>
+    </div>
+  </div>
+  <div id="tuto-vide" class="th-empty" hidden>
+    <p data-i18n="tuto.emptyMsg">Aucun outil ne correspond à votre recherche.</p>
+    <button type="button" id="th-reset" class="th-btn" data-i18n="tuto.reset">Réinitialiser les filtres</button>
+  </div>
+</section>
 
 ${tutoEditorialHTML()}
 ${tutoFaqHTML()}
+
+</main>
+
 ${tutoPlayerModalHTML()}
 
 
@@ -3810,6 +3895,7 @@ ${tutoFirestoreModuleHTML('hub')}
     document.querySelectorAll('[data-href-fr]').forEach(function (a) {
       a.href = a.getAttribute('data-href-' + lang) || a.getAttribute('data-href-fr');
     });
+    if (window.thRender) window.thRender();
   };
   window.onLangueChange = window.tutoApplyVars;
   document.addEventListener('DOMContentLoaded', function () { window.tutoApplyVars(); });

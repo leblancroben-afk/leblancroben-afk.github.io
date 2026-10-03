@@ -3533,7 +3533,7 @@ function tutoCardHTML(tool, allTools, tousOutils) {
   const nbKey = videos.length > 1 ? 'tuto.videoMany' : 'tuto.videoOne';
   const nbTxt = `${videos.length} vidéo${videos.length>1?'s':''}`;
 
-  return `<article class="tuto-card" id="carte-${info.slug}" data-id="${info.slug}">
+  return `<article class="tuto-card" id="carte-${info.slug}" data-id="${info.slug}" data-cat="${slugify(tool.category||'')}" data-nom="${attrEsc(((tool.name||'')+' '+(tool.tags||[]).join(' ')).toLowerCase())}">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -3695,6 +3695,21 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
   const metaDesc = `Toute la vidéothèque Albexia : des tutoriels vidéo gratuits, en français, pour apprendre à utiliser les meilleurs outils IA.`;
   const totalVideos = toolsAvecVideos.reduce((s, t) => s + (t.videotheque||[]).length, 0);
   const cartesHTML = toolsAvecVideos.map(t => tutoCardHTML(t, toolsAvecVideos, tousOutils)).join('\n');
+  const catMap = new Map();
+  toolsAvecVideos.forEach(t => {
+    const c = (t.category || '').trim(); if (!c) return;
+    const k = slugify(c);
+    catMap.set(k, { nom: c, n: (catMap.get(k)?.n || 0) + 1 });
+  });
+  const catsHTML = [...catMap.entries()].sort((a, b) => b[1].n - a[1].n)
+    .map(([k, c]) => `<button type="button" class="tuto-cat" data-cat="${k}"><span>${c.nom}</span><span class="tuto-cat-n">${c.n}</span></button>`).join('');
+  const topHTML = [...toolsAvecVideos]
+    .sort((a, b) => (b.videotheque || []).length - (a.videotheque || []).length)
+    .slice(0, 5).map((t, i) => {
+      const inf = toolVideothequeFolder(t); if (!inf) return '';
+      const n = (t.videotheque || []).length;
+      return `<a class="tuto-top-item" href="#${inf.slug}"><span class="tuto-top-rank">${i + 1}</span><span class="tuto-top-nom">${t.name}</span><span class="tuto-top-n" data-i18n="${n > 1 ? 'tuto.videoMany' : 'tuto.videoOne'}" data-vars='{"n":${n}}'>${n} vidéo${n > 1 ? 's' : ''}</span></a>`;
+    }).join('');
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -3733,9 +3748,34 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
   </div>
 </section>
 
-<div class="tuto-grille-wrap">
-  <div id="tuto-grille" class="tuto-grille">
+<div class="tuto-layout">
+  <nav class="tuto-cats" aria-label="Catégories">
+    <p class="tuto-side-title" data-i18n="tuto.catsTitle">Catégories</p>
+    <button type="button" class="tuto-cat actif" data-cat="all"><span data-i18n="tuto.catAll">Toutes les catégories</span><span class="tuto-cat-n">${toolsAvecVideos.length}</span></button>
+    ${catsHTML}
+  </nav>
+
+  <div class="tuto-search-box">
+    <input id="tuto-recherche" type="search" autocomplete="off" aria-label="Rechercher" placeholder="Rechercher…" />
+  </div>
+
+  <main class="tuto-main">
+    <div id="tuto-grille" class="tuto-grille">
 ${cartesHTML}
+    </div>
+    <p id="tuto-vide" class="tuto-vide" hidden data-i18n="tuto.empty">Aucun résultat.</p>
+  </main>
+
+  <div class="tuto-extra">
+    <section class="tuto-side-card">
+      <p class="tuto-side-title" data-i18n="tuto.topTitle">Les plus complets</p>
+      ${topHTML}
+    </section>
+    <section class="tuto-side-card">
+      <p class="tuto-side-title" data-i18n="tuto.suggestTitle">Une idée de tutoriel ?</p>
+      <p class="tuto-side-txt" data-i18n="tuto.suggestDesc">Dites-nous quel outil ou sujet vous aimeriez voir en guide !</p>
+      <a class="tuto-side-btn" href="${R}contact.html" data-i18n="tuto.suggestBtn">Proposer un tutoriel</a>
+    </section>
   </div>
 </div>
 
@@ -3761,6 +3801,7 @@ ${tutoFirestoreModuleHTML('hub')}
       } catch (e) {}
       el.textContent = s;
     });
+    var ph = document.getElementById('tuto-recherche'); if (ph) ph.placeholder = window.t('tuto.searchPh', lang);
     /* Description et catégorie de chaque outil : version de la langue choisie (repli FR) */
     document.querySelectorAll('[data-txt-fr]').forEach(function (el) {
       el.textContent = el.getAttribute('data-txt-' + lang) || el.getAttribute('data-txt-fr');

@@ -1,0 +1,56 @@
+name: Générer sitemap.xml et robots.txt
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Forcer même si le sitemap perd plus de 50 % de ses URLs"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - 'sitemap-pages.json'   # liste manuelle modifiée
+      - 'gen-sitemap.js'       # script modifié
+  workflow_run:
+    # Se lance après chaque génération des fiches (nom EXACT du workflow gen-fiches.yml)
+    workflows: ["Générer les fiches outils, articles, comparateur et niches"]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: sitemap
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sitemap:
+    # Après gen-fiches : seulement si celui-ci a réussi
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Générer sitemap.xml et robots.txt
+        env:
+          SITEMAP_FORCE: ${{ inputs.force && '1' || '' }}
+        run: node gen-sitemap.js
+
+      - name: Commit et push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml robots.txt
+          git diff --staged --quiet || git commit -m "🤖 sitemap.xml et robots.txt générés automatiquement"
+          git pull --rebase origin main
+          git push

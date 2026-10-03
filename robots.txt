@@ -1,0 +1,11 @@
+# Fichier généré automatiquement par gen-sitemap.js — ne pas modifier à la main.
+# Modifier sitemap-pages.json (section "robots") puis relancer le workflow.
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /auth.html
+Disallow: /profil.html
+Disallow: /profil-public.html
+Disallow: /backups/
+
+Sitemap: https://albexia.com/sitemap.xml

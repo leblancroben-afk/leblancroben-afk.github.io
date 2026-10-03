@@ -1,0 +1,39 @@
+/* Hub /tutoriels/ — structure uniquement */
+.tuto-layout{display:grid;gap:14px;max-width:960px;margin:0 auto;padding:0 16px 48px;
+  grid-template-areas:"cats" "search" "list"}
+.tuto-cats{grid-area:cats;display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.tuto-cats::-webkit-scrollbar{display:none}
+.tuto-search-box{grid-area:search}
+.tuto-main{grid-area:list;min-width:0}
+.tuto-extra{display:none}
+.tuto-side-title{font-weight:600;font-size:14px;margin:0 0 10px;color:var(--text)}
+.tuto-cat{flex:none;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+  background:var(--bg2);border:1px solid var(--border);color:var(--text-muted);font:inherit;font-size:13px;cursor:pointer}
+.tuto-cat.actif{border-color:var(--accent);color:var(--text);background:var(--bg3)}
+.tuto-cat-n{font-size:11px;color:var(--text-dim)}
+#tuto-recherche{width:100%;padding:11px 14px;border-radius:12px;background:var(--bg2);
+  border:1px solid var(--border);color:var(--text);font:inherit;font-size:14px}
+#tuto-recherche:focus{outline:none;border-color:var(--accent)}
+.tuto-vide{text-align:center;color:var(--text-muted);padding:32px 0}
+.tuto-side-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px}
+.tuto-side-txt{font-size:13px;color:var(--text-muted);margin:0 0 12px}
+.tuto-side-btn{display:block;text-align:center;padding:10px;border-radius:10px;border:1px solid var(--border-hover);
+  color:var(--text);font-size:13px;text-decoration:none}
+.tuto-top-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--border);
+  color:var(--text);text-decoration:none;font-size:13px}
+.tuto-top-item:first-of-type{border-top:0}
+.tuto-top-rank{width:22px;height:22px;border-radius:50%;background:var(--bg3);display:grid;place-items:center;font-size:11px}
+.tuto-top-nom{flex:1}
+.tuto-top-n{color:var(--text-muted);font-size:12px}
+
+@media (min-width:1024px){
+  .tuto-layout{max-width:1200px;padding:0 32px 64px;gap:20px;
+    grid-template-columns:220px minmax(0,1fr) 300px;
+    grid-template-rows:auto auto 1fr;
+    grid-template-areas:"cats list search" "cats list extra" "cats list ."}
+  .tuto-cats{flex-direction:column;overflow:visible;align-self:start;position:sticky;top:84px;
+    background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:16px}
+  .tuto-cat{border-radius:10px;justify-content:space-between;border-color:transparent;background:transparent}
+  .tuto-cat.actif{background:var(--bg3)}
+  .tuto-extra{grid-area:extra;display:flex;flex-direction:column;gap:16px;align-self:start}
+}

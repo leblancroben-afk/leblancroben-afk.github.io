@@ -20,6 +20,7 @@ const TUTO = {
 /* ─── INIT ─── */
 document.addEventListener('DOMContentLoaded', () => {
   bindSoumission();
+  bindFiltres();
   bindEscape();
   lireHashURL();
 });
@@ -176,3 +177,30 @@ window.fermerPlayer          = fermerPlayer;
 window.ouvrirModalSoumission = ouvrirModalSoumission;
 window.fermerModalSoumission = fermerModalSoumission;
 window.toggleFAQ             = toggleFAQ;
+
+
+/* ─── FILTRES : catégories + recherche ─── */
+function bindFiltres() {
+  const cats  = document.querySelectorAll('.tuto-cat');
+  const champ = document.getElementById('tuto-recherche');
+  let cat = 'all';
+  const appliquer = () => {
+    const q = (champ?.value || '').trim().toLowerCase();
+    let visibles = 0;
+    document.querySelectorAll('#tuto-grille .tuto-card').forEach(c => {
+      const ok = (cat === 'all' || c.dataset.cat === cat) && (!q || (c.dataset.nom || '').includes(q));
+      c.style.display = ok ? '' : 'none';
+      if (ok) visibles++;
+    });
+    const vide = document.getElementById('tuto-vide');
+    if (vide) vide.hidden = visibles > 0;
+  };
+  cats.forEach(b => b.addEventListener('click', () => {
+    cats.forEach(x => x.classList.remove('actif'));
+    b.classList.add('actif');
+    cat = b.dataset.cat;
+    appliquer();
+  }));
+  champ?.addEventListener('input', appliquer);
+  window.addEventListener('hashchange', lireHashURL);
+}

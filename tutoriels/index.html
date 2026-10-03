@@ -35,9 +35,20 @@
   </div>
 </section>
 
-<div class="tuto-grille-wrap">
-  <div id="tuto-grille" class="tuto-grille">
-<article class="tuto-card" id="carte-harvey" data-id="harvey">
+<div class="tuto-layout">
+  <nav class="tuto-cats" aria-label="Catégories">
+    <p class="tuto-side-title" data-i18n="tuto.catsTitle">Catégories</p>
+    <button type="button" class="tuto-cat actif" data-cat="all"><span data-i18n="tuto.catAll">Toutes les catégories</span><span class="tuto-cat-n">25</span></button>
+    <button type="button" class="tuto-cat" data-cat="juridique"><span>Juridique</span><span class="tuto-cat-n">4</span></button><button type="button" class="tuto-cat" data-cat="texte"><span>Texte</span><span class="tuto-cat-n">4</span></button><button type="button" class="tuto-cat" data-cat="seo"><span>SEO</span><span class="tuto-cat-n">3</span></button><button type="button" class="tuto-cat" data-cat="marketing"><span>Marketing</span><span class="tuto-cat-n">3</span></button><button type="button" class="tuto-cat" data-cat="contenu"><span>Contenu</span><span class="tuto-cat-n">2</span></button><button type="button" class="tuto-cat" data-cat="audio"><span>Audio</span><span class="tuto-cat-n">2</span></button><button type="button" class="tuto-cat" data-cat="code"><span>Code</span><span class="tuto-cat-n">1</span></button><button type="button" class="tuto-cat" data-cat="design-3d"><span>Design 3D</span><span class="tuto-cat-n">1</span></button><button type="button" class="tuto-cat" data-cat="automatisation"><span>Automatisation</span><span class="tuto-cat-n">1</span></button><button type="button" class="tuto-cat" data-cat="recherche"><span>Recherche</span><span class="tuto-cat-n">1</span></button><button type="button" class="tuto-cat" data-cat="video"><span>Vidéo</span><span class="tuto-cat-n">1</span></button><button type="button" class="tuto-cat" data-cat="presentation"><span>Présentation</span><span class="tuto-cat-n">1</span></button><button type="button" class="tuto-cat" data-cat="productivite"><span>Productivité</span><span class="tuto-cat-n">1</span></button>
+  </nav>
+
+  <div class="tuto-search-box">
+    <input id="tuto-recherche" type="search" autocomplete="off" aria-label="Rechercher" placeholder="Rechercher…" />
+  </div>
+
+  <main class="tuto-main">
+    <div id="tuto-grille" class="tuto-grille">
+<article class="tuto-card" id="carte-harvey" data-id="harvey" data-cat="juridique" data-nom="harvey juridique droit cabinet-avocats contrats recherche-juridique due-diligence">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -170,7 +181,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-se-ranking" data-id="se-ranking">
+<article class="tuto-card" id="carte-se-ranking" data-id="se-ranking" data-cat="seo" data-nom="se ranking suivi-position audit-seo visibilité-ia geo référencement">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -303,7 +314,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-marketmuse" data-id="marketmuse">
+<article class="tuto-card" id="carte-marketmuse" data-id="marketmuse" data-cat="seo" data-nom="marketmuse stratégie-contenu content-gap topic-modeling autorité-thématique briefs">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -436,7 +447,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-chatgpt" data-id="chatgpt">
+<article class="tuto-card" id="carte-chatgpt" data-id="chatgpt" data-cat="contenu" data-nom="chatgpt rédaction code analyse productivité">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -569,7 +580,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-claude" data-id="claude">
+<article class="tuto-card" id="carte-claude" data-id="claude" data-cat="code" data-nom="claude rédaction code analyse productivité">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -702,7 +713,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-midjourney" data-id="midjourney">
+<article class="tuto-card" id="carte-midjourney" data-id="midjourney" data-cat="design-3d" data-nom="midjourney art design images marketing">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -835,7 +846,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-make" data-id="make">
+<article class="tuto-card" id="carte-make" data-id="make" data-cat="automatisation" data-nom="make automatisation productivité no-code api">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -968,7 +979,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-perplexity-ai" data-id="perplexity-ai">
+<article class="tuto-card" id="carte-perplexity-ai" data-id="perplexity-ai" data-cat="recherche" data-nom="perplexity.ai recherche analyse veille productivité">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -1101,7 +1112,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-runway" data-id="runway">
+<article class="tuto-card" id="carte-runway" data-id="runway" data-cat="video" data-nom="runway vidéo cinéma animation effets-spéciaux">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -1234,7 +1245,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-gamma" data-id="gamma">
+<article class="tuto-card" id="carte-gamma" data-id="gamma" data-cat="presentation" data-nom="gamma présentation diaporama design productivité ia">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -1367,7 +1378,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-gemini-ai" data-id="gemini-ai">
+<article class="tuto-card" id="carte-gemini-ai" data-id="gemini-ai" data-cat="productivite" data-nom="gemini ai assistant ia génération de texte recherche productivité multimodal">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -1500,7 +1511,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-canva" data-id="canva">
+<article class="tuto-card" id="carte-canva" data-id="canva" data-cat="contenu" data-nom="canva design graphisme template présentation visuels">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -1633,7 +1644,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-elevenlabs" data-id="elevenlabs">
+<article class="tuto-card" id="carte-elevenlabs" data-id="elevenlabs" data-cat="audio" data-nom="elevenlabs voix synthétique narration doublage clonage vocal api audio podcast vidéo accessibilité">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -1766,7 +1777,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-murf-ai" data-id="murf-ai">
+<article class="tuto-card" id="carte-murf-ai" data-id="murf-ai" data-cat="audio" data-nom="murf ai voix off narration e-learning vidéo podcast studio audio">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -1899,7 +1910,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-jasper" data-id="jasper">
+<article class="tuto-card" id="carte-jasper" data-id="jasper" data-cat="texte" data-nom="jasper marketing copywriting brand voice équipes workflows">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -2032,7 +2043,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-writesonic" data-id="writesonic">
+<article class="tuto-card" id="carte-writesonic" data-id="writesonic" data-cat="texte" data-nom="writesonic seo geo articles longs tracking visibilité chatbot">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -2165,7 +2176,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-notion-ai" data-id="notion-ai">
+<article class="tuto-card" id="carte-notion-ai" data-id="notion-ai" data-cat="texte" data-nom="notion ai productivité docs wiki agents collaboration équipes">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -2298,7 +2309,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-gumloop" data-id="gumloop">
+<article class="tuto-card" id="carte-gumloop" data-id="gumloop" data-cat="marketing" data-nom="gumloop automatisation workflows no-code agents-ia zapier-alternative">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -2431,7 +2442,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-adcreative-ai" data-id="adcreative-ai">
+<article class="tuto-card" id="carte-adcreative-ai" data-id="adcreative-ai" data-cat="marketing" data-nom="adcreative.ai publicité bannières ads création-visuelle conversion">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -2564,7 +2575,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-brand24" data-id="brand24">
+<article class="tuto-card" id="carte-brand24" data-id="brand24" data-cat="marketing" data-nom="brand24 social-listening veille-marque e-réputation sentiment mentions">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -2697,7 +2708,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-cocounsel" data-id="cocounsel">
+<article class="tuto-card" id="carte-cocounsel" data-id="cocounsel" data-cat="juridique" data-nom="cocounsel recherche-juridique plaidoirie jurisprudence westlaw thomson-reuters">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -2812,7 +2823,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-juri-predis" data-id="juri-predis">
+<article class="tuto-card" id="carte-juri-predis" data-id="juri-predis" data-cat="juridique" data-nom="juri'predis jurisprudence justice-prédictive recherche-juridique veille-juridique france avocats">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -2927,7 +2938,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-grammarly" data-id="grammarly">
+<article class="tuto-card" id="carte-grammarly" data-id="grammarly" data-cat="texte" data-nom="grammarly correction grammaire style ton plagiat productivité">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -3024,7 +3035,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-wordlift" data-id="wordlift">
+<article class="tuto-card" id="carte-wordlift" data-id="wordlift" data-cat="seo" data-nom="wordlift schema-markup données-structurées knowledge-graph wordpress entity-seo">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -3103,7 +3114,7 @@
       </div>
     </div>
   </article>
-<article class="tuto-card" id="carte-kira-systems" data-id="kira-systems">
+<article class="tuto-card" id="carte-kira-systems" data-id="kira-systems" data-cat="juridique" data-nom="kira systems due-diligence m&amp;a extraction-clauses audit machine-learning">
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
@@ -3164,6 +3175,20 @@
       </div>
     </div>
   </article>
+    </div>
+    <p id="tuto-vide" class="tuto-vide" hidden data-i18n="tuto.empty">Aucun résultat.</p>
+  </main>
+
+  <div class="tuto-extra">
+    <section class="tuto-side-card">
+      <p class="tuto-side-title" data-i18n="tuto.topTitle">Les plus complets</p>
+      <a class="tuto-top-item" href="#harvey"><span class="tuto-top-rank">1</span><span class="tuto-top-nom">Harvey</span><span class="tuto-top-n" data-i18n="tuto.videoMany" data-vars='{"n":5}'>5 vidéos</span></a><a class="tuto-top-item" href="#se-ranking"><span class="tuto-top-rank">2</span><span class="tuto-top-nom">SE Ranking</span><span class="tuto-top-n" data-i18n="tuto.videoMany" data-vars='{"n":5}'>5 vidéos</span></a><a class="tuto-top-item" href="#marketmuse"><span class="tuto-top-rank">3</span><span class="tuto-top-nom">MarketMuse</span><span class="tuto-top-n" data-i18n="tuto.videoMany" data-vars='{"n":5}'>5 vidéos</span></a><a class="tuto-top-item" href="#chatgpt"><span class="tuto-top-rank">4</span><span class="tuto-top-nom">ChatGPT</span><span class="tuto-top-n" data-i18n="tuto.videoMany" data-vars='{"n":5}'>5 vidéos</span></a><a class="tuto-top-item" href="#claude"><span class="tuto-top-rank">5</span><span class="tuto-top-nom">Claude</span><span class="tuto-top-n" data-i18n="tuto.videoMany" data-vars='{"n":5}'>5 vidéos</span></a>
+    </section>
+    <section class="tuto-side-card">
+      <p class="tuto-side-title" data-i18n="tuto.suggestTitle">Une idée de tutoriel ?</p>
+      <p class="tuto-side-txt" data-i18n="tuto.suggestDesc">Dites-nous quel outil ou sujet vous aimeriez voir en guide !</p>
+      <a class="tuto-side-btn" href="/contact.html" data-i18n="tuto.suggestBtn">Proposer un tutoriel</a>
+    </section>
   </div>
 </div>
 
@@ -3322,6 +3347,7 @@
       } catch (e) {}
       el.textContent = s;
     });
+    var ph = document.getElementById('tuto-recherche'); if (ph) ph.placeholder = window.t('tuto.searchPh', lang);
     /* Description et catégorie de chaque outil : version de la langue choisie (repli FR) */
     document.querySelectorAll('[data-txt-fr]').forEach(function (el) {
       el.textContent = el.getAttribute('data-txt-' + lang) || el.getAttribute('data-txt-fr');

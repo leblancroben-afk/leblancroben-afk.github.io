@@ -515,16 +515,40 @@
   },
   "niches": {
     "ia-pour-les-avocats": {
-      "hash": "1a2645afab52d9144bdf6ce0d469b182d13ffe37d2beb287d702c9392b8d44ff",
-      "updatedAtMs": 1784070748551
+      "hash": "5a9cb15af92300e3e6d9f06880d65afcc9562d836fbffc26982ada5e79866872",
+      "updatedAtMs": 1791049288405
+    },
+    "ia-pour-les-avocats-en": {
+      "hash": "bb0c5e41449a523ee451eb563e64f0e6ba2f1dc73405799d2cc254252fb4b287",
+      "updatedAtMs": 1791049288830
+    },
+    "ia-pour-les-avocats-es": {
+      "hash": "4c7078fd975058799415c56daed65c9a3534247950a0421096a421b99aa5310b",
+      "updatedAtMs": 1791049289137
     },
     "ia-pour-les-marketeurs-digitaux": {
-      "hash": "a19d474ca9706bf232eec7689f3832a03fabf8f2f8107d5a6d2459a2dec2cfc5",
-      "updatedAtMs": 1784070662801
+      "hash": "d4efad11fec539992c29a4c5fb2cbf8b37abbc641643c7f4477a79a5da69c059",
+      "updatedAtMs": 1791049363315
+    },
+    "ia-pour-les-marketeurs-digitaux-en": {
+      "hash": "7ef79b743ee1f28dad27a388ada314e5225c53526a6bffb709b4856d77156c6b",
+      "updatedAtMs": 1791049363592
+    },
+    "ia-pour-les-marketeurs-digitaux-es": {
+      "hash": "f3582c893d5d4802b6b395cf16ec7d7b575eacfb5dcf789785fe1ff7925e5403",
+      "updatedAtMs": 1791049363883
     },
     "ia-pour-les-specialistes-seo": {
-      "hash": "12525273146b05a8c3d9c253d293f0ebc098fb7fefa6eb5d7021cc45b97632e4",
-      "updatedAtMs": 1784070693788
+      "hash": "5f14f6ec0876b6e8731a7d88ce21ce5b00ac3afa0f09a796717d380f48b61a31",
+      "updatedAtMs": 1791049443505
+    },
+    "ia-pour-les-specialistes-seo-en": {
+      "hash": "871fe39ba0771d7df32641693b9a6a3bf7e664d5af2e204670d1473d16d4e4e7",
+      "updatedAtMs": 1791049443791
+    },
+    "ia-pour-les-specialistes-seo-es": {
+      "hash": "23a48d09b2938c42253f472546f12fca5e75a284ea96ef2a28868e0a907c6000",
+      "updatedAtMs": 1791049444069
     }
   },
   "videotheques": {

@@ -2500,39 +2500,149 @@ function nicheToolCardHTML(tool) {
 </a>`;
 }
 
-function generateNichePage(niche, tools, allNiches) {
-  const langue = 'fr';
+// ── Niches multilingues (FR racine, EN/ES en sous-dossier) ───────────
+// Même modèle que le comparateur : 1 doc Firestore par langue, même slug,
+// reliés par `traductions` (le doc FR référence ses traductions, et
+// chaque traduction référence le FR via traductions.fr).
+const NICHE_L = {
+  fr: {
+    h1: m => `Meilleurs outils IA pour ${m}`,
+    title: m => `Meilleurs outils IA pour ${m} en 2026 | Albexia`,
+    defDesc: m => `Découvrez les meilleurs outils IA sélectionnés pour ${m}. Comparatif et conseils Albexia.`,
+    noTools: "Aucun outil sélectionné pour l'instant.",
+    conseils: 'Comment choisir ?', faq: 'Questions fréquentes', selection: 'Notre sélection',
+    autres: c => `Autres métiers en ${c}`,
+    explorer: 'Explorer tout le catalogue →', retour: '← Retour au catalogue', voir: 'Voir la fiche →',
+  },
+  en: {
+    h1: m => `Best AI tools for ${m}`,
+    title: m => `Best AI Tools for ${m} in 2026 | Albexia`,
+    defDesc: m => `Discover the best AI tools selected for ${m}. Comparison and advice from Albexia.`,
+    noTools: 'No tools selected yet.',
+    conseils: 'How to choose?', faq: 'Frequently asked questions', selection: 'Our selection',
+    autres: c => `More professions in ${c}`,
+    explorer: 'Explore the full catalog →', retour: '← Back to catalog', voir: 'View tool →',
+  },
+  es: {
+    h1: m => `Mejores herramientas de IA para ${m}`,
+    title: m => `Mejores herramientas de IA para ${m} en 2026 | Albexia`,
+    defDesc: m => `Descubre las mejores herramientas de IA seleccionadas para ${m}. Comparativa y consejos de Albexia.`,
+    noTools: 'Aún no hay herramientas seleccionadas.',
+    conseils: '¿Cómo elegir?', faq: 'Preguntas frecuentes', selection: 'Nuestra selección',
+    autres: c => `Otras profesiones en ${c}`,
+    explorer: 'Explorar todo el catálogo →', retour: '← Volver al catálogo', voir: 'Ver ficha →',
+  },
+};
+
+function nicheLangue(n) { return n.langue || 'fr'; }
+function nicheDocId(n)  { return String(n.id || n.slug); }
+
+// FR → niches/{slug}/ ; EN/ES → niches/{langue}/{slug}/
+function nicheDir(langue, slug) {
+  return langue === 'fr' ? path.join('niches', slug) : path.join('niches', langue, slug);
+}
+function nicheUrl(langue, slug) {
+  return `${SITE_ORIGIN}/niches/${langue === 'fr' ? '' : langue + '/'}${slug}/index.html`;
+}
+
+// Doc FR de référence d'une niche (elle-même si FR, sinon via traductions.fr)
+function nicheParentFr(n, allNiches) {
+  if (nicheLangue(n) === 'fr') return n;
+  const ref = n.traductions?.fr;
+  if (!ref) return null;
+  return allNiches.find(p => nicheLangue(p) === 'fr' && (nicheDocId(p) === String(ref) || p.slug === ref)) || null;
+}
+
+// Une niche est publiée si : slug + statut "publie". Pour EN/ES, il faut en plus
+// que le FR parent soit publié ET que les champs minimaux soient remplis
+// (métier + introduction) — sinon la langue n'est tout simplement pas générée.
+function nicheEstPubliee(n, allNiches) {
+  if (!n.slug || n.status !== 'publie') return false;
+  const langue = nicheLangue(n);
+  if (!NICHE_L[langue]) return false;
+  if (langue === 'fr') return true;
+  const parent = nicheParentFr(n, allNiches);
+  return !!(parent && parent.status === 'publie' && n.metier && n.intro_ia);
+}
+
+// Carte outil localisée : nom/catégorie/lien de la fiche dans la langue de la niche
+// si l'outil a une traduction (tool.traductions[langue]), sinon repli sur la fiche FR.
+function nicheToolCardLocalizedHTML(tool, langue, allTools) {
+  const L = NICHE_L[langue] || NICHE_L.fr;
+  let loc = tool;
+  if (langue !== 'fr') {
+    const relId = tool.traductions?.[langue];
+    const rel = relId ? allTools.find(t => String(t.id) === String(relId)) : null;
+    if (rel && rel.name) loc = rel;
+  }
+  const locLangue = loc.langue || (loc === tool ? 'fr' : langue);
+  const plan = loc.plan === 'featured' ? 'featured' : loc.plan === 'starter' ? 'starter' : 'standard';
+  const slug = slugify(loc.name);
+  const ficheUrl = `${R}tools/${plan}/${locLangue}/${slug}/`;
+  const siteUrl = tool.url || loc.url || '';
+  const fav = `https://www.google.com/s2/favicons?sz=64&domain=${siteUrl.replace(/^https?:\/\//,'').split('/')[0]}`;
+  const note = typeof tool.note === 'number' ? tool.note : (typeof tool.rating === 'number' ? tool.rating : null);
+  return `<a href="${ficheUrl}" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="${fav}" alt="${loc.name}" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">${tool.emoji||'🤖'}</span>
+    <span class="ntc-name">${loc.name}</span>
+    ${note ? `<span class="ntc-note">★ ${note}</span>` : ''}
+  </div>
+  <span class="ntc-cat">${loc.category || tool.category || ''}</span>
+  <span class="ntc-cta">${L.voir}</span>
+</a>`;
+}
+
+// tools = outils dédupliqués par nom (voir toolsUniques) ; allTools = toutes les variantes
+// de langue, nécessaire pour retrouver la fiche traduite d'un outil.
+function generateNichePage(niche, tools, allNiches, allTools) {
+  const langue = nicheLangue(niche);
+  const L = NICHE_L[langue] || NICHE_L.fr;
   const slug = niche.slug;
   if (!slug) return null;
+  allTools = allTools || tools;
+
+  const parent = nicheParentFr(niche, allNiches) || niche;
 
   // "tools" est déjà déduplié par nom en amont (voir toolsUniques dans main()) —
   // pas besoin de refiltrer sur la langue ici, ce qui exclurait à tort un
   // outil qui n'existerait qu'en anglais (aucune variante FR disponible).
   // On déduplique aussi outils_slugs lui-même : des niches enregistrées avant
-  // le correctif de l'admin peuvent contenir le même slug plusieurs fois
-  // (ex: "chatgpt" répété 3 fois) — un tools dédupliqué ne suffit pas si on
-  // itère 3 fois sur la même référence.
-  const slugsUniques = [...new Set(niche.outils_slugs || [])];
+  // le correctif de l'admin peuvent contenir le même slug plusieurs fois.
+  const slugsUniques = [...new Set(niche.outils_slugs || parent.outils_slugs || [])];
   const outilsMatches = slugsUniques
     .map(s => tools.find(t => slugify(t.name) === s))
     .filter(Boolean);
 
-  const canonicalUrl = `${SITE_ORIGIN}/niches/${slug}/index.html`;
-  const titleTag = niche.meta_title || `Meilleurs outils IA pour ${niche.metier} en 2026 | Albexia`;
-  const metaDesc = niche.meta_description || niche.intro_ia?.slice(0, 155) || `Découvrez les meilleurs outils IA sélectionnés pour ${niche.metier}. Comparatif et conseils Albexia.`;
+  // Hreflang : uniquement les langues réellement publiées
+  const langueUrls = { [langue]: nicheUrl(langue, slug) };
+  if (nicheEstPubliee(parent, allNiches)) langueUrls.fr = nicheUrl('fr', parent.slug);
+  for (const [langCode, relRef] of Object.entries(parent.traductions || {})) {
+    if (!NICHE_L[langCode] || langCode === 'fr') continue;
+    const rel = allNiches.find(n => nicheDocId(n) === String(relRef) || (nicheLangue(n) === langCode && n.slug === relRef));
+    if (rel && nicheLangue(rel) === langCode && nicheEstPubliee(rel, allNiches)) {
+      langueUrls[langCode] = nicheUrl(langCode, rel.slug);
+    }
+  }
+  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, langueUrls);
+
+  const categorie = niche.super_categorie || parent.super_categorie || '';
+  const titleTag = niche.meta_title || L.title(niche.metier);
+  const metaDesc = niche.meta_description || niche.intro_ia?.slice(0, 155) || L.defDesc(niche.metier);
 
   const toolsGridHTML = outilsMatches.length
-    ? outilsMatches.map(nicheToolCardHTML).join('\n')
-    : `<p style="color:var(--text-dim);font-size:14px;">Aucun outil sélectionné pour l'instant.</p>`;
+    ? outilsMatches.map(t => nicheToolCardLocalizedHTML(t, langue, allTools)).join('\n')
+    : `<p style="color:var(--text-dim);font-size:14px;">${L.noTools}</p>`;
 
   const conseilsHTML = niche.conseils_ia ? `<div class="niche-section">
-  <div class="niche-section-title">Comment choisir ?</div>
+  <div class="niche-section-title">${L.conseils}</div>
   <div class="niche-conseils">${niche.conseils_ia}</div>
 </div>` : '';
 
   const faqItems = niche.faq || [];
   const faqHTML = faqItems.length ? `<div class="niche-section">
-  <div class="niche-section-title">Questions fréquentes</div>
+  <div class="niche-section-title">${L.faq}</div>
   <div class="niche-faq">
     ${faqItems.map((f, i) => `<div class="niche-faq-item" id="nfaq-${i}">
       <button class="niche-faq-question" onclick="toggleNicheFAQ(${i})">
@@ -2559,12 +2669,19 @@ ${faqItems.map(f => `      {
   }
   </script>` : '';
 
-  // Maillage interne : autres niches publiées de la même super-catégorie
-  const nichesLiees = allNiches.filter(n => n.status === 'publie' && n.super_categorie === niche.super_categorie && n.slug !== slug).slice(0, 8);
+  // Maillage interne : autres niches publiées, DANS LA MÊME LANGUE, de la même
+  // super-catégorie (comparée via le doc FR parent pour rester fiable même si
+  // la catégorie est traduite différemment d'une niche à l'autre).
+  const nichesLiees = allNiches.filter(n => {
+    if (nicheLangue(n) !== langue || n.slug === slug) return false;
+    if (!nicheEstPubliee(n, allNiches)) return false;
+    const p = nicheParentFr(n, allNiches);
+    return !!p && p.super_categorie === parent.super_categorie;
+  }).slice(0, 8);
   const relatedHTML = nichesLiees.length ? `<div class="niche-section">
-  <div class="niche-section-title">Autres métiers en ${niche.super_categorie}</div>
+  <div class="niche-section-title">${L.autres(categorie)}</div>
   <div class="niche-related">
-    ${nichesLiees.map(n => `<a href="${R}niches/${n.slug}/index.html" class="niche-related-link">${n.metier}</a>`).join('')}
+    ${nichesLiees.map(n => `<a href="${R}niches/${langue === 'fr' ? '' : langue + '/'}${n.slug}/index.html" class="niche-related-link">${n.metier}</a>`).join('')}
   </div>
 </div>` : '';
 
@@ -2573,7 +2690,7 @@ ${faqItems.map(f => `      {
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": ${JSON.stringify(`Meilleurs outils IA pour ${niche.metier}`)},
+    "headline": ${JSON.stringify(L.h1(niche.metier))},
     "description": ${JSON.stringify(metaDesc)},
     "inLanguage": "${langue}",
     "author": { "@type": "Organization", "name": "Albexia" },
@@ -2592,11 +2709,14 @@ ${faqItems.map(f => `      {
   <meta name="robots" content="index, follow" />
 
   <link rel="canonical" href="${canonicalUrl}" />
+${hreflangTags}
 
   <meta property="og:title"       content="${titleTag}" />
   <meta property="og:description" content="${metaDesc}" />
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="${canonicalUrl}" />
+  <meta property="og:locale"      content="${ogLocale}" />
+${ogLocaleAlternates}
 ${articleJsonLd}
 ${faqJsonLd}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -2611,13 +2731,13 @@ ${navHTML(langue)}
 
 <section class="niche-hero">
   <div class="niche-hero-glow"></div>
-  <div class="niche-badge">${niche.super_categorie}</div>
-  <h1>Meilleurs outils IA pour ${niche.metier}</h1>
+  <div class="niche-badge">${categorie}</div>
+  <h1>${L.h1(niche.metier)}</h1>
   <p>${niche.intro_ia || ''}</p>
 </section>
 
 <div class="niche-section">
-  <div class="niche-section-title">Notre sélection (${outilsMatches.length})</div>
+  <div class="niche-section-title">${L.selection} (${outilsMatches.length})</div>
   <div class="niche-tools-grid">
 ${toolsGridHTML}
   </div>
@@ -2630,10 +2750,10 @@ ${faqHTML}
 ${relatedHTML}
 
 <div class="niche-cta-wrap">
-  <a href="${R}index.html#tools" class="niche-cta-btn">Explorer tout le catalogue →</a>
+  <a href="${R}index.html#tools" class="niche-cta-btn">${L.explorer}</a>
 </div>
 
-<a href="${R}index.html#tools" class="niche-back">← Retour au catalogue</a>
+<a href="${R}index.html#tools" class="niche-back">${L.retour}</a>
 
 ${footerHTML(langue)}
 ${faqHTML ? '<script>function toggleNicheFAQ(i){document.getElementById("nfaq-"+i).classList.toggle("open");}</script>' : ''}
@@ -4583,7 +4703,7 @@ async function main() {
 
   for (const niche of niches) {
     const nicheHash = hashDoc(niche);
-    const nicheId   = String(niche.id || niche.slug);
+    const nicheId   = nicheDocId(niche);
     newState.niches[nicheId] = { hash: nicheHash, updatedAtMs: updatedAtMs(niche) };
 
     const ownHasChanged = state.niches?.[nicheId]?.hash !== nicheHash;
@@ -4602,15 +4722,16 @@ async function main() {
     const slug = niche.slug;
     if (!slug) { nichesSkippedNoSlug++; continue; }
 
-    const folder   = path.join('niches', slug);
+    // FR à la racine (URLs historiques) ; EN/ES dans niches/{langue}/{slug}/
+    const nLangue  = nicheLangue(niche);
+    const folder   = nicheDir(nLangue, slug);
     const filePath = path.join(folder, 'index.html');
 
-    if (niche.status !== 'publie') {
+    // Brouillon, langue inconnue, ou traduction non publiable (FR parent non
+    // publié / métier ou intro vides) : aucune page. Le nettoyage orphelin
+    // plus bas retire les pages qui existaient avant (dépublication).
+    if (!nicheEstPubliee(niche, niches)) {
       nichesSkippedBrouillon++;
-      // Un brouillon qui a été DÉPUBLIÉ (existait publié avant, repassé en
-      // brouillon) doit voir sa page retirée — pas seulement les nouveaux
-      // brouillons jamais publiés. On laisse le nettoyage orphelin plus bas
-      // s'en charger, puisqu'un brouillon n'est jamais dans validNichePaths.
       continue;
     }
 
@@ -4621,7 +4742,7 @@ async function main() {
 
     if (!hasChanged && fs.existsSync(filePath)) { nichesUnchanged++; continue; }
 
-    const html = generateNichePage(niche, toolsUniques, niches);
+    const html = generateNichePage(niche, toolsUniques, niches, tools);
     if (!html) { nichesSkippedNoSlug++; continue; }
 
     fs.mkdirSync(folder, { recursive: true });
@@ -4629,24 +4750,43 @@ async function main() {
     nichesGenerated++;
   }
 
-  console.log(`\n✅ Niches — ${nichesGenerated} régénérée(s) (dont ${nichesCascade} via cascade outil modifié), ${nichesUnchanged} inchangée(s) (skip), ${nichesSkippedBrouillon} en brouillon (non générées), ${nichesSkippedNoSlug} ignorée(s) (slug vide).`);
+  console.log(`\n✅ Niches — ${nichesGenerated} régénérée(s) (dont ${nichesCascade} via cascade outil modifié), ${nichesUnchanged} inchangée(s) (skip), ${nichesSkippedBrouillon} non publiée(s) (brouillon ou traduction incomplète), ${nichesSkippedNoSlug} ignorée(s) (slug vide).`);
   console.log(`\nStructure :`);
-  console.log(`  niches/{slug}/index.html`);
+  console.log(`  niches/{slug}/index.html          (FR)`);
+  console.log(`  niches/en/{slug}/index.html       (EN)`);
+  console.log(`  niches/es/{slug}/index.html       (ES)`);
 
   // ─── NETTOYAGE DES NICHES ORPHELINES OU DÉPUBLIÉES ───
   console.log(`\n🧹 Nettoyage des pages niches orphelines ou dépubliées...`);
 
   const validNichePaths = new Set();
   for (const niche of niches) {
-    if (!niche.slug || niche.status !== 'publie') continue;
-    validNichePaths.add(path.join('niches', niche.slug));
+    if (!nicheEstPubliee(niche, niches)) continue;
+    validNichePaths.add(nicheDir(nicheLangue(niche), niche.slug));
   }
 
   let removedNiches = 0;
   if (fs.existsSync('niches')) {
-    for (const slugDir of fs.readdirSync('niches')) {
-      const fullPath = path.join('niches', slugDir);
+    for (const entry of fs.readdirSync('niches')) {
+      const fullPath = path.join('niches', entry);
       if (!fs.statSync(fullPath).isDirectory()) continue;
+
+      // niches/en et niches/es sont des dossiers de langue réservés :
+      // chaque sous-dossier à l'intérieur est une traduction.
+      if (entry === 'en' || entry === 'es') {
+        for (const slugDir of fs.readdirSync(fullPath)) {
+          const subPath = path.join(fullPath, slugDir);
+          if (!fs.statSync(subPath).isDirectory()) continue;
+          if (!validNichePaths.has(subPath)) {
+            fs.rmSync(subPath, { recursive: true, force: true });
+            console.log(`  🗑️  Supprimé : ${subPath}`);
+            removedNiches++;
+          }
+        }
+        if (fs.readdirSync(fullPath).length === 0) fs.rmSync(fullPath, { recursive: true, force: true });
+        continue;
+      }
+
       if (!validNichePaths.has(fullPath)) {
         fs.rmSync(fullPath, { recursive: true, force: true });
         console.log(`  🗑️  Supprimé : ${fullPath}`);

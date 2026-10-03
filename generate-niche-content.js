@@ -160,7 +160,9 @@ async function main() {
     db.collection('niches').get(),
     db.collection('outils').get(),
   ]);
-  const niches = nichesSnap.docs.map(d => d.data());
+  // Seuls les docs FR sont traités : les traductions EN/ES (langue != 'fr') sont
+  // produites par le bouton « Traduire depuis le FR » de l'admin, jamais par ce script.
+  const niches = nichesSnap.docs.map(d => d.data()).filter(n => (n.langue || 'fr') === 'fr');
   const outils = outilsSnap.docs.map(d => d.data());
   console.log(`✓ ${niches.length} niche(s), ${outils.length} outil(s) trouvés\n`);
 

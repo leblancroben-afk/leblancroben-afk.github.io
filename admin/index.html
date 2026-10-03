@@ -1229,6 +1229,52 @@ Support français|oui|non|bool"></textarea>
             <input type="text" id="nc-meta-description" maxlength="155">
           </fieldset>
 
+          <button type="button" class="accordion-toggle" data-target="nc-acc-en">+ Ajouter EN (optionnel)</button>
+          <div class="accordion-body" id="nc-acc-en">
+            <fieldset>
+              <legend>Contenu EN</legend>
+              <p class="field-hint">Publié à <code>/niches/en/{slug}/</code> seulement si « Métier EN » et « Introduction EN » sont remplis, et si la niche FR est publiée.</p>
+              <button type="button" class="btn-translate" data-source="fr" data-target-lang="en" data-form="niche">🌐 Traduire depuis le FR</button>
+              <label>Métier EN</label>
+              <input type="text" id="nc-metier-en">
+              <label>Super-catégorie EN</label>
+              <input type="text" id="nc-categorie-en">
+              <label>Introduction EN</label>
+              <textarea id="nc-intro-en" style="min-height:120px;"></textarea>
+              <label>Conseils / comment choisir EN</label>
+              <textarea id="nc-conseils-en" style="min-height:100px;"></textarea>
+              <label>FAQ EN (format : question||réponse, une par ligne)</label>
+              <textarea id="nc-faq-en" style="min-height:100px;"></textarea>
+              <label>Titre SEO EN (optionnel)</label>
+              <input type="text" id="nc-meta-title-en">
+              <label>Meta description SEO EN (155 car. max)</label>
+              <input type="text" id="nc-meta-description-en" maxlength="155">
+            </fieldset>
+          </div>
+
+          <button type="button" class="accordion-toggle" data-target="nc-acc-es">+ Ajouter ES (optionnel)</button>
+          <div class="accordion-body" id="nc-acc-es">
+            <fieldset>
+              <legend>Contenu ES</legend>
+              <p class="field-hint">Publié à <code>/niches/es/{slug}/</code> seulement si « Métier ES » et « Introduction ES » sont remplis, et si la niche FR est publiée.</p>
+              <button type="button" class="btn-translate" data-source="fr" data-target-lang="es" data-form="niche">🌐 Traduire depuis le FR</button>
+              <label>Métier ES</label>
+              <input type="text" id="nc-metier-es">
+              <label>Super-catégorie ES</label>
+              <input type="text" id="nc-categorie-es">
+              <label>Introduction ES</label>
+              <textarea id="nc-intro-es" style="min-height:120px;"></textarea>
+              <label>Conseils / comment choisir ES</label>
+              <textarea id="nc-conseils-es" style="min-height:100px;"></textarea>
+              <label>FAQ ES (format : question||réponse, une par ligne)</label>
+              <textarea id="nc-faq-es" style="min-height:100px;"></textarea>
+              <label>Título SEO ES (opcional)</label>
+              <input type="text" id="nc-meta-title-es">
+              <label>Meta descripción SEO ES (155 car. max)</label>
+              <input type="text" id="nc-meta-description-es" maxlength="155">
+            </fieldset>
+          </div>
+
           <button type="submit" class="btn-submit" id="nc-submit-btn" style="background:var(--accent2);">Publier la niche</button>
           <button type="button" class="btn-danger" id="nc-delete-btn" style="display:none;">🗑 Supprimer cette niche</button>
         </form>
@@ -3340,6 +3386,18 @@ Support français|oui|non|bool"></textarea>
     return resultats.join('\n');
   }
 
+  function nicheFieldsToTranslate(targetLang) {
+    return [
+      ['nc-metier',            `nc-metier-${targetLang}`,            'text'],
+      ['nc-categorie',         `nc-categorie-${targetLang}`,         'text'],
+      ['nc-intro',             `nc-intro-${targetLang}`,             'text'],
+      ['nc-conseils',          `nc-conseils-${targetLang}`,          'text'],
+      ['nc-faq',               `nc-faq-${targetLang}`,               'faq'],
+      ['nc-meta-title',        `nc-meta-title-${targetLang}`,        'text'],
+      ['nc-meta-description',  `nc-meta-description-${targetLang}`,  'text'],
+    ];
+  }
+
   function cpFieldsToTranslate(targetLang) {
     return [
       ['cp-resume',            `cp-resume-${targetLang}`,            'text'],
@@ -3386,6 +3444,8 @@ Support français|oui|non|bool"></textarea>
         ? plansFieldsToTranslate(targetLang)
         : formType === 'comparateur'
         ? cpFieldsToTranslate(targetLang)
+        : formType === 'niche'
+        ? nicheFieldsToTranslate(targetLang)
         : outilFieldsToTranslate(targetLang);
 
       btn.disabled = true;
@@ -4194,6 +4254,7 @@ Support français|oui|non|bool"></textarea>
   const NICHES_SEUIL_ALERTE = 6;
 
   let editingNiche = null;
+  let editingNicheRelated = [];
   let allNichesCache = null;
   let nicheMatchedTools = [];
 
@@ -4204,10 +4265,12 @@ Support français|oui|non|bool"></textarea>
     return allNichesCache;
   }
   function invalidateNichesCache() { allNichesCache = null; }
+  // Les docs EN/ES (langue != 'fr') sont des traductions liées au doc FR : jamais listés comme niches à part.
+  const nicheIsFr = n => (n.langue || 'fr') === 'fr';
 
   async function populateCategorieDatalist() {
     const niches = await fetchAllNiches();
-    const cats = [...new Set(niches.map(n => n.super_categorie).filter(Boolean))].sort();
+    const cats = [...new Set(niches.filter(nicheIsFr).map(n => n.super_categorie).filter(Boolean))].sort();
     document.getElementById('nc-categorie-list').innerHTML =
       cats.map(c => `<option value="${c}"></option>`).join('');
   }
@@ -4309,6 +4372,7 @@ Support français|oui|non|bool"></textarea>
       const niches = await fetchAllNiches();
       const qNorm = q.toLowerCase();
       const matches = niches
+        .filter(nicheIsFr)
         .filter(n => (n.metier||'').toLowerCase().includes(qNorm) || (n.slug||'').toLowerCase().includes(qNorm))
         .slice(0, 8);
       if (!matches.length) {
@@ -4339,7 +4403,17 @@ Support français|oui|non|bool"></textarea>
     const niche = list.find(n => n.slug === slug);
     if (!niche) return;
     editingNiche = niche;
+    editingNicheRelated = [];
     nicheMatchedTools = niche.outils_slugs || [];
+
+    // Docs de traduction liés (EN/ES) : via traductions, sinon repli sur même slug + langue
+    const allNiches = await fetchAllNiches();
+    for (const lang of ['en', 'es']) {
+      const relId = niche.traductions?.[lang];
+      const rel = (relId && allNiches.find(n => String(n.id || n.slug) === String(relId)))
+        || allNiches.find(n => n.langue === lang && n.slug === niche.slug);
+      if (rel) editingNicheRelated.push(rel);
+    }
 
     setVal('nc-metier', niche.metier);
     setVal('nc-categorie', niche.super_categorie);
@@ -4351,6 +4425,17 @@ Support français|oui|non|bool"></textarea>
     setVal('nc-faq', (niche.faq||[]).map(nicheFaqToLine).join('\n'));
     setVal('nc-meta-title', niche.meta_title);
     setVal('nc-meta-description', niche.meta_description);
+
+    for (const lang of ['en', 'es']) {
+      const t = editingNicheRelated.find(n => n.langue === lang) || {};
+      setVal(`nc-metier-${lang}`, t.metier);
+      setVal(`nc-categorie-${lang}`, t.super_categorie);
+      setVal(`nc-intro-${lang}`, t.intro_ia);
+      setVal(`nc-conseils-${lang}`, t.conseils_ia);
+      setVal(`nc-faq-${lang}`, (t.faq||[]).map(nicheFaqToLine).join('\n'));
+      setVal(`nc-meta-title-${lang}`, t.meta_title);
+      setVal(`nc-meta-description-${lang}`, t.meta_description);
+    }
 
     const tools = await fetchAllTools();
     const toolsUniques = deduplicateParNom(tools);
@@ -4367,6 +4452,7 @@ Support français|oui|non|bool"></textarea>
 
   function exitNicheEditMode() {
     editingNiche = null;
+    editingNicheRelated = [];
     nicheMatchedTools = [];
     document.getElementById('form-niche').reset();
     document.getElementById('nc-tools-list').innerHTML = '';
@@ -4383,8 +4469,9 @@ Support français|oui|non|bool"></textarea>
     if (!confirm(`Supprimer définitivement la niche "${editingNiche.metier}" ? Cette action est irréversible (la page sera retirée au prochain gen-fiches.js).`)) return;
     try {
       await deleteDoc(doc(db, 'niches', String(editingNiche.id || editingNiche.slug)));
+      for (const rel of editingNicheRelated) await deleteDoc(doc(db, 'niches', String(rel.id || `${editingNiche.id || editingNiche.slug}-${rel.langue}`)));
       invalidateNichesCache();
-      showMsg('warn-niches','ok-niches','ok', `✓ Niche supprimée. Relancez gen-fiches.js pour retirer la page HTML.`);
+      showMsg('warn-niches','ok-niches','ok', `✓ Niche supprimée (${1 + editingNicheRelated.length} document(s)). Relancez gen-fiches.js pour retirer la page HTML.`);
       exitNicheEditMode();
     } catch(err) { showMsg('warn-niches','ok-niches','warn','Erreur : '+err.message); }
   });
@@ -4407,7 +4494,7 @@ Support français|oui|non|bool"></textarea>
 
       const existing = await fetchAllNiches();
       if (!editingNiche) {
-        const dup = existing.find(n => n.slug === slug);
+        const dup = existing.find(n => nicheIsFr(n) && n.slug === slug);
         if (dup && !confirm(`Une niche avec le slug "${slug}" existe déjà. Voulez-vous vraiment créer un doublon ? (Préférez plutôt la rechercher ci-dessus pour la modifier.)`)) {
           btn.disabled=false; return;
         }
@@ -4428,15 +4515,57 @@ Support français|oui|non|bool"></textarea>
         faq: parseNicheFAQ(document.getElementById('nc-faq').value),
         meta_title: document.getElementById('nc-meta-title').value.trim(),
         meta_description: document.getElementById('nc-meta-description').value.trim(),
+        traductions: {},
         updatedAt: serverTimestamp(),
       });
 
+      // Traductions EN/ES : un doc Firestore par langue, même slug, liés par `traductions`
+      // (même modèle que le comparateur). Une langue n'est écrite que si métier + intro sont remplis.
+      const nicheVal = (fid) => document.getElementById(fid).value.trim();
+      const toWrite = [];
+      for (const lang of ['en', 'es']) {
+        const existingRel = editingNicheRelated.find(n => n.langue === lang);
+        const metierT = nicheVal(`nc-metier-${lang}`);
+        const introT  = nicheVal(`nc-intro-${lang}`);
+        if (!metierT || !introT) continue;
+
+        const relId = existingRel ? (existingRel.id || existingRel.slug) : `${id}-${lang}`;
+        docData.traductions[lang] = String(relId);
+        toWrite.push(stripUndefined({
+          id: String(relId), slug, langue: lang,
+          traductions: { fr: String(id) },
+          metier: metierT,
+          super_categorie: nicheVal(`nc-categorie-${lang}`) || categorie,
+          status: docData.status,
+          mots_cles_matching: docData.mots_cles_matching,
+          outils_slugs: outilsSlugs,
+          intro_ia: introT,
+          conseils_ia: nicheVal(`nc-conseils-${lang}`),
+          faq: parseNicheFAQ(nicheVal(`nc-faq-${lang}`)),
+          meta_title: nicheVal(`nc-meta-title-${lang}`),
+          meta_description: nicheVal(`nc-meta-description-${lang}`),
+          updatedAt: serverTimestamp(),
+        }));
+      }
+
+      // Traduction vidée dans le formulaire : on supprime le doc lié (la page disparaît au prochain gen-fiches.js)
+      if (editingNiche) {
+        for (const lang of ['en', 'es']) {
+          const existingRel = editingNicheRelated.find(n => n.langue === lang);
+          if (existingRel && !docData.traductions[lang]) {
+            await deleteDoc(doc(db, 'niches', String(existingRel.id || existingRel.slug)));
+          }
+        }
+      }
+
       await setDoc(doc(db, 'niches', String(id)), docData);
+      for (const d of toWrite) await setDoc(doc(db, 'niches', String(d.id)), d);
       invalidateNichesCache();
 
       const action = editingNiche ? 'mise à jour' : 'publiée';
+      const langsTxt = ['FR', ...toWrite.map(d => d.langue.toUpperCase())].join('+');
       showMsg('warn-niches','ok-niches','ok',
-        `✓ Niche ${action} (slug "${slug}", ${outilsSlugs.length} outil(s)). Relancez gen-fiches.js pour publier/nettoyer la page HTML.`);
+        `✓ Niche ${action} (slug "${slug}", ${outilsSlugs.length} outil(s), langues : ${langsTxt}). Relancez gen-fiches.js pour publier/nettoyer la page HTML.`);
       exitNicheEditMode();
     } catch(err) { showMsg('warn-niches','ok-niches','warn','Erreur : '+err.message); }
     btn.disabled=false;

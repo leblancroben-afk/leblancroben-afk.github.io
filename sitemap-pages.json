@@ -1,0 +1,17 @@
+{
+  "origin": "https://albexia.com",
+  "pages": [
+    { "path": "/" },
+    { "path": "/hub.html" },
+    { "path": "/soumettre/" },
+    { "path": "/contact.html" },
+    { "path": "/mentions-legales.html" },
+    { "path": "/politique-confidentialite.html" }
+  ],
+  "scan": ["tools", "articles", "comparateur", "niches", "glossaire", "categorie", "tutoriels"],
+  "includeOffline": false,
+  "exclude": ["categorie/seo/"],
+  "robots": {
+    "disallow": ["/admin/", "/auth.html", "/profil.html", "/profil-public.html", "/backups/"]
+  }
+}

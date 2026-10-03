@@ -179,28 +179,127 @@ window.fermerModalSoumission = fermerModalSoumission;
 window.toggleFAQ             = toggleFAQ;
 
 
-/* ─── FILTRES : catégories + recherche ─── */
+/* ─── CATALOGUE : recherche, catégories (6 + toggle), pagination par lots ─── */
 function bindFiltres() {
-  const cats  = document.querySelectorAll('.tuto-cat');
-  const champ = document.getElementById('tuto-recherche');
-  let cat = 'all';
-  const appliquer = () => {
-    const q = (champ?.value || '').trim().toLowerCase();
-    let visibles = 0;
-    document.querySelectorAll('#tuto-grille .tuto-card').forEach(c => {
-      const ok = (cat === 'all' || c.dataset.cat === cat) && (!q || (c.dataset.nom || '').includes(q));
-      c.style.display = ok ? '' : 'none';
-      if (ok) visibles++;
-    });
-    const vide = document.getElementById('tuto-vide');
-    if (vide) vide.hidden = visibles > 0;
+  const grille = document.getElementById('tuto-grille');
+  if (!grille) return;
+  const LOT = 20, CATS_VISIBLES = 6;
+  const $ = (id) => document.getElementById(id);
+  const cartes = Array.from(grille.querySelectorAll('.th-card'));
+  const pills  = Array.from(document.querySelectorAll('.th-pill'));
+  const champ  = $('tuto-recherche');
+  const etat   = { cat: 'all', q: '', visibles: LOT, toutesCats: false };
+
+  const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const langue = () => (window.detecterLangue ? window.detecterLangue() : 'fr');
+  const tr = (cle, defaut, vars) => {
+    let s = window.t ? window.t(cle, langue()) : defaut;
+    if (!s || s === cle) s = defaut;
+    Object.keys(vars || {}).forEach((k) => { s = s.split('{' + k + '}').join(vars[k]); });
+    return s;
   };
-  cats.forEach(b => b.addEventListener('click', () => {
-    cats.forEach(x => x.classList.remove('actif'));
-    b.classList.add('actif');
-    cat = b.dataset.cat;
-    appliquer();
-  }));
-  champ?.addEventListener('input', appliquer);
-  window.addEventListener('hashchange', lireHashURL);
+
+  function rendre() {
+    const q = norm(etat.q);
+    const ok = cartes.filter((c) =>
+      (etat.cat === 'all' || c.dataset.cat === etat.cat) && (!q || norm(c.dataset.nom).includes(q)));
+    const montrees = new Set(ok.slice(0, etat.visibles));
+    cartes.forEach((c) => { c.hidden = !montrees.has(c); });
+
+    /* Catégories : 6 premières, le reste derrière « Plus de catégories (+N) » */
+    pills.forEach((p, i) => {
+      p.classList.toggle('actif', p.dataset.cat === etat.cat);
+      p.hidden = !etat.toutesCats && i >= CATS_VISIBLES && p.dataset.cat !== etat.cat;
+    });
+    const reste = pills.length - CATS_VISIBLES;
+    const plus = $('th-more');
+    if (plus) {
+      plus.hidden = reste <= 0;
+      plus.setAttribute('aria-expanded', String(etat.toutesCats));
+      plus.querySelector('span').textContent = etat.toutesCats
+        ? tr('tuto.lessCats', 'Voir moins')
+        : tr('tuto.moreCats', 'Plus de catégories (+{n})', { n: reste });
+    }
+    const actif = pills.find((p) => p.dataset.cat === etat.cat);
+    const lab = $('th-active');
+    if (lab && actif) lab.textContent = tr('tuto.display', 'Affichage : {x}', { x: actif.querySelector('span').textContent });
+
+    /* Compteurs et boutons */
+    const res = $('th-results');
+    if (res) res.textContent = ok.length > 1
+      ? tr('tuto.resultMany', '{n} résultats', { n: ok.length })
+      : tr('tuto.resultOne', '{n} résultat', { n: ok.length });
+    const info = $('th-info');
+    if (info) info.textContent = tr('tuto.showing', 'Affichage de {a} sur {b} outils', { a: montrees.size, b: ok.length });
+    const restant = ok.length - montrees.size;
+    const plusBtn = $('th-loadmore');
+    if (plusBtn) {
+      plusBtn.hidden = restant <= 0;
+      plusBtn.querySelector('span').textContent = tr('tuto.loadMore', 'Charger {n} de plus', { n: Math.min(LOT, restant) });
+    }
+    const moinsBtn = $('th-less');
+    if (moinsBtn) {
+      moinsBtn.hidden = !(etat.visibles > LOT && ok.length > LOT);
+      moinsBtn.querySelector('span').textContent = tr('tuto.backTop', 'Revenir au début ({n})', { n: LOT });
+    }
+    const vide = $('tuto-vide');
+    if (vide) vide.hidden = ok.length > 0;
+    grille.hidden = ok.length === 0;
+    const pager = $('th-pager');
+    if (pager) pager.hidden = ok.length === 0;
+  }
+
+  pills.forEach((p) => p.addEventListener('click', () => { etat.cat = p.dataset.cat; etat.visibles = LOT; rendre(); }));
+  const plus = $('th-more');
+  if (plus) plus.addEventListener('click', () => { etat.toutesCats = !etat.toutesCats; rendre(); });
+  if (champ) champ.addEventListener('input', () => { etat.q = champ.value.trim(); etat.visibles = LOT; rendre(); });
+  const plusBtn = $('th-loadmore');
+  if (plusBtn) plusBtn.addEventListener('click', () => { etat.visibles += LOT; rendre(); });
+  const moinsBtn = $('th-less');
+  if (moinsBtn) moinsBtn.addEventListener('click', () => {
+    etat.visibles = LOT; rendre();
+    const sec = $('catalogue-section');
+    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  const reset = $('th-reset');
+  if (reset) reset.addEventListener('click', () => {
+    etat.cat = 'all'; etat.q = ''; etat.visibles = LOT;
+    if (champ) champ.value = '';
+    rendre();
+  });
+
+  /* Lien direct #outil : affiche la carte même si elle est hors du premier lot */
+  const reveler = () => {
+    const c = document.getElementById('carte-' + location.hash.slice(1));
+    if (!c || !c.hidden) return;
+    etat.cat = 'all'; etat.q = ''; etat.visibles = cartes.length;
+    if (champ) champ.value = '';
+    rendre();
+  };
+  window.addEventListener('hashchange', reveler);
+  reveler();
+
+  /* Tutoriel du jour : lecture + enregistrement (stockage local, par appareil) */
+  [$('th-play'), $('th-watch')].forEach((b) => {
+    if (b) b.addEventListener('click', () => ouvrirPlayer(b.dataset.yt, b.dataset.titre));
+  });
+  const CLE = 'albexia_tuto_saves';
+  const lire = () => { try { return JSON.parse(localStorage.getItem(CLE) || '[]'); } catch (e) { return []; } };
+  const ecrire = (a) => { try { localStorage.setItem(CLE, JSON.stringify(a)); } catch (e) {} };
+  const bSave = $('th-save');
+  const majSave = () => {
+    if (!bSave) return;
+    const on = lire().indexOf(bSave.dataset.yt) !== -1;
+    bSave.classList.toggle('actif', on);
+    bSave.setAttribute('aria-pressed', String(on));
+    $('th-save-l').textContent = on ? tr('tuto.saved', 'Enregistré') : tr('tuto.save', 'Enregistrer');
+  };
+  if (bSave) bSave.addEventListener('click', () => {
+    const l = lire(), i = l.indexOf(bSave.dataset.yt);
+    if (i === -1) l.push(bSave.dataset.yt); else l.splice(i, 1);
+    ecrire(l); majSave();
+  });
+
+  window.thRender = () => { rendre(); majSave(); };
+  window.thRender();
 }

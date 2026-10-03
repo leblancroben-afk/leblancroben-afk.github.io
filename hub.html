@@ -2,384 +2,210 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hub – Toutes les sections | Albexia</title>
-  <meta name="description" content="Explorez toutes les sections d'Albexia : outils IA, comparateur, glossaire, niches métier et ressources pour maîtriser l'intelligence artificielle en français.">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Hub – Toutes les sections | Albexia">
-  <meta property="og:description" content="Votre carte d'orientation complète pour naviguer dans l'univers Albexia.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Toutes les sections | Albexia</title>
+  <meta name="description" content="Retrouvez tous les outils, catégories, niches métier, articles, comparatifs et ressources de l'annuaire IA Albexia.">
+  <link rel="canonical" href="https://albexia.com/hub.html">
+  <meta property="og:title" content="Explorez toutes les sections | Albexia">
+  <meta property="og:description" content="Outils, catégories, niches, articles, comparatifs, glossaire : tout Albexia sur une seule page.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://albexia.com/hub.html">
-
-  <!-- Fonts -->
+  <meta name="theme-color" content="#0a0a0f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-
-  <!-- CSS site + hub -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/hub.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/hub.css">
 </head>
 <body>
+<div id="site-header"></div>
 
-<!-- ── NAVIGATION ── -->
-<nav>
-   <div class="logo">
-      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-  <style>
-    /* Animation de construction pour les polygones */
-    .poly-part {
-      animation: buildIn 1.2s ease-out forwards;
-      opacity: 0;
-    }
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 4v16M7 20h10M5 8h14"/><path d="m5 8-3 6a3 3 0 0 0 6 0zM19 8l-3 6a3 3 0 0 0 6 0z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-8-2v14c3 0 6 .5 8 2 2-1.5 5-2 8-2V4c-3 0-6 .5-8 2zM12 6v14"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3-5.5 6.5-5.5s6 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M17.5 14.5c2.5.3 4 2 4.5 5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3.5" y="8.5" width="17" height="4" rx="1"/><path d="M5 12.5V20h14v-7.5M12 8.5V20M12 8.5C9 8.5 7.5 7.5 7.5 6S9 3.5 12 8.5zM12 8.5c3 0 4.500-1 4.500-2.500S15 3.500 12 8.500z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+</svg>
 
-    /* Animation d'apparition pour le texte */
-    .logo-text {
-      animation: fadeIn 1s ease-out 0.8s forwards; /* Démarre après 0.8s */
-      opacity: 0;
-    }
+<main class="hub">
+  <nav class="hub-bc" aria-label="Fil d'Ariane">
+    <a href="/index.html">Accueil</a><svg class="ic"><use href="#i-chev"/></svg><span>Toutes les sections</span>
+  </nav>
 
-    @keyframes buildIn {
-      0% {
-        opacity: 0;
-        transform: translateY(10px) scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateX(-5px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    /* Délais spécifiques pour chaque pièce pour un effet "construction" */
-    .part-1 { animation-delay: 0.1s; }
-    .part-2 { animation-delay: 0.3s; }
-    .part-3 { animation-delay: 0.5s; }
-  </style>
-
-  <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
-  
-  <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-  
-  <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
-
-  <text class="logo-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">
-  Albe<tspan fill="#ff6b9d">x</tspan>ia
-</text>
-      </svg>
-   </div>
-     
-    <div class="nav-links">
-    <button class="nav-link" onclick="window.location.href='index.html'">Accueil</button>
-    <button class="nav-link" onclick="window.location.href='index.html#tools'">Outils</button>
-    <button class="nav-link" onclick="window.location.href='index.html#blog'">Blog</button>
-    <button class="nav-link" onclick="location.href='index.html#gallery'">Galerie</button>
-    <button class="nav-link" onclick="location.href='index.html#favorites'">Favoris</button>    
-    <button class="nav-link active">Hub</button>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════
-     NOUVEAU MENU KEBAB — Albexia
-     Remplace l'ancien kebab-wrap dans toutes les pages.
-     Top 3 des incontournables + lien vers le Hub complet.
-     ═══════════════════════════════════════════════════ -->
-
-<div class="kebab-wrap" id="kebab-wrap">
-  <button class="kebab-btn" id="kebab-btn" aria-label="Plus de pages" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-
-  <div class="kebab-menu" id="kebab-menu" role="menu">
-
-    <!-- Top 3 des pages incontournables -->
-    <div class="kebab-label">Incontournables</div>
-
-    <a href="glossaire.html" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">📖</span>
-      <div>
-        <div class="kebab-item-name">Glossaire IA</div>
-        <div class="kebab-item-sub">Tous les termes en français</div>
-      </div>
-    </a>
-
-    <a href="comparateur.html" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">⚖️</span>
-      <div>
-        <div class="kebab-item-name">Comparateur</div>
-        <div class="kebab-item-sub">Comparer les outils côte à côte</div>
-      </div>
-    </a>
-
-    <a href="deals.html" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">🔥</span>
-      <div>
-        <div class="kebab-item-name">Deals &amp; Promos</div>
-        <div class="kebab-item-sub">Essais gratuits · Offres exclusives</div>
-      </div>
-    </a>
-
-    <!-- Séparateur -->
-    <div class="kebab-divider"></div>
-
-    <!-- Lien Hub complet -->
-    <a href="hub.html" class="kebab-item kebab-hub-link" role="menuitem">
-      <span class="kebab-ico">📂</span>
-      <div>
-        <div class="kebab-item-name">Voir toutes les sections</div>
-        <div class="kebab-item-sub">Carte complète d'Albexia →</div>
-      </div>
-    </a>
-
-  </div>
-</div>
-
-</nav>
-
-<!-- ─── HERO HUB ─── -->
-<header class="hub-hero">
-  <div class="hub-hero-glow"></div>
-  <div class="hub-hero-inner container">
-    <span class="hub-hero-badge">
-      <span class="pulse"></span>
-      Carte complète
-    </span>
-    <h1>Votre <span class="grad">Hub Central</span></h1>
-    <p>Toutes les sections d'Albexia organisées pour vous. Trouvez en un clic l'outil, le guide ou la niche qui transformera votre façon de travailler avec l'IA.</p>
-  </div>
-</header>
-
-<!-- ─── CARTE OUTIL VEDETTE ─── -->
-<div class="hub-spotlight-wrap container" id="hub-spotlight">
-  <!-- Injecté par hub.js -->
-</div>
-
-<!-- ════════════════════════════════
-     ZONE 1 — La Boîte à Outils
-     ════════════════════════════════ -->
-<section class="hub-zone container">
-  <div class="hub-zone-header">
-    <span class="hub-zone-icon">🛠️</span>
+  <header class="hub-head">
+    <svg class="hub-head-ic"><use href="#i-grid"/></svg>
     <div>
-      <h2 class="hub-zone-title">La Boîte à Outils Fondamentale</h2>
-      <p class="hub-zone-desc">Tout ce qu'il vous faut pour comprendre, comparer et économiser sur les meilleures solutions IA du marché.</p>
+      <h1>Explorez <span class="grad">toutes les sections</span></h1>
+      <p>Retrouvez rapidement tous les outils, catégories et ressources de notre annuaire IA.</p>
     </div>
+  </header>
+
+  <div class="hub-cols">
+
+    <section class="hub-col" aria-labelledby="h-annuaire">
+      <h2 id="h-annuaire"><svg class="ic c-violet"><use href="#i-compass"/></svg>Explorer l'annuaire</h2>
+      <ul>
+        <li><a href="/index.html#tools">Tous les outils IA</a></li>
+        <li><a href="/comparateur/">Comparateur</a></li>
+        <li><a href="/pages/alternatives.html">Alternatives gratuites</a></li>
+        <li><a href="/deals/">Bons plans</a></li>
+        <li><a href="/index.html#blog">Blog IA</a></li>
+        <li><a href="/index.html#gallery">Galerie IA</a></li>
+        <li><a href="/tutoriels/index.html">Tutoriels vidéo</a></li>
+      </ul>
+    </section>
+
+    <section class="hub-col" aria-labelledby="h-cat">
+      <h2 id="h-cat"><svg class="ic c-pink"><use href="#i-grid"/></svg>Catégories IA</h2>
+      <ul>
+        <li><a href="/categorie/fr/texte/">Texte</a></li>
+        <li><a href="/categorie/fr/contenu/">Contenu</a></li>
+        <li><a href="/categorie/fr/video/">Vidéo</a></li>
+        <li><a href="/categorie/fr/audio/">Audio</a></li>
+        <li><a href="/categorie/fr/code/">Code</a></li>
+        <li><a href="/categorie/fr/productivite/">Productivité</a></li>
+        <li><a href="/categorie/fr/marketing/">Marketing</a></li>
+        <li><a href="/categorie/fr/seo/">SEO</a></li>
+        <li><a href="/categorie/fr/recherche/">Recherche</a></li>
+        <li><a href="/categorie/fr/juridique/">Juridique</a></li>
+        <li><a href="/categorie/fr/" class="more">Toutes les catégories</a></li>
+      </ul>
+    </section>
+
+    <section class="hub-col" aria-labelledby="h-niches">
+      <h2 id="h-niches"><svg class="ic c-mint"><use href="#i-target"/></svg>Explorer par besoin</h2>
+      <ul>
+        <li><a href="/niches/redaction-seo.html">Rédaction &amp; SEO</a></li>
+        <li><a href="/niches/automatisation.html">Automatisation &amp; productivité</a></li>
+        <li><a href="/niches/micro-saas-nocode.html">Micro-SaaS &amp; no-code</a></li>
+        <li><a href="/niches/youtube-video.html">YouTube &amp; vidéo IA</a></li>
+        <li><a href="/niches/ecommerce-marketing.html">E-commerce &amp; marketing</a></li>
+        <li><a href="/niches/ia-pour-les-avocats/">IA pour les avocats</a></li>
+        <li><a href="/niches/ia-pour-les-marketeurs-digitaux/">IA pour les marketeurs</a></li>
+        <li><a href="/niches/ia-pour-les-specialistes-seo/">IA pour les spécialistes SEO</a></li>
+      </ul>
+    </section>
+
+    <section class="hub-col" aria-labelledby="h-comp">
+      <h2 id="h-comp"><svg class="ic c-amber"><use href="#i-scale"/></svg>Comparer &amp; remplacer</h2>
+      <ul>
+        <li><a href="/comparateur/chatgpt-vs-gemini-ai/">ChatGPT vs Gemini</a></li>
+        <li><a href="/comparateur/zapier-vs-make/">Zapier vs Make</a></li>
+        <li><a href="/comparer/midjourney-vs-chatgpt.html">Midjourney vs ChatGPT</a></li>
+        <li><a href="/comparer/dalle-3-vs-stable-diffusion.html">DALL·E 3 vs Stable Diffusion</a></li>
+        <li><a href="/comparer/notion-ai-vs-gamma.html">Notion AI vs Gamma</a></li>
+        <li><a href="/alternatives/claude-ai.html">Remplacer Claude AI</a></li>
+        <li><a href="/alternatives/elevenlabs.html">Remplacer ElevenLabs</a></li>
+        <li><a href="/alternatives/suno.html">Remplacer Suno AI</a></li>
+        <li><a href="/comparateur/" class="more">Tous les duels</a></li>
+        <li><a href="/pages/alternatives.html" class="more">Toutes les alternatives</a></li>
+      </ul>
+    </section>
+
+    <section class="hub-col" aria-labelledby="h-res">
+      <h2 id="h-res"><svg class="ic c-blue"><use href="#i-book"/></svg>Ressources</h2>
+      <ul>
+        <li><a href="/glossaire/">Glossaire de l'IA</a></li>
+        <li><a href="/glossaire/agent-ia/">Agent IA</a></li>
+        <li><a href="/glossaire/api/">API</a></li>
+        <li><a href="/glossaire/apprentissage-automatique/">Apprentissage automatique</a></li>
+        <li><a href="/pages/faq.html">Centre d'aide &amp; FAQ</a></li>
+        <li><a href="/ressources.html">Guides &amp; PDF gratuits</a></li>
+        <li><a href="/index.html#blog">Tous les articles</a></li>
+      </ul>
+    </section>
+
+    <section class="hub-col" aria-labelledby="h-part">
+      <h2 id="h-part"><svg class="ic c-violet"><use href="#i-users"/></svg>Participer</h2>
+      <ul>
+        <li><a href="/soumettre/">Ajouter un outil</a></li>
+        <li><a href="/profil.html">Espace créateur</a></li>
+        <li><a href="/pages/elite.html">Offre Élite</a></li>
+        <li><a href="/contact.html">Contacter l'équipe</a></li>
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="/politique-confidentialite.html">Confidentialité</a></li>
+      </ul>
+    </section>
+
   </div>
-  <div class="hub-cards-grid hub-cards-3">
 
-    <a href="glossaire.html" class="hub-card hub-card--teal">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">📖</div>
-      <h3 class="hub-card-title">Glossaire IA</h3>
-      <p class="hub-card-desc">Parlez couramment l'intelligence artificielle. Tous les termes techniques expliqués simplement.</p>
-      <div class="hub-card-cta">Explorer <span>→</span></div>
-    </a>
+  <section class="hub-wide" aria-labelledby="h-art">
+    <h2 id="h-art">Derniers articles</h2>
+    <ul class="hub-chips">
+      <li><a href="/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/">Qu'est-ce que l'intelligence artificielle ?</a></li>
+      <li><a href="/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/">Prompting : poser les bonnes questions</a></li>
+      <li><a href="/articles/fr/10-usages-pratiques-de-l-ia-dans-la-vie-quotidienne/">10 usages pratiques de l'IA</a></li>
+      <li><a href="/articles/fr/revolution-no-code-ia/">La révolution du no-code</a></li>
+      <li><a href="/articles/fr/comment-proteger-vos-donnees-face-aux-services-ia/">Protéger vos données face à l'IA</a></li>
+      <li><a href="/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/">Les limites actuelles de l'IA</a></li>
+      <li><a href="/articles/fr/annuaire-ia-comment-choisir-l-outil-adapte-a-vos-besoins/">Choisir l'outil adapté</a></li>
+      <li><a href="/articles/fr/avis-customgpt-ai-agent-entreprise/">Avis CustomGPT.ai</a></li>
+    </ul>
+  </section>
 
-    <a href="comparateur.html" class="hub-card hub-card--purple">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">⚖️</div>
-      <h3 class="hub-card-title">Le Comparateur</h3>
-      <p class="hub-card-desc">Ne choisissez plus au hasard. Comparez les prix et les fonctionnalités pour trouver l'IA idéale.</p>
-      <div class="hub-card-cta">Comparer <span>→</span></div>
-    </a>
+  <section class="hub-wide" aria-labelledby="h-fiches">
+    <h2 id="h-fiches">Fiches outils détaillées <span class="count" id="fiches-count"></span></h2>
+    <input type="search" id="fiches-q" class="hub-search" placeholder="Filtrer les fiches…" aria-label="Filtrer les fiches outils" autocomplete="off">
+    <div id="fiches-skel" class="hub-chips skel" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <ul id="fiches-list" class="hub-chips" hidden></ul>
+    <p id="fiches-empty" class="hub-empty" hidden>Aucune fiche ne correspond — <a href="/soumettre/">proposer un outil →</a></p>
+  </section>
 
-    <a href="deals.html" class="hub-card hub-card--amber">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">🔥</div>
-      <h3 class="hub-card-title">Deals &amp; Promos</h3>
-      <p class="hub-card-desc">Maximisez votre budget. Accédez aux codes promos et offres exclusives du moment.</p>
-      <div class="hub-card-cta">Voir les offres <span>→</span></div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ════════════════════════════════
-     ZONE 2 — Niches Métier
-     ════════════════════════════════ -->
-<section class="hub-zone container">
-  <div class="hub-zone-header">
-    <span class="hub-zone-icon">🚀</span>
-    <div>
-      <h2 class="hub-zone-title">IA Appliquée à votre Métier</h2>
-      <p class="hub-zone-desc">Des guides profonds et des sélections d'outils triés sur le volet pour transformer votre flux de travail quotidien.</p>
+  <section class="hub-quick" aria-labelledby="h-quick">
+    <div class="hub-quick-intro">
+      <svg class="ic c-violet"><use href="#i-bolt"/></svg>
+      <div><h2 id="h-quick">Accès rapides</h2><p>Accédez en un clic aux sections les plus consultées.</p></div>
     </div>
-  </div>
-  <div class="hub-cards-grid hub-cards-2-3">
-
-    <a href="niches/redaction-seo.html" class="hub-card hub-card--pink">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">✍️</div>
-      <h3 class="hub-card-title">Rédaction &amp; SEO</h3>
-      <p class="hub-card-desc">Dominez Google. Les outils pour écrire plus vite et mieux sans perdre votre touche humaine.</p>
-      <div class="hub-card-cta">Découvrir <span>→</span></div>
-    </a>
-
-    <a href="niches/youtube-video.html" class="hub-card hub-card--red">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">🎬</div>
-      <h3 class="hub-card-title">YouTube &amp; Vidéo IA</h3>
-      <p class="hub-card-desc">Devenez créateur sans caméra. De la génération de script au montage automatique.</p>
-      <div class="hub-card-cta">Découvrir <span>→</span></div>
-    </a>
-
-    <a href="niches/ecommerce-marketing.html" class="hub-card hub-card--green">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">🛒</div>
-      <h3 class="hub-card-title">E-commerce &amp; Marketing</h3>
-      <p class="hub-card-desc">Vendez en automatique. Optimisez vos fiches produits et vos campagnes publicitaires.</p>
-      <div class="hub-card-cta">Découvrir <span>→</span></div>
-    </a>
-
-    <a href="niches/automatisation.html" class="hub-card hub-card--blue">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">⚙️</div>
-      <h3 class="hub-card-title">Automatisation &amp; Productivité</h3>
-      <p class="hub-card-desc">Gagnez des heures chaque jour. Connectez vos outils et déléguez les tâches répétitives.</p>
-      <div class="hub-card-cta">Découvrir <span>→</span></div>
-    </a>
-
-    <a href="niches/micro-saas-nocode.html" class="hub-card hub-card--purple">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">🧩</div>
-      <h3 class="hub-card-title">Micro-SaaS &amp; No-Code</h3>
-      <p class="hub-card-desc">Créez des produits sans coder. Lancez votre SaaS en quelques jours avec l'IA.</p>
-      <div class="hub-card-cta">Découvrir <span>→</span></div>
-    </a>
-
-    <!-- Carte Fantôme -->
-    <div class="hub-card hub-card--ghost">
-      <div class="hub-card-ico">✨</div>
-      <h3 class="hub-card-title">Nouvelle niche</h3>
-      <p class="hub-card-desc">Une nouvelle niche est en cours de préparation. Revenez bientôt !</p>
-      <div class="hub-card-badge">Bientôt disponible</div>
+    <div class="hub-quick-grid">
+      <a href="/index.html#tools" class="q q1"><span class="qi"><svg class="ic"><use href="#i-search"/></svg></span>Voir tous les outils</a>
+      <a href="/categorie/fr/" class="q q2"><span class="qi"><svg class="ic"><use href="#i-grid"/></svg></span>Parcourir les catégories</a>
+      <a href="/comparateur/" class="q q3"><span class="qi"><svg class="ic"><use href="#i-scale"/></svg></span>Comparer les outils</a>
+      <a href="/tutoriels/index.html" class="q q4"><span class="qi"><svg class="ic"><use href="#i-star"/></svg></span>Tutoriels vidéo</a>
+      <a href="/deals/" class="q q5"><span class="qi"><svg class="ic"><use href="#i-gift"/></svg></span>Bons plans</a>
     </div>
+  </section>
+</main>
 
-  </div>
-</section>
+<div id="site-footer"></div>
 
-<!-- ════════════════════════════════
-     ZONE 3 — Académie & Action
-     ════════════════════════════════ -->
-<section class="hub-zone container">
-  <div class="hub-zone-header">
-    <span class="hub-zone-icon">🎓</span>
-    <div>
-      <h2 class="hub-zone-title">Apprendre &amp; Contribuer</h2>
-      <p class="hub-zone-desc">Passez de la théorie à la pratique avec nos ressources interactives et participez à l'évolution de l'annuaire.</p>
-    </div>
-  </div>
-  <div class="hub-cards-grid hub-cards-3">
-
-    <a href="tutoriels.html" class="hub-card hub-card--pink">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">🎥</div>
-      <h3 class="hub-card-title">Vidéothèque IA</h3>
-      <p class="hub-card-desc">Apprenez par l'image. Des tutoriels filtrés par durée pour maîtriser chaque outil.</p>
-      <div class="hub-card-cta">Voir les tutos <span>→</span></div>
-    </a>
-
-    <a href="tutoriels.html#soumettre" class="hub-card hub-card--teal">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">📤</div>
-      <h3 class="hub-card-title">Soumettre un Tuto</h3>
-      <p class="hub-card-desc">Devenez une référence. Partagez votre expertise avec la communauté et boostez votre chaîne.</p>
-      <div class="hub-card-cta">Contribuer <span>→</span></div>
-    </a>
-
-    <a href="ressources.html" class="hub-card hub-card--purple">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">📄</div>
-      <h3 class="hub-card-title">Guides &amp; Checklists</h3>
-      <p class="hub-card-desc">Passez à l'action. Des PDF prêts à l'emploi pour ne rater aucune étape de votre transformation IA.</p>
-      <div class="hub-card-cta">Télécharger <span>→</span></div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ════════════════════════════════
-     ZONE 4 — Communauté & Ressources
-     ════════════════════════════════ -->
-<section class="hub-zone container">
-  <div class="hub-zone-header">
-    <span class="hub-zone-icon">🤝</span>
-    <div>
-      <h2 class="hub-zone-title">Communauté &amp; Ressources</h2>
-      <p class="hub-zone-desc">Posez vos questions, trouvez des alternatives gratuites et contribuez à l'annuaire en soumettant vos outils favoris.</p>
-    </div>
-  </div>
-  <div class="hub-cards-grid hub-cards-3">
-
-    <a href="pages/faq.html" class="hub-card hub-card--teal">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">💬</div>
-      <h3 class="hub-card-title">Centre d'aide &amp; FAQ</h3>
-      <p class="hub-card-desc">40 questions claires sur l'IA générative, les tarifs et les outils. Réponses pensées pour les francophones.</p>
-      <div class="hub-card-cta">Consulter <span>→</span></div>
-    </a>
-
-    <a href="pages/alternatives.html" class="hub-card hub-card--green">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">🆓</div>
-      <h3 class="hub-card-title">Alternatives gratuites</h3>
-      <p class="hub-card-desc">19 guides pour remplacer ChatGPT, Midjourney et GitHub Copilot par des solutions open-source ou gratuites.</p>
-      <div class="hub-card-cta">Explorer <span>→</span></div>
-    </a>
-
-    <a href="pages/soumettre.html" class="hub-card hub-card--pink">
-      <div class="hub-card-glow"></div>
-      <div class="hub-card-ico">📤</div>
-      <h3 class="hub-card-title">Soumettre un outil IA</h3>
-      <p class="hub-card-desc">Listing premium gratuit pendant la phase de lancement. Faites référencer votre outil devant toute la communauté francophone.</p>
-      <div class="hub-card-cta">Soumettre <span>→</span></div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ─── CTA FINAL ─── -->
-<div class="hub-cta-banner container">
-  <div class="hub-cta-inner">
-    <div class="hub-cta-glow"></div>
-    <span class="hub-cta-ico">🌍</span>
-    <h2>Albexia — L'IA en français pour tous.</h2>
-    <p>Le premier annuaire IA pensé pour l'Afrique, les Caraïbes, la France et le Québec.</p>
-    <a href="index.html" class="btn-main">Explorer les outils →</a>
-  </div>
-</div>
-
-<!-- ─── FOOTER ─── -->
- <footer><div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">&copy; 2025-2026 <a href="../index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> — <a href="../mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> · <a href="../politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> · <a href="../contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a></div></footer>
-  
-
-<script src="js/hub.js"></script>
+<script src="/js/header.js" defer></script>
+<script src="/js/footer.js" defer></script>
+<script src="/js/i18n.js"></script>
 <script>
-  // Kebab toggle
-  const kebabBtn = document.getElementById('kebab-btn');
-  const kebabMenu = document.getElementById('kebab-menu');
-  if (kebabBtn && kebabMenu) {
-    kebabBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = kebabMenu.classList.toggle('open');
-      kebabBtn.setAttribute('aria-expanded', open);
-    });
-    document.addEventListener('click', () => {
-      kebabMenu.classList.remove('open');
-      kebabBtn.setAttribute('aria-expanded', 'false');
-    });
-    kebabMenu.addEventListener('click', e => e.stopPropagation());
+(async function () {
+  var list = document.getElementById('fiches-list'), skel = document.getElementById('fiches-skel'),
+      empty = document.getElementById('fiches-empty'), q = document.getElementById('fiches-q'),
+      count = document.getElementById('fiches-count'), items = [];
+  function render() {
+    var s = q.value.trim().toLowerCase();
+    var v = items.filter(function (t) { return !s || t.name.toLowerCase().indexOf(s) > -1; });
+    list.innerHTML = v.map(function (t) {
+      return '<li><a href="/' + t.page + '">' + t.name.replace(/</g, '&lt;') + '</a></li>';
+    }).join('');
+    list.hidden = !v.length; empty.hidden = !!v.length;
   }
+  try {
+    var r = await fetch('/data/tools.json'); if (!r.ok) throw 0;
+    var all = await r.json(), seen = {};
+    items = all.filter(function (t) {
+      if (!t.page || (t.langue && t.langue !== 'fr') || /^tools\/(en|es)\//.test(t.page) || seen[t.page]) return false;
+      return (seen[t.page] = true);
+    }).sort(function (a, b) { return a.name.localeCompare(b.name, 'fr'); });
+    count.textContent = '(' + items.length + ')';
+    skel.hidden = true; render();
+  } catch (e) {
+    skel.hidden = true; empty.hidden = false;
+    empty.textContent = 'Impossible de charger les fiches pour le moment.';
+  }
+  q.addEventListener('input', render);
+})();
 </script>
 </body>
 </html>

@@ -44,7 +44,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v5';
+const TEMPLATE_VERSION = 'layout-v6'; // v6 : fiche outil unique (fiche-outil.js)
 
 function loadState() {
   try {
@@ -144,6 +144,7 @@ function reecrireAnciensDomaines(html) {
 }
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
+const { generateFiche } = require('./fiche-outil'); // template unique de fiche outil (voir fiche-outil.js)
 
 function sharedJS() {
   return '';
@@ -4160,6 +4161,10 @@ ${firestoreModule}
 // ════════════════════════════════════════════════════════════
 // MAIN
 // ════════════════════════════════════════════════════════════
+// Dépendances passées au générateur unique de fiche (évite un require circulaire).
+const FICHE_DEPS = { esc: escHtml, slugify, seoHeadTags, toolLangueUrls, toolFicheUrl,
+  navHTML, footerHTML, faqJS, tutorialJS, sharedJS, R };
+
 async function main() {
   const state = loadState();
   const newState = { outils: {}, articles: {}, comparaisons: {}, niches: {}, videotheques: {}, glossaire: {} };
@@ -4206,9 +4211,7 @@ async function main() {
 
     let html;
     if (tool.status === 'offline')     html = generateOfflineTakeover(tool, tools);
-    else if (plan === 'featured')      html = generateFeatured(tool, tools);
-    else if (plan === 'starter')       html = generateStarter(tool, tools);
-    else                                html = generateStandard(tool, tools);
+    else                                html = generateFiche(tool, tools, FICHE_DEPS); // 1 template, le plan ne change que l'affichage (PLAN_RULES)
 
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(filePath, html, 'utf8');

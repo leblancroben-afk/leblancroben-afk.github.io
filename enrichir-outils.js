@@ -81,8 +81,15 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `alternatives : noms de 2-3 outils concurrents réellement comparables, séparés par des virgules. ` +
     `fonctionnalites : 3 à 4 fonctionnalités clés, chacune avec un emoji pertinent dans le champ "icon" (pas "emoji"), un titre court, une description d'une phrase. ` +
     `faq : 2 à 4 questions/réponses réellement utiles pour quelqu'un qui découvre cet outil. ` +
-    `presentation : SI le plan est "featured", rédige 2-3 paragraphes de présentation détaillée (séparés par un retour à la ligne), sinon null. ` +
-    `meta_description : SI le plan est "featured", une meta-description SEO de 155 caractères maximum, sinon null. ` +
+    `presentation : 2-3 paragraphes de présentation détaillée, factuels (séparés par un retour à la ligne) — la fiche est unique pour tous les plans. ` +
+    `meta_description : une meta-description SEO de 155 caractères maximum. ` +
+    `sous_categorie : sous-catégorie courte en français (ex. "Assistant de rédaction"), null si incertain. ` +
+    `modele : "proprietaire" ou "open_source", null si tu ne sais pas avec certitude. ` +
+    `annee_creation : année de lancement (nombre entier) si tu la connais avec certitude, sinon null. ` +
+    `support : canaux de support connus (ex. "Email, Centre d'aide"), null si incertain. ` +
+    `tarifs : les formules tarifaires PUBLIQUES de l'outil (2 à 4), chacune {nom, prix, periode, desc}. Les prix changent souvent : ` +
+    `si tu n'es pas certain du montant exact, mets prix "" (chaîne vide) et periode "" plutôt que d'inventer un chiffre. Un tableau vide vaut mieux qu'un tarif inventé. ` +
+    `Ces tarifs seront relus et vérifiés par l'administrateur avant affichage. ` +
     `interface_fr : true si l'interface existe en français, false sinon, null si tu ne sais pas avec certitude. ` +
     `api : true si l'outil propose une API publique, false sinon, null si incertain. ` +
     `mobile : true si une app mobile existe, false sinon, null si incertain. ` +
@@ -99,7 +106,8 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖", ` +
     `"points_forts": ["...","..."], "limite_principale": "...", "alternatives": "Nom1, Nom2, Nom3", ` +
     `"fonctionnalites": [{"icon":"🚀","titre":"...","desc":"..."}], "faq": [{"q":"...","a":"..."}], ` +
-    `"presentation": "..."|null, "meta_description": "..."|null, ` +
+    `"presentation": "..."|null, "meta_description": "..."|null, "sous_categorie": "..."|null, "modele": "proprietaire|open_source"|null, ` +
+    `"annee_creation": 2023|null, "support": "..."|null, "tarifs": [{"nom":"Gratuit","prix":"$0","periode":"","desc":"..."}], ` +
     `"interface_fr": true|false|null, "api": true|false|null, "mobile": true|false|null, "url_tarifs": "..."|null, ` +
     `"essai_gratuit": true|false|null, "duree_essai": "..."|null, "stats": [{"valeur":"200k","label":"tokens de contexte"}]}`;
 
@@ -185,7 +193,8 @@ async function main() {
         emoji: infos.emoji || '🤖',
         favicon,
         points_forts: Array.isArray(infos.points_forts) ? infos.points_forts : [],
-        limite_principale: infos.limite_principale || '',
+        limite: infos.limite_principale || '',            // champ lu par la fiche
+        limite_principale: infos.limite_principale || '', // conservé (compatibilité)
         alternatives: (infos.alternatives || '').split(',').map(s => s.trim()).filter(Boolean),
         fonctionnalites: Array.isArray(infos.fonctionnalites) ? infos.fonctionnalites : [],
         faq: Array.isArray(infos.faq) ? infos.faq : [],
@@ -199,6 +208,16 @@ async function main() {
         ...(infos.duree_essai ? { duree_essai: infos.duree_essai } : {}),
         stats: Array.isArray(infos.stats) ? infos.stats : [],
         ...(infos.presentation ? { presentation: infos.presentation } : {}),
+        ...(infos.sous_categorie ? { sous_categorie: infos.sous_categorie } : {}),
+        ...(infos.modele === 'proprietaire' || infos.modele === 'open_source' ? { modele: infos.modele } : {}),
+        ...(Number.isInteger(infos.annee_creation) ? { annee_creation: infos.annee_creation } : {}),
+        ...(infos.support ? { support: infos.support } : {}),
+        // Tarifs générés par l'IA : jamais affichés tant que l'admin ne les a pas vérifiés
+        // (admin → Outils → « Statut des tarifs » = Vérifiés).
+        tarifs: Array.isArray(infos.tarifs)
+          ? infos.tarifs.filter(t => t && t.nom).slice(0, 4).map(t => ({ nom: String(t.nom), prix: String(t.prix || ''), periode: String(t.periode || ''), desc: String(t.desc || '') }))
+          : [],
+        tarifs_verifie: false,
         ...(infos.meta_description ? { meta_description: infos.meta_description } : {}),
         // stats délibérément absent : des chiffres inventés (ex. "200k tokens")
         // sont le risque d'hallucination le plus visible et le plus gênant —

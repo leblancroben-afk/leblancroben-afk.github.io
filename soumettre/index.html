@@ -749,6 +749,43 @@
 
 
 
+
+<!-- ═══ Kebab + langue (repris tel quel) ═══ -->
+<script>
+  window.changerLanguePage = function(code) {
+    if (window.changerLangueGlobale) window.changerLangueGlobale(code);
+  };
+
+  const kebabBtn = document.getElementById('kebab-btn');
+  const kebabMenu = document.getElementById('kebab-menu');
+  if (kebabBtn && kebabMenu) {
+    kebabBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = kebabMenu.classList.toggle('open');
+      kebabBtn.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', () => {
+      kebabMenu.classList.remove('open');
+      kebabBtn.setAttribute('aria-expanded', 'false');
+    });
+    kebabMenu.addEventListener('click', e => e.stopPropagation());
+  }
+
+  function copyAddress() {
+    const addr = document.getElementById('crypto-address').textContent;
+    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+    navigator.clipboard.writeText(addr).then(() => {
+      const btn = document.querySelector('.btn-copy');
+      btn.textContent = t('soum.copiedBtn', langue);
+      btn.style.color = '#4ade80';
+      btn.style.borderColor = '#4ade80';
+      setTimeout(() => {
+        btn.textContent = t('submit.copyBtn', langue);
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 2000);
+    });
+  }
   function closeModal(e) {
     if (e.target === document.getElementById('modal-don')) {
       document.getElementById('modal-don').classList.remove('open');

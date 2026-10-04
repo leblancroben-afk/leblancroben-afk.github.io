@@ -46,7 +46,7 @@ const L = {
     tutorials: 'Tutoriels vidéo', faq: 'Questions fréquentes', integrations: 'Intégrations', apiT: 'API', apiDoc: "Documentation de l'API", updates: 'Mises à jour',
     reviews: 'Avis des utilisateurs', keyInfo: 'Informations clés', dev: 'Développeur', cat: 'Catégorie', sub: 'Sous-catégorie', model: 'Modèle',
     pricing: 'Tarification', ideal: 'Idéal pour', trial: 'Essai gratuit', from: 'À partir de', platforms: 'Plateformes', api: 'API', mobile: 'App mobile',
-    ifr: 'Interface FR', support: 'Support', social: 'Réseaux sociaux', yes: 'Oui', pricingT: 'Tarification', start: 'Commencer', seeOffer: "Voir l'offre",
+    ifr: 'Interface FR', support: 'Support', social: 'Réseaux sociaux', yes: 'Oui', pricingT: 'Tarification', start: 'Commencer', tryFree: 'Essayer gratuitement', seeOffer: "Voir l'offre",
     alts: 'Alternatives populaires', altsMore: 'Comparer les alternatives', altsFor: (n) => `Alternative à ${n}`, articles: 'Articles liés',
     helpful: 'Cet outil vous a été utile ?', no: 'Non', thanks: 'Merci pour votre retour', know: 'Vous connaissez un autre outil ?', knowSub: 'Soumettez-le pour aider la communauté', submit: 'Soumettre un outil',
     price: { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' }, models: { proprietaire: 'Propriétaire', open_source: 'Open source' },
@@ -63,7 +63,7 @@ const L = {
     tutorials: 'Video tutorials', faq: 'FAQ', integrations: 'Integrations', apiT: 'API', apiDoc: 'API documentation', updates: 'Updates',
     reviews: 'User reviews', keyInfo: 'Key information', dev: 'Developer', cat: 'Category', sub: 'Subcategory', model: 'Model',
     pricing: 'Pricing', ideal: 'Ideal for', trial: 'Free trial', from: 'Starting at', platforms: 'Platforms', api: 'API', mobile: 'Mobile app',
-    ifr: 'FR interface', support: 'Support', social: 'Social media', yes: 'Yes', pricingT: 'Pricing', start: 'Get started', seeOffer: 'View plan',
+    ifr: 'FR interface', support: 'Support', social: 'Social media', yes: 'Yes', pricingT: 'Pricing', start: 'Get started', tryFree: 'Try for free', seeOffer: 'View plan',
     alts: 'Popular alternatives', altsMore: 'Compare alternatives', altsFor: (n) => `Alternative to ${n}`, articles: 'Related articles',
     helpful: 'Was this tool useful?', no: 'No', thanks: 'Thanks for your feedback', know: 'Know another tool?', knowSub: 'Submit it to help the community', submit: 'Submit a tool',
     price: { free: 'Free', freemium: 'Freemium', paid: 'Paid' }, models: { proprietaire: 'Proprietary', open_source: 'Open source' },
@@ -80,7 +80,7 @@ const L = {
     tutorials: 'Tutoriales en vídeo', faq: 'Preguntas frecuentes', integrations: 'Integraciones', apiT: 'API', apiDoc: 'Documentación de la API', updates: 'Novedades',
     reviews: 'Reseñas de usuarios', keyInfo: 'Información clave', dev: 'Desarrollador', cat: 'Categoría', sub: 'Subcategoría', model: 'Modelo',
     pricing: 'Precios', ideal: 'Ideal para', trial: 'Prueba gratis', from: 'Desde', platforms: 'Plataformas', api: 'API', mobile: 'App móvil',
-    ifr: 'Interfaz FR', support: 'Soporte', social: 'Redes sociales', yes: 'Sí', pricingT: 'Precios', start: 'Empezar', seeOffer: 'Ver plan',
+    ifr: 'Interfaz FR', support: 'Soporte', social: 'Redes sociales', yes: 'Sí', pricingT: 'Precios', start: 'Empezar', tryFree: 'Probar gratis', seeOffer: 'Ver plan',
     alts: 'Alternativas populares', altsMore: 'Comparar alternativas', altsFor: (n) => `Alternativa a ${n}`, articles: 'Artículos relacionados',
     helpful: '¿Te ha sido útil esta herramienta?', no: 'No', thanks: 'Gracias por tu opinión', know: '¿Conoces otra herramienta?', knowSub: 'Envíala para ayudar a la comunidad', submit: 'Enviar una herramienta',
     price: { free: 'Gratis', freemium: 'Freemium', paid: 'De pago' }, models: { proprietaire: 'Propietario', open_source: 'Código abierto' },
@@ -89,24 +89,14 @@ const L = {
   },
 };
 
-// ── Icônes SVG inline (aucune dépendance externe) ──
-const ICONS = {
-  share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>',
-  heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
-  scale: '<path d="M12 3v18M5 7h14M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7zM8 21h8"/>',
-  check: '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/>',
-  left: '<path d="M15 6l-6 6 6 6"/>', right: '<path d="M9 6l6 6-6 6"/>',
-  ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
-  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
-  lang: '<path d="M4 5h9M8.5 3v2M6 5c0 4 3 7 6 8M11 5c0 3-3 7-7 9M13 20l4-9 4 9M14.5 17h5"/>',
-  cal: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
-  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
-  up: '<path d="M7 11v9H4v-9h3zM7 11l4-8c1.5 0 2.5 1 2.5 2.5V9H19a2 2 0 0 1 2 2.3l-1 6.5A2 2 0 0 1 18 20H7"/>',
-  wand: '<path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/>',
-};
-const ic = (n, cls = '') => `<svg class="fo-ico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
+// ── Icônes SVG : bibliothèque partagée avec l'admin (js/fiche-icons.js) — aucun emoji ──
+const FI = require('./js/fiche-icons.js');
+const ic = (n, cls = '') => FI.svg(n, cls);
 const STAR = '<svg class="fo-ico fo-ico-fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
-const WIN = '<svg class="fo-ico fo-ico-fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5l7.5-1v7H3zM12 4.3L21 3v8.5h-9zM3 12.5h7.5v7L3 18.5zM12 12.5H21V21l-9-1.3z"/></svg>';
+
+// Thème de la fiche : 'template' = couleurs exactes de la maquette (page claire, bandeau bleu nuit)
+//                     'albexia'  = couleurs sombres du site. Un seul mot à changer.
+const FICHE_THEME = 'template';
 
 const safeUrl = (u) => (/^https?:\/\//i.test(String(u || '').trim()) ? String(u).trim() : '');
 const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
@@ -189,8 +179,6 @@ function generateFiche(tool, allTools = [], deps) {
 <header class="fo-hero">
   <div class="fo-wrap">
     <div class="fo-topbar">
-      <div class="fo-crumbs"><a href="${R}index.html">${E(T.home)}</a><span aria-hidden="true">&rsaquo;</span>
-        <a href="${R}index.html#tools">${E(category)}</a><span aria-hidden="true">&rsaquo;</span><span aria-current="page">${E(name)}</span></div>
       <div class="fo-actions-top">
         <button type="button" class="fo-pill" data-fo-share data-copied="${E(T.copied)}">${ic('share')}<span>${E(T.share)}</span></button>
         <button type="button" class="fo-pill" data-fo-fav aria-pressed="false" data-on="${E(T.favOn)}" data-off="${E(T.fav)}">${ic('heart')}<span>${E(T.fav)}</span></button>
@@ -249,7 +237,7 @@ function generateFiche(tool, allTools = [], deps) {
   <h2>${E(T.takeaways)}</h2>
   <div class="fo-feat-grid">
     ${pf.map((p) => `<div class="fo-feat is-ok"><div class="fo-feat-ico">${ic('check')}</div><div><h3>${E(p)}</h3></div></div>`).join('')}
-    ${limite ? `<div class="fo-feat is-warn"><div class="fo-feat-ico">!</div><div><h3>${E(T.limit)}</h3><p>${E(limite)}</p></div></div>` : ''}
+    ${limite ? `<div class="fo-feat is-warn"><div class="fo-feat-ico">${ic('alert')}</div><div><h3>${E(T.limit)}</h3><p>${E(limite)}</p></div></div>` : ''}
   </div>
 </section>` : '';
 
@@ -257,7 +245,7 @@ function generateFiche(tool, allTools = [], deps) {
   const featuresSection = features.length ? `
 <section class="fo-card" id="fo-fonctionnalites">
   <h2>${E(T.mainFeatures)}</h2>
-  <div class="fo-feat-grid">${features.map((f) => `<div class="fo-feat"><div class="fo-feat-ico">${E(f.icon || '✦')}</div><div><h3>${E(f.titre)}</h3><p>${E(f.desc || '')}</p></div></div>`).join('')}</div>
+  <div class="fo-feat-grid">${features.map((f) => `<div class="fo-feat"><div class="fo-feat-ico">${ic(FI.featureKey(f.icon))}</div><div><h3>${E(f.titre)}</h3><p>${E(f.desc || '')}</p></div></div>`).join('')}</div>
 </section>` : '';
 
   // ── Captures (Featured) ──
@@ -306,12 +294,17 @@ function generateFiche(tool, allTools = [], deps) {
   const reviewsSection = `<section class="fo-card" id="fo-avis"><div class="fo-reviews-head"><h2>${E(T.reviews)}</h2></div><div id="reviews-section"></div></section>`;
 
   // ── Sidebar : informations clés ──
-  const platKeys = String(plateformes || '').toLowerCase();
-  const platChips = plateformes ? ([
-    [/web|navigateur|browser/, ic('globe') + ' Web'], [/windows/, WIN + ' Windows'], [/mac/, 'Mac'], [/ios|iphone|ipad/, 'iOS'], [/android/, 'Android'], [/linux/, 'Linux'],
-  ].filter(([re]) => re.test(platKeys)).map(([, l]) => `<span class="fo-chip">${l}</span>`).join('') || `<span class="fo-chip">${E(plateformes)}</span>`) : '';
-  const soc = [['x', 'X'], ['linkedin', 'in'], ['youtube', 'YT']].filter(([k]) => safeUrl(reseaux[k]))
-    .map(([k, l]) => `<a href="${E(safeUrl(reseaux[k]))}" target="_blank" rel="noopener nofollow" aria-label="${k}">${l}</a>`).join('');
+  const PLAT_KEYS = ['web', 'windows', 'apple', 'android'];
+  let platIcons = Array.isArray(g('plateformes_icones')) ? g('plateformes_icones').filter((k) => PLAT_KEYS.includes(k)) : [];
+  if (!platIcons.length && plateformes) {   // anciennes fiches : on déduit les icônes du texte saisi
+    const t = String(plateformes).toLowerCase();
+    platIcons = [[/web|navigateur|browser/, 'web'], [/windows/, 'windows'], [/mac|ios|iphone|ipad|apple/, 'apple'], [/android/, 'android']].filter(([re]) => re.test(t)).map(([, k]) => k);
+  }
+  const platChips = platIcons.length
+    ? platIcons.map((k) => `<span class="fo-plat" title="${E(FI.BRAND[k][0])}" role="img" aria-label="${E(FI.BRAND[k][0])}">${ic(k)}</span>`).join('')
+    : (plateformes ? `<span class="fo-chip">${E(plateformes)}</span>` : '');
+  const soc = ['x', 'linkedin', 'youtube'].filter((k) => safeUrl(reseaux[k]))
+    .map((k) => `<a href="${E(safeUrl(reseaux[k]))}" target="_blank" rel="noopener nofollow" aria-label="${E(FI.BRAND[k][0])}" title="${E(FI.BRAND[k][0])}">${ic(k)}</a>`).join('');
   const modelKey = g('modele');
   const row = (label, val, cls = '') => (val ? `<div><dt>${E(label)}</dt><dd class="${cls}">${val}</dd></div>` : '');
   const infoRows = [
@@ -323,7 +316,7 @@ function generateFiche(tool, allTools = [], deps) {
     row(T.ideal, E(tool.ideal_pour)),
     row(T.trial, g('essai_gratuit') === true ? `${E(T.yes)}${g('duree_essai') ? ' · ' + E(g('duree_essai')) : ''}` : '', 'is-green'),
     row(T.from, E(g('a_partir_de')), 'is-strong'),
-    row(T.platforms, platChips ? `<div class="fo-chips">${platChips}</div>` : ''),
+    row(T.platforms, platChips ? `<div class="fo-plats">${platChips}</div>` : ''),
     row(T.api, g('api') === true ? E(T.yes) : ''),
     row(T.mobile, g('mobile') === true ? E(T.yes) : ''),
     rules.interfaceFr ? row(T.ifr, g('interface_fr') === true ? E(T.yes) : '', 'is-green') : '',
@@ -333,13 +326,14 @@ function generateFiche(tool, allTools = [], deps) {
   const infoCard = `<section class="fo-card" id="fo-infos"><h3 class="fo-h3">${E(T.keyInfo)}</h3><dl class="fo-info">${infoRows}</dl></section>`;
 
   // ── Sidebar : tarifs de l'outil ──
-  const planBtn = (p) => (/^\s*[$€£]?\s*(0([.,]0+)?(?![\d])|gratuit|free|gratis)/i.test(String(p.prix || '')) ? T.start : T.seeOffer);
+  const isFree = (p) => /^\s*[$€£]?\s*(0([.,]0+)?(?![\d])|gratuit|free|gratis)/i.test(String(p.prix || ''));
+  const planBtn = (p) => (isFree(p) ? T.start : (g('essai_gratuit') === true ? T.tryFree : T.seeOffer));
   const tarifsCard = tarifsOk ? `
 <section class="fo-card" id="fo-tarifs">
   <div class="fo-card-head"><h3 class="fo-h3">${E(T.pricingT)}</h3>${tarifsUrl ? `<a class="fo-link" href="${E(tarifsUrl)}" target="_blank" rel="noopener">${E(T.seePricing)}</a>` : ''}</div>
   <div class="fo-plans">${tarifsRaw.slice(0, 4).map((p) => `<div class="fo-plan"><div><b>${E(p.nom)}</b>
     ${p.prix ? `<strong>${E(p.prix)}${p.periode ? ` <small>${E(p.periode)}</small>` : ''}</strong>` : ''}${p.desc ? `<em>${E(p.desc)}</em>` : ''}</div>
-    <a class="fo-btn fo-btn-outline" href="${E(tarifsUrl || url)}" target="_blank" rel="noopener">${E(planBtn(p))}</a></div>`).join('')}</div>
+    <a class="fo-btn ${isFree(p) ? 'fo-btn-outline' : 'fo-btn-softsm'}" href="${E(tarifsUrl || url)}" target="_blank" rel="noopener">${E(planBtn(p))}</a></div>`).join('')}</div>
 </section>` : '';
   const pricingBtnOnly = !tarifsCard && rules.urlTarifs && tarifsUrl
     ? `<section class="fo-card"><a class="fo-btn fo-btn-soft" style="width:100%" href="${E(tarifsUrl)}" target="_blank" rel="noopener">${E(T.seePricing)} ${ic('ext')}</a></section>` : '';
@@ -392,8 +386,6 @@ function generateFiche(tool, allTools = [], deps) {
     <button type="button" class="fo-vote" data-fo-vote="up" aria-pressed="false">${ic('up')}<span>${E(T.yes)}</span></button>
     <button type="button" class="fo-vote down" data-fo-vote="down" aria-pressed="false">${ic('up')}<span>${E(T.no)}</span></button>
     <span class="t" data-fo-thanks hidden>${E(T.thanks)}</span></div>
-  <div class="fo-foot-r"><div class="s"><b>${E(T.know)}</b><small>${E(T.knowSub)}</small></div>
-    <a class="fo-btn fo-btn-soft" href="${R}soumettre/">${E(T.submit)}</a></div>
 </div>`;
 
   // ── SEO ──
@@ -495,7 +487,7 @@ ${ogLocaleAlternates}
 </head>
 <body>
 ${navHTML(langue)}
-<main class="fo-page" data-fo-id="${E(tool.id)}">
+<main class="fo-page fo-theme-${FICHE_THEME}" data-fo-id="${E(tool.id)}">
 ${hero}
 ${tabsNav}
 <div class="fo-body"><div class="fo-wrap">

@@ -58,6 +58,8 @@ async function fetchCategories() {
 // ══════════════════════════════════════
 // Gemini structure les champs depuis sa mémoire (pas de recherche web)
 // ══════════════════════════════════════
+const ICON_KEYS = require('./js/fiche-icons.js').FEATURE_KEYS; // clés d'icônes autorisées (source unique, partagée avec l'admin)
+
 async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 0) {
   const prompt = `Tu structures une fiche complète pour un annuaire d'outils IA francophone (Albexia), à partir de ` +
     `l'outil nommé "${nomOutil}" (plan : "${plan}"). Tu n'as PAS accès à une recherche web en temps réel — utilise uniquement ` +
@@ -79,7 +81,7 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `points_forts : 2 à 4 points forts réels et vérifiables (pas des généralités marketing), courtes phrases. ` +
     `limite_principale : LA limite/faiblesse principale connue de cet outil, une phrase honnête. ` +
     `alternatives : noms de 2-3 outils concurrents réellement comparables, séparés par des virgules. ` +
-    `fonctionnalites : 3 à 4 fonctionnalités clés, chacune avec un emoji pertinent dans le champ "icon" (pas "emoji"), un titre court, une description d'une phrase. ` +
+    `fonctionnalites : 3 à 4 fonctionnalités clés, chacune avec une icône dans le champ \"icon\" choisie parmi EXACTEMENT ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji), un titre court, une description d'une phrase. ` +
     `faq : 2 à 4 questions/réponses réellement utiles pour quelqu'un qui découvre cet outil. ` +
     `presentation : 2-3 paragraphes de présentation détaillée, factuels (séparés par un retour à la ligne) — la fiche est unique pour tous les plans. ` +
     `meta_description : une meta-description SEO de 155 caractères maximum. ` +
@@ -105,7 +107,7 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `{"trouve": true, "url": "https://...", "category": "...", "price": "free|freemium|paid", ` +
     `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖", ` +
     `"points_forts": ["...","..."], "limite_principale": "...", "alternatives": "Nom1, Nom2, Nom3", ` +
-    `"fonctionnalites": [{"icon":"🚀","titre":"...","desc":"..."}], "faq": [{"q":"...","a":"..."}], ` +
+    `"fonctionnalites": [{"icon":"rocket","titre":"...","desc":"..."}], "faq": [{"q":"...","a":"..."}], ` +
     `"presentation": "..."|null, "meta_description": "..."|null, "sous_categorie": "..."|null, "modele": "proprietaire|open_source"|null, ` +
     `"annee_creation": 2023|null, "support": "..."|null, "tarifs": [{"nom":"Gratuit","prix":"$0","periode":"","desc":"..."}], ` +
     `"interface_fr": true|false|null, "api": true|false|null, "mobile": true|false|null, "url_tarifs": "..."|null, ` +
@@ -196,7 +198,9 @@ async function main() {
         limite: infos.limite_principale || '',            // champ lu par la fiche
         limite_principale: infos.limite_principale || '', // conservé (compatibilité)
         alternatives: (infos.alternatives || '').split(',').map(s => s.trim()).filter(Boolean),
-        fonctionnalites: Array.isArray(infos.fonctionnalites) ? infos.fonctionnalites : [],
+        fonctionnalites: Array.isArray(infos.fonctionnalites)
+          ? infos.fonctionnalites.map(f => ({ ...f, icon: ICON_KEYS.includes(f && f.icon) ? f.icon : 'sparkles' }))
+          : [],
         faq: Array.isArray(infos.faq) ? infos.faq : [],
         // null volontaire de Gemini (incertain) → on n'écrit PAS le champ,
         // ce qui laisse "Non renseigné" dans l'admin plutôt qu'une fausse valeur.

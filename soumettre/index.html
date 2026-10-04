@@ -482,109 +482,8 @@
 </head>
 <body>
 
-<!-- NAV (reprise à l'identique de l'ancienne page — nécessaire pour l'auth, le kebab, la langue) -->
-<nav>
-   <div class="logo">
-      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-  <style>
-    .poly-part { animation: buildIn 1.2s ease-out forwards; opacity: 0; }
-    .logo-text { animation: fadeIn 1s ease-out 0.8s forwards; opacity: 0; }
-    @keyframes buildIn { 0% { opacity: 0; transform: translateY(10px) scale(0.8); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-    @keyframes fadeIn { 0% { opacity: 0; transform: translateX(-5px); } 100% { opacity: 1; transform: translateX(0); } }
-    .part-1 { animation-delay: 0.1s; }
-    .part-2 { animation-delay: 0.3s; }
-    .part-3 { animation-delay: 0.5s; }
-  </style>
-  <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
-  <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-  <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
-  <text class="logo-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">
-  Albe<tspan fill="#ff6b9d">x</tspan>ia
-</text>
-      </svg>
-   </div>
-
-    <div class="nav-links">
-    <button class="nav-link" onclick="window.location.href='/index.html'" data-i18n="nav.home">Accueil</button>
-    <button class="nav-link" onclick="window.location.href='/index.html#tools'" data-i18n="nav.tools">Outils</button>
-    <button class="nav-link" onclick="window.location.href='/index.html#blog'" data-i18n="nav.blog">Blog</button>
-    </div>
-
-      <div class="lang-switch">
-  <button
-    class="lang-current"
-    id="lang-current"
-    type="button"
-    aria-expanded="false"
-    aria-haspopup="true"
-    aria-label="Choisir la langue" data-i18n-aria-label="nav.chooseLangAria"
-  >
-    <span class="lang-globe">🌐</span>
-    <span id="lang-current-label">FR</span>
-    <span class="lang-arrow">⌄</span>
-  </button>
-
-  <div class="lang-menu" id="lang-menu">
-    <button class="lang-btn active" data-lang="fr" type="button">
-      🇫🇷 Français
-    </button>
-
-    <button class="lang-btn" data-lang="en" type="button">
-      🇬🇧 English
-    </button>
-
-    <button class="lang-btn" data-lang="es" type="button">
-      🇪🇸 Español
-    </button>
-  </div>
-</div>
-
-    <div class="nav-profile-slot">
-      <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
-        <div class="nav-avatar" id="nav-avatar">?</div>
-      </a>
-      <a href="/profil.html" id="nav-login-btn" class="nav-link" data-i18n="nav.login">Connexion</a>
-    </div>
-
-<div class="kebab-wrap" id="kebab-wrap">
-  <button class="kebab-btn" id="kebab-btn" aria-label="Plus de pages" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-  <div class="kebab-menu" id="kebab-menu" role="menu">
-    <div class="kebab-label" data-i18n="kebab.mustHave">Incontournables</div>
-    <a href="/glossaire.html" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">📖</span>
-      <div>
-        <div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div>
-        <div class="kebab-item-sub" data-i18n="kebab.glossarySub">Tous les termes en français</div>
-      </div>
-    </a>
-    <a href="/comparateur.html" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">⚖️</span>
-      <div>
-        <div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div>
-        <div class="kebab-item-sub" data-i18n="kebab.compareSub">Comparer les outils côte à côte</div>
-      </div>
-    </a>
-    <a href="/pages/deals.html" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">🔥</span>
-      <div>
-        <div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div>
-        <div class="kebab-item-sub" data-i18n="kebab.dealsSub">Essais gratuits · Offres exclusives</div>
-      </div>
-    </a>
-    <div class="kebab-divider"></div>
-    <a href="/hub.html" class="kebab-item kebab-hub-link" role="menuitem">
-      <span class="kebab-ico">📂</span>
-      <div>
-        <div class="kebab-item-name" data-i18n="kebab.hub">Voir toutes les sections</div>
-        <div class="kebab-item-sub" data-i18n="kebab.hubSub">Carte complète d'Albexia →</div>
-      </div>
-    </a>
-  </div>
-</div>
-</nav>
-
+<div id="site-header"></div>   
+  
 <div class="wrap">
 
   <div class="page-header">
@@ -842,101 +741,13 @@
   </div>
 </div>
 
-<!-- FOOTER -->
-<footer><div style="text-align:center;padding:24px 0;font-size:13px;color:#4a4a6a;">&copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> — <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none" data-i18n="footer.legalNotice">Mentions légales</a> · <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none" data-i18n="soum.footerPrivacy">Confidentialité</a> · <a href="/contact.html" style="color:#7a7a9a;text-decoration:none" data-i18n="footer.contactTitle">Contact</a></div></footer>
-
+<script src="/js/header.js" defer></script>
+<script src="/js/footer.js" defer></script>
+  
 <script src="/js/i18n.js"></script>
 
-<!-- ═══ AUTH — Avatar / Connexion dans la nav ═══ -->
-<script type="module">
-  import { auth, db, doc, getDoc, onAuthStateChanged }
-    from '/js/firebase-config.js';
 
-  const profileBtn = document.getElementById('nav-profile-btn');
-  const loginBtn   = document.getElementById('nav-login-btn');
-  if (loginBtn) loginBtn.style.display = 'none';
 
-  function setNavAvatar(photoURL, initial) {
-    const navAvatar = document.getElementById('nav-avatar');
-    if (!profileBtn || !loginBtn) return;
-    profileBtn.style.display = 'inline-flex';
-    loginBtn.style.display   = 'none';
-    if (!navAvatar) return;
-    if (photoURL) {
-      const img = document.createElement('img');
-      img.src   = photoURL;
-      img.alt   = 'Profil';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
-      img.onerror = () => { navAvatar.textContent = initial; };
-      navAvatar.innerHTML = '';
-      navAvatar.appendChild(img);
-    } else {
-      navAvatar.textContent = initial;
-    }
-  }
-
-  function setNavLoggedOut() {
-    if (!profileBtn || !loginBtn) return;
-    profileBtn.style.display = 'none';
-    loginBtn.style.display   = 'inline-flex';
-  }
-
-  onAuthStateChanged(auth, async (user) => {
-    window._firebaseUser = user || null;
-    if (user) {
-      const initial = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
-      setNavAvatar(user.photoURL || null, initial);
-      try {
-        const snap = await getDoc(doc(db, 'users', user.uid));
-        if (snap.exists() && snap.data().photoURL) {
-          setNavAvatar(snap.data().photoURL, initial);
-        }
-      } catch(e) {}
-      // Si la zone de connexion était affichée (Starter/Featured), on la masque
-      const zoneLogin = document.getElementById('zone-login-requis');
-      if (zoneLogin) zoneLogin.classList.remove('show');
-    } else {
-      setNavLoggedOut();
-    }
-  });
-</script>
-
-<!-- ═══ Kebab + langue (repris tel quel) ═══ -->
-<script>
-  window.changerLanguePage = function(code) {
-    if (window.changerLangueGlobale) window.changerLangueGlobale(code);
-  };
-
-  const kebabBtn = document.getElementById('kebab-btn');
-  const kebabMenu = document.getElementById('kebab-menu');
-  if (kebabBtn && kebabMenu) {
-    kebabBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = kebabMenu.classList.toggle('open');
-      kebabBtn.setAttribute('aria-expanded', open);
-    });
-    document.addEventListener('click', () => {
-      kebabMenu.classList.remove('open');
-      kebabBtn.setAttribute('aria-expanded', 'false');
-    });
-    kebabMenu.addEventListener('click', e => e.stopPropagation());
-  }
-
-  function copyAddress() {
-    const addr = document.getElementById('crypto-address').textContent;
-    const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
-    navigator.clipboard.writeText(addr).then(() => {
-      const btn = document.querySelector('.btn-copy');
-      btn.textContent = t('soum.copiedBtn', langue);
-      btn.style.color = '#4ade80';
-      btn.style.borderColor = '#4ade80';
-      setTimeout(() => {
-        btn.textContent = t('submit.copyBtn', langue);
-        btn.style.color = '';
-        btn.style.borderColor = '';
-      }, 2000);
-    });
-  }
 
   function closeModal(e) {
     if (e.target === document.getElementById('modal-don')) {

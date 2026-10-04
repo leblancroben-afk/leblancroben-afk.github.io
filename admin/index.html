@@ -302,12 +302,13 @@
                 </select>
               </div>
               <div>
-                <label>Plan</label>
+                <label>Offre Albexia (plan)</label>
                 <select id="o-plan">
                   <option value="">Standard</option>
                   <option value="starter">Starter</option>
                   <option value="featured">Featured</option>
                 </select>
+                <p class="field-hint">Ne change PAS ce que vous remplissez : tous les champs ci-dessous sont communs aux 3 offres. Le plan décide seulement de ce que la fiche affiche (nombre de fonctionnalités et de FAQ, captures, tutoriel, tarifs, badge, articles liés).</p>
               </div>
             </div>
             <div class="row">
@@ -404,18 +405,23 @@
               <label>Nom</label><input type="text" id="o-name-en">
               <label>Description</label><textarea id="o-desc-en"></textarea>
               <label>Idéal pour</label><input type="text" id="o-ideal-en">
-              <div id="acc-en-starter" style="display:none;">
-                <label>Fonctionnalités EN (emoji|titre|desc, une par ligne)</label>
-                <textarea id="o-fonctionnalites-en" style="min-height:100px;"></textarea>
-                <label>FAQ EN (question||réponse, une par ligne)</label>
-                <textarea id="o-faq-en" style="min-height:100px;"></textarea>
-              </div>
-              <div id="acc-en-featured" style="display:none;">
-                <label>Présentation longue EN</label>
-                <textarea id="o-presentation-en" style="min-height:140px;"></textarea>
-                <label>Meta description EN (155 car. max)</label>
-                <input type="text" id="o-meta-desc-en" maxlength="155">
-              </div>
+              <p class="field-hint">Contenu traduisible, saisi une seule fois par langue. Les champs communs (maker, plateformes, intégrations, captures, tutoriels…) sont repris automatiquement du FR.</p>
+              <label>Points forts EN (un par ligne)</label>
+              <textarea id="o-points-forts-en" style="min-height:70px;"></textarea>
+              <label>Limite principale EN</label>
+              <input type="text" id="o-limite-en">
+              <label>Fonctionnalités EN (emoji|titre|desc, une par ligne)</label>
+              <textarea id="o-fonctionnalites-en" style="min-height:100px;"></textarea>
+              <label>FAQ EN (question||réponse, une par ligne)</label>
+              <textarea id="o-faq-en" style="min-height:100px;"></textarea>
+              <label>Stats clés EN (valeur|label, une par ligne)</label>
+              <textarea id="o-stats-en" style="min-height:70px;"></textarea>
+              <label>Tarifs de l'outil EN (nom|prix|période|description, une par ligne)</label>
+              <textarea id="o-tarifs-en" style="min-height:80px;"></textarea>
+              <label>Présentation longue EN</label>
+              <textarea id="o-presentation-en" style="min-height:140px;"></textarea>
+              <label>Meta description EN (155 car. max)</label>
+              <input type="text" id="o-meta-desc-en" maxlength="155">
             </fieldset>
           </div>
           <button type="button" class="accordion-toggle" data-target="acc-es">+ Ajouter ES (optionnel)</button>
@@ -426,47 +432,85 @@
               <label>Nom</label><input type="text" id="o-name-es">
               <label>Description</label><textarea id="o-desc-es"></textarea>
               <label>Idéal pour</label><input type="text" id="o-ideal-es">
-              <div id="acc-es-starter" style="display:none;">
-                <label>Fonctionnalités ES (emoji|titre|desc, une par ligne)</label>
-                <textarea id="o-fonctionnalites-es" style="min-height:100px;"></textarea>
-                <label>FAQ ES (pregunta||respuesta, une par ligne)</label>
-                <textarea id="o-faq-es" style="min-height:100px;"></textarea>
-              </div>
-              <div id="acc-es-featured" style="display:none;">
-                <label>Presentación ES</label>
-                <textarea id="o-presentation-es" style="min-height:140px;"></textarea>
-                <label>Meta descripción ES (155 car. max)</label>
-                <input type="text" id="o-meta-desc-es" maxlength="155">
-              </div>
+              <p class="field-hint">Contenu traduisible, saisi une seule fois par langue. Les champs communs (maker, plateformes, intégrations, captures, tutoriels…) sont repris automatiquement du FR.</p>
+              <label>Points forts ES (un par ligne)</label>
+              <textarea id="o-points-forts-es" style="min-height:70px;"></textarea>
+              <label>Limite principale ES</label>
+              <input type="text" id="o-limite-es">
+              <label>Fonctionnalités ES (emoji|titre|desc, une par ligne)</label>
+              <textarea id="o-fonctionnalites-es" style="min-height:100px;"></textarea>
+              <label>FAQ ES (question||réponse, une par ligne)</label>
+              <textarea id="o-faq-es" style="min-height:100px;"></textarea>
+              <label>Stats clés ES (valeur|label, une par ligne)</label>
+              <textarea id="o-stats-es" style="min-height:70px;"></textarea>
+              <label>Tarifs de l'outil ES (nom|prix|période|description, une par ligne)</label>
+              <textarea id="o-tarifs-es" style="min-height:80px;"></textarea>
+              <label>Présentation longue ES</label>
+              <textarea id="o-presentation-es" style="min-height:140px;"></textarea>
+              <label>Meta description ES (155 car. max)</label>
+              <input type="text" id="o-meta-desc-es" maxlength="155">
             </fieldset>
           </div>
 
-          <fieldset id="fs-standard" style="display:none;">
-            <legend>Contenu fiche Standard</legend>
+          <fieldset>
+            <legend>📝 À propos de l'outil</legend>
+            <p class="field-hint" style="margin-top:-4px;">Affiché : Standard = description courte · Featured = présentation longue.</p>
+            <label>Présentation longue (paragraphes séparés par une ligne vide)</label>
+            <textarea id="o-presentation" style="min-height:140px;"></textarea>
+            <label>Meta description SEO (155 car. max)</label>
+            <input type="text" id="o-meta-desc" maxlength="155">
+            <div class="row">
+              <div><label>Type d'outil</label><input type="text" id="o-type-outil" placeholder="Assistant IA"></div>
+              <div><label>Sous-catégorie</label><input type="text" id="o-sous-cat" placeholder="Assistant de rédaction"></div>
+            </div>
+            <div class="row">
+              <div><label>Modèle</label>
+                <select id="o-modele"><option value="">— Non renseigné —</option><option value="proprietaire">Propriétaire</option><option value="open_source">Open source</option></select></div>
+              <div><label>Année de création</label><input type="number" id="o-annee" min="1990" max="2100" placeholder="2023"></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>✅ Points forts &amp; limite</legend>
+            <p class="field-hint" style="margin-top:-4px;">Affiché : Standard (bloc « Ce qu'on retient »).</p>
             <label>Points forts (un par ligne, 2-4 max)</label>
             <textarea id="o-points-forts" style="min-height:80px;"></textarea>
             <label>Limite principale</label>
             <input type="text" id="o-limite">
-            <label>Alternatives (noms séparés par virgules)</label>
-            <input type="text" id="o-alternatives">
           </fieldset>
 
-          <fieldset id="fs-starter" style="display:none;">
-            <legend>Contenu fiche Starter</legend>
-            <label>Stats clés (format : valeur|label, une par ligne, 4 max)</label>
-            <textarea id="o-stats" style="min-height:80px;"></textarea>
+          <fieldset>
+            <legend>⚡ Fonctionnalités, stats &amp; FAQ</legend>
+            <p class="field-hint" style="margin-top:-4px;">Affiché : Starter (3 fonctionnalités, 2 FAQ, 4 stats) · Featured (4 fonctionnalités, 4 FAQ, 4 stats). Remplissez tout : seules les premières lignes servent selon l'offre.</p>
             <label>Fonctionnalités (format : emoji|titre|description, une par ligne)</label>
             <textarea id="o-fonctionnalites" style="min-height:100px;"></textarea>
-            <p class="field-hint">Starter affiche 3 fonctionnalités max, Featured 4 max — au-delà, seules les premières lignes sont utilisées par le générateur.</p>
+            <label>Stats clés (format : valeur|label, une par ligne, 4 max)</label>
+            <textarea id="o-stats" style="min-height:80px;"></textarea>
             <label>FAQ (format : question||réponse, une par ligne)</label>
             <textarea id="o-faq" style="min-height:100px;"></textarea>
-            <p class="field-hint">Starter affiche 2 questions max, Featured 4 max — au-delà, seules les premières lignes sont utilisées par le générateur.</p>
+          </fieldset>
+
+          <fieldset>
+            <legend>💳 Tarifs de l'outil</legend>
+            <p class="field-hint" style="margin-top:-4px;">Les formules de l'outil lui-même (pas les plans Albexia). Affiché : Starter et Featured, uniquement si « Vérifié ». Rempli par Gemini → à vérifier avant d'afficher.</p>
+            <label>Formules (format : nom|prix|période|description, une par ligne)</label>
+            <textarea id="o-tarifs" style="min-height:90px;" placeholder="Gratuit|$0||Pour commencer&#10;Plus|$8|/ mois|Par utilisateur, facturé annuellement"></textarea>
+            <div class="row">
+              <div><label>À partir de</label><input type="text" id="o-a-partir-de" placeholder="8 $ / mois"></div>
+              <div><label>Statut des tarifs</label>
+                <select id="o-tarifs-verifie"><option value="true">✓ Vérifiés</option><option value="false">⚠ À vérifier (rempli par l'IA)</option></select></div>
+            </div>
+            <label>URL tarifs</label>
+            <input type="url" id="o-url-tarifs">
+          </fieldset>
+
+          <fieldset>
+            <legend>ℹ️ Informations clés</legend>
+            <p class="field-hint" style="margin-top:-4px;">Un champ vide n'affiche rien (jamais de fausse information). Développeur et interface FR : Starter et Featured.</p>
             <label>Maker (nom du développeur)</label>
             <input type="text" id="o-maker">
             <label>Plateformes</label>
-            <input type="text" id="o-plateformes">
-            <label>URL tarifs</label>
-            <input type="url" id="o-url-tarifs">
+            <input type="text" id="o-plateformes" placeholder="Web, Windows, Mac, iOS, Android">
             <div class="row">
               <div>
                 <label>Interface FR</label>
@@ -493,19 +537,36 @@
                 </select>
               </div>
             </div>
+            <label>Support</label>
+            <input type="text" id="o-support" placeholder="Email, Centre d'aide">
+            <label>URL documentation API (onglet API : Starter et Featured)</label>
+            <input type="url" id="o-api-url">
+            <div class="row">
+              <div><label>X (Twitter)</label><input type="url" id="o-reseau-x"></div>
+              <div><label>LinkedIn</label><input type="url" id="o-reseau-linkedin"></div>
+              <div><label>YouTube</label><input type="url" id="o-reseau-youtube"></div>
+            </div>
+            <label>Badge « Vérifié » sur la fiche</label>
+            <select id="o-verifie"><option value="">Non</option><option value="true">Oui — fiche vérifiée par l'admin</option></select>
           </fieldset>
 
-          <fieldset id="fs-featured" style="display:none;">
-            <legend>Contenu fiche Featured</legend>
-            <label>Présentation longue (paragraphes séparés par une ligne vide)</label>
-            <textarea id="o-presentation" style="min-height:140px;"></textarea>
-            <label>Meta description SEO (155 car. max)</label>
-            <input type="text" id="o-meta-desc" maxlength="155">
-            <label>URL screenshot</label>
+          <fieldset>
+            <legend>🖼️ Médias</legend>
+            <p class="field-hint" style="margin-top:-4px;">Affiché : Featured (aperçu + jusqu'à 5 captures, carrousel). Les autres offres affichent l'aperçu simple.</p>
+            <label>URL screenshot principal</label>
             <input type="url" id="o-screenshot">
-            <label>Tutoriels YouTube (format : youtube_id|titre|durée, un par ligne)</label>
-            <textarea id="o-tutoriels" style="min-height:80px;"></textarea>
-            <p class="field-hint">Un seul tutoriel est affiché sur la fiche Featured — seule la première ligne est utilisée par le générateur, les suivantes sont ignorées.</p>
+            <label>Captures d'écran (format : url|légende, une par ligne, 5 max affichées)</label>
+            <textarea id="o-galerie" style="min-height:80px;" placeholder="https://…/capture1.png|Tableau de bord"></textarea>
+            <label>Tutoriel YouTube (format : youtube_id|titre|durée — 1 seul affiché, Featured)</label>
+            <textarea id="o-tutoriels" style="min-height:60px;"></textarea>
+          </fieldset>
+
+          <fieldset>
+            <legend>🔗 Alternatives &amp; mises à jour</legend>
+            <label>Alternatives (noms séparés par virgules)</label>
+            <input type="text" id="o-alternatives">
+            <label>Mises à jour (format : date|titre|description, une par ligne — onglet Featured)</label>
+            <textarea id="o-changelog" style="min-height:70px;" placeholder="2026-09|Nouveau modèle|Qualité de rédaction accrue"></textarea>
           </fieldset>
           <button type="submit" class="btn-submit" id="o-submit-btn">Créer l'outil</button>
           <button type="button" class="btn-danger" id="o-delete-btn" style="display:none;">🗑 Supprimer cet outil</button>
@@ -1710,7 +1771,6 @@ Support français|oui|non|bool"></textarea>
     setVal('o-desc-fr', s.description || '');
     setVal('o-cat', mapCategorieSoumission(s.categorie));
     setVal('o-plan', '');
-    document.getElementById('o-plan').dispatchEvent(new Event('change'));
     updateToolPreview();
 
     if (s.tier_demande === 'starter' || s.tier_demande === 'featured') {
@@ -2449,23 +2509,7 @@ Support français|oui|non|bool"></textarea>
   }
   ['g-title','g-tool'].forEach(id => document.getElementById(id).addEventListener('input', updateGalleryMeta));
 
-  document.getElementById('o-plan').addEventListener('change', function() {
-    const plan = this.value;
-    ['fs-standard','fs-starter','fs-featured',
-     'acc-en-starter','acc-en-featured','acc-es-starter','acc-es-featured'].forEach(id => {
-      const el = document.getElementById(id); if (el) el.style.display='none';
-    });
-    if (plan === 'starter') {
-      ['fs-standard','fs-starter','acc-en-starter','acc-es-starter'].forEach(id => {
-        const el = document.getElementById(id); if (el) el.style.display='block';
-      });
-    } else if (plan === 'featured') {
-      ['fs-standard','fs-starter','fs-featured',
-       'acc-en-starter','acc-en-featured','acc-es-starter','acc-es-featured'].forEach(id => {
-        const el = document.getElementById(id); if (el) el.style.display='block';
-      });
-    }
-  });
+  // Le plan ne masque plus aucun champ : une seule fiche, un seul remplissage.
 
   let editingTool = null;
   let editingRelated = [];
@@ -2764,6 +2808,10 @@ Support français|oui|non|bool"></textarea>
     setVal('o-faq-en', en ? joinLines((en.faq||[]).map(f=>`${f.q}||${f.a}`), '\n') : '');
     setVal('o-presentation-en', en ? en.presentation : '');
     setVal('o-meta-desc-en', en ? en.meta_description : '');
+    setVal('o-points-forts-en', en ? joinLines(en.points_forts, '\n') : '');
+    setVal('o-limite-en', en ? (en.limite || '') : '');
+    setVal('o-stats-en', en ? joinLines((en.stats||[]).map(x=>`${x.valeur}|${x.label}`), '\n') : '');
+    setVal('o-tarifs-en', en ? joinLines((en.tarifs||[]).map(t=>[t.nom,t.prix||'',t.periode||'',t.desc||''].join('|')), '\n') : '');
 
     setVal('o-name-es', es ? es.name : '');
     setVal('o-desc-es', es ? es.description : '');
@@ -2772,9 +2820,13 @@ Support français|oui|non|bool"></textarea>
     setVal('o-faq-es', es ? joinLines((es.faq||[]).map(f=>`${f.q}||${f.a}`), '\n') : '');
     setVal('o-presentation-es', es ? es.presentation : '');
     setVal('o-meta-desc-es', es ? es.meta_description : '');
+    setVal('o-points-forts-es', es ? joinLines(es.points_forts, '\n') : '');
+    setVal('o-limite-es', es ? (es.limite || '') : '');
+    setVal('o-stats-es', es ? joinLines((es.stats||[]).map(x=>`${x.valeur}|${x.label}`), '\n') : '');
+    setVal('o-tarifs-es', es ? joinLines((es.tarifs||[]).map(t=>[t.nom,t.prix||'',t.periode||'',t.desc||''].join('|')), '\n') : '');
 
     setVal('o-points-forts', joinLines(tool.points_forts, '\n'));
-    setVal('o-limite', tool.limite);
+    setVal('o-limite', tool.limite || tool.limite_principale);
     setVal('o-alternatives', (tool.alternatives||[]).join(', '));
 
     setVal('o-stats', joinLines((tool.stats||[]).map(s=>`${s.valeur}|${s.label}`), '\n'));
@@ -2783,6 +2835,21 @@ Support français|oui|non|bool"></textarea>
     setVal('o-maker', tool.maker);
     setVal('o-plateformes', tool.plateformes);
     setVal('o-url-tarifs', tool.url_tarifs);
+    setVal('o-type-outil', tool.type_outil || '');
+    setVal('o-sous-cat', tool.sous_categorie || '');
+    setVal('o-modele', tool.modele || '');
+    setVal('o-annee', tool.annee_creation || '');
+    setVal('o-support', tool.support || '');
+    setVal('o-api-url', tool.api_url || '');
+    setVal('o-a-partir-de', tool.a_partir_de || '');
+    setVal('o-reseau-x', (tool.reseaux||{}).x || '');
+    setVal('o-reseau-linkedin', (tool.reseaux||{}).linkedin || '');
+    setVal('o-reseau-youtube', (tool.reseaux||{}).youtube || '');
+    setVal('o-verifie', tool.verifie === true ? 'true' : '');
+    setVal('o-tarifs', joinLines((tool.tarifs||[]).map(t=>[t.nom,t.prix||'',t.periode||'',t.desc||''].join('|')), '\n'));
+    setVal('o-tarifs-verifie', tool.tarifs_verifie === false ? 'false' : 'true');
+    setVal('o-galerie', joinLines((tool.galerie||[]).map(x=>`${x.url}|${x.legende||''}`), '\n'));
+    setVal('o-changelog', joinLines((tool.changelog||[]).map(c=>`${c.date||''}|${c.titre||''}|${c.desc||''}`), '\n'));
     setVal('o-interface-fr', tool.interface_fr === true ? 'true' : tool.interface_fr === false ? 'false' : '');
     setVal('o-api', tool.api === true ? 'true' : tool.api === false ? 'false' : '');
     setVal('o-mobile', tool.mobile === true ? 'true' : tool.mobile === false ? 'false' : '');
@@ -2795,7 +2862,6 @@ Support français|oui|non|bool"></textarea>
     vtClearRows();
     (tool.videotheque || []).forEach(v => vtAddRow(v));
 
-    document.getElementById('o-plan').dispatchEvent(new Event('change'));
     updateToolPreview();
 
     document.getElementById('editing-banner').classList.add('open');
@@ -2817,10 +2883,6 @@ Support français|oui|non|bool"></textarea>
     document.getElementById('form-outils').reset();
     searchInput.value = '';
     vtClearRows();
-    ['fs-standard','fs-starter','fs-featured',
-     'acc-en-starter','acc-en-featured','acc-es-starter','acc-es-featured'].forEach(id => {
-      const el = document.getElementById(id); if (el) el.style.display='none';
-    });
     updateToolPreview();
   }
   document.getElementById('editing-cancel').addEventListener('click', exitEditMode);
@@ -2966,6 +3028,33 @@ Support français|oui|non|bool"></textarea>
 
       const videotheque = vtCollectRows();
 
+      // ── Nouveaux champs de la fiche unique (communs aux 3 offres) ──
+      const gv = id => document.getElementById(id).value.trim();
+      const lignes = id => (document.getElementById(id).value||'').split('\n').map(l=>l.trim()).filter(Boolean);
+      const parseStatsTxt = id => lignes(id).map(l=>{const[valeur,label]=l.split('|');return valeur&&label?{valeur:valeur.trim(),label:label.trim()}:null;}).filter(Boolean);
+      const parseTarifsTxt = id => lignes(id).map(l=>{const[nom,prix,periode,desc]=l.split('|');return nom&&nom.trim()?{nom:nom.trim(),prix:(prix||'').trim(),periode:(periode||'').trim(),desc:(desc||'').trim()}:null;}).filter(Boolean);
+      const tarifs = parseTarifsTxt('o-tarifs');
+      const tarifsEn = parseTarifsTxt('o-tarifs-en');
+      const tarifsEs = parseTarifsTxt('o-tarifs-es');
+      const statsEn = parseStatsTxt('o-stats-en');
+      const statsEs = parseStatsTxt('o-stats-es');
+      const pointsFortsEn = lignes('o-points-forts-en');
+      const pointsFortsEs = lignes('o-points-forts-es');
+      const limiteEn = gv('o-limite-en');
+      const limiteEs = gv('o-limite-es');
+      const galerie = lignes('o-galerie').map(l=>{const i=l.indexOf('|');const u=(i<0?l:l.slice(0,i)).trim();return /^https?:\/\//i.test(u)?{url:u,legende:i<0?'':l.slice(i+1).trim()}:null;}).filter(Boolean);
+      const changelog = lignes('o-changelog').map(l=>{const[date,titre,desc]=l.split('|');return titre&&titre.trim()?{date:(date||'').trim(),titre:titre.trim(),desc:(desc||'').trim()}:null;}).filter(Boolean);
+      const reseaux = {}; ['x','linkedin','youtube'].forEach(k=>{const v=gv('o-reseau-'+k); if(v) reseaux[k]=v;});
+      const anneeVal = parseInt(gv('o-annee'), 10);
+      const communsNouveaux = {
+        type_outil: gv('o-type-outil'), sous_categorie: gv('o-sous-cat'), modele: gv('o-modele') || undefined,
+        annee_creation: Number.isInteger(anneeVal) ? anneeVal : undefined, support: gv('o-support'),
+        api_url: gv('o-api-url'), a_partir_de: gv('o-a-partir-de'),
+        reseaux: Object.keys(reseaux).length ? reseaux : undefined,
+        verifie: gv('o-verifie') === 'true', tarifs_verifie: gv('o-tarifs-verifie') !== 'false',
+        galerie, changelog,
+      };
+
       const fonctionnalitesEn = (document.getElementById('o-fonctionnalites-en').value||'').split('\n')
         .map(l=>{const[icon,titre,desc]=l.split('|');return icon&&titre?{icon:icon.trim(),titre:titre.trim(),desc:(desc||'').trim()}:null;}).filter(Boolean);
       const faqEn          = (document.getElementById('o-faq-en').value||'').split('\n')
@@ -2995,7 +3084,8 @@ Support français|oui|non|bool"></textarea>
           plan,langue:'en',traductions:{fr:mainId},ideal_pour:document.getElementById('o-ideal-en').value.trim(),
           fonctionnalites:fonctionnalitesEn,faq:faqEn,presentation:presentationEn,
           meta_description:metaDescEn,maker,plateformes,url_tarifs:urlTarifs,
-          interface_fr:interfaceFr,api,mobile,stats,tutoriels,alternatives,screenshot_url:screenshot,
+          interface_fr:interfaceFr,api,mobile,stats:(statsEn.length?statsEn:stats),tutoriels,alternatives,screenshot_url:screenshot,
+          points_forts:pointsFortsEn,limite:limiteEn,tarifs:tarifsEn,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
       const nameEs=document.getElementById('o-name-es').value.trim();
@@ -3008,7 +3098,8 @@ Support français|oui|non|bool"></textarea>
           plan,langue:'es',traductions:{fr:mainId},ideal_pour:document.getElementById('o-ideal-es').value.trim(),
           fonctionnalites:fonctionnalitesEs,faq:faqEs,presentation:presentationEs,
           meta_description:metaDescEs,maker,plateformes,url_tarifs:urlTarifs,
-          interface_fr:interfaceFr,api,mobile,stats,tutoriels,alternatives,screenshot_url:screenshot,
+          interface_fr:interfaceFr,api,mobile,stats:(statsEs.length?statsEs:stats),tutoriels,alternatives,screenshot_url:screenshot,
+          points_forts:pointsFortsEs,limite:limiteEs,tarifs:tarifsEs,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
 
@@ -3019,7 +3110,7 @@ Support français|oui|non|bool"></textarea>
         langues_disponibles:languesDisponibles,integrations,
         points_forts:pointsForts,limite,alternatives,maker,plateformes,url_tarifs:urlTarifs,
         interface_fr:interfaceFr,api,mobile,presentation,meta_description:metaDesc,
-        screenshot_url:screenshot,stats,fonctionnalites,faq,tutoriels,videotheque,
+        screenshot_url:screenshot,stats,fonctionnalites,faq,tutoriels,videotheque,tarifs,...communsNouveaux,
         generer_fiche:genererFiche,slug_articles:slugArticles||null,
         soumission_id: window.__soumissionEnCours || null});
 

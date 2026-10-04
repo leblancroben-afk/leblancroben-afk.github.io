@@ -25,7 +25,8 @@
 .fo-ico-fill { fill: currentColor; stroke: none; }
 
 /* ── HERO ── */
-.fo-hero { background: var(--bg); border-bottom: 1px solid var(--border); padding: 16px 0 40px; position: relative; overflow: hidden; }
+
+.fo-hero { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 16px 0 40px; position: relative; overflow: hidden; }
 .fo-hero::before { content: ''; position: absolute; top: -120px; right: -100px; width: 520px; height: 420px; pointer-events: none;
   background: radial-gradient(ellipse, var(--fo-pink-soft) 0%, transparent 65%); }
 .fo-hero { color: var(--text); }
@@ -262,7 +263,7 @@
   --fo-on-primary: #ffffff;
 }
 .fo-theme-template .fo-hero {
-  background: #0b1329;
+  background: #0a0a0f;
   --bg: #0b1329; --bg2: #0b1329; --bg3: rgba(30, 41, 59, .85);
   --text: #ffffff; --text-muted: #cbd5e1; --text-dim: #94a3b8;
   --border: rgba(51, 65, 85, .6); --border-hover: #334155;

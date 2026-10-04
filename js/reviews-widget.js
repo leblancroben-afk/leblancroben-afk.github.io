@@ -1,7 +1,9 @@
 /* ═══════════════════════════════════════
-   Albexia — reviews-widget.js  v3
-   Fiche outil : formulaire + 3 derniers avis
-   + votes + bouton "Voir tous les avis →"
+   Albexia — reviews-widget.js  v4  (fiche outil unique)
+   Affichage des avis sur la fiche d'un outil : note moyenne, étoiles,
+   nombre d'avis, répartition 5→1, cartes d'avis, formulaire, votes,
+   signalement. Données et écritures : js/reviews.js (inchangé).
+   Aucun emoji : icônes SVG.
    ═══════════════════════════════════════ */
 
 import { auth, onAuthStateChanged }
@@ -21,9 +23,9 @@ import {
 
 // ── Config ────────────────────────────────────
 const TOOL_SLUG    = getToolSlugFromPath(window.location.pathname);
-const TOOL_NAME    = document.querySelector('h1.tool-hero-title')?.textContent?.trim()
+const TOOL_NAME    = document.querySelector('h1.fo-title, h1.tool-hero-title')?.textContent?.trim()
                   || document.title.split('—')[0].trim();
-const TOOL_FAVICON = document.querySelector('.tool-logo-img')?.src || '';
+const TOOL_FAVICON = document.querySelector('.fo-logo img, .tool-logo-img')?.src || '';
 const TOOL_EMOJI   = '🤖';
 const TOOL_PAGE    = window.location.pathname;
 
@@ -43,6 +45,23 @@ function tr(key, vars) {
   return str;
 }
 
+const L10N = {
+  fr: { title: 'Avis des utilisateurs', seeAll: 'Voir tous les avis', basedOn: 'Basé sur {count} avis', countShort: '{count} avis', formZone: 'Votre avis' },
+  en: { title: 'User reviews',          seeAll: 'See all reviews',    basedOn: 'Based on {count} reviews', countShort: '{count} reviews', formZone: 'Your review' },
+  es: { title: 'Opiniones de usuarios', seeAll: 'Ver todas las opiniones', basedOn: 'Basado en {count} opiniones', countShort: '{count} opiniones', formZone: 'Tu opinión' },
+};
+function lbl(key, vars) {
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+  let str = (L10N[langue] || L10N.fr)[key] || L10N.fr[key] || key;
+  if (vars) Object.keys(vars).forEach(k => { str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), vars[k]); });
+  return str;
+}
+const ICO = (d, fill) => `<svg class="fo-ico${fill ? ' fo-ico-fill' : ''}" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+const STAR_SVG = ICO('<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>', true);
+const THUMB_SVG = ICO('<path d="M7 11v9H4v-9h3zM7 11l4-8c1.5 0 2.5 1 2.5 2.5V9H19a2 2 0 0 1 2 2.3l-1 6.5A2 2 0 0 1 18 20H7"/>');
+const CHAT_SVG = ICO('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>');
+const starsRow = (n) => [1,2,3,4,5].map(i => `<span class="${i <= Math.round(n) ? 'on' : ''}">${STAR_SVG}</span>`).join('');
+
 let currentUser = null;
 let userReview  = null;
 let allReviews  = [];
@@ -55,19 +74,20 @@ onAuthStateChanged(auth, async (user) => {
   await refreshHeroStars();
 });
 
-// ── Étoiles hero ─────────────────────────────
-async function refreshHeroStars() {
-  const summary = await getRatingSummary(TOOL_SLUG);
-  if (!summary.ratingCount) return;
-  const starsEl = document.querySelector('.tool-hero-stars');
-  if (!starsEl) return;
-  const avg  = summary.ratingAverage.toFixed(1);
-  const full = Math.round(summary.ratingAverage);
-  const starsHtml = [1,2,3,4,5].map(i =>
-    `<span class="star ${i <= full ? 'on' : ''}">★</span>`
-  ).join('');
-  starsEl.innerHTML = `${starsHtml}
-    <span class="star-label">${avg}/5 · ${summary.ratingCount} ${tr('reviews.avgLabel')}</span>`;
+// ── Hero + onglet « Avis (N) » : synchronisés avec les avis réels ──
+async function refreshHeroStars() { syncHeader(); }
+function syncHeader() {
+  const total = allReviews.length;
+  if (!total) return;
+  const avg = allReviews.reduce((sum, r) => sum + (r.rating || 0), 0) / total;
+  const stars = document.querySelector('[data-fo-stars]');
+  const score = document.querySelector('[data-fo-score]');
+  const fresh = document.querySelector('[data-fo-new]');
+  if (stars) { stars.hidden = false; stars.innerHTML = starsRow(avg); }
+  if (score) { score.hidden = false; score.innerHTML = `${avg.toFixed(1)} <small>(${lbl('countShort', { count: total })})</small>`; }
+  if (fresh) fresh.hidden = true;
+  const tab = document.querySelector('.fo-tab[href="#fo-avis"]');
+  if (tab) tab.textContent = `${tab.dataset.label || tab.textContent.replace(/\s*\(\d+\)$/, '')} (${total})`;
 }
 
 // ── Chargement données ────────────────────────
@@ -104,34 +124,52 @@ function render() {
   if (!container) return;
   container.innerHTML = buildWidgetHTML();
   attachEvents();
+  syncHeader();
 }
 
 // ── HTML principal ────────────────────────────
+function buildSummaryHTML() {
+  const total = allReviews.length;
+  const counts = [0, 0, 0, 0, 0, 0];
+  let sum = 0;
+  allReviews.forEach(r => { const n = Math.min(5, Math.max(1, Math.round(r.rating || 0))); counts[n]++; sum += n; });
+  const avg = sum / total;
+  const rows = [5, 4, 3, 2, 1].map(n => {
+    const pct = Math.round((counts[n] / total) * 100);
+    return `<div class="rv-dist-row"><span class="rv-dist-n">${n}</span>${STAR_SVG}
+      <div class="rv-dist-track"><div class="rv-dist-fill" style="width:${pct}%"></div></div>
+      <span class="rv-dist-pct">${pct}%</span></div>`;
+  }).join('');
+  return `
+    <div class="rv-summary">
+      <div class="rv-avg">
+        <div class="rv-avg-num">${avg.toFixed(1)}</div>
+        <div class="rv-avg-stars">${starsRow(avg)}</div>
+        <div class="rv-avg-count">${lbl('basedOn', { count: total })}</div>
+      </div>
+      <div class="rv-dist">${rows}</div>
+    </div>`;
+}
+
 function buildWidgetHTML() {
   const total   = allReviews.length;
   const visible = allReviews.slice(0, MAX_VISIBLE);
 
   return `
-  <section class="rv-section" id="avis-utilisateurs">
-    <h2 class="rv-title">
-      ${tr('reviews.title')}
-      ${total ? `<span class="rv-count">${total}</span>` : ''}
-    </h2>
+  <div class="rv-section" id="avis-utilisateurs">
+    <div class="fo-card-head">
+      <h2>${lbl('title')}</h2>
+      ${total ? `<a class="fo-link" href="/tools/avis-outil.html?tool=${TOOL_SLUG}">${lbl('seeAll')}</a>` : ''}
+    </div>
 
-    ${buildFormHTML()}
+    ${total ? buildSummaryHTML() : ''}
 
-    ${total ? `
-      <div class="rv-list">${visible.map(r => buildCardHTML(r)).join('')}</div>
+    ${total
+      ? `<div class="rv-list">${visible.map(r => buildCardHTML(r)).join('')}</div>`
+      : `<div class="rv-empty">${tr('reviews.empty')}</div>`}
 
-      <div class="rv-see-all-wrap">
-        <a class="rv-see-all-btn"
-           href="/tools/avis-outil.html?tool=${TOOL_SLUG}">
-          ${tr('reviews.seeAllPrefix')} ${TOOL_NAME}
-          <span class="rv-see-all-count">${tr('reviews.seeAllCount', { count: total })}</span>
-        </a>
-      </div>
-    ` : `<div class="rv-empty">${tr('reviews.empty')}</div>`}
-  </section>
+    <div class="rv-form-zone">${buildFormHTML()}</div>
+  </div>
 
   <div id="rv-toast" class="rv-toast"></div>`;
 }
@@ -141,7 +179,7 @@ function buildFormHTML() {
   if (!currentUser) {
     return `
       <div class="rv-login-prompt">
-        💬 <span>${tr('reviews.loginPrompt')}
+        ${CHAT_SVG} <span>${tr('reviews.loginPrompt')}
         <a class="rv-login-link" href="/profil.html">${tr('reviews.loginLink')}</a></span>
       </div>`;
   }
@@ -191,10 +229,6 @@ function buildCardHTML(r) {
       })
     : '';
 
-  const stars = [1,2,3,4,5].map(i =>
-    `<span class="${i <= r.rating ? '' : 'off'}">★</span>`
-  ).join('');
-
   const isOwn    = currentUser?.uid === r.uid;
   const myVote   = userVotes[r.id] || null;
   const yesCount = r.helpful_yes || 0;
@@ -214,9 +248,9 @@ function buildCardHTML(r) {
             ? `<a class="rv-author" href="${profileUrl}">${esc(r.displayName)}</a>`
             : `<div class="rv-author">${esc(r.displayName)}</div>`
           }
-          <div class="rv-date">${date}</div>
+          <div class="rv-rate"><span class="rv-rate-num">${Number(r.rating || 0).toFixed(1)}</span><span class="rv-rate-stars">${starsRow(r.rating || 0)}</span></div>
         </div>
-        <div class="rv-stars-display">${stars}</div>
+        <div class="rv-date">${date}</div>
       </div>
       ${r.comment ? `<p class="rv-comment">${esc(r.comment)}</p>` : ''}
       <div class="rv-vote-row">
@@ -225,16 +259,16 @@ function buildCardHTML(r) {
           <button class="rv-vote-btn rv-vote-yes ${myVote === 'yes' ? 'voted' : ''}"
                   data-review-id="${r.id}" data-value="yes"
                   ${!currentUser ? `title="${esc(tr('reviews.loginToVoteTitle'))}"` : ''}>
-            👍 <span class="rv-vote-num">${yesCount}</span>
+            ${THUMB_SVG} <span class="rv-vote-num">${yesCount}</span>
           </button>
           <button class="rv-vote-btn rv-vote-no ${myVote === 'no' ? 'voted' : ''}"
                   data-review-id="${r.id}" data-value="no"
                   ${!currentUser ? `title="${esc(tr('reviews.loginToVoteTitle'))}"` : ''}>
-            👎 <span class="rv-vote-num">${noCount}</span>
+            <span class="rv-thumb-down">${THUMB_SVG}</span> <span class="rv-vote-num">${noCount}</span>
           </button>
           <button class="rv-report-btn" data-review-id="${r.id}">${tr('reviews.reportBtn')}</button>
         ` : `
-          <span class="rv-vote-own">👍 ${yesCount} · 👎 ${noCount}</span>
+          <span class="rv-vote-own">${THUMB_SVG} ${yesCount} · <span class="rv-thumb-down">${THUMB_SVG}</span> ${noCount}</span>
         `}
       </div>
     </div>`;

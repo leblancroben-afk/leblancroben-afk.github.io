@@ -8,7 +8,7 @@
             plateformes, ideal_pour, favicon, emoji, points_forts,
             limite_principale, alternatives, fonctionnalites, faq,
             interface_fr/api/mobile (si connus avec certitude),
-            url_tarifs, essai_gratuit, duree_essai, stats — puis
+            url_tarifs, essai_gratuit, duree_essai — puis
             bascule status='active' et generer_fiche=true (publication).
 
    ⚠️ STATS INCLUS TEMPORAIREMENT sur demande explicite, en attendant
@@ -98,11 +98,8 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `url_tarifs : URL de la page tarifs si tu la connais avec certitude, sinon null. ` +
     `essai_gratuit : true si l'outil propose un essai gratuit du plan payant, false sinon, null si incertain. ` +
     `duree_essai : durée de l'essai si tu la connais avec certitude (ex. "14 jours"), sinon null. ` +
-    `stats : 2 à 4 statistiques chiffrées RÉELLES et vérifiées sur cet outil (ex. nombre de tokens de contexte, ` +
-    `version du modèle, taille de la fenêtre de contexte, pourcentage documenté). C'est le champ où une erreur ` +
-    `est la plus visible et la plus grave — si tu n'es pas certain à 100% d'un chiffre précis, NE L'INCLUS PAS, ` +
-    `un tableau stats plus court (ou vide) vaut infiniment mieux qu'un chiffre inventé. N'arrondis pas et ne ` +
-    `déduis pas un chiffre approximatif "au pif" pour remplir la case. ` +
+    `type_outil : le type d'outil en 2-3 mots (ex. "Assistant IA", "Générateur d'images"), null si incertain. ` +
+    `langues_disponibles : langues de l'interface ou du service que tu connais avec certitude (ex. "Français, Anglais +"), null si incertain. ` +
     `Réponds UNIQUEMENT avec un objet JSON valide, sans markdown, avec exactement cette forme :\n` +
     `{"trouve": true, "url": "https://...", "category": "...", "price": "free|freemium|paid", ` +
     `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖", ` +
@@ -111,7 +108,7 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `"presentation": "..."|null, "meta_description": "..."|null, "sous_categorie": "..."|null, "modele": "proprietaire|open_source"|null, ` +
     `"annee_creation": 2023|null, "support": "..."|null, "tarifs": [{"nom":"Gratuit","prix":"$0","periode":"","desc":"..."}], ` +
     `"interface_fr": true|false|null, "api": true|false|null, "mobile": true|false|null, "url_tarifs": "..."|null, ` +
-    `"essai_gratuit": true|false|null, "duree_essai": "..."|null, "stats": [{"valeur":"200k","label":"tokens de contexte"}]}`;
+    `"essai_gratuit": true|false|null, "duree_essai": "..."|null, "type_outil": "..."|null, "langues_disponibles": "..."|null}`;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
   const res = await fetch(url, {
@@ -210,7 +207,8 @@ async function main() {
         ...(infos.url_tarifs ? { url_tarifs: infos.url_tarifs } : {}),
         ...(infos.essai_gratuit !== null && infos.essai_gratuit !== undefined ? { essai_gratuit: infos.essai_gratuit } : {}),
         ...(infos.duree_essai ? { duree_essai: infos.duree_essai } : {}),
-        stats: Array.isArray(infos.stats) ? infos.stats : [],
+        ...(infos.type_outil ? { type_outil: infos.type_outil } : {}),
+        ...(infos.langues_disponibles ? { langues_disponibles: infos.langues_disponibles } : {}),
         ...(infos.presentation ? { presentation: infos.presentation } : {}),
         ...(infos.sous_categorie ? { sous_categorie: infos.sous_categorie } : {}),
         ...(infos.modele === 'proprietaire' || infos.modele === 'open_source' ? { modele: infos.modele } : {}),
@@ -223,9 +221,7 @@ async function main() {
           : [],
         tarifs_verifie: false,
         ...(infos.meta_description ? { meta_description: infos.meta_description } : {}),
-        // stats délibérément absent : des chiffres inventés (ex. "200k tokens")
-        // sont le risque d'hallucination le plus visible et le plus gênant —
-        // reste à remplir à la main si tu veux ce bloc.
+        // « Statistiques clés » : section supprimée des fiches, stats n'est plus généré.
         status: 'active',
         generer_fiche: true, // publication — voir garde-fou existant dans gen-fiches.js
         enrichi_ia: true,

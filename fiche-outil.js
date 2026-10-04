@@ -17,7 +17,7 @@
 //  features  : nb max de fonctionnalités   faq : nb max de questions
 //  stats     : nb max de stats             aboutLong : « À propos » long (presentation)
 //  gallery   : nb max de captures          tutoriels : nb max de tutoriels YouTube
-//  tarifs    : bloc tarifs de l'outil      extras : intégrations / API / mises à jour
+//  tarifs    : bloc tarifs de l'outil      extras : API / mises à jour
 //  articles  : nb d'articles liés (sidebar, FR)  maker/urlTarifs/interfaceFr : éléments Starter+
 //  badge     : badge d'offre dans le hero
 const PLAN_RULES = {
@@ -28,7 +28,7 @@ const PLAN_RULES = {
   featured: { takeaways: false, features: 4, faq: 4, stats: 4, aboutLong: true,  gallery: 5, tutoriels: 1,
               tarifs: true,  extras: 2, articles: 2, maker: true,  urlTarifs: true,  interfaceFr: true,  badge: 'recommended' },
 };
-// extras : 1 = intégrations + API ; 2 = + mises à jour
+// extras : 1 = API ; 2 = + mises à jour   (les sections « Statistiques clés » et « Intégrations » n'existent plus)
 
 const planOf = (t) => (t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard');
 
@@ -47,7 +47,7 @@ const L = {
     reviews: 'Avis des utilisateurs', keyInfo: 'Informations clés', dev: 'Développeur', cat: 'Catégorie', sub: 'Sous-catégorie', model: 'Modèle',
     pricing: 'Tarification', ideal: 'Idéal pour', trial: 'Essai gratuit', from: 'À partir de', platforms: 'Plateformes', api: 'API', mobile: 'App mobile',
     ifr: 'Interface FR', support: 'Support', social: 'Réseaux sociaux', yes: 'Oui', pricingT: 'Tarification', start: 'Commencer', tryFree: 'Essayer gratuitement', seeOffer: "Voir l'offre",
-    alts: 'Alternatives populaires', altsMore: 'Comparer les alternatives', altsFor: (n) => `Alternative à ${n}`, articles: 'Articles liés',
+    alts: 'Alternatives populaires', seeMore: 'Voir plus', altsMore: 'Comparer les alternatives', altsFor: (n) => `Alternative à ${n}`, articles: 'Articles liés',
     helpful: 'Cet outil vous a été utile ?', no: 'Non', thanks: 'Merci pour votre retour', know: 'Vous connaissez un autre outil ?', knowSub: 'Soumettez-le pour aider la communauté', submit: 'Soumettre un outil',
     price: { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' }, models: { proprietaire: 'Propriétaire', open_source: 'Open source' },
     interfaceBadge: 'Interface en français', titles: ['Avis, Prix & Alternatives 2026', 'Guide, Tarifs & Avis 2026', 'Guide complet, Tarifs & Tutoriels 2026'],
@@ -64,7 +64,7 @@ const L = {
     reviews: 'User reviews', keyInfo: 'Key information', dev: 'Developer', cat: 'Category', sub: 'Subcategory', model: 'Model',
     pricing: 'Pricing', ideal: 'Ideal for', trial: 'Free trial', from: 'Starting at', platforms: 'Platforms', api: 'API', mobile: 'Mobile app',
     ifr: 'FR interface', support: 'Support', social: 'Social media', yes: 'Yes', pricingT: 'Pricing', start: 'Get started', tryFree: 'Try for free', seeOffer: 'View plan',
-    alts: 'Popular alternatives', altsMore: 'Compare alternatives', altsFor: (n) => `Alternative to ${n}`, articles: 'Related articles',
+    alts: 'Popular alternatives', seeMore: 'See more', altsMore: 'Compare alternatives', altsFor: (n) => `Alternative to ${n}`, articles: 'Related articles',
     helpful: 'Was this tool useful?', no: 'No', thanks: 'Thanks for your feedback', know: 'Know another tool?', knowSub: 'Submit it to help the community', submit: 'Submit a tool',
     price: { free: 'Free', freemium: 'Freemium', paid: 'Paid' }, models: { proprietaire: 'Proprietary', open_source: 'Open source' },
     interfaceBadge: 'French interface', titles: ['Review, Pricing & Alternatives 2026', 'Guide, Pricing & Reviews 2026', 'Complete Guide, Pricing & Tutorials 2026'],
@@ -81,7 +81,7 @@ const L = {
     reviews: 'Reseñas de usuarios', keyInfo: 'Información clave', dev: 'Desarrollador', cat: 'Categoría', sub: 'Subcategoría', model: 'Modelo',
     pricing: 'Precios', ideal: 'Ideal para', trial: 'Prueba gratis', from: 'Desde', platforms: 'Plataformas', api: 'API', mobile: 'App móvil',
     ifr: 'Interfaz FR', support: 'Soporte', social: 'Redes sociales', yes: 'Sí', pricingT: 'Precios', start: 'Empezar', tryFree: 'Probar gratis', seeOffer: 'Ver plan',
-    alts: 'Alternativas populares', altsMore: 'Comparar alternativas', altsFor: (n) => `Alternativa a ${n}`, articles: 'Artículos relacionados',
+    alts: 'Alternativas populares', seeMore: 'Ver más', altsMore: 'Comparar alternativas', altsFor: (n) => `Alternativa a ${n}`, articles: 'Artículos relacionados',
     helpful: '¿Te ha sido útil esta herramienta?', no: 'No', thanks: 'Gracias por tu opinión', know: '¿Conoces otra herramienta?', knowSub: 'Envíala para ayudar a la comunidad', submit: 'Enviar una herramienta',
     price: { free: 'Gratis', freemium: 'Freemium', paid: 'De pago' }, models: { proprietaire: 'Propietario', open_source: 'Código abierto' },
     interfaceBadge: 'Interfaz en francés', titles: ['Reseña, Precios & Alternativas 2026', 'Guía, Precios & Reseñas 2026', 'Guía completa, Precios & Tutoriales 2026'],
@@ -140,9 +140,7 @@ function generateFiche(tool, allTools = [], deps) {
   const maker = g('maker');
   const plateformes = g('plateformes');
   const reseaux = g('reseaux') || {};
-  const integrations = (g('integrations') || []).filter(Boolean);
   const alternatives = g('alternatives') || [];
-  const stats = (g('stats') || []).slice(0, rules.stats);
   const features = (g('fonctionnalites') || []).slice(0, rules.features);
   const faq = (g('faq') || []).slice(0, rules.faq);
   const tutoriels = (g('tutoriels') || []).slice(0, rules.tutoriels);
@@ -158,9 +156,10 @@ function generateFiche(tool, allTools = [], deps) {
 
   // ── Hero ──
   const starsHTML = Array.from({ length: 5 }, (_, i) => `<span class="${i < Math.round(note) ? 'on' : ''}">${STAR}</span>`).join('');
-  const ratingHTML = note
-    ? `<span class="fo-stars" aria-hidden="true">${starsHTML}</span><span class="fo-score">${note.toFixed(1)}<small>/5</small></span>`
-    : `<span class="fo-badge fo-badge-new">${E(T.newTool)}</span>`;
+  // Étoiles + note + nombre d'avis : mis à jour par js/reviews-widget.js dès que les avis sont chargés.
+  const ratingHTML = `<span class="fo-stars" data-fo-stars aria-hidden="true"${note ? '' : ' hidden'}>${starsHTML}</span>`
+    + `<span class="fo-score" data-fo-score${note ? '' : ' hidden'}>${note ? note.toFixed(1) : ''}</span>`
+    + (note ? '' : `<span class="fo-badge fo-badge-new" data-fo-new>${E(T.newTool)}</span>`);
   const planBadge = rules.badge ? `<span class="fo-badge fo-badge-plan">${E(T[rules.badge])}</span>` : '';
   const verifBadge = tool.verifie === true || (frDoc && frDoc.verifie === true)
     ? `<span class="fo-badge fo-badge-ok">${ic('check')} ${E(T.verified)}</span>` : '';
@@ -171,7 +170,7 @@ function generateFiche(tool, allTools = [], deps) {
         <img id="fo-preview-img" src="${E(safeUrl(previewImg.url))}" alt="${E(name)}"></div>`
     : `<div class="fo-preview"><div class="fo-preview-bar"><div class="fo-dots"><i></i><i></i><i></i></div><span class="fo-preview-mono">${E(name)}</span></div>
         <div class="fo-preview-body"><h3>${E(name)}</h3><p>${E(description)}</p>
-        ${tool.ideal_pour ? `<div class="fo-preview-chip">${ic('wand')}<span>${E(tool.ideal_pour)}</span></div>` : ''}</div></div>`;
+        </div></div>`;
   const thumbsBlock = galerie.length > 1
     ? `<div class="fo-thumbs">${galerie.map((x, i) => `<button type="button" class="fo-thumb${i === 0 ? ' active' : ''}" data-fo-thumb data-src="${E(safeUrl(x.url))}" data-cap="${E(x.legende || name)}" aria-label="${E(T.shotsAlt)} ${i + 1}"><img src="${E(safeUrl(x.url))}" alt="" loading="lazy"></button>`).join('')}</div>` : '';
 
@@ -190,7 +189,6 @@ function generateFiche(tool, allTools = [], deps) {
           <div class="fo-logo">${fav ? `<img src="${E(fav)}" alt="${E(name)} logo">` : ''}</div>
           <div class="fo-id-info">
             <h1 class="fo-title">${E(name)}</h1>
-            ${rules.maker && maker ? `<p class="fo-maker">${E(T.dev)} : <strong>${E(maker)}</strong></p>` : ''}
             <p class="fo-short">${E(description)}</p>
             <div class="fo-rating">${ratingHTML}${verifBadge}${planBadge}</div>
           </div>
@@ -211,22 +209,19 @@ function generateFiche(tool, allTools = [], deps) {
     ? String(tool.presentation).split('\n').filter(Boolean).map((p) => `<p>${E(p)}</p>`).join('')
     : `<p>${E(description)}</p>`;
   const typeOutil = g('type_outil') || g('sous_categorie');
+  const dash = '<span>—</span>';
   const metaCards = [
-    safeUrl(url) !== '' && hostOf(url) ? ['globe', T.site, `<a href="${E(url)}" target="_blank" rel="noopener">${E(hostOf(url))}</a>`] : null,
-    g('langues_disponibles') ? ['lang', T.language, `<span>${E(g('langues_disponibles'))}</span>`] : null,
-    g('annee_creation') ? ['cal', T.created, `<span>${E(g('annee_creation'))}</span>`] : null,
-    typeOutil ? ['user', T.type, `<span>${E(typeOutil)}</span>`] : null,
-  ].filter(Boolean).map(([i, l, v]) => `<div class="fo-meta-item"><div class="fo-meta-ico">${ic(i)}</div><div><small>${E(l)}</small>${v}</div></div>`).join('');
-
-  const statsHTML = stats.length ? `<div class="fo-meta" style="grid-template-columns:repeat(${Math.min(stats.length, 4)},1fr)">${stats.map((s) =>
-    `<div class="fo-meta-item"><div><small>${E(s.label)}</small><span style="font:800 20px 'Syne',sans-serif;color:var(--accent2)">${E(s.valeur)}</span></div></div>`).join('')}</div>` : '';
+    ['globe', T.site, hostOf(url) ? `<a href="${E(url)}" target="_blank" rel="noopener">${E(hostOf(url))}</a>` : dash],
+    ['lang', T.language, g('langues_disponibles') ? `<span>${E(g('langues_disponibles'))}</span>` : dash],
+    ['cal', T.created, g('annee_creation') ? `<span>${E(g('annee_creation'))}</span>` : dash],
+    ['user', T.type, typeOutil ? `<span>${E(typeOutil)}</span>` : dash],
+  ].map(([i, l, v]) => `<div class="fo-meta-item"><div class="fo-meta-ico">${ic(i)}</div><div><small>${E(l)}</small>${v}</div></div>`).join('');
 
   const aboutSection = `
 <section class="fo-card" id="fo-presentation">
   <h2>${E(T.about(name))}</h2>
   <div class="fo-text">${aboutParas}</div>
-  ${statsHTML}
-  ${metaCards ? `<div class="fo-meta">${metaCards}</div>` : ''}
+  <div class="fo-meta">${metaCards}</div>
 </section>`;
 
   // ── Ce qu'on retient (Standard) ──
@@ -281,9 +276,7 @@ function generateFiche(tool, allTools = [], deps) {
   const faqHTML = faq.map((f) => `<div class="faq-item"><button class="faq-q">${E(f.q)}</button><div class="faq-a">${E(f.a)}</div></div>`).join('');
   const faqSection = faqHTML ? `<section class="fo-card" id="fo-faq"><h2>${E(T.faq)}</h2><div class="faq-list">${faqHTML}</div></section>` : '';
 
-  // ── Intégrations / API / Mises à jour ──
-  const integrationsSection = rules.extras >= 1 && integrations.length ? `
-<section class="fo-card" id="fo-integrations"><h2>${E(T.integrations)}</h2><div class="fo-chips">${integrations.map((i) => `<span class="fo-chip">${E(i)}</span>`).join('')}</div></section>` : '';
+  // ── API / Mises à jour ──
   const apiSection = rules.extras >= 1 && g('api') === true && apiUrl ? `
 <section class="fo-card" id="fo-api"><h2>${E(T.apiT)}</h2>
   <a href="${E(apiUrl)}" target="_blank" rel="noopener" class="fo-btn fo-btn-soft">${E(T.apiDoc)} ${ic('ext')}</a></section>` : '';
@@ -291,7 +284,7 @@ function generateFiche(tool, allTools = [], deps) {
 <section class="fo-card" id="fo-maj"><h2>${E(T.updates)}</h2><ul class="fo-log">${changelog.slice(0, 6).map((c) =>
     `<li>${c.date ? `<time>${E(c.date)}</time>` : ''}<h3>${E(c.titre || '')}</h3>${c.desc ? `<p>${E(c.desc)}</p>` : ''}</li>`).join('')}</ul></section>` : '';
 
-  const reviewsSection = `<section class="fo-card" id="fo-avis"><div class="fo-reviews-head"><h2>${E(T.reviews)}</h2></div><div id="reviews-section"></div></section>`;
+  const reviewsSection = `<section class="fo-card" id="fo-avis"><div id="reviews-section"><div class="fo-card-head"><h2>${E(T.reviews)}</h2></div></div></section>`;
 
   // ── Sidebar : informations clés ──
   const PLAT_KEYS = ['web', 'windows', 'apple', 'android'];
@@ -307,19 +300,17 @@ function generateFiche(tool, allTools = [], deps) {
     .map((k) => `<a href="${E(safeUrl(reseaux[k]))}" target="_blank" rel="noopener nofollow" aria-label="${E(FI.BRAND[k][0])}" title="${E(FI.BRAND[k][0])}">${ic(k)}</a>`).join('');
   const modelKey = g('modele');
   const row = (label, val, cls = '') => (val ? `<div><dt>${E(label)}</dt><dd class="${cls}">${val}</dd></div>` : '');
+  // Informations clés : uniquement ces champs, dans cet ordre (une ligne sans donnée n'est pas affichée).
+  const yn = (v) => (v === true ? E(T.yes) : v === false ? E(T.no) : '');
   const infoRows = [
-    rules.maker ? row(T.dev, E(maker)) : '',
     row(T.cat, E(category)),
     row(T.sub, E(g('sous_categorie'))),
     row(T.model, modelKey && T.models[modelKey] ? E(T.models[modelKey]) : ''),
-    row(T.pricing, E(T.price[pk]), 'is-green'),
-    row(T.ideal, E(tool.ideal_pour)),
-    row(T.trial, g('essai_gratuit') === true ? `${E(T.yes)}${g('duree_essai') ? ' · ' + E(g('duree_essai')) : ''}` : '', 'is-green'),
+    row(T.pricing, E(T.price[pk])),
+    row(T.trial, yn(g('essai_gratuit'))),
     row(T.from, E(g('a_partir_de')), 'is-strong'),
     row(T.platforms, platChips ? `<div class="fo-plats">${platChips}</div>` : ''),
-    row(T.api, g('api') === true ? E(T.yes) : ''),
-    row(T.mobile, g('mobile') === true ? E(T.yes) : ''),
-    rules.interfaceFr ? row(T.ifr, g('interface_fr') === true ? E(T.yes) : '', 'is-green') : '',
+    row(T.api, yn(g('api'))),
     row(T.support, E(g('support'))),
     row(T.social, soc ? `<div class="fo-socials">${soc}</div>` : ''),
   ].join('');
@@ -338,23 +329,22 @@ function generateFiche(tool, allTools = [], deps) {
   const pricingBtnOnly = !tarifsCard && rules.urlTarifs && tarifsUrl
     ? `<section class="fo-card"><a class="fo-btn fo-btn-soft" style="width:100%" href="${E(tarifsUrl)}" target="_blank" rel="noopener">${E(T.seePricing)} ${ic('ext')}</a></section>` : '';
 
-  // ── Sidebar : alternatives ──
-  const altItems = alternatives.map((a) => {
+  // ── Sidebar : alternatives (données Albexia : note et catégorie lues dans la base si l'outil y figure) ──
+  const altItems = alternatives.map((a, idx) => {   // couleurs dans l'ordre : vert, rose, turquoise… comme la maquette
     const [nom, domaine, desc] = (typeof a === 'string' ? a : `${a.nom}|${a.domaine || ''}|${a.desc || ''}`).split('|');
     if (!nom || !nom.trim()) return '';
     const known = allTools.find((t) => (t.langue || 'fr') === langue && String(t.name).toLowerCase() === nom.trim().toLowerCase());
     const dom = (domaine || '').replace(/^https?:\/\//, '') || (known ? hostOf(known.url) : `${slugify(nom)}.com`);
-    const logo = known && known.favicon ? known.favicon : `https://www.google.com/s2/favicons?sz=64&domain=${dom}`;
-    const href = known && known.generer_fiche !== false ? toolFicheUrl(known) : `https://${dom}`;
-    const ext = !(known && known.generer_fiche !== false);
+    const hasPage = known && known.generer_fiche !== false;
+    const href = hasPage ? toolFicheUrl(known) : `https://${dom}`;
     const kNote = known ? Number(known.note || known.rating || 0) : 0;
-    return `<a class="fo-alt" href="${E(href)}"${ext ? ' target="_blank" rel="noopener"' : ''}>
-      <div class="fo-alt-id"><div class="fo-alt-logo"><img src="${E(logo)}" alt="" loading="lazy" onerror="this.style.display='none'"></div>
-        <div><b>${E(nom.trim())}</b><small>${E(desc || (known && known.category) || T.altsFor(name))}</small></div></div>
+    return `<a class="fo-alt" href="${E(href)}"${hasPage ? '' : ' target="_blank" rel="noopener"'}>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av${idx % 6}" aria-hidden="true">${E(nom.trim().charAt(0).toUpperCase())}</div>
+        <div><b>${E(nom.trim())}</b><small>${E((known && known.category) || desc || T.altsFor(name))}</small></div></div>
       ${kNote ? `<div class="fo-alt-note">${kNote.toFixed(1)} ${STAR}</div>` : ''}</a>`;
   }).join('');
   const altsCard = altItems ? `
-<section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">${E(T.alts)}</h3></div>
+<section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">${E(T.alts)}</h3><a class="fo-link" href="${R}index.html#tools">${E(T.seeMore)}</a></div>
   <div class="fo-alts">${altItems}</div><a class="fo-btn fo-btn-block" href="${R}comparateur/index.html">${E(T.altsMore)}</a></section>` : '';
 
   // ── Sidebar : articles liés (FR uniquement, selon l'offre) ──
@@ -371,11 +361,10 @@ function generateFiche(tool, allTools = [], deps) {
     ['fo-tarifs', T.tabs.pricing, !!tarifsCard],
     ['fo-avis', T.tabs.reviews, true],
     ['fo-alternatives', T.tabs.alternatives, !!altsCard],
-    ['fo-integrations', T.tabs.integrations, !!integrationsSection],
     ['fo-api', T.tabs.api, !!apiSection],
     ['fo-maj', T.tabs.updates, !!updatesSection],
   ].filter((t) => t[2]);
-  const tabsNav = `<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="${E(name)}">${tabs.map(([id, l], i) => `<a href="#${id}" class="fo-tab${i === 0 ? ' active' : ''}">${E(l)}</a>`).join('')}</nav></div></div>`;
+  const tabsNav = `<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="${E(name)}">${tabs.map(([id, l], i) => `<a href="#${id}" class="fo-tab${i === 0 ? ' active' : ''}" data-label="${E(l)}">${E(l)}</a>`).join('')}</nav></div></div>`;
   // ancre « Fonctionnalités » : Standard → bloc « Ce qu'on retient »
   const takeFix = !featuresSection && takeawaysSection ? takeawaysSection.replace('id="fo-retenir"', 'id="fo-fonctionnalites"') : takeawaysSection;
 
@@ -499,7 +488,6 @@ ${tabsNav}
       ${shotsSection}
       ${tutoSection}
       ${faqSection}
-      ${integrationsSection}
       ${apiSection}
       ${updatesSection}
       ${reviewsSection}

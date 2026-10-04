@@ -150,7 +150,7 @@ for (const e of entries.values()) {
 // ── Garde-fous ───────────────────────────────────────────
 const urls = [...entries.keys()].sort();
 if (urls.length > MAX_URLS) errors.push(`${urls.length} URLs : dépasse la limite de ${MAX_URLS} par sitemap (il faudra un index de sitemaps).`);
-if (!Object.keys(scannedCount).length) errors.push('Aucune page générée trouvée dans les dossiers scannés : sitemap non écrit pour éviter de publier un sitemap quasi vide.');
+if (!Object.keys(scannedCount).length) errors.push(`Aucune page générée trouvée dans les dossiers scannés : sitemap non écrit pour éviter de publier un sitemap quasi vide. Vérifier que "origin" (sitemap-pages.json) est identique à SITE_ORIGIN dans gen-fiches.js${skipped['canonical sur un autre domaine'] ? ' (' + skipped['canonical sur un autre domaine'].length + ' pages ont un canonical sur un autre domaine)' : ''}.`);
 
 if (fs.existsSync(SITEMAP_PATH) && !process.env.SITEMAP_FORCE) {
   const previous = (fs.readFileSync(SITEMAP_PATH, 'utf8').match(/<loc>/g) || []).length;

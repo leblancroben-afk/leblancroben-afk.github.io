@@ -941,6 +941,11 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/jasper/tutoriels/"/>
   </url>
   <url>
+    <loc>https://leblancroben-afk.github.io/tools/featured/fr/kimi/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/kimi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/kimi/"/>
+  </url>
+  <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/fr/make/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/make/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/make/tutoriels/"/>

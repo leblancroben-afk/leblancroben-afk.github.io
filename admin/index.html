@@ -381,8 +381,8 @@
                 <input type="text" id="o-langues" placeholder="Français, Anglais, Espagnol">
               </div>
             </div>
-            <label>Intégrations (séparées par virgules)</label>
-            <input type="text" id="o-integrations" placeholder="Slack, Notion, Zapier, Google Drive">
+            <div hidden><label>Intégrations (séparées par virgules)</label>
+            <input type="text" id="o-integrations" placeholder="Slack, Notion, Zapier, Google Drive"></div>
             <p class="field-hint">Alimente le filtre "Intégrations" et la ligne du même nom dans le comparateur. Laisser vide tant que non vérifié — un champ vide affiche "—", jamais une fausse information.</p>
           </fieldset>
 
@@ -423,8 +423,8 @@
               <textarea id="o-fonctionnalites-en" style="min-height:100px;"></textarea>
               <label>FAQ EN (question||réponse, une par ligne)</label>
               <textarea id="o-faq-en" style="min-height:100px;"></textarea>
-              <label>Stats clés EN (valeur|label, une par ligne)</label>
-              <textarea id="o-stats-en" style="min-height:70px;"></textarea>
+              <div hidden><label>Stats clés EN (valeur|label, une par ligne)</label>
+              <textarea id="o-stats-en" style="min-height:70px;"></textarea></div>
               <label>Tarifs de l'outil EN (nom|prix|période|description, une par ligne)</label>
               <textarea id="o-tarifs-en" style="min-height:80px;"></textarea>
               <label>Présentation longue EN</label>
@@ -450,8 +450,8 @@
               <textarea id="o-fonctionnalites-es" style="min-height:100px;"></textarea>
               <label>FAQ ES (question||réponse, une par ligne)</label>
               <textarea id="o-faq-es" style="min-height:100px;"></textarea>
-              <label>Stats clés ES (valeur|label, une par ligne)</label>
-              <textarea id="o-stats-es" style="min-height:70px;"></textarea>
+              <div hidden><label>Stats clés ES (valeur|label, une par ligne)</label>
+              <textarea id="o-stats-es" style="min-height:70px;"></textarea></div>
               <label>Tarifs de l'outil ES (nom|prix|période|description, une par ligne)</label>
               <textarea id="o-tarifs-es" style="min-height:80px;"></textarea>
               <label>Présentation longue ES</label>
@@ -489,12 +489,12 @@
           </fieldset>
 
           <fieldset>
-            <legend>⚡ Fonctionnalités, stats &amp; FAQ</legend>
-            <p class="field-hint" style="margin-top:-4px;">Affiché : Starter (3 fonctionnalités, 2 FAQ, 4 stats) · Featured (4 fonctionnalités, 4 FAQ, 4 stats). Remplissez tout : seules les premières lignes servent selon l'offre.</p>
+            <legend>⚡ Fonctionnalités &amp; FAQ</legend>
+            <p class="field-hint" style="margin-top:-4px;">Affiché : Starter (3 fonctionnalités, 2 FAQ) · Featured (4 fonctionnalités, 4 FAQ). Remplissez tout : seules les premières lignes servent selon l'offre.</p>
             <label>Fonctionnalités (format : icône|titre|description, une par ligne — touchez une icône ci-dessous pour l'insérer)</label>
             <textarea id="o-fonctionnalites" style="min-height:100px;"></textarea>
-            <label>Stats clés (format : valeur|label, une par ligne, 4 max)</label>
-            <textarea id="o-stats" style="min-height:80px;"></textarea>
+            <div hidden><label>Stats clés (format : valeur|label, une par ligne, 4 max)</label>
+            <textarea id="o-stats" style="min-height:80px;"></textarea></div>
             <label>FAQ (format : question||réponse, une par ligne)</label>
             <textarea id="o-faq" style="min-height:100px;"></textarea>
           </fieldset>

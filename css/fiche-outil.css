@@ -15,6 +15,8 @@
   --fo-amber-soft:  color-mix(in srgb, var(--accent-amber) 12%, transparent);
   font-family: 'DM Sans', sans-serif;
   color: var(--text);
+  background: var(--bg);
+  --fo-on-primary: var(--bg);
 }
 .fo-page h1, .fo-page h2, .fo-page h3 { font-family: 'Syne', sans-serif; letter-spacing: -0.03em; }
 .fo-wrap { max-width: 1280px; margin: 0 auto; padding: 0 16px; }
@@ -26,8 +28,10 @@
 .fo-hero { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 16px 0 40px; position: relative; overflow: hidden; }
 .fo-hero::before { content: ''; position: absolute; top: -120px; right: -100px; width: 520px; height: 420px; pointer-events: none;
   background: radial-gradient(ellipse, var(--fo-pink-soft) 0%, transparent 65%); }
+.fo-hero { color: var(--text); }
 .fo-hero > .fo-wrap { position: relative; }
-.fo-topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 0; font-size: 12px; color: var(--text-muted); }
+.fo-preview { color: var(--text); }
+.fo-topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; padding: 8px 0; font-size: 12px; color: var(--text-muted); }
 .fo-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .fo-crumbs a { color: var(--text-muted); text-decoration: none; }
 .fo-crumbs a:hover { text-decoration: underline; }
@@ -63,7 +67,7 @@
 .fo-hero-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-top: 4px; }
 .fo-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; padding: 10px 20px;
   font: 600 14px 'DM Sans', sans-serif; text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: transform .15s, background .15s, border-color .15s; }
-.fo-btn-primary { background: var(--accent2); color: var(--bg); box-shadow: 0 6px 18px var(--fo-pink-soft); }
+.fo-btn-primary { background: var(--accent2); color: var(--fo-on-primary, var(--bg)); box-shadow: 0 6px 18px var(--fo-pink-soft); }
 .fo-btn-primary:hover { transform: translateY(-1px); }
 .fo-btn-ghost { background: var(--bg3); color: var(--text); border-color: var(--border-hover); font-weight: 500; padding: 10px 16px; }
 .fo-btn-ghost:hover { border-color: var(--accent2); }
@@ -178,9 +182,8 @@
 .fo-info .is-strong { font-weight: 700; } .fo-info .is-green { color: var(--accent3); }
 .fo-info .fo-chips { justify-content: flex-end; gap: 6px; } .fo-info .fo-chip { padding: 3px 8px; font-size: 11px; }
 .fo-socials { display: flex; gap: 8px; justify-content: flex-end; }
-.fo-socials a { width: 26px; height: 26px; border-radius: 6px; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
-  color: var(--text); text-decoration: none; font: 700 11px 'DM Sans', sans-serif; }
-.fo-socials a:hover { color: var(--accent2); border-color: var(--accent2); }
+.fo-socials a { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--text); text-decoration: none; font-size: 15px; }
+.fo-socials a:hover { color: var(--accent); }
 
 .fo-plans { display: flex; flex-direction: column; gap: 16px; }
 .fo-plan { border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -221,16 +224,71 @@
   .fo-hero-grid, .fo-grid { gap: 24px; }
   .fo-shot { flex-basis: calc((100% - 16px) / 2); }
 }
+@media (max-width: 420px) { .fo-feat-grid { grid-template-columns: 1fr; } }
 @media (max-width: 600px) {
   .fo-title { font-size: 26px; }
   .fo-logo { width: 64px; height: 64px; }
   .fo-meta { grid-template-columns: repeat(2, 1fr); }
-  .fo-feat-grid { grid-template-columns: 1fr; }
   .fo-shot { flex-basis: 85%; }
   .fo-car-prev { left: 4px; } .fo-car-next { right: 4px; }
   .fo-card { padding: 18px; }
   .fo-tabs nav { gap: 20px; }
   .fo-foot .s { text-align: left; }
-  .fo-plan { flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) { .fo-feat, .fo-btn, .fo-thumb { transition: none; } }
+
+
+/* ── Icônes de plateformes (choisies dans l'admin) ── */
+.fo-plats { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 12px; font-size: 15px; color: var(--text); }
+.fo-plat { display: inline-flex; }
+.fo-btn-softsm { background: var(--fo-soft); color: var(--accent); border-color: transparent; font-size: 12px; padding: 6px 12px; border-radius: 8px; font-weight: 500; white-space: nowrap; }
+.fo-btn-softsm:hover { background: var(--fo-soft-border); }
+.fo-feat-ico .fo-ico { font-size: 17px; color: var(--accent); }
+.fo-feat.is-ok .fo-feat-ico .fo-ico { color: var(--accent3); }
+.fo-feat.is-warn .fo-feat-ico .fo-ico { color: var(--accent-amber); }
+
+/* =========================================================
+   THÈME « template » — couleurs exactes de la maquette Fiche Notion AI
+   (page claire #f4f6f9, cartes blanches, bandeau bleu nuit, bleu #2563eb).
+   Il suffit de redéfinir les variables du site à l'intérieur de .fo-page :
+   tout le reste (fiche, FAQ, widget d'avis) suit. Pour revenir aux couleurs
+   sombres d'Albexia : FICHE_THEME = 'albexia' dans fiche-outil.js.
+   ========================================================= */
+.fo-theme-template {
+  --bg: #f4f6f9; --bg2: #ffffff; --bg3: #f8fafc;
+  --text: #111827; --text-muted: #4b5563; --text-dim: #9ca3af;
+  --border: #e5e7eb; --border-hover: #d1d5db;
+  --accent: #2563eb; --accent2: #2563eb; --accent3: #059669; --accent-amber: #fbbf24;
+  --fo-on-primary: #ffffff;
+}
+.fo-theme-template .fo-hero {
+  background: #0b1329;
+  --bg: #0b1329; --bg2: #0b1329; --bg3: rgba(30, 41, 59, .85);
+  --text: #ffffff; --text-muted: #cbd5e1; --text-dim: #94a3b8;
+  --border: rgba(51, 65, 85, .6); --border-hover: #334155;
+  --accent: #60a5fa; --accent2: #60a5fa; --accent3: #34d399;
+  border-bottom: 0;
+}
+.fo-theme-template .fo-hero::before { display: none; }
+.fo-theme-template .fo-hero .fo-btn-primary { background: #2563eb; box-shadow: 0 6px 16px rgba(0, 0, 0, .25); }
+.fo-theme-template .fo-hero .fo-btn-primary:hover { background: #1d4ed8; }
+.fo-theme-template .fo-hero .fo-pill:hover, .fo-theme-template .fo-hero .fo-btn-ghost:hover { border-color: #64748b; background: #334155; }
+.fo-theme-template .fo-dots i:nth-child(1) { background: #f87171; }
+.fo-theme-template .fo-dots i:nth-child(2) { background: #facc15; }
+.fo-theme-template .fo-dots i:nth-child(3) { background: #4ade80; }
+.fo-theme-template .fo-preview {
+  --bg2: #ffffff; --bg3: #ffffff; --text: #111827; --text-muted: #6b7280; --text-dim: #9ca3af; --border: #e5e7eb; --accent: #9333ea;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, .45); border-color: rgba(51, 65, 85, .5);
+}
+.fo-theme-template .fo-preview-chip { background: #f1f5f9; border-color: #e2e8f0; }
+.fo-theme-template .fo-thumb { background: #e5e7eb; border-color: rgba(51, 65, 85, .4); }
+.fo-theme-template .fo-thumb.active { border-color: #3b82f6; background: #fff; }
+.fo-theme-template .fo-tabs { box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+.fo-theme-template .fo-card { box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+.fo-theme-template .fo-info .is-green, .fo-theme-template .fo-plan strong { color: var(--text); }
+.fo-theme-template .fo-meta { background: rgba(248, 250, 252, .8); border-color: #f1f5f9; }
+.fo-theme-template .fo-feat-ico { background: #eff6ff; border-color: #dbeafe; }
+.fo-theme-template .fo-plan { box-shadow: none; }
+.fo-theme-template .fo-alt-logo { background: #f1f5f9; }
+.fo-theme-template .fo-shot { background: #f8fafc; }
+.fo-theme-template .fo-shot img { background: #fff; border-color: #e5e7eb; }

@@ -295,7 +295,7 @@
 
 
 /* =========================================================
-   AVIS DES UTILISATEURS — rendu par js/fiche-avis.js
+   AVIS DES UTILISATEURS — rendu par js/reviews-widget.js
    (note moyenne, étoiles, nombre d'avis, répartition 5→1, cartes d'avis)
    ========================================================= */
 .fo-score small { color: var(--text-muted); font-weight: 400; }

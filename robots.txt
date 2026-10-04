@@ -8,4 +8,4 @@ Disallow: /profil.html
 Disallow: /profil-public.html
 Disallow: /backups/
 
-Sitemap: https://albexia.com/sitemap.xml
+Sitemap: https://leblancroben-afk.github.io/sitemap.xml

@@ -48,6 +48,15 @@
     .row{display:flex;gap:12px;}
     .row>div{flex:1;}
     .field-hint{font-size:11px;color:var(--text-dim);margin-top:4px;}
+    .icon-picker{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+    .icon-picker button{width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;}
+    .icon-picker button:active,.icon-picker button:hover{border-color:var(--accent2);color:var(--accent2);}
+    .icon-picker .fo-ico,.plat-checks .fo-ico{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .icon-picker .fo-ico-fill,.plat-checks .fo-ico-fill{fill:currentColor;stroke:none;}
+    .plat-checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+    .plat-checks label{display:inline-flex;align-items:center;gap:8px;margin:0;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg3);cursor:pointer;font-size:13px;}
+    .plat-checks input{width:auto;margin:0;}
+    .plat-checks label:has(input:checked){border-color:var(--accent3);color:var(--accent3);}
     .field-hint a{color:var(--accent3);text-decoration:none;}
     .accordion-toggle{background:var(--bg2);border:1px solid var(--border);border-radius:8px;
       color:var(--text-muted);padding:10px 14px;cursor:pointer;font-size:13px;
@@ -410,7 +419,7 @@
               <textarea id="o-points-forts-en" style="min-height:70px;"></textarea>
               <label>Limite principale EN</label>
               <input type="text" id="o-limite-en">
-              <label>Fonctionnalités EN (emoji|titre|desc, une par ligne)</label>
+              <label>Fonctionnalités EN (icône|titre|desc, une par ligne)</label>
               <textarea id="o-fonctionnalites-en" style="min-height:100px;"></textarea>
               <label>FAQ EN (question||réponse, une par ligne)</label>
               <textarea id="o-faq-en" style="min-height:100px;"></textarea>
@@ -437,7 +446,7 @@
               <textarea id="o-points-forts-es" style="min-height:70px;"></textarea>
               <label>Limite principale ES</label>
               <input type="text" id="o-limite-es">
-              <label>Fonctionnalités ES (emoji|titre|desc, une par ligne)</label>
+              <label>Fonctionnalités ES (icône|titre|desc, une par ligne)</label>
               <textarea id="o-fonctionnalites-es" style="min-height:100px;"></textarea>
               <label>FAQ ES (question||réponse, une par ligne)</label>
               <textarea id="o-faq-es" style="min-height:100px;"></textarea>
@@ -482,7 +491,7 @@
           <fieldset>
             <legend>⚡ Fonctionnalités, stats &amp; FAQ</legend>
             <p class="field-hint" style="margin-top:-4px;">Affiché : Starter (3 fonctionnalités, 2 FAQ, 4 stats) · Featured (4 fonctionnalités, 4 FAQ, 4 stats). Remplissez tout : seules les premières lignes servent selon l'offre.</p>
-            <label>Fonctionnalités (format : emoji|titre|description, une par ligne)</label>
+            <label>Fonctionnalités (format : icône|titre|description, une par ligne — touchez une icône ci-dessous pour l'insérer)</label>
             <textarea id="o-fonctionnalites" style="min-height:100px;"></textarea>
             <label>Stats clés (format : valeur|label, une par ligne, 4 max)</label>
             <textarea id="o-stats" style="min-height:80px;"></textarea>
@@ -511,6 +520,14 @@
             <input type="text" id="o-maker">
             <label>Plateformes</label>
             <input type="text" id="o-plateformes" placeholder="Web, Windows, Mac, iOS, Android">
+            <label>Icônes affichées sur la fiche (à la place du texte)</label>
+            <div class="plat-checks" id="o-plat-ico">
+              <label><input type="checkbox" value="web"><span data-fi="web"></span> Web</label>
+              <label><input type="checkbox" value="windows"><span data-fi="windows"></span> Windows</label>
+              <label><input type="checkbox" value="apple"><span data-fi="apple"></span> Apple (Mac / iOS)</label>
+              <label><input type="checkbox" value="android"><span data-fi="android"></span> Android</label>
+            </div>
+            <p class="field-hint">Les icônes LinkedIn, YouTube et X s'affichent automatiquement dès qu'un lien est renseigné plus bas.</p>
             <div class="row">
               <div>
                 <label>Interface FR</label>
@@ -1551,6 +1568,7 @@ Support français|oui|non|bool"></textarea>
   </div>
 </div>
 
+<script src="/js/fiche-icons.js"></script>
 <script type="module">
   import { auth, db, onAuthStateChanged, collection, getDocs, getDoc, doc, setDoc, addDoc, deleteDoc, updateDoc, query, where, orderBy, serverTimestamp, writeBatch }
     from '/js/firebase-config.js';
@@ -2835,6 +2853,12 @@ Support français|oui|non|bool"></textarea>
     setVal('o-maker', tool.maker);
     setVal('o-plateformes', tool.plateformes);
     setVal('o-url-tarifs', tool.url_tarifs);
+    (function(){
+      var ico = Array.isArray(tool.plateformes_icones) && tool.plateformes_icones.length ? tool.plateformes_icones : [];
+      if(!ico.length && tool.plateformes){ var t = String(tool.plateformes).toLowerCase();
+        [[/web|navigateur|browser/,'web'],[/windows/,'windows'],[/mac|ios|iphone|ipad|apple/,'apple'],[/android/,'android']].forEach(function(p){ if(p[0].test(t)) ico.push(p[1]); }); }
+      document.querySelectorAll('#o-plat-ico input').forEach(function(c){ c.checked = ico.indexOf(c.value) > -1; });
+    })();
     setVal('o-type-outil', tool.type_outil || '');
     setVal('o-sous-cat', tool.sous_categorie || '');
     setVal('o-modele', tool.modele || '');
@@ -3053,6 +3077,7 @@ Support français|oui|non|bool"></textarea>
         reseaux: Object.keys(reseaux).length ? reseaux : undefined,
         verifie: gv('o-verifie') === 'true', tarifs_verifie: gv('o-tarifs-verifie') !== 'false',
         galerie, changelog,
+        plateformes_icones: [...document.querySelectorAll('#o-plat-ico input:checked')].map(c=>c.value),
       };
 
       const fonctionnalitesEn = (document.getElementById('o-fonctionnalites-en').value||'').split('\n')
@@ -4932,6 +4957,33 @@ Support français|oui|non|bool"></textarea>
     btn.disabled=false;
   });
 
+</script>
+
+<script>
+/* Sélecteur d'icônes (fonctionnalités) et icônes des plateformes — bibliothèque partagée /js/fiche-icons.js */
+(function(){
+  var FI = window.FICHE_ICONS; if(!FI) return;
+  document.querySelectorAll('[data-fi]').forEach(function(el){ el.innerHTML = FI.svg(el.getAttribute('data-fi')); });
+  function applyIcon(ta, key){
+    var v = ta.value, pos = ta.selectionStart || 0;
+    var ls = v.lastIndexOf('\n', pos - 1) + 1; var le = v.indexOf('\n', pos); if(le < 0) le = v.length;
+    var line = v.slice(ls, le), bar = line.indexOf('|');
+    var nl = line.trim() === '' ? key + '|' : (bar > -1 ? key + line.slice(bar) : key + '|' + line);
+    ta.value = v.slice(0, ls) + nl + v.slice(le);
+    var np = ls + key.length + 1; ta.focus(); ta.setSelectionRange(np, np);
+  }
+  ['o-fonctionnalites','o-fonctionnalites-en','o-fonctionnalites-es'].forEach(function(id){
+    var ta = document.getElementById(id); if(!ta) return;
+    var box = document.createElement('div'); box.className = 'icon-picker';
+    FI.FEATURE_KEYS.forEach(function(k){
+      var b = document.createElement('button'); b.type = 'button'; b.title = FI.STROKE[k][0] + ' (' + k + ')'; b.setAttribute('aria-label', FI.STROKE[k][0]);
+      b.innerHTML = FI.svg(k); b.addEventListener('click', function(){ applyIcon(ta, k); }); box.appendChild(b);
+    });
+    var hint = document.createElement('p'); hint.className = 'field-hint';
+    hint.textContent = 'Placez le curseur sur une ligne puis touchez une icône : elle remplace celle de la ligne (ou s\u2019ajoute sur une ligne vide).';
+    ta.insertAdjacentElement('afterend', hint); hint.insertAdjacentElement('afterend', box);
+  });
+})();
 </script>
 </body>
 </html>

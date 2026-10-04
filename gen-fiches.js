@@ -137,8 +137,11 @@ function stars(note, langue = 'fr') {
 
 // R = chemin absolu vers la racine du site (site servi à la racine du domaine)
 const R = '/';
-const SITE_ORIGIN = 'https://albexia.com';
+const SITE_ORIGIN = 'https://leblancroben-afk.github.io';
 
+function reecrireAnciensDomaines(html) {
+  return html ? html.replace(/https:\/\/ia-directory\.github\.io\/(?:annuaire-ia\/)?/g, SITE_ORIGIN + '/') : html;
+}
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
 
@@ -4407,7 +4410,7 @@ async function main() {
 
     if (!hasChanged && fs.existsSync(filePath)) { articlesUnchanged++; continue; }
 
-    const html = generateArticle(article, articles);
+    const html = reecrireAnciensDomaines(generateArticle(article, articles));
     if (!html) { articlesSkippedNoSlug++; continue; }
 
     fs.mkdirSync(folder, { recursive: true });
@@ -4458,7 +4461,7 @@ async function main() {
     // Promise.all, pour ne jamais envoyer plusieurs requêtes simultanées
     // vers des sites tiers pendant le build (poli envers leurs serveurs,
     // et plus facile à débugger si un site bloque le run).
-    const html = await generateArticleCreateur(article, outilsMap, articlesCreateurs);
+    const html = reecrireAnciensDomaines(await generateArticleCreateur(article, outilsMap, articlesCreateurs));
     if (!html) continue;
 
     const slug = articleCreateurSlug(article);

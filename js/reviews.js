@@ -5,6 +5,7 @@
      • reviews/{id}/voters/{uid}       → votes utile
      • ratings_summary/{toolSlug}      → moyenne calculée
      • reports/{reviewId}_{reporterUid}→ signalements
+     • tool_votes/{toolSlug}_{uid}     → vote rapide « Cet outil vous a été utile ? »
    ═══════════════════════════════════════ */
 
 import {
@@ -48,6 +49,11 @@ export async function submitReview(uid, toolSlug, toolMeta, rating, comment, use
   const oldRating = isUpdate ? existing.data().rating : null;
 
   const batch = writeBatch(db);
+
+  // Un avis remplace le vote rapide de la même personne (jamais comptée deux fois)
+  const quickRef  = doc(db, 'tool_votes', reviewId);
+  const quickSnap = await getDoc(quickRef);
+  if (quickSnap.exists()) batch.delete(quickRef);
 
   batch.set(reviewRef, {
     uid,
@@ -171,6 +177,82 @@ export async function deleteUserReview(uid, toolSlug) {
     updatedAt:   serverTimestamp(),
   });
   await batch.commit();
+}
+
+// ──────────────────────────────────────────
+// UTILITÉ DE L'OUTIL (calcul à la volée)
+// Oui = avis positifs + votes rapides Oui
+// Non = avis négatifs + votes rapides Non
+// Seuils identiques aux filtres Positifs / Négatifs de avis-outil.js
+// (≥ 4 ★ positif, ≤ 2 ★ négatif). Un avis de 3 ★ compte 0,5 Oui + 0,5 Non.
+// Indépendant de la note ⭐ et du « Utile ? » sous chaque avis.
+// ──────────────────────────────────────────
+
+export const POSITIVE_MIN_RATING = 4;
+export const NEGATIVE_MAX_RATING = 2;
+
+export function isPositiveRating(rating) { return rating >= POSITIVE_MIN_RATING; }
+export function isNegativeRating(rating) { return rating <= NEGATIVE_MAX_RATING; }
+
+export function computeUsefulness(reviews, quickVotes) {
+  let yes = 0;
+  let no  = 0;
+  (reviews || []).forEach(r => {
+    if (isPositiveRating(r.rating))      yes += 1;
+    else if (isNegativeRating(r.rating)) no  += 1;
+    else { yes += 0.5; no += 0.5; }
+  });
+  (quickVotes || []).forEach(v => {
+    if (v.value === 'yes') yes += 1;
+    else if (v.value === 'no') no += 1;
+  });
+  const total = yes + no;
+  return {
+    yes, no, total,
+    percent: total > 0 ? Math.round((yes / total) * 100) : null,
+  };
+}
+
+export async function getToolQuickVotes(toolSlug) {
+  const q    = query(collection(db, 'tool_votes'), where('toolSlug', '==', toolSlug));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+export async function getToolUsefulness(toolSlug) {
+  const [reviews, quickVotes] = await Promise.all([
+    getToolReviews(toolSlug),
+    getToolQuickVotes(toolSlug),
+  ]);
+  return computeUsefulness(reviews, quickVotes);
+}
+
+export async function getUserToolVote(uid, toolSlug) {
+  const snap = await getDoc(doc(db, 'tool_votes', `${toolSlug}_${uid}`));
+  return snap.exists() ? snap.data().value : null;
+}
+
+// Même valeur → annule le vote. Valeur différente → change.
+// Refusé si la personne a déjà un avis actif sur cet outil.
+export async function voteTool(uid, toolSlug, value) {
+  if (value !== 'yes' && value !== 'no') throw new Error('Valeur invalide');
+  const id = `${toolSlug}_${uid}`;
+  const [reviewSnap, voteSnap] = await Promise.all([
+    getDoc(doc(db, 'reviews', id)),
+    getDoc(doc(db, 'tool_votes', id)),
+  ]);
+  if (reviewSnap.exists()) {
+    const err = new Error('has-review');
+    err.code = 'has-review';
+    throw err;
+  }
+  const voteRef = doc(db, 'tool_votes', id);
+  if (voteSnap.exists() && voteSnap.data().value === value) {
+    await deleteDoc(voteRef);
+    return null;
+  }
+  await setDoc(voteRef, { uid, toolSlug, value, updatedAt: serverTimestamp() });
+  return value;
 }
 
 // ──────────────────────────────────────────

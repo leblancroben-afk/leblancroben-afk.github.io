@@ -341,6 +341,7 @@ async function handleSubmit() {
     rvToast(tr('reviews.toastSubmitted'));
     await refreshWidget();
     await refreshHeroStars();
+    window.dispatchEvent(new CustomEvent('albexia:review-changed'));
   } catch (err) {
     console.error('reviews-widget: échec submitReview', err);
     errorEl.textContent = tr('reviews.errorSubmit');
@@ -358,6 +359,7 @@ async function handleDelete() {
     rvToast(tr('reviews.toastDeleted'));
     await refreshWidget();
     await refreshHeroStars();
+    window.dispatchEvent(new CustomEvent('albexia:review-changed'));
   } catch {
     rvToast(tr('reviews.toastDeleteError'));
   }

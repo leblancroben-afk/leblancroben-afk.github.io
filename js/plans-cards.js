@@ -21,15 +21,15 @@ import { db, doc, getDoc } from './firebase-config.js';
 
 const PLANS_DEFAUT = {
   standard: {
-    features_fr: ['Fiche basique', 'Position standard dans la catégorie'],
-    features_en: ['Basic listing', 'Standard position in category'],
-    features_es: ['Ficha básica', 'Posición estándar en la categoría'],
+    features_fr: ['Fiche outil complète', 'Position standard dans la catégorie'],
+    features_en: ['Full tool listing', 'Standard position in category'],
+    features_es: ['Ficha completa de la herramienta', 'Posición estándar en la categoría'],
   },
   starter: {
     prix: 9,
-    features_fr: ['Fiche complète (description longue, captures, vidéo)', 'Badge Partenaire Albexia', 'Position prioritaire dans la catégorie'],
-    features_en: ['Full listing (long description, screenshots, video)', 'Albexia Partner badge', 'Priority position in category'],
-    features_es: ['Ficha completa (descripción larga, capturas, vídeo)', 'Insignia de Socio Albexia', 'Posición prioritaria en la categoría'],
+    features_fr: ['Fiche outil complète', 'Badge Partenaire Albexia', 'Position prioritaire dans la catégorie'],
+    features_en: ['Full tool listing', 'Albexia Partner badge', 'Priority position in category'],
+    features_es: ['Ficha completa de la herramienta', 'Insignia de Socio Albexia', 'Posición prioritaria en la categoría'],
   },
   featured: {
     prix: 9,

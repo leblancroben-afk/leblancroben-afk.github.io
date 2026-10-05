@@ -4,7 +4,7 @@
    URL : /tools/avis-outil.html?tool=canva
    ═══════════════════════════════════════ */
 
-import { auth, onAuthStateChanged }
+import { auth, onAuthStateChanged, db, collection, getDocs, query, where }
   from '/js/firebase-config.js';
 
 import {
@@ -47,7 +47,7 @@ let userVotes    = {};
 let quickVotes   = [];      // votes rapides Oui/Non de l'outil
 let userQuickVote = null;   // vote rapide de la personne connectée
 let toolMeta     = { name: '', favicon: '', page: '' };
-let toolInfo     = null;   // fiche de l'outil (data/tools.json) : description, catégorie, tags, site officiel
+let toolInfo     = null;   // fiche de l'outil (Firestore « outils ») : description, catégorie, tags, site officiel
 
 // ── Init ──────────────────────────────────────
 onAuthStateChanged(auth, async (user) => {
@@ -55,18 +55,36 @@ onAuthStateChanged(auth, async (user) => {
   if (TOOL_SLUG) await loadAll();
 });
 
+// Même règle que gen-fiches.js (dossier de la fiche = slug du nom)
+function slugifyName(str) {
+  return (str || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+// Fiche de l'outil : collection Firestore « outils » (source de gen-fiches.js).
+// Un outil existe en plusieurs documents (fr/en/es) : on privilégie le français.
 async function loadToolInfo() {
   try {
-    const res = await fetch('/data/tools.json');
-    if (!res.ok) return null;
-    const list = await res.json();
-    const arr  = Array.isArray(list) ? list : (list.tools || []);
-    return arr.find(t => t.page && getToolSlugFromPath(t.page) === TOOL_SLUG) || null;
-  } catch { return null; }
+    let docs = [];
+    if (toolMeta.name) {
+      const snap = await getDocs(query(collection(db, 'outils'), where('name', '==', toolMeta.name)));
+      docs = snap.docs.map(d => d.data());
+    }
+    if (!docs.some(t => slugifyName(t.name) === TOOL_SLUG)) {
+      // Pas d'avis (nom inconnu) : recherche par slug dans la collection
+      const snap = await getDocs(collection(db, 'outils'));
+      docs = snap.docs.map(d => d.data()).filter(t => slugifyName(t.name) === TOOL_SLUG);
+    }
+    docs = docs.filter(t => slugifyName(t.name) === TOOL_SLUG);
+    return docs.find(t => (t.langue || 'fr') === 'fr') || docs[0] || null;
+  } catch (e) {
+    console.error('avis-outil: lecture de la fiche outil', e);
+    return null;
+  }
 }
 
 async function loadAll() {
-  toolInfo = await loadToolInfo();
   try {
     [allReviews, userReview, quickVotes, userQuickVote] = await Promise.all([
       getToolReviews(TOOL_SLUG),
@@ -93,11 +111,17 @@ async function loadAll() {
     console.error(e);
   }
 
+  // Fiche de l'outil (Firestore « outils »), après les avis pour connaître le nom exact
+  toolInfo = await loadToolInfo();
+
   // FIX 1 : guard null sur bc-tool-name (évite le crash + chargement infini)
   if (toolInfo) {
     toolMeta.name    = toolInfo.name || toolMeta.name;
     toolMeta.favicon = toolInfo.favicon || toolMeta.favicon;
-    toolMeta.page    = toolInfo.page ? '/' + toolInfo.page.replace(/^\//, '') : toolMeta.page;
+    if (!toolMeta.page) {
+      const plan = ['featured', 'starter'].includes(toolInfo.plan) ? toolInfo.plan : 'standard';
+      toolMeta.page = `/tools/${plan}/${toolInfo.langue || 'fr'}/${TOOL_SLUG}/`;
+    }
   }
   if (toolMeta.name) {
     document.title = `Avis ${toolMeta.name} — Albexia`;

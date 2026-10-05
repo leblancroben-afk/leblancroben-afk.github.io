@@ -15,12 +15,12 @@
 
 // ── Les 3 offres (Standard / Starter / Featured) ──
 // Toutes les fiches ont EXACTEMENT les mêmes sections et les mêmes informations.
-// Le plan ne règle plus la quantité d'informations affichées : seulement la
-// promotion — badge dans le bandeau et nombre d'articles liés en sidebar (FR).
+// Le plan ne règle plus ni la quantité d'informations ni le nombre d'articles liés :
+// il ne pilote ici que le badge du bandeau (la mise en avant se gère ailleurs).
 const PLAN_RULES = {
-  standard: { badge: null,          articles: 0 },
-  starter:  { badge: 'partner',     articles: 1 },
-  featured: { badge: 'recommended', articles: 2 },
+  standard: { badge: null },
+  starter:  { badge: 'partner' },
+  featured: { badge: 'recommended' },
 };
 // Plafonds d'affichage, IDENTIQUES pour tous les plans.
 const LIMITES = { features: 6, faq: 6, gallery: 5, tutoriels: 3 };
@@ -37,7 +37,7 @@ const L = {
     visit: 'Visiter le site', compare: 'Comparer', seePricing: 'Voir tous les tarifs',
     tabs: { presentation: 'Présentation', features: 'Fonctionnalités', pricing: 'Tarifs', reviews: 'Avis', alternatives: 'Alternatives', integrations: 'Intégrations', api: 'API', updates: 'Mises à jour' },
     about: (n) => `À propos de ${n}`, site: 'Site officiel', language: 'Langue', created: 'Créé en', type: 'Type',
-    takeaways: "Ce qu'on retient", limit: 'Limite principale', mainFeatures: 'Fonctionnalités principales', shots: "Captures d'écran",
+    mainFeatures: 'Fonctionnalités principales', shots: "Captures d'écran",
     tutorials: 'Tutoriels vidéo', faq: 'Questions fréquentes', integrations: 'Intégrations', apiT: 'API', apiDoc: "Documentation de l'API", updates: 'Mises à jour',
     reviews: 'Avis des utilisateurs', keyInfo: 'Informations clés', dev: 'Développeur', cat: 'Catégorie', sub: 'Sous-catégorie', model: 'Modèle',
     pricing: 'Tarification', ideal: 'Idéal pour', trial: 'Essai gratuit', from: 'À partir de', platforms: 'Plateformes', api: 'API', mobile: 'App mobile',
@@ -54,7 +54,7 @@ const L = {
     visit: 'Visit website', compare: 'Compare', seePricing: 'See all pricing',
     tabs: { presentation: 'Overview', features: 'Features', pricing: 'Pricing', reviews: 'Reviews', alternatives: 'Alternatives', integrations: 'Integrations', api: 'API', updates: 'Updates' },
     about: (n) => `About ${n}`, site: 'Official website', language: 'Language', created: 'Created in', type: 'Type',
-    takeaways: 'Key takeaways', limit: 'Main limitation', mainFeatures: 'Key features', shots: 'Screenshots',
+    mainFeatures: 'Key features', shots: 'Screenshots',
     tutorials: 'Video tutorials', faq: 'FAQ', integrations: 'Integrations', apiT: 'API', apiDoc: 'API documentation', updates: 'Updates',
     reviews: 'User reviews', keyInfo: 'Key information', dev: 'Developer', cat: 'Category', sub: 'Subcategory', model: 'Model',
     pricing: 'Pricing', ideal: 'Ideal for', trial: 'Free trial', from: 'Starting at', platforms: 'Platforms', api: 'API', mobile: 'Mobile app',
@@ -71,7 +71,7 @@ const L = {
     visit: 'Visitar el sitio', compare: 'Comparar', seePricing: 'Ver todos los precios',
     tabs: { presentation: 'Presentación', features: 'Funcionalidades', pricing: 'Precios', reviews: 'Reseñas', alternatives: 'Alternativas', integrations: 'Integraciones', api: 'API', updates: 'Novedades' },
     about: (n) => `Acerca de ${n}`, site: 'Sitio oficial', language: 'Idioma', created: 'Creado en', type: 'Tipo',
-    takeaways: 'Lo destacado', limit: 'Limitación principal', mainFeatures: 'Funcionalidades principales', shots: 'Capturas de pantalla',
+    mainFeatures: 'Funcionalidades principales', shots: 'Capturas de pantalla',
     tutorials: 'Tutoriales en vídeo', faq: 'Preguntas frecuentes', integrations: 'Integraciones', apiT: 'API', apiDoc: 'Documentación de la API', updates: 'Novedades',
     reviews: 'Reseñas de usuarios', keyInfo: 'Información clave', dev: 'Desarrollador', cat: 'Categoría', sub: 'Subcategoría', model: 'Modelo',
     pricing: 'Precios', ideal: 'Ideal para', trial: 'Prueba gratis', from: 'Desde', platforms: 'Plataformas', api: 'API', mobile: 'App móvil',
@@ -109,7 +109,7 @@ const nonEmpty = (v) => !(v == null || v === '' || (Array.isArray(v) && !v.lengt
 // on ne veut pas de texte français sur une page EN/ES). Tous les autres
 // champs sont communs et repris du document FR si la langue n'a pas le sien.
 const TRADUISIBLES = new Set(['name', 'description', 'ideal_pour', 'presentation', 'meta_description',
-  'points_forts', 'limite', 'fonctionnalites', 'faq', 'stats', 'tarifs']);
+  'fonctionnalites', 'faq', 'stats', 'tarifs']);
 
 function generateFiche(tool, allTools = [], deps) {
   const { esc, slugify, seoHeadTags, toolLangueUrls, toolFicheUrl, navHTML, footerHTML, faqJS, tutorialJS, sharedJS, R } = deps;
@@ -229,18 +229,6 @@ function generateFiche(tool, allTools = [], deps) {
   <div class="fo-meta">${metaCards}</div>
 </section>`;
 
-  // ── Ce qu'on retient (Standard) ──
-  const pf = (g('points_forts') || []).slice(0, 4);
-  const limite = g('limite') || g('limite_principale');
-  const takeawaysSection = (pf.length || limite) ? `
-<section class="fo-card" id="fo-retenir">
-  <h2>${E(T.takeaways)}</h2>
-  <div class="fo-feat-grid">
-    ${pf.map((p) => `<div class="fo-feat is-ok"><div class="fo-feat-ico">${ic('check')}</div><div><h3>${E(p)}</h3></div></div>`).join('')}
-    ${limite ? `<div class="fo-feat is-warn"><div class="fo-feat-ico">${ic('alert')}</div><div><h3>${E(T.limit)}</h3><p>${E(limite)}</p></div></div>` : ''}
-  </div>
-</section>` : '';
-
   // ── Fonctionnalités ──
   const featuresSection = features.length ? `
 <section class="fo-card" id="fo-fonctionnalites">
@@ -352,17 +340,18 @@ function generateFiche(tool, allTools = [], deps) {
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">${E(T.alts)}</h3><a class="fo-link" href="${R}index.html#tools">${E(T.seeMore)}</a></div>
   <div class="fo-alts">${altItems}</div><a class="fo-btn fo-btn-block" href="${R}comparateur/index.html">${E(T.altsMore)}</a></section>` : '';
 
-  // ── Sidebar : articles liés (FR uniquement, selon l'offre) ──
-  const artId = plan === 'featured' ? 'articles-sidebar-all' : 'articles-sidebar-starter';
-  const articlesCard = langue === 'fr' && rules.articles ? `
-<section class="fo-card fo-articles"><h3 class="fo-h3">${E(T.articles)}</h3><div id="${artId}"></div></section>` : '';
-  const articlesScript = langue === 'fr' && rules.articles
-    ? `<script src="${R}js/articles-loader.js" data-outil="${E(slug)}" data-plan="${plan}"></script>` : '';
+  // ── Sidebar : articles liés — pour TOUS les plans (FR : articles.json est en français).
+  // Le nombre affiché dépend uniquement des articles disponibles pour l'outil ; js/articles-loader.js
+  // masque la carte s'il n'y en a aucun.
+  const articlesCard = langue === 'fr' ? `
+<section class="fo-card fo-articles"><h3 class="fo-h3">${E(T.articles)}</h3><div id="articles-sidebar"></div></section>` : '';
+  const articlesScript = langue === 'fr'
+    ? `<script src="${R}js/articles-loader.js" data-outil="${E(slug)}"></script>` : '';
 
   // ── Onglets ──
   const tabs = [
     ['fo-presentation', T.tabs.presentation, true],
-    ['fo-fonctionnalites', T.tabs.features, !!featuresSection || !!takeawaysSection],
+    ['fo-fonctionnalites', T.tabs.features, !!featuresSection],
     ['fo-tarifs', T.tabs.pricing, !!tarifsCard],
     ['fo-avis', T.tabs.reviews, true],
     ['fo-alternatives', T.tabs.alternatives, !!altsCard],
@@ -370,8 +359,6 @@ function generateFiche(tool, allTools = [], deps) {
     ['fo-maj', T.tabs.updates, !!updatesSection],
   ].filter((t) => t[2]);
   const tabsNav = `<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="${E(name)}">${tabs.map(([id, l], i) => `<a href="#${id}" class="fo-tab${i === 0 ? ' active' : ''}" data-label="${E(l)}">${E(l)}</a>`).join('')}</nav></div></div>`;
-  // ancre « Fonctionnalités » : Standard → bloc « Ce qu'on retient »
-  const takeFix = !featuresSection && takeawaysSection ? takeawaysSection.replace('id="fo-retenir"', 'id="fo-fonctionnalites"') : takeawaysSection;
 
   // ── Pied de fiche ──
   const foot = `
@@ -498,7 +485,6 @@ ${tabsNav}
   <div class="fo-grid">
     <div class="fo-col-main">
       ${aboutSection}
-      ${takeFix}
       ${featuresSection}
       ${shotsSection}
       ${tutoSection}

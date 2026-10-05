@@ -138,8 +138,6 @@ Génère un JSON strict avec exactement ces clés, correspondant aux champs d'un
   "emoji": "Un seul emoji pertinent représentant l'outil",
   "description": "Description courte de 150 à 200 caractères, en français, présentant l'outil pour un lecteur pressé",
   "ideal_pour": "Une phrase courte type profil cible, ex: Rédacteurs et community managers",
-  "points_forts": "2 à 4 points forts, un par ligne, phrases courtes",
-  "limite": "Une limite ou inconvénient honnête de l'outil, une phrase",
   "tags": "3 à 6 mots-clés séparés par des virgules",
   "presentation": "Un texte de présentation complet de 150 à 300 mots, plusieurs paragraphes possibles, qui explique ce que fait l'outil, pour qui, et ce qui le différencie",
   "meta_description": "Une meta description SEO de 155 caractères maximum",
@@ -172,8 +170,6 @@ async function main() {
   console.log(`   emoji       → o-emoji`);
   console.log(`   description → o-desc-fr`);
   console.log(`   ideal_pour  → o-ideal-fr`);
-  console.log(`   points_forts→ o-points-forts`);
-  console.log(`   limite      → o-limite`);
   console.log(`   tags        → o-tags`);
   console.log(`   presentation→ o-presentation`);
   console.log(`   meta_description → o-meta-desc`);

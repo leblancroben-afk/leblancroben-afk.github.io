@@ -5,8 +5,8 @@
 
    Source : Firestore "outils" où status === 'a_enrichir'
    Écrit  : url, category, price, description, tags, maker,
-            plateformes, ideal_pour, favicon, emoji, points_forts,
-            limite_principale, alternatives, fonctionnalites, faq,
+            plateformes, ideal_pour, favicon, emoji,
+            alternatives, fonctionnalites, faq,
             interface_fr/api/mobile (si connus avec certitude),
             url_tarifs, essai_gratuit, duree_essai — puis
             bascule status='active' et generer_fiche=true (publication).
@@ -78,8 +78,6 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `Prix : "free" (gratuit), "freemium" (gratuit avec palier payant), ou "paid" (payant uniquement). ` +
     `Description : 150-200 caractères, en français, factuelle, sans superlatifs marketing exagérés. ` +
     `Tags : 3 à 6 mots-clés courts en français. ` +
-    `points_forts : 2 à 4 points forts réels et vérifiables (pas des généralités marketing), courtes phrases. ` +
-    `limite_principale : LA limite/faiblesse principale connue de cet outil, une phrase honnête. ` +
     `alternatives : noms de 2-3 outils concurrents réellement comparables, séparés par des virgules. ` +
     `fonctionnalites : 3 à 4 fonctionnalités clés, chacune avec une icône dans le champ \"icon\" choisie parmi EXACTEMENT ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji), un titre court, une description d'une phrase. ` +
     `faq : 2 à 4 questions/réponses réellement utiles pour quelqu'un qui découvre cet outil. ` +
@@ -103,7 +101,7 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `Réponds UNIQUEMENT avec un objet JSON valide, sans markdown, avec exactement cette forme :\n` +
     `{"trouve": true, "url": "https://...", "category": "...", "price": "free|freemium|paid", ` +
     `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖", ` +
-    `"points_forts": ["...","..."], "limite_principale": "...", "alternatives": "Nom1, Nom2, Nom3", ` +
+    `"alternatives": "Nom1, Nom2, Nom3", ` +
     `"fonctionnalites": [{"icon":"rocket","titre":"...","desc":"..."}], "faq": [{"q":"...","a":"..."}], ` +
     `"presentation": "..."|null, "meta_description": "..."|null, "sous_categorie": "..."|null, "modele": "proprietaire|open_source"|null, ` +
     `"annee_creation": 2023|null, "support": "..."|null, "tarifs": [{"nom":"Gratuit","prix":"$0","periode":"","desc":"..."}], ` +
@@ -191,9 +189,6 @@ async function main() {
         ideal_pour: infos.ideal_pour || '',
         emoji: infos.emoji || '🤖',
         favicon,
-        points_forts: Array.isArray(infos.points_forts) ? infos.points_forts : [],
-        limite: infos.limite_principale || '',            // champ lu par la fiche
-        limite_principale: infos.limite_principale || '', // conservé (compatibilité)
         alternatives: (infos.alternatives || '').split(',').map(s => s.trim()).filter(Boolean),
         fonctionnalites: Array.isArray(infos.fonctionnalites)
           ? infos.fonctionnalites.map(f => ({ ...f, icon: ICON_KEYS.includes(f && f.icon) ? f.icon : 'sparkles' }))

@@ -317,7 +317,7 @@
                   <option value="starter">Starter</option>
                   <option value="featured">Featured</option>
                 </select>
-                <p class="field-hint">Ne change PAS ce que vous remplissez : tous les champs ci-dessous sont communs aux 3 offres. Le plan décide seulement de ce que la fiche affiche (nombre de fonctionnalités et de FAQ, captures, tutoriel, tarifs, badge, articles liés).</p>
+                <p class="field-hint">Le plan ne change plus le contenu de la fiche : les 3 offres ont exactement les mêmes sections. Il décide seulement du badge, des articles liés et de la mise en avant.</p>
               </div>
             </div>
             <div class="row">
@@ -463,7 +463,7 @@
 
           <fieldset>
             <legend>📝 À propos de l'outil</legend>
-            <p class="field-hint" style="margin-top:-4px;">Affiché : Standard = description courte · Featured = présentation longue.</p>
+            <p class="field-hint" style="margin-top:-4px;">Si la présentation longue est vide, la description courte est utilisée. Identique pour les 3 offres.</p>
             <label>Présentation longue (paragraphes séparés par une ligne vide)</label>
             <textarea id="o-presentation" style="min-height:140px;"></textarea>
             <label>Meta description SEO (155 car. max)</label>
@@ -481,7 +481,7 @@
 
           <fieldset>
             <legend>✅ Points forts &amp; limite</legend>
-            <p class="field-hint" style="margin-top:-4px;">Affiché : Standard (bloc « Ce qu'on retient »).</p>
+            <p class="field-hint" style="margin-top:-4px;">Affiché sur toutes les fiches (bloc « Ce qu'on retient »).</p>
             <label>Points forts (un par ligne, 2-4 max)</label>
             <textarea id="o-points-forts" style="min-height:80px;"></textarea>
             <label>Limite principale</label>
@@ -490,7 +490,7 @@
 
           <fieldset>
             <legend>⚡ Fonctionnalités &amp; FAQ</legend>
-            <p class="field-hint" style="margin-top:-4px;">Affiché : Starter (3 fonctionnalités, 2 FAQ) · Featured (4 fonctionnalités, 4 FAQ). Remplissez tout : seules les premières lignes servent selon l'offre.</p>
+            <p class="field-hint" style="margin-top:-4px;">Affiché sur toutes les fiches, quelle que soit l'offre (jusqu'à 6 fonctionnalités et 6 questions).</p>
             <label>Fonctionnalités (format : icône|titre|description, une par ligne — touchez une icône ci-dessous pour l'insérer)</label>
             <textarea id="o-fonctionnalites" style="min-height:100px;"></textarea>
             <div hidden><label>Stats clés (format : valeur|label, une par ligne, 4 max)</label>
@@ -501,7 +501,7 @@
 
           <fieldset>
             <legend>💳 Tarifs de l'outil</legend>
-            <p class="field-hint" style="margin-top:-4px;">Les formules de l'outil lui-même (pas les plans Albexia). Affiché : Starter et Featured, uniquement si « Vérifié ». Rempli par Gemini → à vérifier avant d'afficher.</p>
+            <p class="field-hint" style="margin-top:-4px;">Les formules de l'outil lui-même (pas les plans Albexia). Affiché sur toutes les fiches, uniquement si « Vérifiés ». Rempli par Gemini → à vérifier avant d'afficher.</p>
             <label>Formules (format : nom|prix|période|description, une par ligne)</label>
             <textarea id="o-tarifs" style="min-height:90px;" placeholder="Gratuit|$0||Pour commencer&#10;Plus|$8|/ mois|Par utilisateur, facturé annuellement"></textarea>
             <div class="row">
@@ -515,7 +515,7 @@
 
           <fieldset>
             <legend>ℹ️ Informations clés</legend>
-            <p class="field-hint" style="margin-top:-4px;">Un champ vide n'affiche rien (jamais de fausse information). Développeur et interface FR : Starter et Featured.</p>
+            <p class="field-hint" style="margin-top:-4px;">Un champ vide n'affiche rien (jamais de fausse information).</p>
             <label>Maker (nom du développeur)</label>
             <input type="text" id="o-maker">
             <label>Plateformes</label>
@@ -556,7 +556,7 @@
             </div>
             <label>Support</label>
             <input type="text" id="o-support" placeholder="Email, Centre d'aide">
-            <label>URL documentation API (onglet API : Starter et Featured)</label>
+            <label>URL documentation API (onglet API)</label>
             <input type="url" id="o-api-url">
             <div class="row">
               <div><label>X (Twitter)</label><input type="url" id="o-reseau-x"></div>
@@ -569,12 +569,12 @@
 
           <fieldset>
             <legend>🖼️ Médias</legend>
-            <p class="field-hint" style="margin-top:-4px;">Affiché : Featured (aperçu + jusqu'à 5 captures, carrousel). Les autres offres affichent l'aperçu simple.</p>
+            <p class="field-hint" style="margin-top:-4px;">Même rendu pour toutes les offres : la 1re image sert d'aperçu en haut de la fiche, les suivantes apparaissent dans « Captures d'écran » (5 max). Chemin du site (/medias/images/outils/mon-outil/1.webp) ou lien https://…</p>
             <label>URL screenshot principal</label>
-            <input type="url" id="o-screenshot">
+            <input type="text" inputmode="url" id="o-screenshot" placeholder="/medias/images/outils/mon-outil/1.webp ou https://…">
             <label>Captures d'écran (format : url|légende, une par ligne, 5 max affichées)</label>
             <textarea id="o-galerie" style="min-height:80px;" placeholder="https://…/capture1.png|Tableau de bord"></textarea>
-            <label>Tutoriel YouTube (format : youtube_id|titre|durée — 1 seul affiché, Featured)</label>
+            <label>Tutoriel YouTube (format : youtube_id|titre|durée — jusqu'à 3 affichés)</label>
             <textarea id="o-tutoriels" style="min-height:60px;"></textarea>
           </fieldset>
 
@@ -582,7 +582,7 @@
             <legend>🔗 Alternatives &amp; mises à jour</legend>
             <label>Alternatives (noms séparés par virgules)</label>
             <input type="text" id="o-alternatives">
-            <label>Mises à jour (format : date|titre|description, une par ligne — onglet Featured)</label>
+            <label>Mises à jour (format : date|titre|description, une par ligne)</label>
             <textarea id="o-changelog" style="min-height:70px;" placeholder="2026-09|Nouveau modèle|Qualité de rédaction accrue"></textarea>
           </fieldset>
           <button type="submit" class="btn-submit" id="o-submit-btn">Créer l'outil</button>
@@ -1520,7 +1520,7 @@ Support français|oui|non|bool"></textarea>
         <input type="number" id="pl-starter-prix" min="0" step="0.01" required placeholder="9">
         <p class="field-hint">C'est le montant réellement facturé par NOWPayments — pas juste un texte d'affichage. Universel, pas de traduction nécessaire.</p>
         <label>Avantages FR (un par ligne)</label>
-        <textarea id="pl-starter-features-fr" rows="4" placeholder="Fiche complète (description longue, captures, vidéo)&#10;Badge Partenaire Albexia&#10;Position prioritaire dans la catégorie"></textarea>
+        <textarea id="pl-starter-features-fr" rows="4" placeholder="Fiche outil complète&#10;Badge Partenaire Albexia&#10;Position prioritaire dans la catégorie"></textarea>
         <label>Avantages EN</label>
         <textarea id="pl-starter-features-en" rows="4"></textarea>
         <label>Avantages ES</label>
@@ -1597,15 +1597,15 @@ Support français|oui|non|bool"></textarea>
 
   const PLANS_DEFAUT = {
     standard: {
-      features_fr: ['Fiche basique', 'Position standard dans la catégorie'],
-      features_en: ['Basic listing', 'Standard position in category'],
-      features_es: ['Ficha básica', 'Posición estándar en la categoría'],
+      features_fr: ['Fiche outil complète', 'Position standard dans la catégorie'],
+      features_en: ['Full tool listing', 'Standard position in category'],
+      features_es: ['Ficha completa de la herramienta', 'Posición estándar en la categoría'],
     },
     starter: {
       prix: 9,
-      features_fr: ['Fiche complète (description longue, captures, vidéo)', 'Badge Partenaire Albexia', 'Position prioritaire dans la catégorie'],
-      features_en: ['Full listing (long description, screenshots, video)', 'Albexia Partner badge', 'Priority position in category'],
-      features_es: ['Ficha completa (descripción larga, capturas, vídeo)', 'Insignia de Socio Albexia', 'Posición prioritaria en la categoría'],
+      features_fr: ['Fiche outil complète', 'Badge Partenaire Albexia', 'Position prioritaire dans la catégorie'],
+      features_en: ['Full tool listing', 'Albexia Partner badge', 'Priority position in category'],
+      features_es: ['Ficha completa de la herramienta', 'Insignia de Socio Albexia', 'Posición prioritaria en la categoría'],
     },
     featured: {
       prix: 9,

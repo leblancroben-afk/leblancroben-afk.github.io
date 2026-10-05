@@ -2,14 +2,14 @@
 <html lang="es" data-static-lang>
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ElevenLabs — Guía completa, Precios &amp; Tutoriales 2026 | Albexia</title>
+  <title>ElevenLabs — Reseña, Precios &amp; Alternativas 2026 | Albexia</title>
   <meta name="description" content="EvenLabs: IA síntesis de voz, clonación de voz, apropiación automática y agentes de conversación. Plan gratuito + API para desarrolladores. Calidad del est">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/featured/es/elevenlabs/">
   <link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/elevenlabs/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/elevenlabs/" />
   <link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/elevenlabs/" />
-  <meta property="og:title" content="ElevenLabs — Guía completa, Precios &amp; Tutoriales 2026 | Albexia">
+  <meta property="og:title" content="ElevenLabs — Reseña, Precios &amp; Alternativas 2026 | Albexia">
   <meta property="og:description" content="EvenLabs: IA síntesis de voz, clonación de voz, apropiación automática y agentes de conversación. Plan gratuito + API para desarrolladores. Calidad del est">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/featured/es/elevenlabs/">
@@ -60,7 +60,7 @@
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo"><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=elevenlabs.io" alt="ElevenLabs logo"></div>
+          <div class="fo-logo" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=elevenlabs.io https://www.google.com/s2/favicons?sz=128&amp;domain=elevenlabs.io https://icons.duckduckgo.com/ip3/elevenlabs.io.ico"><span class="fo-letter" aria-hidden="true">E</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=elevenlabs.io" alt="ElevenLabs logo" fetchpriority="high" referrerpolicy="no-referrer"></div>
           <div class="fo-id-info">
             <h1 class="fo-title">ElevenLabs</h1>
             <p class="fo-short">Plataforma IA para síntesis de voz, clonación de voz, apropiación automática, transcripción y agentes conversacionales. Ideal para creadores, desarrolladores y empresas.</p>
@@ -119,13 +119,13 @@
       
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Alternativas populares</h3><a class="fo-link" href="/index.html#tools">Ver más</a></div>
   <div class="fo-alts"><a class="fo-alt" href="https://murf.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" aria-hidden="true">M</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=murf.com https://icons.duckduckgo.com/ip3/murf.com.ico"><span class="fo-letter" aria-hidden="true">M</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=murf.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Murf</b><small>Alternativa a ElevenLabs</small></div></div>
       </a><a class="fo-alt" href="https://playht.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" aria-hidden="true">P</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=playht.com https://icons.duckduckgo.com/ip3/playht.com.ico"><span class="fo-letter" aria-hidden="true">P</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=playht.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>PlayHT</b><small>Alternativa a ElevenLabs</small></div></div>
       </a><a class="fo-alt" href="https://resemble-ai.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" aria-hidden="true">R</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=resemble-ai.com https://icons.duckduckgo.com/ip3/resemble-ai.com.ico"><span class="fo-letter" aria-hidden="true">R</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=resemble-ai.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Resemble AI</b><small>Alternativa a ElevenLabs</small></div></div>
       </a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Comparar alternativas</a></section>
     </aside>
@@ -194,6 +194,16 @@
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');

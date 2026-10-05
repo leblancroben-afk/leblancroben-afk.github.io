@@ -60,7 +60,7 @@
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo"><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.notion.ai" alt="Notion AI logo"></div>
+          <div class="fo-logo" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=www.notion.ai https://www.google.com/s2/favicons?sz=128&amp;domain=notion.ai https://icons.duckduckgo.com/ip3/notion.ai.ico"><span class="fo-letter" aria-hidden="true">N</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.notion.ai" alt="Notion AI logo" fetchpriority="high" referrerpolicy="no-referrer"></div>
           <div class="fo-id-info">
             <h1 class="fo-title">Notion AI</h1>
             <p class="fo-short">IA integrated into Conception for writing, summary, translation, agents and meeting notes. Included in business plan ($20/member/mo). Free trial on Free and Plus.</p>
@@ -105,13 +105,13 @@
       
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Popular alternatives</h3><a class="fo-link" href="/index.html#tools">See more</a></div>
   <div class="fo-alts"><a class="fo-alt" href="/tools/featured/en/chatgpt/">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" aria-hidden="true">C</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=chatgpt.com https://icons.duckduckgo.com/ip3/chatgpt.com.ico"><span class="fo-letter" aria-hidden="true">C</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=chatgpt.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>ChatGPT</b><small>Contenu</small></div></div>
       </a><a class="fo-alt" href="/tools/featured/en/claude/">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" aria-hidden="true">C</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=claude.ai https://icons.duckduckgo.com/ip3/claude.ai.ico"><span class="fo-letter" aria-hidden="true">C</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=claude.ai" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Claude</b><small>Code</small></div></div>
       </a><a class="fo-alt" href="/tools/featured/en/jasper/">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" aria-hidden="true">J</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=www.jasper.ai https://www.google.com/s2/favicons?sz=64&amp;domain=jasper.ai https://icons.duckduckgo.com/ip3/jasper.ai.ico"><span class="fo-letter" aria-hidden="true">J</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.jasper.ai" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Jasper</b><small>Texte</small></div></div>
       </a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Compare alternatives</a></section>
     </aside>
@@ -166,6 +166,16 @@
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');

@@ -60,7 +60,7 @@
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo"><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=albert.ai" alt="Albert logo"></div>
+          <div class="fo-logo" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=albert.ai https://www.google.com/s2/favicons?sz=128&amp;domain=albert.ai https://icons.duckduckgo.com/ip3/albert.ai.ico"><span class="fo-letter" aria-hidden="true">A</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=albert.ai" alt="Albert logo" fetchpriority="high" referrerpolicy="no-referrer"></div>
           <div class="fo-id-info">
             <h1 class="fo-title">Albert</h1>
             <p class="fo-short">Albert es una AI independiente que gestiona y optimiza campañas de publicidad multicanal (investigación, social, programática). Comprado por Zoomd en 2022, la herramienta combina automatización robótica y aprendizaje automático.</p>
@@ -100,18 +100,18 @@
     </div>
     <aside class="fo-col-side">
       <section class="fo-card" id="fo-infos"><h3 class="fo-h3">Información clave</h3><dl class="fo-info"><div><dt>Categoría</dt><dd class="">Marketing</dd></div><div><dt>Precios</dt><dd class="">De pago</dd></div><div><dt>Prueba gratis</dt><dd class="">No</dd></div><div><dt>Plataformas</dt><dd class=""><div class="fo-plats"><span class="fo-plat" title="Web" role="img" aria-label="Web"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span></div></dd></div><div><dt>API</dt><dd class="">No</dd></div></dl></section>
-      
+      <section class="fo-card"><a class="fo-btn fo-btn-soft" style="width:100%" href="https://albert.ai/pricing/" target="_blank" rel="noopener">Ver todos los precios <svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></section>
       
       
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Alternativas populares</h3><a class="fo-link" href="/index.html#tools">Ver más</a></div>
   <div class="fo-alts"><a class="fo-alt" href="https://smartly-io.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" aria-hidden="true">S</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=smartly-io.com https://icons.duckduckgo.com/ip3/smartly-io.com.ico"><span class="fo-letter" aria-hidden="true">S</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=smartly-io.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Smartly.io</b><small>Alternativa a Albert</small></div></div>
       </a><a class="fo-alt" href="https://hunch.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" aria-hidden="true">H</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=hunch.com https://icons.duckduckgo.com/ip3/hunch.com.ico"><span class="fo-letter" aria-hidden="true">H</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=hunch.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Hunch</b><small>Alternativa a Albert</small></div></div>
       </a><a class="fo-alt" href="https://madgicx.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" aria-hidden="true">M</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=madgicx.com https://icons.duckduckgo.com/ip3/madgicx.com.ico"><span class="fo-letter" aria-hidden="true">M</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=madgicx.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Madgicx</b><small>Alternativa a Albert</small></div></div>
       </a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Comparar alternativas</a></section>
     </aside>
@@ -166,6 +166,16 @@
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');

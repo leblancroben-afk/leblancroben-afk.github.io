@@ -62,7 +62,7 @@
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo"><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=wordlift.io" alt="WordLift logo"></div>
+          <div class="fo-logo" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=wordlift.io https://www.google.com/s2/favicons?sz=128&amp;domain=wordlift.io https://icons.duckduckgo.com/ip3/wordlift.io.ico"><span class="fo-letter" aria-hidden="true">W</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=wordlift.io" alt="WordLift logo" fetchpriority="high" referrerpolicy="no-referrer"></div>
           <div class="fo-id-info">
             <h1 class="fo-title">WordLift</h1>
             <p class="fo-short">WordLift automatise le balisage Schema.org et construit un graphe de connaissances à partir de votre contenu WordPress. L'outil connecte vos entités à des sources externes comme Wikidata pour renforcer la compréhension par les moteurs et les IA.</p>
@@ -109,18 +109,18 @@
     </div>
     <aside class="fo-col-side">
       <section class="fo-card" id="fo-infos"><h3 class="fo-h3">Informations clés</h3><dl class="fo-info"><div><dt>Catégorie</dt><dd class="">SEO</dd></div><div><dt>Tarification</dt><dd class="">Payant</dd></div><div><dt>Essai gratuit</dt><dd class="">Oui</dd></div><div><dt>Plateformes</dt><dd class=""><div class="fo-plats"><span class="fo-chip">WordPress uniquement</span></div></dd></div><div><dt>API</dt><dd class="">Oui</dd></div></dl></section>
-      
+      <section class="fo-card"><a class="fo-btn fo-btn-soft" style="width:100%" href="https://wordlift.io/pricing/" target="_blank" rel="noopener">Voir tous les tarifs <svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></section>
       
       
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Alternatives populaires</h3><a class="fo-link" href="/index.html#tools">Voir plus</a></div>
   <div class="fo-alts"><a class="fo-alt" href="https://schema-app.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" aria-hidden="true">S</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=schema-app.com https://icons.duckduckgo.com/ip3/schema-app.com.ico"><span class="fo-letter" aria-hidden="true">S</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=schema-app.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Schema App</b><small>Alternative à WordLift</small></div></div>
       </a><a class="fo-alt" href="https://rankmath.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" aria-hidden="true">R</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=rankmath.com https://icons.duckduckgo.com/ip3/rankmath.com.ico"><span class="fo-letter" aria-hidden="true">R</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=rankmath.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>RankMath</b><small>Alternative à WordLift</small></div></div>
       </a><a class="fo-alt" href="https://yoast-seo.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" aria-hidden="true">Y</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=yoast-seo.com https://icons.duckduckgo.com/ip3/yoast-seo.com.ico"><span class="fo-letter" aria-hidden="true">Y</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=yoast-seo.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Yoast SEO</b><small>Alternative à WordLift</small></div></div>
       </a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Comparer les alternatives</a></section>
     </aside>
@@ -175,6 +175,16 @@
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');

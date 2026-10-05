@@ -2,14 +2,14 @@
 <html lang="en" data-static-lang>
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gumloop — Guide, Pricing &amp; Reviews 2026 | Albexia</title>
+  <title>Gumloop — Review, Pricing &amp; Alternatives 2026 | Albexia</title>
   <meta name="description" content="Gumloop is a no-code automation platform powered by AI. It allows to create complex agent workflows by drag-and-drop, without writing code.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/starter/en/gumloop/">
   <link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/starter/en/gumloop/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/starter/fr/gumloop/" />
   <link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/starter/fr/gumloop/" />
-  <meta property="og:title" content="Gumloop — Guide, Pricing &amp; Reviews 2026 | Albexia">
+  <meta property="og:title" content="Gumloop — Review, Pricing &amp; Alternatives 2026 | Albexia">
   <meta property="og:description" content="Gumloop is a no-code automation platform powered by AI. It allows to create complex agent workflows by drag-and-drop, without writing code.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/starter/en/gumloop/">
@@ -60,7 +60,7 @@
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo"><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.gumloop.com" alt="Gumloop logo"></div>
+          <div class="fo-logo" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=www.gumloop.com https://www.google.com/s2/favicons?sz=128&amp;domain=gumloop.com https://icons.duckduckgo.com/ip3/gumloop.com.ico"><span class="fo-letter" aria-hidden="true">G</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.gumloop.com" alt="Gumloop logo" fetchpriority="high" referrerpolicy="no-referrer"></div>
           <div class="fo-id-info">
             <h1 class="fo-title">Gumloop</h1>
             <p class="fo-short">Gumloop is a no-code automation platform powered by AI. It allows to create complex agent workflows by drag-and-drop, without writing code.</p>
@@ -109,13 +109,13 @@
       
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Popular alternatives</h3><a class="fo-link" href="/index.html#tools">See more</a></div>
   <div class="fo-alts"><a class="fo-alt" href="https://zapier.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" aria-hidden="true">Z</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=zapier.com https://icons.duckduckgo.com/ip3/zapier.com.ico"><span class="fo-letter" aria-hidden="true">Z</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=zapier.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Zapier</b><small>Alternative to Gumloop</small></div></div>
       </a><a class="fo-alt" href="/tools/featured/en/make/">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" aria-hidden="true">M</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=make.com https://icons.duckduckgo.com/ip3/make.com.ico"><span class="fo-letter" aria-hidden="true">M</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=make.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Make</b><small>Automatisation</small></div></div>
       </a><a class="fo-alt" href="https://n8n.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" aria-hidden="true">N</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=n8n.com https://icons.duckduckgo.com/ip3/n8n.com.ico"><span class="fo-letter" aria-hidden="true">N</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=n8n.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>n8n</b><small>Alternative to Gumloop</small></div></div>
       </a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Compare alternatives</a></section>
     </aside>
@@ -174,6 +174,16 @@
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');

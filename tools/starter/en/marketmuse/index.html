@@ -2,14 +2,14 @@
 <html lang="en" data-static-lang>
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MarketMuse — Guide, Pricing &amp; Reviews 2026 | Albexia</title>
+  <title>MarketMuse — Review, Pricing &amp; Alternatives 2026 | Albexia</title>
   <meta name="description" content="MarketMuse analyses the entire site to identify gaps in content relative to competitors and build the thematic authority. It generates detailed briefings b">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/starter/en/marketmuse/">
   <link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/starter/en/marketmuse/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/starter/fr/marketmuse/" />
   <link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/starter/fr/marketmuse/" />
-  <meta property="og:title" content="MarketMuse — Guide, Pricing &amp; Reviews 2026 | Albexia">
+  <meta property="og:title" content="MarketMuse — Review, Pricing &amp; Alternatives 2026 | Albexia">
   <meta property="og:description" content="MarketMuse analyses the entire site to identify gaps in content relative to competitors and build the thematic authority. It generates detailed briefings b">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/starter/en/marketmuse/">
@@ -60,7 +60,7 @@
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo"><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.marketmuse.com" alt="MarketMuse logo"></div>
+          <div class="fo-logo" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=www.marketmuse.com https://www.google.com/s2/favicons?sz=128&amp;domain=marketmuse.com https://icons.duckduckgo.com/ip3/marketmuse.com.ico"><span class="fo-letter" aria-hidden="true">M</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.marketmuse.com" alt="MarketMuse logo" fetchpriority="high" referrerpolicy="no-referrer"></div>
           <div class="fo-id-info">
             <h1 class="fo-title">MarketMuse</h1>
             <p class="fo-short">MarketMuse analyses the entire site to identify gaps in content relative to competitors and build the thematic authority. It generates detailed briefings based on its proprietary subject modeling.</p>
@@ -163,6 +163,16 @@
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');

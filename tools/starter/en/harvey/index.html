@@ -2,14 +2,14 @@
 <html lang="en" data-static-lang>
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harvey — Guide, Pricing &amp; Reviews 2026 | Albexia</title>
+  <title>Harvey — Review, Pricing &amp; Alternatives 2026 | Albexia</title>
   <meta name="description" content="Harvey is a legal AI designed for law firms and corporate legal branches. It assists in regulatory research, contract analysis and complex due diligence.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/starter/en/harvey/">
   <link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/starter/en/harvey/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/starter/fr/harvey/" />
   <link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/starter/fr/harvey/" />
-  <meta property="og:title" content="Harvey — Guide, Pricing &amp; Reviews 2026 | Albexia">
+  <meta property="og:title" content="Harvey — Review, Pricing &amp; Alternatives 2026 | Albexia">
   <meta property="og:description" content="Harvey is a legal AI designed for law firms and corporate legal branches. It assists in regulatory research, contract analysis and complex due diligence.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/starter/en/harvey/">
@@ -60,7 +60,7 @@
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo"><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.harvey.ai" alt="Harvey logo"></div>
+          <div class="fo-logo" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=www.harvey.ai https://www.google.com/s2/favicons?sz=128&amp;domain=harvey.ai https://icons.duckduckgo.com/ip3/harvey.ai.ico"><span class="fo-letter" aria-hidden="true">H</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.harvey.ai" alt="Harvey logo" fetchpriority="high" referrerpolicy="no-referrer"></div>
           <div class="fo-id-info">
             <h1 class="fo-title">Harvey</h1>
             <p class="fo-short">Harvey is a legal AI designed for law firms and corporate legal branches. It assists in regulatory research, contract analysis and complex due diligence.</p>
@@ -109,13 +109,13 @@
       
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Popular alternatives</h3><a class="fo-link" href="/index.html#tools">See more</a></div>
   <div class="fo-alts"><a class="fo-alt" href="/tools/starter/en/cocounsel/">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" aria-hidden="true">C</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=www.thomsonreuters.com https://www.google.com/s2/favicons?sz=64&amp;domain=thomsonreuters.com https://icons.duckduckgo.com/ip3/thomsonreuters.com.ico"><span class="fo-letter" aria-hidden="true">C</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.thomsonreuters.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>CoCounsel</b><small>Juridique</small></div></div>
       </a><a class="fo-alt" href="https://legora.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" aria-hidden="true">L</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=legora.com https://icons.duckduckgo.com/ip3/legora.com.ico"><span class="fo-letter" aria-hidden="true">L</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=legora.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Legora</b><small>Alternative to Harvey</small></div></div>
       </a><a class="fo-alt" href="https://spellbook.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" aria-hidden="true">S</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=spellbook.com https://icons.duckduckgo.com/ip3/spellbook.com.ico"><span class="fo-letter" aria-hidden="true">S</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=spellbook.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Spellbook</b><small>Alternative to Harvey</small></div></div>
       </a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Compare alternatives</a></section>
     </aside>
@@ -174,6 +174,16 @@
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');

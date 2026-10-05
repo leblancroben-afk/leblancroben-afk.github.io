@@ -2,14 +2,14 @@
 <html lang="es" data-static-lang>
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AdCreative.ai — Guía, Precios &amp; Reseñas 2026 | Albexia</title>
+  <title>AdCreative.ai — Reseña, Precios &amp; Alternativas 2026 | Albexia</title>
   <meta name="description" content="AdCreative.ai genera banners y publicidad visual optimizada para la conversión de datos de su marca. Más de 4.2 millones de usuarios confían en sus algorit">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/starter/es/adcreative-ai/">
   <link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/starter/es/adcreative-ai/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/starter/fr/adcreative-ai/" />
   <link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/starter/fr/adcreative-ai/" />
-  <meta property="og:title" content="AdCreative.ai — Guía, Precios &amp; Reseñas 2026 | Albexia">
+  <meta property="og:title" content="AdCreative.ai — Reseña, Precios &amp; Alternativas 2026 | Albexia">
   <meta property="og:description" content="AdCreative.ai genera banners y publicidad visual optimizada para la conversión de datos de su marca. Más de 4.2 millones de usuarios confían en sus algorit">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/starter/es/adcreative-ai/">
@@ -60,7 +60,7 @@
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo"><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.adcreative.ai" alt="AdCreative.ai logo"></div>
+          <div class="fo-logo" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=www.adcreative.ai https://www.google.com/s2/favicons?sz=128&amp;domain=adcreative.ai https://icons.duckduckgo.com/ip3/adcreative.ai.ico"><span class="fo-letter" aria-hidden="true">A</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=www.adcreative.ai" alt="AdCreative.ai logo" fetchpriority="high" referrerpolicy="no-referrer"></div>
           <div class="fo-id-info">
             <h1 class="fo-title">AdCreative.ai</h1>
             <p class="fo-short">AdCreative.ai genera banners y publicidad visual optimizada para la conversión de datos de su marca. Más de 4.2 millones de usuarios confían en sus algoritmos entrenados en el rendimiento publicitario real.</p>
@@ -109,13 +109,13 @@
       
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Alternativas populares</h3><a class="fo-link" href="/index.html#tools">Ver más</a></div>
   <div class="fo-alts"><a class="fo-alt" href="https://superscale.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" aria-hidden="true">S</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=superscale.com https://icons.duckduckgo.com/ip3/superscale.com.ico"><span class="fo-letter" aria-hidden="true">S</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=superscale.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Superscale</b><small>Alternativa a AdCreative.ai</small></div></div>
       </a><a class="fo-alt" href="https://predis-ai.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" aria-hidden="true">P</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=predis-ai.com https://icons.duckduckgo.com/ip3/predis-ai.com.ico"><span class="fo-letter" aria-hidden="true">P</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=predis-ai.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Predis.ai</b><small>Alternativa a AdCreative.ai</small></div></div>
       </a><a class="fo-alt" href="https://madgicx.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" aria-hidden="true">M</div>
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=madgicx.com https://icons.duckduckgo.com/ip3/madgicx.com.ico"><span class="fo-letter" aria-hidden="true">M</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=madgicx.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Madgicx</b><small>Alternativa a AdCreative.ai</small></div></div>
       </a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Comparar alternativas</a></section>
     </aside>
@@ -174,6 +174,16 @@
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');

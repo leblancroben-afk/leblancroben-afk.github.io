@@ -150,6 +150,7 @@
 
 <script src="/js/articles-loader.js" data-outil="harvey"></script>
 <script type="module" src="/js/reviews-widget.js"></script>
+<script type="module" src="/js/fiche-utile.js"></script>
 <script src="/js/i18n.js"></script>
 <script>
 (function(){
@@ -223,12 +224,6 @@
   // Masque la carte « Articles liés » si le chargeur n'a rien injecté
   setTimeout(function(){ d.querySelectorAll('.fo-articles').forEach(function(c){ var b=c.querySelector('[id^="articles-sidebar"]'); if(b && !b.children.length) c.style.display='none'; }); }, 2500);
 
-  // « Utile ? » (choix mémorisé localement)
-  var votes=d.querySelectorAll('[data-fo-vote]'), th=d.querySelector('[data-fo-thanks]');
-  var prev=ls('albexia_fiche_utile_'+id);
-  function mark(v){ votes.forEach(function(b){b.setAttribute('aria-pressed', b.getAttribute('data-fo-vote')===v);}); if(th) th.hidden=false; }
-  if(prev) mark(prev);
-  votes.forEach(function(b){ b.addEventListener('click',function(){ var v=b.getAttribute('data-fo-vote'); ls('albexia_fiche_utile_'+id,v); mark(v); }); });
 })();</script>
 </body>
 </html>

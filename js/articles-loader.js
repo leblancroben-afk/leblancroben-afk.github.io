@@ -1,64 +1,46 @@
 /**
  * articles-loader.js — Albexia
- * Charge les articles depuis articles.json et les injecte dans la sidebar des fiches outils.
+ * Charge les articles liés à un outil depuis /data/articles.json et les injecte
+ * dans la sidebar de sa fiche.
  *
- * Usage dans chaque fiche HTML :
- * <script src="../../js/articles-loader.js" data-outil="stable-diffusion" data-plan="featured"></script>
+ * Usage (généré par fiche-outil.js) :
+ *   <script src="/js/articles-loader.js" data-outil="stable-diffusion"></script>
  *
- * Plans :
- * featured  → sidebar uniquement (2 articles max)
- * starter   → sidebar uniquement (1 premier article)
- * gratuit   → rien affiché
+ * Le plan de l'outil (Standard / Starter / Featured) n'intervient PLUS :
+ * on affiche tous les articles disponibles pour l'outil (MAX_ARTICLES au plus).
+ * S'il n'y en a aucun, la carte « Articles liés » est masquée.
  */
-
 (function () {
-  const script  = document.currentScript;
-  const outil   = script.getAttribute('data-outil');
-  const plan    = script.getAttribute('data-plan');
+  const MAX_ARTICLES = 3;   // plafond de sécurité pour la sidebar (2 articles → 2 affichés)
 
-  // Si pas d'outil ou plan gratuit, on arrête tout
-  if (!outil || plan === 'gratuit') return;
+  const script = document.currentScript;
+  const outil  = script && script.getAttribute('data-outil');
+  if (!outil) return;
 
-  // Chemin absolu vers articles.json
-  const jsonPath = '/data/articles.json';
+  // 'articles-sidebar' = fiches actuelles ; les 2 autres ids = anciennes fiches pas encore régénérées.
+  const container = ['articles-sidebar', 'articles-sidebar-all', 'articles-sidebar-starter']
+    .map(id => document.getElementById(id)).find(Boolean);
+  if (!container) return;
 
-  fetch(jsonPath)
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const hide = () => { const card = container.closest('.fo-articles'); if (card) card.style.display = 'none'; };
+
+  fetch('/data/articles.json')
     .then(r => r.json())
     .then(data => {
-      const toolData = data[outil];
-      if (!toolData) return;
-      const articles = toolData.articles;
+      const articles = ((data[outil] || {}).articles || []).filter(a => a && a.lien && a.titre);
+      if (!articles.length) { hide(); return; }
 
-      // Affichage ultra-léger selon le plan
-      if (plan === 'featured') {
-        injectSidebar(articles, 2, 'articles-sidebar-all');
-      }
-
-      if (plan === 'starter') {
-        injectSidebar(articles, 1, 'articles-sidebar-starter');
-      }
+      container.innerHTML = articles.slice(0, MAX_ARTICLES).map(a => `
+        <a href="${esc(a.lien)}" class="article-link-card">
+          <div class="article-link-thumb">
+            <img src="${esc(a.image)}" alt="${esc(a.titre)}" loading="lazy">
+          </div>
+          <div>
+            <div class="article-link-title">${esc(a.titre)}</div>
+            <div class="article-link-sub">${esc(a.soustitre)}</div>
+          </div>
+        </a>`).join('');
     })
-    .catch(err => console.warn('articles-loader : impossible de charger articles.json', err));
-
-  /* ─────────────────────────────────────────
-     INJECTION SIDEBAR (Contenu épuré)
-  ───────────────────────────────────────── */
-  function injectSidebar(articles, maxCount, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    // Récupère uniquement le nombre d'articles demandé (1 ou 2)
-    container.innerHTML = articles.slice(0, maxCount).map(a => `
-      <a href="${a.lien}" class="article-link-card">
-        <div class="article-link-thumb">
-          <img src="${a.image}" alt="${a.titre}" loading="lazy">
-        </div>
-        <div>
-          <div class="article-link-title">${a.titre}</div>
-          <div class="article-link-sub">${a.soustitre}</div>
-        </div>
-      </a>
-    `).join('');
-  }
-
+    .catch(err => { console.warn('articles-loader : impossible de charger articles.json', err); hide(); });
 })();

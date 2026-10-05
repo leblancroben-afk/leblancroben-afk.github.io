@@ -317,7 +317,7 @@
                   <option value="starter">Starter</option>
                   <option value="featured">Featured</option>
                 </select>
-                <p class="field-hint">Le plan ne change plus le contenu de la fiche : les 3 offres ont exactement les mêmes sections. Il décide seulement du badge, des articles liés et de la mise en avant.</p>
+                <p class="field-hint">Le plan ne change plus le contenu de la fiche : les 3 offres ont exactement les mêmes sections. Il décide seulement du badge et de la mise en avant (les articles liés, eux, dépendent uniquement des articles disponibles).</p>
               </div>
             </div>
             <div class="row">
@@ -415,10 +415,10 @@
               <label>Description</label><textarea id="o-desc-en"></textarea>
               <label>Idéal pour</label><input type="text" id="o-ideal-en">
               <p class="field-hint">Contenu traduisible, saisi une seule fois par langue. Les champs communs (maker, plateformes, intégrations, captures, tutoriels…) sont repris automatiquement du FR.</p>
-              <label>Points forts EN (un par ligne)</label>
+              <div hidden><label>Points forts EN (un par ligne)</label>
               <textarea id="o-points-forts-en" style="min-height:70px;"></textarea>
               <label>Limite principale EN</label>
-              <input type="text" id="o-limite-en">
+              <input type="text" id="o-limite-en"></div>
               <label>Fonctionnalités EN (icône|titre|desc, une par ligne)</label>
               <textarea id="o-fonctionnalites-en" style="min-height:100px;"></textarea>
               <label>FAQ EN (question||réponse, une par ligne)</label>
@@ -442,10 +442,10 @@
               <label>Description</label><textarea id="o-desc-es"></textarea>
               <label>Idéal pour</label><input type="text" id="o-ideal-es">
               <p class="field-hint">Contenu traduisible, saisi une seule fois par langue. Les champs communs (maker, plateformes, intégrations, captures, tutoriels…) sont repris automatiquement du FR.</p>
-              <label>Points forts ES (un par ligne)</label>
+              <div hidden><label>Points forts ES (un par ligne)</label>
               <textarea id="o-points-forts-es" style="min-height:70px;"></textarea>
               <label>Limite principale ES</label>
-              <input type="text" id="o-limite-es">
+              <input type="text" id="o-limite-es"></div>
               <label>Fonctionnalités ES (icône|titre|desc, une par ligne)</label>
               <textarea id="o-fonctionnalites-es" style="min-height:100px;"></textarea>
               <label>FAQ ES (question||réponse, une par ligne)</label>
@@ -479,7 +479,7 @@
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset hidden>
             <legend>✅ Points forts &amp; limite</legend>
             <p class="field-hint" style="margin-top:-4px;">Affiché sur toutes les fiches (bloc « Ce qu'on retient »).</p>
             <label>Points forts (un par ligne, 2-4 max)</label>

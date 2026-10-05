@@ -10,25 +10,20 @@
 
    Header et footer : navHTML() / footerHTML() de layout.js (inchangés).
    Les URLs restent tools/{plan}/{langue}/{slug}/ (calculées dans gen-fiches.js).
+   Même structure d'informations pour les 3 plans (voir PLAN_RULES / LIMITES).
    ========================================================= */
 
-// ── Différences entre offres (reprend le fonctionnement actuel) ──
-//  takeaways : bloc « Ce qu'on retient » (points forts + limite)
-//  features  : nb max de fonctionnalités   faq : nb max de questions
-//  stats     : nb max de stats             aboutLong : « À propos » long (presentation)
-//  gallery   : nb max de captures          tutoriels : nb max de tutoriels YouTube
-//  tarifs    : bloc tarifs de l'outil      extras : API / mises à jour
-//  articles  : nb d'articles liés (sidebar, FR)  maker/urlTarifs/interfaceFr : éléments Starter+
-//  badge     : badge d'offre dans le hero
+// ── Les 3 offres (Standard / Starter / Featured) ──
+// Toutes les fiches ont EXACTEMENT les mêmes sections et les mêmes informations.
+// Le plan ne règle plus la quantité d'informations affichées : seulement la
+// promotion — badge dans le bandeau et nombre d'articles liés en sidebar (FR).
 const PLAN_RULES = {
-  standard: { takeaways: true,  features: 0, faq: 0, stats: 0, aboutLong: false, gallery: 0, tutoriels: 0,
-              tarifs: false, extras: 0, articles: 0, maker: false, urlTarifs: false, interfaceFr: false, badge: null },
-  starter:  { takeaways: false, features: 3, faq: 2, stats: 4, aboutLong: false, gallery: 0, tutoriels: 0,
-              tarifs: true,  extras: 1, articles: 1, maker: true,  urlTarifs: true,  interfaceFr: true,  badge: 'partner' },
-  featured: { takeaways: false, features: 4, faq: 4, stats: 4, aboutLong: true,  gallery: 5, tutoriels: 1,
-              tarifs: true,  extras: 2, articles: 2, maker: true,  urlTarifs: true,  interfaceFr: true,  badge: 'recommended' },
+  standard: { badge: null,          articles: 0 },
+  starter:  { badge: 'partner',     articles: 1 },
+  featured: { badge: 'recommended', articles: 2 },
 };
-// extras : 1 = API ; 2 = + mises à jour   (les sections « Statistiques clés » et « Intégrations » n'existent plus)
+// Plafonds d'affichage, IDENTIQUES pour tous les plans.
+const LIMITES = { features: 6, faq: 6, gallery: 5, tutoriels: 3 };
 
 const planOf = (t) => (t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard');
 
@@ -50,7 +45,7 @@ const L = {
     alts: 'Alternatives populaires', seeMore: 'Voir plus', altsMore: 'Comparer les alternatives', altsFor: (n) => `Alternative à ${n}`, articles: 'Articles liés',
     helpful: 'Cet outil vous a été utile ?', no: 'Non', thanks: 'Merci pour votre retour', know: 'Vous connaissez un autre outil ?', knowSub: 'Soumettez-le pour aider la communauté', submit: 'Soumettre un outil',
     price: { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' }, models: { proprietaire: 'Propriétaire', open_source: 'Open source' },
-    interfaceBadge: 'Interface en français', titles: ['Avis, Prix & Alternatives 2026', 'Guide, Tarifs & Avis 2026', 'Guide complet, Tarifs & Tutoriels 2026'],
+    interfaceBadge: 'Interface en français', title: 'Avis, Prix & Alternatives 2026',
     previewHint: "Aperçu de l'outil", shotsAlt: 'Capture',
   },
   en: {
@@ -67,7 +62,7 @@ const L = {
     alts: 'Popular alternatives', seeMore: 'See more', altsMore: 'Compare alternatives', altsFor: (n) => `Alternative to ${n}`, articles: 'Related articles',
     helpful: 'Was this tool useful?', no: 'No', thanks: 'Thanks for your feedback', know: 'Know another tool?', knowSub: 'Submit it to help the community', submit: 'Submit a tool',
     price: { free: 'Free', freemium: 'Freemium', paid: 'Paid' }, models: { proprietaire: 'Proprietary', open_source: 'Open source' },
-    interfaceBadge: 'French interface', titles: ['Review, Pricing & Alternatives 2026', 'Guide, Pricing & Reviews 2026', 'Complete Guide, Pricing & Tutorials 2026'],
+    interfaceBadge: 'French interface', title: 'Review, Pricing & Alternatives 2026',
     previewHint: 'Tool preview', shotsAlt: 'Screenshot',
   },
   es: {
@@ -84,7 +79,7 @@ const L = {
     alts: 'Alternativas populares', seeMore: 'Ver más', altsMore: 'Comparar alternativas', altsFor: (n) => `Alternativa a ${n}`, articles: 'Artículos relacionados',
     helpful: '¿Te ha sido útil esta herramienta?', no: 'No', thanks: 'Gracias por tu opinión', know: '¿Conoces otra herramienta?', knowSub: 'Envíala para ayudar a la comunidad', submit: 'Enviar una herramienta',
     price: { free: 'Gratis', freemium: 'Freemium', paid: 'De pago' }, models: { proprietaire: 'Propietario', open_source: 'Código abierto' },
-    interfaceBadge: 'Interfaz en francés', titles: ['Reseña, Precios & Alternativas 2026', 'Guía, Precios & Reseñas 2026', 'Guía completa, Precios & Tutoriales 2026'],
+    interfaceBadge: 'Interfaz en francés', title: 'Reseña, Precios & Alternativas 2026',
     previewHint: 'Vista de la herramienta', shotsAlt: 'Captura',
   },
 };
@@ -98,7 +93,15 @@ const STAR = '<svg class="fo-ico fo-ico-fill" viewBox="0 0 24 24" aria-hidden="t
 //                     'albexia'  = couleurs sombres du site. Un seul mot à changer.
 const FICHE_THEME = 'template';
 
-const safeUrl = (u) => (/^https?:\/\//i.test(String(u || '').trim()) ? String(u).trim() : '');
+// Accepte un lien https://… ou un chemin du site (/medias/images/…) ; refuse le reste (javascript:, data:…).
+const safeUrl = (u) => { const v = String(u || '').trim(); return /^https?:\/\//i.test(v) || /^\/(?!\/)[^\s"'<>]*$/.test(v) ? v : ''; };
+// Sources successives d'un logo : favicon enregistré → Google → DuckDuckGo. Si aucune ne charge
+// (ou si l'image est une icône générique minuscule), la fiche garde l'initiale de l'outil.
+const logoSources = (favicon, domain, size = 64) => [
+  safeUrl(favicon),
+  domain ? `https://www.google.com/s2/favicons?sz=${size}&domain=${domain}` : '',
+  domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : '',
+].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
 const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
 const nonEmpty = (v) => !(v == null || v === '' || (Array.isArray(v) && !v.length));
 
@@ -130,7 +133,9 @@ function generateFiche(tool, allTools = [], deps) {
   const url = safeUrl(tool.url) || '#';
   const category = tool.category || '';
   const slug = tool.slug_articles || slugify(name);
-  const fav = tool.favicon || (safeUrl(url) ? `https://www.google.com/s2/favicons?sz=128&domain=${hostOf(url)}` : '');
+  const logoBox = (cls, letter, srcs, alt, eager) => (srcs.length
+    ? `<div class="${cls}" data-fo-logo data-srcs="${srcs.map(E).join(' ')}"><span class="fo-letter" aria-hidden="true">${E(letter)}</span><img src="${E(srcs[0])}" alt="${E(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} referrerpolicy="no-referrer"></div>`
+    : `<div class="${cls}" aria-hidden="true"><span class="fo-letter">${E(letter)}</span></div>`);
   const note = Number(tool.note || tool.rating || 0) || 0;
   const pk = { free: 'free', gratuit: 'free', freemium: 'freemium', paid: 'paid', payant: 'paid' }[String(tool.price || 'freemium').toLowerCase()] || 'freemium';
   const tarifsUrl = safeUrl(g('url_tarifs'));
@@ -141,18 +146,18 @@ function generateFiche(tool, allTools = [], deps) {
   const plateformes = g('plateformes');
   const reseaux = g('reseaux') || {};
   const alternatives = g('alternatives') || [];
-  const features = (g('fonctionnalites') || []).slice(0, rules.features);
-  const faq = (g('faq') || []).slice(0, rules.faq);
-  const tutoriels = (g('tutoriels') || []).slice(0, rules.tutoriels);
+  const features = (g('fonctionnalites') || []).slice(0, LIMITES.features);
+  const faq = (g('faq') || []).slice(0, LIMITES.faq);
+  const tutoriels = (g('tutoriels') || []).slice(0, LIMITES.tutoriels);
   const changelog = (g('changelog') || []).filter((c) => c && (c.titre || c.desc));
   const apiUrl = safeUrl(g('api_url'));
   const tarifsRaw = Array.isArray(g('tarifs')) ? g('tarifs').filter((p) => p && p.nom) : [];
   // Tarifs remplis par l'IA : affichés seulement après vérification par l'admin.
-  const tarifsOk = rules.tarifs && tarifsRaw.length && tool.tarifs_verifie !== false;
+  const tarifsOk = tarifsRaw.length && tool.tarifs_verifie !== false;
 
   let galerie = (g('galerie') || []).map((x) => (typeof x === 'string' ? { url: x } : x)).filter((x) => x && safeUrl(x.url));
   if (!galerie.length && safeUrl(g('screenshot_url'))) galerie = [{ url: g('screenshot_url'), legende: '' }];
-  galerie = galerie.slice(0, rules.gallery);
+  galerie = galerie.slice(0, LIMITES.gallery);
 
   // ── Hero ──
   const starsHTML = Array.from({ length: 5 }, (_, i) => `<span class="${i < Math.round(note) ? 'on' : ''}">${STAR}</span>`).join('');
@@ -167,7 +172,7 @@ function generateFiche(tool, allTools = [], deps) {
   const previewImg = galerie[0];
   const previewBlock = previewImg
     ? `<div class="fo-preview has-img"><div class="fo-preview-bar"><div class="fo-dots"><i></i><i></i><i></i></div><span class="fo-preview-mono" id="fo-preview-cap">${E(previewImg.legende || name)}</span></div>
-        <img id="fo-preview-img" src="${E(safeUrl(previewImg.url))}" alt="${E(name)}"></div>`
+        <img id="fo-preview-img" src="${E(safeUrl(previewImg.url))}" alt="${E(name)} — interface" fetchpriority="high"></div>`
     : `<div class="fo-preview"><div class="fo-preview-bar"><div class="fo-dots"><i></i><i></i><i></i></div><span class="fo-preview-mono">${E(name)}</span></div>
         <div class="fo-preview-body"><h3>${E(name)}</h3><p>${E(description)}</p>
         </div></div>`;
@@ -186,7 +191,7 @@ function generateFiche(tool, allTools = [], deps) {
     <div class="fo-hero-grid">
       <div class="fo-hero-left">
         <div class="fo-id">
-          <div class="fo-logo">${fav ? `<img src="${E(fav)}" alt="${E(name)} logo">` : ''}</div>
+          ${logoBox('fo-logo', name.charAt(0).toUpperCase(), logoSources(tool.favicon, hostOf(url), 128), `${name} logo`, true)}
           <div class="fo-id-info">
             <h1 class="fo-title">${E(name)}</h1>
             <p class="fo-short">${E(description)}</p>
@@ -205,8 +210,8 @@ function generateFiche(tool, allTools = [], deps) {
 </header>`;
 
   // ── À propos ──
-  const aboutParas = (rules.aboutLong && tool.presentation)
-    ? String(tool.presentation).split('\n').filter(Boolean).map((p) => `<p>${E(p)}</p>`).join('')
+  const aboutParas = (g('presentation'))
+    ? String(g('presentation')).split('\n').filter(Boolean).map((p) => `<p>${E(p)}</p>`).join('')
     : `<p>${E(description)}</p>`;
   const typeOutil = g('type_outil') || g('sous_categorie');
   const dash = '<span>—</span>';
@@ -227,7 +232,7 @@ function generateFiche(tool, allTools = [], deps) {
   // ── Ce qu'on retient (Standard) ──
   const pf = (g('points_forts') || []).slice(0, 4);
   const limite = g('limite') || g('limite_principale');
-  const takeawaysSection = rules.takeaways && (pf.length || limite) ? `
+  const takeawaysSection = (pf.length || limite) ? `
 <section class="fo-card" id="fo-retenir">
   <h2>${E(T.takeaways)}</h2>
   <div class="fo-feat-grid">
@@ -244,7 +249,7 @@ function generateFiche(tool, allTools = [], deps) {
 </section>` : '';
 
   // ── Captures (Featured) ──
-  const shotsSection = galerie.length ? `
+  const shotsSection = galerie.length > 1 ? `
 <section class="fo-card" id="fo-captures">
   <div class="fo-card-head"><h2>${E(T.shots)}</h2></div>
   <div class="fo-car" data-fo-car>
@@ -277,10 +282,10 @@ function generateFiche(tool, allTools = [], deps) {
   const faqSection = faqHTML ? `<section class="fo-card" id="fo-faq"><h2>${E(T.faq)}</h2><div class="faq-list">${faqHTML}</div></section>` : '';
 
   // ── API / Mises à jour ──
-  const apiSection = rules.extras >= 1 && g('api') === true && apiUrl ? `
+  const apiSection = g('api') === true && apiUrl ? `
 <section class="fo-card" id="fo-api"><h2>${E(T.apiT)}</h2>
   <a href="${E(apiUrl)}" target="_blank" rel="noopener" class="fo-btn fo-btn-soft">${E(T.apiDoc)} ${ic('ext')}</a></section>` : '';
-  const updatesSection = rules.extras >= 2 && changelog.length ? `
+  const updatesSection = changelog.length ? `
 <section class="fo-card" id="fo-maj"><h2>${E(T.updates)}</h2><ul class="fo-log">${changelog.slice(0, 6).map((c) =>
     `<li>${c.date ? `<time>${E(c.date)}</time>` : ''}<h3>${E(c.titre || '')}</h3>${c.desc ? `<p>${E(c.desc)}</p>` : ''}</li>`).join('')}</ul></section>` : '';
 
@@ -326,7 +331,7 @@ function generateFiche(tool, allTools = [], deps) {
     ${p.prix ? `<strong>${E(p.prix)}${p.periode ? ` <small>${E(p.periode)}</small>` : ''}</strong>` : ''}${p.desc ? `<em>${E(p.desc)}</em>` : ''}</div>
     <a class="fo-btn ${isFree(p) ? 'fo-btn-outline' : 'fo-btn-softsm'}" href="${E(tarifsUrl || url)}" target="_blank" rel="noopener">${E(planBtn(p))}</a></div>`).join('')}</div>
 </section>` : '';
-  const pricingBtnOnly = !tarifsCard && rules.urlTarifs && tarifsUrl
+  const pricingBtnOnly = !tarifsCard && tarifsUrl
     ? `<section class="fo-card"><a class="fo-btn fo-btn-soft" style="width:100%" href="${E(tarifsUrl)}" target="_blank" rel="noopener">${E(T.seePricing)} ${ic('ext')}</a></section>` : '';
 
   // ── Sidebar : alternatives (données Albexia : note et catégorie lues dans la base si l'outil y figure) ──
@@ -339,7 +344,7 @@ function generateFiche(tool, allTools = [], deps) {
     const href = hasPage ? toolFicheUrl(known) : `https://${dom}`;
     const kNote = known ? Number(known.note || known.rating || 0) : 0;
     return `<a class="fo-alt" href="${E(href)}"${hasPage ? '' : ' target="_blank" rel="noopener"'}>
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av${idx % 6}" aria-hidden="true">${E(nom.trim().charAt(0).toUpperCase())}</div>
+      <div class="fo-alt-id">${logoBox(`fo-alt-logo fo-av${idx % 6}`, nom.trim().charAt(0).toUpperCase(), logoSources(known && known.favicon, dom, 64), '', false)}
         <div><b>${E(nom.trim())}</b><small>${E((known && known.category) || desc || T.altsFor(name))}</small></div></div>
       ${kNote ? `<div class="fo-alt-note">${kNote.toFixed(1)} ${STAR}</div>` : ''}</a>`;
   }).join('');
@@ -378,7 +383,7 @@ function generateFiche(tool, allTools = [], deps) {
 </div>`;
 
   // ── SEO ──
-  const titre = `${name} — ${T.titles[plan === 'standard' ? 0 : plan === 'starter' ? 1 : 2]} | Albexia`;
+  const titre = `${name} — ${T.title} | Albexia`;
   const metaDesc = E(((tool.meta_description || description) || '').slice(0, 155));
   const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
 
@@ -407,6 +412,16 @@ function generateFiche(tool, allTools = [], deps) {
     },{rootMargin:'-140px 0px -60% 0px'});
     links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
   }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
 
   // Partager
   var sh=d.querySelector('[data-fo-share]');
@@ -514,4 +529,39 @@ ${articlesScript}
 </html>`;
 }
 
-module.exports = { generateFiche, PLAN_RULES };
+// Page « Voir tous les avis » : /tools/avis-outil.html?tool=<slug>
+// (le script js/avis-outil.js la remplit ; header et footer = ceux des fiches)
+function avisOutilPageHTML(deps) {
+  const { navHTML, footerHTML, R } = deps;
+  return `<!DOCTYPE html>
+<html lang="fr" data-static-lang>
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avis utilisateurs — Albexia</title>
+  <meta name="description" content="Tous les avis des utilisateurs sur cet outil IA, avec notes, filtres et tri.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/svg+xml" href="${FAVICON}">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="${R}css/style.css">
+  <link rel="stylesheet" href="${R}css/tool-detail.css">
+</head>
+<body>
+${navHTML('fr')}
+<main style="max-width:860px;margin:0 auto;padding:40px 24px 64px;">
+  <p style="font-size:.8rem;color:var(--text-dim);margin:0 0 24px;"><a href="${R}index.html" style="color:inherit;text-decoration:none;">Accueil</a> &rsaquo; <span id="bc-tool-name">Avis</span></p>
+  <div id="avo-header" class="avo-header"></div>
+  <div id="avo-summary"></div>
+  <div id="avo-controls"></div>
+  <div id="avo-list"><p style="color:var(--text-muted);padding:40px 0;text-align:center;">Chargement des avis…</p></div>
+  <div id="avo-load-more"></div>
+  <div id="rv-toast" class="rv-toast"></div>
+</main>
+${footerHTML('fr')}
+<script src="${R}js/i18n.js"></script>
+<script type="module" src="${R}js/avis-outil.js"></script>
+</body>
+</html>`;
+}
+
+module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES };

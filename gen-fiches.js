@@ -44,7 +44,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v8'; // v6 : fiche outil unique (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v9'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
 
 function loadState() {
   try {
@@ -144,7 +144,7 @@ function reecrireAnciensDomaines(html) {
 }
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
-const { generateFiche } = require('./fiche-outil'); // template unique de fiche outil (voir fiche-outil.js)
+const { generateFiche, avisOutilPageHTML } = require('./fiche-outil'); // template unique de fiche outil + page « tous les avis »
 
 function sharedJS() {
   return '';
@@ -172,49 +172,7 @@ function tutorialJS() {
 </script>`;
 }
 
-// ── Alternatives ──────────────────────────────────────────
-function altsHTML(alternatives, name, langue) {
-  const moreLabel = { fr:'Voir tous les outils →', en:'See all tools →', es:'Ver todas las herramientas →' }[langue] || 'Voir tous les outils →';
-  if (!alternatives || !alternatives.length) return '';
-  const items = alternatives.map(a => {
-    // Format : "nom|domaine|description" ou juste "nom"
-    const [nom, domaine, desc] = (typeof a === 'string' ? a : `${a.nom}|${a.domaine||''}|${a.desc||''}`).split('|');
-    const domain = domaine || slugify(nom) + '.com';
-    const favicon = `https://www.google.com/s2/favicons?sz=32&domain=${domain}`;
-    const siteUrl = domaine ? (domaine.startsWith('http') ? domaine : `https://${domaine}`) : `https://${domain}`;
-    return `<a href="${siteUrl}" target="_blank" rel="noopener" class="alt-item">
-      <img src="${favicon}" alt="${nom}" onerror="this.style.display='none'">
-      <div><div class="alt-name">${nom}</div><div class="alt-desc">${desc || `Alternative à ${name}`}</div></div>
-    </a>`;
-  }).join('');
-  return `<div class="sidebar-card">
-    <div class="sc-title">${{fr:'Alternatives', en:'Alternatives', es:'Alternativas'}[langue]||'Alternatives'}</div>
-    ${items}
-    <a href="${R}index.html#tools" class="alt-more">${moreLabel}</a>
-  </div>`;
-}
 
-// ── Infos rapides sidebar ─────────────────────────────────
-function infosSidebar(tool, langue) {
-  const labels = {
-    fr: { cat:'Catégorie', prix:'Prix', ideal:'Idéal pour', dev:'Développeur', plateformes:'Plateformes', api:'API', ifr:'Interface FR', essai:'Essai gratuit', oui:'✓ Oui' },
-    en: { cat:'Category',  prix:'Price', ideal:'Ideal for', dev:'Developer',   plateformes:'Platforms',   api:'API', ifr:'FR Interface',  essai:'Free trial',   oui:'✓ Yes' },
-    es: { cat:'Categoría', prix:'Precio', ideal:'Ideal para', dev:'Desarrollador', plateformes:'Plataformas', api:'API', ifr:'Interfaz FR', essai:'Prueba gratis', oui:'✓ Sí' },
-  }[langue] || {};
-  const price = tool.price || 'freemium';
-  const priceLabel = { fr:{gratuit:'Gratuit',freemium:'Freemium',payant:'Payant'}, en:{gratuit:'Free',freemium:'Freemium',payant:'Paid'}, es:{gratuit:'Gratis',freemium:'Freemium',payant:'De pago'} }[langue]?.[price] || price;
-  return `<div class="sidebar-card sidebar-card-featured-highlight">
-    <div class="sc-title">${{fr:'Infos rapides',en:'Quick info',es:'Info rápida'}[langue]||'Infos rapides'}</div>
-    ${tool.maker ? `<div class="sc-row"><span class="sc-label">${labels.dev}</span><span class="sc-val">${tool.maker}</span></div>` : ''}
-    <div class="sc-row"><span class="sc-label">${labels.cat}</span><span class="sc-val">${tool.category||''}</span></div>
-    <div class="sc-row"><span class="sc-label">${labels.prix}</span><span class="sc-val-green sc-val">${priceLabel}</span></div>
-    ${tool.ideal_pour ? `<div class="sc-row"><span class="sc-label">${labels.ideal}</span><span class="sc-val">${tool.ideal_pour}</span></div>` : ''}
-    ${tool.plateformes ? `<div class="sc-row"><span class="sc-label">${labels.plateformes}</span><span class="sc-val">${tool.plateformes}</span></div>` : ''}
-    ${tool.api ? `<div class="sc-row"><span class="sc-label">${labels.api}</span><span class="sc-val">${labels.oui}</span></div>` : ''}
-    ${tool.interface_fr ? `<div class="sc-row"><span class="sc-label">${labels.ifr}</span><span class="sc-val-green sc-val">${labels.oui}</span></div>` : ''}
-    ${tool.essai_gratuit ? `<div class="sc-row"><span class="sc-label">${labels.essai}</span><span class="sc-val-green sc-val">${labels.oui} · ${tool.duree_essai||''}</span></div>` : ''}
-  </div>`;
-}
 
 // ════════════════════════════════════════════════════════════
 // BALISES SEO MULTILINGUES (canonical, hreflang, og:locale)
@@ -380,418 +338,8 @@ ${sharedJS()}
 </html>`;
 }
 
-function generateStandard(tool, allTools=[]) {
-  const { name, description='', price='freemium', category='', url='#', favicon, emoji='🤖', langue='fr' } = tool;
-  const fav = favicon || `https://www.google.com/s2/favicons?sz=128&domain=${new URL(url).hostname}`;
-  const slug = tool.slug_articles || slugify(name);
 
-  const pointsForts = (tool.points_forts || []).map(p =>
-    `<div class="feature-item"><div class="fi-icon">✓</div><div class="fi-title">${p}</div></div>`
-  ).join('');
 
-  const limiteHTML = tool.limite ? `
-    <div class="feature-item" style="border-color:rgba(245,166,35,0.2)">
-      <div class="fi-icon">⚠️</div>
-      <div class="fi-title">${{fr:'Limite principale',en:'Main limitation',es:'Limitación principal'}[langue]||'Limite'}</div>
-      <div class="fi-desc">${tool.limite}</div>
-    </div>` : '';
-
-  const titres = {
-    fr: `${name} — Avis, Prix & Alternatives 2026 | Albexia`,
-    en: `${name} — Review, Pricing & Alternatives 2026 | Albexia`,
-    es: `${name} — Reseña, Precios & Alternativas 2026 | Albexia`,
-  };
-  const metaDesc = tool.meta_description || description.slice(0, 155);
-  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
-
-  return `<!DOCTYPE html>
-<html lang="${langue}" data-static-lang>
-<head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${titres[langue] || titres.fr}</title>
-  <meta name="description" content="${metaDesc}">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="${canonicalUrl}">
-${hreflangTags}
-  <meta property="og:title" content="${titres[langue] || titres.fr}">
-  <meta property="og:description" content="${metaDesc}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="${canonicalUrl}">
-  <meta property="og:locale" content="${ogLocale}">
-${ogLocaleAlternates}
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${R}css/style.css">
-  <link rel="stylesheet" href="${R}css/tool-detail.css">
-</head>
-<body>
-${navHTML(langue)}
-<main><div class="container">
-  <div class="tool-hero">
-    <div class="hero-glow"></div>
-    <div class="tool-hero-left">
-      <div class="tool-logo-wrap">
-        <img src="${fav}" alt="${name} logo" class="tool-logo-img">
-      </div>
-      <div class="tool-hero-info">
-        <div class="tool-hero-badges">
-          <span class="tool-badge badge-cat">${category}</span>
-          ${badgePrice(price, langue)}
-        </div>
-        <h1 class="tool-hero-title">${name}</h1>
-        <div class="tool-hero-stars">${stars(tool.note || tool.rating || 0, langue)}</div>
-        <p class="tool-hero-desc">${description}</p>
-        <div class="tool-hero-actions">
-          <a href="${url}" target="_blank" rel="noopener" class="btn-try">${{fr:'Essayer',en:'Try it',es:'Probar'}[langue]||'Essayer'} ${emoji} →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="tool-content">
-    <div class="tool-main">
-      ${pointsForts || limiteHTML ? `
-      <section class="tool-section">
-        <h2>${{fr:"Ce qu'on retient",en:'Key takeaways',es:'Lo destacado'}[langue]||"Ce qu'on retient"}</h2>
-        <div class="feature-grid">${pointsForts}${limiteHTML}</div>
-      </section>` : ''}
-      <div id="reviews-section"></div>
-    </div>
-    <aside class="tool-sidebar">
-      ${infosSidebar(tool, langue)}
-      ${altsHTML(tool.alternatives, name, langue)}
-      <div class="sidebar-card sidebar-card-cta">
-        <div class="sc-title">${{fr:`Essayer ${name}`,en:`Try ${name}`,es:`Probar ${name}`}[langue]||`Essayer ${name}`}</div>
-        <p>${tool.ideal_pour || ''}</p>
-        <a href="${url}" target="_blank" rel="noopener" class="btn-try-full">${{fr:`Aller sur ${name}`,en:`Go to ${name}`,es:`Ir a ${name}`}[langue]||`Aller sur ${name}`} →</a>
-      </div>
-    </aside>
-  </div>
-</div></main>
-${footerHTML(langue)}
-${sharedJS()}
-<script type="module" src="${R}js/reviews-widget.js"></script>
-<script src="${R}js/i18n.js"></script>
-</body>
-</html>`;
-}
-
-// ════════════════════════════════════════════════════════════
-// GÉNÉRATEUR STARTER
-// ════════════════════════════════════════════════════════════
-function generateStarter(tool, allTools=[]) {
-  const { name, description='', price='freemium', category='', url='#', favicon, emoji='🤖', langue='fr' } = tool;
-  const fav  = favicon || `https://www.google.com/s2/favicons?sz=128&domain=${new URL(url).hostname}`;
-  const slug = tool.slug_articles || slugify(name);
-
-  const statsHTML = (tool.stats||[]).slice(0,4).map(s =>
-    `<div class="tool-stat"><div class="ts-n">${s.valeur}</div><div class="ts-l">${s.label}</div></div>`
-  ).join('');
-
-  // Starter : 3 fonctionnalités max, 2 FAQ max — cf. hiérarchie éditoriale par plan.
-  const featuresHTML = (tool.fonctionnalites||[]).slice(0,3).map(f =>
-    `<div class="feature-item">
-      <div class="fi-icon">${f.icon||'✦'}</div>
-      <div class="fi-title">${f.titre}</div>
-      <div class="fi-desc">${f.desc||''}</div>
-    </div>`
-  ).join('');
-
-  const faqHTML = (tool.faq||[]).slice(0,2).map(f =>
-    `<div class="faq-item">
-      <button class="faq-q">${f.q}</button>
-      <div class="faq-a">${f.a}</div>
-    </div>`
-  ).join('');
-
-  const titres = {
-    fr: `${name} — Guide, Tarifs & Avis 2026 | Albexia`,
-    en: `${name} — Guide, Pricing & Reviews 2026 | Albexia`,
-    es: `${name} — Guía, Precios & Reseñas 2026 | Albexia`,
-  };
-
-  // Articles sidebar selon langue
-  const articlesSidebar = langue === 'fr'
-    ? `<div class="sidebar-card">
-        <div class="sc-title">Articles liés</div>
-        <div id="articles-sidebar-starter"></div>
-      </div>`
-    : '';
-  const articlesScript = langue === 'fr'
-    ? `<script src="${R}js/articles-loader.js" data-outil="${slug}" data-plan="starter"></script>`
-    : '';
-
-  const metaDescStarter = (tool.meta_description||description).slice(0,155);
-  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
-
-  return `<!DOCTYPE html>
-<html lang="${langue}" data-static-lang>
-<head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${titres[langue]||titres.fr}</title>
-  <meta name="description" content="${metaDescStarter}">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="${canonicalUrl}">
-${hreflangTags}
-  <meta property="og:title" content="${titres[langue]||titres.fr}">
-  <meta property="og:description" content="${metaDescStarter}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="${canonicalUrl}">
-  <meta property="og:locale" content="${ogLocale}">
-${ogLocaleAlternates}
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${R}css/style.css">
-  <link rel="stylesheet" href="${R}css/tool-detail.css">
-</head>
-<body>
-${navHTML(langue)}
-<main><div class="container">
-  <div class="tool-hero">
-    <div class="hero-glow"></div>
-    <div class="tool-hero-left">
-      <div class="tool-logo-wrap">
-        <img src="${fav}" alt="${name} logo" class="tool-logo-img">
-      </div>
-      <div class="tool-hero-info">
-        <div class="tool-hero-badges">
-          <span class="tool-badge badge-cat">${category}</span>
-          ${badgePrice(price, langue)}
-          ${tool.interface_fr ? `<span class="tool-badge badge-hot">🌍 ${langue==='fr'?'Interface en français':langue==='en'?'French interface':'Interfaz en francés'}</span>` : ''}
-        </div>
-        <h1 class="tool-hero-title">${name}</h1>
-        ${tool.maker ? `<p class="tool-hero-maker">par <strong>${tool.maker}</strong></p>` : ''}
-        <div class="tool-hero-stars">${stars(tool.note||tool.rating||0, langue)}</div>
-        <p class="tool-hero-desc">${description}</p>
-        <div class="tool-hero-actions">
-          <a href="${url}" target="_blank" rel="noopener" class="btn-try">${{fr:'Essayer',en:'Try it',es:'Probar'}[langue]||'Essayer'} →</a>
-          ${tool.url_tarifs ? `<a href="${tool.url_tarifs}" target="_blank" rel="noopener" class="btn-pricing">${{fr:'Voir les tarifs',en:'See pricing',es:'Ver precios'}[langue]||'Voir les tarifs'}</a>` : ''}
-        </div>
-      </div>
-    </div>
-  </div>
-  ${statsHTML ? `<div class="tool-stats">${statsHTML}</div>` : ''}
-  <div class="tool-content">
-    <div class="tool-main">
-      ${featuresHTML ? `
-      <section class="tool-section">
-        <h2>${{fr:'Fonctionnalités clés',en:'Key features',es:'Funcionalidades clave'}[langue]||'Fonctionnalités'}</h2>
-        <div class="feature-grid">${featuresHTML}</div>
-      </section>` : ''}
-      ${faqHTML ? `
-      <section class="tool-section">
-        <h2>${{fr:'Questions fréquentes',en:'FAQ',es:'Preguntas frecuentes'}[langue]||'FAQ'}</h2>
-        <div class="faq-list">${faqHTML}</div>
-      </section>` : ''}
-      <div id="reviews-section"></div>
-    </div>
-    <aside class="tool-sidebar">
-      ${infosSidebar(tool, langue)}
-      ${articlesSidebar}
-      ${altsHTML(tool.alternatives, name, langue)}
-      <div class="sidebar-card sidebar-card-cta">
-        <div class="sc-title">${{fr:`Essayer ${name}`,en:`Try ${name}`,es:`Probar ${name}`}[langue]||`Essayer ${name}`}</div>
-        <p>${tool.ideal_pour||''}</p>
-        <a href="${url}" target="_blank" rel="noopener" class="btn-try-full">${{fr:`Aller sur ${name}`,en:`Go to ${name}`,es:`Ir a ${name}`}[langue]||`Aller sur ${name}`} →</a>
-      </div>
-    </aside>
-  </div>
-</div></main>
-${footerHTML(langue)}
-${faqHTML ? faqJS() : ''}
-${sharedJS()}
-${articlesScript}
-<script type="module" src="${R}js/reviews-widget.js"></script>
-<script src="${R}js/i18n.js"></script>
-</body>
-</html>`;
-}
-
-// ════════════════════════════════════════════════════════════
-// GÉNÉRATEUR FEATURED
-// ════════════════════════════════════════════════════════════
-function generateFeatured(tool, allTools=[]) {
-  const { name, description='', price='freemium', category='', url='#', favicon, emoji='🤖', langue='fr' } = tool;
-  const fav  = favicon || `https://www.google.com/s2/favicons?sz=128&domain=${new URL(url).hostname}`;
-  const slug = tool.slug_articles || slugify(name);
-
-  const statsHTML = (tool.stats||[]).slice(0,4).map(s =>
-    `<div class="tool-stat"><div class="ts-n">${s.valeur}</div><div class="ts-l">${s.label}</div></div>`
-  ).join('');
-
-  // Featured : 4 fonctionnalités max, 1 seul tutoriel, 4 FAQ max — cf. hiérarchie
-  // éditoriale par plan (Featured reste plus complet que Starter/Standard,
-  // mais sans dupliquer le contenu sous plusieurs formes).
-  const featuresHTML = (tool.fonctionnalites||[]).slice(0,4).map(f =>
-    `<div class="feature-item">
-      <div class="fi-icon">${f.icon||'✦'}</div>
-      <div class="fi-title">${f.titre}</div>
-      <div class="fi-desc">${f.desc||''}</div>
-    </div>`
-  ).join('');
-
-  const tutorielsHTML = (tool.tutoriels||[]).slice(0,1).map((t,i) => {
-    const id = `tuto-${i}`;
-    return `<div class="tutorial-item" id="${id}">
-      <div class="tutorial-header" onclick="toggleTutorial('${id}')">
-        <div class="tutorial-thumb">
-          <img src="https://img.youtube.com/vi/${t.youtube_id}/mqdefault.jpg" alt="${t.titre}" loading="lazy">
-          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <div class="tutorial-meta">
-          <div class="tutorial-title">${t.titre}</div>
-          ${t.duree ? `<div class="tutorial-duration">${t.duree}</div>` : ''}
-        </div>
-        <button class="tutorial-toggle">▾</button>
-      </div>
-      <div class="tutorial-video">
-        <div class="tutorial-video-inner">
-          <iframe data-src="https://www.youtube.com/embed/${t.youtube_id}" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-
-  const faqHTML = (tool.faq||[]).slice(0,4).map(f =>
-    `<div class="faq-item">
-      <button class="faq-q">${f.q}</button>
-      <div class="faq-a">${f.a}</div>
-    </div>`
-  ).join('');
-
-  const screenshotHTML = tool.screenshot_url ? `
-    <section class="tool-section">
-      <h2>${{fr:"Interface de l'outil",en:'Tool interface',es:'Interfaz del tool'}[langue]||"Interface"}</h2>
-      <div class="screenshot-wrap">
-        <img src="${tool.screenshot_url}" alt="Interface ${name}" loading="lazy">
-        <div class="screenshot-label">Interface ${name} — 2026</div>
-      </div>
-    </section>` : '';
-
-  const presentationHTML = tool.presentation ? `
-    <section class="tool-section">
-      <h2>${{fr:`Qu'est-ce que ${name} ?`,en:`What is ${name}?`,es:`¿Qué es ${name}?`}[langue]||`Qu'est-ce que ${name} ?`}</h2>
-      ${tool.presentation.split('\n').filter(Boolean).map(p=>`<p>${p}</p>`).join('')}
-    </section>` : '';
-
-  // Verdict et grille "Articles liés" du main retirés du template Featured :
-  // le verdict reformulait sans info nouvelle le hero + les features, et la
-  // grille d'articles faisait doublon avec la version sidebar juste en dessous
-  // (une seule suffit — cf. décision éditoriale sur la densité des fiches).
-
-  // Articles : uniquement si langue FR (articles.json est en français) —
-  // affichés uniquement en sidebar sur Featured, plus de grille dans le main.
-  const articlesSidebar = langue === 'fr' ? `
-    <div class="sidebar-card">
-      <div class="sc-title">Articles liés</div>
-      <div id="articles-sidebar-all"></div>
-    </div>` : '';
-
-  const articlesScript = langue === 'fr'
-    ? `<script src="${R}js/articles-loader.js" data-outil="${slug}" data-plan="featured"></script>`
-    : '';
-
-  const titres = {
-    fr: `${name} — Guide complet, Tarifs & Tutoriels 2026 | Albexia`,
-    en: `${name} — Complete Guide, Pricing & Tutorials 2026 | Albexia`,
-    es: `${name} — Guía completa, Precios & Tutoriales 2026 | Albexia`,
-  };
-
-  const metaDescFeatured = (tool.meta_description||description).slice(0,155);
-  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
-
-  return `<!DOCTYPE html>
-<html lang="${langue}" data-static-lang>
-<head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${titres[langue]||titres.fr}</title>
-  <meta name="description" content="${metaDescFeatured}">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="${canonicalUrl}">
-${hreflangTags}
-  <meta property="og:title" content="${titres[langue]||titres.fr}">
-  <meta property="og:description" content="${metaDescFeatured}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="${canonicalUrl}">
-  <meta property="og:locale" content="${ogLocale}">
-${ogLocaleAlternates}
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${R}css/style.css">
-  <link rel="stylesheet" href="${R}css/tool-detail.css">
-</head>
-<body>
-${navHTML(langue)}
-<main><div class="container">
-  <div class="tool-hero">
-    <div class="hero-glow"></div>
-    <div class="tool-hero-left">
-      <div class="tool-logo-wrap">
-        <img src="${fav}" alt="${name} logo" class="tool-logo-img">
-      </div>
-      <div class="tool-hero-info">
-        <div class="tool-hero-badges">
-          <span class="tool-badge badge-cat">${category}</span>
-          ${badgePrice(price, langue)}
-          ${tool.interface_fr ? `<span class="tool-badge badge-hot">🌍 ${langue==='fr'?'Interface en français':langue==='en'?'French interface':'Interfaz en francés'}</span>` : ''}
-        </div>
-        <h1 class="tool-hero-title">${name}</h1>
-        ${tool.maker ? `<p class="tool-hero-maker">par <strong>${tool.maker}</strong></p>` : ''}
-        <div class="tool-hero-stars">${stars(tool.note||tool.rating||0, langue)}</div>
-        <p class="tool-hero-desc">${description}</p>
-        <div class="tool-hero-actions">
-          <a href="${url}" target="_blank" rel="noopener" class="btn-try">${{fr:'Essayer',en:'Try it',es:'Probar'}[langue]||'Essayer'} →</a>
-          ${tool.url_tarifs ? `<a href="${tool.url_tarifs}" target="_blank" rel="noopener" class="btn-pricing">${{fr:'Voir les tarifs',en:'See pricing',es:'Ver precios'}[langue]||'Voir les tarifs'}</a>` : ''}
-        </div>
-      </div>
-    </div>
-  </div>
-  ${statsHTML ? `<div class="tool-stats">${statsHTML}</div>` : ''}
-  <div class="tool-content">
-    <div class="tool-main">
-      ${presentationHTML}
-      ${screenshotHTML}
-      ${featuresHTML ? `
-      <section class="tool-section">
-        <h2>${{fr:'Fonctionnalités clés',en:'Key features',es:'Funcionalidades clave'}[langue]||'Fonctionnalités'}</h2>
-        <div class="feature-grid">${featuresHTML}</div>
-      </section>` : ''}
-      ${tutorielsHTML ? `
-      <section class="tool-section">
-        <h2>${{fr:'Tutoriels vidéo',en:'Video tutorials',es:'Tutoriales en vídeo'}[langue]||'Tutoriels'}</h2>
-        <div class="tutorials-list">${tutorielsHTML}</div>
-      </section>` : ''}
-      ${faqHTML ? `
-      <section class="tool-section">
-        <h2>${{fr:'Questions fréquentes',en:'FAQ',es:'Preguntas frecuentes'}[langue]||'FAQ'}</h2>
-        <div class="faq-list">${faqHTML}</div>
-      </section>` : ''}
-      <div id="reviews-section"></div>
-    </div>
-    <aside class="tool-sidebar">
-      ${infosSidebar(tool, langue)}
-      ${articlesSidebar}
-      ${altsHTML(tool.alternatives, name, langue)}
-      <div class="sidebar-card sidebar-card-cta">
-        <div class="sc-title">${{fr:`Essayer ${name}`,en:`Try ${name}`,es:`Probar ${name}`}[langue]||`Essayer ${name}`}</div>
-        <p>${tool.ideal_pour||''}</p>
-        <a href="${url}" target="_blank" rel="noopener" class="btn-try-full">${{fr:`Aller sur ${name}`,en:`Go to ${name}`,es:`Ir a ${name}`}[langue]||`Aller sur ${name}`} →</a>
-      </div>
-    </aside>
-  </div>
-</div></main>
-${footerHTML(langue)}
-${faqHTML ? faqJS() : ''}
-${tutorielsHTML ? tutorialJS() : ''}
-${sharedJS()}
-${articlesScript}
-<script type="module" src="${R}js/reviews-widget.js"></script>
-<script src="${R}js/i18n.js"></script>
-</body>
-</html>`;
-}
 
 // ════════════════════════════════════════════════════════════
 // GÉNÉRATEUR ARTICLES (blog)
@@ -4169,6 +3717,11 @@ async function main() {
   const state = loadState();
   const newState = { outils: {}, articles: {}, comparaisons: {}, niches: {}, videotheques: {}, glossaire: {} };
 
+  // Page « Voir tous les avis » (tools/avis-outil.html) : régénérée à chaque run avec le même
+  // header/footer que les fiches — elle ne peut plus manquer ni devenir obsolète.
+  fs.mkdirSync('tools', { recursive: true });
+  fs.writeFileSync(path.join('tools', 'avis-outil.html'), avisOutilPageHTML(FICHE_DEPS));
+
   console.log('📥 Lecture de Firestore (outils)...');
   const snap  = await db.collection('outils').get();
   const tools = snap.docs.map(d => d.data());
@@ -4211,7 +3764,7 @@ async function main() {
 
     let html;
     if (tool.status === 'offline')     html = generateOfflineTakeover(tool, tools);
-    else                                html = generateFiche(tool, tools, FICHE_DEPS); // 1 template, le plan ne change que l'affichage (PLAN_RULES)
+    else                                html = generateFiche(tool, tools, FICHE_DEPS); // 1 seul template, mêmes sections pour les 3 plans
 
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(filePath, html, 'utf8');

@@ -1118,3 +1118,39 @@ footer a { color: #a8a3ff; text-decoration: none; }
   .offline-headline { font-size: clamp(1.2rem, 5.5vw, 1.6rem); }
   .offline-body-text { font-size: 0.88rem; }
 }
+
+/* ── Utilité de l'outil (page des avis) ── */
+.rv-summary-left { flex-direction:column; }
+.rv-quick { margin-top:16px;padding-top:14px;border-top:1px solid var(--border);text-align:left; }
+.rv-quick-q { font-size:.82rem;color:var(--text-muted);margin-bottom:10px; }
+.rv-quick-btns { display:flex;gap:8px;flex-wrap:wrap; }
+.rv-quick-btn { font-family:inherit;font-size:.82rem;font-weight:600;background:transparent;border:1px solid var(--border-hover);color:var(--text);border-radius:999px;padding:7px 16px;cursor:pointer;transition:background .15s,border-color .15s; }
+.rv-quick-btn:hover { background:var(--bg3); }
+.rv-quick-btn.yes[aria-pressed="true"] { border-color:#00d4aa;color:#00d4aa;background:rgba(0,212,170,.08); }
+.rv-quick-btn.no[aria-pressed="true"]  { border-color:var(--accent2);color:var(--accent2);background:rgba(255,107,157,.08); }
+.rv-useful { min-width:200px;flex:1;max-width:260px; }
+.rv-useful-title { font-size:.95rem;font-weight:700;font-family:'Syne',sans-serif;margin-bottom:10px; }
+.rv-useful-pct { font-size:1.5rem;font-weight:800;color:#00d4aa;margin-bottom:6px; }
+.rv-useful-counts { font-size:.85rem;color:var(--text-muted);margin-bottom:12px; }
+.rv-useful-bar { height:8px;background:var(--bg3);border-radius:4px;overflow:hidden; }
+.rv-useful-bar-fill { height:100%;background:#00d4aa;border-radius:4px;transition:width .4s ease; }
+.rv-useful-empty { font-size:.85rem;color:var(--text-dim); }
+@media (max-width:640px) {
+  .rv-useful { max-width:none;width:100%; }
+}
+
+/* ── En-tête outil + pagination (page des avis) ── */
+.avo-head-row { display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap; }
+.avo-tool-desc { font-size:.9rem;color:var(--text-muted);margin-top:4px;max-width:460px; }
+.avo-tags { display:flex;gap:8px;flex-wrap:wrap;margin-top:12px; }
+.avo-tag { font-size:.75rem;color:var(--text-muted);border:1px solid var(--border-hover);border-radius:999px;padding:3px 12px; }
+.avo-actions { display:flex;gap:10px;flex-wrap:wrap; }
+.avo-btn { font-size:.82rem;font-weight:600;color:var(--text);text-decoration:none;border:1px solid var(--border-hover);border-radius:999px;padding:8px 16px;transition:background .15s; }
+.avo-btn:hover { background:var(--bg3); }
+.rv-useful-note { font-size:.8rem;color:var(--text-dim);margin-top:12px; }
+.rv-pager { display:flex;justify-content:center;align-items:center;gap:8px;margin-top:28px;flex-wrap:wrap; }
+.rv-page { min-width:34px;height:34px;font-family:inherit;font-size:.85rem;background:var(--bg2);border:1px solid var(--border);color:var(--text-muted);border-radius:8px;cursor:pointer; }
+.rv-page:hover:not(:disabled) { border-color:var(--border-hover);color:var(--text); }
+.rv-page.active { background:var(--accent);border-color:var(--accent);color:#fff; }
+.rv-page:disabled { opacity:.35;cursor:default; }
+.rv-page-gap { color:var(--text-dim); }

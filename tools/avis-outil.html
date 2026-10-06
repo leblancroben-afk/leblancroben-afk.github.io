@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" data-static-lang>
+<html lang="fr">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avis utilisateurs — Albexia</title>
@@ -10,38 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/tool-detail.css">
+  <script src="/js/i18n.js"></script>
 </head>
 <body>
-<nav>
-  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
-    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
-      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
-      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
-      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
-    </svg>
-  </a></div>
-  <div class="nav-links">
-    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Accueil</a>
-    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
-    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
-  </div>
-  <div class="nav-profile-slot">
-    <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
-      <div class="nav-avatar" id="nav-avatar">?</div>
-    </a>
-    <a href="/profil.html" id="nav-login-btn" class="nav-link" style="display:none">Connexion</a>
-  </div>
-  <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
-</nav>
-<script type="module" src="/js/auth-nav.js"></script>
+<div id="site-header" style="display:contents"></div>
+<script src="/js/header.js" defer></script>
 <main style="max-width:860px;margin:0 auto;padding:40px 24px 64px;">
-  <p style="font-size:.8rem;color:var(--text-dim);margin:0 0 24px;"><a href="/index.html" style="color:inherit;text-decoration:none;">Accueil</a> &rsaquo; <span id="bc-tool-name">Avis</span></p>
   <div id="avo-header" class="avo-header"></div>
   <div id="avo-summary"></div>
+  <h2 class="avo-section-title" id="avo-title" data-i18n="avo.title">Avis utilisateur</h2>
   <div id="avo-controls"></div>
-  <div id="avo-list"><p style="color:var(--text-muted);padding:40px 0;text-align:center;">Chargement des avis…</p></div>
+  <div id="avo-list"><p data-i18n="avo.loading" style="color:var(--text-muted);padding:40px 0;text-align:center;">Chargement des avis…</p></div>
   <div id="avo-load-more"></div>
   <div id="rv-toast" class="rv-toast"></div>
 </main>
@@ -55,7 +34,6 @@
   </div>
 </footer>
 <script src="/js/footer.js" defer></script>
-<script src="/js/i18n.js"></script>
 <script type="module" src="/js/avis-outil.js"></script>
 </body>
 </html>

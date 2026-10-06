@@ -1,0 +1,1812 @@
+/* ═══════════════════════════════════════
+   Albexia — app.js
+   Fonctionnalités : navigation, JSON,
+   collections Firebase, soumission d'outil
+
+   Dépend de /js/i18n.js (chargé avant ce fichier) pour LS_LANG_KEY,
+   LANGUES_SUPPORTEES, detecterLangue(), t(), appliquerTraductionsStatiques().
+   ═══════════════════════════════════════ */
+
+'use strict';
+
+// ─── SLUG / URL FICHE ────────────────────
+// Identique à la logique de gen-fiches.js — garantit que les URLs
+// reconstruites ici correspondent toujours aux fichiers réellement générés,
+// sans dépendre du champ "page" stocké en Firestore (qui peut être obsolète).
+function slugify(str) {
+  return (str || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function buildToolPageUrl(t) {
+  if (t.generer_fiche === false) return null; // pas de fiche générée pour cet outil
+  const slug = slugify(t.name);
+  if (!slug) return null;
+  const folder = t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard';
+  const langue = t.langue || 'fr';
+  return `/tools/${folder}/${langue}/${slug}/`;
+}
+
+// Reconstruit toujours l'URL de l'article à partir du slug + de la langue
+// (schéma Firestore "articles"), sans dépendre d'un champ "url" potentiellement
+// obsolète — même logique que buildToolPageUrl.
+function buildBlogPageUrl(p) {
+  const slug = p.slug || slugify(p.title);
+  if (!slug) return '#';
+  const langue = p.langue || 'fr';
+  return `/articles/${langue}/${slug}/index.html`;
+}
+window.slugify = slugify;
+window.buildToolPageUrl = buildToolPageUrl;
+window.buildBlogPageUrl = buildBlogPageUrl;
+
+// Échappement strict — utilisé UNIQUEMENT pour les champs venant de
+// articles_createurs (contenu soumis par un tiers non admin). Les articles
+// classiques restent injectés tels quels dans renderBlog() comme avant,
+// car ils ne sont écrits que par l'admin (toi) — pas de risque là-dessus.
+function escHtmlBlog(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ─── LANGUE ──────────────────────────────
+// Le dictionnaire de traductions (UI_TRANSLATIONS), la fonction t(),
+// appliquerTraductionsStatiques(), detecterLangue(), LS_LANG_KEY et
+// LANGUES_SUPPORTEES vivent maintenant dans /js/i18n.js, partagé par
+// toutes les pages du site (index, soumettre, profil, etc.).
+// Ce fichier doit être chargé AVANT app.js :
+//   <script src="/js/i18n.js"></script>
+//   <script src="/js/app.js"></script>
+
+// Slugs (noms normalisés) des outils actuellement affichés dans le panneau
+// spotlight, si présent. Permet de retrouver la variante linguistique du
+// même outil quand l'utilisateur change de langue (FR/EN/ES) — on suppose
+// que le nom de l'outil (une fois slugifié) reste stable ou très proche
+// d'une langue à l'autre, comme le fait déjà buildToolPageUrl().
+let _spotlightSlugs = null;
+
+// Alias dédié pour les endroits où le nom "t" est déjà utilisé comme
+// variable locale (ex : .map(t => ...) sur une liste d'outils).
+function translateQuizViewSheet(langue) {
+  return t('quiz.viewSheet', langue);
+}
+
+function changerLangue(code) {
+  if (!LANGUES_SUPPORTEES.includes(code)) return;
+
+  if (typeof window.changerLangueGlobale === 'function') {
+    return window.changerLangueGlobale(code);
+  }
+
+  localStorage.setItem(LS_LANG_KEY, code);
+  state.langue = code;
+
+  if (typeof window.onLangueChange === 'function') {
+    return window.onLangueChange(code);
+  }
+}
+
+// ─── RENDU DYNAMIQUE APRÈS CHANGEMENT DE LANGUE ───
+window.onLangueChange = function (code) {
+  if (!LANGUES_SUPPORTEES.includes(code)) return;
+
+  state.langue = code;
+
+  state.activeToolCat    = 'Tous';
+  state.activeBlogCat    = 'Tous';
+  state.activeGalleryCat = 'Tous';
+
+  state.toolsPage   = 1;
+  state.blogPage    = 1;
+  state.galleryPage = 1;
+
+  renderTools();
+  renderBlog();
+  renderGallery();
+  renderHome();
+
+  // Si un panneau spotlight est affiché, on le reconstruit
+  // avec la variante Firestore correspondant à la nouvelle langue.
+  if (_spotlightSlugs && _spotlightSlugs.length) {
+    const found = _spotlightSlugs
+      .map(slug =>
+        state.tools.find(
+          t =>
+            t.langue === code &&
+            slugify(t.name) === slug
+        )
+      )
+      .filter(Boolean);
+
+    if (found.length) {
+      renderSpotlight(found, true);
+    } else {
+      const old = document.getElementById('notif-spotlight');
+      if (old) old.remove();
+    }
+  }
+};
+
+// ─── STATE ───────────────────────────────
+const state = {
+  tools:   [],
+  blog:    [],
+  gallery: [],
+  langue:  detecterLangue(),
+  activeToolCat:    'Tous',
+  activeBlogCat:    'Tous',
+  activeGalleryCat: 'Tous',
+  priceFilter: 'tous',    // 'tous' | 'freemium' | 'gratuit' | 'payant'
+  minRating:   0,         // 0-5 (via le menu étoiles)
+  apiOnly:     false,
+  trialOnly:   false,
+  toolsSort:   'popularite', // 'popularite' | 'note' | 'nom'
+  ratingsCache: new Map(),   // slug -> { ratingAverage, ratingCount }, alimenté au fil des tris/filtres
+  searchQuery: '',
+  toolsPage:   1,
+  blogPage:    1,
+  galleryPage: 1,
+  itemsPerPage: 20,
+};
+window.state = state;
+
+// ─── COLOR PALETTES ──────────────────────
+const catColors = {
+  Texte:        { bg: 'rgba(108,99,255,0.18)'  },
+  Image:        { bg: 'rgba(255,107,157,0.18)' },
+  Musique:      { bg: 'rgba(0,212,170,0.18)'   },
+  Code:         { bg: 'rgba(108,99,255,0.18)'  },
+  Vidéo:        { bg: 'rgba(255,107,157,0.18)' },
+  Recherche:    { bg: 'rgba(0,212,170,0.18)'   },
+  Audio:        { bg: 'rgba(108,99,255,0.18)'  },
+  Productivité: { bg: 'rgba(245,166,35,0.18)'  },
+  Autre:        { bg: 'rgba(255,255,255,0.08)' },
+};
+
+// Icônes des catégories affichées en tuiles sur l'accueil.
+// Clé = valeur exacte de t.category en base. '_default' sert de repli
+// pour toute catégorie non listée ici (nouvelle catégorie ajoutée en Firestore
+// sans mise à jour de cette table).
+const catIcons = {
+  Juridique:       '⚖️',
+  Marketing:       '📣',
+  SEO:             '🔍',
+  Contenu:         '✍️',
+  Code:            '💻',
+  'Design 3D':     '🧊',
+  Automatisation:  '⚡',
+  Recherche:       '🧠',
+  Vidéo:           '🎬',
+  Productivité:    '🚀',
+  Texte:           '📝',
+  Image:           '🎨',
+  Musique:         '🎵',
+  Audio:           '🎧',
+  _default:        '✨',
+};
+
+// Descriptions affichées dans l'entête dynamique de la page Outils.
+// À ajuster/compléter par Damon — texte générique en repli pour toute
+// catégorie non listée ici.
+const catDescriptionKeys = {
+  Tous: 'Tous', Juridique: 'Juridique', Marketing: 'Marketing', SEO: 'SEO',
+  Contenu: 'Contenu', Code: 'Code', 'Design 3D': 'Design3D',
+  Automatisation: 'Automatisation', Recherche: 'Recherche', Vidéo: 'Video',
+  Productivité: 'Productivite',
+};
+function getCatDescription(cat, langue) {
+  const suffix = catDescriptionKeys[cat];
+  if (suffix) return t(`idx.catDesc${suffix}`, langue);
+  return t('idx.catDescFallback', langue).replace('{cat}', cat);
+}
+
+const blogColors = {
+  Guide:      { bg: 'rgba(108,99,255,0.2)',  tagBg: 'rgba(108,99,255,0.15)',  tagColor: '#a8a3ff' },
+  Sélection:  { bg: 'rgba(255,107,157,0.2)', tagBg: 'rgba(255,107,157,0.15)', tagColor: '#ff6b9d' },
+  Débutant:   { bg: 'rgba(0,212,170,0.2)',   tagBg: 'rgba(0,212,170,0.15)',   tagColor: '#00d4aa' },
+  Comparatif: { bg: 'rgba(245,166,35,0.2)',  tagBg: 'rgba(245,166,35,0.15)',  tagColor: '#f5a623' },
+  Tutoriel:   { bg: 'rgba(108,99,255,0.2)',  tagBg: 'rgba(108,99,255,0.15)',  tagColor: '#a8a3ff' },
+  Analyse:    { bg: 'rgba(0,212,170,0.2)',   tagBg: 'rgba(0,212,170,0.15)',   tagColor: '#00d4aa' },
+};
+window.blogColorsMap = blogColors;
+
+const galleryColors = {
+  image:   'rgba(108,99,255,0.2)',
+  vidéo:   'rgba(255,107,157,0.18)',
+  musique: 'rgba(0,212,170,0.2)',
+};
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+
+let toastTimer = null;
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ═══════════════════════════════════════
+// MODAL — SOUMISSION D'OUTIL
+// ═══════════════════════════════════════
+
+function openModal() {
+  resetForm();
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('f-name').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function resetForm() {
+  ['f-name','f-url','f-cat','f-price','f-desc','f-emoji','f-email'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const err = document.getElementById('form-error');
+  if (err) { err.style.display = 'none'; err.textContent = ''; }
+  const countEl = document.getElementById('f-desc-count');
+  if (countEl) countEl.textContent = '0 / 200';
+}
+
+function validateForm() {
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const name  = document.getElementById('f-name').value.trim();
+  const url   = document.getElementById('f-url').value.trim();
+  const cat   = document.getElementById('f-cat').value;
+  const price = document.getElementById('f-price').value;
+  const desc  = document.getElementById('f-desc').value.trim();
+  if (!name)  return t('idx.errNameRequired', langue);
+  if (!url)   return t('idx.errUrlRequired', langue);
+  if (!url.startsWith('http')) return t('idx.errUrlFormat', langue);
+  if (!cat)   return t('idx.errCatRequired', langue);
+  if (!price) return t('idx.errPriceRequired', langue);
+  if (!desc)  return t('idx.errDescRequired', langue);
+  if (desc.length < 20) return t('idx.errDescMinLength', langue);
+  return null;
+}
+
+function handleSubmit() {
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const errMsg = validateForm();
+  const errEl  = document.getElementById('form-error');
+
+  if (errMsg) {
+    errEl.textContent = errMsg;
+    errEl.style.display = 'block';
+    return;
+  }
+  errEl.style.display = 'none';
+
+  const nomOutil = document.getElementById('f-name').value.trim();
+
+  const formData = new FormData();
+  formData.append('nom_outil',    nomOutil);
+  formData.append('url',          document.getElementById('f-url').value.trim());
+  formData.append('categorie',    document.getElementById('f-cat').value);
+  formData.append('tarification', document.getElementById('f-price').value);
+  formData.append('description',  document.getElementById('f-desc').value.trim());
+  formData.append('emoji',        document.getElementById('f-emoji').value.trim() || '🤖');
+  formData.append('email',        document.getElementById('f-email').value.trim());
+
+  const submitBtn = document.querySelector('.modal-footer .btn-main');
+  const submitBtnOriginal = t('idx.modalSubmitBtn', langue);
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = t('idx.sendingShort', langue); }
+
+  fetch('https://formspree.io/f/xaqkgqlr', {
+    method:  'POST',
+    body:    formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(() => {
+    const successText = t('idx.modalSuccessText', langue).replace('{name}', `<strong>${nomOutil}</strong>`);
+    document.querySelector('.modal-body').innerHTML = `
+      <div class="form-success">
+        <div class="success-icon">✅</div>
+        <h4>${t('soum.successTitle', langue)}</h4>
+        <p>${successText}</p>
+      </div>`;
+    document.querySelector('.modal-footer').innerHTML =
+      `<button class="btn-main" onclick="closeModal()">${t('profil.closeBtn', langue)}</button>`;
+  }).catch(() => {
+    errEl.textContent = t('idx.networkError', langue);
+    errEl.style.display = 'block';
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtnOriginal; }
+  });
+}
+
+// ═══════════════════════════════════════
+// DATA LOADING
+// ═══════════════════════════════════════
+
+async function loadJSON(path) {
+  const res = await fetch(path);
+  if (!res.ok) throw new Error(`Erreur chargement ${path}`);
+  return res.json();
+}
+
+async function loadAllData() {
+  // Pages catégorie statiques générées par gen-fiches.js : les outils de la
+  // catégorie (une seule langue par page désormais — vraies URLs par langue,
+  // voir categorie-template.js) sont déjà embarqués dans le HTML
+  // (window.CATEGORY_TOOLS) pour le SEO et la vitesse — inutile de
+  // retélécharger tout Firestore ici. Le reste de l'app (blog/galerie) n'a
+  // pas de sens sur ces pages.
+  if (window.CATEGORY_TOOLS) {
+    state.tools = window.CATEGORY_TOOLS;
+    // La langue est fixée par l'URL de la page, pas par le choix du visiteur
+    // (localStorage) — sinon un visiteur FR qui atterrit sur /categorie/en/seo/
+    // verrait sa grille filtrée à vide par filtrerParLangue().
+    if (window.CATEGORY_META && window.CATEGORY_META.langue) {
+      state.langue = window.CATEGORY_META.langue;
+      // js/i18n.js applique automatiquement detecterLangue() (préférence du
+      // visiteur) sur DOMContentLoaded, avant que ce bloc ne s'exécute — ça
+      // écrase <html lang="..."> avec la mauvaise valeur sur une page dont
+      // la langue est fixée par l'URL. On la restaure ici explicitement.
+      document.documentElement.lang = state.langue;
+    }
+    state.activeToolCat = (window.CATEGORY_TOOLS[0] && window.CATEGORY_TOOLS[0].category) || 'Tous';
+    renderTools();
+    return;
+  }
+
+  try {
+    // Outils, articles et galerie viennent tous de Firestore désormais
+    // (mise à jour immédiate sans redéploiement ni fichier JSON à régénérer
+    // manuellement). Les fiches/articles HTML individuels restent générés
+    // en statique par gen-fiches.js pour le SEO, mais l'INDEX affiché ici
+    // (grille d'outils, liste blog, galerie) est toujours lu en direct.
+    const { db, collection, getDocs, query, where } = await import('./firebase-config.js');
+
+    const [toolsSnap, articlesSnap, gallerySnap, articlesCreateursSnap] = await Promise.all([
+      getDocs(collection(db, 'outils')).catch(() => ({ docs: [] })),
+      getDocs(collection(db, 'articles')).catch(() => ({ docs: [] })),
+      getDocs(collection(db, 'galerie')).catch(() => ({ docs: [] })),
+      getDocs(query(collection(db, 'articles_createurs'), where('statut', '==', 'publie'))).catch(() => ({ docs: [] })),
+    ]);
+
+    state.tools   = toolsSnap.docs.map(d => d.data());
+    state.gallery = gallerySnap.docs.map(d => d.data());
+
+    // Articles créateurs (revendication + rédaction) — champs reconstruits
+    // pour correspondre au schéma attendu par renderBlog(), avec échappement
+    // strict des champs soumis par le créateur (titre, extrait), puisqu'ils
+    // n'ont jamais été validés par un admin avant affichage sur l'accueil.
+    const articlesCreateurs = articlesCreateursSnap.docs.map(d => {
+      const a = d.data();
+      const slug = `${slugify(a.titre || '')}-${String(d.id).slice(0, 6)}`;
+      const premierParagraphe = (a.contenu || []).find(b => b.type === 'paragraph');
+      const excerptBrut = premierParagraphe ? String(premierParagraphe.text || '') : '';
+      const excerpt = excerptBrut.length > 150 ? excerptBrut.slice(0, 149) + '…' : excerptBrut;
+      const nbMots = a.nb_mots || 0;
+      const outil = state.tools.find(t => t.slug === a.outil_slug);
+      const dateAffichage = a.created_at?.toDate
+        ? a.created_at.toDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+        : '';
+
+      return {
+        title: escHtmlBlog(a.titre),
+        slug,
+        langue: 'fr',
+        date: dateAffichage,
+        author: escHtmlBlog(outil ? `Équipe ${outil.nom}` : 'Créateur partenaire'),
+        excerpt: escHtmlBlog(excerpt),
+        category: 'Actualité créateur',
+        readTime: `${Math.max(1, Math.round(nbMots / 200))} min`,
+        og_image: /^https?:\/\//i.test(a.banniere_url || '') ? a.banniere_url : '',
+        emoji: '✍️',
+      };
+    });
+
+    state.blog = [...articlesSnap.docs.map(d => d.data()), ...articlesCreateurs];
+    renderTools();
+    renderBlog();
+    renderGallery();
+    renderHome();
+    checkToolsParam();
+  } catch (err) {
+    console.error('Erreur chargement données:', err);
+    showError('tools-grid',   'Impossible de charger les outils.');
+    showError('blog-list',    'Impossible de charger les articles.');
+    showError('gallery-grid', 'Impossible de charger la galerie.');
+    showError('home-top-tools', 'Impossible de charger les outils.');
+    showError('home-latest-articles', 'Impossible de charger les articles.');
+  }
+}
+
+function filtrerParLangue(items) {
+  return items.filter(item => !item.langue || item.langue === state.langue);
+}
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  const btn = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (pageId === 'profile') window.location.href = 'profil.html';
+}
+
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+
+function getColor(map, key, fallback = {}) {
+  return map[key] || fallback;
+}
+
+function showError(containerId, msg) {
+  const el = document.getElementById(containerId);
+  if (el) el.innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div>${msg}</div>`;
+}
+
+function showEmpty(containerId, msg) {
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const message = msg !== undefined ? msg : t('idx.emptyResults', langue);
+  const el = document.getElementById(containerId);
+  if (el) el.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div>${message}</div>`;
+}
+
+// ═══════════════════════════════════════
+// CARTE OUTIL — source unique de vérité
+// ═══════════════════════════════════════
+
+function buildToolCard(t, direct = false) {
+  const priceLabel = {
+    free: window.t('alertes.priceFree', state.langue),
+    freemium: window.t('alertes.priceFreemium', state.langue),
+    paid: window.t('alertes.pricePaid', state.langue),
+  };
+  const col  = catColors[t.category] || { bg: 'rgba(255,255,255,0.08)' };
+  const pageUrl = buildToolPageUrl(t);
+  const plan = t.plan || (pageUrl ? 'gratuit' : null);
+
+  const iconHtml = t.favicon
+    ? `<img src="${t.favicon}" alt="${t.name}" class="tool-favicon"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+           onload="this.nextElementSibling.style.display='none'">
+       <span class="tool-ico-fallback" style="display:none">${t.emoji}</span>`
+    : `<span class="tool-ico-fallback">${t.emoji}</span>`;
+
+  // direct=true : l'utilisateur vient d'un CTA article (?tools=... via
+  // checkToolsParam → renderSpotlight). L'article a déjà convaincu — on
+  // saute la fiche et on envoie directement vers le site officiel de l'outil.
+  // direct=false (défaut) : comportement habituel, fiche → site officiel.
+  const cardAction = (direct && t.url)
+    ? `onclick="window.open('${t.url}','_blank')"`
+    : pageUrl
+      ? `onclick="window.location.href='${pageUrl}'"`
+      : `onclick="window.open('${t.url}','_blank')"`;
+
+  let planBadge = '';
+  let cardClass = 'tool-card';
+
+  if (plan === 'featured') {
+    cardClass = 'tool-card tool-card-featured tool-card-plan-featured';
+  } else if (plan === 'starter') {
+    cardClass = 'tool-card tool-card-featured tool-card-plan-starter';
+  } else if (plan === 'gratuit') {
+    cardClass = 'tool-card tool-card-plan-gratuit';
+  }
+
+  const BADGE_LABELS = {
+    fr: { direct: 'Aller sur le site officiel →', guide: 'Guide complet →' },
+    en: { direct: 'Go to official website →',     guide: 'Full guide →' },
+    es: { direct: 'Ir al sitio oficial →',         guide: 'Guía completa →' },
+  };
+  const badgeT9n = BADGE_LABELS[state.langue] || BADGE_LABELS.fr;
+
+  if (direct && t.url) {
+    planBadge = `<span class="tool-plan-badge tool-plan-badge-direct">${badgeT9n.direct}</span>`;
+  } else if (pageUrl) {
+    planBadge = `<span class="tool-plan-badge tool-plan-badge-gratuit">${badgeT9n.guide}</span>`;
+  }
+
+  const toolJson = JSON.stringify(t)
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, '&#39;')
+    .replace(/"/g, '&quot;');
+
+  // Slug pour Firestore ratings — même logique que gen-fiches.js (slugify du nom)
+  const slug = slugify(t.name) || String(t.id);
+
+  return `
+    <article class="${cardClass}" ${cardAction} data-tool-slug="${slug}">
+      <div class="tool-head">
+        <div class="tool-ico" style="background:${col.bg}">${iconHtml}</div>
+        <div style="flex:1">
+          <div class="tool-name">${t.name}</div>
+          <div class="tool-cat">${t.category}</div>
+        </div>
+        <button class="fav-btn"
+          onclick="openCollectionPicker(event, ${toolJson})"
+          title="${window.t('idx.addToCollectionTitle', state.langue)}">♡</button>
+      </div>
+      <p class="tool-desc">${t.description}</p>
+      <div class="tool-foot">
+        <span class="price-tag price-${t.price}">${priceLabel[t.price]}</span>
+        <span class="tool-rating-badge" data-slug="${slug}"></span>
+      </div>
+      ${planBadge}
+    </article>`;
+}
+window.buildToolCard = buildToolCard;
+
+// ════════════════════════════════════════
+// RATINGS FIRESTORE — enrichir les cartes
+// Appelé après chaque renderTools()
+// ════════════════════════════════════════
+async function renderRatingsOnCards() {
+  if (typeof window._getRatingSummaries !== 'function') return;
+  try {
+    const cards = document.querySelectorAll('.tool-card');
+    if (!cards.length) return;
+
+    const slugs = [];
+    cards.forEach(card => {
+      const slug = card.getAttribute('data-tool-slug');
+      if (slug) slugs.push(slug);
+    });
+
+    if (!slugs.length) return;
+
+    const summaries = await window._getRatingSummaries([...new Set(slugs)]);
+    if (!summaries) return;
+
+    cards.forEach(card => {
+      const slug = card.getAttribute('data-tool-slug');
+      if (!slug) return;
+
+      const badge = card.querySelector('.tool-rating-badge');
+      if (!badge) return;
+
+      const summary = summaries.get(slug);
+
+      // Aucun avis → badge vide (pas de fausses étoiles)
+      if (!summary || !summary.ratingCount) {
+        badge.innerHTML = '';
+        return;
+      }
+
+      const avg   = summary.ratingAverage.toFixed(1);
+      const count = summary.ratingCount;
+      badge.innerHTML = `★ ${avg} <span style="font-size:0.85em;opacity:0.75;font-weight:normal">(${count} avis)</span>`;
+    });
+  } catch (err) {
+    console.warn('Ratings Firestore non chargés:', err);
+  }
+}
+
+// ═══════════════════════════════════════
+// TOOLS
+// ═══════════════════════════════════════
+
+// Les libellés FR des filtres (Freemium/Gratuit/Payant) ne correspondent pas
+// forcément aux valeurs stockées dans Firestore (t.price = 'free'/'freemium'/'paid').
+// Cette table fait le pont pour éviter un filtre qui matche jamais rien.
+const PRICE_FIELD_MAP = { freemium: 'freemium', gratuit: 'free', payant: 'paid' };
+
+function renderTools() {
+  const toolsLangue = filtrerParLangue(state.tools);
+
+  // Grille de catégories partagée (identique à l'accueil)
+  renderCategoryTiles('tools-cat-grid', state.activeToolCat, 'setToolCat');
+
+  // Entête dynamique (nom, compteur, description, placeholder recherche)
+  const catCount = updateToolsPageHeader(toolsLangue);
+  renderCatConfirmBar(state.activeToolCat, catCount);
+
+  // Filtres de base : catégorie, prix, recherche texte
+  let base = toolsLangue.filter(t =>
+    t.status !== 'offline' && // outil dont le lien est mort depuis 7 checks consécutifs
+                               // (check-liens.js) — carte masquée, fiche HTML reste publiée
+    (state.activeToolCat === 'Tous' || t.category === state.activeToolCat) &&
+    (state.priceFilter === 'tous' || t.price === PRICE_FIELD_MAP[state.priceFilter]) &&
+    (matchRecherche(state.searchQuery, t.name) ||
+     matchRecherche(state.searchQuery, t.description) ||
+     t.tags.some(tag => matchRecherche(state.searchQuery, tag)))
+  );
+
+  if (state.apiOnly)   base = base.filter(t => t.api === true);
+  if (state.trialOnly) base = base.filter(t => t.essaiGratuit === true);
+
+  renderSecondaryFilters();
+
+  const needsRatings = state.minRating > 0 || state.toolsSort === 'note' || state.toolsSort === 'popularite';
+  if (needsRatings) {
+    // Rendu immédiat avec les notes déjà en cache (peut être approximatif
+    // au premier passage), puis on complète et on re-rend.
+    finalizeAndRenderTools(base);
+    ensureRatingsLoaded(base).then(() => finalizeAndRenderTools(base));
+  } else {
+    finalizeAndRenderTools(base);
+  }
+}
+
+function updateToolsPageHeader(toolsLangue) {
+  const cat = state.activeToolCat;
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const count = cat === 'Tous'
+    ? toolsLangue.filter(t => t.status !== 'offline').length
+    : toolsLangue.filter(t => t.status !== 'offline' && t.category === cat).length;
+
+  const titleEl = document.getElementById('tools-page-title');
+  const subEl   = document.getElementById('tools-page-sub');
+  if (titleEl) {
+    const title = cat === 'Tous' ? t('idx.allToolsTitle', langue) : cat;
+    titleEl.innerHTML = `${title} <span class="tools-page-count">${count} ${t('idx.toolsCountSuffix', langue)}</span>`;
+  }
+  if (subEl) {
+    subEl.textContent = getCatDescription(cat, langue);
+  }
+
+  const search = document.getElementById('tool-search');
+  if (search && document.activeElement !== search) {
+    search.placeholder = cat === 'Tous'
+      ? t('tools.searchPlaceholder', langue)
+      : t('idx.searchPlaceholderCat', langue).replace('{cat}', cat);
+  }
+
+  return count;
+}
+
+// ─── Filtres avancés (prix / note / API / essai) + tri ───
+
+function renderSecondaryFilters() {
+  const el = document.getElementById('tool-secondary-filters');
+  if (!el) return;
+
+  // On ne propose les filtres API / essai gratuit que si au moins un
+  // outil expose réellement ces champs en base — sinon ils restent
+  // visibles mais désactivés (évite un filtre qui renverrait toujours 0 résultat).
+  const hasApiField   = state.tools.some(t => typeof t.api === 'boolean');
+  const hasTrialField = state.tools.some(t => typeof t.essaiGratuit === 'boolean');
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+
+  const priceOpts = [
+    ['tous', t('idx.galleryTypeAll', langue)],
+    ['freemium', t('submit.priceFreemium', langue)],
+    ['gratuit', t('submit.priceFree', langue)],
+    ['payant', t('submit.pricePaid', langue)],
+  ];
+
+  el.innerHTML = `
+    <div class="tool-filter-row">
+      ${priceOpts.map(([val, label]) =>
+        `<button class="filter${state.priceFilter === val ? ' active' : ''}" onclick="setPriceFilter('${val}')">${label}</button>`
+      ).join('')}
+      <details class="star-filter" id="star-filter-details">
+        <summary class="filter star-filter-summary${state.minRating > 0 ? ' active' : ''}">
+          ★ ${state.minRating > 0 ? t('idx.ratingStars', langue).replace('{n}', state.minRating) : t('idx.ratingFilterDefault', langue)}
+        </summary>
+        <div class="star-menu">
+          ${[5, 4, 3, 2, 1].map(n => `
+            <label class="star-menu-option">
+              <input type="radio" name="star-rating" value="${n}" ${state.minRating === n ? 'checked' : ''} onchange="setMinRating(${n})">
+              <span>${'★'.repeat(n)}${'☆'.repeat(5 - n)} ${t('idx.ratingStars', langue).replace('{n}', n)}</span>
+            </label>`).join('')}
+          <label class="star-menu-option star-menu-clear">
+            <input type="radio" name="star-rating" value="0" ${state.minRating === 0 ? 'checked' : ''} onchange="setMinRating(0)">
+            <span>${t('idx.allRatings', langue)}</span>
+          </label>
+        </div>
+      </details>
+      <button class="filter${state.apiOnly ? ' active' : ''}${hasApiField ? '' : ' filter-disabled'}"
+        ${hasApiField ? `onclick="toggleApiOnly()"` : `title="${t('idx.apiFieldMissing', langue)}"`}>${t('idx.apiAvailable', langue)}</button>
+      <button class="filter${state.trialOnly ? ' active' : ''}${hasTrialField ? '' : ' filter-disabled'}"
+        ${hasTrialField ? `onclick="toggleTrialOnly()"` : `title="${t('idx.trialFieldMissing', langue)}"`}>${t('soum.labelEssai', langue)}</button>
+      <button class="filter filter-reset" onclick="resetToolFilters()">${t('idx.resetFilters', langue)}</button>
+    </div>
+    <div class="tool-sort-row">
+      <label for="tool-sort-select">${t('idx.sortBy', langue)}</label>
+      <select id="tool-sort-select" onchange="setToolsSort(this.value)">
+        <option value="popularite" ${state.toolsSort === 'popularite' ? 'selected' : ''}>${t('idx.sortPopularity', langue)}</option>
+        <option value="note" ${state.toolsSort === 'note' ? 'selected' : ''}>${t('idx.ratingFilterDefault', langue)}</option>
+        <option value="nom" ${state.toolsSort === 'nom' ? 'selected' : ''}>${t('idx.sortNameAZ', langue)}</option>
+      </select>
+    </div>`;
+}
+
+function setPriceFilter(val) { state.priceFilter = val; state.toolsPage = 1; renderTools(); }
+function setMinRating(n)     { state.minRating = n; state.toolsPage = 1; renderTools(); }
+function toggleApiOnly()     { state.apiOnly = !state.apiOnly; state.toolsPage = 1; renderTools(); }
+function toggleTrialOnly()   { state.trialOnly = !state.trialOnly; state.toolsPage = 1; renderTools(); }
+function setToolsSort(val)   { state.toolsSort = val; state.toolsPage = 1; renderTools(); }
+window.setPriceFilter = setPriceFilter;
+window.setMinRating = setMinRating;
+window.toggleApiOnly = toggleApiOnly;
+window.toggleTrialOnly = toggleTrialOnly;
+window.setToolsSort = setToolsSort;
+
+function resetToolFilters() {
+  state.priceFilter = 'tous';
+  state.minRating   = 0;
+  state.apiOnly     = false;
+  state.trialOnly   = false;
+  state.toolsSort   = 'popularite';
+  state.searchQuery = '';
+  const search = document.getElementById('tool-search');
+  if (search) search.value = '';
+  state.toolsPage = 1;
+  renderTools();
+}
+window.resetToolFilters = resetToolFilters;
+
+// ─── Notes Firestore pour tri/filtre (pas seulement badge visuel) ───
+// Distinct de renderRatingsOnCards() : celle-ci alimente state.ratingsCache
+// pour TOUT l'ensemble filtré (avant pagination), nécessaire pour trier par
+// note/popularité ou filtrer "4+ étoiles" sur des outils pas encore affichés.
+async function ensureRatingsLoaded(tools) {
+  if (typeof window._getRatingSummaries !== 'function') return;
+  const slugs = tools.map(t => slugify(t.name) || String(t.id));
+  const missing = [...new Set(slugs)].filter(s => !state.ratingsCache.has(s));
+  if (!missing.length) return;
+  try {
+    const summaries = await window._getRatingSummaries(missing);
+    if (summaries) {
+      missing.forEach(s => {
+        const sum = summaries.get(s);
+        state.ratingsCache.set(s, sum || { ratingAverage: 0, ratingCount: 0 });
+      });
+    }
+  } catch (err) {
+    console.warn('Notes non chargées pour tri/filtre:', err);
+  }
+}
+
+function finalizeAndRenderTools(base) {
+  let list = [...base];
+  const getRating = t => state.ratingsCache.get(slugify(t.name) || String(t.id)) || { ratingAverage: 0, ratingCount: 0 };
+
+  if (state.minRating > 0) {
+    list = list.filter(t => getRating(t).ratingCount > 0 && getRating(t).ratingAverage >= state.minRating);
+  }
+
+  if (state.toolsSort === 'note') {
+    list.sort((a, b) => getRating(b).ratingAverage - getRating(a).ratingAverage);
+  } else if (state.toolsSort === 'popularite') {
+    list.sort((a, b) => getRating(b).ratingCount - getRating(a).ratingCount);
+  } else if (state.toolsSort === 'nom') {
+    list.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  if (!list.length) { showEmpty('tools-grid'); setPaginationEl('tools-grid', ''); return; }
+
+  const total      = list.length;
+  const totalPages = Math.ceil(total / state.itemsPerPage);
+  if (state.toolsPage > totalPages) state.toolsPage = 1;
+  const start    = (state.toolsPage - 1) * state.itemsPerPage;
+  const paged    = list.slice(start, start + state.itemsPerPage);
+  const shownEnd = start + paged.length;
+
+  document.getElementById('tools-grid').innerHTML = paged.map(t => buildToolCard(t)).join('');
+  setPaginationEl('tools-grid', buildPaginationHTML(state.toolsPage, totalPages, total, start + 1, shownEnd, 'tools', t('idx.toolsCountSuffix', (window.detecterLangue ? window.detecterLangue() : 'fr'))));
+
+  // Ratings Firestore (badges visuels) après chaque rendu
+  renderRatingsOnCards();
+}
+
+function buildPaginationHTML(current, totalPages, totalItems, shownStart, shownEnd, section, label) {
+  if (totalPages <= 1) return '';
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+  let pages = '';
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= current - 1 && i <= current + 1)) {
+      pages += `<button class="pg-btn${i === current ? ' active' : ''}" onclick="goToPage('${section}',${i})">${i}</button>`;
+    } else if (i === current - 2 || i === current + 2) {
+      pages += `<span class="pg-dots">…</span>`;
+    }
+  }
+  const info = t('idx.paginationInfo', langue)
+    .replace('{start}', shownStart).replace('{end}', shownEnd)
+    .replace('{total}', totalItems).replace('{unit}', label);
+  return `
+    <div class="pagination">
+      <span class="pg-info">${info}</span>
+      <div class="pg-controls">
+        <button class="pg-btn pg-arrow" onclick="goToPage('${section}',${current - 1})" ${current === 1 ? 'disabled' : ''}>‹</button>
+        ${pages}
+        <button class="pg-btn pg-arrow" onclick="goToPage('${section}',${current + 1})" ${current === totalPages ? 'disabled' : ''}>›</button>
+      </div>
+    </div>`;
+}
+
+function setPaginationEl(containerId, html) {
+  let el = document.getElementById(containerId + '-pagination');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = containerId + '-pagination';
+    document.getElementById(containerId).insertAdjacentElement('afterend', el);
+  }
+  el.innerHTML = html;
+}
+
+function goToPage(section, page) {
+  if (section === 'tools') {
+    state.toolsPage = page;
+    renderTools(); // renderRatingsOnCards() appelé à l'intérieur
+    document.getElementById('tools').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  if (section === 'blog')    { state.blogPage    = page; renderBlog();    document.getElementById('blog').scrollIntoView({behavior:'smooth',block:'start'}); }
+  if (section === 'gallery') { state.galleryPage = page; renderGallery(); document.getElementById('gallery').scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+
+function setToolCat(cat) {
+  state.activeToolCat = cat;
+  state.toolsPage = 1;
+  renderTools(); // renderRatingsOnCards() appelé à l'intérieur
+}
+window.setToolCat = setToolCat;
+
+// ═══════════════════════════════════════
+// GRILLE DE CATÉGORIES — composant partagé
+// (accueil + page Outils, rendu identique)
+// ═══════════════════════════════════════
+
+function renderCategoryTiles(containerId, activeCat, onSelectFn) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
+
+  const toolsLangue = filtrerParLangue(state.tools);
+  if (!toolsLangue.length) return; // pas encore de données
+
+  const counts = new Map();
+  toolsLangue.forEach(t => {
+    if (t.status === 'offline') return;
+    counts.set(t.category, (counts.get(t.category) || 0) + 1);
+  });
+  const total = [...counts.values()].reduce((a, b) => a + b, 0);
+  const cats  = [...counts.keys()];
+
+  const badge = document.getElementById('cat-count-badge');
+  const langueCats = window.detecterLangue ? window.detecterLangue() : 'fr';
+  if (badge) badge.textContent = t('idx.categoriesCount', langueCats).replace('{n}', cats.length);
+
+  
+  const tousTile = `
+    <button class="home-cat-tile${activeCat === 'Tous' ? ' active' : ''}" onclick="${onSelectFn}('Tous')">
+      <span class="home-cat-icon">🗂️</span>
+      <span class="home-cat-name">${t('idx.galleryTypeAll', langueCats)}</span>
+      <span class="home-cat-count">${total} ${t('idx.toolsCountSuffix', langueCats)}</span>
+      
+    </button>`;
+
+  const tiles = cats.map(c => {
+    const icon = catIcons[c] || catIcons._default;
+    const isActive = activeCat === c;
+    return `
+      <button class="home-cat-tile${isActive ? ' active' : ''}" onclick="${onSelectFn}('${c.replace(/'/g, "\\'")}')">
+        <span class="home-cat-icon">${icon}</span>
+        <span class="home-cat-name">${c}</span>
+        <span class="home-cat-count">${counts.get(c)} ${t('idx.toolsCountSuffix', langueCats)}</span>
+        
+      </button>`;
+  }).join('');
+
+  grid.innerHTML = tousTile + tiles;
+}
+
+// Barre de confirmation affichée sous la grille de tuiles quand une vraie
+// catégorie (≠ Tous) est sélectionnée. Le CTA renvoie vers la vraie page
+// catégorie statique, dans la langue courante de la page Outils
+// (/categorie/{langue}/{slug}/ — même schéma que categorie-template.js).
+function renderCatConfirmBar(cat, count) {
+  const bar = document.getElementById('cat-confirm-bar');
+  if (!bar) return;
+
+  if (cat === 'Tous') {
+    bar.hidden = true;
+    bar.innerHTML = '';
+    return;
+  }
+
+  const slug = slugify(cat);
+  const langueBar = window.detecterLangue ? window.detecterLangue() : 'fr';
+
+  bar.innerHTML = `
+    <a class="cat-confirm-cta" href="/categorie/${state.langue}/${slug}/">${t('idx.exploreCategory', langueBar)}</a>
+  `;
+
+  bar.hidden = false;
+}
+
+// ═══════════════════════════════════════
+// BLOG
+// ═══════════════════════════════════════
+
+function renderBlog() {
+  const filtersEl = document.getElementById('blog-filters');
+  if (!filtersEl) return; // page sans section blog (ex: page catégorie statique)
+
+  const langueBlog = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const blogLangue = filtrerParLangue(state.blog);
+  const cats = ['Tous', ...new Set(blogLangue.map(p => p.category))];
+  filtersEl.innerHTML = cats.map(c =>
+    `<button class="filter${c === state.activeBlogCat ? ' active' : ''}"
+      onclick="setBlogCat('${c}')">${c}</button>`
+  ).join('');
+
+  const filtered = blogLangue.filter(p =>
+    state.activeBlogCat === 'Tous' || p.category === state.activeBlogCat
+  );
+
+  if (!filtered.length) { showEmpty('blog-list'); setPaginationEl('blog-list', ''); return; }
+
+  const total      = filtered.length;
+  const totalPages = Math.ceil(total / state.itemsPerPage);
+  if (state.blogPage > totalPages) state.blogPage = 1;
+  const start    = (state.blogPage - 1) * state.itemsPerPage;
+  const paged    = filtered.slice(start, start + state.itemsPerPage);
+  const shownEnd = start + paged.length;
+
+  document.getElementById('blog-list').innerHTML = paged.map(p => {
+    const col = getColor(blogColors, p.category, { bg: 'rgba(255,255,255,0.08)', tagBg: 'rgba(255,255,255,0.08)', tagColor: '#aaa' });
+    const href = buildBlogPageUrl(p);
+    const thumbImage = p.og_image || p.image; // og_image = schéma Firestore actuel, image = compat ancien blog.json
+    const thumbContent = thumbImage
+      ? `<img src="${thumbImage}" alt="${p.title}" loading="lazy"
+             onerror="this.style.display='none';this.parentElement.innerHTML='<span style=font-size:48px>${p.emoji || '📝'}</span>'">`
+      : `<span>${p.emoji || '📝'}</span>`;
+    return `
+      <a href="${href}" class="blog-card-link" style="text-decoration:none;display:block;">
+        <article class="blog-card">
+          <div class="blog-thumb">${thumbContent}</div>
+          <div class="blog-body">
+            <div class="blog-title">${p.title}</div>
+            <div class="blog-meta">${p.date} · ${p.author}</div>
+            <p class="blog-excerpt">${p.excerpt}</p>
+            <span class="blog-tag" style="background:${col.tagBg};color:${col.tagColor}">${p.category}</span>
+          </div>
+          <div class="blog-mins">⏱ ${p.readTime} ${t('idx.readTimeSuffix', langueBlog)}</div>
+        </article>
+      </a>`;
+  }).join('');
+
+  setPaginationEl('blog-list', buildPaginationHTML(state.blogPage, totalPages, total, start + 1, shownEnd, 'blog', t('idx.articlesUnit', (window.detecterLangue ? window.detecterLangue() : 'fr'))));
+}
+
+// ═══════════════════════════════════════
+// ACCUEIL — catégories, outils les mieux notés, derniers articles
+// ═══════════════════════════════════════
+function renderHome() {
+  const catRow = document.getElementById('home-cat-row');
+  const topEl  = document.getElementById('home-top-tools');
+  const artEl  = document.getElementById('home-latest-articles');
+  if (!catRow && !topEl && !artEl) return; // page sans accueil (ex: page catégorie statique)
+
+  const lang  = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const tools = filtrerParLangue(state.tools).filter(x => x.status !== 'offline');
+  const empty = '<p class="home-empty">—</p>';
+
+  if (catRow) {
+    const counts = new Map();
+    tools.forEach(x => counts.set(x.category, (counts.get(x.category) || 0) + 1));
+    const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6);
+    catRow.innerHTML = top.length ? top.map(([c, n]) => `
+      <button type="button" class="home-cat-card" data-cat="${escHtmlBlog(c)}">
+        <span class="home-cat-card-name">${escHtmlBlog(c)}</span>
+        <span class="home-cat-card-count">${n} ${t('idx.toolsCountSuffix', lang)}</span>
+      </button>`).join('') : empty;
+    catRow.onclick = ev => {
+      const btn = ev.target.closest('[data-cat]');
+      if (!btn) return;
+      showPage('tools');
+      setToolCat(btn.dataset.cat);
+    };
+  }
+
+  // Bandeau « Outils sponsorisés » : 2 lignes défilantes (plan featured)
+  const spEl = document.getElementById('home-sponsors');
+  if (spEl) {
+    const sponsored = tools.filter(x => x.plan === 'featured');
+    const row1 = document.getElementById('home-marquee-1');
+    const row2 = document.getElementById('home-marquee-2');
+    const pauseBtn = document.getElementById('home-sponsors-pause');
+    if (!sponsored.length || !row1 || !row2) {
+      spEl.hidden = true;
+    } else {
+      const card = (x, clone) => {
+        const col  = catColors[x.category] || { bg: 'rgba(255,255,255,0.08)' };
+        const href = buildToolPageUrl(x) || x.url || '#';
+        const ext  = !buildToolPageUrl(x) && x.url ? ' target="_blank" rel="noopener sponsored"' : '';
+        const ico  = x.favicon
+          ? `<img src="${escHtmlBlog(x.favicon)}" alt="" loading="lazy"
+               onerror="this.replaceWith(document.createTextNode('${escHtmlBlog(x.emoji || '✨')}'))">`
+          : escHtmlBlog(x.emoji || '✨');
+        return `
+          <a class="home-sp-card" href="${escHtmlBlog(href)}"${ext}${clone ? ' aria-hidden="true" tabindex="-1"' : ''}>
+            <span class="home-sp-ico" style="background:${col.bg}">${ico}</span>
+            <span class="home-sp-txt"><strong>${escHtmlBlog(x.name)}</strong><small>${escHtmlBlog(x.category)}</small></span>
+          </a>`;
+      };
+      // Boucle sans saccade : les deux moitiés de la piste sont identiques
+      // (translateX 0 → -50 %). Nombre de copies pair, au moins 4.
+      const n = sponsored.length;
+      let copies = Math.max(4, Math.ceil(16 / n));
+      if (copies % 2) copies++;
+      const fill = list => Array.from({ length: copies }, (_, k) => list.map(x => card(x, k > 0)).join('')).join('');
+      row1.innerHTML = fill(sponsored);
+      row2.innerHTML = fill([...sponsored].reverse());
+      const dur = (copies / 2) * n * 5; // ~40 px/s
+      row1.style.setProperty('--marquee-dur', dur + 's');
+      row2.style.setProperty('--marquee-dur', dur + 's');
+      spEl.hidden = false;
+      if (pauseBtn) {
+        const setLabel = () => {
+          pauseBtn.textContent = t(spEl.classList.contains('is-paused') ? 'home.play' : 'home.pause', lang);
+        };
+        pauseBtn.onclick = () => { spEl.classList.toggle('is-paused'); setLabel(); };
+        setLabel();
+      }
+    }
+  }
+
+  if (topEl) {
+    const priceLabel = {
+      free: window.t('alertes.priceFree', lang),
+      freemium: window.t('alertes.priceFreemium', lang),
+      paid: window.t('alertes.pricePaid', lang),
+    };
+    const best = [...tools]
+      .sort((x, y) => (Number(y.note || y.rating) || 0) - (Number(x.note || x.rating) || 0))
+      .slice(0, 4);
+    topEl.innerHTML = best.length ? best.map(x => {
+      const col  = catColors[x.category] || { bg: 'rgba(255,255,255,0.08)' };
+      const href = buildToolPageUrl(x) || x.url || '#';
+      const note = Number(x.note || x.rating) || 0;
+      const noteTxt = lang === 'fr' ? note.toFixed(1).replace('.', ',') : note.toFixed(1);
+      const ico = x.favicon
+        ? `<img src="${escHtmlBlog(x.favicon)}" alt="" class="tool-favicon" loading="lazy"
+             onerror="this.replaceWith(document.createTextNode('${escHtmlBlog(x.emoji || '✨')}'))">`
+        : escHtmlBlog(x.emoji || '✨');
+      return `
+        <a class="home-top-card" href="${escHtmlBlog(href)}">
+          <div class="home-top-head">
+            <span class="home-top-ico" style="background:${col.bg}">${ico}</span>
+            <span class="home-top-name">${escHtmlBlog(x.name)}</span>
+          </div>
+          <p class="home-top-desc">${escHtmlBlog(x.description)}</p>
+          <div class="home-top-foot">
+            ${priceLabel[x.price] ? `<span class="price-tag price-${escHtmlBlog(x.price)}">${priceLabel[x.price]}</span>` : ''}
+            ${note ? `<span class="home-top-note">★ ${noteTxt}</span>` : ''}
+          </div>
+        </a>`;
+    }).join('') : empty;
+  }
+
+  if (artEl) {
+    const posts = filtrerParLangue(state.blog).slice(0, 4);
+    artEl.innerHTML = posts.length ? posts.map(p => {
+      const img = p.og_image || p.image;
+      const thumb = img
+        ? `<img src="${img}" alt="" loading="lazy" onerror="this.replaceWith(document.createTextNode('${p.emoji || '📝'}'))">`
+        : `<span>${p.emoji || '📝'}</span>`;
+      return `
+        <a class="home-art-card" href="${buildBlogPageUrl(p)}">
+          <div class="home-art-thumb">${thumb}</div>
+          <div class="home-art-body">
+            <div class="home-art-title">${p.title}</div>
+            <div class="home-art-meta">${p.category} · ${p.readTime}</div>
+          </div>
+        </a>`;
+    }).join('') : empty;
+  }
+}
+window.renderHome = renderHome;
+
+function setBlogCat(cat) {
+  state.activeBlogCat = cat;
+  state.blogPage = 1;
+  renderBlog();
+}
+
+// ═══════════════════════════════════════
+// GALLERY
+// ═══════════════════════════════════════
+
+function renderGallery() {
+  const filtersEl = document.getElementById('gallery-filters');
+  if (!filtersEl) return; // page sans galerie (ex: page catégorie statique)
+
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+  const types = ['Tous', 'image', 'vidéo', 'musique'];
+  const typeLabels = {
+    Tous: t('idx.galleryTypeAll', langue),
+    image: t('idx.galleryTypeImage', langue),
+    vidéo: t('idx.galleryTypeVideo', langue),
+    musique: t('idx.galleryTypeMusic', langue),
+  };
+  const typeIcons  = { image: '🖼', vidéo: '▶', musique: '♪' };
+
+  filtersEl.innerHTML = types.map(ty =>
+    `<button class="filter${ty === state.activeGalleryCat ? ' active' : ''}"
+      onclick="setGalleryCat('${ty}')">${typeLabels[ty]}</button>`
+  ).join('');
+
+  const filtered = state.gallery.filter(g =>
+    state.activeGalleryCat === 'Tous' || g.type === state.activeGalleryCat
+  );
+
+  if (!filtered.length) { showEmpty('gallery-grid'); setPaginationEl('gallery-grid', ''); return; }
+
+  const total      = filtered.length;
+  const totalPages = Math.ceil(total / state.itemsPerPage);
+  if (state.galleryPage > totalPages) state.galleryPage = 1;
+  const start    = (state.galleryPage - 1) * state.itemsPerPage;
+  const paged    = filtered.slice(start, start + state.itemsPerPage);
+  const shownEnd = start + paged.length;
+
+  document.getElementById('gallery-grid').innerHTML = paged.map((g, i) => {
+    const realIndex = start + i;
+    const isMusic = g.type === 'musique';
+    const thumbStyle = isMusic ? `background:var(--bg3);` : `background:var(--bg3);`;
+    const thumbContent = isMusic
+      ? `<span class="gallery-music-ico">♪</span>`
+      : `<img src="${g.thumb}" alt="${g.title}" style="width:100%;height:auto;display:block;" loading="lazy">`;
+    return `
+      <article class="gallery-card" onclick="openGalleryItem(${realIndex})" style="cursor:pointer;">
+        <div class="gallery-thumb" style="${thumbStyle}position:relative;overflow:hidden;">
+          ${thumbContent}
+          <span class="gallery-type type-${g.type}">${typeLabels[g.type]}</span>
+          <div class="gallery-play-icon">${typeIcons[g.type]}</div>
+        </div>
+        <div class="gallery-info">
+          <div class="gallery-title">${g.title}</div>
+          <div class="gallery-tool">${g.tool}</div>
+        </div>
+      </article>`;
+  }).join('');
+
+  state.filteredGallery = filtered;
+  setPaginationEl('gallery-grid', buildPaginationHTML(state.galleryPage, totalPages, total, start + 1, shownEnd, 'gallery', t('idx.galleryWorksUnit', (window.detecterLangue ? window.detecterLangue() : 'fr'))));
+}
+
+function openGalleryItem(index) {
+  if (window.GalleryLightbox) {
+    window.GalleryLightbox.openLightbox(state.filteredGallery, index);
+  }
+}
+
+function setGalleryCat(cat) {
+  state.activeGalleryCat = cat;
+  state.galleryPage = 1;
+  renderGallery();
+}
+
+// ═══════════════════════════════════════
+// NEWSLETTER (Formspree)
+// ═══════════════════════════════════════
+
+function initNewsletter() {
+  const form = document.getElementById('newsletter-form');
+  if (!form) return;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email    = document.getElementById('footer-email').value.trim();
+    const feedback = document.getElementById('nl-feedback');
+    const btn      = form.querySelector('button[type=submit]');
+    if (!email) return;
+    btn.textContent = '...';
+    btn.disabled = true;
+    const langueNews = window.detecterLangue ? window.detecterLangue() : 'fr';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) {
+        feedback.textContent = t('idx.newsletterSuccess', langueNews).replace('{name}', email.split('@')[0]);
+        feedback.style.color = '#00d4aa';
+        form.reset();
+      } else {
+        feedback.textContent = t('idx.newsletterErrorGeneric', langueNews);
+        feedback.style.color = '#f5a623';
+      }
+    } catch {
+      feedback.textContent = t('idx.newsletterErrorNetwork', langueNews);
+      feedback.style.color = '#f5a623';
+    }
+    btn.textContent = 'S\'abonner';
+    btn.disabled = false;
+  });
+}
+
+// ═══════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════
+
+function normaliser(str) {
+  return (str || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function levenshtein(a, b) {
+  if (!a) return b.length;
+  if (!b) return a.length;
+  const m = a.length, n = b.length;
+  const dp = Array.from({ length: m + 1 }, (_, i) => [i]);
+  for (let j = 1; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i-1] === b[j-1]
+        ? dp[i-1][j-1]
+        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+function matchRecherche(query, target) {
+  const q = normaliser(query);
+  const t = normaliser(target);
+  if (!q) return true;
+  if (t.includes(q)) return true;
+  const mots = q.split(' ').filter(Boolean);
+  const motsTarget = t.split(' ').filter(Boolean);
+  return mots.every(mot => {
+    if (motsTarget.some(mt => mt.includes(mot) || mot.includes(mt))) return true;
+    const seuil = mot.length <= 3 ? 0 : mot.length <= 5 ? 1 : 2;
+    return motsTarget.some(mt => levenshtein(mot, mt) <= seuil);
+  });
+}
+
+function handleSearch(e) {
+  state.searchQuery = e.target.value;
+  state.toolsPage = 1;
+  const url = new URL(window.location);
+  if (e.target.value) {
+    url.searchParams.set('search', e.target.value);
+  } else {
+    url.searchParams.delete('search');
+  }
+  window.history.replaceState({}, '', url);
+  renderTools();
+}
+
+function readSearchFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('search');
+  if (q) {
+    state.searchQuery = q;
+    const searchEl = document.getElementById('tool-search');
+    if (searchEl) searchEl.value = q;
+    if (document.getElementById('tools')) showPage('tools'); // page absente sur les pages catégorie statiques
+  }
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  document.querySelectorAll('.nav-link').forEach(btn => {
+    if (btn.dataset.page) btn.addEventListener('click', () => showPage(btn.dataset.page));
+  });
+
+  const searchEl = document.getElementById('tool-search');
+  if (searchEl) searchEl.addEventListener('input', handleSearch);
+
+  const descEl = document.getElementById('f-desc');
+  if (descEl) {
+    descEl.addEventListener('input', () => {
+      document.getElementById('f-desc-count').textContent = `${descEl.value.length} / 200`;
+    });
+  }
+
+  // Applique la langue détectée (localStorage ou navigateur) au chargement
+  // initial : texte statique + bouton FR/EN/ES actif, sans quoi seule la
+  // langue par défaut FR s'affichait tant que l'utilisateur n'avait pas
+  // cliqué manuellement sur le sélecteur.
+  appliquerTraductionsStatiques(state.langue);
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === state.langue);
+  });
+
+  document.getElementById('open-submit-btn')?.addEventListener('click', openModal);
+  document.getElementById('modal-close')?.addEventListener('click', closeModal);
+  document.getElementById('modal-cancel')?.addEventListener('click', closeModal);
+  document.getElementById('modal-overlay')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+  document.getElementById('modal-submit')?.addEventListener('click', handleSubmit);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  initNewsletter();
+  readSearchFromURL();
+  loadAllData();
+
+  if (window.BlogReader) window.BlogReader.createBlogReader();
+  if (window.GalleryLightbox) window.GalleryLightbox.initLightbox();
+});
+
+// ═══════════════════════════════════════
+// QUIZ — TROUVER MON OUTIL IA
+// ═══════════════════════════════════════
+
+// Questions et options du quiz, traduites FR/EN/ES. Les "value" (metier,
+// objectif, budget, connexion, niveau) restent les clés internes utilisées
+// par scoreOutil() et METIER_CATS — seuls les labels affichés changent.
+const QUIZ_QUESTIONS_I18N = {
+  fr: [
+    {
+      id: 'metier',
+      question: 'Tu es plutôt…',
+      options: [
+        { label: '✍️ Rédacteur / Copywriter',   value: 'redacteur'    },
+        { label: '🎨 Designer / Créatif',        value: 'designer'     },
+        { label: '💻 Développeur',               value: 'developpeur'  },
+        { label: '🚀 Entrepreneur / Freelance',  value: 'entrepreneur' },
+        { label: '🎓 Étudiant',                  value: 'etudiant'     },
+        { label: '👤 Autre',                     value: 'autre'        },
+      ]
+    },
+    {
+      id: 'objectif',
+      question: "Ton objectif principal avec l'IA…",
+      options: [
+        { label: '⚡ Gagner du temps',           value: 'temps'     },
+        { label: '✏️ Créer du contenu',          value: 'contenu'   },
+        { label: '📚 Apprendre',                 value: 'apprendre' },
+        { label: '💰 Générer des revenus',       value: 'revenus'   },
+        { label: "📋 M'organiser",               value: 'organiser' },
+      ]
+    },
+    {
+      id: 'budget',
+      question: 'Ton budget mensuel pour un outil IA…',
+      options: [
+        { label: '🆓 Gratuit uniquement',        value: 'free'     },
+        { label: '💳 Moins de 20$/mois',         value: 'freemium' },
+        { label: '💎 Plus de 20$/mois',          value: 'paid'     },
+      ]
+    },
+    {
+      id: 'connexion',
+      question: 'Ta connexion internet est…',
+      options: [
+        { label: '🚀 Rapide et stable',          value: 'rapide'  },
+        { label: '📶 Correcte',                  value: 'moyenne' },
+        { label: '🐢 Lente ou instable',         value: 'lente'   },
+      ]
+    },
+    {
+      id: 'niveau',
+      question: 'Ton niveau avec les outils IA…',
+      options: [
+        { label: '🌱 Débutant complet',          value: 'debutant'      },
+        { label: '🌿 Quelques expériences',      value: 'intermediaire' },
+        { label: '🌳 Utilisateur régulier',      value: 'avance'        },
+      ]
+    }
+  ],
+  en: [
+    {
+      id: 'metier',
+      question: 'You are more of a…',
+      options: [
+        { label: '✍️ Writer / Copywriter',       value: 'redacteur'    },
+        { label: '🎨 Designer / Creative',        value: 'designer'     },
+        { label: '💻 Developer',                  value: 'developpeur'  },
+        { label: '🚀 Entrepreneur / Freelancer',  value: 'entrepreneur' },
+        { label: '🎓 Student',                    value: 'etudiant'     },
+        { label: '👤 Other',                      value: 'autre'        },
+      ]
+    },
+    {
+      id: 'objectif',
+      question: 'Your main goal with AI…',
+      options: [
+        { label: '⚡ Save time',                  value: 'temps'     },
+        { label: '✏️ Create content',             value: 'contenu'   },
+        { label: '📚 Learn',                      value: 'apprendre' },
+        { label: '💰 Generate income',            value: 'revenus'   },
+        { label: '📋 Get organized',              value: 'organiser' },
+      ]
+    },
+    {
+      id: 'budget',
+      question: 'Your monthly budget for an AI tool…',
+      options: [
+        { label: '🆓 Free only',                  value: 'free'     },
+        { label: '💳 Under $20/month',            value: 'freemium' },
+        { label: '💎 Over $20/month',             value: 'paid'     },
+      ]
+    },
+    {
+      id: 'connexion',
+      question: 'Your internet connection is…',
+      options: [
+        { label: '🚀 Fast and stable',            value: 'rapide'  },
+        { label: '📶 Decent',                     value: 'moyenne' },
+        { label: '🐢 Slow or unstable',           value: 'lente'   },
+      ]
+    },
+    {
+      id: 'niveau',
+      question: 'Your level with AI tools…',
+      options: [
+        { label: '🌱 Complete beginner',          value: 'debutant'      },
+        { label: '🌿 Some experience',            value: 'intermediaire' },
+        { label: '🌳 Regular user',               value: 'avance'        },
+      ]
+    }
+  ],
+  es: [
+    {
+      id: 'metier',
+      question: 'Eres más bien…',
+      options: [
+        { label: '✍️ Redactor / Copywriter',      value: 'redacteur'    },
+        { label: '🎨 Diseñador / Creativo',        value: 'designer'     },
+        { label: '💻 Desarrollador',               value: 'developpeur'  },
+        { label: '🚀 Emprendedor / Freelance',     value: 'entrepreneur' },
+        { label: '🎓 Estudiante',                  value: 'etudiant'     },
+        { label: '👤 Otro',                        value: 'autre'        },
+      ]
+    },
+    {
+      id: 'objectif',
+      question: 'Tu objetivo principal con la IA…',
+      options: [
+        { label: '⚡ Ahorrar tiempo',              value: 'temps'     },
+        { label: '✏️ Crear contenido',             value: 'contenu'   },
+        { label: '📚 Aprender',                    value: 'apprendre' },
+        { label: '💰 Generar ingresos',            value: 'revenus'   },
+        { label: '📋 Organizarme',                 value: 'organiser' },
+      ]
+    },
+    {
+      id: 'budget',
+      question: 'Tu presupuesto mensual para una herramienta IA…',
+      options: [
+        { label: '🆓 Solo gratis',                 value: 'free'     },
+        { label: '💳 Menos de 20$/mes',            value: 'freemium' },
+        { label: '💎 Más de 20$/mes',              value: 'paid'     },
+      ]
+    },
+    {
+      id: 'connexion',
+      question: 'Tu conexión a internet es…',
+      options: [
+        { label: '🚀 Rápida y estable',            value: 'rapide'  },
+        { label: '📶 Correcta',                    value: 'moyenne' },
+        { label: '🐢 Lenta o inestable',           value: 'lente'   },
+      ]
+    },
+    {
+      id: 'niveau',
+      question: 'Tu nivel con las herramientas IA…',
+      options: [
+        { label: '🌱 Principiante total',          value: 'debutant'      },
+        { label: '🌿 Algo de experiencia',         value: 'intermediaire' },
+        { label: '🌳 Usuario habitual',            value: 'avance'        },
+      ]
+    }
+  ],
+};
+
+// Retourne les questions du quiz dans la langue courante (repli FR).
+function getQuizQuestions(langue) {
+  return QUIZ_QUESTIONS_I18N[langue] || QUIZ_QUESTIONS_I18N.fr;
+}
+window.getQuizQuestions = getQuizQuestions;
+
+// Alias conservé pour compatibilité : toujours la version FR par défaut,
+// utilisée uniquement en repli si du code externe y fait encore référence.
+const QUIZ_QUESTIONS = QUIZ_QUESTIONS_I18N.fr;
+
+const METIER_CATS = {
+  redacteur:    ['Texte', 'Productivité'],
+  designer:     ['Image', 'Design', 'Vidéo'],
+  developpeur:  ['Code', 'Productivité'],
+  entrepreneur: ['Texte', 'Productivité', 'Recherche'],
+  etudiant:     ['Texte', 'Recherche', 'Productivité'],
+  autre:        ['Texte', 'Productivité', 'Image'],
+};
+
+const CATS_LOURDES = ['Vidéo', 'Image', 'Musique'];
+
+const quizState = { step: 0, answers: {} };
+
+function openQuiz() {
+  if (!window._firebaseUser) {
+    window.location.href = 'profil.html?redirect=quiz';
+    return;
+  }
+  const params = new URLSearchParams(window.location.search);
+  const quizParam = params.get('quiz');
+  if (quizParam) {
+    const parts = quizParam.split('-');
+    const ids = ['metier','objectif','budget','connexion','niveau'];
+    ids.forEach((id, i) => { if (parts[i]) quizState.answers[id] = parts[i]; });
+    quizState.step = 5;
+    document.getElementById('quiz-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    showQuizResults();
+    return;
+  }
+  quizState.step    = 0;
+  quizState.answers = {};
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-body').style.display    = 'block';
+  document.getElementById('quiz-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderQuizStep();
+}
+
+function closeQuiz() {
+  document.getElementById('quiz-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderQuizStep() {
+  const questions = getQuizQuestions(state.langue);
+  const q     = questions[quizState.step];
+  const total = questions.length;
+  const pct   = (quizState.step / total) * 100;
+  document.getElementById('quiz-progress-bar').style.width = pct + '%';
+  document.getElementById('quiz-step-label').textContent   =
+    t('quiz.questionOf', state.langue).replace('{n}', quizState.step + 1).replace('{total}', total);
+  document.getElementById('quiz-question').textContent     = q.question;
+  document.getElementById('quiz-options').innerHTML = q.options.map(o =>
+    `<button class="quiz-option" onclick="selectQuizOption('${q.id}','${o.value}')">${o.label}</button>`
+  ).join('');
+}
+
+function selectQuizOption(questionId, value) {
+  quizState.answers[questionId] = value;
+  const questions = getQuizQuestions(state.langue);
+  document.querySelectorAll('.quiz-option').forEach(btn => {
+    if (btn.textContent.trim() ===
+        questions[quizState.step].options.find(o => o.value === value)?.label.trim()) {
+      btn.classList.add('selected');
+    }
+  });
+  setTimeout(() => {
+    quizState.step++;
+    if (quizState.step < questions.length) renderQuizStep();
+    else showQuizResults();
+  }, 280);
+}
+
+function scoreOutil(tool, answers) {
+  let score = 0;
+  const cats = METIER_CATS[answers.metier] || ['Texte'];
+  if (cats[0] === tool.category)         score += 3;
+  else if (cats.includes(tool.category)) score += 1;
+  if (answers.budget === 'free'     && tool.price === 'free') score += 3;
+  if (answers.budget === 'freemium' && tool.price !== 'paid') score += 2;
+  if (answers.budget === 'paid')                               score += 1;
+  if (answers.connexion === 'lente' && CATS_LOURDES.includes(tool.category)) score -= 3;
+  const hasPage = !!buildToolPageUrl(tool);
+  if (answers.niveau === 'debutant' && !hasPage) score += 1;
+  if (answers.niveau === 'avance'   && hasPage)  score += 1;
+  score += (tool.rating || 3) * 0.3;
+  return score;
+}
+
+function showQuizResults() {
+  const answers = quizState.answers;
+  const outils  = filtrerParLangue(state.tools).filter(t => t.status !== 'offline');
+  const scored  = outils.map(t => ({ tool: t, score: scoreOutil(t, answers) }));
+  scored.sort((a, b) => b.score - a.score);
+
+  const selected = [];
+  const usedCats = new Set();
+  for (const item of scored) {
+    if (selected.length >= 3) break;
+    if (!usedCats.has(item.tool.category)) {
+      selected.push(item.tool);
+      usedCats.add(item.tool.category);
+    }
+  }
+  for (const item of scored) {
+    if (selected.length >= 3) break;
+    if (!selected.find(t => t.id === item.tool.id)) selected.push(item.tool);
+  }
+
+  const metierLabel = getQuizQuestions(state.langue)[0].options.find(o => o.value === answers.metier)?.label || '';
+  document.getElementById('quiz-results-sub').textContent =
+    t('quiz.profileSummary', state.langue)
+      .replace('{metier}', metierLabel)
+      .replace('{budget}', answers.budget)
+      .replace('{connexion}', answers.connexion);
+
+  const priceLabel = {
+    free: t('alertes.priceFree', state.langue),
+    freemium: t('alertes.priceFreemium', state.langue),
+    paid: t('alertes.pricePaid', state.langue),
+  };
+  document.getElementById('quiz-results-grid').innerHTML = selected.map(t => {
+    const quizPageUrl = buildToolPageUrl(t);
+    const action = quizPageUrl
+      ? `onclick="closeQuiz();window.location.href='${quizPageUrl}'"`
+      : `onclick="closeQuiz();window.open('${t.url}','_blank')"`;
+    const iconHtml = t.favicon
+      ? `<img src="${t.favicon}" alt="${t.name}" style="width:32px;height:32px;border-radius:6px;" onerror="this.style.display='none'">`
+      : `<span style="font-size:28px">${t.emoji}</span>`;
+    return `
+      <div class="quiz-result-card" ${action}>
+        <div class="quiz-result-head">
+          <div class="quiz-result-ico">${iconHtml}</div>
+          <div style="flex:1">
+            <div class="quiz-result-name">${t.name}</div>
+            <div class="quiz-result-cat">${t.category}</div>
+          </div>
+          <span class="price-tag price-${t.price}">${priceLabel[t.price]}</span>
+        </div>
+        <p class="quiz-result-desc">${t.description}</p>
+        <div class="quiz-result-cta">${translateQuizViewSheet(state.langue)}</div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('quiz-body').style.display    = 'none';
+  document.getElementById('quiz-results').style.display = 'block';
+  document.getElementById('quiz-progress-bar').style.width = '100%';
+
+  if (window._firebaseUser && window._saveQuizToFirebase) {
+    window._saveQuizToFirebase(window._firebaseUser.uid, answers, selected);
+  }
+}
+
+function restartQuiz() {
+  quizState.step    = 0;
+  quizState.answers = {};
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-body').style.display    = 'block';
+  document.getElementById('quiz-copy-confirm').style.display = 'none';
+  renderQuizStep();
+}
+
+function copyQuizLink() {
+  const a     = quizState.answers;
+  const param = [a.metier, a.objectif, a.budget, a.connexion, a.niveau].join('-');
+  const url   = `${window.location.origin}${window.location.pathname}?quiz=${param}`;
+  navigator.clipboard.writeText(url).then(() => {
+    const el = document.getElementById('quiz-copy-confirm');
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 2500);
+  });
+}
+
+function shareWhatsApp() {
+  const grid = document.getElementById('quiz-results-grid');
+  const noms = [...grid.querySelectorAll('.quiz-result-name')].map(el => '• ' + el.textContent).join('\n');
+  const a    = quizState.answers;
+  const param = [a.metier, a.objectif, a.budget, a.connexion, a.niveau].join('-');
+  const url  = `${window.location.origin}${window.location.pathname}?quiz=${param}`;
+  const msg  = encodeURIComponent(
+    t('quiz.shareMessage', state.langue).replace('{list}', noms).replace('{link}', url)
+  );
+  window.open(`https://wa.me/?text=${msg}`, '_blank');
+}
+
+window.openQuiz      = openQuiz;
+window.closeQuiz     = closeQuiz;
+window.restartQuiz   = restartQuiz;
+window.copyQuizLink  = copyQuizLink;
+window.shareWhatsApp = shareWhatsApp;
+
+// ═══════════════════════════════════════
+// SPOTLIGHT
+// ═══════════════════════════════════════
+
+function checkToolsParam() {
+  const params = new URLSearchParams(window.location.search);
+  const raw    = params.get('tools');
+  if (!raw) return;
+  const ids   = raw.split(',').map(s => s.trim()).filter(Boolean);
+  if (!ids.length) return;
+  const found = ids
+    .map(id => state.tools.find(t => String(t.id) === id))
+    .filter(Boolean);
+  if (!found.length) return;
+  // Mémorise les slugs de nom pour pouvoir reconstruire le panneau dans la
+  // bonne langue si l'utilisateur change de langue ensuite (voir changerLangue).
+  _spotlightSlugs = found.map(t => slugify(t.name));
+  // Le hash #tools est nécessaire en plus de showPage('tools') pour que
+  // la navigation visuelle s'aligne correctement — on le force ici pour
+  // que le CTA article n'ait besoin que de ?tools=ID, sans avoir à
+  // penser à ajouter #tools à la main dans chaque article.
+  if (window.location.hash !== '#tools') {
+    window.location.hash = 'tools';
+  }
+  // Ce paramètre ?tools= vient toujours d'un CTA article (voir reveal
+  // du bouton "Voir l'outil / ces outils" dans les pages d'article) —
+  // donc on active systématiquement le lien direct vers le site officiel.
+  renderSpotlight(found, true);
+}
+
+function renderSpotlight(outils, fromArticle = false) {
+  const old = document.getElementById('notif-spotlight');
+  if (old) old.remove();
+  // direct=true : ces cards viennent d'un CTA article, on saute la fiche
+  // et on va tout droit au site officiel (voir buildToolCard).
+  const cardsHTML = outils.map(t => buildToolCard(t, fromArticle)).join('');
+  const panel = document.createElement('div');
+  panel.id = 'notif-spotlight';
+  if (fromArticle) panel.classList.add('spotlight-highlight');
+
+  const SPOTLIGHT_LABELS = {
+    fr: { articleMulti: 'Outils mentionnés dans l\'article', articleSingle: 'Outil mentionné dans l\'article', weekly: 'Outils sélectionnés cette semaine' },
+    en: { articleMulti: 'Tools mentioned in the article',    articleSingle: 'Tool mentioned in the article',    weekly: 'Tools selected this week' },
+    es: { articleMulti: 'Herramientas mencionadas en el artículo', articleSingle: 'Herramienta mencionada en el artículo', weekly: 'Herramientas seleccionadas esta semana' },
+  };
+  const t9n = SPOTLIGHT_LABELS[state.langue] || SPOTLIGHT_LABELS.fr;
+  const label = fromArticle
+    ? (outils.length > 1 ? t9n.articleMulti : t9n.articleSingle)
+    : t9n.weekly;
+
+  panel.innerHTML = `
+    <div class="spotlight-header">
+      <div class="spotlight-label">
+        <span class="spotlight-dot"></span>
+        ${label}
+      </div>
+      <button class="spotlight-close" onclick="closeSpotlight()" aria-label="Fermer">✕</button>
+    </div>
+    <div class="spotlight-grid">${cardsHTML}</div>
+  `;
+  const toolsGrid = document.getElementById('tools-grid');
+  if (toolsGrid) toolsGrid.insertAdjacentElement('beforebegin', panel);
+  showPage('tools');
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function closeSpotlight() {
+  const panel = document.getElementById('notif-spotlight');
+  if (!panel) return;
+  panel.classList.add('spotlight-hiding');
+  setTimeout(() => panel.remove(), 350);
+  _spotlightSlugs = null;
+  const url = new URL(window.location.href);
+  url.searchParams.delete('tools');
+  window.history.replaceState({}, '', url.toString());
+}
+
+window.closeSpotlight = closeSpotlight;
+
+// ── NAVIGATION DEPUIS LES PAGES SECONDAIRES ──
+(function() {
+  const hash = window.location.hash.replace('#', '');
+  const pages = ['tools', 'blog', 'gallery', 'favorites'];
+  if (pages.includes(hash) && document.getElementById(hash)) {
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof showPage === 'function') showPage(hash);
+    });
+  }
+})();
+
+// ═══════════════════════════════════════
+// COLLECTION PICKER — fallback
+// ═══════════════════════════════════════
+if (typeof window.openCollectionPicker === 'undefined') {
+  window.openCollectionPicker = function(event, tool) {
+    event.stopPropagation();
+    window.location.href = 'profil.html';
+  };
+}

@@ -513,9 +513,10 @@ ${articlesScript}
 // Page « Voir tous les avis » : /tools/avis-outil.html?tool=<slug>
 // (le script js/avis-outil.js la remplit ; header et footer = ceux des fiches)
 function avisOutilPageHTML(deps) {
-  const { navHTML, footerHTML, R } = deps;
+  const { navDynamicHTML, footerHTML, R } = deps;
+  // Page dynamique : header avec sélecteur de langue (js/header.js) et textes via js/i18n.js
   return `<!DOCTYPE html>
-<html lang="fr" data-static-lang>
+<html lang="fr">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avis utilisateurs — Albexia</title>
@@ -526,20 +527,20 @@ function avisOutilPageHTML(deps) {
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${R}css/style.css">
   <link rel="stylesheet" href="${R}css/tool-detail.css">
+  <script src="${R}js/i18n.js"></script>
 </head>
 <body>
-${navHTML('fr')}
+${navDynamicHTML()}
 <main style="max-width:860px;margin:0 auto;padding:40px 24px 64px;">
-  <p style="font-size:.8rem;color:var(--text-dim);margin:0 0 24px;"><a href="${R}index.html" style="color:inherit;text-decoration:none;">Accueil</a> &rsaquo; <span id="bc-tool-name">Avis</span></p>
   <div id="avo-header" class="avo-header"></div>
   <div id="avo-summary"></div>
+  <h2 class="avo-section-title" id="avo-title" data-i18n="avo.title">Avis utilisateur</h2>
   <div id="avo-controls"></div>
-  <div id="avo-list"><p style="color:var(--text-muted);padding:40px 0;text-align:center;">Chargement des avis…</p></div>
+  <div id="avo-list"><p data-i18n="avo.loading" style="color:var(--text-muted);padding:40px 0;text-align:center;">Chargement des avis…</p></div>
   <div id="avo-load-more"></div>
   <div id="rv-toast" class="rv-toast"></div>
 </main>
 ${footerHTML('fr')}
-<script src="${R}js/i18n.js"></script>
 <script type="module" src="${R}js/avis-outil.js"></script>
 </body>
 </html>`;

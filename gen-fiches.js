@@ -3711,7 +3711,7 @@ ${firestoreModule}
 // ════════════════════════════════════════════════════════════
 // Dépendances passées au générateur unique de fiche (évite un require circulaire).
 const FICHE_DEPS = { esc: escHtml, slugify, seoHeadTags, toolLangueUrls, toolFicheUrl,
-  navHTML, footerHTML, faqJS, tutorialJS, sharedJS, R };
+  navHTML, navDynamicHTML, footerHTML, faqJS, tutorialJS, sharedJS, R };
 
 async function main() {
   const state = loadState();

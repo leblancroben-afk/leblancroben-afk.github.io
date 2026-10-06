@@ -3,7 +3,6 @@
    Utilisé par : chatgpt.html, canva.html, et toutes les fiches
    ============================================================ */
 
-
 /* --- Variables & Reset ------------------------------------ */
 :root {
   --bg: #0a0a0f;
@@ -1155,3 +1154,17 @@ footer a { color: #a8a3ff; text-decoration: none; }
 .rv-page.active { background:var(--accent);border-color:var(--accent);color:#fff; }
 .rv-page:disabled { opacity:.35;cursor:default; }
 .rv-page-gap { color:var(--text-dim); }
+
+/* ── Filtres des avis ── */
+.rv-controls { gap:12px; }
+.rv-filter-group { display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;max-width:100%;padding-bottom:4px;scrollbar-width:none; }
+.rv-filter-group::-webkit-scrollbar { display:none; }
+.rv-ctrl-btn { flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;white-space:nowrap; }
+.rv-ctrl-count { font-size:.7rem;opacity:.65; }
+.rv-ctrl-btn.active { background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;box-shadow:0 0 0 3px rgba(108,92,231,.25); }
+.rv-ctrl-btn.active .rv-ctrl-count { opacity:.9; }
+.rv-sort-btn.active { font-weight:700; }
+.avo-share { display:inline-flex;align-items:center;gap:7px;font-family:inherit;background:transparent;cursor:pointer; }
+
+/* ── Titre de la section des avis ── */
+.avo-section-title { font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);margin:36px 0 16px;letter-spacing:-.01em; }

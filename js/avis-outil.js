@@ -26,12 +26,27 @@ import {
 } from '/js/reviews.js';
 
 // ── Config depuis URL ─────────────────────────
+// ── i18n : système existant (js/i18n.js → window.t / detecterLangue) ──
+function lang() {
+  return window.detecterLangue ? window.detecterLangue() : 'fr';
+}
+function tr(key, vars) {
+  let str = window.t ? window.t(key, lang()) : key;
+  if (vars) {
+    Object.keys(vars).forEach(k => {
+      str = str.split('{' + k + '}').join(vars[k]);
+    });
+  }
+  return str;
+}
+const DATE_LOCALES = { fr: 'fr-FR', en: 'en-US', es: 'es-ES' };
+
 const params   = new URLSearchParams(window.location.search);
 const TOOL_SLUG = params.get('tool') || '';
 
 if (!TOOL_SLUG) {
   document.getElementById('avo-list').innerHTML =
-    '<p style="color:var(--text-muted);padding:40px 0;text-align:center">Outil introuvable.</p>';
+    `<p style="color:var(--text-muted);padding:40px 0;text-align:center">${tr('avo.toolNotFound')}</p>`;
 }
 
 const PAGE_SIZE = 6;
@@ -47,6 +62,7 @@ let userVotes    = {};
 let quickVotes   = [];      // votes rapides Oui/Non de l'outil
 let userQuickVote = null;   // vote rapide de la personne connectée
 let toolMeta     = { name: '', favicon: '', page: '' };
+let toolDocs     = [];     // documents Firestore de l'outil (un par langue)
 let toolInfo     = null;   // fiche de l'outil (Firestore « outils ») : description, catégorie, tags, site officiel
 
 // ── Init ──────────────────────────────────────
@@ -63,8 +79,8 @@ function slugifyName(str) {
 }
 
 // Fiche de l'outil : collection Firestore « outils » (source de gen-fiches.js).
-// Un outil existe en plusieurs documents (fr/en/es) : on privilégie le français.
-async function loadToolInfo() {
+// Un outil existe en plusieurs documents (fr/en/es) : on les garde tous.
+async function loadToolDocs() {
   try {
     let docs = [];
     if (toolMeta.name) {
@@ -76,12 +92,18 @@ async function loadToolInfo() {
       const snap = await getDocs(collection(db, 'outils'));
       docs = snap.docs.map(d => d.data()).filter(t => slugifyName(t.name) === TOOL_SLUG);
     }
-    docs = docs.filter(t => slugifyName(t.name) === TOOL_SLUG);
-    return docs.find(t => (t.langue || 'fr') === 'fr') || docs[0] || null;
+    return docs.filter(t => slugifyName(t.name) === TOOL_SLUG);
   } catch (e) {
     console.error('avis-outil: lecture de la fiche outil', e);
-    return null;
+    return [];
   }
+}
+
+// Document de la langue courante, sinon français, sinon le premier
+function pickToolInfo() {
+  return toolDocs.find(t => (t.langue || 'fr') === lang())
+      || toolDocs.find(t => (t.langue || 'fr') === 'fr')
+      || toolDocs[0] || null;
 }
 
 async function loadAll() {
@@ -112,9 +134,9 @@ async function loadAll() {
   }
 
   // Fiche de l'outil (Firestore « outils »), après les avis pour connaître le nom exact
-  toolInfo = await loadToolInfo();
+  toolDocs = await loadToolDocs();
+  toolInfo = pickToolInfo();
 
-  // FIX 1 : guard null sur bc-tool-name (évite le crash + chargement infini)
   if (toolInfo) {
     toolMeta.name    = toolInfo.name || toolMeta.name;
     toolMeta.favicon = toolInfo.favicon || toolMeta.favicon;
@@ -124,9 +146,7 @@ async function loadAll() {
     }
   }
   if (toolMeta.name) {
-    document.title = `Avis ${toolMeta.name} — Albexia`;
-    const bcEl = document.getElementById('bc-tool-name');
-    if (bcEl) bcEl.textContent = toolMeta.name;
+    document.title = tr('avo.pageTitle', { tool: toolMeta.name });
   }
 
   applyFilterSort();
@@ -161,18 +181,9 @@ function renderAll() {
 
 function renderHeader() {
   const el = document.getElementById('avo-header');
-  const backUrl = toolMeta.page || `/tools/standard/fr/${TOOL_SLUG}/`;
   const name = toolMeta.name || TOOL_SLUG;
   const tags = (toolInfo?.tags || []).slice(0, 4);
   const site = toolInfo?.url && /^https?:\/\//.test(toolInfo.url) ? toolInfo.url : '';
-
-  // Fil d'Ariane : Accueil › Catégorie › Outil
-  const bc = document.querySelector('main > p');
-  if (bc) {
-    bc.innerHTML = `<a href="/index.html" style="color:inherit;text-decoration:none;">Accueil</a>`
-      + (toolInfo?.category ? ` &rsaquo; <span>${esc(toolInfo.category)}</span>` : '')
-      + ` &rsaquo; <a href="${esc(backUrl)}" style="color:inherit;text-decoration:none;"><span id="bc-tool-name">${esc(name)}</span></a>`;
-  }
 
   el.innerHTML = `
     <div class="avo-header-inner">
@@ -184,16 +195,21 @@ function renderHeader() {
           }
           <div>
             <div class="avo-tool-name">${esc(name)}</div>
-            ${toolInfo?.description ? `<div class="avo-tool-desc">${esc(toolInfo.description)}</div>` : `<div class="avo-tool-sub">Avis utilisateurs</div>`}
+            ${toolInfo?.description ? `<div class="avo-tool-desc">${esc(toolInfo.description)}</div>` : `<div class="avo-tool-sub">${esc(tr('avo.title'))}</div>`}
             ${tags.length ? `<div class="avo-tags">${tags.map(t => `<span class="avo-tag">${esc(t)}</span>`).join('')}</div>` : ''}
           </div>
         </div>
         <div class="avo-actions">
-          ${site ? `<a class="avo-btn" href="${esc(site)}" target="_blank" rel="noopener noreferrer">Site officiel</a>` : ''}
-          <a class="avo-btn" href="${esc(backUrl)}">← Retour à la fiche</a>
+          ${site ? `<a class="avo-btn" href="${esc(site)}" target="_blank" rel="noopener noreferrer">${esc(tr('avo.officialSite'))}</a>` : ''}
+          <button type="button" class="avo-btn avo-share" id="avo-share" aria-label="${esc(tr('avo.shareAria', { tool: name }))}">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+            ${esc(tr('avo.share'))}
+          </button>
         </div>
       </div>
     </div>`;
+
+  el.querySelector('#avo-share')?.addEventListener('click', shareReviews);
 
   const logo = el.querySelector('img.avo-tool-logo');
   if (logo) logo.addEventListener('error', () => {
@@ -204,42 +220,70 @@ function renderHeader() {
   }, { once: true });
 }
 
+// Partage de la page des avis : partage natif en priorité, sinon copie du lien
+async function shareReviews() {
+  const name  = toolMeta.name || TOOL_SLUG;
+  const data  = {
+    title: tr('avo.shareTitle', { tool: name }),
+    text:  tr('avo.shareText', { tool: name }),
+    url:   window.location.href,
+  };
+  if (navigator.share) {
+    try { await navigator.share(data); }
+    catch (e) { if (e && e.name !== 'AbortError') copyLink(data.url); }
+    return;
+  }
+  copyLink(data.url);
+}
+
+async function copyLink(url) {
+  try {
+    await navigator.clipboard.writeText(url);
+    rvToast(tr('avo.linkCopied'));
+  } catch {
+    window.prompt(tr('avo.copyPrompt'), url);
+  }
+}
+
+// Décimale selon la langue : 3,8 (fr, es) / 3.8 (en)
 function fmtNum(n) {
-  return Number.isInteger(n) ? String(n) : n.toFixed(1).replace('.', ',');
+  if (Number.isInteger(n)) return String(n);
+  const txt = n.toFixed(1);
+  return lang() === 'en' ? txt : txt.replace('.', ',');
 }
 
 function usefulBlockHTML() {
   const u = computeUsefulness(allReviews, quickVotes);
   if (!u.total) {
     return `<div class="rv-useful">
-      <div class="rv-useful-title">Utilité de l’outil</div>
-      <div class="rv-useful-empty">Aucune réponse pour le moment</div>
+      <div class="rv-useful-title">${esc(tr('avo.usefulTitle'))}</div>
+      <div class="rv-useful-empty">${esc(tr('avo.usefulEmpty'))}</div>
     </div>`;
   }
   return `<div class="rv-useful">
-    <div class="rv-useful-title">Utilité de l’outil</div>
-    <div class="rv-useful-pct">👍 ${u.percent} % utile</div>
-    <div class="rv-useful-counts">${fmtNum(u.yes)} Oui · ${fmtNum(u.no)} Non · ${u.total} réponses</div>
+    <div class="rv-useful-title">${esc(tr('avo.usefulTitle'))}</div>
+    <div class="rv-useful-pct">👍 ${esc(tr('avo.usefulPct', { n: u.percent }))}</div>
+    <div class="rv-useful-counts">${esc(tr('avo.usefulCounts', { yes: fmtNum(u.yes), no: fmtNum(u.no), total: u.total }))}</div>
     <div class="rv-useful-bar"><div class="rv-useful-bar-fill" style="width:${u.percent}%"></div></div>
-    <div class="rv-useful-note">${
-      u.percent > 50 ? 'La majorité des utilisateurs trouvent cet outil utile.'
-      : u.percent < 50 ? 'La majorité des utilisateurs ne trouvent pas cet outil utile.'
-      : 'Les avis sont partagés.'
-    }</div>
+    <div class="rv-useful-note">${esc(
+      u.percent > 50 ? tr('avo.usefulMajorityYes')
+      : u.percent < 50 ? tr('avo.usefulMajorityNo')
+      : tr('avo.usefulSplit')
+    )}</div>
   </div>`;
 }
 
 function quickVoteBlockHTML() {
   if (userReview) {
     return `<div class="rv-quick">
-      <div class="rv-quick-q">Votre avis compte déjà dans l’utilité de l’outil.</div>
+      <div class="rv-quick-q">${esc(tr('avo.quickHasReview'))}</div>
     </div>`;
   }
   return `<div class="rv-quick">
-    <div class="rv-quick-q">Cet outil vous a été utile ?</div>
+    <div class="rv-quick-q">${esc(tr('avo.quickQuestion'))}</div>
     <div class="rv-quick-btns">
-      <button class="rv-quick-btn yes" data-quick="yes" aria-pressed="${userQuickVote === 'yes'}">👍 Oui</button>
-      <button class="rv-quick-btn no"  data-quick="no"  aria-pressed="${userQuickVote === 'no'}">👎 Non</button>
+      <button class="rv-quick-btn yes" data-quick="yes" aria-pressed="${userQuickVote === 'yes'}">${esc(tr('avo.quickYes'))}</button>
+      <button class="rv-quick-btn no"  data-quick="no"  aria-pressed="${userQuickVote === 'no'}">${esc(tr('avo.quickNo'))}</button>
     </div>
   </div>`;
 }
@@ -266,7 +310,7 @@ function renderSummary() {
       return `
       <button class="rv-dist-row ${activeFilter === String(n) ? 'active' : ''}"
               data-filter="${n}">
-        <span class="rv-dist-label">${n}★</span>
+        <span class="rv-dist-label">${esc(tr('avo.filterStars', { n }))}</span>
         <div class="rv-dist-bar-bg">
           <div class="rv-dist-bar-fill" style="width:${pct}%"></div>
         </div>
@@ -275,9 +319,9 @@ function renderSummary() {
     }).join('');
 
     ratingHtml = `
-        <div class="rv-avg-score">${avg}</div>
+        <div class="rv-avg-score">${lang() === 'en' ? avg : avg.replace('.', ',')}</div>
         <div class="rv-avg-stars">${starsHtml}</div>
-        <div class="rv-avg-count">${total} avis</div>`;
+        <div class="rv-avg-count">${esc(tr(total === 1 ? 'avo.reviewCountOne' : 'avo.reviewCountMany', { n: total }))}</div>`;
     distHtml = `<div class="rv-dist-bars">${bars}</div>`;
   }
 
@@ -308,8 +352,8 @@ function renderSummary() {
 }
 
 async function handleQuickVote(value) {
-  if (!currentUser) { rvToast('Connectez-vous pour voter.'); return; }
-  if (userReview)   { rvToast('Votre avis compte déjà dans l’utilité de l’outil.'); return; }
+  if (!currentUser) { rvToast(tr('avo.loginToVote')); return; }
+  if (userReview)   { rvToast(tr('avo.quickHasReview')); return; }
   try {
     userQuickVote = await voteTool(currentUser.uid, TOOL_SLUG, value);
     quickVotes = await getToolQuickVotes(TOOL_SLUG);
@@ -318,7 +362,7 @@ async function handleQuickVote(value) {
     if (e?.code === 'has-review') {
       userReview = await getUserReview(currentUser.uid, TOOL_SLUG).catch(() => null);
       renderSummary();
-      rvToast('Votre avis compte déjà dans l’utilité de l’outil.');
+      rvToast(tr('avo.quickHasReview'));
     } else {
       rvToast('⚠ ' + (e?.code || e?.message || String(e)));
     }
@@ -329,28 +373,32 @@ function renderControls() {
   const el = document.getElementById('avo-controls');
   if (!allReviews.length) { el.innerHTML = ''; return; }
 
+  const count = (fn) => allReviews.filter(fn).length;
   const filters = [
-    { key: 'all',      label: 'Tous' },
-    { key: 'positive', label: '👍 Positifs' },
-    { key: 'negative', label: '👎 Négatifs' },
+    { key: 'all',      label: tr('avo.filterAll'),      n: allReviews.length },
+    { key: 'positive', label: tr('avo.filterPositive'), n: count(r => isPositiveRating(r.rating)) },
+    { key: 'negative', label: tr('avo.filterNegative'), n: count(r => isNegativeRating(r.rating)) },
+    ...[5, 4, 3, 2, 1].map(n => ({ key: String(n), label: tr('avo.filterStars', { n }), n: count(r => r.rating === n) })),
   ];
   const sorts = [
-    { key: 'recent', label: 'Plus récents' },
-    { key: 'oldest', label: 'Plus anciens' },
+    { key: 'recent', label: tr('avo.sortRecent') },
+    { key: 'oldest', label: tr('avo.sortOldest') },
   ];
 
   el.innerHTML = `
     <div class="rv-controls">
-      <div class="rv-filter-group">
+      <div class="rv-filter-group" role="group" aria-label="${esc(tr('avo.filterGroup'))}">
         ${filters.map(f =>
           `<button class="rv-ctrl-btn ${activeFilter === f.key ? 'active' : ''}"
-                   data-filter="${f.key}">${f.label}</button>`
+                   data-filter="${f.key}" aria-pressed="${activeFilter === f.key}">
+             ${esc(f.label)}<span class="rv-ctrl-count">${f.n}</span>
+           </button>`
         ).join('')}
       </div>
-      <div class="rv-sort-group">
+      <div class="rv-sort-group" role="group" aria-label="${esc(tr('avo.sortGroup'))}">
         ${sorts.map(s =>
           `<button class="rv-sort-btn ${activeSort === s.key ? 'active' : ''}"
-                   data-sort="${s.key}">${s.label}</button>`
+                   data-sort="${s.key}" aria-pressed="${activeSort === s.key}">${esc(s.label)}</button>`
         ).join('')}
       </div>
     </div>`;
@@ -385,7 +433,7 @@ function renderList() {
 
   if (!filtered.length) {
     el.innerHTML = `<div class="rv-empty">${
-      allReviews.length ? 'Aucun avis pour ce filtre.' : 'Aucun avis pour le moment.'
+      esc(allReviews.length ? tr('avo.emptyFilter') : tr('avo.empty'))
     }</div>`;
     return;
   }
@@ -398,12 +446,12 @@ function renderList() {
     else if (nums[nums.length - 1] !== '…') nums.push('…');
   }
   const pager = pages > 1 ? `
-    <nav class="rv-pager" aria-label="Pages d'avis">
-      <button class="rv-page" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''} aria-label="Page précédente">‹</button>
+    <nav class="rv-pager" aria-label="${esc(tr('avo.pagesAria'))}">
+      <button class="rv-page" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''} aria-label="${esc(tr('avo.pagePrev'))}">‹</button>
       ${nums.map(n => n === '…'
         ? '<span class="rv-page-gap">…</span>'
         : `<button class="rv-page ${n === currentPage ? 'active' : ''}" data-page="${n}">${n}</button>`).join('')}
-      <button class="rv-page" data-page="${currentPage + 1}" ${currentPage === pages ? 'disabled' : ''} aria-label="Page suivante">›</button>
+      <button class="rv-page" data-page="${currentPage + 1}" ${currentPage === pages ? 'disabled' : ''} aria-label="${esc(tr('avo.pageNext'))}">›</button>
     </nav>` : '';
 
   el.innerHTML = `<div class="rv-list">${cards}</div>${pager}`;
@@ -431,7 +479,7 @@ function buildCardHTML(r) {
     : initial;
 
   const date = r.updatedAt?.seconds
-    ? new Date(r.updatedAt.seconds * 1000).toLocaleDateString('fr-FR', {
+    ? new Date(r.updatedAt.seconds * 1000).toLocaleDateString(DATE_LOCALES[lang()] || 'fr-FR', {
         day: 'numeric', month: 'long', year: 'numeric'
       })
     : '';
@@ -451,7 +499,7 @@ function buildCardHTML(r) {
     <div class="rv-card" data-review-id="${r.id}">
       <div class="rv-card-head">
         ${profileUrl
-          ? `<a class="rv-avatar" href="${profileUrl}" aria-label="Voir le profil de ${esc(r.displayName)}">${avatar}</a>`
+          ? `<a class="rv-avatar" href="${profileUrl}" aria-label="${esc(tr('avo.viewProfile', { name: r.displayName }))}">${avatar}</a>`
           : `<div class="rv-avatar">${avatar}</div>`
         }
         <div class="rv-meta">
@@ -465,19 +513,19 @@ function buildCardHTML(r) {
       </div>
       ${r.comment ? `<p class="rv-comment">${esc(r.comment)}</p>` : ''}
       <div class="rv-vote-row">
-        <span class="rv-vote-label">Utile ?</span>
+        <span class="rv-vote-label">${esc(tr('reviews.helpfulLabel'))}</span>
         ${!isOwn ? `
           <button class="rv-vote-btn rv-vote-yes ${myVote === 'yes' ? 'voted' : ''}"
                   data-review-id="${r.id}" data-value="yes"
-                  ${!currentUser ? 'title="Connectez-vous pour voter"' : ''}>
+                  ${!currentUser ? `title="${esc(tr('avo.loginToVoteTitle'))}"` : ''}>
             👍 <span class="rv-vote-num">${yesCount}</span>
           </button>
           <button class="rv-vote-btn rv-vote-no ${myVote === 'no' ? 'voted' : ''}"
                   data-review-id="${r.id}" data-value="no"
-                  ${!currentUser ? 'title="Connectez-vous pour voter"' : ''}>
+                  ${!currentUser ? `title="${esc(tr('avo.loginToVoteTitle'))}"` : ''}>
             👎 <span class="rv-vote-num">${noCount}</span>
           </button>
-          <button class="rv-report-btn" data-review-id="${r.id}">⚑ Signaler</button>
+          <button class="rv-report-btn" data-review-id="${r.id}">${esc(tr('reviews.reportBtn'))}</button>
         ` : `
           <span class="rv-vote-own">👍 ${yesCount} · 👎 ${noCount}</span>
         `}
@@ -487,7 +535,7 @@ function buildCardHTML(r) {
 
 // ── Handlers vote / signaler ──────────────────
 async function handleVote(btn) {
-  if (!currentUser) { rvToast('Connectez-vous pour voter.'); return; }
+  if (!currentUser) { rvToast(tr('avo.loginToVote')); return; }
 
   const reviewId = btn.dataset.reviewId;
   const value    = btn.dataset.value;
@@ -542,17 +590,17 @@ async function handleVote(btn) {
 }
 
 async function handleReport(btn) {
-  if (!currentUser) { rvToast('Connectez-vous pour signaler un avis.'); return; }
-  if (!confirm('Signaler cet avis comme inapproprié ?')) return;
+  if (!currentUser) { rvToast(tr('avo.loginToReport')); return; }
+  if (!confirm(tr('reviews.confirmReport'))) return;
   const reviewId = btn.dataset.reviewId;
   btn.disabled = true;
   try {
     await reportReview(reviewId, currentUser.uid, 'Contenu inapproprié');
-    btn.textContent = '✓ Signalé';
-    rvToast('Avis signalé. Merci.');
+    btn.textContent = tr('reviews.reportBtnDone');
+    rvToast(tr('reviews.toastReported'));
   } catch {
     btn.disabled = false;
-    rvToast('⚠ Erreur lors du signalement.');
+    rvToast(tr('reviews.toastReportError'));
   }
 }
 
@@ -572,3 +620,10 @@ function esc(str) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
+
+// ── Changement de langue (hook de js/i18n.js › changerLangueGlobale) ──
+window.onLangueChange = () => {
+  toolInfo = pickToolInfo();
+  if (toolMeta.name) document.title = tr('avo.pageTitle', { tool: toolMeta.name });
+  renderAll();
+};

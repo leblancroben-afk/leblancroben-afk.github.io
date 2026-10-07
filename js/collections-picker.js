@@ -43,7 +43,26 @@ const _originalBuildToolCard = window.buildToolCard;
 window.buildToolCard = function(t, direct = false) {
   if (!_currentUser) return _originalBuildToolCard(t, direct);
 
-  const priceLabel = { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' };
+  // Langue courante : même source que buildToolCard d'app.js (state.langue),
+  // pour que la carte connectée soit traduite comme la carte visiteur.
+  const lang = (window.state && window.state.langue)
+    || (typeof window.detecterLangue === 'function' ? window.detecterLangue() : 'fr');
+  const tr = (key) => (typeof window.t === 'function' ? window.t(key, lang) : key);
+  const BADGE_LABELS = {
+    fr: { direct: 'Aller sur le site officiel →', guide: 'Guide complet →' },
+    en: { direct: 'Go to official website →',     guide: 'Full guide →' },
+    es: { direct: 'Ir al sitio oficial →',         guide: 'Guía completa →' },
+  };
+  const badgeT9n = BADGE_LABELS[lang] || BADGE_LABELS.fr;
+  const catLabel = (typeof window.translateCategory === 'function')
+    ? window.translateCategory(t.category, lang)
+    : t.category;
+
+  const priceLabel = {
+    free: tr('alertes.priceFree'),
+    freemium: tr('alertes.priceFreemium'),
+    paid: tr('alertes.pricePaid'),
+  };
   const catColors  = window.catColors || {};
   const col        = catColors[t.category] || { bg: 'rgba(255,255,255,0.08)' };
 
@@ -65,9 +84,9 @@ window.buildToolCard = function(t, direct = false) {
   // Même logique que dans app.js/buildToolCard, dupliquée ici car ce
   // fichier remplace window.buildToolCard quand l'utilisateur est connecté.
   if (direct && t.url) {
-    planBadge = `<span class="tool-plan-badge tool-plan-badge-direct">Aller sur le site officiel →</span>`;
+    planBadge = `<span class="tool-plan-badge tool-plan-badge-direct">${badgeT9n.direct}</span>`;
   } else if (pageUrl) {
-    planBadge = `<span class="tool-plan-badge tool-plan-badge-gratuit">Guide complet →</span>`;
+    planBadge = `<span class="tool-plan-badge tool-plan-badge-gratuit">${badgeT9n.guide}</span>`;
   }
 
   const cardAction = (direct && t.url)
@@ -92,11 +111,11 @@ window.buildToolCard = function(t, direct = false) {
         <div class="tool-ico" style="background:${col.bg}">${iconHtml}</div>
         <div style="flex:1">
           <div class="tool-name">${t.name}</div>
-          <div class="tool-cat">${t.category}</div>
+          <div class="tool-cat">${catLabel}</div>
         </div>
         <button class="fav-btn ${inAnyCollection ? 'active' : ''}"
           onclick="openCollectionPicker(event, ${JSON.stringify(t).replace(/"/g, '&quot;')})"
-          title="${inAnyCollection ? 'Dans une collection' : 'Ajouter à une collection'}">
+          title="${inAnyCollection ? 'Dans une collection' : tr('idx.addToCollectionTitle')}">
           ${inAnyCollection ? '♥' : '♡'}
         </button>
       </div>

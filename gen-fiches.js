@@ -3636,13 +3636,7 @@ ${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "nam
 
 ${navHTML(langue)}
 
-<div class="outil-breadcrumb">
-  <a href="${R}index.html">${L.home}</a>
-  <span class="bc-sep">›</span>
-  <a href="${R}tutoriels/index.html">${L.tutorials}</a>
-  <span class="bc-sep">›</span>
-  <span id="bc-outil">${tool.name}</span>
-</div>
+
 
 <section class="outil-hero">
   <a href="${ficheUrl}" id="lien-retour" class="outil-retour">

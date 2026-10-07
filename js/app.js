@@ -19,6 +19,15 @@ function slugify(str) {
     .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
+// Libellé affiché d'une catégorie : la valeur Firestore (t.category) reste
+// l'identité de la catégorie (filtres, compteurs, slugs) ; seul le texte
+// visible est traduit via i18n.js. Repli sûr si i18n.js n'est pas chargé.
+function catLabel(cat, langue) {
+  return typeof window.translateCategory === 'function'
+    ? window.translateCategory(cat, langue)
+    : cat;
+}
+
 function buildToolPageUrl(t) {
   if (t.generer_fiche === false) return null; // pas de fiche générée pour cet outil
   const slug = slugify(t.name);
@@ -201,7 +210,7 @@ const catDescriptionKeys = {
 function getCatDescription(cat, langue) {
   const suffix = catDescriptionKeys[cat];
   if (suffix) return t(`idx.catDesc${suffix}`, langue);
-  return t('idx.catDescFallback', langue).replace('{cat}', cat);
+  return t('idx.catDescFallback', langue).replace('{cat}', catLabel(cat, langue));
 }
 
 const blogColors = {
@@ -531,7 +540,7 @@ function buildToolCard(t, direct = false) {
         <div class="tool-ico" style="background:${col.bg}">${iconHtml}</div>
         <div style="flex:1">
           <div class="tool-name">${t.name}</div>
-          <div class="tool-cat">${t.category}</div>
+          <div class="tool-cat">${catLabel(t.category, state.langue)}</div>
         </div>
         <button class="fav-btn"
           onclick="openCollectionPicker(event, ${toolJson})"
@@ -648,7 +657,7 @@ function updateToolsPageHeader(toolsLangue) {
   const titleEl = document.getElementById('tools-page-title');
   const subEl   = document.getElementById('tools-page-sub');
   if (titleEl) {
-    const title = cat === 'Tous' ? t('idx.allToolsTitle', langue) : cat;
+    const title = cat === 'Tous' ? t('idx.allToolsTitle', langue) : catLabel(cat, langue);
     titleEl.innerHTML = `${title} <span class="tools-page-count">${count} ${t('idx.toolsCountSuffix', langue)}</span>`;
   }
   if (subEl) {
@@ -659,7 +668,7 @@ function updateToolsPageHeader(toolsLangue) {
   if (search && document.activeElement !== search) {
     search.placeholder = cat === 'Tous'
       ? t('tools.searchPlaceholder', langue)
-      : t('idx.searchPlaceholderCat', langue).replace('{cat}', cat);
+      : t('idx.searchPlaceholderCat', langue).replace('{cat}', catLabel(cat, langue));
   }
 
   return count;
@@ -892,7 +901,7 @@ function renderCategoryTiles(containerId, activeCat, onSelectFn) {
     return `
       <button class="home-cat-tile${isActive ? ' active' : ''}" onclick="${onSelectFn}('${c.replace(/'/g, "\\'")}')">
         <span class="home-cat-icon">${icon}</span>
-        <span class="home-cat-name">${c}</span>
+        <span class="home-cat-name">${catLabel(c, langueCats)}</span>
         <span class="home-cat-count">${counts.get(c)} ${t('idx.toolsCountSuffix', langueCats)}</span>
         
       </button>`;
@@ -999,7 +1008,7 @@ function renderHome() {
     const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6);
     catRow.innerHTML = top.length ? top.map(([c, n]) => `
       <button type="button" class="home-cat-card" data-cat="${escHtmlBlog(c)}">
-        <span class="home-cat-card-name">${escHtmlBlog(c)}</span>
+        <span class="home-cat-card-name">${escHtmlBlog(catLabel(c, lang))}</span>
         <span class="home-cat-card-count">${n} ${t('idx.toolsCountSuffix', lang)}</span>
       </button>`).join('') : empty;
     catRow.onclick = ev => {
@@ -1031,7 +1040,7 @@ function renderHome() {
         return `
           <a class="home-sp-card" href="${escHtmlBlog(href)}"${ext}${clone ? ' aria-hidden="true" tabindex="-1"' : ''}>
             <span class="home-sp-ico" style="background:${col.bg}">${ico}</span>
-            <span class="home-sp-txt"><strong>${escHtmlBlog(x.name)}</strong><small>${escHtmlBlog(x.category)}</small></span>
+            <span class="home-sp-txt"><strong>${escHtmlBlog(x.name)}</strong><small>${escHtmlBlog(catLabel(x.category))}</small></span>
           </a>`;
       };
       // Boucle sans saccade : les deux moitiés de la piste sont identiques
@@ -1655,7 +1664,7 @@ function showQuizResults() {
           <div class="quiz-result-ico">${iconHtml}</div>
           <div style="flex:1">
             <div class="quiz-result-name">${t.name}</div>
-            <div class="quiz-result-cat">${t.category}</div>
+            <div class="quiz-result-cat">${catLabel(t.category, state.langue)}</div>
           </div>
           <span class="price-tag price-${t.price}">${priceLabel[t.price]}</span>
         </div>

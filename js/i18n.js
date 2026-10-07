@@ -472,6 +472,33 @@ const UI_TRANSLATIONS = {
     'idx.categoriesTitle': 'Catégories',
     'idx.allToolsTitle': 'Tous les outils IA',
     'idx.toolsCountSuffix': 'outils',
+    // Noms de catégories (clé = cat.<slug de la valeur Firestore>)
+    'cat.audio': "Audio",
+    'cat.automatisation': "Automatisation",
+    'cat.code': "Code",
+    'cat.contenu': "Contenu",
+    'cat.crm': "CRM",
+    'cat.design-3d': "Design 3D",
+    'cat.developpement': "Développement",
+    'cat.donnees': "Données",
+    'cat.e-commerce': "E-commerce",
+    'cat.ecriture-creative': "Écriture créative",
+    'cat.education': "Éducation",
+    'cat.email': "Email",
+    'cat.juridique': "Juridique",
+    'cat.marketing': "Marketing",
+    'cat.musique': "Musique",
+    'cat.presentation': "Présentation",
+    'cat.productivite': "Productivité",
+    'cat.recherche': "Recherche",
+    'cat.sante': "Santé",
+    'cat.seo': "SEO",
+    'cat.service-client': "Service client",
+    'cat.texte': "Texte",
+    'cat.traduction': "Traduction",
+    'cat.vente': "Vente",
+    'cat.video': "Vidéo",
+    'cat.web': "Web",
     'idx.categoriesSubtitle': "Explore les meilleurs outils d'intelligence artificielle par catégorie.",
     'idx.galleryTypeAll': 'Tous',
     'idx.galleryTypeImage': 'Image',
@@ -1427,6 +1454,33 @@ const UI_TRANSLATIONS = {
     'idx.categoriesTitle': 'Categories',
     'idx.allToolsTitle': 'All AI tools',
     'idx.toolsCountSuffix': 'tools',
+    // Noms de catégories (clé = cat.<slug de la valeur Firestore>)
+    'cat.audio': "Audio",
+    'cat.automatisation': "Automation",
+    'cat.code': "Code",
+    'cat.contenu': "Content",
+    'cat.crm': "CRM",
+    'cat.design-3d': "3D Design",
+    'cat.developpement': "Development",
+    'cat.donnees': "Data",
+    'cat.e-commerce': "E-commerce",
+    'cat.ecriture-creative': "Creative writing",
+    'cat.education': "Education",
+    'cat.email': "Email",
+    'cat.juridique': "Legal",
+    'cat.marketing': "Marketing",
+    'cat.musique': "Music",
+    'cat.presentation': "Presentation",
+    'cat.productivite': "Productivity",
+    'cat.recherche': "Research",
+    'cat.sante': "Health",
+    'cat.seo': "SEO",
+    'cat.service-client': "Customer service",
+    'cat.texte': "Text",
+    'cat.traduction': "Translation",
+    'cat.vente': "Sales",
+    'cat.video': "Video",
+    'cat.web': "Web",
     'idx.categoriesSubtitle': 'Explore the best AI tools by category.',
     'idx.galleryTypeAll': 'All',
     'idx.galleryTypeImage': 'Image',
@@ -2382,6 +2436,33 @@ const UI_TRANSLATIONS = {
     'idx.categoriesTitle': 'Categorías',
     'idx.allToolsTitle': 'Todas las herramientas IA',
     'idx.toolsCountSuffix': 'herramientas',
+    // Noms de catégories (clé = cat.<slug de la valeur Firestore>)
+    'cat.audio': "Audio",
+    'cat.automatisation': "Automatización",
+    'cat.code': "Código",
+    'cat.contenu': "Contenido",
+    'cat.crm': "CRM",
+    'cat.design-3d': "Diseño 3D",
+    'cat.developpement': "Desarrollo",
+    'cat.donnees': "Datos",
+    'cat.e-commerce': "E-commerce",
+    'cat.ecriture-creative': "Escritura creativa",
+    'cat.education': "Educación",
+    'cat.email': "Correo electrónico",
+    'cat.juridique': "Legal",
+    'cat.marketing': "Marketing",
+    'cat.musique': "Música",
+    'cat.presentation': "Presentación",
+    'cat.productivite': "Productividad",
+    'cat.recherche': "Investigación",
+    'cat.sante': "Salud",
+    'cat.seo': "SEO",
+    'cat.service-client': "Atención al cliente",
+    'cat.texte': "Texto",
+    'cat.traduction': "Traducción",
+    'cat.vente': "Ventas",
+    'cat.video': "Vídeo",
+    'cat.web': "Web",
     'idx.categoriesSubtitle': 'Explora las mejores herramientas de inteligencia artificial por categoría.',
     'idx.galleryTypeAll': 'Todos',
     'idx.galleryTypeImage': 'Imagen',
@@ -2926,6 +3007,29 @@ function t(key, langue) {
   return dict[key] ?? UI_TRANSLATIONS.fr[key] ?? key;
 }
 window.t = t;
+
+// ─── CATÉGORIES (libellé traduit d'une catégorie Firestore) ───
+// L'identité d'une catégorie = sa valeur en base (t.category), jamais traduite.
+// categoryId() en dérive un id stable (« Design 3D » → « design-3d », même
+// règle que slugify() d'app.js et que les URLs /categorie/{langue}/{slug}/).
+// translateCategory() ne fait QUE fournir le texte visible :
+//   1. langue demandée  2. français  3. valeur brute (catégorie inconnue).
+// Une catégorie ajoutée dans Firebase s'affiche donc d'office (valeur brute)
+// sans aucune liste à maintenir ; ajouter 'cat.<id>' ici la traduit.
+function categoryId(value) {
+  return String(value == null ? '' : value).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+function translateCategory(value, langue) {
+  if (value == null || value === '') return '';
+  const lang = langue || (typeof detecterLangue === 'function' ? detecterLangue() : 'fr');
+  const key = 'cat.' + categoryId(value);
+  const dict = UI_TRANSLATIONS[lang] || UI_TRANSLATIONS.fr;
+  return dict[key] ?? UI_TRANSLATIONS.fr[key] ?? String(value);
+}
+window.categoryId = categoryId;
+window.translateCategory = translateCategory;
 
 // Applique les traductions statiques à tout le DOM courant : texte simple
 // (data-i18n), HTML avec balises (data-i18n-html) et placeholders

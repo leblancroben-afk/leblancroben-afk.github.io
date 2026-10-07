@@ -1168,3 +1168,16 @@ footer a { color: #a8a3ff; text-decoration: none; }
 
 /* ── Titre de la section des avis ── */
 .avo-section-title { font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);margin:36px 0 16px;letter-spacing:-.01em; }
+
+/* ── Mobile : la répartition des étoiles doit occuper toute la largeur ── */
+@media (max-width: 640px) {
+  .rv-summary { align-items: stretch; }
+  .rv-summary-left { align-items: center; }
+  .rv-quick { width: 100%; }
+  .rv-dist-bars { flex: none; width: 100%; }
+  .rv-dist-row { width: 100%; box-sizing: border-box; }
+  .rv-dist-bar-bg { flex: 1 1 auto; min-width: 60px; }
+  .rv-dist-label { min-width: 28px; }
+  .rv-dist-count { min-width: 28px; text-align: right; }
+  .rv-useful { min-width: 0; }
+}

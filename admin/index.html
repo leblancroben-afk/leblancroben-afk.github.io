@@ -183,6 +183,26 @@
     .vt-row-index{font-size:11px;color:var(--text-dim);margin-bottom:8px;font-weight:600;}
     .vt-empty-hint{font-size:12.5px;color:var(--text-dim);font-style:italic;padding:6px 0 2px;}
     @media(max-width:520px){.vt-row-grid{grid-template-columns:1fr;}}
+
+    /* ── Upload d'image (identique à profil.html → Rédiger un article) ── */
+    .art-img-upload { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:6px 0 10px; }
+    .art-img-upload-btn {
+      background: var(--bg3); border:1px dashed var(--border-hover); color:var(--text);
+      font-size:.82rem; padding:10px 14px; border-radius:8px; cursor:pointer; width:auto;
+    }
+    .art-img-upload-btn:hover { border-color:#6c63ff; }
+    .art-img-upload-btn:disabled { opacity:.6; cursor:wait; }
+    .art-img-status { font-size:.78rem; color:var(--text-muted); }
+    .art-img-preview { position:relative; display:inline-block; }
+    .art-img-preview img {
+      max-width:180px; max-height:110px; border-radius:8px; border:1px solid var(--border);
+      display:block; object-fit:cover;
+    }
+    .art-img-remove {
+      position:absolute; top:-8px; right:-8px; width:24px; height:24px; border-radius:50%;
+      background:#1a1a22; border:1px solid var(--border); color:#ff5050; cursor:pointer;
+      font-size:.75rem; display:flex; align-items:center; justify-content:center; padding:0;
+    }
   </style>
 </head>
 <body>
@@ -570,9 +590,25 @@
           <fieldset>
             <legend>🖼️ Médias</legend>
             <p class="field-hint" style="margin-top:-4px;">Même rendu pour toutes les offres : la 1re image sert d'aperçu en haut de la fiche, les suivantes apparaissent dans « Captures d'écran » (5 max). Chemin du site (/medias/images/outils/mon-outil/1.webp) ou lien https://…</p>
-            <label>URL screenshot principal</label>
+            <label>Image principale (screenshot)</label>
+            <div class="art-img-upload">
+              <div class="art-img-preview" id="media-main-preview" style="display:none">
+                <img id="media-main-preview-img" src="" alt="">
+                <button type="button" class="art-img-remove" id="media-main-remove" title="Retirer l'image">✕</button>
+              </div>
+              <button type="button" class="art-img-upload-btn" id="media-main-btn">⬆ Choisir une image</button>
+              <input type="file" id="media-main-file" accept="image/*" style="display:none">
+              <span class="art-img-status" id="media-main-status"></span>
+            </div>
             <input type="text" inputmode="url" id="o-screenshot" placeholder="/medias/images/outils/mon-outil/1.webp ou https://…">
-            <label>Captures d'écran (format : url|légende, une par ligne, 5 max affichées)</label>
+            <label>Captures d'écran (5 max affichées)</label>
+            <div class="art-img-upload" id="media-gal-previews"></div>
+            <div class="art-img-upload">
+              <button type="button" class="art-img-upload-btn" id="media-gal-btn">⬆ Ajouter une capture</button>
+              <input type="file" id="media-gal-file" accept="image/*" style="display:none">
+              <span class="art-img-status" id="media-gal-status"></span>
+            </div>
+            <label>Liste des captures (format : url|légende, une par ligne)</label>
             <textarea id="o-galerie" style="min-height:80px;" placeholder="https://…/capture1.png|Tableau de bord"></textarea>
             <label>Tutoriel YouTube (format : youtube_id|titre|durée — jusqu'à 3 affichés)</label>
             <textarea id="o-tutoriels" style="min-height:60px;"></textarea>
@@ -2881,6 +2917,7 @@ Support français|oui|non|bool"></textarea>
     setVal('o-presentation', tool.presentation);
     setVal('o-meta-desc', tool.meta_description);
     setVal('o-screenshot', tool.screenshot_url);
+    mediaRefresh();
     setVal('o-tutoriels', joinLines((tool.tutoriels||[]).map(t=>`${t.youtube_id}|${t.titre}|${t.duree}`), '\n'));
 
     vtClearRows();
@@ -2897,6 +2934,90 @@ Support français|oui|non|bool"></textarea>
     searchResults.classList.remove('open');
     document.getElementById('form-outils').scrollIntoView({behavior:'smooth', block:'start'});
   }
+
+  // ── Upload d'image Médias : même Worker → ImgBB que profil.html (uploadArticleImage) ──
+  const MEDIA_UPLOAD_WORKER_URL = 'https://albexia-upload-image.leblancroben.workers.dev/upload';
+  async function uploadMediaImage(file) {
+    if (!file.type.startsWith('image/')) throw new Error('Fichier image requis.');
+    if (file.size > 5 * 1024 * 1024) throw new Error('Image trop lourde (max 5 Mo).');
+    if (!auth.currentUser) throw new Error('Non connecté.');
+    const idToken = await auth.currentUser.getIdToken();
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('idToken', idToken);
+    const response = await fetch(MEDIA_UPLOAD_WORKER_URL, { method: 'POST', body: formData });
+    const result = await response.json();
+    if (!result.success) throw new Error(result.error || "Échec de l'upload.");
+    return result.url;
+  }
+  function mediaGalLines() {
+    return (document.getElementById('o-galerie').value || '').split('\n').map(l => l.trim()).filter(Boolean);
+  }
+  window.mediaRefresh = function() {
+    const url = document.getElementById('o-screenshot').value.trim();
+    const box = document.getElementById('media-main-preview');
+    const img = document.getElementById('media-main-preview-img');
+    if (url) { img.src = url; box.style.display = ''; } else { img.src = ''; box.style.display = 'none'; }
+    const wrap = document.getElementById('media-gal-previews');
+    wrap.innerHTML = '';
+    mediaGalLines().forEach((l, i) => {
+      const u = l.split('|')[0].trim();
+      const d = document.createElement('div');
+      d.className = 'art-img-preview';
+      const im = document.createElement('img'); im.src = u; im.alt = '';
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'art-img-remove'; b.title = 'Retirer'; b.textContent = '✕';
+      b.addEventListener('click', () => {
+        const arr = mediaGalLines(); arr.splice(i, 1);
+        document.getElementById('o-galerie').value = arr.join('\n');
+        mediaRefresh();
+      });
+      d.append(im, b); wrap.appendChild(d);
+    });
+  };
+  async function mediaDoUpload(file, btnId, statusId, onUrl) {
+    const statusEl = document.getElementById(statusId);
+    const btn = document.getElementById(btnId);
+    statusEl.textContent = 'Envoi en cours…';
+    btn.disabled = true;
+    try {
+      const url = await uploadMediaImage(file);
+      onUrl(url);
+      mediaRefresh();
+      statusEl.textContent = '✅';
+    } catch (err) {
+      statusEl.textContent = '⚠ ' + err.message;
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+  document.getElementById('media-main-btn').addEventListener('click', () => document.getElementById('media-main-file').click());
+  document.getElementById('media-main-file').addEventListener('change', e => {
+    const f = e.target.files?.[0]; if (!f) return;
+    mediaDoUpload(f, 'media-main-btn', 'media-main-status', url => { document.getElementById('o-screenshot').value = url; });
+    e.target.value = '';
+  });
+  document.getElementById('media-main-remove').addEventListener('click', () => {
+    document.getElementById('o-screenshot').value = '';
+    document.getElementById('media-main-status').textContent = '';
+    mediaRefresh();
+  });
+  document.getElementById('media-gal-btn').addEventListener('click', () => {
+    if (mediaGalLines().length >= 5) { document.getElementById('media-gal-status').textContent = '⚠ 5 captures max.'; return; }
+    document.getElementById('media-gal-file').click();
+  });
+  document.getElementById('media-gal-file').addEventListener('change', e => {
+    const f = e.target.files?.[0]; if (!f) return;
+    mediaDoUpload(f, 'media-gal-btn', 'media-gal-status', url => {
+      const arr = mediaGalLines(); arr.push(url + '|');
+      document.getElementById('o-galerie').value = arr.join('\n');
+    });
+    e.target.value = '';
+  });
+  document.getElementById('o-screenshot').addEventListener('input', mediaRefresh);
+  document.getElementById('o-galerie').addEventListener('input', mediaRefresh);
+  document.getElementById('form-outils').addEventListener('reset', () => setTimeout(mediaRefresh, 0));
 
   function exitEditMode() {
     editingTool = null;

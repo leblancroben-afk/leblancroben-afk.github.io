@@ -327,14 +327,6 @@ ${navHTML(langue)}
           <p class="cat-hero-desc">${escHtml(description)}</p>
         </div>
       </div>
-      <div class="cat-hero-illustration" aria-hidden="true">
-        <div class="cat-illu-blob"></div>
-        <div class="cat-illu-bars">
-          <span style="height:35%"></span><span style="height:55%"></span>
-          <span style="height:40%"></span><span style="height:75%"></span>
-          <span style="height:95%"></span>
-        </div>
-      </div>
     </section>
 
     <div class="cat-stats-bar">

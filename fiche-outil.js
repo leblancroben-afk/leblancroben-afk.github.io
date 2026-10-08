@@ -86,6 +86,7 @@ const L = {
 
 // ── Icônes SVG : bibliothèque partagée avec l'admin (js/fiche-icons.js) — aucun emoji ──
 const FI = require('./js/fiche-icons.js');
+const { categoryName } = require('./categorie-template.js'); // nom de catégorie traduit (affichage uniquement)
 const ic = (n, cls = '') => FI.svg(n, cls);
 const STAR = '<svg class="fo-ico fo-ico-fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
 
@@ -131,7 +132,7 @@ function generateFiche(tool, allTools = [], deps) {
   const name = tool.name || '';
   const description = tool.description || '';
   const url = safeUrl(tool.url) || '#';
-  const category = tool.category || '';
+  const category = categoryName(tool.category || '', langue);
   const slug = tool.slug_articles || slugify(name);
   const logoBox = (cls, letter, srcs, alt, eager) => (srcs.length
     ? `<div class="${cls}" data-fo-logo data-srcs="${srcs.map(E).join(' ')}"><span class="fo-letter" aria-hidden="true">${E(letter)}</span><img src="${E(srcs[0])}" alt="${E(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} referrerpolicy="no-referrer"></div>`
@@ -333,7 +334,7 @@ function generateFiche(tool, allTools = [], deps) {
     const kNote = known ? Number(known.note || known.rating || 0) : 0;
     return `<a class="fo-alt" href="${E(href)}"${hasPage ? '' : ' target="_blank" rel="noopener"'}>
       <div class="fo-alt-id">${logoBox(`fo-alt-logo fo-av${idx % 6}`, nom.trim().charAt(0).toUpperCase(), logoSources(known && known.favicon, dom, 64), '', false)}
-        <div><b>${E(nom.trim())}</b><small>${E((known && known.category) || desc || T.altsFor(name))}</small></div></div>
+        <div><b>${E(nom.trim())}</b><small>${E((known && categoryName(known.category, langue)) || desc || T.altsFor(name))}</small></div></div>
       ${kNote ? `<div class="fo-alt-note">${kNote.toFixed(1)} ${STAR}</div>` : ''}</a>`;
   }).join('');
   const altsCard = altItems ? `

@@ -32,7 +32,7 @@ const { getFirestore }        = require('firebase-admin/firestore');
 const fs     = require('fs');
 const path   = require('path');
 const crypto = require('crypto');
-const { genererPagesCategories } = require('./categorie-template.js');
+const { genererPagesCategories, categoryName } = require('./categorie-template.js');
 
 // ── Init Firebase Admin ──────────────────────────────────
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -269,10 +269,10 @@ function generateOfflineTakeover(tool, allTools = []) {
           about: `${name} était référencé dans la catégorie ${category || 'outils IA'} sur Albexia.` },
     en: { headline: 'is', word: 'offline', body: `We check this link regularly, and it hasn't responded in a while. The tool may have shut down, rebranded, or moved without a trace.`,
           verif: dateVerif ? `Last checked on ${dateVerif}.` : '', altLabel: 'Alternative', linksLabel: 'In the same category', foot: 'TOOL OFFLINE',
-          about: `${name} was listed in the ${category || 'AI tools'} category on Albexia.` },
+          about: `${name} was listed in the ${categoryName(category, 'en') || 'AI tools'} category on Albexia.` },
     es: { headline: 'está', word: 'fuera de línea', body: `Verificamos este enlace regularmente, y no responde desde hace un tiempo. La herramienta puede haber cerrado, cambiado de nombre o mudado sin dejar rastro.`,
           verif: dateVerif ? `Última verificación el ${dateVerif}.` : '', altLabel: 'Alternativa', linksLabel: 'En la misma categoría', foot: 'HERRAMIENTA FUERA DE LÍNEA',
-          about: `${name} estaba listada en la categoría ${category || 'herramientas IA'} en Albexia.` },
+          about: `${name} estaba listada en la categoría ${categoryName(category, 'es') || 'herramientas IA'} en Albexia.` },
   };
   const t = labels[langue] || labels.fr;
 
@@ -312,7 +312,7 @@ ${navHTML(langue)}
 <main><div class="container">
   <div class="tool-breadcrumb"><div class="container">
     <a href="${R}index.html#tools">${{fr:'Outils',en:'Tools',es:'Herramientas'}[langue]||'Outils'}</a> ›
-    <a href="${R}index.html#tools">${category}</a> › <span>${name}</span>
+    <a href="${R}index.html#tools">${categoryName(category, langue)}</a> › <span>${name}</span>
   </div></div>
 
   <div class="offline-page"><div class="offline-container">
@@ -1242,7 +1242,7 @@ function buildToolsDataJSON(tools, langue = 'fr') {
       name: t.name,
       emoji: t.emoji || fr.emoji || '🤖',
       favicon: `https://www.google.com/s2/favicons?sz=64&domain=${(t.url||fr.url||'').replace(/^https?:\/\//,'').split('/')[0]}`,
-      category: t.category || fr.category || '',
+      category: categoryName(t.category || fr.category || '', langue),
       description: t.description || fr.description || '',
       price: t.price || fr.price || '',
       modele_gratuit: (t.price||fr.price) ? (t.price||fr.price) === 'free' : null,
@@ -2047,7 +2047,7 @@ function nicheToolCardHTML(tool) {
     <span class="ntc-name">${tool.name}</span>
     ${note ? `<span class="ntc-note">★ ${note}</span>` : ''}
   </div>
-  <span class="ntc-cat">${tool.category||''}</span>
+  <span class="ntc-cat">${categoryName(tool.category||'', langue)}</span>
   <span class="ntc-cta">Voir la fiche →</span>
 </a>`;
 }
@@ -2141,7 +2141,7 @@ function nicheToolCardLocalizedHTML(tool, langue, allTools) {
     <span class="ntc-name">${loc.name}</span>
     ${note ? `<span class="ntc-note">★ ${note}</span>` : ''}
   </div>
-  <span class="ntc-cat">${loc.category || tool.category || ''}</span>
+  <span class="ntc-cat">${categoryName(loc.category || tool.category || '', langue)}</span>
   <span class="ntc-cta">${L.voir}</span>
 </a>`;
 }
@@ -3201,7 +3201,7 @@ function tutoCardHTML(tool, allTools, tousOutils) {
   const nomVars = attrVars({ tool: tool.name });
   // Description / catégorie dans chaque langue (document traduit lié, sinon repli FR)
   const attrEsc = (x) => String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-  const txtAttrs = (champ) => VT_LANGS.map(l => `data-txt-${l}="${attrEsc(vues[l].view[champ] || tool[champ] || '')}"`).join(' ');
+  const txtAttrs = (champ) => VT_LANGS.map(l => { const v = vues[l].view[champ] || tool[champ] || ''; return `data-txt-${l}="${attrEsc(champ === 'category' ? categoryName(v, l) : v)}"`; }).join(' ');
   const nbKey = videos.length > 1 ? 'tuto.videoMany' : 'tuto.videoOne';
   const nbTxt = `${videos.length} vidéo${videos.length>1?'s':''}`;
 
@@ -3262,7 +3262,7 @@ function vtLienOutil(tool, tousOutils) {
 }
 function vtAttrEsc(x) { return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
 function vtTxtAttrs(tool, vues, champ) {
-  return VT_LANGS.map(l => `data-txt-${l}="${vtAttrEsc(vues[l].view[champ] || tool[champ] || '')}"`).join(' ');
+  return VT_LANGS.map(l => { const v = vues[l].view[champ] || tool[champ] || ''; return `data-txt-${l}="${vtAttrEsc(champ === 'category' ? categoryName(v, l) : v)}"`; }).join(' ');
 }
 
 // ── Carte du catalogue (hub /tutoriels/) : sobre, une par outil ──
@@ -3415,7 +3415,7 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
     catMap.set(k, { nom: c, n: (catMap.get(k)?.n || 0) + 1 });
   });
   const pillsHTML = [...catMap.entries()].sort((a, b) => b[1].n - a[1].n)
-    .map(([k, c]) => `<button type="button" class="th-pill" data-cat="${k}"><span>${esc(c.nom)}</span><span class="th-pill-n">${c.n}</span></button>`).join('');
+    .map(([k, c]) => `<button type="button" class="th-pill" data-cat="${k}"><span data-txt-fr="${esc(c.nom)}" data-txt-en="${esc(categoryName(c.nom, 'en'))}" data-txt-es="${esc(categoryName(c.nom, 'es'))}">${esc(c.nom)}</span><span class="th-pill-n">${c.n}</span></button>`).join('');
 
   // Tutoriel du jour : une vidéo réelle de la vidéothèque, qui change chaque jour (à chaque génération)
   const tousVideos = toolsAvecVideos.flatMap(t => (t.videotheque || []).filter(v => v && v.youtube_id).map(v => ({ v, t })));
@@ -3651,7 +3651,7 @@ ${navHTML(langue)}
     </div>
     <div class="outil-hero-infos">
       <div class="outil-hero-top">
-        <span id="outil-cat" class="outil-cat-badge">${tool.category||''}</span>
+        <span id="outil-cat" class="outil-cat-badge">${categoryName(tool.category||'', langue)}</span>
       </div>
       <h1 id="outil-h1" class="outil-h1">${fill(L.h1)}</h1>
       <p id="outil-sous-titre" class="outil-sous-titre">${tool.description||''}</p>

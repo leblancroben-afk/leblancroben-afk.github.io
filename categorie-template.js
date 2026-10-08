@@ -103,6 +103,51 @@ const CATEGORY_I18N = {
   },
 };
 
+// Noms traduits de TOUTES les catégories (clé = slug de la valeur t.category en base,
+// donc insensible à la casse et aux accents). Sert uniquement à l'AFFICHAGE :
+// slugs, URLs, regroupements et filtres restent calculés sur la valeur de la base.
+// Une catégorie absente de cette table s'affiche telle que stockée (jamais cassée).
+const CATEGORY_NAMES = {
+  'audio': { en: 'Audio', es: 'Audio' },
+  'automatisation': { en: 'Automation', es: 'Automatización' },
+  'code': { en: 'Code', es: 'Código' },
+  'contenu': { en: 'Content', es: 'Contenido' },
+  'crm': { en: 'CRM', es: 'CRM' },
+  'design-3d': { en: '3D Design', es: 'Diseño 3D' },
+  'developpement': { en: 'Development', es: 'Desarrollo' },
+  'donnees': { en: 'Data', es: 'Datos' },
+  'e-commerce': { en: 'E-commerce', es: 'E-commerce' },
+  'ecriture-creative': { en: 'Creative writing', es: 'Escritura creativa' },
+  'education': { en: 'Education', es: 'Educación' },
+  'email': { en: 'Email', es: 'Correo electrónico' },
+  'juridique': { en: 'Legal', es: 'Legal' },
+  'marketing': { en: 'Marketing', es: 'Marketing' },
+  'musique': { en: 'Music', es: 'Música' },
+  'presentation': { en: 'Presentation', es: 'Presentación' },
+  'productivite': { en: 'Productivity', es: 'Productividad' },
+  'recherche': { en: 'Research', es: 'Investigación' },
+  'sante': { en: 'Health', es: 'Salud' },
+  'seo': { en: 'SEO', es: 'SEO' },
+  'service-client': { en: 'Customer service', es: 'Atención al cliente' },
+  'texte': { en: 'Text', es: 'Texto' },
+  'traduction': { en: 'Translation', es: 'Traducción' },
+  'vente': { en: 'Sales', es: 'Ventas' },
+  'video': { en: 'Video', es: 'Vídeo' },
+  'web': { en: 'Web', es: 'Web' },
+  'image': { en: 'Image', es: 'Imagen' },
+};
+
+// Nom d'une catégorie dans la langue de la page. FR = valeur de la base, inchangée.
+// Ordre : CATEGORY_I18N (nom exact) → CATEGORY_NAMES (slug) → valeur brute.
+function categoryName(cat, langue) {
+  const raw = String(cat == null ? '' : cat);
+  if (!raw || !langue || langue === 'fr') return raw;
+  const e = CATEGORY_I18N[raw] && CATEGORY_I18N[raw][langue];
+  if (e && e.name) return e.name;
+  const n = CATEGORY_NAMES[slugifyFallback(raw)];
+  return (n && n[langue]) || raw;
+}
+
 // Petites chaines d'interface propres a cette page (hors nav/footer, deja
 // geres par navHTML()/footerHTML() de gen-fiches.js).
 const UI = {
@@ -211,7 +256,7 @@ function genererPageCategorie(cat, tools, opts = {}) {
 
   const meta = CATEGORY_META[cat.name] || CATEGORY_META._default;
   const i18n = (CATEGORY_I18N[cat.name] && (CATEGORY_I18N[cat.name][langue] || CATEGORY_I18N[cat.name].fr))
-    || { name: cat.name, desc: `${cat.name}` };
+    || { name: categoryName(cat.name, langue), desc: categoryName(cat.name, langue) };
   const icon  = cat.icon  || meta.icon;
   const color = cat.color || meta.color;
   const name  = i18n.name;
@@ -361,7 +406,7 @@ function genererCategoriesPopulaires(autresCategories, langue, hubUrl) {
   const top = [...autresCategories].sort((a, b) => b.count - a.count).slice(0, 6);
   const tuiles = top.map(c => {
     const meta = CATEGORY_META[c.name] || CATEGORY_META._default;
-    const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: c.name };
+    const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: categoryName(c.name, langue) };
     return `<a class="pop-cat-tile" href="/categorie/${langue}/${c.slug}/">
       <span class="pop-cat-icon">${meta.icon}</span>
       <span class="pop-cat-name">${i18n.name}</span>
@@ -416,7 +461,7 @@ function genererPageHub(langue, categories, helpers) {
 
   const tuiles = tri.map(c => {
     const meta = CATEGORY_META[c.name] || CATEGORY_META._default;
-    const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: c.name };
+    const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: categoryName(c.name, langue) };
     return `<a class="hub-cat-tile" href="/categorie/${langue}/${c.slug}/" data-name="${escHtml(i18n.name.toLowerCase())}">
       <span class="hub-cat-icon">${meta.icon}</span>
       <span class="hub-cat-name">${escHtml(i18n.name)}</span>
@@ -510,7 +555,7 @@ function buildToolCardSSR(t, langue) {
           <div class="tool-ico">${iconHtml}</div>
           <div style="flex:1">
             <div class="tool-name">${t.name}</div>
-            <div class="tool-cat">${t.category}</div>
+            <div class="tool-cat">${categoryName(t.category, langue)}</div>
           </div>
         </div>
         <p class="tool-desc">${t.description || ''}</p>
@@ -522,6 +567,7 @@ function buildToolCardSSR(t, langue) {
 }
 
 module.exports = {
+  categoryName,
   genererPagesCategories,
   genererPageCategorie,
   CATEGORY_META,

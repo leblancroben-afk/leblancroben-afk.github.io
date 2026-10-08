@@ -96,10 +96,11 @@ nav {
 .nav-link.active { color: var(--text); background: rgba(255,255,255,0.08); }
 
 .nav-cta {
-  padding: 7px 18px; font-size: 13px; font-weight: 600;
+  padding: 5px 12px; font-size: 12px; font-weight: 600; line-height: 1.4;
   border: 1px solid #fff; background: #fff;
   color: var(--bg); border-radius: 8px; cursor: pointer;
   font-family: var(--sans); transition: all .2s;
+  white-space: nowrap; flex-shrink: 0; margin-left: 10px;
 }
 .nav-cta:hover { background: #e8e8ee; border-color: #e8e8ee; }
 
@@ -479,9 +480,9 @@ nav {
   font-size: 11px; font-weight: 500;
   padding: 3px 10px; border-radius: 6px; letter-spacing: 0.03em;
 }
-.price-free     { background: rgba(52,211,153,0.12); color: #34D399; border: 1px solid rgba(52,211,153,0.25); }
-.price-freemium { background: rgba(255,107,157,0.12); color: #FF9DBC; border: 1px solid rgba(255,107,157,0.25); }
-.price-paid     { background: rgba(255,107,157,0.12); color: #ff6b9d; border: 1px solid rgba(255,107,157,0.25); }
+.price-free,
+.price-freemium,
+.price-paid { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1); }
 
 .stars { font-size: 13px; color: var(--text-dim); }
 .stars .on { color: var(--accent-amber); }
@@ -3915,3 +3916,6 @@ a:active .blog-title { color: #fff; text-decoration: none; }
    CATÉGORIES — pas d'emojis sur les tuiles/onglets de catégories
    ═══════════════════════════════════════ */
 .home-cat-icon { display: none; }
+
+/* Nav : la zone profil ne se fait plus recouvrir par le bouton Soumettre */
+.nav-profile-slot { flex-shrink: 0; }

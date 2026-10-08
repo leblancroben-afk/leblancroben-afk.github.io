@@ -23,23 +23,6 @@
 }
 .cat-hero-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 560px; }
 
-.cat-hero-illustration {
-  flex-shrink: 0; position: relative; width: 220px; height: 200px;
-  display: flex; align-items: center; justify-content: center;
-}
-.cat-illu-blob {
-  position: absolute; inset: 0; border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, color-mix(in srgb, var(--cat-color) 40%, transparent), transparent 70%);
-  filter: blur(4px);
-}
-.cat-illu-bars {
-  position: absolute; bottom: 12px; right: 8px; z-index: 1;
-  display: flex; align-items: flex-end; gap: 5px; height: 70px; opacity: 0.55;
-}
-.cat-illu-bars span {
-  width: 9px; border-radius: 3px 3px 0 0;
-  background: linear-gradient(to top, var(--cat-color), transparent);
-}
 
 /* Barre de stats */
 .cat-stats-bar {
@@ -59,7 +42,6 @@
 
 @media (max-width: 780px) {
   .cat-hero { flex-direction: column; }
-  .cat-hero-illustration { width: 100%; height: 140px; }
   .cat-hero-title { font-size: 26px; }
 }
 

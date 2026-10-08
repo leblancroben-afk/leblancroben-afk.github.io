@@ -1608,9 +1608,28 @@
       .nav { padding: 12px 16px; }
     }
   @keyframes skpulse { 0%,100% { opacity:.55; } 50% { opacity:1; } }
+
+    /* ── Icônes SVG professionnelles (remplacement des emojis) ── */
+    .ic { width:1em; height:1em; flex-shrink:0; vertical-align:-.15em;
+          fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .auth-logo .ic { width:2.1rem; height:2.1rem; }
+    #notif-bell-btn .ic { width:1.05rem; height:1.05rem; stroke-width:1.8; }
+    .empty-state .icon .ic { width:2rem; height:2rem; opacity:.75; }
+    #toast .ic { width:.95rem; height:.95rem; vertical-align:-.12rem; }
+    .quiz-session-date .ic, .avis-date .ic, .saved-video-date .ic { width:.85rem; height:.85rem; }
+    .btn-icon .ic { width:1rem; height:1rem; }
+    .btn-avis-edit .ic, .btn-avis-delete .ic, .btn-pay-now .ic, .btn-logout .ic,
+    .btn-sm .ic, .btn-primary .ic, .btn-outline .ic, .btn-quiz-share .ic,
+    .btn-quiz-whatsapp .ic, .soum-link .ic { width:.9rem; height:.9rem; vertical-align:-.12rem; }
+    .fe-pm-btn .ic { width:.95rem; height:.95rem; }
+    .soum-note-box .ic { color:var(--accent-amber); }
+    .mc-rule-check { font-family:var(--sans); }
+    .sidebar-item-icon svg { display:block; }
   </style>
 </head>
 <body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="ic-robot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="11" rx="2"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><circle cx="9" cy="13" r="0.7" fill="currentColor" stroke="none"/><circle cx="15" cy="13" r="0.7" fill="currentColor" stroke="none"/><path d="M9.5 16.5h5"/><path d="M4 13H2M22 13h-2"/></symbol><symbol id="ic-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol><symbol id="ic-bell-off" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="1" y1="1" x2="23" y2="23"/></symbol><symbol id="ic-bulb" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.74c.6.44 1 .99 1 1.63V17h6v-.63c0-.64.4-1.19 1-1.63A7 7 0 0 0 12 2z"/></symbol><symbol id="ic-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol><symbol id="ic-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol><symbol id="ic-camera" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></symbol><symbol id="ic-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol><symbol id="ic-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol><symbol id="ic-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></symbol><symbol id="ic-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol><symbol id="ic-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-4A12.88 12.88 0 0 1 22 2c0 2.72-.62 4.5-2 7-1.12 1.97-2.5 3-4 4z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol><symbol id="ic-pen-tool" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></symbol><symbol id="ic-palette" viewBox="0 0 24 24"><path d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.04 10 9c0 3.31-2.69 6-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.33.41.47.64 1.06.64 1.67A2.5 2.5 0 0 1 12 22z"/><circle cx="6.5" cy="11.5" r="0.7" fill="currentColor" stroke="none"/><circle cx="9.5" cy="7.5" r="0.7" fill="currentColor" stroke="none"/><circle cx="14.5" cy="7.5" r="0.7" fill="currentColor" stroke="none"/><circle cx="17.5" cy="11.5" r="0.7" fill="currentColor" stroke="none"/></symbol><symbol id="ic-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol><symbol id="ic-graduation" viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></symbol><symbol id="ic-zap" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></symbol><symbol id="ic-pencil" viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></symbol><symbol id="ic-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol><symbol id="ic-dollar" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol><symbol id="ic-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol><symbol id="ic-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></symbol><symbol id="ic-card" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol><symbol id="ic-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9l4-6z"/><path d="M2 9h20"/><path d="M11.5 3L8 9l4 13 4-13-3.5-6"/></symbol><symbol id="ic-wifi" viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/></symbol><symbol id="ic-trend-down" viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></symbol><symbol id="ic-sprout" viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 13c-3.5 0-6-2.5-6-6 3.5 0 6 2.5 6 6z"/><path d="M12 11c0-3 2.5-5 6-5 0 3.5-2.5 5-6 5z"/></symbol><symbol id="ic-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol><symbol id="ic-tree" viewBox="0 0 24 24"><path d="M12 2L7 10h3l-4 7h5v5h2v-5h5l-4-7h3L12 2z"/></symbol><symbol id="ic-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></symbol><symbol id="ic-x-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></symbol><symbol id="ic-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol><symbol id="ic-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="ic-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol><symbol id="ic-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol><symbol id="ic-plus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></symbol><symbol id="ic-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol><symbol id="ic-file-text" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol><symbol id="ic-file" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></symbol><symbol id="ic-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol><symbol id="ic-undo" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></symbol><symbol id="ic-redo" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol><symbol id="ic-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol><symbol id="ic-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol><symbol id="ic-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol><symbol id="ic-message" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol><symbol id="ic-warn" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol></svg>
 
 <!-- ── NAV ─────────────────────────────────────── -->
 <nav class="nav">
@@ -1653,7 +1672,7 @@
 
 <div id="auth-wall">
   <div class="auth-card">
-    <div class="auth-logo">🤖</div>
+    <div class="auth-logo"><svg class="ic ic-robot" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-robot"/></svg></div>
     <h2 data-i18n="profil.authTitle">Accéder à mon profil</h2>
     <p data-i18n="profil.authSubtitle">Sauvegarde tes outils préférés et retrouve-les partout.</p>
 
@@ -1770,7 +1789,7 @@
         </div>
         <button class="sidebar-toggle" id="notif-bell-btn" onclick="openNotifModal(event)"
                 title="Notifications" data-i18n-title="profil.notifBellTitle" style="position:relative">
-          🔔
+          <svg class="ic ic-bell" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell"/></svg>
           <span id="notif-badge" style="display:none;position:absolute;top:-2px;right:-2px;
                 background:var(--accent2);color:#fff;border-radius:50%;
                 min-width:16px;height:16px;font-size:.65rem;line-height:16px;
@@ -1957,7 +1976,7 @@
             <button id="notif-modal-back" onclick="showNotifList()" data-i18n="notif.back"
                     style="display:none;background:none;border:none;color:var(--accent);
                            font-size:.9rem;cursor:pointer;flex-shrink:0;padding:0">← Retour</button>
-            <strong style="font-size:1rem" data-i18n="notif.title">🔔 Notifications</strong>
+            <strong style="font-size:1rem" data-i18n="notif.title"><svg class="ic ic-bell" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell"/></svg> Notifications</strong>
           </div>
           <button onclick="closeNotifModal()"
                   style="background:none;border:none;color:var(--muted);font-size:1.3rem;
@@ -2126,7 +2145,7 @@
           </div>
 
           <div class="soum-note-box">
-            💡 <span data-i18n="profil.soumNoteBox">Vous pouvez aussi soumettre un outil sans créer de compte via la</span> <a href="/soumettre.html" data-i18n="profil.dedicatedPage">page dédiée</a> — <span data-i18n="profil.soumNoteBox2">mais depuis votre profil, vous pouvez suivre le statut de vos soumissions ici.</span>
+            <svg class="ic ic-bulb" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bulb"/></svg> <span data-i18n="profil.soumNoteBox">Vous pouvez aussi soumettre un outil sans créer de compte via la</span> <a href="/soumettre.html" data-i18n="profil.dedicatedPage">page dédiée</a> — <span data-i18n="profil.soumNoteBox2">mais depuis votre profil, vous pouvez suivre le statut de vos soumissions ici.</span>
           </div>
         </div>
 
@@ -2253,17 +2272,17 @@
       <!-- 5. PARAMÈTRES -->
       <div class="profile-section" id="section-parametres">
         <div class="section-header">
-          <div class="section-title">⚙️ <span data-i18n="profil.settingsTitle">Paramètres</span></div>
+          <div class="section-title"><svg class="ic ic-gear" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gear"/></svg> <span data-i18n="profil.settingsTitle">Paramètres</span></div>
         </div>
         <div class="settings-stack">
 
           <!-- PROFIL -->
           <div class="settings-card">
-            <div class="settings-card-title">👤 <span data-i18n="profil.sectionProfile">Profil</span></div>
+            <div class="settings-card-title"><svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> <span data-i18n="profil.sectionProfile">Profil</span></div>
             <div class="settings-row">
               <div class="settings-row-name" data-i18n="profil.profilePhoto">Photo de profil</div>
               <button class="btn-sm btn-outline" onclick="document.getElementById('avatar-file-input').click()">
-                📷 <span data-i18n="profil.changePhoto">Changer</span>
+                <svg class="ic ic-camera" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-camera"/></svg> <span data-i18n="profil.changePhoto">Changer</span>
               </button>
             </div>
             <div class="settings-row">
@@ -2275,13 +2294,13 @@
 
           <!-- PRÉFÉRENCES -->
           <div class="settings-card">
-            <div class="settings-card-title">🌐 <span data-i18n="profil.sectionPreferences">Préférences</span></div>
+            <div class="settings-card-title"><svg class="ic ic-globe" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-globe"/></svg> <span data-i18n="profil.sectionPreferences">Préférences</span></div>
             <div class="settings-row">
               <div class="settings-row-name" data-i18n="profil.interfaceLanguage">Langue de l'interface</div>
               <select id="pref-langue" onchange="saveLangue()">
-                <option value="fr" data-i18n="profil.langFrLabel">🇫🇷 Français</option>
-                <option value="en" data-i18n="profil.langEnLabel">🇬🇧 English</option>
-                <option value="es" data-i18n="profil.langEsLabel">🇪🇸 Español</option>
+                <option value="fr" data-i18n="profil.langFrLabel">Français</option>
+                <option value="en" data-i18n="profil.langEnLabel">English</option>
+                <option value="es" data-i18n="profil.langEsLabel">Español</option>
               </select>
             </div>
             <div class="settings-row">
@@ -2293,7 +2312,7 @@
           <!-- NOTIFICATIONS — préférences générales de réception uniquement,
                pas de "Mes alertes" ici (elle reste dans le menu principal) -->
           <div class="settings-card">
-            <div class="settings-card-title">🔔 <span data-i18n="profil.sectionNotifications">Notifications</span></div>
+            <div class="settings-card-title"><svg class="ic ic-bell" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell"/></svg> <span data-i18n="profil.sectionNotifications">Notifications</span></div>
             <div class="settings-row">
               <div class="settings-row-name">Nouveaux outils</div>
               <div class="toggle" id="notif-pref-newTools" onclick="toggleNotifPref('newTools')"></div>
@@ -2311,9 +2330,9 @@
           <!-- COMPTE — pas de "Sécurité" : Albexia n'utilise pas de mot de
                passe local, seulement l'auth Google. -->
           <div class="settings-card">
-            <div class="settings-card-title">👤 <span data-i18n="profil.sectionAccount">Compte</span></div>
+            <div class="settings-card-title"><svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> <span data-i18n="profil.sectionAccount">Compte</span></div>
             <div class="settings-row">
-              <div class="settings-row-name">🔗 <span data-i18n="profil.connectedWithGoogle">Connecté avec Google</span></div>
+              <div class="settings-row-name"><svg class="ic ic-link" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-link"/></svg> <span data-i18n="profil.connectedWithGoogle">Connecté avec Google</span></div>
             </div>
             <div class="settings-row">
               <div class="settings-row-name" data-i18n="profil.memberSince">Membre depuis</div>
@@ -2396,12 +2415,12 @@
 <!-- MODALE : Revendiquer un outil -->
 <div class="modal-overlay" id="modal-revendiquer-search">
   <div class="modal">
-    <h3 style="display:flex;align-items:center;gap:8px;" data-i18n="profil.claimSearchTitle">🚩 Revendiquer un outil</h3>
+    <h3 style="display:flex;align-items:center;gap:8px;" data-i18n="profil.claimSearchTitle"><svg class="ic ic-flag" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-flag"/></svg> Revendiquer un outil</h3>
     <p style="color:var(--text-muted);font-size:.9rem;line-height:1.6;margin:8px 0 16px">
       <span data-i18n="profil.claimSearchIntro">Recherchez votre outil dans la base Albexia, puis cliquez sur « Revendiquer ».</span>
     </p>
     <div class="form-group full" style="margin-bottom:14px">
-      <input type="text" id="rev-search-input" placeholder="🔎 Nom de l'outil…" data-i18n-placeholder="profil.claimSearchPlaceholder" autocomplete="off"
+      <input type="text" id="rev-search-input" placeholder="Nom de l'outil…" data-i18n-placeholder="profil.claimSearchPlaceholder" autocomplete="off"
              oninput="_revSearchDebounce()"
              style="width:100%;box-sizing:border-box">
     </div>
@@ -2417,7 +2436,7 @@
 <div class="modal-overlay" id="modal-revendiquer">
   <div class="modal">
     <h3 style="display:flex;align-items:center;gap:8px;">
-      🚩 <span id="revendiquer-titre" data-i18n="profil.claimTitle">Revendiquer la propriété</span>
+      <svg class="ic ic-flag" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-flag"/></svg> <span id="revendiquer-titre" data-i18n="profil.claimTitle">Revendiquer la propriété</span>
     </h3>
     <p style="color:var(--muted);font-size:.9rem;line-height:1.6;margin:8px 0 20px" data-i18n="profil.claimIntro">
       Confirmez que vous êtes le créateur ou un représentant officiel de cet outil. Votre demande sera examinée par notre équipe sous 24 à 48h.
@@ -2443,7 +2462,7 @@
     </form>
     <div class="modal-actions">
       <button class="btn-sm btn-outline" onclick="closeRevendiquerModal()" data-i18n="profil.cancel">Annuler</button>
-      <button class="btn-primary btn-sm" id="btn-submit-revendiquer" onclick="submitRevendication()" data-i18n="profil.claimSubmit">🚀 Soumettre la demande</button>
+      <button class="btn-primary btn-sm" id="btn-submit-revendiquer" onclick="submitRevendication()" data-i18n="profil.claimSubmit"><svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Soumettre la demande</button>
     </div>
   </div>
 </div>
@@ -2479,8 +2498,8 @@
     <button class="fe-back" onclick="closeArticleModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span data-i18n="profil.articleBack">Retour</span></button>
     <div class="fe-topbar-title" id="article-titre-modal" data-i18n="profil.newArticleTitle">Nouvel article</div>
     <div class="fe-autosave" id="art-autosave-status"></div>
-    <button type="button" id="art-undo-btn" class="fe-pm-btn" onclick="artUndo()" title="Annuler" data-i18n-title="profil.undoTitle" disabled>↶</button>
-    <button type="button" id="art-redo-btn" class="fe-pm-btn" onclick="artRedo()" title="Rétablir" data-i18n-title="profil.redoTitle" disabled>↷</button>
+    <button type="button" id="art-undo-btn" class="fe-pm-btn" onclick="artUndo()" title="Annuler" data-i18n-title="profil.undoTitle" disabled><svg class="ic ic-undo" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-undo"/></svg></button>
+    <button type="button" id="art-redo-btn" class="fe-pm-btn" onclick="artRedo()" title="Rétablir" data-i18n-title="profil.redoTitle" disabled><svg class="ic ic-redo" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-redo"/></svg></button>
     <div class="fe-preview-modes" id="fe-preview-modes" style="display:none">
       <button type="button" class="fe-pm-btn active" id="fe-pm-desktop" onclick="setArtPreviewDevice('desktop')" title="Aperçu desktop" data-i18n-title="profil.previewDesktopTitle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
       <button type="button" class="fe-pm-btn" id="fe-pm-mobile" onclick="setArtPreviewDevice('mobile')" title="Aperçu mobile" data-i18n-title="profil.previewMobileTitle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></button>
@@ -2884,50 +2903,50 @@
         id: 'metier',
         question: 'Tu es plutôt…',
         options: [
-          { label: '✍️ Rédacteur / Copywriter',   value: 'redacteur'    },
-          { label: '🎨 Designer / Créatif',        value: 'designer'     },
-          { label: '💻 Développeur',               value: 'developpeur'  },
-          { label: '🚀 Entrepreneur / Freelance',  value: 'entrepreneur' },
-          { label: '🎓 Étudiant',                  value: 'etudiant'     },
-          { label: '👤 Autre',                     value: 'autre'        },
+          { label: '<svg class="ic ic-pen-tool" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pen-tool"/></svg> Rédacteur / Copywriter',   value: 'redacteur'    },
+          { label: '<svg class="ic ic-palette" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-palette"/></svg> Designer / Créatif',        value: 'designer'     },
+          { label: '<svg class="ic ic-monitor" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-monitor"/></svg> Développeur',               value: 'developpeur'  },
+          { label: '<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Entrepreneur / Freelance',  value: 'entrepreneur' },
+          { label: '<svg class="ic ic-graduation" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-graduation"/></svg> Étudiant',                  value: 'etudiant'     },
+          { label: '<svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> Autre',                     value: 'autre'        },
         ]
       },
       {
         id: 'objectif',
         question: "Ton objectif principal avec l'IA…",
         options: [
-          { label: '⚡ Gagner du temps',           value: 'temps'     },
-          { label: '✏️ Créer du contenu',          value: 'contenu'   },
-          { label: '📚 Apprendre',                 value: 'apprendre' },
-          { label: '💰 Générer des revenus',       value: 'revenus'   },
-          { label: "📋 M'organiser",               value: 'organiser' },
+          { label: '<svg class="ic ic-zap" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-zap"/></svg> Gagner du temps',           value: 'temps'     },
+          { label: '<svg class="ic ic-pencil" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pencil"/></svg> Créer du contenu',          value: 'contenu'   },
+          { label: '<svg class="ic ic-book" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-book"/></svg> Apprendre',                 value: 'apprendre' },
+          { label: '<svg class="ic ic-dollar" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-dollar"/></svg> Générer des revenus',       value: 'revenus'   },
+          { label: "<svg class="ic ic-list" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-list"/></svg> M'organiser",               value: 'organiser' },
         ]
       },
       {
         id: 'budget',
         question: 'Ton budget mensuel pour un outil IA…',
         options: [
-          { label: '🆓 Gratuit uniquement',        value: 'free'     },
-          { label: '💳 Moins de 20$/mois',         value: 'freemium' },
-          { label: '💎 Plus de 20$/mois',          value: 'paid'     },
+          { label: '<svg class="ic ic-gift" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gift"/></svg> Gratuit uniquement',        value: 'free'     },
+          { label: '<svg class="ic ic-card" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-card"/></svg> Moins de 20$/mois',         value: 'freemium' },
+          { label: '<svg class="ic ic-gem" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gem"/></svg> Plus de 20$/mois',          value: 'paid'     },
         ]
       },
       {
         id: 'connexion',
         question: 'Ta connexion internet est…',
         options: [
-          { label: '🚀 Rapide et stable',          value: 'rapide'  },
-          { label: '📶 Correcte',                  value: 'moyenne' },
-          { label: '🐢 Lente ou instable',         value: 'lente'   },
+          { label: '<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Rapide et stable',          value: 'rapide'  },
+          { label: '<svg class="ic ic-wifi" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wifi"/></svg> Correcte',                  value: 'moyenne' },
+          { label: '<svg class="ic ic-trend-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trend-down"/></svg> Lente ou instable',         value: 'lente'   },
         ]
       },
       {
         id: 'niveau',
         question: 'Ton niveau avec les outils IA…',
         options: [
-          { label: '🌱 Débutant complet',          value: 'debutant'      },
-          { label: '🌿 Quelques expériences',      value: 'intermediaire' },
-          { label: '🌳 Utilisateur régulier',      value: 'avance'        },
+          { label: '<svg class="ic ic-sprout" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-sprout"/></svg> Débutant complet',          value: 'debutant'      },
+          { label: '<svg class="ic ic-leaf" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-leaf"/></svg> Quelques expériences',      value: 'intermediaire' },
+          { label: '<svg class="ic ic-tree" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-tree"/></svg> Utilisateur régulier',      value: 'avance'        },
         ]
       }
     ],
@@ -2936,50 +2955,50 @@
         id: 'metier',
         question: 'You are more of a…',
         options: [
-          { label: '✍️ Writer / Copywriter',       value: 'redacteur'    },
-          { label: '🎨 Designer / Creative',        value: 'designer'     },
-          { label: '💻 Developer',                  value: 'developpeur'  },
-          { label: '🚀 Entrepreneur / Freelancer',  value: 'entrepreneur' },
-          { label: '🎓 Student',                    value: 'etudiant'     },
-          { label: '👤 Other',                      value: 'autre'        },
+          { label: '<svg class="ic ic-pen-tool" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pen-tool"/></svg> Writer / Copywriter',       value: 'redacteur'    },
+          { label: '<svg class="ic ic-palette" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-palette"/></svg> Designer / Creative',        value: 'designer'     },
+          { label: '<svg class="ic ic-monitor" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-monitor"/></svg> Developer',                  value: 'developpeur'  },
+          { label: '<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Entrepreneur / Freelancer',  value: 'entrepreneur' },
+          { label: '<svg class="ic ic-graduation" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-graduation"/></svg> Student',                    value: 'etudiant'     },
+          { label: '<svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> Other',                      value: 'autre'        },
         ]
       },
       {
         id: 'objectif',
         question: 'Your main goal with AI…',
         options: [
-          { label: '⚡ Save time',                  value: 'temps'     },
-          { label: '✏️ Create content',             value: 'contenu'   },
-          { label: '📚 Learn',                      value: 'apprendre' },
-          { label: '💰 Generate income',            value: 'revenus'   },
-          { label: '📋 Get organized',              value: 'organiser' },
+          { label: '<svg class="ic ic-zap" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-zap"/></svg> Save time',                  value: 'temps'     },
+          { label: '<svg class="ic ic-pencil" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pencil"/></svg> Create content',             value: 'contenu'   },
+          { label: '<svg class="ic ic-book" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-book"/></svg> Learn',                      value: 'apprendre' },
+          { label: '<svg class="ic ic-dollar" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-dollar"/></svg> Generate income',            value: 'revenus'   },
+          { label: '<svg class="ic ic-list" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-list"/></svg> Get organized',              value: 'organiser' },
         ]
       },
       {
         id: 'budget',
         question: 'Your monthly budget for an AI tool…',
         options: [
-          { label: '🆓 Free only',                  value: 'free'     },
-          { label: '💳 Under $20/month',            value: 'freemium' },
-          { label: '💎 Over $20/month',             value: 'paid'     },
+          { label: '<svg class="ic ic-gift" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gift"/></svg> Free only',                  value: 'free'     },
+          { label: '<svg class="ic ic-card" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-card"/></svg> Under $20/month',            value: 'freemium' },
+          { label: '<svg class="ic ic-gem" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gem"/></svg> Over $20/month',             value: 'paid'     },
         ]
       },
       {
         id: 'connexion',
         question: 'Your internet connection is…',
         options: [
-          { label: '🚀 Fast and stable',            value: 'rapide'  },
-          { label: '📶 Decent',                     value: 'moyenne' },
-          { label: '🐢 Slow or unstable',           value: 'lente'   },
+          { label: '<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Fast and stable',            value: 'rapide'  },
+          { label: '<svg class="ic ic-wifi" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wifi"/></svg> Decent',                     value: 'moyenne' },
+          { label: '<svg class="ic ic-trend-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trend-down"/></svg> Slow or unstable',           value: 'lente'   },
         ]
       },
       {
         id: 'niveau',
         question: 'Your level with AI tools…',
         options: [
-          { label: '🌱 Complete beginner',          value: 'debutant'      },
-          { label: '🌿 Some experience',            value: 'intermediaire' },
-          { label: '🌳 Regular user',               value: 'avance'        },
+          { label: '<svg class="ic ic-sprout" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-sprout"/></svg> Complete beginner',          value: 'debutant'      },
+          { label: '<svg class="ic ic-leaf" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-leaf"/></svg> Some experience',            value: 'intermediaire' },
+          { label: '<svg class="ic ic-tree" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-tree"/></svg> Regular user',               value: 'avance'        },
         ]
       }
     ],
@@ -2988,50 +3007,50 @@
         id: 'metier',
         question: 'Eres más bien…',
         options: [
-          { label: '✍️ Redactor / Copywriter',      value: 'redacteur'    },
-          { label: '🎨 Diseñador / Creativo',        value: 'designer'     },
-          { label: '💻 Desarrollador',               value: 'developpeur'  },
-          { label: '🚀 Emprendedor / Freelance',     value: 'entrepreneur' },
-          { label: '🎓 Estudiante',                  value: 'etudiant'     },
-          { label: '👤 Otro',                        value: 'autre'        },
+          { label: '<svg class="ic ic-pen-tool" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pen-tool"/></svg> Redactor / Copywriter',      value: 'redacteur'    },
+          { label: '<svg class="ic ic-palette" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-palette"/></svg> Diseñador / Creativo',        value: 'designer'     },
+          { label: '<svg class="ic ic-monitor" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-monitor"/></svg> Desarrollador',               value: 'developpeur'  },
+          { label: '<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Emprendedor / Freelance',     value: 'entrepreneur' },
+          { label: '<svg class="ic ic-graduation" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-graduation"/></svg> Estudiante',                  value: 'etudiant'     },
+          { label: '<svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> Otro',                        value: 'autre'        },
         ]
       },
       {
         id: 'objectif',
         question: 'Tu objetivo principal con la IA…',
         options: [
-          { label: '⚡ Ahorrar tiempo',              value: 'temps'     },
-          { label: '✏️ Crear contenido',             value: 'contenu'   },
-          { label: '📚 Aprender',                    value: 'apprendre' },
-          { label: '💰 Generar ingresos',            value: 'revenus'   },
-          { label: '📋 Organizarme',                 value: 'organiser' },
+          { label: '<svg class="ic ic-zap" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-zap"/></svg> Ahorrar tiempo',              value: 'temps'     },
+          { label: '<svg class="ic ic-pencil" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pencil"/></svg> Crear contenido',             value: 'contenu'   },
+          { label: '<svg class="ic ic-book" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-book"/></svg> Aprender',                    value: 'apprendre' },
+          { label: '<svg class="ic ic-dollar" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-dollar"/></svg> Generar ingresos',            value: 'revenus'   },
+          { label: '<svg class="ic ic-list" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-list"/></svg> Organizarme',                 value: 'organiser' },
         ]
       },
       {
         id: 'budget',
         question: 'Tu presupuesto mensual para una herramienta IA…',
         options: [
-          { label: '🆓 Solo gratis',                 value: 'free'     },
-          { label: '💳 Menos de 20$/mes',            value: 'freemium' },
-          { label: '💎 Más de 20$/mes',              value: 'paid'     },
+          { label: '<svg class="ic ic-gift" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gift"/></svg> Solo gratis',                 value: 'free'     },
+          { label: '<svg class="ic ic-card" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-card"/></svg> Menos de 20$/mes',            value: 'freemium' },
+          { label: '<svg class="ic ic-gem" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gem"/></svg> Más de 20$/mes',              value: 'paid'     },
         ]
       },
       {
         id: 'connexion',
         question: 'Tu conexión a internet es…',
         options: [
-          { label: '🚀 Rápida y estable',            value: 'rapide'  },
-          { label: '📶 Correcta',                    value: 'moyenne' },
-          { label: '🐢 Lenta o inestable',           value: 'lente'   },
+          { label: '<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Rápida y estable',            value: 'rapide'  },
+          { label: '<svg class="ic ic-wifi" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wifi"/></svg> Correcta',                    value: 'moyenne' },
+          { label: '<svg class="ic ic-trend-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trend-down"/></svg> Lenta o inestable',           value: 'lente'   },
         ]
       },
       {
         id: 'niveau',
         question: 'Tu nivel con las herramientas IA…',
         options: [
-          { label: '🌱 Principiante total',          value: 'debutant'      },
-          { label: '🌿 Algo de experiencia',         value: 'intermediaire' },
-          { label: '🌳 Usuario habitual',            value: 'avance'        },
+          { label: '<svg class="ic ic-sprout" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-sprout"/></svg> Principiante total',          value: 'debutant'      },
+          { label: '<svg class="ic ic-leaf" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-leaf"/></svg> Algo de experiencia',         value: 'intermediaire' },
+          { label: '<svg class="ic ic-tree" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-tree"/></svg> Usuario habitual',            value: 'avance'        },
         ]
       }
     ],
@@ -3106,7 +3125,7 @@
     document.getElementById('quiz-step-label').textContent   = t('quiz.questionOf', langue).replace('{n}', quizState.step + 1).replace('{total}', total);
     document.getElementById('quiz-question').textContent     = q.question;
     document.getElementById('quiz-options').innerHTML = q.options.map(o =>
-      `<button class="quiz-option" onclick="selectQuizOption('${q.id}','${o.value}')">${o.label}</button>`
+      `<button class="quiz-option" data-value="${o.value}" onclick="selectQuizOption('${q.id}','${o.value}')">${o.label}</button>`
     ).join('');
   }
 
@@ -3115,8 +3134,7 @@
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const questions = getProfilQuizQuestions(langue);
     document.querySelectorAll('.quiz-option').forEach(btn => {
-      if (btn.textContent.trim() ===
-          questions[quizState.step].options.find(o => o.value === value)?.label.trim()) {
+      if (btn.dataset.value === value) {
         btn.classList.add('selected');
       }
     });
@@ -3185,7 +3203,7 @@
       const target = t.page ? '_self' : '_blank';
       const iconHtml = t.favicon
         ? `<img src="${t.favicon}" alt="${t.name}" style="width:36px;height:36px;border-radius:8px;" onerror="this.style.display='none'">`
-        : `<span style="font-size:1.4rem">${t.emoji || '🤖'}</span>`;
+        : `<span style="font-size:1.4rem">${t.emoji || '<svg class="ic ic-robot" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-robot"/></svg>'}</span>`;
       return `
         <div class="quiz-result-card" onclick="window.open('${href}','${target}')">
           <div class="quiz-result-head">
@@ -3253,7 +3271,7 @@
   // ─── TOAST ────────────────────────────────────
   window.showToast = function(msg) {
     const el = document.getElementById('toast');
-    el.textContent = msg;
+    el.innerHTML = msg;
     el.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
@@ -3346,7 +3364,7 @@
   // ─── LOGIN GOOGLE ─────────────────────────────
   window.handleGoogleLogin = async function() {
     const res = await loginWithGoogle();
-    if (!res.ok) showToast('⚠ ' + res.error);
+    if (!res.ok) showToast('<svg class="ic ic-warn" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-warn"/></svg> ' + res.error);
   };
 
   // ─── LOGOUT ───────────────────────────────────
@@ -3511,7 +3529,7 @@
     if (collections.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
-          <div class="icon">📁</div>
+          <div class="icon"><svg class="ic ic-folder" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-folder"/></svg></div>
           <p>${t('profil.noCollectionsYet', langue)}</p>
           <button class="btn-primary btn-sm" onclick="openNewColModal()">+ ${t('profil.createCollection', langue)}</button>
         </div>`;
@@ -3527,7 +3545,7 @@
         const ico = tool.favicon
           ? `<img src="${tool.favicon}" alt="${tool.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
           : '';
-        const emoji = `<span style="display:${tool.favicon ? 'none' : 'flex'};align-items:center;justify-content:center;width:100%;height:100%">${tool.emoji || '🤖'}</span>`;
+        const emoji = `<span style="display:${tool.favicon ? 'none' : 'flex'};align-items:center;justify-content:center;width:100%;height:100%">${tool.emoji || '<svg class="ic ic-robot" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-robot"/></svg>'}</span>`;
         const url   = tool.page ? tool.page : (tool.url || '#');
         return `
           <div class="tool-item" style="position:relative;display:flex;align-items:center;gap:4px">
@@ -3554,10 +3572,10 @@
 
       const isPublic   = col.isPublic === true;
       const toggleTip  = isPublic ? t('profil.makePrivate', langue) : t('profil.makePublic', langue);
-      const toggleIcon = isPublic ? '🌐' : '🔒';
+      const toggleIcon = isPublic ? '<svg class="ic ic-globe" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-globe"/></svg>' : '<svg class="ic ic-lock" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-lock"/></svg>';
       const publicBadge = isPublic
-        ? `<span style="color:var(--accent2);font-size:.75rem">🌐 ${t('profil.public', langue)}</span>`
-        : `<span style="color:var(--muted);font-size:.75rem">🔒 ${t('profil.private', langue)}</span>`;
+        ? `<span style="color:var(--accent2);font-size:.75rem"><svg class="ic ic-globe" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-globe"/></svg> ${t('profil.public', langue)}</span>`
+        : `<span style="color:var(--muted);font-size:.75rem"><svg class="ic ic-lock" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-lock"/></svg> ${t('profil.private', langue)}</span>`;
 
       const toolLabel = tools.length > 1 ? t('profil.toolsPlural', langue) : t('profil.toolSingular', langue);
 
@@ -3567,8 +3585,8 @@
             <div class="collection-name">${col.name}</div>
             <div style="display:flex;gap:4px">
               <button class="btn-icon" onclick="toggleColPublic('${col.id}',${isPublic})" title="${toggleTip}" style="font-size:.9rem">${toggleIcon}</button>
-              <button class="btn-icon" onclick="openRenameModal('${col.id}','${escHtml(col.name)}')" title="${t('profil.rename', langue)}">✏️</button>
-              <button class="btn-icon" onclick="confirmDeleteCol('${col.id}','${escHtml(col.name)}')" title="${t('profil.delete', langue)}">🗑️</button>
+              <button class="btn-icon" onclick="openRenameModal('${col.id}','${escHtml(col.name)}')" title="${t('profil.rename', langue)}"><svg class="ic ic-pencil" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pencil"/></svg></button>
+              <button class="btn-icon" onclick="confirmDeleteCol('${col.id}','${escHtml(col.name)}')" title="${t('profil.delete', langue)}"><svg class="ic ic-trash" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trash"/></svg></button>
             </div>
           </div>
           <div class="collection-meta">${tools.length} ${toolLabel} · ${publicBadge}</div>
@@ -3697,7 +3715,7 @@
     if (alertes.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
-          <div class="icon">🎯</div>
+          <div class="icon"><svg class="ic ic-target" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-target"/></svg></div>
           <p>${t('alertes.emptyText', langue)}</p>
           <button class="btn-primary btn-sm" onclick="openNewAlerteModal()">${t('alertes.create', langue)}</button>
         </div>`;
@@ -3713,9 +3731,9 @@
             <div style="display:flex;gap:4px">
               <button class="btn-icon" onclick="handleToggleAlerte('${a.id}',${a.active !== false})"
                       title="${a.active !== false ? t('alertes.disable', langue) : t('alertes.enable', langue)}">
-                ${a.active !== false ? '🔔' : '🔕'}
+                ${a.active !== false ? '<svg class="ic ic-bell" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell"/></svg>' : '<svg class="ic ic-bell-off" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell-off"/></svg>'}
               </button>
-              <button class="btn-icon" onclick="handleDeleteAlerte('${a.id}','${escHtml(a.name || catLabel(a.category, langue))}')" title="${t('alertes.deleteTitle', langue)}">🗑️</button>
+              <button class="btn-icon" onclick="handleDeleteAlerte('${a.id}','${escHtml(a.name || catLabel(a.category, langue))}')" title="${t('alertes.deleteTitle', langue)}"><svg class="ic ic-trash" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trash"/></svg></button>
             </div>
           </div>
           <div class="collection-meta">${t('alertes.categoryPrefix', langue).replace('{category}', catLabel(a.category, langue))} · ${prixTxt}</div>
@@ -3801,14 +3819,14 @@
   // Alias legacy → clé i18n canonique (anciens noms de type déjà en base).
   const NOTIF_TYPE_ALIAS = { new_tool: 'alert_match', update: 'tool_updated', article: 'new_article' };
   const NOTIF_TYPE_ICON = {
-    alert_match: '🆕', tool_updated: '🔄', price_change: '💰', free_offer: '🆓',
-    new_article: '📝', submission: '✍️', claim: '👤', creator_article: '📄',
-    collection_update: '📌',
+    alert_match: '<svg class="ic ic-plus-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-plus-circle"/></svg>', tool_updated: '<svg class="ic ic-refresh" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-refresh"/></svg>', price_change: '<svg class="ic ic-dollar" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-dollar"/></svg>', free_offer: '<svg class="ic ic-gift" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gift"/></svg>',
+    new_article: '<svg class="ic ic-file-text" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-file-text"/></svg>', submission: '<svg class="ic ic-pen-tool" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pen-tool"/></svg>', claim: '<svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg>', creator_article: '<svg class="ic ic-file" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-file"/></svg>',
+    collection_update: '<svg class="ic ic-pin" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pin"/></svg>',
   };
   function notifTypeInfo(type) {
     const canon = NOTIF_TYPE_ALIAS[type] || type;
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
-    const icon = NOTIF_TYPE_ICON[canon] || '🔔';
+    const icon = NOTIF_TYPE_ICON[canon] || '<svg class="ic ic-bell" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell"/></svg>';
     const label = t('notif.type.' + canon, langue);
     return { icon, label: label === 'notif.type.' + canon ? 'Notification' : label };
   }
@@ -3885,7 +3903,7 @@
     const list = document.getElementById('notif-modal-list');
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     if (!notifItems.length) {
-      list.innerHTML = `<div class="empty-state"><div class="icon">🔔</div><p>${t('notif.empty', langue)}</p></div>`;
+      list.innerHTML = `<div class="empty-state"><div class="icon"><svg class="ic ic-bell" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell"/></svg></div><p>${t('notif.empty', langue)}</p></div>`;
       return;
     }
     list.innerHTML = notifItems.map(n => {
@@ -3931,14 +3949,14 @@
     if (n.toolName && n.source?.type !== 'account') {
       const logo = n.favicon
         ? `<img src="${n.favicon}" alt="" style="width:44px;height:44px;border-radius:10px;object-fit:contain;background:#fff;padding:6px">`
-        : `<div style="width:44px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem">🤖</div>`;
+        : `<div style="width:44px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem"><svg class="ic ic-robot" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-robot"/></svg></div>`;
       const badgeStyle = 'padding:4px 10px;border-radius:20px;font-size:.75rem;font-weight:600';
       const badges = [
         n.category ? `<span style="${badgeStyle};background:rgba(124,92,255,.18);color:#b9a8ff">${catLabel(n.category, langue)}</span>` : '',
         n.price ? `<span style="${badgeStyle};background:rgba(90,120,255,.18);color:#9cb2ff">${prixLabel[n.price] || n.price}</span>` : '',
       ].join('');
       const extLink = n.toolUrl
-        ? `<a href="${n.toolUrl}" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;margin-left:6px">🔗</a>` : '';
+        ? `<a href="${n.toolUrl}" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none;margin-left:6px"><svg class="ic ic-link" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-link"/></svg></a>` : '';
 
       toolCardHtml = `
         <div style="margin-top:20px;padding:16px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2,rgba(255,255,255,.02))">
@@ -3967,7 +3985,7 @@
       if (raison) {
         toolCardHtml += `
           <div style="margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(90,140,255,.08);display:flex;gap:10px;align-items:flex-start">
-            <span>ℹ️</span>
+            <span>ℹ</span>
             <span style="font-size:.82rem;color:var(--muted);line-height:1.45">${raison}</span>
           </div>`;
       }
@@ -4032,31 +4050,31 @@
 
   function metierLabels(langue) {
     return langue === 'en'
-      ? { redacteur:'✍️ Writer', designer:'🎨 Designer', developpeur:'💻 Developer', entrepreneur:'🚀 Entrepreneur', etudiant:'🎓 Student', autre:'👤 Other' }
+      ? { redacteur:'<svg class="ic ic-pen-tool" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pen-tool"/></svg> Writer', designer:'<svg class="ic ic-palette" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-palette"/></svg> Designer', developpeur:'<svg class="ic ic-monitor" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-monitor"/></svg> Developer', entrepreneur:'<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Entrepreneur', etudiant:'<svg class="ic ic-graduation" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-graduation"/></svg> Student', autre:'<svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> Other' }
       : langue === 'es'
-      ? { redacteur:'✍️ Redactor', designer:'🎨 Diseñador', developpeur:'💻 Desarrollador', entrepreneur:'🚀 Emprendedor', etudiant:'🎓 Estudiante', autre:'👤 Otro' }
-      : { redacteur:'✍️ Rédacteur', designer:'🎨 Designer', developpeur:'💻 Développeur', entrepreneur:'🚀 Entrepreneur', etudiant:'🎓 Étudiant', autre:'👤 Autre' };
+      ? { redacteur:'<svg class="ic ic-pen-tool" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pen-tool"/></svg> Redactor', designer:'<svg class="ic ic-palette" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-palette"/></svg> Diseñador', developpeur:'<svg class="ic ic-monitor" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-monitor"/></svg> Desarrollador', entrepreneur:'<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Emprendedor', etudiant:'<svg class="ic ic-graduation" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-graduation"/></svg> Estudiante', autre:'<svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> Otro' }
+      : { redacteur:'<svg class="ic ic-pen-tool" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pen-tool"/></svg> Rédacteur', designer:'<svg class="ic ic-palette" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-palette"/></svg> Designer', developpeur:'<svg class="ic ic-monitor" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-monitor"/></svg> Développeur', entrepreneur:'<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Entrepreneur', etudiant:'<svg class="ic ic-graduation" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-graduation"/></svg> Étudiant', autre:'<svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> Autre' };
   }
   function budgetLabels(langue) {
     return langue === 'en'
-      ? { free:'🆓 Free', freemium:'💳 <$20/mo', paid:'💎 >$20/mo' }
+      ? { free:'<svg class="ic ic-gift" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gift"/></svg> Free', freemium:'<svg class="ic ic-card" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-card"/></svg> <$20/mo', paid:'<svg class="ic ic-gem" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gem"/></svg> >$20/mo' }
       : langue === 'es'
-      ? { free:'🆓 Gratis', freemium:'💳 <20$/mes', paid:'💎 >20$/mes' }
-      : { free:'🆓 Gratuit', freemium:'💳 <20$/mois', paid:'💎 >20$/mois' };
+      ? { free:'<svg class="ic ic-gift" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gift"/></svg> Gratis', freemium:'<svg class="ic ic-card" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-card"/></svg> <20$/mes', paid:'<svg class="ic ic-gem" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gem"/></svg> >20$/mes' }
+      : { free:'<svg class="ic ic-gift" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gift"/></svg> Gratuit', freemium:'<svg class="ic ic-card" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-card"/></svg> <20$/mois', paid:'<svg class="ic ic-gem" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-gem"/></svg> >20$/mois' };
   }
   function connexionLabels(langue) {
     return langue === 'en'
-      ? { rapide:'🚀 Fast', moyenne:'📶 Decent', lente:'🐢 Slow' }
+      ? { rapide:'<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Fast', moyenne:'<svg class="ic ic-wifi" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wifi"/></svg> Decent', lente:'<svg class="ic ic-trend-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trend-down"/></svg> Slow' }
       : langue === 'es'
-      ? { rapide:'🚀 Rápida', moyenne:'📶 Correcta', lente:'🐢 Lenta' }
-      : { rapide:'🚀 Rapide', moyenne:'📶 Correcte', lente:'🐢 Lente' };
+      ? { rapide:'<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Rápida', moyenne:'<svg class="ic ic-wifi" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wifi"/></svg> Correcta', lente:'<svg class="ic ic-trend-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trend-down"/></svg> Lenta' }
+      : { rapide:'<svg class="ic ic-rocket" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-rocket"/></svg> Rapide', moyenne:'<svg class="ic ic-wifi" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wifi"/></svg> Correcte', lente:'<svg class="ic ic-trend-down" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trend-down"/></svg> Lente' };
   }
   function niveauLabels(langue) {
     return langue === 'en'
-      ? { debutant:'🌱 Beginner', intermediaire:'🌿 Intermediate', avance:'🌳 Advanced' }
+      ? { debutant:'<svg class="ic ic-sprout" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-sprout"/></svg> Beginner', intermediaire:'<svg class="ic ic-leaf" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-leaf"/></svg> Intermediate', avance:'<svg class="ic ic-tree" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-tree"/></svg> Advanced' }
       : langue === 'es'
-      ? { debutant:'🌱 Principiante', intermediaire:'🌿 Intermedio', avance:'🌳 Avanzado' }
-      : { debutant:'🌱 Débutant', intermediaire:'🌿 Intermédiaire', avance:'🌳 Avancé' };
+      ? { debutant:'<svg class="ic ic-sprout" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-sprout"/></svg> Principiante', intermediaire:'<svg class="ic ic-leaf" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-leaf"/></svg> Intermedio', avance:'<svg class="ic ic-tree" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-tree"/></svg> Avanzado' }
+      : { debutant:'<svg class="ic ic-sprout" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-sprout"/></svg> Débutant', intermediaire:'<svg class="ic ic-leaf" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-leaf"/></svg> Intermédiaire', avance:'<svg class="ic ic-tree" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-tree"/></svg> Avancé' };
   }
   async function loadQuizHistory() {
     quizHistory = await getQuizHistory(currentUser.uid);
@@ -4099,16 +4117,16 @@
       const results = (session.results || []).map(tool => {
         const href = tool.page || tool.url || '#';
         const ico  = tool.favicon
-          ? `<div class="quiz-result-ico"><img src="${tool.favicon}" alt="${tool.name}" onerror="this.parentElement.textContent='${tool.emoji||'🤖'}'"></div>`
-          : `<div class="quiz-result-ico">${tool.emoji || '🤖'}</div>`;
+          ? `<div class="quiz-result-ico"><img src="${tool.favicon}" alt="${tool.name}" onerror="this.parentElement.textContent='${tool.emoji||'<svg class="ic ic-robot" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-robot"/></svg>'}'"></div>`
+          : `<div class="quiz-result-ico">${tool.emoji || '<svg class="ic ic-robot" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-robot"/></svg>'}</div>`;
         return `<a class="quiz-result-pill" href="${href}" target="_blank">${ico}${tool.name}</a>`;
       }).join('');
 
       return `
         <div class="quiz-session-card">
           <div class="quiz-session-header">
-            <div class="quiz-session-date">📅 ${date}</div>
-            <button class="btn-icon" onclick="deleteSession('${session.id}')" title="${t('profil.deleteSession', langue)}">🗑️</button>
+            <div class="quiz-session-date"><svg class="ic ic-calendar" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-calendar"/></svg> ${date}</div>
+            <button class="btn-icon" onclick="deleteSession('${session.id}')" title="${t('profil.deleteSession', langue)}"><svg class="ic ic-trash" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trash"/></svg></button>
           </div>
           <div class="quiz-session-tags">${tags}</div>
           <div class="quiz-session-results">${results}</div>
@@ -4150,7 +4168,7 @@
     if (userAvis.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
-          <div class="icon">💬</div>
+          <div class="icon"><svg class="ic ic-message" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-message"/></svg></div>
           <p>${t('profil.noReviewsYet', langue)}</p>
           <a href="./index.html#tools" class="btn-primary btn-sm"
              style="display:inline-block;text-decoration:none">${t('hero.ctaTools', langue)} →</a>
@@ -4184,7 +4202,7 @@
 
       const ico = r.toolFavicon
         ? `<img src="${r.toolFavicon}" alt="${escHtml(r.toolName)}" onerror="this.style.display='none'">`
-        : (r.toolEmoji || '🤖');
+        : (r.toolEmoji || '<svg class="ic ic-robot" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-robot"/></svg>');
 
       const ficheUrl = r.toolPage || '#';
 
@@ -4203,11 +4221,11 @@
             : `<p class="avis-no-comment">${t('profil.noCommentLeft', langue)}</p>`
           }
           <div class="avis-card-foot">
-            <span class="avis-date">📅 ${date}</span>
+            <span class="avis-date"><svg class="ic ic-calendar" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-calendar"/></svg> ${date}</span>
             <div class="avis-actions">
-              <a class="btn-avis-edit" href="${ficheUrl}#avis-utilisateurs">✏️ ${t('profil.editAction', langue)}</a>
+              <a class="btn-avis-edit" href="${ficheUrl}#avis-utilisateurs"><svg class="ic ic-pencil" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-pencil"/></svg> ${t('profil.editAction', langue)}</a>
               <button class="btn-avis-delete"
-                      onclick="handleDeleteAvis('${r.toolSlug}')">🗑 ${t('profil.delete', langue)}</button>
+                      onclick="handleDeleteAvis('${r.toolSlug}')"><svg class="ic ic-trash" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trash"/></svg> ${t('profil.delete', langue)}</button>
             </div>
           </div>
         </div>`;
@@ -4271,7 +4289,7 @@
       if (container) {
         container.innerHTML = `
           <div class="empty-state">
-            <div class="icon">⚠️</div>
+            <div class="icon"><svg class="ic ic-warn" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-warn"/></svg></div>
             <p style="color:#ff4757;">${t('profil.submissionsLoadError', langue)}<br>
             <span style="font-size:.75rem;color:var(--muted)">${escHtml(e.message || String(e))}</span></p>
           </div>`;
@@ -4427,7 +4445,7 @@
       if (!a) { showToast(t('profil.toastArticleNotFound', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
       await ouvrirEditeurPourArticleExistant(a);
     } catch (e) {
-      showToast('❌ ' + (e.message || e));
+      showToast('<svg class="ic ic-x-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-x-circle"/></svg> ' + (e.message || e));
     }
   };
 
@@ -4437,7 +4455,7 @@
       if (!a) { showToast(t('profil.toastArticleNotFound', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
       await ouvrirEditeurPourArticleExistant(a, true);
     } catch (e) {
-      showToast('❌ ' + (e.message || e));
+      showToast('<svg class="ic ic-x-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-x-circle"/></svg> ' + (e.message || e));
     }
   };
 
@@ -4503,13 +4521,13 @@
     if (paiementEnAttente) {
       pillHtml = `<span class="status-pill status-payment"><span class="status-dot"></span>${t('profil.paymentRequired', langue)}</span>`;
       if (s.payment_url) {
-        payBtnHtml = `<a href="${escHtml(s.payment_url)}" target="_blank" rel="noopener" class="btn-pay-now">💳 ${t('profil.payNow', langue)}</a>`;
+        payBtnHtml = `<a href="${escHtml(s.payment_url)}" target="_blank" rel="noopener" class="btn-pay-now"><svg class="ic ic-card" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-card"/></svg> ${t('profil.payNow', langue)}</a>`;
       }
     }
 
     const cardHead = `
       <div class="soum-card">
-        <div class="soum-icon">🤖</div>
+        <div class="soum-icon"><svg class="ic ic-robot" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-robot"/></svg></div>
         <div class="soum-info">
           <div class="soum-name">${escHtml(s.nom_outil)}</div>
           <div class="soum-meta">
@@ -4538,7 +4556,7 @@
 
   function revendicationExtraHTML(s, langue, contexteRejete) {
     const lienExistant = (contexteRejete && s.outil_existant_slug)
-      ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline">🔗 ${t('profil.viewExistingSheet', langue)}</a>`
+      ? `<a href="/tools/standard/${langue}/${escHtml(s.outil_existant_slug)}/" class="btn-sm btn-outline"><svg class="ic ic-link" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-link"/></svg> ${t('profil.viewExistingSheet', langue)}</a>`
       : '';
 
     // Cas doublon (rejeté) : outil_existant_slug est un SLUG, pas l'id
@@ -4570,14 +4588,14 @@
         ? new Date(claim.submittedAt.seconds * 1000).toLocaleDateString(LOCALE_MAP[langue] || 'fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
         : '';
       const noteVerifSupp = claim.status === 'additional_verification' && claim.additionalVerificationNote
-        ? `<p style="font-size:.8rem;color:var(--muted)">📋 ${escHtml(claim.additionalVerificationNote)}</p>` : '';
+        ? `<p style="font-size:.8rem;color:var(--muted)"><svg class="ic ic-list" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-list"/></svg> ${escHtml(claim.additionalVerificationNote)}</p>` : '';
       return `
         <div class="soum-card-extra">
           <p>⏳ ${t('profil.claimSentOn', langue)} ${dateDemande} <span class="status-pill status-pending">${t('profil.underReview', langue)}</span></p>
           <p style="font-size:.8rem;color:var(--muted)">${t('profil.claimReviewDelay', langue)}</p>
           ${noteVerifSupp}
           <div class="soum-actions-row">
-            <button class="btn-sm btn-outline" onclick="annulerRevendication('${claim.id}')">🗑️ ${t('profil.cancelClaim', langue)}</button>
+            <button class="btn-sm btn-outline" onclick="annulerRevendication('${claim.id}')"><svg class="ic ic-trash" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trash"/></svg> ${t('profil.cancelClaim', langue)}</button>
           </div>
         </div>`;
     }
@@ -4586,10 +4604,10 @@
       // le seul point d'entrée pour rédiger un article reste
       // "+ Nouvel article" → modale de choix → sélecteur d'outil dans
       // l'éditeur, qui liste tous les outils revendiqués d'un coup.
-      return `<div class="soum-card-extra"><p>✔️ ${t('profil.toolClaimed', langue)}</p></div>`;
+      return `<div class="soum-card-extra"><p><svg class="ic ic-check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-check"/></svg> ${t('profil.toolClaimed', langue)}</p></div>`;
     }
     if (claim.status === 'rejected') {
-      return `<div class="soum-card-extra"><p style="color:var(--danger)">❌ ${t('profil.claimRefused', langue)}${claim.rejectionReason ? ' — ' + escHtml(claim.rejectionReason) : ''}</p></div>`;
+      return `<div class="soum-card-extra"><p style="color:var(--danger)"><svg class="ic ic-x-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-x-circle"/></svg> ${t('profil.claimRefused', langue)}${claim.rejectionReason ? ' — ' + escHtml(claim.rejectionReason) : ''}</p></div>`;
     }
     if (claim.status === 'revoked') {
       return `<div class="soum-card-extra"><p style="color:var(--danger)">🚫 ${t('profil.claimRevoked', langue)}${claim.revocationReason ? ' — ' + escHtml(claim.revocationReason) : ''}</p></div>`;
@@ -4693,12 +4711,12 @@
         ? `<img src="${escHtml(o.favicon)}" alt="${escHtml(nom)}" style="width:100%;height:100%;object-fit:contain;border-radius:6px"
                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
                 onload="this.nextElementSibling.style.display='none'">
-           <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.1rem">${o.emoji || '🔧'}</span>`
-        : `<span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.1rem">${o.emoji || '🔧'}</span>`;
+           <span style="display:none;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.1rem">${o.emoji || '<svg class="ic ic-wrench" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wrench"/></svg>'}</span>`
+        : `<span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:1.1rem">${o.emoji || '<svg class="ic ic-wrench" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-wrench"/></svg>'}</span>`;
       const claim = userClaimsParOutilId ? userClaimsParOutilId.get(id) : null;
       let actionHTML;
       if (claim && claim.status === 'approved') {
-        actionHTML = `<span style="font-size:.8rem;color:var(--accent2)">✔️ ${t('profil.claimAlreadyDone', langue)}</span>`;
+        actionHTML = `<span style="font-size:.8rem;color:var(--accent2)"><svg class="ic ic-check" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-check"/></svg> ${t('profil.claimAlreadyDone', langue)}</span>`;
       } else if (claim && (claim.status === 'pending' || claim.status === 'additional_verification')) {
         actionHTML = `<span style="font-size:.8rem;color:var(--text-muted)">⏳ ${t('profil.claimPendingShort', langue)}</span>`;
       } else {
@@ -4745,7 +4763,7 @@
     const email = document.getElementById('rev-email').value.trim();
     const preuve = document.getElementById('rev-preuve').value.trim();
     if (!role || !email || !preuve) {
-      showToast('⚠️ ' + t('profil.fillAllFields', langue));
+      showToast('<svg class="ic ic-warn" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-warn"/></svg> ' + t('profil.fillAllFields', langue));
       return;
     }
     const btn = document.getElementById('btn-submit-revendiquer');
@@ -4759,10 +4777,10 @@
         role, email_pro: email, preuve_url: preuve
       });
       closeRevendiquerModal();
-      showToast('✅ ' + t('profil.claimSentToast', langue));
+      showToast('<svg class="ic ic-check-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-check-circle"/></svg> ' + t('profil.claimSentToast', langue));
       await loadSoumissions();
     } catch (e) {
-      showToast('❌ ' + t('profil.errorPrefix', langue) + (e.message || e));
+      showToast('<svg class="ic ic-x-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-x-circle"/></svg> ' + t('profil.errorPrefix', langue) + (e.message || e));
     } finally {
       btn.disabled = false;
       btn.textContent = t('profil.claimSubmit', langue);
@@ -4777,7 +4795,7 @@
       showToast(t('profil.claimCancelled', langue));
       await loadSoumissions();
     } catch (e) {
-      showToast('❌ ' + t('profil.errorPrefix', langue) + (e.message || e));
+      showToast('<svg class="ic ic-x-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-x-circle"/></svg> ' + t('profil.errorPrefix', langue) + (e.message || e));
     }
   };
 
@@ -5165,10 +5183,10 @@
       document.getElementById('art-banniere-preview-img').src = url;
       document.getElementById('art-banniere-preview').style.display = '';
       document.getElementById('art-banniere-dropzone').style.display = 'none';
-      statusEl.textContent = '✅';
+      statusEl.textContent = 'OK';
       scheduleArtAutosave();
     } catch (err) {
-      statusEl.textContent = '⚠ ' + err.message;
+      statusEl.textContent = 'Erreur : ' + err.message;
       console.error(err);
     } finally {
       btn.disabled = false;
@@ -5218,9 +5236,9 @@
       document.getElementById('art-bloc-preview-img-' + id).src = url;
       document.getElementById('art-bloc-preview-' + id).style.display = '';
       btn.style.display = 'none';
-      statusEl.textContent = '✅';
+      statusEl.textContent = 'OK';
     } catch (err) {
-      statusEl.textContent = '⚠ ' + err.message;
+      statusEl.textContent = 'Erreur : ' + err.message;
       console.error(err);
     } finally {
       btn.disabled = false;
@@ -5699,7 +5717,7 @@
     container.innerHTML = insertPointHTML(-1) + _artBlocs.map((b, i) => {
       const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
       const label = artBlockLabels(langue)[b.type] || b.type;
-      const noteBadge = b.note ? `<span class="art-bloc-note-badge" onclick="artAjouterCommentaire('${b.id}')" title="${t('profil.blockNoteTooltip', langue).replace('{note}', escHtmlStrict(b.note))}">💬</span>` : '';
+      const noteBadge = b.note ? `<span class="art-bloc-note-badge" onclick="artAjouterCommentaire('${b.id}')" title="${t('profil.blockNoteTooltip', langue).replace('{note}', escHtmlStrict(b.note))}"><svg class="ic ic-message" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-message"/></svg></span>` : '';
       const controls = `
         <div class="art-bloc-controls">
           <span class="art-bloc-draghandle" title="${t('profil.blockDragReorder', langue)}" onpointerdown="artDragStart(event,'${b.id}')">⠿</span>
@@ -5792,8 +5810,8 @@
       <button type="button" onclick="artFormaterCode('${blocId}')" title="${t('profil.toolbarCode', langue)}">&lt;/&gt;</button>
       <button type="button" onclick="artFormaterSurligne('${blocId}')" title="${t('profil.toolbarHighlight', langue)}">◐</button>
       <span class="fe-mini-toolbar-couleurs">${couleurs}</span>
-      <button type="button" onclick="artInsererLien('${blocId}')" title="${t('profil.toolbarLink', langue)}">🔗</button>
-      <button type="button" onclick="artAjouterCommentaire('${blocId}')" title="${t('profil.toolbarNote', langue)}">💬</button>
+      <button type="button" onclick="artInsererLien('${blocId}')" title="${t('profil.toolbarLink', langue)}"><svg class="ic ic-link" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-link"/></svg></button>
+      <button type="button" onclick="artAjouterCommentaire('${blocId}')" title="${t('profil.toolbarNote', langue)}"><svg class="ic ic-message" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-message"/></svg></button>
     </div>`;
   }
 
@@ -5900,7 +5918,7 @@
         <div class="pv-body">
           ${categorie ? `<span class="pv-tag">${escHtmlStrict(categorie)}</span>` : ''}
           <h1>${escHtmlStrict(titre)}</h1>
-          <div class="pv-meta">👤 <strong>${escHtmlStrict(auteurNom)}</strong> · ${tempsLecture} ${t('profil.minRead', langueAp)}</div>
+          <div class="pv-meta"><svg class="ic ic-user" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-user"/></svg> <strong>${escHtmlStrict(auteurNom)}</strong> · ${tempsLecture} ${t('profil.minRead', langueAp)}</div>
           ${extrait ? `<p class="pv-lead">${escHtmlStrict(extrait)}</p>` : ''}
           ${tocHtml}
           <div class="pv-render">${_artBlocs.map(renderPreviewBloc).join('')}</div>
@@ -6019,12 +6037,12 @@
     const auteurBio = document.getElementById('art-auteur-bio').value.trim();
     const consent = document.getElementById('art-consent').checked;
     const nbMots = updateArtWordCount();
-    if (!titre) { showToast('⚠️ ' + t('profil.titleRequired', langue)); return; }
+    if (!titre) { showToast('<svg class="ic ic-warn" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-warn"/></svg> ' + t('profil.titleRequired', langue)); return; }
     if (!categorie) { showToast(t('profil.toastChooseCategory', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
     if (!extrait) { showToast(t('profil.toastAddExcerpt', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
     if (!banniereUrl) { showToast(t('profil.toastAddCover', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
     if (!auteurNom) { showToast(t('profil.toastAddDisplayName', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
-    if (nbMots < 500) { showToast('⚠️ ' + t('profil.min500Words', langue)); return; }
+    if (nbMots < 500) { showToast('<svg class="ic ic-warn" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-warn"/></svg> ' + t('profil.min500Words', langue)); return; }
     if (_artBlocs.length === 0) { showToast(t('profil.addAtLeastOneBlock', langue)); return; }
     if (!consent) { showToast(t('profil.toastAcceptTerms', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
     if (!_artOutilChoisi) {
@@ -6088,7 +6106,7 @@
       const draftKey = _artTargetClaimId ? ('art-brouillon-' + _artTargetClaimId) : ART_DRAFT_KEY;
       localStorage.removeItem(draftKey);
       document.getElementById('editor-article').classList.remove('open');
-      showToast('✅ ' + (_artEditingArticleId ? t('profil.toastArticleResent', langue) : t('profil.articleSentToast', langue)));
+      showToast('<svg class="ic ic-check-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-check-circle"/></svg> ' + (_artEditingArticleId ? t('profil.toastArticleResent', langue) : t('profil.articleSentToast', langue)));
       await loadMesArticles();
       if (_artTargetClaimId) await loadSoumissions();
     } catch (e) {
@@ -6102,7 +6120,7 @@
         // case de quota reflète la réalité sans attendre un rechargement.
         try { userProfile = await getUserProfile(currentUser.uid); renderMcQuotaBox(); } catch {}
       } else {
-        showToast('❌ ' + t('profil.errorPrefix', langue) + (e.message || e));
+        showToast('<svg class="ic ic-x-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-x-circle"/></svg> ' + t('profil.errorPrefix', langue) + (e.message || e));
       }
     } finally {
       btn.disabled = false;
@@ -6254,10 +6272,10 @@
               ${v.outilId ? `<a href="tutoriel-outil.html?outil=${escHtml(v.outilId)}" class="saved-video-outil">${t('profil.viewVideoLibrary', langue)} →</a>` : ''}
             </p>
             <div class="saved-video-foot">
-              <span class="saved-video-date">📅 ${savedDate}</span>
+              <span class="saved-video-date"><svg class="ic ic-calendar" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-calendar"/></svg> ${savedDate}</span>
               <button class="btn-unsave-video"
                       onclick="handleUnsaveVideo('${escHtml(v.videoId)}')">
-                🗑 ${t('profil.removeAction', langue)}
+                <svg class="ic ic-trash" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-trash"/></svg> ${t('profil.removeAction', langue)}
               </button>
             </div>
           </div>

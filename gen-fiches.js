@@ -44,7 +44,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v13'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
+const TEMPLATE_VERSION = 'layout-v14'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
 
 function loadState() {
   try {
@@ -675,8 +675,8 @@ ${bannerTag}
       color: #7a7a9a; border-radius: 20px; padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
       transition: border-color .15s, color .15s;
     }
-    .pvac-icon-btn:hover { border-color: rgba(255,107,157,0.4); color: #f0f0f5; }
-    .pvac-icon-btn.liked { color: #ff6b9d; border-color: rgba(255,107,157,0.4); }
+    .pvac-icon-btn:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+    .pvac-icon-btn.liked { color: #fff; border-color: rgba(255,255,255,0.4); }
     .pvac-share-wrap { position: relative; }
     .pvac-share-panel {
       display: none; position: absolute; right: 0; top: 38px; background: #12121a; border: 1px solid rgba(255,255,255,0.07);
@@ -705,7 +705,7 @@ ${bannerTag}
     .pvac-cta-titre { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; }
     .pvac-cta-desc { font-size: 13px; color: #c8c8d0; line-height: 1.6; }
     .pvac-cta-btn {
-      align-self: flex-start; background: #ff6b9d; color: #0a0a12; font-weight: 700; text-decoration: none;
+      align-self: flex-start; background: #fff; color: #0a0a12; font-weight: 700; text-decoration: none;
       padding: 11px 20px; border-radius: 8px; font-size: 13px; margin-top: 4px;
     }
 
@@ -737,7 +737,9 @@ ${bannerTag}
       background: linear-gradient(135deg,#1a1a26,#12121a); display: flex; align-items: center; justify-content: center; font-size: 18px;
     }
     .pvac-related-cat { font-size: 10px; color: #ff6b9d; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
-    .pvac-related-titre { font-size: 12px; line-height: 1.4; color: #f0f0f5; margin: 3px 0 0; }
+    .pvac-related-titre { font-size: 12px; line-height: 1.4; color: #fff; margin: 3px 0 0; }
+    .pvac-related-card, .pvac-related-card:visited, .pvac-related-card:hover { color: #fff; }
+    .pvac-related-card:hover .pvac-related-titre, .pvac-related-card:visited .pvac-related-titre { color: #fff; }
   </style>
 </head>
 <body>
@@ -2441,8 +2443,8 @@ function generateGlossaireHub(termes, tools) {
     .term-exemple{font-size:12px;color:var(--text-dim);line-height:1.6;font-style:italic;margin-bottom:10px;padding:10px 14px;background:var(--bg3);border-radius:8px;border-left:2px solid rgba(108,99,255,0.4)}
     .term-exemple strong{font-weight:500;color:#a8a3ff}
     .term-outils{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-    .term-outil-tag{font-size:11px;padding:3px 10px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:6px;color:#ff6b9d;text-decoration:none;transition:all .15s}
-    .term-outil-tag:hover{background:rgba(255,107,157,0.15)}
+    .term-outil-tag{font-size:11px;padding:3px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:#fff;text-decoration:none;transition:all .15s}
+    .term-outil-tag:hover{background:rgba(255,255,255,0.12)}
     .term-fiche-link{display:inline-block;font-size:11px;font-weight:600;color:#00d4aa;text-decoration:none}
     .term-fiche-link:hover{text-decoration:underline}
     .term-brouillon-tag{font-size:10px;color:var(--text-dim);font-style:italic}
@@ -2452,7 +2454,7 @@ function generateGlossaireHub(termes, tools) {
     .glossaire-cta-text span{color:var(--text-muted);font-weight:300;display:block;font-size:12px;margin-top:2px}
     .glossaire-cta-tools{display:flex;gap:8px;flex-wrap:wrap}
     .cta-tool-btn{padding:7px 16px;font-size:12px;font-weight:500;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
-    .cta-tool-btn:hover{border-color:rgba(255,107,157,0.4);color:#ff6b9d;background:rgba(255,107,157,0.06)}
+    .cta-tool-btn:hover{border-color:rgba(255,255,255,0.4);color:#fff;background:rgba(255,255,255,0.06)}
     .no-results{text-align:center;padding:64px 32px;color:var(--text-muted);font-size:15px}
     .no-results .no-results-ico{font-size:40px;margin-bottom:12px}
     html,body{overflow-x:hidden;width:100%;position:relative}

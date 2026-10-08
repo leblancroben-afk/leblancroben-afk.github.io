@@ -163,9 +163,6 @@ const UI = {
   search:     { fr: 'Rechercher un outil',     en: 'Search a tool',        es: 'Buscar una herramienta' },
   breadHome:  { fr: '⌂ Accueil',               en: '⌂ Home',               es: '⌂ Inicio' },
   breadCats:  { fr: 'Catégories',              en: 'Categories',           es: 'Categorías' },
-  submitTitle:{ fr: "Vous ne trouvez pas l'outil qu'il vous faut ?", en: "Can't find the tool you need?", es: '¿No encuentras la herramienta que necesitas?' },
-  submitText: { fr: "Proposez un outil et aidez la communauté à découvrir les meilleures solutions IA.", en: 'Suggest a tool and help the community discover the best AI solutions.', es: 'Propón una herramienta y ayuda a la comunidad a descubrir las mejores soluciones de IA.' },
-  submitBtn:  { fr: 'Soumettre un outil +',    en: 'Submit a tool +',      es: 'Enviar una herramienta +' },
   empty:      { fr: 'Aucun outil publié dans cette catégorie pour le moment.', en: 'No tools published in this category yet.', es: 'Aún no hay herramientas publicadas en esta categoría.' },
 };
 const u = (key, langue) => (UI[key] && (UI[key][langue] || UI[key].fr)) || '';
@@ -324,7 +321,6 @@ ${navHTML(langue)}
 
     <section class="cat-hero" style="--cat-color:${color}">
       <div class="cat-hero-main">
-        <div class="cat-hero-icon">${icon}</div>
         <div class="cat-hero-body">
           <span class="cat-hero-badge">${u('category', langue)}</span>
           <h1 class="cat-hero-title">${escHtml(name)}</h1>
@@ -333,7 +329,6 @@ ${navHTML(langue)}
       </div>
       <div class="cat-hero-illustration" aria-hidden="true">
         <div class="cat-illu-blob"></div>
-        <div class="cat-illu-icon">${icon}</div>
         <div class="cat-illu-bars">
           <span style="height:35%"></span><span style="height:55%"></span>
           <span style="height:40%"></span><span style="height:75%"></span>
@@ -363,15 +358,6 @@ ${navHTML(langue)}
 ${cartesInitiales || `<p class="cat-empty">${u('empty', langue)}</p>`}
     </div>
     <div id="tools-grid-pagination"></div>
-
-    <div class="cat-submit-cta">
-      <span class="cat-submit-ico">♔</span>
-      <div class="cat-submit-text">
-        <strong>${u('submitTitle', langue)}</strong>
-        <p>${u('submitText', langue)}</p>
-      </div>
-      <a href="${R}index.html#tools" class="btn-main">${u('submitBtn', langue)}</a>
-    </div>
 
     ${genererCategoriesPopulaires(autresCategories, langue, hubUrl)}
 
@@ -408,7 +394,6 @@ function genererCategoriesPopulaires(autresCategories, langue, hubUrl) {
     const meta = CATEGORY_META[c.name] || CATEGORY_META._default;
     const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: categoryName(c.name, langue) };
     return `<a class="pop-cat-tile" href="/categorie/${langue}/${c.slug}/">
-      <span class="pop-cat-icon">${meta.icon}</span>
       <span class="pop-cat-name">${i18n.name}</span>
       <span class="pop-cat-count">${c.count} ${u('tools', langue)}</span>
     </a>`;
@@ -463,7 +448,6 @@ function genererPageHub(langue, categories, helpers) {
     const meta = CATEGORY_META[c.name] || CATEGORY_META._default;
     const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: categoryName(c.name, langue) };
     return `<a class="hub-cat-tile" href="/categorie/${langue}/${c.slug}/" data-name="${escHtml(i18n.name.toLowerCase())}">
-      <span class="hub-cat-icon">${meta.icon}</span>
       <span class="hub-cat-name">${escHtml(i18n.name)}</span>
       <span class="hub-cat-count">${c.count} ${u('tools', langue)}</span>
     </a>`;

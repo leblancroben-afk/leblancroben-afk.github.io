@@ -44,7 +44,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v14'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
+const TEMPLATE_VERSION = 'layout-v15'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
 
 function loadState() {
   try {

@@ -107,3 +107,6 @@
 @media (max-width: 480px) {
   .hub-header h1 { font-size: 24px; }
 }
+
+/* Coins des cartes : pilotés par --radius (:root de style.css) */
+.cat-hero, .cat-stat, .pop-cat-tile, .hub-cat-tile { border-radius: var(--radius); }

@@ -3919,3 +3919,18 @@ a:active .blog-title { color: #fff; text-decoration: none; }
 
 /* Nav : la zone profil ne se fait plus recouvrir par le bouton Soumettre */
 .nav-profile-slot { flex-shrink: 0; }
+
+/* ═══════════════════════════════════════
+   COINS DES CARTES — pilotés par --radius (:root)
+   Les cartes avaient des border-radius codés en dur (14-20px) qui
+   ignoraient la variable ; elles lisent maintenant var(--radius).
+   ═══════════════════════════════════════ */
+.tool-card, .blog-card, .home-cat-tile, .editorial-highlight, .editorial-feature,
+.quiz-result-card, .picker-card, .comp-tool-card, .reco-card, .duel-card,
+.tool-header-card, .verdict-card, .sidebar-block, .ressource-card,
+.glossaire-vitrine-card, .ressources-newsletter-card, .tuto-card,
+.outil-video-card, .hub-card, .hub-card::before, .hub-spotlight, .hub-spotlight::before,
+.home-cat-card, .home-top-card, .home-art-card, .home-sp-card,
+.selected-bar-inner, .outil-cta-inner, .nav-avatar-menu {
+  border-radius: var(--radius);
+}

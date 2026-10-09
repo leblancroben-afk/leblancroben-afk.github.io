@@ -96,18 +96,6 @@
       letter-spacing: -0.5px;
     }
     .nav-logo span { color: var(--accent); }
-    .nav-back {
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border-strong);
-      padding-bottom: 2px;
-      transition: color .2s, border-color .2s;
-    }
-    .nav-back:hover { color: var(--text); border-color: var(--text); }
 
     /* ── AUTH WALL ───────────────────────────────── */
     #auth-wall {
@@ -1222,6 +1210,9 @@
       font-family:inherit;
     }
     .mobile-tab.active { color: var(--text); border-bottom-color: var(--text); }
+    a.mobile-tab { display:inline-flex; align-items:center; }
+    .mobile-bell { position:sticky; left:0; z-index:2; background:var(--bg); display:inline-flex; align-items:center; }
+    .sidebar-home { margin-bottom:6px; padding-bottom:9px; border-bottom:1px solid var(--border); border-radius:var(--radius-sm) var(--radius-sm) 0 0; }
 
     /* ══ QUIZ MODAL ══════════════════════════════════ */
     .quiz-modal {
@@ -1658,7 +1649,6 @@
       </text>
     </svg>
   </a>
-  <a href="index.html" class="nav-back" data-i18n="profil.backToDirectory">← Retour à l'annuaire</a>
 </nav>
 
 <!-- ══════════════════════════════════════════════
@@ -1720,11 +1710,19 @@
 
     <!-- ── MOBILE TABS ─────────────────────────── -->
   <div class="mobile-tabs">
+    <button class="mobile-tab mobile-bell" id="notif-bell-btn-mobile" onclick="openNotifModal(event)"
+            title="Notifications" data-i18n-title="profil.notifBellTitle" aria-label="Notifications" data-i18n-aria-label="profil.notifBellTitle">
+      <svg class="ic ic-bell" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.05rem;height:1.05rem;vertical-align:middle"><use href="#ic-bell"/></svg>
+      <span id="notif-badge-mobile" style="display:none;position:absolute;top:6px;right:4px;background:var(--accent2);color:#fff;border-radius:50%;min-width:16px;height:16px;font-size:.65rem;line-height:16px;text-align:center;padding:0 3px">0</span>
+    </button>
+    <a class="mobile-tab" href="index.html" style="text-decoration:none">
+      <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M2.5 8.2L9 2.8l6.5 5.4V15a.5.5 0 0 1-.5.5h-3.5v-4h-5v4H3a.5.5 0 0 1-.5-.5V8.2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg><span data-i18n="profil.navHome">Accueil</span>
+    </a>
     <button class="mobile-tab active" data-section="collections" onclick="switchSection('collections')">
       <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;">
         <path d="M2 4.5C2 3.67 2.67 3 3.5 3H6.5L8.5 5H14.5C15.33 5 16 5.67 16 6.5V13.5C16 14.33 15.33 15 14.5 15H3.5C2.67 15 2 14.33 2 13.5V4.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
       </svg>
-      Collections
+      <span data-i18n="profil.navCollections">Collections</span>
     </button>
     <button class="mobile-tab" data-section="quiz" onclick="switchSection('quiz')">
       <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;">
@@ -1732,33 +1730,36 @@
         <path d="M4.5 8.5V12C4.5 12 7 14.5 9 14.5C11 14.5 13.5 12 13.5 12V8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M15 6V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
       </svg>
-      Quiz
+      <span data-i18n="profil.tooltipQuiz">Quiz</span>
     </button>
     <button class="mobile-tab" data-section="avis" onclick="switchSection('avis')">
       <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;">
         <path d="M15.5 9C15.5 12.1 12.6 14.5 9 14.5C7.8 14.5 6.7 14.2 5.7 13.7L2.5 14.5L3.5 11.6C2.8 10.9 2.5 10 2.5 9C2.5 5.9 5.4 3.5 9 3.5C12.6 3.5 15.5 5.9 15.5 9Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Avis
+      <span data-i18n="profil.tabReviews">Avis</span>
     </button>
     <button class="mobile-tab" data-section="videos" onclick="switchSection('videos')">
       <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;">
         <path d="M4 3C4 2.45 4.45 2 5 2H13C13.55 2 14 2.45 14 3V16L9 12.5L4 16V3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
         <path d="M8 6.5L10.5 8L8 9.5V6.5Z" fill="currentColor"/>
       </svg>
-      Vidéos
+      <span data-i18n="profil.tabVideos">Vidéos</span>
     </button>
     <button class="mobile-tab" data-section="soumissions" onclick="switchSection('soumissions')">
       <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;">
         <path d="M2.5 9L15.5 2.5L13.5 15L9 12L6.5 14.5V11.5L2.5 9Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
       </svg>
-      Soumissions
+      <span data-i18n="profil.tabSubmissions">Soumissions</span>
+    </button>
+    <button class="mobile-tab" data-section="alertes" onclick="switchSection('alertes')">
+      <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="9" r="2" stroke="currentColor" stroke-width="1.4"/></svg><span data-i18n="profil.tabAlerts">Alertes</span>
     </button>
     <button class="mobile-tab" data-section="profil-public" onclick="switchSection('profil-public')">
       <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;">
         <circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.4"/>
         <path d="M3 15c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
       </svg>
-      Profil public
+      <span data-i18n="profil.navPublicProfile">Profil public</span>
     </button>
     <button class="mobile-tab" data-section="parametres" onclick="switchSection('parametres')">
       <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle;margin-right:4px;">
@@ -1800,6 +1801,10 @@
 
             <!-- Navigation -->
       <nav class="sidebar-nav">
+        <a class="sidebar-item sidebar-home" href="index.html" data-tooltip="Accueil" data-i18n-tooltip="profil.navHome" style="text-decoration:none">
+          <span class="sidebar-item-icon"><svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle"><path d="M2.5 8.2L9 2.8l6.5 5.4V15a.5.5 0 0 1-.5.5h-3.5v-4h-5v4H3a.5.5 0 0 1-.5-.5V8.2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
+          <span class="sidebar-item-label" data-i18n="profil.navHome">Accueil</span>
+        </a>
         <button class="sidebar-item active" data-section="collections" data-tooltip="Collections" data-i18n-tooltip="profil.navCollections" onclick="switchSection('collections')">
           <span class="sidebar-item-icon">
             <svg viewBox="0 0 18 18" fill="none" width="16" height="16" style="display:inline-block;vertical-align:middle">
@@ -3807,9 +3812,12 @@
 
   function updateNotifBadge() {
     const unread = notifItems.filter(n => !n.read).length;
-    const badge = document.getElementById('notif-badge');
-    badge.style.display = unread ? 'block' : 'none';
-    badge.textContent = unread > 9 ? '9+' : unread;
+    ['notif-badge', 'notif-badge-mobile'].forEach(id => {
+      const badge = document.getElementById(id);
+      if (!badge) return;
+      badge.style.display = unread ? 'block' : 'none';
+      badge.textContent = unread > 9 ? '9+' : unread;
+    });
   }
 
   // Icône + libellé de type de notif — couvre les 2 familles :
@@ -4348,14 +4356,17 @@
     button.childNodes[0].textContent = isOpen ? t('profil.hideRulesText', langue) : t('profil.showRulesText', langue);
   };
 
-  async function loadMesArticles() {
+  async function loadMesArticles(useCache) {
     const container = document.getElementById('mes-articles-container');
     if (!container) return;
     try {
-      const [articles, outils] = await Promise.all([
-        getArticlesCreateurUtilisateur_(currentUser.uid),
-        getOutilsCreateur_(currentUser.uid)
-      ]);
+      const [articles, outils] = (useCache === true && window.__mesArticlesCache)
+        ? window.__mesArticlesCache
+        : await Promise.all([
+            getArticlesCreateurUtilisateur_(currentUser.uid),
+            getOutilsCreateur_(currentUser.uid)
+          ]);
+      window.__mesArticlesCache = [articles, outils];
       articles.sort((a, b) => (b.created_at?.seconds || 0) - (a.created_at?.seconds || 0));
       // Favicon réel de l'outil (pas une devinette outil_slug + ".com", qui
       // serait fausse pour la plupart des outils — ex. Notion est sur
@@ -6163,6 +6174,25 @@
     // de langue, sinon "Mes alertes" et la cloche restent figés dans
     // l'ancienne langue jusqu'au prochain rechargement.
     if (typeof alertes !== 'undefined' && alertes.length) renderAlertes();
+    // Tout le reste du contenu généré en JS : re-rendu depuis les données
+    // déjà en mémoire (aucun nouvel appel Firestore → changement instantané).
+    if (currentUser) {
+      const safe = (label, fn) => { try { fn(); } catch (err) { console.error('[i18n] re-rendu ' + label, err); } };
+      safe('hero',          () => renderHero());
+      safe('collections',   () => renderCollections());
+      safe('quiz',          () => renderQuizHistory());
+      safe('avis',          () => renderAvis());
+      safe('soumissions',   () => renderSoumissions());
+      safe('videos',        () => renderSavedVideos());
+      safe('quota',         () => renderMcQuotaBox());
+      safe('badges',        () => refreshBadges());
+      safe('mes-articles',  () => { if (window.__mesArticlesCache) loadMesArticles(true); });
+      safe('quiz-etape',    () => {
+        const ov = document.getElementById('quiz-overlay');
+        if (ov && ov.classList.contains('open') && document.getElementById('quiz-options')?.children.length
+            && quizState.step < getProfilQuizQuestions(code).length) renderQuizStep();
+      });
+    }
     if (document.getElementById('notif-modal')?.style.display !== 'none') {
       if (document.getElementById('notif-modal-detail')?.style.display !== 'none' && window.__currentNotifDetailId) {
         showNotifDetail(window.__currentNotifDetailId);
@@ -6375,12 +6405,17 @@
 
   window.saveLangue = async function() {
     const langue = document.getElementById('pref-langue').value;
-    await updateLangue(currentUser.uid, langue);
-    // changerLangueGlobale (i18n.js) persiste dans localStorage — partagé
-    // par toutes les pages du site — et réapplique immédiatement les
-    // traductions statiques sur cette page (nav, sidebar, paramètres...).
+    // 1) Instantané : on applique d'abord la langue localement (DOM statique
+    //    + re-rendu de tout le contenu dynamique via onLangueChange).
     window.changerLangueGlobale(langue);
-    showToast(t('profil.toastLangSaved', window.detecterLangue ? window.detecterLangue() : 'fr'));
+    showToast(t('profil.toastLangSaved', langue));
+    // 2) Puis on enregistre sur le compte en arrière-plan : un échec réseau
+    //    ne doit ni retarder ni annuler le changement visible.
+    try {
+      await updateLangue(currentUser.uid, langue);
+    } catch (err) {
+      console.error('Erreur enregistrement langue:', err);
+    }
   };
 
   window.toggleNewsletter = async function() {

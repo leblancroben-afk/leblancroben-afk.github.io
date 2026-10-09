@@ -303,7 +303,7 @@ ${hreflangTags}
 ${ogLocaleAlternates}
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${R}css/style.css">
   <link rel="stylesheet" href="${R}css/tool-detail.css">
 </head>
@@ -2275,7 +2275,7 @@ ${articleJsonLd}
 ${faqJsonLd}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/niche.css" />
 </head>
@@ -2324,8 +2324,8 @@ ${sharedJS()}
 // (définition flash / erreur fréquente) ont un <style> scopé en page.
 
 const GLOSSAIRE_NIVEAUX = {
-  debutant:      { emoji: '🌱', label: 'Débutant',      couleur: '#00d4aa' },
-  intermediaire: { emoji: '🌿', label: 'Intermédiaire', couleur: '#f5a623' },
+  debutant:      { emoji: '🌱', label: 'Débutant',      couleur: '#34D399' },
+  intermediaire: { emoji: '🌿', label: 'Intermédiaire', couleur: '#E8B84B' },
   avance:        { emoji: '🌳', label: 'Avancé',        couleur: '#ff6b9d' },
 };
 
@@ -2386,87 +2386,87 @@ function generateGlossaireHub(termes, tools) {
   <meta property="og:url" content="${canonicalUrl}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <style>
-    .glossaire-hero{padding:64px 32px 48px;text-align:center;max-width:1100px;margin:0 auto;position:relative}
-    .glossaire-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse at center,rgba(108,99,255,0.12) 0%,transparent 70%);pointer-events:none}
-    .glossaire-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.3);color:#a8a3ff;font-size:12px;font-weight:600;padding:5px 16px;border-radius:20px;margin-bottom:24px;letter-spacing:0.08em;text-transform:uppercase}
-    .glossaire-hero h1{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:16px}
-    .glossaire-hero h1 .grad-purple{background:linear-gradient(135deg,#6c63ff 0%,#00d4aa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .glossaire-hero p{font-size:16px;color:var(--text-muted);max-width:480px;margin:0 auto 32px;font-weight:300;line-height:1.7}
-    .terme-jour-wrap{max-width:1100px;margin:0 auto;padding:0 32px 28px}
-    .terme-jour{background:linear-gradient(135deg,rgba(108,99,255,0.1) 0%,rgba(0,212,170,0.06) 100%);border:1px solid rgba(108,99,255,0.25);border-radius:16px;padding:24px 28px;display:flex;align-items:flex-start;gap:20px}
-    .terme-jour-ico{font-size:32px;flex-shrink:0;line-height:1}
-    .terme-jour-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#a8a3ff;margin-bottom:4px}
-    .terme-jour-nom{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px}
-    .terme-jour-def{font-size:13px;color:var(--text-muted);line-height:1.6;font-weight:300}
-    .glossaire-controls{max-width:1100px;margin:0 auto;padding:0 32px 28px}
-    .glossaire-search-wrap{position:relative;margin-bottom:16px}
-    .glossaire-search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:17px;pointer-events:none}
-    .glossaire-search{width:100%;padding:14px 16px 14px 48px;background:var(--bg2);border:1px solid var(--border);color:var(--text);font-size:14px;border-radius:12px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
-    .glossaire-search::placeholder{color:var(--text-dim)}
-    .glossaire-search:focus{border-color:rgba(108,99,255,0.5)}
-    .alpha-nav{display:flex;gap:3px;flex-wrap:wrap}
-    .alpha-btn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;border:1px solid var(--border);border-radius:7px;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
-    .alpha-btn:hover{border-color:rgba(108,99,255,0.4);color:#a8a3ff;background:rgba(108,99,255,0.08)}
-    .alpha-btn.has-terms{color:var(--text)}
-    .alpha-btn.inactive{opacity:0.3;cursor:default;pointer-events:none}
-    .niveau-filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-    .niveau-filter{padding:5px 14px;font-size:12px;font-weight:500;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
-    .niveau-filter:hover{border-color:var(--border-hover);color:var(--text)}
-    .niveau-filter.active{background:rgba(108,99,255,0.12);border-color:rgba(108,99,255,0.4);color:#a8a3ff}
-    .niveau-filter[data-niveau="debutant"].active{background:rgba(0,212,170,0.1);border-color:rgba(0,212,170,0.4);color:#00d4aa}
-    .niveau-filter[data-niveau="intermediaire"].active{background:rgba(245,166,35,0.1);border-color:rgba(245,166,35,0.4);color:#f5a623}
-    .niveau-filter[data-niveau="avance"].active{background:rgba(255,107,157,0.1);border-color:rgba(255,107,157,0.4);color:#ff6b9d}
-    .glossaire-body{max-width:1100px;margin:0 auto;padding:0 32px 64px}
-    .letter-section{margin-bottom:40px}
-    .letter-anchor{display:flex;align-items:center;gap:16px;margin-bottom:16px}
-    .letter-char{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:rgba(108,99,255,0.5);line-height:1;min-width:36px}
-    .letter-line{flex:1;height:1px;background:var(--border)}
-    .terms-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
-    .term-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;transition:all .2s;position:relative}
-    .term-card:hover{border-color:rgba(108,99,255,0.35);transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,99,255,0.06)}
-    .term-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
-    .term-nom{font-family:'Syne',sans-serif;font-size:15px;font-weight:700}
-    .term-nom-link{color:var(--text);text-decoration:none}
-    .term-nom-link:hover{color:#a8a3ff}
-    .term-niveau{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border-radius:5px;flex-shrink:0}
-    .niveau-debutant{background:rgba(0,212,170,0.1);color:#00d4aa;border:1px solid rgba(0,212,170,0.2)}
-    .niveau-intermediaire{background:rgba(245,166,35,0.1);color:#f5a623;border:1px solid rgba(245,166,35,0.2)}
-    .niveau-avance{background:rgba(255,107,157,0.1);color:#ff6b9d;border:1px solid rgba(255,107,157,0.2)}
-    .term-def{font-size:13px;color:var(--text-muted);line-height:1.6;font-weight:300;margin-bottom:10px}
-    .term-toggle{font-size:11px;color:#a8a3ff;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-bottom:0;transition:color .15s}
-    .term-toggle:hover{color:#fff}
-    .term-extra{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-    .term-extra.open{display:block}
-    .term-exemple{font-size:12px;color:var(--text-dim);line-height:1.6;font-style:italic;margin-bottom:10px;padding:10px 14px;background:var(--bg3);border-radius:8px;border-left:2px solid rgba(108,99,255,0.4)}
-    .term-exemple strong{font-weight:500;color:#a8a3ff}
-    .term-outils{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-    .term-outil-tag{font-size:11px;padding:3px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:#fff;text-decoration:none;transition:all .15s}
-    .term-outil-tag:hover{background:rgba(255,255,255,0.12)}
-    .term-fiche-link{display:inline-block;font-size:11px;font-weight:600;color:#00d4aa;text-decoration:none}
-    .term-fiche-link:hover{text-decoration:underline}
-    .term-brouillon-tag{font-size:10px;color:var(--text-dim);font-style:italic}
-    .glossaire-cta{max-width:1100px;margin:0 auto 16px;padding:0 32px}
-    .glossaire-cta-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-    .glossaire-cta-text{font-size:14px;font-weight:500}
-    .glossaire-cta-text span{color:var(--text-muted);font-weight:300;display:block;font-size:12px;margin-top:2px}
-    .glossaire-cta-tools{display:flex;gap:8px;flex-wrap:wrap}
-    .cta-tool-btn{padding:7px 16px;font-size:12px;font-weight:500;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;text-decoration:none}
-    .cta-tool-btn:hover{border-color:rgba(255,255,255,0.4);color:#fff;background:rgba(255,255,255,0.06)}
-    .no-results{text-align:center;padding:64px 32px;color:var(--text-muted);font-size:15px}
-    .no-results .no-results-ico{font-size:40px;margin-bottom:12px}
-    html,body{overflow-x:hidden;width:100%;position:relative}
+    .glossaire-hero{padding:64px 32px 48px; text-align:center; max-width:1100px; margin:0 auto; position:relative;}
+    .glossaire-hero::before{content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:600px; height:300px; pointer-events:none;}
+    .glossaire-badge{display:inline-flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border-strong); color:var(--text); font-size:12px; font-weight:600; padding:5px 16px; border-radius:20px; margin-bottom:24px; letter-spacing:0.08em; text-transform:uppercase;}
+    .glossaire-hero h1{font-family:var(--serif); font-size:clamp(32px,5vw,56px); font-weight:600; line-height:1.05; letter-spacing:-0.02em; margin-bottom:16px;}
+    .glossaire-hero h1 .grad-purple{color:var(--accent);}
+    .glossaire-hero p{font-size:16px; color:var(--text-muted); max-width:480px; margin:0 auto 32px; font-weight:300; line-height:1.7;}
+    .terme-jour-wrap{max-width:1100px; margin:0 auto; padding:0 32px 28px;}
+    .terme-jour{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px 28px; display:flex; align-items:flex-start; gap:20px;}
+    .terme-jour-ico{font-size:32px; flex-shrink:0; line-height:1;}
+    .terme-jour-label{font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:4px;}
+    .terme-jour-nom{font-family:var(--serif); font-size:20px; font-weight:600; margin-bottom:6px;}
+    .terme-jour-def{font-size:13px; color:var(--text-muted); line-height:1.6; font-weight:300;}
+    .glossaire-controls{max-width:1100px; margin:0 auto; padding:0 32px 28px;}
+    .glossaire-search-wrap{position:relative; margin-bottom:16px;}
+    .glossaire-search-icon{position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--text-dim); font-size:17px; pointer-events:none;}
+    .glossaire-search{width:100%; padding:14px 16px 14px 48px; background:var(--bg2); border:1px solid var(--border); color:var(--text); font-size:14px; border-radius:var(--radius); font-family:var(--sans); outline:none; transition:border-color .2s;}
+    .glossaire-search::placeholder{color:var(--text-dim);}
+    .glossaire-search:focus{border-color:var(--text);}
+    .alpha-nav{display:flex; gap:3px; flex-wrap:wrap;}
+    .alpha-btn{width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; border:1px solid var(--border); border-radius:var(--radius-sm); background:transparent; color:var(--text-muted); cursor:pointer; font-family:var(--sans); transition:all .15s;}
+    .alpha-btn:hover{border-color:var(--text); color:var(--accent); background:rgba(255,107,157,0.08);}
+    .alpha-btn.has-terms{color:var(--text);}
+    .alpha-btn.inactive{opacity:0.3; cursor:default; pointer-events:none;}
+    .niveau-filters{display:flex; gap:6px; flex-wrap:wrap; margin-top:12px;}
+    .niveau-filter{padding:5px 14px; font-size:12px; font-weight:500; border:1px solid var(--border); border-radius:20px; background:transparent; color:var(--text-muted); cursor:pointer; font-family:var(--sans); transition:all .15s;}
+    .niveau-filter:hover{border-color:var(--text); color:var(--text);}
+    .niveau-filter.active{background:var(--text); border-color:var(--text); color:var(--bg);}
+    .niveau-filter[data-niveau="debutant"].active{background:rgba(52,211,153,0.1); border-color:rgba(52,211,153,0.4); color:var(--accent2);}
+    .niveau-filter[data-niveau="intermediaire"].active{background:rgba(232,184,75,0.1); border-color:rgba(232,184,75,0.4); color:var(--accent-amber);}
+    .niveau-filter[data-niveau="avance"].active{background:rgba(255,107,157,0.1); border-color:rgba(255,107,157,0.4); color:var(--accent);}
+    .glossaire-body{max-width:1100px; margin:0 auto; padding:0 32px 64px;}
+    .letter-section{margin-bottom:40px;}
+    .letter-anchor{display:flex; align-items:center; gap:16px; margin-bottom:16px;}
+    .letter-char{font-family:var(--serif); font-size:36px; font-weight:600; color:rgba(255,107,157,0.5); line-height:1; min-width:36px;}
+    .letter-line{flex:1; height:1px; background:var(--border);}
+    .terms-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:10px;}
+    .term-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; transition:all .2s; position:relative;}
+    .term-card:hover{border-color:var(--text); box-shadow:0 8px 24px rgba(255,107,157,0.06);}
+    .term-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:8px;}
+    .term-nom{font-family:var(--serif); font-size:15px; font-weight:600;}
+    .term-nom-link{color:var(--text); text-decoration:none;}
+    .term-nom-link:hover{color:var(--accent);}
+    .term-niveau{font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:2px 8px; border-radius:var(--radius-sm); flex-shrink:0;}
+    .niveau-debutant{background:rgba(52,211,153,0.1); color:var(--accent2); border:1px solid rgba(52,211,153,0.2);}
+    .niveau-intermediaire{background:rgba(232,184,75,0.1); color:var(--accent-amber); border:1px solid rgba(232,184,75,0.2);}
+    .niveau-avance{background:rgba(255,107,157,0.1); color:var(--accent); border:1px solid rgba(255,107,157,0.2);}
+    .term-def{font-size:13px; color:var(--text-muted); line-height:1.6; font-weight:300; margin-bottom:10px;}
+    .term-toggle{font-size:11px; color:var(--accent); background:none; border:none; cursor:pointer; font-family:var(--sans); padding:0; margin-bottom:0; transition:color .15s;}
+    .term-toggle:hover{color:#fff;}
+    .term-extra{display:none; margin-top:12px; padding-top:12px; border-top:1px solid var(--border);}
+    .term-extra.open{display:block;}
+    .term-exemple{font-size:12px; color:var(--text-dim); line-height:1.6; font-style:italic; margin-bottom:10px; padding:10px 14px; background:var(--bg3); border-radius:var(--radius-sm); border-left:2px solid rgba(255,107,157,0.4);}
+    .term-exemple strong{font-weight:500; color:var(--accent);}
+    .term-outils{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
+    .term-outil-tag{font-size:11px; padding:3px 10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); border-radius:var(--radius-sm); color:#fff; text-decoration:none; transition:all .15s;}
+    .term-outil-tag:hover{background:rgba(255,255,255,0.12);}
+    .term-fiche-link{display:inline-block; font-size:11px; font-weight:600; color:var(--accent2); text-decoration:none;}
+    .term-fiche-link:hover{text-decoration:underline;}
+    .term-brouillon-tag{font-size:10px; color:var(--text-dim); font-style:italic;}
+    .glossaire-cta{max-width:1100px; margin:0 auto 16px; padding:0 32px;}
+    .glossaire-cta-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px 28px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;}
+    .glossaire-cta-text{font-size:14px; font-weight:500;}
+    .glossaire-cta-text span{color:var(--text-muted); font-weight:300; display:block; font-size:12px; margin-top:2px;}
+    .glossaire-cta-tools{display:flex; gap:8px; flex-wrap:wrap;}
+    .cta-tool-btn{padding:7px 16px; font-size:12px; font-weight:500; border:1px solid var(--border); border-radius:var(--radius-sm); background:transparent; color:var(--text-muted); cursor:pointer; font-family:var(--sans); transition:all .2s; text-decoration:none;}
+    .cta-tool-btn:hover{border-color:var(--text); color:#fff; background:rgba(255,255,255,0.06);}
+    .no-results{text-align:center; padding:64px 32px; color:var(--text-muted); font-size:15px;}
+    .no-results .no-results-ico{font-size:40px; margin-bottom:12px;}
+    html,body{overflow-x:hidden; width:100%; position:relative;}
     @media (max-width:768px){
-      .glossaire-hero,.terme-jour-wrap,.glossaire-controls,.glossaire-body,.glossaire-cta{padding-left:20px;padding-right:20px}
-      .glossaire-hero::before{width:100%;height:200px}
-      .glossaire-hero div[style*="display:flex"]{flex-direction:column;gap:20px!important}
-      .terms-list{grid-template-columns:1fr}
-      .terme-jour{flex-direction:column;align-items:center;text-align:center}
-      .glossaire-cta-card{flex-direction:column;text-align:center}
-      .glossaire-cta-tools{justify-content:center;width:100%}
-      .cta-tool-btn{flex:1;text-align:center}
+      .glossaire-hero,.terme-jour-wrap,.glossaire-controls,.glossaire-body,.glossaire-cta{padding-left:20px; padding-right:20px;}
+      .glossaire-hero::before{width:100%; height:200px;}
+      .glossaire-hero div[style*="display:flex"]{flex-direction:column; gap:20px!important;}
+      .terms-list{grid-template-columns:1fr;}
+      .terme-jour{flex-direction:column; align-items:center; text-align:center; background:var(--surface); border:1px solid var(--border);}
+      .glossaire-cta-card{flex-direction:column; text-align:center; background:var(--surface);}
+      .glossaire-cta-tools{justify-content:center; width:100%;}
+      .cta-tool-btn{flex:1; text-align:center;}
     }
   </style>
 </head>
@@ -2833,13 +2833,13 @@ ${ogLocaleAlternates}
   ${jsonLdHTML}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/niche.css" />
   <style>
-    .glossaire-niveau-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:14px;border:1px solid;margin-bottom:16px}
-    .glossaire-erreur-box{background:rgba(255,107,157,0.06);border:1px solid rgba(255,107,157,0.25);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.7;color:var(--text)}
-    .glossaire-erreur-box strong{color:#ff6b9d}
+    .glossaire-niveau-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:3px 10px; border-radius:var(--radius); border:1px solid; margin-bottom:16px;}
+    .glossaire-erreur-box{background:rgba(255,107,157,0.06); border:1px solid rgba(255,107,157,0.25); border-radius:var(--radius); padding:16px 20px; font-size:14px; line-height:1.7; color:var(--text);}
+    .glossaire-erreur-box strong{color:var(--accent);}
   </style>
 </head>
 <body>
@@ -3469,7 +3469,7 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/tutoriels-hub.css" />
 </head>
@@ -3630,7 +3630,7 @@ ${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "nam
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/tutoriels-hub.css" />
 </head>

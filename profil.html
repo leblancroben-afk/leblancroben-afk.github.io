@@ -1625,31 +1625,40 @@
 <!-- ── NAV ─────────────────────────────────────── -->
 <nav class="nav">
   <a href="index.html" class="nav-logo" style="text-decoration:none;">
-    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="28" aria-label="Albexia">
-      <style>
-        .pp-poly { animation: ppBuild 1.2s ease-out forwards; opacity: 0; }
-        .pp-text { animation: ppFade 1s ease-out 0.8s forwards; opacity: 0; }
-        @keyframes ppBuild {
-          0%   { opacity:0; transform:translateY(10px) scale(0.8); }
-          100% { opacity:1; transform:translateY(0) scale(1); }
-        }
-        @keyframes ppFade {
-          0%   { opacity:0; transform:translateX(-5px); }
-          100% { opacity:1; transform:translateX(0); }
-        }
-        .pp-p1 { animation-delay:.1s; }
-        .pp-p2 { animation-delay:.3s; }
-        .pp-p3 { animation-delay:.5s; }
-      </style>
-      <polygon class="pp-poly pp-p1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
-      <polygon class="pp-poly pp-p2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-      <polygon class="pp-poly pp-p3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
-      <text class="pp-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#191712" letter-spacing="-0.5">
-        Albe<tspan fill="#ff6b9d">x</tspan>ia
-      </text>
+    <svg
+              viewBox="0 0 130 36"
+              xmlns="http://www.w3.org/2000/svg"
+              height="32"
+              aria-hidden="true">
+
+              <polygon
+                points="2,10 14,32 10,32"
+                fill="#ff6b9d"/>
+
+              <polygon
+                points="14,2 18,12 10,12"
+                fill="#ff6b9d"
+                opacity="0.6"/>
+
+              <polygon
+                points="26,10 14,32 18,32"
+                fill="#ff6b9d"/>
+
+              <text
+                x="36"
+                y="26"
+                font-family="Georgia, serif"
+                font-size="20"
+                font-weight="700"
+                fill="#f0f0f5"
+                letter-spacing="-0.5">
+                Albe<tspan fill="#ff6b9d">x</tspan>ia
+              </text>
+
     </svg>
   </a>
 </nav>
+  
 
 <!-- ══════════════════════════════════════════════
      MUR D'AUTHENTIFICATION

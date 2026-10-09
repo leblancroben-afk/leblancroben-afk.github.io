@@ -292,5 +292,20 @@
   .niche-tools-grid {
   grid-template-columns: 1fr;
 }}
-.niche-cta-btn { border: 1px solid var(--text); transition: background .2s, border-color .2s; }
-.niche-cta-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+/* Bouton « Explorer tout le catalogue » : aucune teinte rose (survol, clic, focus, visité) */
+.niche-cta-btn,
+.niche-cta-btn:link,
+.niche-cta-btn:visited,
+.niche-cta-btn:focus,
+.niche-cta-btn:active {
+  background: var(--text);
+  border: 1px solid var(--text);
+  color: var(--bg);
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity .2s;
+}
+.niche-cta-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+@media (hover: hover) {
+  .niche-cta-btn:hover { background: var(--text); border-color: var(--text); color: var(--bg); opacity: .88; }
+}

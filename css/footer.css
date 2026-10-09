@@ -24,7 +24,7 @@ background: var(--bg) !important;
 border-top: 1px solid var(--border);
 
 color: var(--text-muted);
-font-family: 'DM Sans', sans-serif;
+font-family: var(--sans, 'Inter', -apple-system, 'Segoe UI', sans-serif);
 font-size: 13px;
 line-height: 1.6;
 text-align: left !important;
@@ -144,7 +144,7 @@ fill: var(--accent2);
 
 #site-footer .fl-text {
 fill: var(--text);
-font-family: Georgia, serif;
+font-family: var(--serif, 'Fraunces', Georgia, 'Times New Roman', serif);
 font-size: 20px;
 font-weight: 700;
 letter-spacing: -0.5px;
@@ -240,7 +240,7 @@ padding: 9px 12px;
 
 background: var(--bg3);
 border: 1px solid var(--border);
-border-radius: 8px;
+border-radius: var(--radius-sm, 3px);
 
 color: var(--text);
 font-family: inherit;
@@ -266,7 +266,7 @@ padding: 9px 16px;
 
 background: var(--accent);
 border: 0 !important;
-border-radius: 8px;
+border-radius: var(--radius-sm, 3px);
 box-shadow: none !important;
 
 color: var(--text);
@@ -381,7 +381,7 @@ ACCESSIBILITÉ
 #site-footer .footer-logo:focus-visible {
 outline: 2px solid var(--accent);
 outline-offset: 3px;
-border-radius: 4px;
+border-radius: var(--radius, 4px);
 }
 
 /* =========================================================

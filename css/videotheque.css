@@ -24,7 +24,7 @@
 }
 .vt-hero-logo {
   width: 64px; height: 64px;
-  border-radius: 16px;
+  border-radius: var(--radius, 4px);
   object-fit: contain;
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -42,7 +42,7 @@
   margin-bottom: 8px;
 }
 .vt-hero h1 {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--serif, 'Fraunces', Georgia, 'Times New Roman', serif);
   font-size: 26px;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -64,7 +64,7 @@
   margin: 0 auto;
 }
 .vt-hub-hero h1 {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--serif, 'Fraunces', Georgia, 'Times New Roman', serif);
   font-size: 34px;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -94,7 +94,7 @@
   background: var(--bg2);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--sans, 'Inter', -apple-system, 'Segoe UI', sans-serif);
   font-size: 12.5px;
   padding: 7px 14px;
   border-radius: 999px;
@@ -144,7 +144,7 @@
   font-weight: 700;
   font-size: 14px;
   padding: 12px 24px;
-  border-radius: 10px;
+  border-radius: var(--radius, 4px);
   text-decoration: none;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
@@ -163,7 +163,7 @@
   gap: 10px;
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: var(--radius, 4px);
   padding: 18px;
   text-decoration: none;
   transition: border-color 0.15s ease, transform 0.15s ease;
@@ -172,7 +172,7 @@
 .vt-card-top { display: flex; align-items: center; gap: 10px; }
 .vt-card-logo, .vt-card-logo-fallback {
   width: 36px; height: 36px;
-  border-radius: 9px;
+  border-radius: var(--radius-sm, 3px);
   object-fit: contain;
   background: var(--bg3);
   flex-shrink: 0;

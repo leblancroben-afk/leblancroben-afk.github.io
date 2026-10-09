@@ -44,7 +44,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v16'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
+const TEMPLATE_VERSION = 'layout-v15'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
 
 function loadState() {
   try {
@@ -2307,7 +2307,6 @@ ${relatedHTML}
   <a href="${R}index.html#tools" class="niche-cta-btn">${L.explorer}</a>
 </div>
 
-<a href="${R}index.html#tools" class="niche-back">${L.retour}</a>
 
 ${footerHTML(langue)}
 ${faqHTML ? '<script>function toggleNicheFAQ(i){document.getElementById("nfaq-"+i).classList.toggle("open");}</script>' : ''}
@@ -2393,7 +2392,7 @@ function generateGlossaireHub(termes, tools) {
     .glossaire-hero::before{content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:600px; height:300px; pointer-events:none;}
     .glossaire-badge{display:inline-flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border-strong); color:var(--text); font-size:12px; font-weight:600; padding:5px 16px; border-radius:20px; margin-bottom:24px; letter-spacing:0.08em; text-transform:uppercase;}
     .glossaire-hero h1{font-family:var(--serif); font-size:clamp(32px,5vw,56px); font-weight:600; line-height:1.05; letter-spacing:-0.02em; margin-bottom:16px;}
-    .glossaire-hero h1 .grad-purple{color:var(--accent);}
+    .glossaire-hero h1 .grad-purple{color:var(--text);}
     .glossaire-hero p{font-size:16px; color:var(--text-muted); max-width:480px; margin:0 auto 32px; font-weight:300; line-height:1.7;}
     .terme-jour-wrap{max-width:1100px; margin:0 auto; padding:0 32px 28px;}
     .terme-jour{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px 28px; display:flex; align-items:flex-start; gap:20px;}
@@ -2409,7 +2408,7 @@ function generateGlossaireHub(termes, tools) {
     .glossaire-search:focus{border-color:var(--text);}
     .alpha-nav{display:flex; gap:3px; flex-wrap:wrap;}
     .alpha-btn{width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; border:1px solid var(--border); border-radius:var(--radius-sm); background:transparent; color:var(--text-muted); cursor:pointer; font-family:var(--sans); transition:all .15s;}
-    .alpha-btn:hover{border-color:var(--text); color:var(--accent); background:rgba(255,107,157,0.08);}
+    .alpha-btn:hover{border-color:var(--text); color:var(--text); background:rgba(255,255,255,0.08);}
     .alpha-btn.has-terms{color:var(--text);}
     .alpha-btn.inactive{opacity:0.3; cursor:default; pointer-events:none;}
     .niveau-filters{display:flex; gap:6px; flex-wrap:wrap; margin-top:12px;}
@@ -2422,7 +2421,7 @@ function generateGlossaireHub(termes, tools) {
     .glossaire-body{max-width:1100px; margin:0 auto; padding:0 32px 64px;}
     .letter-section{margin-bottom:40px;}
     .letter-anchor{display:flex; align-items:center; gap:16px; margin-bottom:16px;}
-    .letter-char{font-family:var(--serif); font-size:36px; font-weight:600; color:rgba(255,107,157,0.5); line-height:1; min-width:36px;}
+    .letter-char{font-family:var(--serif); font-size:36px; font-weight:600; color:var(--text); line-height:1; min-width:36px;}
     .letter-line{flex:1; height:1px; background:var(--border);}
     .terms-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:10px;}
     .term-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; transition:all .2s; position:relative;}
@@ -2436,12 +2435,12 @@ function generateGlossaireHub(termes, tools) {
     .niveau-intermediaire{background:rgba(232,184,75,0.1); color:var(--accent-amber); border:1px solid rgba(232,184,75,0.2);}
     .niveau-avance{background:rgba(255,107,157,0.1); color:var(--accent); border:1px solid rgba(255,107,157,0.2);}
     .term-def{font-size:13px; color:var(--text-muted); line-height:1.6; font-weight:300; margin-bottom:10px;}
-    .term-toggle{font-size:11px; color:var(--accent); background:none; border:none; cursor:pointer; font-family:var(--sans); padding:0; margin-bottom:0; transition:color .15s;}
-    .term-toggle:hover{color:#fff;}
+    .term-toggle{font-size:11px; color:var(--text); background:none; border:none; cursor:pointer; font-family:var(--sans); padding:0; margin-bottom:0; transition:color .15s;}
+    .term-toggle:hover{color:var(--text); text-decoration:underline;}
     .term-extra{display:none; margin-top:12px; padding-top:12px; border-top:1px solid var(--border);}
     .term-extra.open{display:block;}
     .term-exemple{font-size:12px; color:var(--text-dim); line-height:1.6; font-style:italic; margin-bottom:10px; padding:10px 14px; background:var(--bg3); border-radius:var(--radius-sm); border-left:2px solid rgba(255,107,157,0.4);}
-    .term-exemple strong{font-weight:500; color:var(--accent);}
+    .term-exemple strong{font-weight:500; color:var(--text);}
     .term-outils{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
     .term-outil-tag{font-size:11px; padding:3px 10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.2); border-radius:var(--radius-sm); color:#fff; text-decoration:none; transition:all .15s;}
     .term-outil-tag:hover{background:rgba(255,255,255,0.12);}
@@ -2482,15 +2481,15 @@ ${navDynamicHTML()}
   <p data-i18n="glossaire.subtitle">Tous les termes de l'intelligence artificielle expliqués simplement — pour débutants et professionnels.</p>
   <div style="display:flex;gap:32px;justify-content:center;margin-top:32px;padding-top:28px;border-top:1px solid var(--border)">
     <div>
-      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#6c63ff">${dataJS.length}</div>
+      <div style="font-family:var(--serif);font-size:28px;font-weight:600;color:var(--text)">${dataJS.length}</div>
       <div style="font-size:12px;color:var(--text-muted);margin-top:2px" data-i18n="glossaire.statTerms">termes définis</div>
     </div>
     <div>
-      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#00d4aa">3</div>
+      <div style="font-family:var(--serif);font-size:28px;font-weight:600;color:var(--text)">3</div>
       <div style="font-size:12px;color:var(--text-muted);margin-top:2px" data-i18n="glossaire.statLevels">niveaux</div>
     </div>
     <div>
-      <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#ff6b9d" id="glossaire-lang-badge">FR</div>
+      <div style="font-family:var(--serif);font-size:28px;font-weight:600;color:var(--text)" id="glossaire-lang-badge">FR</div>
       <div style="font-size:12px;color:var(--text-muted);margin-top:2px" data-i18n="glossaire.statLang">3 langues</div>
     </div>
   </div>
@@ -2577,7 +2576,7 @@ function initAlpha() {
       searchQuery = '';
       document.getElementById('glossaire-search').value = '';
       nav.querySelectorAll('.alpha-btn').forEach(b => { b.style.background=''; b.style.borderColor=''; b.style.color=''; });
-      if (activeLettre) { btn.style.background='rgba(108,99,255,0.2)'; btn.style.borderColor='rgba(108,99,255,0.5)'; btn.style.color='#a8a3ff'; }
+      if (activeLettre) { btn.style.background='rgba(255,255,255,0.12)'; btn.style.borderColor='var(--text)'; btn.style.color='var(--text)'; }
       renderGlossaire();
       if (activeLettre) { const s = document.getElementById('section-'+activeLettre); if (s) s.scrollIntoView({behavior:'smooth',block:'start'}); }
     });

@@ -76,7 +76,8 @@ function navHTML(langue) {
   </div>
   <a href="${R}soumettre/" class="nav-cta">${esc(t.submitCta)}</a>
 </nav>
-<script type="module" src="${R}js/auth-nav.js"></script>`;
+<script type="module" src="${R}js/auth-nav.js"></script>
+<script type="module" src="${R}js/notifications.js"></script>`;
 }
 
 /* ─── FOOTER : petit footer de secours (HTML) + footer unique (js/footer.js) ─── */

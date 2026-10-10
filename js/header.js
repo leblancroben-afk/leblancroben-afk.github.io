@@ -64,6 +64,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.dispatchEvent(new CustomEvent('albexia:header-ready'));
 
+    /* Cloche + toasts de notifications (source unique : Firestore). */
+    import('/js/notifications.js').catch((e) => {
+      console.error('[Albexia] notifications.js : ', e);
+    });
+
     /* Avatar / Connexion : le module a besoin que le header existe déjà. */
     import('/js/auth-nav.js').catch((e) => {
       console.error('[Albexia] auth-nav.js : ', e);

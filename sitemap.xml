@@ -349,6 +349,11 @@
     <loc>https://leblancroben-afk.github.io/categorie/fr/</loc>
   </url>
   <url>
+    <loc>https://leblancroben-afk.github.io/categorie/fr/1/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/categorie/fr/1/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/categorie/fr/1/"/>
+  </url>
+  <url>
     <loc>https://leblancroben-afk.github.io/categorie/fr/audio/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/categorie/fr/audio/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/categorie/en/audio/"/>
@@ -361,6 +366,11 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/categorie/es/contenu/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/categorie/fr/contenu/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/categorie/fr/contenu/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/categorie/fr/generation-video/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/categorie/fr/generation-video/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/categorie/fr/generation-video/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/categorie/fr/juridique/</loc>
@@ -1325,6 +1335,11 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/freepik-ai/tutoriels/"/>
   </url>
   <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/fr/google-veo/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/google-veo/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/google-veo/"/>
+  </url>
+  <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/grok/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/grok/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/grok/"/>
@@ -1337,6 +1352,11 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/grok/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/grok/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/grok/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/fr/ideogram/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/ideogram/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/ideogram/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/kira-systems/</loc>
@@ -1353,11 +1373,21 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/kira-systems/tutoriels/"/>
   </url>
   <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/fr/kling-ai/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/kling-ai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/kling-ai/"/>
+  </url>
+  <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/leonardo-ai/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/leonardo-ai/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/leonardo-ai/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/leonardo-ai/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/leonardo-ai/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/fr/microsoft-designer/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/microsoft-designer/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/microsoft-designer/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/mutiny/</loc>
@@ -1386,6 +1416,11 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/phrasee/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/phrasee/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/phrasee/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/fr/pika/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/pika/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/pika/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/recraft/</loc>

@@ -1,0 +1,762 @@
+name: Thème clair/sombre — installer et brancher
+
+# Un seul clic (Actions → ce workflow → Run workflow). Ce workflow :
+#   1. sauvegarde l'état actuel dans la branche « backup-avant-theme-clair » ;
+#   2. écrit js/theme.js, scripts/build-themes.js, scripts/themes-core.css,
+#      scripts/inject-theme.js ;
+#   3. génère css/themes.css (surcharges du thème clair) ;
+#   4. branche theme.js + themes.css dans toutes les pages et les générateurs ;
+#   5. commit + push.
+# Le thème sombre reste celui de tout le monde : le bouton est masqué
+# (SHOW_BUTTON = false dans js/theme.js). Test : ajouter ?theme=light à une URL.
+# Relançable sans risque (idempotent).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sauvegarde (branche backup-avant-theme-clair)
+        run: |
+          git push origin HEAD:refs/heads/backup-avant-theme-clair || echo "Sauvegarde déjà existante : conservée."
+
+      - name: Écrire les fichiers du système de thèmes
+        run: |
+          mkdir -p js
+          cat > js/theme.js <<'__ALBEXIA_EOF__'
+          /* =========================================================
+             Albexia — theme.js
+             UN SEUL système de thèmes pour tout le site (sombre / clair).
+
+             - Sombre = thème par défaut. Le clair n'est activé que si le visiteur
+               l'a choisi (ou via ?theme=light pour tester).
+             - À charger en TOUT PREMIER dans le <head>, sans defer/async : le
+               thème est posé sur <html data-theme="…"> avant le premier affichage
+               (aucun flash).
+             - Les couleurs vivent dans /css/themes.css (rien n'est stylé ici).
+             - Mémorisation : localStorage « albexia_theme » (dark | light).
+               N'interfère pas avec « albexia_langue ».
+             - Bouton : monté automatiquement dans le <nav> du site (header partagé
+               dynamique ET headers statiques). Un élément [data-theme-toggle]
+               déjà présent dans la page est réutilisé tel quel.
+             - Libellés FR / EN / ES intégrés (fonctionne sans i18n.js).
+             ========================================================= */
+          (function () {
+            'use strict';
+
+            /* ► Mettre à true pour AFFICHER le bouton aux visiteurs (étape finale).
+                 Tant que c'est false : thème sombre pour tous, test possible via
+                 ?theme=light / ?theme=dark. */
+            var SHOW_BUTTON = false;
+
+            var KEY = 'albexia_theme';
+            var LANG_KEY = 'albexia_langue';
+            var THEMES = ['dark', 'light'];
+            var META_COLOR = { dark: '#0a0a0f', light: '#F4F1EA' };
+            var LABELS = {
+              fr: { toLight: 'Passer en mode clair', toDark: 'Passer en mode sombre' },
+              en: { toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
+              es: { toLight: 'Cambiar a modo claro', toDark: 'Cambiar a modo oscuro' }
+            };
+
+            var root = document.documentElement;
+
+            function readStored() {
+              try {
+                var v = localStorage.getItem(KEY);
+                return THEMES.indexOf(v) > -1 ? v : null;
+              } catch (e) { return null; }
+            }
+
+            function store(v) {
+              try { localStorage.setItem(KEY, v); } catch (e) { /* stockage indisponible */ }
+            }
+
+            function readUrl() {
+              try {
+                var m = /[?&]theme=(light|dark)(?:&|#|$)/.exec(location.search);
+                return m ? m[1] : null;
+              } catch (e) { return null; }
+            }
+
+            function current() {
+              return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+            }
+
+            /* ─── Langue (même logique que js/footer.js) ─── */
+            function lang() {
+              var l = '';
+              if (root.hasAttribute('data-static-lang')) {
+                l = (root.lang || '').slice(0, 2).toLowerCase();
+              } else if (typeof window.detecterLangue === 'function') {
+                try { l = window.detecterLangue(); } catch (e) { l = ''; }
+              }
+              if (!LABELS[l]) {
+                try { l = localStorage.getItem(LANG_KEY) || ''; } catch (e) { l = ''; }
+              }
+              if (!LABELS[l]) l = (root.lang || '').slice(0, 2).toLowerCase();
+              return LABELS[l] ? l : 'fr';
+            }
+
+            /* ─── Application du thème ─── */
+            function setMeta(theme) {
+              var head = document.head || document.getElementsByTagName('head')[0];
+              if (!head) return;
+              var meta = head.querySelector('meta[name="theme-color"]');
+              /* Sombre : on ne crée rien (rendu actuel inchangé). Clair : on crée la balise. */
+              if (!meta) {
+                if (theme !== 'light') return;
+                meta = document.createElement('meta');
+                meta.setAttribute('name', 'theme-color');
+                head.appendChild(meta);
+              }
+              meta.setAttribute('content', META_COLOR[theme]);
+            }
+
+            function refreshButtons() {
+              var theme = current();
+              var t = LABELS[lang()];
+              var label = theme === 'light' ? t.toDark : t.toLight;
+              var btns = document.querySelectorAll('[data-theme-toggle]');
+              for (var i = 0; i < btns.length; i++) {
+                btns[i].setAttribute('aria-label', label);
+                btns[i].setAttribute('title', label);
+                btns[i].setAttribute('data-theme-state', theme);
+              }
+            }
+
+            function apply(theme, persist) {
+              if (THEMES.indexOf(theme) === -1) theme = 'dark';
+              root.setAttribute('data-theme', theme);
+              root.style.colorScheme = theme === 'light' ? 'light' : ''; /* sombre : rendu actuel inchangé */
+              setMeta(theme);
+              if (persist) store(theme);
+              refreshButtons();
+              try {
+                document.dispatchEvent(new CustomEvent('albexia:theme-change', { detail: { theme: theme } }));
+              } catch (e) { /* CustomEvent indisponible */ }
+            }
+
+            function toggle() {
+              apply(current() === 'light' ? 'dark' : 'light', true);
+            }
+
+            /* ─── Thème initial (exécuté immédiatement) ─── */
+            var fromUrl = readUrl();
+            if (fromUrl) store(fromUrl);
+            apply(fromUrl || readStored() || 'dark', false);
+
+            window.AlbexiaTheme = { get: current, set: function (t) { apply(t, true); }, toggle: toggle };
+
+            /* ─── Bouton ─── */
+            var ICONS =
+              '<svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true">' +
+                '<circle cx="12" cy="12" r="4"/>' +
+                '<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>' +
+              '</svg>' +
+              '<svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true">' +
+                '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>' +
+              '</svg>';
+
+            function mountButton() {
+              if (!SHOW_BUTTON) return;
+              if (document.querySelector('[data-theme-toggle]')) { refreshButtons(); return; }
+              var nav = document.querySelector('body > nav') || document.querySelector('nav');
+              if (!nav) return;
+
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.className = 'theme-toggle';
+              btn.setAttribute('data-theme-toggle', '');
+              btn.innerHTML = ICONS;
+
+              var before =
+                nav.querySelector('.nav-profile-slot') ||
+                nav.querySelector('.nav-cta');
+              if (before && before.parentNode === nav) nav.insertBefore(btn, before);
+              else nav.appendChild(btn);
+
+              refreshButtons();
+            }
+
+            document.addEventListener('click', function (e) {
+              var el = e.target && e.target.closest ? e.target.closest('[data-theme-toggle]') : null;
+              if (!el) return;
+              e.preventDefault();
+              toggle();
+            });
+
+            /* Autre onglet : suit le changement. */
+            window.addEventListener('storage', function (e) {
+              if (e.key === KEY && THEMES.indexOf(e.newValue) > -1) apply(e.newValue, false);
+              if (e.key === LANG_KEY) refreshButtons();
+            });
+
+            /* Header dynamique (js/header.js) : monté après l'injection. */
+            document.addEventListener('albexia:header-ready', mountButton);
+
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', mountButton);
+            } else {
+              mountButton();
+            }
+          })();
+          __ALBEXIA_EOF__
+          mkdir -p scripts
+          cat > scripts/build-themes.js <<'__ALBEXIA_EOF__'
+          #!/usr/bin/env node
+          /* =========================================================
+             scripts/build-themes.js
+             Génère css/themes.css = scripts/themes-core.css (jetons + bouton,
+             écrits à la main) + surcharges AUTOMATIQUES du thème clair.
+
+             Principe : on lit tous les CSS existants (sans les modifier) et, pour
+             chaque règle contenant une couleur codée en dur, on écrit une
+             surcharge  html[data-theme="light"] <sélecteur> { … }  avec la
+             couleur adaptée au thème papier/encre. Le thème sombre n'a AUCUNE
+             règle ici : il reste exactement celui des fichiers actuels.
+
+             Usage :  node scripts/build-themes.js            (écrit css/themes.css)
+                      node scripts/build-themes.js --report   (rapport seulement)
+             ========================================================= */
+          'use strict';
+          const fs = require('fs');
+          const path = require('path');
+
+          const ROOT = path.resolve(__dirname, '..');
+          const CORE = path.join(__dirname, 'themes-core.css');
+          const OUT = path.join(ROOT, 'css', 'themes.css');
+          const REPORT_ONLY = process.argv.includes('--report');
+
+          /* Ordre = ordre de lecture du rapport (style.css d'abord). */
+          const FILES = [
+            'css/style.css', 'css/footer.css', 'css/tool-detail.css', 'css/tool-page.css',
+            'css/fiche-outil.css', 'css/article.css', 'css/categorie.css', 'css/niche.css',
+            'js/niche.css', 'css/hub.css', 'css/comparateur.css', 'css/comparer.css',
+            'css/alternatives.css', 'css/guide-alternatif.css', 'css/faq.css',
+            'css/tutoriels-hub.css', 'css/videotheque.css', 'css/profile.css', 'css/auth.css'
+          ];
+
+          const INK = '25,23,18'; // #191712
+
+          /* ─────────────── Lecture CSS (parseur minimal, sans dépendance) ─────────────── */
+          function stripComments(s) { return s.replace(/\/\*[\s\S]*?\*\//g, ''); }
+
+          /* Avance jusqu'au caractère `stops` au niveau 0 (hors guillemets / parenthèses). */
+          function scan(s, i, stops) {
+            let depth = 0, q = null;
+            for (; i < s.length; i++) {
+              const c = s[i];
+              if (q) { if (c === '\\') i++; else if (c === q) q = null; continue; }
+              if (c === '"' || c === "'") { q = c; continue; }
+              if (c === '(') { depth++; continue; }
+              if (c === ')') { depth--; continue; }
+              if (depth === 0 && stops.includes(c)) return i;
+            }
+            return -1;
+          }
+
+          function matchBrace(s, open) { // s[open] === '{'
+            let depth = 0, q = null, paren = 0;
+            for (let i = open; i < s.length; i++) {
+              const c = s[i];
+              if (q) { if (c === '\\') i++; else if (c === q) q = null; continue; }
+              if (c === '"' || c === "'") { q = c; continue; }
+              if (c === '(') { paren++; continue; }
+              if (c === ')') { paren--; continue; }
+              if (paren > 0) continue;
+              if (c === '{') depth++;
+              else if (c === '}') { depth--; if (depth === 0) return i; }
+            }
+            return -1;
+          }
+
+          function splitTop(s, sep) {
+            const parts = []; let last = 0, i = 0;
+            while ((i = scan(s, i, sep)) !== -1) { parts.push(s.slice(last, i)); last = ++i; }
+            parts.push(s.slice(last));
+            return parts;
+          }
+
+          function parseDecls(body) {
+            const out = [];
+            for (const raw of splitTop(body, ';')) {
+              const d = raw.trim(); if (!d) continue;
+              const k = d.indexOf(':'); if (k < 1) continue;
+              out.push({ prop: d.slice(0, k).trim().toLowerCase(), value: d.slice(k + 1).trim() });
+            }
+            return out;
+          }
+
+          function parseNodes(s) {
+            const nodes = []; let i = 0;
+            while (i < s.length) {
+              while (i < s.length && /\s/.test(s[i])) i++;
+              if (i >= s.length) break;
+              const stop = scan(s, i, ['{', ';']);
+              if (stop === -1) break;
+              const prelude = s.slice(i, stop).trim();
+              if (s[stop] === ';') { i = stop + 1; continue; } // @import, @charset…
+              const end = matchBrace(s, stop);
+              if (end === -1) break;
+              const body = s.slice(stop + 1, end);
+              i = end + 1;
+              if (prelude.startsWith('@')) {
+                if (/^@(media|supports)\b/i.test(prelude)) nodes.push({ at: prelude, children: parseNodes(body) });
+                /* @keyframes, @font-face, @page… ignorés */
+              } else {
+                nodes.push({ selector: prelude, decls: parseDecls(body) });
+              }
+            }
+            return nodes;
+          }
+
+          /* ─────────────── Correspondances de couleurs ─────────────── */
+          const TEXT_PROPS = /^(color|fill|stroke|caret-color|text-decoration-color|-webkit-text-fill-color|-webkit-text-stroke-color)$/;
+          const SHADOW_PROPS = /(shadow|filter)/;
+
+          /* Sélecteurs dont le blanc doit rester blanc (par-dessus images / fonds sombres fixes). */
+          const KEEP_WHITE_SEL = /(#lb-|lightbox|thumb|gallery|[-_]play(?![a-z])|hub-spotlight|badge-short|thumb-duree|\.toast-link-btn|\.lb-)/i;
+
+          /* Fond « coloré » : le texte blanc posé dessus reste blanc. */
+          function coloredBg(bg) {
+            if (!bg) return false;
+            if (/var\(--(accent|purple|pink|teal|danger)/i.test(bg)) return true;
+            if (/gradient\(/i.test(bg)) return true;
+            if (/rgba?\(\s*0\s*,\s*0\s*,\s*0/i.test(bg)) return true;
+            if (/rgba?\(\s*(255\s*,\s*107|108\s*,\s*99|52\s*,\s*211|0\s*,\s*212)/i.test(bg)) return true;
+            const hexes = bg.match(/#[0-9a-f]{3,8}\b/gi) || [];
+            return hexes.some(h => !['#fff', '#ffffff', '#f4f1ea'].includes(h.toLowerCase()) && !/^#(0a0a0f|12121a|16161f|1e1e2a)$/i.test(h));
+          }
+
+          function norm(hex) {
+            let h = hex.toLowerCase();
+            if (h.length === 4) h = '#' + h[1] + h[1] + h[2] + h[2] + h[3] + h[3];
+            return h;
+          }
+
+          /* ctx = { selector, isText, isShadow, bg, primaryBtn } */
+          function mapHex(h, ctx) {
+            const x = norm(h);
+            switch (x) {
+              case '#ffffff':
+                if (ctx.isText) return keepWhiteText(ctx) ? null : 'var(--text)';
+                if (ctx.primaryBtn) return 'var(--text)';
+                return null;
+              case '#0a0a0f': return ctx.isText ? (ctx.primaryBtn ? 'var(--bg)' : null) : 'var(--bg)';
+              case '#12121a': case '#16161f': case '#13131f': return ctx.isText ? null : 'var(--surface)';
+              case '#1e1e2a': case '#1a1a2e': return ctx.isText ? null : 'var(--surface2)';
+              case '#f0f0f5': return ctx.isText ? 'var(--text)' : null;
+              case '#e8e8ee': return ctx.isText ? 'var(--text)' : '#33312a';
+              case '#55556e': case '#4a4a6a': return ctx.isText ? 'var(--text-dim)' : null;
+              case '#8a8a9e': case '#7a7a9a': case '#9090a8': case '#8888aa': return ctx.isText ? 'var(--text-muted)' : null;
+              case '#33334a': return ctx.isText ? null : 'var(--border-strong)';
+              case '#26263a': return ctx.isText ? null : 'var(--border)';
+              case '#a8a3ff': case '#6c63ff': return ctx.isText ? '#5a50d0' : null;
+              case '#ff9dbc': case '#ff4d8b': return ctx.isText ? 'var(--accent-ink)' : null;
+              case '#ff6b9d': return ctx.isText ? 'var(--accent-ink)' : 'var(--accent)';
+              case '#34d399': case '#00d4aa': case '#00bfa0': case '#009b80': return ctx.isText ? 'var(--accent2)' : null;
+              case '#f5a623': case '#e8b84b': return ctx.isText ? '#b45309' : null;
+              case '#e05c5c': case '#ff4d4d': case '#f87171': case '#ff6b78': case '#ff7070': return ctx.isText ? 'var(--danger)' : null;
+              default: return null;
+            }
+          }
+
+          function keepWhiteText(ctx) {
+            return KEEP_WHITE_SEL.test(ctx.selector) || coloredBg(ctx.bg);
+          }
+
+          function fmtAlpha(a) { return String(Math.round(a * 100) / 100).replace(/^0\./, '.').replace(/^\./, '0.'); }
+
+          function mapRgb(r, g, b, a, ctx) {
+            const hasA = a !== undefined;
+            const alpha = hasA ? (a.endsWith('%') ? parseFloat(a) / 100 : parseFloat(a)) : 1;
+            const out = (rgb, al) => hasA ? `rgba(${rgb},${al})` : `rgb(${rgb})`;
+            const key = `${r},${g},${b}`;
+            if (key === '255,255,255') {
+              if (ctx.isText) return keepWhiteText(ctx) ? null : out(INK, a);
+              if (KEEP_WHITE_SEL.test(ctx.selector)) return null;
+              return out(INK, a);
+            }
+            if (key === '0,0,0') {
+              return ctx.isShadow && hasA ? out(INK, fmtAlpha(alpha * 0.4)) : null;
+            }
+            if (key === '10,10,15') return ctx.isText ? null : (hasA ? out('244,241,234', a) : 'var(--bg)');
+            if (key === '255,107,157') return out('232,68,124', a);
+            if (key === '52,211,153' || key === '0,212,170') return out('14,122,95', a);
+            if (key === '245,166,35' || key === '232,184,75') return out('180,83,9', a);
+            if (key === '224,92,92' || key === '255,77,77' || key === '255,71,87') return out('194,57,43', a);
+            return null;
+          }
+
+          /* Remplace toutes les couleurs d'une valeur ; protège url(...). */
+          function mapValue(value, ctx) {
+            const holes = [];
+            let v = value.replace(/url\([^)]*\)/gi, m => { holes.push(m); return `\u0000${holes.length - 1}\u0000`; });
+
+            v = v.replace(/rgba?\(\s*(\d+)\s*[, ]\s*(\d+)\s*[, ]\s*(\d+)\s*(?:[,/]\s*([\d.]+%?)\s*)?\)/gi,
+              (m, r, g, b, a) => mapRgb(+r, +g, +b, a, ctx) || m);
+            v = v.replace(/#[0-9a-fA-F]{3,8}\b/g, m => mapHex(m, ctx) || m);
+            v = v.replace(/(^|[\s,(])white(?=$|[\s,;)])/gi, (m, p) => {
+              const r = mapHex('#ffffff', ctx); return r ? p + r : m;
+            });
+
+            return v.replace(/\u0000(\d+)\u0000/g, (_, i) => holes[+i]);
+          }
+
+          /* ─────────────── Génération des surcharges ─────────────── */
+          const PREFIX = 'html[data-theme="light"] ';
+
+          function prefixSelector(sel) {
+            const parts = splitTop(sel, ',').map(s => s.trim()).filter(Boolean);
+            const kept = [];
+            for (const p of parts) {
+              if (/^(html|:root|\*)(?![\w-])/.test(p) && !/^\*\s*\S/.test(p)) continue;
+              if (/fo-theme-template/.test(p)) continue; // thème « template » des fiches : traité à part
+              kept.push(PREFIX + p);
+            }
+            return kept;
+          }
+
+          const stats = { rules: 0, decls: 0, perFile: {}, unmapped: {}, residual: {}, residualEx: {}, collisions: [] };
+          const seenSel = {}; // sélecteur -> fichier (détection de collisions entre fichiers)
+
+
+          /* Couleurs « sensibles au thème » restées telles quelles (très claires, très
+             sombres ou grises) : liste de suivi à relire après génération. */
+          function lumOf(r, g, b) {
+            const f = c => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+            return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+          }
+          function noteResidual(d, selector, file) {
+            if (d.prop.startsWith('--')) return;
+            if (/fo-theme-template/.test(selector)) return;
+            const v = d.value.replace(/url\([^)]*\)/gi, '');
+            const lits = [];
+            (v.match(/#[0-9a-fA-F]{3,8}\b/g) || []).forEach(h => {
+              let x = norm(h); if (x.length < 7) return;
+              lits.push([parseInt(x.slice(1, 3), 16), parseInt(x.slice(3, 5), 16), parseInt(x.slice(5, 7), 16)]);
+            });
+            (v.match(/rgba?\(\s*\d+\s*[, ]\s*\d+\s*[, ]\s*\d+/gi) || []).forEach(m => {
+              const n = m.match(/\d+/g).map(Number); if (n[0] === 0 && n[1] === 0 && n[2] === 0) return; lits.push(n);
+            });
+            const bad = lits.some(([r, g, b]) => { const l = lumOf(r, g, b); const grey = Math.max(r, g, b) - Math.min(r, g, b) < 40; return l > 0.8 || (l < 0.03 && grey); });
+            if (!bad) return;
+            stats.residual[file] = (stats.residual[file] || 0) + 1;
+            (stats.residualEx[file] = stats.residualEx[file] || []).push(`${selector.replace(/\s+/g, ' ').slice(0, 50)} { ${d.prop}: ${d.value.slice(0, 50)} }`);
+          }
+
+          function processRule(node, file, atCtx) {
+            const sels = prefixSelector(node.selector);
+            if (!sels.length) return null;
+            const dmap = {};
+            for (const d of node.decls) dmap[d.prop] = d.value;
+            const bg = dmap['background'] || dmap['background-color'] || dmap['background-image'] || '';
+            const col = (dmap['color'] || '').trim();
+            const primaryBtn =
+              /^(#fff|#ffffff|white)\b/i.test((dmap['background'] || dmap['background-color'] || '').trim()) &&
+              /(btn|cta|pg-|submit|button)/i.test(node.selector) &&
+              !/(logo|img|thumb|fo-alt)/i.test(node.selector) &&
+              (!col || /^(var\(--bg\)|#0a0a0f)/i.test(col));
+
+            const changed = [];
+            for (const d of node.decls) {
+              if (d.prop.startsWith('--')) continue;
+              const ctx = {
+                selector: node.selector, bg, primaryBtn,
+                isText: TEXT_PROPS.test(d.prop), isShadow: SHADOW_PROPS.test(d.prop)
+              };
+              let nv = mapValue(d.value, ctx);
+
+              /* texte en couleur d'accent : version « encre » lisible sur papier */
+              if (d.prop === 'color' && /^var\(--(accent|purple|pink)\)(\s*!important)?$/i.test(d.value.trim()) && !coloredBg(bg)) {
+                nv = d.value.replace(/var\(--(accent|purple|pink)\)/i, 'var(--accent-ink)');
+              }
+              if (nv !== d.value) changed.push(`${d.prop}: ${nv}`);
+              else noteResidual(d, node.selector, file);
+            }
+            if (primaryBtn && !col && changed.length) changed.push('color: var(--bg)');
+            if (!changed.length) return null;
+
+            for (const s of sels) {
+              const k = atCtx + '|' + s;
+              if (seenSel[k] && seenSel[k] !== file) stats.collisions.push(`${s} (${seenSel[k]} / ${file})`);
+              seenSel[k] = file;
+            }
+            stats.rules++; stats.decls += changed.length;
+            stats.perFile[file] = (stats.perFile[file] || 0) + changed.length;
+            return `${sels.join(',\n')} { ${changed.join('; ')}; }`;
+          }
+
+          function processNodes(nodes, file, atCtx) {
+            const out = [];
+            for (const n of nodes) {
+              if (n.children) {
+                const inner = processNodes(n.children, file, atCtx + '@' + n.at);
+                if (inner.length) out.push(`${n.at} {\n${inner.join('\n')}\n}`);
+              } else {
+                const r = processRule(n, file, atCtx);
+                if (r) out.push(r);
+              }
+            }
+            return out;
+          }
+
+          /* Couleurs restantes (non traitées) : pour le suivi de couverture. */
+          function countRemaining(nodes, file) {
+            const walk = ns => { for (const n of ns) {
+              if (n.children) { walk(n.children); continue; }
+              if (/fo-theme-template/.test(n.selector)) continue;
+              for (const d of n.decls) {
+                if (d.prop.startsWith('--')) continue;
+                const v = d.value.replace(/url\([^)]*\)/gi, '');
+                const m = v.match(/#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g);
+                if (m) stats.unmapped[file] = (stats.unmapped[file] || 0) + m.length;
+              }
+            } };
+            walk(nodes);
+          }
+
+          /* ─────────────── Exécution ─────────────── */
+          const blocks = [];
+          for (const rel of FILES) {
+            const abs = path.join(ROOT, rel);
+            if (!fs.existsSync(abs)) { console.warn('⚠ introuvable :', rel); continue; }
+            const nodes = parseNodes(stripComments(fs.readFileSync(abs, 'utf8')));
+            const rules = processNodes(nodes, rel, '');
+            countRemaining(nodes, rel);
+            if (rules.length) blocks.push(`/* ── ${rel} ── */\n${rules.join('\n')}`);
+          }
+
+          if (!fs.existsSync(CORE)) { console.error('✖ scripts/themes-core.css manquant'); process.exit(1); }
+          const core = fs.readFileSync(CORE, 'utf8').trimEnd();
+          const css =
+          `${core}
+
+          /* ═══════════════════════════════════════════════════════════
+             SURCHARGES AUTOMATIQUES DU THÈME CLAIR
+             Générées par scripts/build-themes.js — NE PAS ÉDITER À LA MAIN
+             (modifier scripts/themes-core.css ou le script, puis relancer).
+             Le thème sombre n'a aucune règle ici.
+             ═══════════════════════════════════════════════════════════ */
+
+          ${blocks.join('\n\n')}
+          `;
+
+          console.log(`Règles de surcharge : ${stats.rules} · déclarations : ${stats.decls} · taille : ${(css.length / 1024).toFixed(1)} Ko`);
+          console.log('Déclarations surchargées par fichier :', stats.perFile);
+          console.log('À relire — couleurs très claires / très sombres / grises NON surchargées :', stats.residual);
+          if (process.argv.includes('--examples')) for (const f in stats.residualEx) { console.log('\n' + f); stats.residualEx[f].slice(0, 40).forEach(e => console.log('   ' + e)); }
+          console.log(`Sélecteurs présents dans plusieurs fichiers avec surcharge : ${stats.collisions.length}`);
+          if (stats.collisions.length) console.log('  ex. ' + stats.collisions.slice(0, 8).join('\n      '));
+
+          if (!REPORT_ONLY) { fs.writeFileSync(OUT, css); console.log('✔ écrit :', path.relative(ROOT, OUT)); }
+          __ALBEXIA_EOF__
+          mkdir -p scripts
+          cat > scripts/themes-core.css <<'__ALBEXIA_EOF__'
+          /* ══════════════════════════════════════════════════════════════
+             ALBEXIA — THÈMES (clair / sombre)           css/themes.css
+             Chargé en DERNIER sur chaque page, avec js/theme.js dans le <head>.
+
+             • SOMBRE = thème par défaut : aucune règle ici, il reste défini par les
+               fichiers CSS existants (aucune couleur sombre n'est touchée).
+             • CLAIR  = « papier & encre » (direction éditoriale de profil.html) :
+               on redéfinit les mêmes jetons sous html[data-theme="light"], plus
+               spécifique que n'importe quel :root (même ceux écrits dans les pages),
+               puis des surcharges générées corrigent les couleurs codées en dur.
+
+             Fichier produit par scripts/build-themes.js à partir de
+             scripts/themes-core.css (ce noyau) + les CSS du site.
+             ══════════════════════════════════════════════════════════════ */
+
+          html[data-theme="light"] {
+            color-scheme: light;
+
+            /* surfaces */
+            --bg:            #F4F1EA;   /* papier */
+            --bg2:           #FFFFFF;   /* feuille */
+            --bg3:           #ECE8DE;   /* papier recyclé */
+            --surface:       #FFFFFF;
+            --surface2:      #ECE8DE;
+
+            /* filets */
+            --border:        #DAD5C7;
+            --border-hover:  #B7B0A0;
+            --border-strong: #B7B0A0;
+
+            /* encre */
+            --text:          #191712;
+            --text-muted:    #716C5D;
+            --muted:         #716C5D;
+            --text-dim:      #716C5D;
+
+            /* accents */
+            --accent:        #E8447C;   /* rose Albexia (boutons, icônes, décors) */
+            --accent-ink:    #B02A5C;   /* rose pour le TEXTE (≥ 5,6:1 sur papier) */
+            --accent2:       #0E7A5F;   /* vert rédactionnel */
+            --accent3:       #0E7A5F;
+            --accent-amber:  #CA9A2E;   /* étoiles, avertissements */
+            --danger:        #C2392B;
+
+            /* alias hérités du markup */
+            --purple:        #E8447C;
+            --pink:          #E8447C;
+            --teal:          #0E7A5F;
+            --amber:         #CA9A2E;
+          }
+
+          /* Logo : le texte est en fill="#f0f0f5" dans le SVG (invisible sur papier). */
+          html[data-theme="light"] .logo-text { fill: var(--text); }
+
+          /* ── Bouton de bascule (monté par js/theme.js) ── */
+          .theme-toggle {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; padding: 0; margin-left: 10px; flex-shrink: 0;
+            border: 1px solid var(--border); border-radius: var(--radius-sm, 3px);
+            background: transparent; color: var(--text); cursor: pointer;
+            transition: background .2s, border-color .2s;
+            -webkit-tap-highlight-color: transparent;
+          }
+          .theme-toggle:hover { border-color: var(--border-hover); background: color-mix(in srgb, var(--text) 8%, transparent); }
+          .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+          .theme-toggle svg {
+            width: 16px; height: 16px; fill: none; stroke: currentColor;
+            stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+          }
+          /* sombre → on propose le soleil ; clair → on propose la lune */
+          .theme-toggle .ic-moon { display: none; }
+          html[data-theme="light"] .theme-toggle .ic-sun  { display: none; }
+          html[data-theme="light"] .theme-toggle .ic-moon { display: inline; }
+          __ALBEXIA_EOF__
+          mkdir -p scripts
+          cat > scripts/inject-theme.js <<'__ALBEXIA_EOF__'
+          #!/usr/bin/env node
+          /* =========================================================
+             scripts/inject-theme.js
+             Branche le système de thèmes sur le site :
+               1. <script src="/js/theme.js"></script> juste après <meta charset>
+                  (premier script de la page → pas de flash de thème) ;
+               2. <link rel="stylesheet" href="/css/themes.css"> juste avant </head>
+                  (dernier CSS → ses surcharges l'emportent).
+             Appliqué :
+               - à toutes les pages .html (sauf components/, admin/, backups/ et
+                 les pages qui n'utilisent pas css/style.css) ;
+               - aux gabarits des générateurs (gen-fiches.js, categorie-template.js,
+                 fiche-outil.js) pour que les pages futures l'incluent aussi.
+             Idempotent : relancer ne change rien. Aucune suppression de contenu.
+
+             Usage :  node scripts/inject-theme.js          (applique)
+                      node scripts/inject-theme.js --dry    (liste seulement)
+             ========================================================= */
+          'use strict';
+          const fs = require('fs');
+          const path = require('path');
+
+          const ROOT = path.resolve(__dirname, '..');
+          const DRY = process.argv.includes('--dry');
+
+          const GENERATORS = ['gen-fiches.js', 'categorie-template.js', 'fiche-outil.js'];
+          const SKIP_DIRS = new Set(['.git', 'node_modules', 'components', 'admin', 'backups']);
+
+          const CHARSET_RE = /<meta\s+charset=["']?[^>]*>/gi;
+
+          function inject(text, prefix, all) {
+            if (/js\/theme\.js/.test(text)) return null; // déjà fait
+            const script = `<script src="${prefix}js/theme.js"></script>`;
+            const link = `<link rel="stylesheet" href="${prefix}css/themes.css">`;
+            let out = text, n = 0;
+
+            const putScript = (re) => {
+              out = out.replace(re, (m) => { n++; return `${m}\n  ${script}`; });
+            };
+
+            if (all) {
+              putScript(CHARSET_RE);
+            } else {
+              const first = new RegExp(CHARSET_RE.source, 'i');
+              if (first.test(out)) putScript(first);
+              else out = out.replace(/<head[^>]*>/i, (m) => { n++; return `${m}\n  ${script}`; });
+            }
+            if (!n) return null;
+
+            const headClose = all ? /<\/head>/gi : /<\/head>/i;
+            out = out.replace(headClose, `  ${link}\n</head>`);
+            return out;
+          }
+
+          function walk(dir, acc) {
+            for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+              if (e.isDirectory()) { if (!SKIP_DIRS.has(e.name)) walk(path.join(dir, e.name), acc); }
+              else if (e.name.endsWith('.html')) acc.push(path.join(dir, e.name));
+            }
+            return acc;
+          }
+
+          const res = { pages: 0, already: 0, noStyle: [], noHead: [], gens: [] };
+
+          for (const f of walk(ROOT, [])) {
+            const rel = path.relative(ROOT, f);
+            const src = fs.readFileSync(f, 'utf8');
+            if (/js\/theme\.js/.test(src)) { res.already++; continue; }
+            if (!/css\/style\.css/.test(src)) { res.noStyle.push(rel); continue; }
+            if (!/<\/head>/i.test(src)) { res.noHead.push(rel); continue; }
+            const out = inject(src, '/', false);
+            if (!out) { res.noHead.push(rel); continue; }
+            if (!DRY) fs.writeFileSync(f, out);
+            res.pages++;
+          }
+
+          for (const g of GENERATORS) {
+            const f = path.join(ROOT, g);
+            if (!fs.existsSync(f)) continue;
+            const src = fs.readFileSync(f, 'utf8');
+            const heads = (src.match(/<\/head>/gi) || []).length;
+            const charsets = (src.match(CHARSET_RE) || []).length;
+            if (heads !== charsets) { res.gens.push(`${g} : ${charsets} charset ≠ ${heads} </head> → NON modifié`); continue; }
+            const out = inject(src, '${R}', true);
+            if (!out) { res.gens.push(`${g} : déjà branché`); continue; }
+            if (!DRY) fs.writeFileSync(f, out);
+            res.gens.push(`${g} : ${heads} gabarits`);
+          }
+
+          console.log(`${DRY ? '[SIMULATION] ' : ''}Pages HTML modifiées : ${res.pages} · déjà branchées : ${res.already}`);
+          if (res.noStyle.length) console.log(`Ignorées (pas de css/style.css) : ${res.noStyle.join(', ')}`);
+          if (res.noHead.length) console.log(`Ignorées (pas de <head> exploitable) : ${res.noHead.join(', ')}`);
+          console.log('Générateurs :\n  ' + (res.gens.join('\n  ') || '—'));
+          __ALBEXIA_EOF__
+
+      - name: Générer css/themes.css
+        run: node scripts/build-themes.js
+
+      - name: Brancher les pages et les générateurs
+        run: node scripts/inject-theme.js
+
+      - name: Vérifier la syntaxe
+        run: |
+          node --check js/theme.js
+          node --check scripts/build-themes.js
+          node --check scripts/inject-theme.js
+          node --check gen-fiches.js
+          node --check categorie-template.js
+          node --check fiche-outil.js
+
+      - name: Commit et push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "🎨 Thèmes clair/sombre : socle (theme.js, themes.css) + branchement des pages"
+          git push

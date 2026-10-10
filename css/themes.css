@@ -67,6 +67,11 @@ html[data-theme="light"] .logo-text { fill: var(--text); }
   width: 16px; height: 16px; fill: none; stroke: currentColor;
   stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
 }
+/* ── Header : espacement entre le bouton de thème et l'avatar (correctif ciblé) ──
+   Le bouton de thème n'avait qu'une marge gauche et .nav-profile-slot aucune : 0 px entre les deux. */
+.theme-toggle + .nav-profile-slot,
+.notif-wrap + .nav-profile-slot { margin-left: 10px; }
+
 /* sombre → on propose le soleil ; clair → on propose la lune */
 .theme-toggle .ic-moon { display: none; }
 html[data-theme="light"] .theme-toggle .ic-sun  { display: none; }

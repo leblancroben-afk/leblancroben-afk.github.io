@@ -1,0 +1,53 @@
+name: Thème — régénérer css/themes.css
+
+# Se lance tout seul quand un CSS de css/ (ou js/niche.css) est modifié,
+# et à la main (Actions → Run workflow). Il relit tes CSS, régénère
+# css/themes.css (surcharges du thème clair) et ne commit que si le
+# résultat a changé. Le thème sombre n'est jamais touché.
+# Pour changer une couleur du thème clair lui-même : modifier
+# scripts/themes-core.css, puis relancer ce workflow.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'css/**'
+      - 'js/niche.css'
+      - 'scripts/themes-core.css'
+      - 'scripts/build-themes.js'
+      - '!css/themes.css'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Régénérer css/themes.css
+        run: node scripts/build-themes.js --examples
+
+      - name: Vérifier que seul css/themes.css a changé
+        run: |
+          git status --short
+          CHANGED=$(git status --porcelain | awk '{print $2}')
+          for f in $CHANGED; do
+            [ "$f" = "css/themes.css" ] || { echo "Fichier inattendu : $f"; exit 1; }
+          done
+
+      - name: Commit et push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add css/themes.css
+          git diff --staged --quiet && echo "themes.css déjà à jour." || git commit -m "🎨 Thème clair : themes.css régénéré"
+          git push

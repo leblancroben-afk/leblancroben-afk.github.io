@@ -18,10 +18,10 @@
 (function () {
   'use strict';
 
-  /* ► Mettre à true pour AFFICHER le bouton aux visiteurs (étape finale).
-       Tant que c'est false : thème sombre pour tous, test possible via
-       ?theme=light / ?theme=dark. */
-  var SHOW_BUTTON = false;
+  /* ► true = bouton visible pour tous les visiteurs.
+       false = bouton masqué (thème sombre pour tous ; test possible via
+       ?theme=light / ?theme=dark). */
+  var SHOW_BUTTON = true;
 
   var KEY = 'albexia_theme';
   var LANG_KEY = 'albexia_langue';
@@ -158,6 +158,14 @@
     if (!el) return;
     e.preventDefault();
     toggle();
+  });
+
+  /* Libellé toujours dans la langue courante : changerLangueGlobale() (i18n.js)
+     ne prévient pas, on rafraîchit donc au survol / focus / toucher du bouton. */
+  ['pointerover', 'focusin', 'touchstart'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) {
+      if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) refreshButtons();
+    }, true);
   });
 
   /* Autre onglet : suit le changement. */

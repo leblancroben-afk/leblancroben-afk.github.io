@@ -1619,6 +1619,12 @@
     .sidebar-item-icon svg { display:block; }
   </style>
   <link rel="stylesheet" href="/css/themes.css">
+
+  <style id="theme-light-page-fixes">
+    /* Thème clair : les règles propres à cette page priment sur les surcharges génériques de themes.css. */
+    html[data-theme="light"] body .auth-tab.active { color: var(--bg); }
+    html[data-theme="light"] body .quiz-option.selected { background: var(--text); border-color: var(--text); color: var(--bg); }
+  </style>
 </head>
 <body>
 

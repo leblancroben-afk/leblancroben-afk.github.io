@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>404 — Albexia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -262,6 +263,35 @@
       .headline { font-size: clamp(1.2rem, 5.5vw, 1.6rem); }
       .link-main { font-size: .85rem; }
       .foot { font-size: .55rem; }
+    }
+  
+    /* ── THÈME CLAIR (js/theme.js pose html[data-theme="light"]) — marqueur : THEME-CLAIR-404 ── */
+    html[data-theme="light"] {
+      --pink:  #E8447C;
+      --dark:  #F4F1EA;                 /* papier */
+      --off:   #191712;                 /* encre */
+      --muted: #716C5D;
+      --glass: rgba(25,23,18,.04);
+      --pink-ink: #B02A5C;              /* rose pour le texte (contraste >= 5,6:1) */
+    }
+    html[data-theme="light"] .lang-btn { border-color: rgba(25,23,18,.18); }
+    html[data-theme="light"] .lang-btn:hover,
+    html[data-theme="light"] .lang-btn.active { border-color: var(--pink-ink); color: var(--pink-ink); background: rgba(232,68,124,.08); }
+    html[data-theme="light"] .body-text { color: rgba(25,23,18,.72); }
+    html[data-theme="light"] .headline .brand,
+    html[data-theme="light"] .link-arrow,
+    html[data-theme="light"] .foot span { color: var(--pink-ink); }
+    html[data-theme="light"] .link-item { border-color: rgba(25,23,18,.12); }
+    html[data-theme="light"] .link-item:hover { border-color: rgba(232,68,124,.5); background: rgba(232,68,124,.08); }
+    html[data-theme="light"] .giant { animation-name: flicker-light; -webkit-text-stroke-color: rgba(232,68,124,.4); }
+    @keyframes flicker-light {
+      0%,100% { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+      48%     { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+      50%     { -webkit-text-stroke-color: rgba(232,68,124,.85); }
+      52%     { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+      80%     { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+      81%     { -webkit-text-stroke-color: rgba(232,68,124,.7); }
+      82%     { -webkit-text-stroke-color: rgba(232,68,124,.4); }
     }
   </style>
 </head>

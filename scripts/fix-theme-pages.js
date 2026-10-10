@@ -1,0 +1,94 @@
+#!/usr/bin/env node
+/* =========================================================
+   scripts/fix-theme-pages.js
+   Correctifs CIBLÉS du thème clair (aucune migration globale), uniquement
+   des problèmes mesurés dans un navigateur :
+
+   1. 404.html  — page autonome (ses propres styles et polices) qui n'avait
+      pas reçu js/theme.js : elle ne suivait donc pas le thème choisi.
+      On ajoute theme.js + un bloc « thème clair » limité à cette page.
+      Le rendu sombre et les polices (Syne / DM Sans / Space Mono) ne
+      changent pas.
+   2. profil.html — ses règles .auth-tab.active et .quiz-option.selected
+      (fond --text, texte --bg) étaient écrasées par une surcharge
+      générique de themes.css : texte quasi illisible en clair.
+      On rétablit les deux règles propres à la page (contraste 2,8:1 → 15,9:1).
+
+   Chaque correctif : ancre exacte exigée (sinon arrêt sans rien écrire),
+   marqueur d'idempotence, et le thème sombre n'est pas concerné
+   (toutes les règles ajoutées sont sous html[data-theme="light"]).
+
+   Usage :  node scripts/fix-theme-pages.js [--dry]
+   ========================================================= */
+'use strict';
+const fs = require('fs');
+const path = require('path');
+const ROOT = path.resolve(__dirname, '..');
+const DRY = process.argv.includes('--dry');
+
+/* ─────────── 404.html ─────────── */
+const CSS_404 = `
+    /* ── THÈME CLAIR (js/theme.js pose html[data-theme="light"]) — marqueur : THEME-CLAIR-404 ── */
+    html[data-theme="light"] {
+      --pink:  #E8447C;
+      --dark:  #F4F1EA;                 /* papier */
+      --off:   #191712;                 /* encre */
+      --muted: #716C5D;
+      --glass: rgba(25,23,18,.04);
+      --pink-ink: #B02A5C;              /* rose pour le texte (contraste >= 5,6:1) */
+    }
+    html[data-theme="light"] .lang-btn { border-color: rgba(25,23,18,.18); }
+    html[data-theme="light"] .lang-btn:hover,
+    html[data-theme="light"] .lang-btn.active { border-color: var(--pink-ink); color: var(--pink-ink); background: rgba(232,68,124,.08); }
+    html[data-theme="light"] .body-text { color: rgba(25,23,18,.72); }
+    html[data-theme="light"] .headline .brand,
+    html[data-theme="light"] .link-arrow,
+    html[data-theme="light"] .foot span { color: var(--pink-ink); }
+    html[data-theme="light"] .link-item { border-color: rgba(25,23,18,.12); }
+    html[data-theme="light"] .link-item:hover { border-color: rgba(232,68,124,.5); background: rgba(232,68,124,.08); }
+    html[data-theme="light"] .giant { animation-name: flicker-light; -webkit-text-stroke-color: rgba(232,68,124,.4); }
+    @keyframes flicker-light {
+      0%,100% { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+      48%     { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+      50%     { -webkit-text-stroke-color: rgba(232,68,124,.85); }
+      52%     { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+      80%     { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+      81%     { -webkit-text-stroke-color: rgba(232,68,124,.7); }
+      82%     { -webkit-text-stroke-color: rgba(232,68,124,.4); }
+    }
+`;
+
+/* ─────────── profil.html / soumettre ─────────── */
+const CSS_PROFIL = `
+  <style id="theme-light-page-fixes">
+    /* Thème clair : les règles propres à cette page priment sur les surcharges génériques de themes.css. */
+    html[data-theme="light"] body .auth-tab.active { color: var(--bg); }
+    html[data-theme="light"] body .quiz-option.selected { background: var(--text); border-color: var(--text); color: var(--bg); }
+  </style>
+`;
+
+const JOBS = [
+  { file: '404.html', marker: 'THEME-CLAIR-404', edits: [
+      { find: '<meta charset="UTF-8" />', replace: '<meta charset="UTF-8" />\n  <script src="/js/theme.js"></script>', skipIf: 'js/theme.js' },
+      { find: '</style>', replace: CSS_404 + '  </style>' } ] },
+  { file: 'profil.html', marker: 'theme-light-page-fixes', edits: [
+      { find: '</head>', replace: CSS_PROFIL + '</head>' } ] }
+];
+
+let failed = false;
+for (const job of JOBS) {
+  const f = path.join(ROOT, job.file);
+  let s = fs.readFileSync(f, 'utf8');
+  if (s.includes(job.marker)) { console.log(`= ${job.file} : déjà corrigé`); continue; }
+  let ok = true;
+  for (const e of job.edits) {
+    if (e.skipIf && s.includes(e.skipIf)) continue;
+    const n = s.split(e.find).length - 1;
+    if (n !== 1) { console.error(`✖ ${job.file} : ancre « ${e.find} » trouvée ${n} fois (attendu : 1) — fichier NON modifié`); ok = false; failed = true; break; }
+    s = s.replace(e.find, () => e.replace);
+  }
+  if (!ok) continue;
+  if (!DRY) fs.writeFileSync(f, s);
+  console.log(`✔ ${job.file} : corrigé`);
+}
+process.exit(failed ? 1 : 0);

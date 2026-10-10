@@ -279,6 +279,7 @@ function genererPageCategorie(cat, tools, opts = {}) {
 <html lang="${langue}" data-static-lang>
 <head>
 <meta charset="UTF-8">
+  <script src="${R}js/theme.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${escHtml(title)}</title>
 <meta name="description" content="${escHtml(metaDesc)}">
@@ -311,6 +312,7 @@ ${ogLocaleAlternates}
   }
 }
 </script>
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 
@@ -449,6 +451,7 @@ function genererPageHub(langue, categories, helpers) {
 <html lang="${langue}" data-static-lang>
 <head>
 <meta charset="UTF-8">
+  <script src="${R}js/theme.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${escHtml(titre)} — Albexia (${total} outils IA)</title>
 <meta name="description" content="${escHtml(sousTitre)} — ${total} outils IA classés dans ${tri.length} catégories.">
@@ -456,6 +459,7 @@ function genererPageHub(langue, categories, helpers) {
 <link rel="stylesheet" href="${R}css/style.css">
 <link rel="stylesheet" href="${R}css/categorie.css">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 

@@ -1,0 +1,73 @@
+/* ══════════════════════════════════════════════════════════════
+   ALBEXIA — THÈMES (clair / sombre)           css/themes.css
+   Chargé en DERNIER sur chaque page, avec js/theme.js dans le <head>.
+
+   • SOMBRE = thème par défaut : aucune règle ici, il reste défini par les
+     fichiers CSS existants (aucune couleur sombre n'est touchée).
+   • CLAIR  = « papier & encre » (direction éditoriale de profil.html) :
+     on redéfinit les mêmes jetons sous html[data-theme="light"], plus
+     spécifique que n'importe quel :root (même ceux écrits dans les pages),
+     puis des surcharges générées corrigent les couleurs codées en dur.
+
+   Fichier produit par scripts/build-themes.js à partir de
+   scripts/themes-core.css (ce noyau) + les CSS du site.
+   ══════════════════════════════════════════════════════════════ */
+
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* surfaces */
+  --bg:            #F4F1EA;   /* papier */
+  --bg2:           #FFFFFF;   /* feuille */
+  --bg3:           #ECE8DE;   /* papier recyclé */
+  --surface:       #FFFFFF;
+  --surface2:      #ECE8DE;
+
+  /* filets */
+  --border:        #DAD5C7;
+  --border-hover:  #B7B0A0;
+  --border-strong: #B7B0A0;
+
+  /* encre */
+  --text:          #191712;
+  --text-muted:    #716C5D;
+  --muted:         #716C5D;
+  --text-dim:      #716C5D;
+
+  /* accents */
+  --accent:        #E8447C;   /* rose Albexia (boutons, icônes, décors) */
+  --accent-ink:    #B02A5C;   /* rose pour le TEXTE (≥ 5,6:1 sur papier) */
+  --accent2:       #0E7A5F;   /* vert rédactionnel */
+  --accent3:       #0E7A5F;
+  --accent-amber:  #CA9A2E;   /* étoiles, avertissements */
+  --danger:        #C2392B;
+
+  /* alias hérités du markup */
+  --purple:        #E8447C;
+  --pink:          #E8447C;
+  --teal:          #0E7A5F;
+  --amber:         #CA9A2E;
+}
+
+/* Logo : le texte est en fill="#f0f0f5" dans le SVG (invisible sur papier). */
+html[data-theme="light"] .logo-text { fill: var(--text); }
+
+/* ── Bouton de bascule (monté par js/theme.js) ── */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; padding: 0; margin-left: 10px; flex-shrink: 0;
+  border: 1px solid var(--border); border-radius: var(--radius-sm, 3px);
+  background: transparent; color: var(--text); cursor: pointer;
+  transition: background .2s, border-color .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle:hover { border-color: var(--border-hover); background: color-mix(in srgb, var(--text) 8%, transparent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.theme-toggle svg {
+  width: 16px; height: 16px; fill: none; stroke: currentColor;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+/* sombre → on propose le soleil ; clair → on propose la lune */
+.theme-toggle .ic-moon { display: none; }
+html[data-theme="light"] .theme-toggle .ic-sun  { display: none; }
+html[data-theme="light"] .theme-toggle .ic-moon { display: inline; }

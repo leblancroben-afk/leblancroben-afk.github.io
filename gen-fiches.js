@@ -289,7 +289,8 @@ function generateOfflineTakeover(tool, allTools = []) {
   return `<!DOCTYPE html>
 <html lang="${langue}">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <script src="${R}js/theme.js"></script><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${titres[langue] || titres.fr}</title>
   <meta name="description" content="${metaDesc}">
   <meta name="robots" content="index, follow">
@@ -306,6 +307,7 @@ ${ogLocaleAlternates}
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${R}css/style.css">
   <link rel="stylesheet" href="${R}css/tool-detail.css">
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 ${navHTML(langue)}
@@ -626,6 +628,7 @@ async function generateArticleCreateur(article, outilsMap, allArticlesCreateurs 
 <html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${escHtml(metaDesc)}" />
@@ -741,6 +744,7 @@ ${bannerTag}
     .pvac-related-card, .pvac-related-card:visited, .pvac-related-card:hover { color: #fff; }
     .pvac-related-card:hover .pvac-related-titre, .pvac-related-card:visited .pvac-related-titre { color: #fff; }
   </style>
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 
@@ -996,6 +1000,7 @@ function generateArticle(article, allArticles) {
 <html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${metaDesc}" />
@@ -1036,6 +1041,7 @@ ${workTranslations}
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/article.css" />
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 
@@ -1370,6 +1376,7 @@ ${buildListForLang(lang)}
 <html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${metaDesc}" />
@@ -1389,6 +1396,7 @@ ${buildListForLang(lang)}
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <script src="${R}js/i18n.js"></script>
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 
@@ -1953,6 +1961,7 @@ ${faqItems.map(f => `      {
 <html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${metaDesc}" />
@@ -1978,6 +1987,7 @@ ${faqJsonLd}
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/comparer.css" />
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 
@@ -2257,6 +2267,7 @@ ${faqItems.map(f => `      {
 <html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${metaDesc}" />
@@ -2278,6 +2289,7 @@ ${faqJsonLd}
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/niche.css" />
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 
@@ -2374,6 +2386,7 @@ function generateGlossaireHub(termes, tools) {
 <html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${metaDesc}" />
@@ -2468,6 +2481,7 @@ function generateGlossaireHub(termes, tools) {
       .cta-tool-btn{flex:1; text-align:center;}
     }
   </style>
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 
@@ -2817,6 +2831,7 @@ function generateGlossaireTermePage(terme, tools, allTermes, langue = 'fr') {
 <html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${metaDesc}" />
@@ -2840,6 +2855,7 @@ ${ogLocaleAlternates}
     .glossaire-erreur-box{background:rgba(255,107,157,0.06); border:1px solid rgba(255,107,157,0.25); border-radius:var(--radius); padding:16px 20px; font-size:14px; line-height:1.7; color:var(--text);}
     .glossaire-erreur-box strong{color:var(--accent);}
   </style>
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 
@@ -3454,6 +3470,7 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${metaDesc}" />
@@ -3471,6 +3488,7 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/tutoriels-hub.css" />
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body class="tuto-hub">
 
@@ -3604,6 +3622,7 @@ function generateVideothequePage(tool, allToolsAvecVideo, opts = {}) {
 <html lang="${langue}">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${titleTag}</title>
   <meta name="description" content="${metaDesc}" />
@@ -3632,6 +3651,7 @@ ${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "nam
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/tutoriels-hub.css" />
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body class="tuto-outil">
 
@@ -4223,11 +4243,13 @@ async function main() {
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <script src="${R}js/theme.js"></script>
   <title>Redirection — Comparateur | Albexia</title>
   <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="${SITE_ORIGIN}/comparateur/index.html" />
   <meta http-equiv="refresh" content="0; url=${R}comparateur/index.html" />
   <script>window.location.replace('${R}comparateur/index.html');</script>
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
   <p>Cette page a été déplacée. Si vous n'êtes pas redirigé automatiquement,

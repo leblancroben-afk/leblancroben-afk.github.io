@@ -452,7 +452,8 @@ function generateFiche(tool, allTools = [], deps) {
   return `<!DOCTYPE html>
 <html lang="${langue}" data-static-lang>
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <script src="${R}js/theme.js"></script><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${E(titre)}</title>
   <meta name="description" content="${metaDesc}">
   <meta name="robots" content="index, follow">
@@ -470,6 +471,7 @@ ${ogLocaleAlternates}
   <link rel="stylesheet" href="${R}css/style.css">
   <link rel="stylesheet" href="${R}css/tool-detail.css">
   <link rel="stylesheet" href="${R}css/fiche-outil.css">
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 ${navHTML(langue)}
@@ -519,7 +521,8 @@ function avisOutilPageHTML(deps) {
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <script src="${R}js/theme.js"></script><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avis utilisateurs — Albexia</title>
   <meta name="description" content="Tous les avis des utilisateurs sur cet outil IA, avec notes, filtres et tri.">
   <meta name="robots" content="noindex, follow">
@@ -529,6 +532,7 @@ function avisOutilPageHTML(deps) {
   <link rel="stylesheet" href="${R}css/style.css">
   <link rel="stylesheet" href="${R}css/tool-detail.css">
   <script src="${R}js/i18n.js"></script>
+  <link rel="stylesheet" href="${R}css/themes.css">
 </head>
 <body>
 ${navDynamicHTML()}

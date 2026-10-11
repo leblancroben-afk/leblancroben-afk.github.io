@@ -32,6 +32,7 @@ const { getFirestore }        = require('firebase-admin/firestore');
 const fs     = require('fs');
 const path   = require('path');
 const crypto = require('crypto');
+const ArticleCats = require('./js/categories-articles.js'); // nomenclature unique des catégories d'articles
 const { genererPagesCategories, categoryName } = require('./categorie-template.js');
 
 // ── Init Firebase Admin ──────────────────────────────────
@@ -762,7 +763,7 @@ ${navHTML('fr')}
   <article class="pvac-article">
     <header class="article-header">
       <div class="article-meta-top">
-        <span class="article-cat fond">${escHtml(categorie || 'Actualité créateur')}</span>
+        <span class="article-cat fond">${escHtml(ArticleCats.libelle(categorie || 'Outils IA', 'fr'))}</span>
         <span class="dot"></span>
         <span class="article-date">${dateAffichage}</span>
         <span class="dot"></span>
@@ -1052,7 +1053,7 @@ ${articleNavHTML(langue)}
 
   <header class="article-header">
     <div class="article-meta-top">
-      <span class="article-cat fond">${category}</span>
+      <span class="article-cat fond">${escHtml(ArticleCats.libelle(category, langue))}</span>
       <span class="dot"></span>
       <span class="article-date">${date}</span>
       <span class="dot"></span>
@@ -3956,7 +3957,10 @@ async function main() {
   // ════════════════════════════════════════════════════════════
   console.log(`\n📥 Lecture de Firestore (articles)...`);
   const articlesSnap = await db.collection('articles').get();
-  const articles = articlesSnap.docs.map(d => d.data());
+  const articles = articlesSnap.docs.map(d => {
+    const data = d.data();
+    return { ...data, category: ArticleCats.normaliser(data.category) || data.category };
+  });
   console.log(`✓ ${articles.length} documents trouvés`);
 
   let articlesGenerated = 0, articlesSkippedNoSlug = 0, articlesSkippedNoCorps = 0, articlesUnchanged = 0;
@@ -4002,7 +4006,10 @@ async function main() {
   const articlesCreateursSnap = await db.collection('articles_createurs')
     .where('statut', '==', 'publie')
     .get();
-  const articlesCreateurs = articlesCreateursSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const articlesCreateurs = articlesCreateursSnap.docs.map(d => {
+    const data = d.data();
+    return { id: d.id, ...data, categorie: ArticleCats.normaliser(data.categorie) || data.categorie };
+  });
   console.log(`✓ ${articlesCreateurs.length} article(s) créateur(s) publié(s)`);
 
   // outilsMap : nom, dossier de plan, url officielle et description par slug

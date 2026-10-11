@@ -2564,16 +2564,12 @@
           <label class="form-label"><span data-i18n="profil.categoryLabel">Catégorie</span> <span class="fe-req">*</span></label>
           <select id="art-categorie" class="form-input" onchange="scheduleArtAutosave()">
             <option value="" disabled selected data-i18n="submit.optChooseCat">Choisir une catégorie</option>
-            <option data-i18n="submit.catWriting">Rédaction & Contenu</option>
-            <option data-i18n="submit.catImage">Image & Design</option>
-            <option data-i18n="submit.catVideo">Vidéo & Audio</option>
-            <option data-i18n="submit.catCode">Code & Développement</option>
-            <option data-i18n="submit.catProductivity">Productivité</option>
-            <option data-i18n="submit.catMarketing">Marketing & SEO</option>
-            <option data-i18n="submit.catEducation">Éducation</option>
-            <option data-i18n="submit.catHealth">Santé & Bien-être</option>
-            <option data-i18n="submit.catFinance">Finance & Business</option>
-            <option data-i18n="submit.catOther">Autre</option>
+            <option value="Découvrir l'IA" data-i18n="artcat.decouvrir-ia">Découvrir l'IA</option>
+            <option value="Outils IA" data-i18n="artcat.outils-ia">Outils IA</option>
+            <option value="IA au quotidien" data-i18n="artcat.ia-quotidien">IA au quotidien</option>
+            <option value="Productivité et travail" data-i18n="artcat.productivite-travail">Productivité et travail</option>
+            <option value="Sécurité et éthique" data-i18n="artcat.securite-ethique">Sécurité et éthique</option>
+            <option value="Guides et tutoriels" data-i18n="artcat.guides-tutoriels">Guides et tutoriels</option>
           </select>
         </div>
       </div>
@@ -2756,6 +2752,7 @@
 <!-- ══════════════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════════════ -->
+<script src="/js/categories-articles.js"></script>
 <script src="/js/i18n.js"></script>
 <script>
   /* Nom de catégorie traduit pour l'AFFICHAGE uniquement (la valeur stockée reste le nom français). */
@@ -5009,7 +5006,7 @@
       try {
         const data = JSON.parse(brouillon);
         document.getElementById('art-titre').value = data.titre || (nomOutil || '');
-        document.getElementById('art-categorie').value = data.categorie || '';
+        document.getElementById('art-categorie').value = (window.AlbexiaArticleCats && AlbexiaArticleCats.normaliser(data.categorie)) || '';
         document.getElementById('art-extrait').value = data.extrait || '';
         document.getElementById('art-auteur-nom').value = data.auteurNom || (userProfile?.displayName || currentUser?.displayName || '');
         document.getElementById('art-auteur-bio').value = data.auteurBio || (userProfile?.bio || '');
@@ -5097,7 +5094,7 @@
 
     document.getElementById('article-titre-modal').textContent = a.titre || 'Article';
     document.getElementById('art-titre').value = a.titre || '';
-    document.getElementById('art-categorie').value = a.categorie || '';
+    document.getElementById('art-categorie').value = (window.AlbexiaArticleCats && AlbexiaArticleCats.normaliser(a.categorie)) || '';
     document.getElementById('art-extrait').value = a.extrait || '';
     document.getElementById('art-auteur-nom').value = a.auteur_nom || (userProfile?.displayName || currentUser?.displayName || '');
     document.getElementById('art-auteur-bio').value = a.auteur_bio || (userProfile?.bio || '');

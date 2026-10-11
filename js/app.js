@@ -1648,7 +1648,7 @@ function showQuizResults() {
   }
 
   const metierLabel = getQuizQuestions(state.langue)[0].options.find(o => o.value === answers.metier)?.label || '';
-  document.getElementById('quiz-results-sub').textContent =
+  document.getElementById('quiz-results-sub').innerHTML =
     t('quiz.profileSummary', state.langue)
       .replace('{metier}', metierLabel)
       .replace('{budget}', answers.budget)

@@ -124,7 +124,6 @@ const UI_TRANSLATIONS = {
     'comparateur.reco.integrationApi': 'Meilleure intégration (API)',
     'comparateur.reco.meilleurFr': 'Meilleur en français',
     // ── Page /tutoriels/ ──
-    "tuto.badge": "Vidéothèque francophone",
     "tuto.heroTitle": "Explorez le futur de l'IA<br>avec nos <span class=\"grad-pink\">tutoriels experts</span>",
     "tuto.heroDesc": "Plus de {n} outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.",
     "tuto.statTools": "Outils référencés",
@@ -1256,7 +1255,6 @@ const UI_TRANSLATIONS = {
     'comparateur.reco.integrationApi': 'Best API integration',
     'comparateur.reco.meilleurFr': 'Best in French',
     // ── Page /tutoriels/ ──
-    "tuto.badge": "Francophone video library",
     "tuto.heroTitle": "Explore the future of AI<br>with our <span class=\"grad-pink\">expert tutorials</span>",
     "tuto.heroDesc": "Over {n} tools listed and explained in video by the community. Free, in French, for all levels.",
     "tuto.statTools": "Tools listed",
@@ -2389,7 +2387,6 @@ const UI_TRANSLATIONS = {
     'comparateur.reco.integrationApi': 'Mejor integración (API)',
     'comparateur.reco.meilleurFr': 'Mejor en francés',
     // ── Page /tutoriels/ ──
-    "tuto.badge": "Videoteca francófona",
     "tuto.heroTitle": "Explora el futuro de la IA<br>con nuestros <span class=\"grad-pink\">tutoriales expertos</span>",
     "tuto.heroDesc": "Más de {n} herramientas catalogadas y explicadas en vídeo por la comunidad. Gratis, en francés, para todos los niveles.",
     "tuto.statTools": "Herramientas catalogadas",

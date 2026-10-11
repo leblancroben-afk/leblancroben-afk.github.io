@@ -902,6 +902,12 @@
       <button type="button" id="a-editing-cancel">Annuler / Créer un nouvel article</button>
     </div>
 
+    <div class="editing-banner" id="a-cat-migration" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span>Catégories : les articles existants doivent utiliser les 6 catégories officielles.</span>
+      <button type="button" id="a-cat-migrate-btn">Normaliser les catégories existantes</button>
+      <span id="a-cat-migrate-msg"></span>
+    </div>
+
     <div class="form-layout">
       <div class="form-col">
         <form id="form-articles">
@@ -912,7 +918,15 @@
             <div class="row">
               <div>
                 <label>Catégorie *</label>
-                <input type="text" id="a-category" placeholder="Tutoriel, Comparatif, Analyse…" required>
+                <select id="a-category" required>
+                  <option value="" disabled selected>Choisir une catégorie…</option>
+                  <option value="Découvrir l'IA">Découvrir l'IA</option>
+                  <option value="Outils IA">Outils IA</option>
+                  <option value="IA au quotidien">IA au quotidien</option>
+                  <option value="Productivité et travail">Productivité et travail</option>
+                  <option value="Sécurité et éthique">Sécurité et éthique</option>
+                  <option value="Guides et tutoriels">Guides et tutoriels</option>
+                </select>
               </div>
               <div>
                 <label>Emoji</label>
@@ -1691,6 +1705,7 @@ Support français|oui|non|bool"></textarea>
 </div>
 
 <script src="/js/fiche-icons.js"></script>
+<script src="/js/categories-articles.js"></script>
 <script type="module">
   import { auth, db, onAuthStateChanged, collection, getDocs, getDoc, doc, setDoc, addDoc, deleteDoc, updateDoc, query, where, orderBy, serverTimestamp, writeBatch }
     from '/js/firebase-config.js';
@@ -4071,6 +4086,50 @@ Support français|oui|non|bool"></textarea>
   }
   function invalidateArticlesCache() { allArticlesCache = null; }
 
+  // Normalisation des catégories d'articles existants (collections « articles » et « articles_createurs »).
+  // Aperçu + confirmation avant toute écriture ; les valeurs inconnues sont listées et laissées intactes.
+  document.getElementById('a-cat-migrate-btn').addEventListener('click', async () => {
+    const AC = window.AlbexiaArticleCats;
+    const msg = document.getElementById('a-cat-migrate-msg');
+    if (!AC) { msg.textContent = 'categories-articles.js non chargé.'; return; }
+    msg.textContent = 'Analyse en cours…';
+    try {
+      const cibles = [['articles', 'category'], ['articles_createurs', 'categorie']];
+      const aMettreAJour = [];
+      const inconnues = [];
+      let dejaOk = 0;
+      for (const [coll, champ] of cibles) {
+        const snap = await getDocs(collection(db, coll));
+        snap.docs.forEach(d => {
+          const brut = d.data()[champ];
+          const norm = AC.normaliser(brut);
+          if (!norm) { inconnues.push(`${coll}/${d.id} : « ${brut || '(vide)'} »`); return; }
+          if (brut === norm) { dejaOk++; return; }
+          aMettreAJour.push({ ref: d.ref, champ, de: brut, vers: norm });
+        });
+      }
+      const resume = `${aMettreAJour.length} à convertir, ${dejaOk} déjà conformes, ${inconnues.length} inconnue(s).`;
+      if (!aMettreAJour.length) {
+        msg.textContent = resume + (inconnues.length ? ' À corriger à la main : ' + inconnues.join(' ; ') : '');
+        return;
+      }
+      const apercu = aMettreAJour.slice(0, 15).map(x => `• ${x.de || '(vide)'} → ${x.vers}`).join('\n');
+      if (!confirm(resume + '\n\n' + apercu + (aMettreAJour.length > 15 ? '\n…' : '') + '\n\nAppliquer ?')) {
+        msg.textContent = 'Annulé. ' + resume; return;
+      }
+      for (let i = 0; i < aMettreAJour.length; i += 400) {
+        const batch = writeBatch(db);
+        aMettreAJour.slice(i, i + 400).forEach(x => batch.update(x.ref, { [x.champ]: x.vers }));
+        await batch.commit();
+      }
+      invalidateArticlesCache();
+      msg.textContent = `✓ ${aMettreAJour.length} mis à jour.` + (inconnues.length ? ' À corriger à la main : ' + inconnues.join(' ; ') : '') + ' Relancez gen-fiches pour régénérer les pages.';
+    } catch (e) {
+      console.error(e);
+      msg.textContent = 'Erreur : ' + (e.message || e);
+    }
+  });
+
   const aSearchInput   = document.getElementById('a-search');
   const aSearchResults = document.getElementById('a-search-results');
   let aSearchDebounce = null;
@@ -4124,7 +4183,7 @@ Support français|oui|non|bool"></textarea>
     }
 
     setVal('a-title-fr', article.title);
-    setVal('a-category', article.category);
+    setVal('a-category', (window.AlbexiaArticleCats && AlbexiaArticleCats.normaliser(article.category)) || '');
     setVal('a-emoji', article.emoji);
     setVal('a-date', article.date);
     setVal('a-readtime', article.readTime);

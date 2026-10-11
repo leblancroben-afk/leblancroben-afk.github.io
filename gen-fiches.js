@@ -3739,7 +3739,22 @@ async function main() {
 
   console.log('📥 Lecture de Firestore (outils)...');
   const snap  = await db.collection('outils').get();
-  const tools = snap.docs.map(d => d.data());
+  // Normalisation défensive : un outil « a_enrichir » (pas encore passé par l'IA)
+  // peut n'avoir ni emoji, ni catégorie, ni description. Sans valeur par défaut,
+  // les templates écrivaient littéralement « undefined ».
+  const tools = snap.docs.map(d => {
+    const t = d.data();
+    return {
+      ...t,
+      name:        t.name || '',
+      emoji:       t.emoji || '🤖',
+      category:    ArticleCats.normaliser(t.category) ? t.category : (t.category || ''),
+      description: t.description || '',
+      tags:        Array.isArray(t.tags) ? t.tags : [],
+      price:       t.price || 'freemium',
+      status:      t.status || 'a_enrichir',
+    };
+  }).filter(t => t.name);
   console.log(`✓ ${tools.length} documents trouvés`);
 
   let generated = 0, skipped = 0, noFiche = 0, unchanged = 0;

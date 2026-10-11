@@ -50,9 +50,28 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-3.5-flash';
 const MAX_OUTILS_PAR_RUN = 10;
 
+// Liste officielle unique (js/categories-articles.js). Les outils ne doivent
+// recevoir qu'une de ces valeurs ; la collection « categories » Firestore
+// (anciennes catégories libres) n'est plus utilisée pour l'enrichissement.
+const ArticleCats = require('./js/categories-articles.js');
 async function fetchCategories() {
-  const snap = await db.collection('categories').get();
-  return snap.docs.map(d => d.data().nom).filter(Boolean);
+  return ArticleCats.liste().map(c => c.fr);
+}
+
+// Valide la catégorie renvoyée par Gemini ; sinon fallback sur celle de l'admin,
+// jamais une valeur inventée.
+function categorieAdminOuIA(categorieAdmin, propositionIA) {
+  // La catégorie choisie dans l'admin fait foi ; l'IA ne sert qu'à compléter.
+  const admin = ArticleCats.normaliser(categorieAdmin);
+  if (admin) return admin;
+  return categorieValide(propositionIA, '');
+}
+
+function categorieValide(propositionIA, categorieAdmin) {
+  const norm = ArticleCats.normaliser(propositionIA);
+  if (norm) return norm;
+  const adminNorm = ArticleCats.normaliser(categorieAdmin);
+  return adminNorm || '';
 }
 
 // ══════════════════════════════════════
@@ -73,7 +92,7 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     `ce qu'est l'outil mais pas s'il propose une API) : mets alors null pour CE champ précis plutôt que d'inventer, ` +
     `le reste de la fiche peut quand même être rempli. ` +
     `Si tu connais l'outil avec certitude : catégorie à choisir OBLIGATOIREMENT dans cette liste exacte ` +
-    `(recopie le texte exact) : ${JSON.stringify(categoriesDisponibles)} — si aucune ne correspond bien, choisis ` +
+    `(recopie le texte exact, UNE SEULE valeur) : ${JSON.stringify(categoriesDisponibles)} — si aucune ne correspond bien, choisis ` +
     `la plus proche, n'en invente jamais une nouvelle. ` +
     `Prix : "free" (gratuit), "freemium" (gratuit avec palier payant), ou "paid" (payant uniquement). ` +
     `Description : 150-200 caractères, en français, factuelle, sans superlatifs marketing exagérés. ` +
@@ -125,7 +144,7 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
     if (res.status === 503 && tentative < 2) {
       const pause = 5000 * (tentative + 1); // 5s, puis 10s
       await new Promise(r => setTimeout(r, pause));
-      return enrichirOutil(nomOutil, categoriesDisponibles, tentative + 1);
+      return enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative + 1);
     }
     throw new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
   }
@@ -180,7 +199,7 @@ async function main() {
 
       await docSnap.ref.update({
         url: infos.url || '',
-        category: infos.category || '',
+        category: categorieAdminOuIA(outil.category, infos.category),
         price: infos.price || 'freemium',
         description: infos.description || '',
         tags: Array.isArray(infos.tags) ? infos.tags : [],

@@ -492,31 +492,6 @@ html[data-theme="light"] .reco-label.mint { background: rgba(14,122,95,0.12); }
 html[data-theme="light"] .reco-label.purple { color: #5a50d0; }
 html[data-theme="light"] .reco-label.pink { background: rgba(232,68,124,0.12); }
 
-/* ── css/comparer.css ── */
-html[data-theme="light"] nav { background: rgba(244,241,234,0.92); }
-html[data-theme="light"] .nav-link:hover { background: rgba(25,23,18,0.05); }
-html[data-theme="light"] .nav-link.active { background: rgba(25,23,18,0.08); }
-html[data-theme="light"] .cp-hero::before { background: radial-gradient(ellipse, rgba(232,68,124,0.1) 0%, transparent 70%); }
-html[data-theme="light"] .cp-vs-badge { background: rgba(232,68,124,0.1); border: 1px solid rgba(232,68,124,0.3); }
-html[data-theme="light"] .cp-hero h1 .vs-sep { color: rgba(232,68,124,0.4); }
-html[data-theme="light"] .cp-tool-card.winner { border-color: rgba(232,68,124,0.35); background: linear-gradient(135deg, var(--bg2), rgba(232,68,124,0.04)); }
-html[data-theme="light"] .note-top { background: rgba(14,122,95,0.12); border: 1px solid rgba(14,122,95,0.25); }
-html[data-theme="light"] .note-bon { color: #5a50d0; }
-html[data-theme="light"] .note-ok { background: rgba(180,83,9,0.12); border: 1px solid rgba(180,83,9,0.25); }
-html[data-theme="light"] .cp-vs-divider { color: rgba(232,68,124,0.4); }
-html[data-theme="light"] .cp-table tr:hover { background: rgba(25,23,18,0.02); }
-html[data-theme="light"] .check-no { color: var(--danger); }
-html[data-theme="light"] .cp-cons-list li::before { color: var(--danger); }
-html[data-theme="light"] .cp-cas-card.card-a { border-top: 2px solid rgba(232,68,124,0.4); }
-html[data-theme="light"] .card-a .cp-cas-label { color: var(--accent-ink); }
-html[data-theme="light"] .card-b .cp-cas-label { color: #5a50d0; }
-html[data-theme="light"] .cp-verdict-card { background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(14,122,95,0.05)); }
-html[data-theme="light"] .cp-verdict-label { color: #5a50d0; }
-html[data-theme="light"] .cp-faq-question:hover { color: #5a50d0; }
-html[data-theme="light"] .cp-cta-a { background: rgba(232,68,124,0.1); border-color: rgba(232,68,124,0.3); }
-html[data-theme="light"] .cp-cta-a:hover { background: rgba(232,68,124,0.18); border-color: rgba(232,68,124,0.5); }
-html[data-theme="light"] .cp-cta-b { color: #5a50d0; }
-
 /* ── css/guide-alternatif.css ── */
 html[data-theme="light"] .badge-green { background: rgba(14,122,95,0.12); border: 1px solid rgba(14,122,95,0.25); }
 html[data-theme="light"] .badge-pink { background: rgba(232,68,124,0.12); border: 1px solid rgba(232,68,124,0.25); }

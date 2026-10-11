@@ -493,8 +493,8 @@ function buildToolCard(t, direct = false) {
     ? `<img src="${t.favicon}" alt="${t.name}" class="tool-favicon"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
            onload="this.nextElementSibling.style.display='none'">
-       <span class="tool-ico-fallback" style="display:none">${t.emoji}</span>`
-    : `<span class="tool-ico-fallback">${t.emoji}</span>`;
+       <span class="tool-ico-fallback" style="display:none">${t.emoji || '🤖'}</span>`
+    : `<span class="tool-ico-fallback">${t.emoji || '🤖'}</span>`;
 
   // direct=true : l'utilisateur vient d'un CTA article (?tools=... via
   // checkToolsParam → renderSpotlight). L'article a déjà convaincu — on
@@ -543,16 +543,16 @@ function buildToolCard(t, direct = false) {
       <div class="tool-head">
         <div class="tool-ico" style="background:${col.bg}">${iconHtml}</div>
         <div style="flex:1">
-          <div class="tool-name">${t.name}</div>
+          <div class="tool-name">${t.name || ''}</div>
           <div class="tool-cat">${catLabel(t.category, state.langue)}</div>
         </div>
         <button class="fav-btn"
           onclick="openCollectionPicker(event, ${toolJson})"
           title="${window.t('idx.addToCollectionTitle', state.langue)}">♡</button>
       </div>
-      <p class="tool-desc">${t.description}</p>
+      <p class="tool-desc">${t.description || ''}</p>
       <div class="tool-foot">
-        <span class="price-tag price-${t.price}">${priceLabel[t.price]}</span>
+        <span class="price-tag price-${t.price || 'freemium'}">${priceLabel[t.price] || priceLabel.freemium}</span>
         <span class="tool-rating-badge" data-slug="${slug}"></span>
       </div>
       ${planBadge}
@@ -1675,7 +1675,7 @@ function showQuizResults() {
             <div class="quiz-result-name">${t.name}</div>
             <div class="quiz-result-cat">${catLabel(t.category, state.langue)}</div>
           </div>
-          <span class="price-tag price-${t.price}">${priceLabel[t.price]}</span>
+          <span class="price-tag price-${t.price || 'freemium'}">${priceLabel[t.price] || priceLabel.freemium}</span>
         </div>
         <p class="quiz-result-desc">${t.description}</p>
         <div class="quiz-result-cta">${translateQuizViewSheet(state.langue)}</div>

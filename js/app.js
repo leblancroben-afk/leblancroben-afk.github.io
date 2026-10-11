@@ -384,7 +384,8 @@ async function loadAllData() {
       getDocs(query(collection(db, 'articles_createurs'), where('statut', '==', 'publie'))).catch(() => ({ docs: [] })),
     ]);
 
-    state.tools   = toolsSnap.docs.map(d => d.data());
+    // Un outil encore en attente d'enrichissement IA est incomplet : jamais affiché.
+    state.tools   = toolsSnap.docs.map(d => d.data()).filter(t => t.status !== 'a_enrichir');
     state.gallery = gallerySnap.docs.map(d => d.data());
 
     // Articles créateurs (revendication + rédaction) — champs reconstruits

@@ -530,15 +530,6 @@ html[data-theme="light"] .elite-cta-block { background: linear-gradient(135deg, 
 html[data-theme="light"] .elite-cta-block::before { background: linear-gradient(90deg, #6c63ff, var(--accent)); }
 html[data-theme="light"] .btn-elite { background: linear-gradient(135deg, #6c63ff, var(--accent)); }
 
-/* ── css/faq.css ── */
-html[data-theme="light"] .faq-total strong { color: var(--accent-ink); }
-html[data-theme="light"] .faq-link mark { color: #5a50d0; }
-html[data-theme="light"] .faq-answer-box { background: linear-gradient(135deg, rgba(108,99,255,0.08) 0%, rgba(232,68,124,0.06) 100%); }
-html[data-theme="light"] .faq-answer-label { color: var(--accent-ink); }
-html[data-theme="light"] .faq-content a { border-bottom: 1px solid rgba(232,68,124,0.3); }
-html[data-theme="light"] .faq-table tbody tr:hover td { background: rgba(25,23,18,0.02); }
-html[data-theme="light"] .faq-cta-block { background: linear-gradient(135deg, rgba(108,99,255,0.1) 0%, rgba(232,68,124,0.08) 100%); }
-
 /* ── css/tutoriels-hub.css ── */
 html[data-theme="light"] .th-btn.actif { color: var(--accent-ink); }
 html[data-theme="light"] .th-player-bar { background: rgba(244,241,234,.88); }

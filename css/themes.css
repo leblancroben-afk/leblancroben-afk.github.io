@@ -51,6 +51,7 @@ html[data-theme="light"] {
 
 /* Logo : le texte est en fill="#f0f0f5" dans le SVG (invisible sur papier). */
 html[data-theme="light"] .logo-text { fill: var(--text); }
+/* Logo du footer (même SVG, même classe) : couvert par la règle ci-dessus. */
 
 /* ── Bouton de bascule (monté par js/theme.js) ── */
 .theme-toggle {

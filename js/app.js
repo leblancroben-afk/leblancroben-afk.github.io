@@ -214,12 +214,12 @@ function getCatDescription(cat, langue) {
 }
 
 const blogColors = {
-  Guide:      { bg: 'rgba(108,99,255,0.2)',  tagBg: 'rgba(108,99,255,0.15)',  tagColor: '#a8a3ff' },
-  Sélection:  { bg: 'rgba(255,107,157,0.2)', tagBg: 'rgba(255,107,157,0.15)', tagColor: '#ff6b9d' },
-  Débutant:   { bg: 'rgba(0,212,170,0.2)',   tagBg: 'rgba(0,212,170,0.15)',   tagColor: '#00d4aa' },
-  Comparatif: { bg: 'rgba(245,166,35,0.2)',  tagBg: 'rgba(245,166,35,0.15)',  tagColor: '#f5a623' },
-  Tutoriel:   { bg: 'rgba(108,99,255,0.2)',  tagBg: 'rgba(108,99,255,0.15)',  tagColor: '#a8a3ff' },
-  Analyse:    { bg: 'rgba(0,212,170,0.2)',   tagBg: 'rgba(0,212,170,0.15)',   tagColor: '#00d4aa' },
+  "Découvrir l'IA":          { bg: 'rgba(0,212,170,0.2)',   tagBg: 'rgba(0,212,170,0.15)',   tagColor: '#00d4aa' },
+  'Outils IA':               { bg: 'rgba(108,99,255,0.2)',  tagBg: 'rgba(108,99,255,0.15)',  tagColor: '#a8a3ff' },
+  'IA au quotidien':         { bg: 'rgba(255,107,157,0.2)', tagBg: 'rgba(255,107,157,0.15)', tagColor: '#ff6b9d' },
+  'Productivité et travail': { bg: 'rgba(245,166,35,0.2)',  tagBg: 'rgba(245,166,35,0.15)',  tagColor: '#f5a623' },
+  'Sécurité et éthique':     { bg: 'rgba(255,107,157,0.2)', tagBg: 'rgba(255,107,157,0.15)', tagColor: '#ff6b9d' },
+  'Guides et tutoriels':     { bg: 'rgba(108,99,255,0.2)',  tagBg: 'rgba(108,99,255,0.15)',  tagColor: '#a8a3ff' },
 };
 window.blogColorsMap = blogColors;
 
@@ -410,14 +410,18 @@ async function loadAllData() {
         date: dateAffichage,
         author: escHtmlBlog(outil ? `Équipe ${outil.nom}` : 'Créateur partenaire'),
         excerpt: escHtmlBlog(excerpt),
-        category: 'Actualité créateur',
+        category: (window.AlbexiaArticleCats && window.AlbexiaArticleCats.normaliser(a.categorie)) || escHtmlBlog(a.categorie || ''),
         readTime: `${Math.max(1, Math.round(nbMots / 200))} min`,
         og_image: /^https?:\/\//i.test(a.banniere_url || '') ? a.banniere_url : '',
         emoji: '✍️',
       };
     });
 
-    state.blog = [...articlesSnap.docs.map(d => d.data()), ...articlesCreateurs];
+    // Nomenclature unique des catégories d'articles (js/categories-articles.js) :
+    // les anciennes valeurs encore présentes en base sont converties à l'affichage.
+    const _AC = window.AlbexiaArticleCats;
+    state.blog = [...articlesSnap.docs.map(d => d.data()), ...articlesCreateurs]
+      .map(p => _AC ? { ...p, category: _AC.normaliser(p.category) || p.category } : p);
     renderTools();
     renderBlog();
     renderGallery();
@@ -944,11 +948,16 @@ function renderBlog() {
 
   const langueBlog = window.detecterLangue ? window.detecterLangue() : 'fr';
   const blogLangue = filtrerParLangue(state.blog);
-  const cats = ['Tous', ...new Set(blogLangue.map(p => p.category))];
-  filtersEl.innerHTML = cats.map(c =>
-    `<button class="filter${c === state.activeBlogCat ? ' active' : ''}"
-      onclick="setBlogCat('${c}')">${c}</button>`
-  ).join('');
+  // Filtres = « Tous » + les 6 catégories officielles (identiques sur toutes les pages)
+  const AC = window.AlbexiaArticleCats;
+  const cats = AC ? ['Tous', ...AC.liste().map(c => c.fr)]
+                  : ['Tous', ...new Set(blogLangue.map(p => p.category))];
+  filtersEl.innerHTML = cats.map(c => {
+    const label = c === 'Tous' ? t('blog.filterAll', langueBlog) : (AC ? AC.libelle(c, langueBlog) : c);
+    return `<button class="filter${c === state.activeBlogCat ? ' active' : ''}"
+      data-cat="${String(c).replace(/"/g, '&quot;')}"
+      onclick="setBlogCat(this.dataset.cat)">${label}</button>`;
+  }).join('');
 
   const filtered = blogLangue.filter(p =>
     state.activeBlogCat === 'Tous' || p.category === state.activeBlogCat
@@ -979,7 +988,7 @@ function renderBlog() {
             <div class="blog-title">${p.title}</div>
             <div class="blog-meta">${p.date} · ${p.author}</div>
             <p class="blog-excerpt">${p.excerpt}</p>
-            <span class="blog-tag" style="background:${col.tagBg};color:${col.tagColor}">${p.category}</span>
+            <span class="blog-tag" style="background:${col.tagBg};color:${col.tagColor}">${AC ? AC.libelle(p.category, langueBlog) : p.category}</span>
           </div>
           <div class="blog-mins">⏱ ${p.readTime} ${t('idx.readTimeSuffix', langueBlog)}</div>
         </article>
@@ -1110,7 +1119,7 @@ function renderHome() {
           <div class="home-art-thumb">${thumb}</div>
           <div class="home-art-body">
             <div class="home-art-title">${p.title}</div>
-            <div class="home-art-meta">${p.category} · ${p.readTime}</div>
+            <div class="home-art-meta">${window.AlbexiaArticleCats ? window.AlbexiaArticleCats.libelle(p.category, state.langue || 'fr') : p.category} · ${p.readTime}</div>
           </div>
         </a>`;
     }).join('') : empty;

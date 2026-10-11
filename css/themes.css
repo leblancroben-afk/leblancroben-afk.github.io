@@ -294,22 +294,19 @@ html[data-theme="light"] .hub-card--ghost { border: 2px dashed rgba(25,23,18,0.1
 html[data-theme="light"] .hub-card-badge { background: rgba(25,23,18,0.05); border: 1px solid rgba(25,23,18,0.1); }
 html[data-theme="light"] .hub-cta-inner { background: linear-gradient(135deg,rgba(232,68,124,.1) 0%,rgba(232,68,124,.08) 50%,rgba(14,122,95,.06) 100%); border: 1px solid rgba(232,68,124,.2); }
 html[data-theme="light"] .hub-cta-glow { background: radial-gradient(ellipse,rgba(232,68,124,.15) 0%,transparent 70%); }
-html[data-theme="light"] .tool-card-plan-featured { border-color: rgba(232,68,124,0.3); background: linear-gradient(
-    160deg,
-    rgba(232,68,124,0.06) 0%,
-    var(--bg2, var(--surface)) 55%
-  ); box-shadow: 0 0 0 1px rgba(232,68,124,0.12),
-    0 4px 24px rgba(25,23,18,0.12); }
-html[data-theme="light"] .tool-card-plan-featured::before { background: linear-gradient(90deg, var(--accent), #f5a623, var(--accent)); }
-html[data-theme="light"] .tool-card-plan-featured:hover { border-color: rgba(232,68,124,0.5); box-shadow: 0 0 0 1px rgba(232,68,124,0.2),
-    0 12px 40px rgba(25,23,18,0.16); }
-html[data-theme="light"] .tool-card-plan-starter { border-color: rgba(232,68,124,0.25); background: linear-gradient(
-    160deg,
-    rgba(232,68,124,0.05) 0%,
-    var(--bg2, var(--surface)) 55%
-  ); }
-html[data-theme="light"] .tool-card-plan-starter::before { background: linear-gradient(90deg, var(--accent), #FF9DBC); }
-html[data-theme="light"] .tool-card-plan-starter:hover { border-color: rgba(232,68,124,0.4); }
+/* Cartes outils : blanches en mode clair, quel que soit le plan (aucun dégradé ni liseré rose) */
+html[data-theme="light"] .tool-card,
+html[data-theme="light"] .tool-card.tool-card-featured,
+html[data-theme="light"] .tool-card.tool-card-plan-featured,
+html[data-theme="light"] .tool-card.tool-card-plan-starter,
+html[data-theme="light"] .tool-card.tool-card-plan-gratuit { background: #FFFFFF; border-color: var(--border); box-shadow: none; }
+html[data-theme="light"] .tool-card:hover,
+html[data-theme="light"] .tool-card.tool-card-featured:hover,
+html[data-theme="light"] .tool-card.tool-card-plan-featured:hover,
+html[data-theme="light"] .tool-card.tool-card-plan-starter:hover,
+html[data-theme="light"] .tool-card.tool-card-plan-gratuit:hover { border-color: var(--border-hover); box-shadow: none; }
+html[data-theme="light"] .tool-card-plan-featured::before,
+html[data-theme="light"] .tool-card-plan-starter::before { content: none; display: none; }
 html[data-theme="light"] .tool-plan-badge-featured { background: rgba(25,23,18,0.05); color: var(--text-dim, var(--text-dim)); border: 1px solid rgba(25,23,18,0.08); }
 html[data-theme="light"] .tool-plan-badge-starter { background: rgba(25,23,18,0.05); color: var(--text-dim, var(--text-dim)); border: 1px solid rgba(25,23,18,0.08); }
 html[data-theme="light"] .tool-plan-badge-gratuit { background: rgba(25,23,18,0.05); color: var(--text-dim, var(--text-dim)); border: 1px solid rgba(25,23,18,0.08); }

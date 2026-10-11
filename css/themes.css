@@ -51,7 +51,6 @@ html[data-theme="light"] {
 
 /* Logo : le texte est en fill="#f0f0f5" dans le SVG (invisible sur papier). */
 html[data-theme="light"] .logo-text { fill: var(--text); }
-/* Logo du footer (même SVG, même classe) : couvert par la règle ci-dessus. */
 
 /* ── Bouton de bascule (monté par js/theme.js) ── */
 .theme-toggle {
@@ -517,18 +516,6 @@ html[data-theme="light"] .cp-faq-question:hover { color: #5a50d0; }
 html[data-theme="light"] .cp-cta-a { background: rgba(232,68,124,0.1); border-color: rgba(232,68,124,0.3); }
 html[data-theme="light"] .cp-cta-a:hover { background: rgba(232,68,124,0.18); border-color: rgba(232,68,124,0.5); }
 html[data-theme="light"] .cp-cta-b { color: #5a50d0; }
-
-/* ── css/alternatives.css ── */
-html[data-theme="light"] .alt-hero h1 .grad { background: linear-gradient(135deg, #6c63ff 0%, var(--accent) 50%, #00d4aa 100%); }
-html[data-theme="light"] .est-tool.selected { border-color: rgba(232,68,124,0.5); background: rgba(232,68,124,0.06); }
-html[data-theme="light"] .alt-cat-focus { background: rgba(25,23,18,0.04); }
-html[data-theme="light"] .guide-card { border: 1px solid rgba(232,68,124,0.2); }
-html[data-theme="light"] .guide-card::before { background: linear-gradient(90deg, var(--accent), #6c63ff); }
-html[data-theme="light"] .guide-card:hover { border-color: rgba(232,68,124,0.4); box-shadow: 0 8px 32px rgba(25,23,18,0.12); }
-html[data-theme="light"] .guide-card-economie { background: rgba(14,122,95,0.1); border: 1px solid rgba(14,122,95,0.2); }
-html[data-theme="light"] .alt-list-tag { background: rgba(25,23,18,0.04); }
-html[data-theme="light"] .proto-num { color: #5a50d0; }
-html[data-theme="light"] .alt-tip { background: rgba(180,83,9,0.07); border: 1px solid rgba(180,83,9,0.2); }
 
 /* ── css/guide-alternatif.css ── */
 html[data-theme="light"] .badge-green { background: rgba(14,122,95,0.12); border: 1px solid rgba(14,122,95,0.25); }

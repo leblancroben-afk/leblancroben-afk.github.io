@@ -3205,7 +3205,7 @@
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
     const questions = getProfilQuizQuestions(langue);
     const metierLabel = questions[0].options.find(o => o.value === answers.metier)?.label || '';
-    document.getElementById('quiz-results-sub').textContent =
+    document.getElementById('quiz-results-sub').innerHTML =
       t('quiz.profileSummary', langue)
         .replace('{metier}', metierLabel)
         .replace('{budget}', answers.budget)

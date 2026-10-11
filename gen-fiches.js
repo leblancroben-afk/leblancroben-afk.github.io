@@ -3500,7 +3500,6 @@ function generateVideothequeHub(toolsAvecVideos, tousOutils = []) {
 <section class="th-hero">
   <div class="th-hero-text">
     <div>
-      <span class="th-badge"><span class="th-dot"></span><span data-i18n="tuto.badge">Vidéothèque francophone</span></span>
       <h1 data-i18n="tuto.heroTitle2">Explorez le futur de l'IA avec nos tutoriels</h1>
       <p data-i18n="tuto.heroDesc" data-vars='{"n":${toolsAvecVideos.length}}'>Plus de ${toolsAvecVideos.length} outils répertoriés et expliqués en vidéo par la communauté. Gratuit, en français, pour tous les niveaux.</p>
     </div>

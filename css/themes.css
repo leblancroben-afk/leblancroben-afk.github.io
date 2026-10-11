@@ -492,19 +492,6 @@ html[data-theme="light"] .reco-label.mint { background: rgba(14,122,95,0.12); }
 html[data-theme="light"] .reco-label.purple { color: #5a50d0; }
 html[data-theme="light"] .reco-label.pink { background: rgba(232,68,124,0.12); }
 
-/* ── css/guide-alternatif.css ── */
-html[data-theme="light"] .badge-green { background: rgba(14,122,95,0.12); border: 1px solid rgba(14,122,95,0.25); }
-html[data-theme="light"] .badge-pink { background: rgba(232,68,124,0.12); border: 1px solid rgba(232,68,124,0.25); }
-html[data-theme="light"] .badge-purple { color: #5a50d0; }
-html[data-theme="light"] .badge-amber { background: rgba(180,83,9,0.12); border: 1px solid rgba(180,83,9,0.25); }
-html[data-theme="light"] .btn-site:hover { border-color: rgba(25,23,18,0.3); background: rgba(25,23,18,0.04); }
-html[data-theme="light"] .btn-analyse { color: #5a50d0; }
-html[data-theme="light"] .compare-table tr:hover td { background: rgba(25,23,18,0.02); }
-html[data-theme="light"] .verdict-label { color: #5a50d0; }
-html[data-theme="light"] .elite-cta-block { background: linear-gradient(135deg, rgba(108,99,255,0.1) 0%, rgba(232,68,124,0.08) 100%); border: 1px solid rgba(232,68,124,0.25); }
-html[data-theme="light"] .elite-cta-block::before { background: linear-gradient(90deg, #6c63ff, var(--accent)); }
-html[data-theme="light"] .btn-elite { background: linear-gradient(135deg, #6c63ff, var(--accent)); }
-
 /* ── css/tutoriels-hub.css ── */
 html[data-theme="light"] .th-btn.actif { color: var(--accent-ink); }
 html[data-theme="light"] .th-player-bar { background: rgba(244,241,234,.88); }

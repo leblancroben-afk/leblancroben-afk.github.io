@@ -3739,10 +3739,14 @@ async function main() {
 
   console.log('📥 Lecture de Firestore (outils)...');
   const snap  = await db.collection('outils').get();
+  // Outils pas encore enrichis par l'IA (status 'a_enrichir' explicite) : exclus de TOUTE
+  // génération (fiche, alternatives, comparateurs, catégories) tant que l'enrichissement
+  // n'est pas terminé. Un doc sans champ status n'est pas concerné (comportement inchangé).
+  const docsOutils = snap.docs.filter(d => d.data().status !== 'a_enrichir');
   // Normalisation défensive : un outil « a_enrichir » (pas encore passé par l'IA)
   // peut n'avoir ni emoji, ni catégorie, ni description. Sans valeur par défaut,
   // les templates écrivaient littéralement « undefined ».
-  const tools = snap.docs.map(d => {
+  const tools = docsOutils.map(d => {
     const t = d.data();
     return {
       ...t,

@@ -146,7 +146,10 @@ async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 
       await new Promise(r => setTimeout(r, pause));
       return enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative + 1);
     }
-    throw new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+    const erreurApi = new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+    // 429 / RESOURCE_EXHAUSTED = quota épuisé : inutile d'essayer les outils suivants.
+    erreurApi.quota = res.status === 429 || data?.error?.status === 'RESOURCE_EXHAUSTED';
+    throw erreurApi;
   }
 
   const texte = data?.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -180,7 +183,7 @@ async function main() {
 
   console.log(`${snap.docs.length} outil(s) en attente, ${aTraiter.length} traité(s) ce run.`);
 
-  let succes = 0, echecs = 0, nonTrouves = 0;
+  let succes = 0, echecs = 0, nonTrouves = 0, quotaEpuise = false;
 
   for (const docSnap of aTraiter) {
     const outil = docSnap.data();
@@ -189,6 +192,13 @@ async function main() {
 
       if (!infos.trouve) {
         console.log(`  – ${outil.name} : introuvable par l'IA, laissé en 'a_enrichir' pour retraitement ou vérification manuelle.`);
+        nonTrouves++;
+        continue;
+      }
+
+      // Garde-fou : sans URL, description et catégorie, on ne publie pas (reste 'a_enrichir').
+      if (!infos.url || !infos.description || !infos.category) {
+        console.log(`  – ${outil.name} : réponse IA incomplète (url/description/catégorie manquante), laissé en 'a_enrichir'.`);
         nonTrouves++;
         continue;
       }
@@ -249,10 +259,18 @@ async function main() {
     } catch (err) {
       console.error(`  ✗ ${outil.name} : ${err.message}`);
       echecs++;
+      if (err.quota) {
+        // Quota Gemini épuisé : on arrête tout de suite. Les outils restants
+        // (et celui-ci) gardent status='a_enrichir' → ils seront repris au prochain run.
+        quotaEpuise = true;
+        console.error('⛔ Quota Gemini épuisé — arrêt du run. Les outils restants restent en \'a_enrichir\'.');
+        console.log('::warning::Quota Gemini épuisé — enrichissement interrompu');
+        break;
+      }
     }
   }
 
-  console.log(`\nTerminé — ${succes} enrichi(s) et publié(s), ${nonTrouves} introuvable(s), ${echecs} en erreur.`);
+  console.log(`\nTerminé — ${succes} enrichi(s) et publié(s), ${nonTrouves} introuvable(s), ${echecs} en erreur.${quotaEpuise ? ' (arrêt : quota épuisé)' : ''}`);
   if (succes > 0) console.log('⚠️  gen-fiches.js doit tourner pour publier les nouvelles fiches HTML statiques.');
 }
 

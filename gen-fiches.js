@@ -33,7 +33,7 @@ const fs     = require('fs');
 const path   = require('path');
 const crypto = require('crypto');
 const ArticleCats = require('./js/categories-articles.js'); // nomenclature unique des catégories d'articles
-const { genererPagesCategories, categoryName } = require('./categorie-template.js');
+const { genererPagesCategories, categoryName, canonicalCategory } = require('./categorie-template.js');
 
 // ── Init Firebase Admin ──────────────────────────────────
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -3752,7 +3752,7 @@ async function main() {
       ...t,
       name:        t.name || '',
       emoji:       t.emoji || '🤖',
-      category:    ArticleCats.normaliser(t.category) ? t.category : (t.category || ''),
+      category:    canonicalCategory(t.category || ''),   // nomenclature fusionnée (voir categorie-template.js)
       description: t.description || '',
       tags:        Array.isArray(t.tags) ? t.tags : [],
       price:       t.price || 'freemium',
@@ -4519,7 +4519,7 @@ async function main() {
   const catResult = genererPagesCategories(tools, {
     navHTML, footerHTML, seoHeadTags, sharedJS, R, SITE_ORIGIN, slugify, escHtml,
   });
-  console.log(`✅ Catégories — ${catResult.genere} page(s) générée(s) sur ${catResult.langues} langue(s).`);
+  console.log(`✅ Catégories — ${catResult.genere} page(s) générée(s) sur ${catResult.langues} langue(s)${catResult.redirections ? `, ${catResult.redirections} redirection(s) d'anciennes URLs` : ''}.`);
   console.log(`  categorie/{langue}/{slug}/index.html`);
 
   // ─── SAUVEGARDE DE L'ÉTAT DE GÉNÉRATION ───

@@ -21,6 +21,28 @@
 const fs = require('fs');
 const path = require('path');
 
+// ── Nomenclature canonique des catégories ──────────────────────────────────────
+// COPIE de CATEGORY_CANONICAL dans js/i18n.js (le navigateur et Node ne partagent pas de
+// module) : toute modification doit être faite aux DEUX endroits.
+// Clé = slug d'une ancienne ou nouvelle valeur de t.category ; valeur = nom canonique unique.
+const CATEGORY_CANONICAL = {
+  'audio': "Audio & Musique", 'musique': "Audio & Musique", 'audio-musique': "Audio & Musique",
+  'recherche': "Assistants IA et recherche", 'assistants-ia-et-recherche': "Assistants IA et recherche",
+  'video': "Vidéo et animation", 'video-et-animation': "Vidéo et animation",
+  'image': "Images et design", 'images': "Images et design", 'design': "Images et design",
+  'design-3d': "Images et design", 'images-et-design': "Images et design",
+  'marketing': "Rédaction et marketing", 'redaction-et-marketing': "Rédaction et marketing",
+  'code': "Programmation et création d'applications",
+  'programmation-et-creation-d-applications': "Programmation et création d'applications",
+  'productivite': "Productivité, études et traduction", 'traduction': "Productivité, études et traduction",
+  'education': "Productivité, études et traduction",
+  'productivite-etudes-et-traduction': "Productivité, études et traduction",
+};
+function canonicalCategory(value) {
+  if (value == null || value === '') return value;
+  return CATEGORY_CANONICAL[slugifyFallback(String(value))] || value;
+}
+
 // Icone + couleur d'accent par categorie (cle = valeur canonique de
 // t.category en base, toujours en francais quelle que soit la langue
 // de la page). '_default' sert de repli pour toute categorie ajoutee
@@ -40,6 +62,13 @@ const CATEGORY_META = {
   Image:           { icon: '🎨', color: '#ff6b9d' },
   Musique:         { icon: '🎵', color: '#00d4aa' },
   Audio:           { icon: '🎧', color: '#00d4aa' },
+  'Audio & Musique':                          { icon: '🎧', color: '#00d4aa' },
+  'Assistants IA et recherche':               { icon: '🧠', color: '#00d4aa' },
+  'Vidéo et animation':                       { icon: '🎬', color: '#ff6b9d' },
+  'Images et design':                         { icon: '🎨', color: '#ff6b9d' },
+  'Rédaction et marketing':                   { icon: '📣', color: '#ff6b9d' },
+  "Programmation et création d'applications": { icon: '💻', color: '#6c63ff' },
+  'Productivité, études et traduction':       { icon: '🚀', color: '#f5a623' },
   _default:        { icon: '✨', color: '#6c63ff' },
 };
 
@@ -101,6 +130,41 @@ const CATEGORY_I18N = {
     en: { name: 'Productivity', desc: "AI tools to save time on your everyday tasks." },
     es: { name: 'Productividad', desc: "Herramientas de IA para ahorrar tiempo en tus tareas diarias." },
   },
+  'Audio & Musique': {
+    fr: { name: 'Audio & Musique', desc: "Outils IA pour la voix, la synthèse vocale, la transcription et la création musicale." },
+    en: { name: 'Audio & Music', desc: "AI tools for voice, speech synthesis, transcription and music creation." },
+    es: { name: 'Audio y música', desc: "Herramientas de IA para voz, síntesis de voz, transcripción y creación musical." },
+  },
+  'Assistants IA et recherche': {
+    fr: { name: 'Assistants IA et recherche', desc: "Assistants IA et outils pour explorer, synthétiser et vérifier l'information." },
+    en: { name: 'AI assistants & research', desc: "AI assistants and tools to explore, summarize and verify information." },
+    es: { name: 'Asistentes de IA e investigación', desc: "Asistentes de IA y herramientas para explorar, resumir y verificar información." },
+  },
+  'Vidéo et animation': {
+    fr: { name: 'Vidéo et animation', desc: "Outils IA pour générer, monter, animer et éditer des vidéos." },
+    en: { name: 'Video & animation', desc: "AI tools to generate, edit, animate and produce videos." },
+    es: { name: 'Vídeo y animación', desc: "Herramientas de IA para generar, montar, animar y editar vídeos." },
+  },
+  'Images et design': {
+    fr: { name: 'Images et design', desc: "Outils IA pour créer des images, des visuels, des designs et des rendus 3D." },
+    en: { name: 'Images & design', desc: "AI tools to create images, visuals, designs and 3D renders." },
+    es: { name: 'Imágenes y diseño', desc: "Herramientas de IA para crear imágenes, diseños, visuales y renders 3D." },
+  },
+  'Rédaction et marketing': {
+    fr: { name: 'Rédaction et marketing', desc: "Outils IA pour rédiger, optimiser vos contenus et automatiser vos campagnes marketing." },
+    en: { name: 'Writing & marketing', desc: "AI tools to write, optimize your content and automate your marketing campaigns." },
+    es: { name: 'Redacción y marketing', desc: "Herramientas de IA para redactar, optimizar tu contenido y automatizar tus campañas de marketing." },
+  },
+  "Programmation et création d'applications": {
+    fr: { name: "Programmation et création d'applications", desc: "Outils IA pour écrire, corriger du code et créer des applications plus vite." },
+    en: { name: 'Programming & app building', desc: "AI tools to write and fix code and build applications faster." },
+    es: { name: 'Programación y creación de aplicaciones', desc: "Herramientas de IA para escribir y corregir código y crear aplicaciones más rápido." },
+  },
+  'Productivité, études et traduction': {
+    fr: { name: 'Productivité, études et traduction', desc: "Outils IA pour gagner du temps, étudier, apprendre et traduire." },
+    en: { name: 'Productivity, study & translation', desc: "AI tools to save time, study, learn and translate." },
+    es: { name: 'Productividad, estudios y traducción', desc: "Herramientas de IA para ahorrar tiempo, estudiar, aprender y traducir." },
+  },
 };
 
 // Noms traduits de TOUTES les catégories (clé = slug de la valeur t.category en base,
@@ -135,12 +199,19 @@ const CATEGORY_NAMES = {
   'video': { en: 'Video', es: 'Vídeo' },
   'web': { en: 'Web', es: 'Web' },
   'image': { en: 'Image', es: 'Imagen' },
+  'audio-musique': { en: 'Audio & Music', es: 'Audio y música' },
+  'assistants-ia-et-recherche': { en: 'AI assistants & research', es: 'Asistentes de IA e investigación' },
+  'video-et-animation': { en: 'Video & animation', es: 'Vídeo y animación' },
+  'images-et-design': { en: 'Images & design', es: 'Imágenes y diseño' },
+  'redaction-et-marketing': { en: 'Writing & marketing', es: 'Redacción y marketing' },
+  'programmation-et-creation-d-applications': { en: 'Programming & app building', es: 'Programación y creación de aplicaciones' },
+  'productivite-etudes-et-traduction': { en: 'Productivity, study & translation', es: 'Productividad, estudios y traducción' },
 };
 
 // Nom d'une catégorie dans la langue de la page. FR = valeur de la base, inchangée.
 // Ordre : CATEGORY_I18N (nom exact) → CATEGORY_NAMES (slug) → valeur brute.
 function categoryName(cat, langue) {
-  const raw = String(cat == null ? '' : cat);
+  const raw = String(canonicalCategory(cat == null ? '' : cat));
   if (!raw || !langue || langue === 'fr') return raw;
   const e = CATEGORY_I18N[raw] && CATEGORY_I18N[raw][langue];
   if (e && e.name) return e.name;
@@ -241,7 +312,31 @@ function genererPagesCategories(tousLesOutils, helpers) {
     hubsGeneres++;
   }
 
-  return { genere, langues: languesGenerees.size, hubs: hubsGeneres };
+  // Redirections : anciennes URLs de catégories fusionnées (/categorie/{langue}/audio/ → /audio-musique/)
+  // pour ne perdre ni les liens ni le référencement. Jamais écrites si l'ancien slug est encore une
+  // vraie catégorie vivante.
+  let redirections = 0;
+  const slugsVivants = new Set(slugParCat.values());
+  for (const [ancienSlug, canon] of Object.entries(CATEGORY_CANONICAL)) {
+    const nouveauSlug = slugify(canon);
+    if (ancienSlug === nouveauSlug || slugsVivants.has(ancienSlug)) continue;
+    const parLangue = parCategorie.get(canon);
+    if (!parLangue) continue;
+    for (const langue of parLangue.keys()) {
+      const url = `${helpers.SITE_ORIGIN}/categorie/${langue}/${nouveauSlug}/`;
+      const html = `<!DOCTYPE html>
+<html lang="${langue}"><head><meta charset="UTF-8"><title>${helpers.escHtml(categoryName(canon, langue))}</title>
+<link rel="canonical" href="${url}"><meta http-equiv="refresh" content="0;url=${url}"><meta name="robots" content="noindex,follow">
+<script>location.replace(${JSON.stringify(url)})</script></head>
+<body><a href="${url}">${helpers.escHtml(url)}</a></body></html>`;
+      const dir = path.join('categorie', langue, ancienSlug);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
+      redirections++;
+    }
+  }
+
+  return { genere, langues: languesGenerees.size, hubs: hubsGeneres, redirections };
 }
 
 function genererPageCategorie(cat, tools, opts = {}) {
@@ -548,6 +643,7 @@ function buildToolCardSSR(t, langue) {
 
 module.exports = {
   categoryName,
+  canonicalCategory,
   genererPagesCategories,
   genererPageCategorie,
   CATEGORY_META,

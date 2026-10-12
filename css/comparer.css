@@ -9,18 +9,6 @@
 
 /* ── VARIABLES (reprises d'Albexia) ── */
 :root {
-  --bg:        #0a0a0f;
-  --bg2:       #12121a;
-  --bg3:       #1a1a24;
-  --text:      #f0f0f5;
-  --text-muted:#9090a8;
-  --text-dim:  #5a5a72;
-  --border:    rgba(255,255,255,0.08);
-  --border-hover: rgba(255,255,255,0.15);
-  --pink:      #ff6b9d;
-  --purple:    #6c63ff;
-  --teal:      #00d4aa;
-  --amber:     #f5a623;
   --radius:    4px;
   --radius-sm: 3px;
 }
@@ -30,7 +18,7 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--sans);
   font-weight: 400;
   line-height: 1.6;
   overflow-x: hidden;
@@ -51,9 +39,9 @@ nav {
 }
 
 .logo {
-  font-family: 'Fraunces', sans-serif;
+  font-family: var(--serif);
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--text);
   letter-spacing: -0.03em;
 }
@@ -67,9 +55,9 @@ nav {
   color: var(--text-muted);
   background: transparent;
   border: none;
-  border-radius: --radius;
+  border-radius: var(--radius);
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--sans);
   transition: all .15s;
 }
 
@@ -102,20 +90,20 @@ nav {
   color: var(--text-muted);
   font-size: 11px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 4px 14px; border-radius: --radius;
+  padding: 4px 14px; border-radius: var(--radius);
   margin-bottom: 20px;
 }
 
 .cp-hero h1 {
-  font-family: 'Fraunces', sans-serif;
+  font-family: var(--serif);
   font-size: clamp(26px, 4.5vw, 46px);
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.03em;
   margin-bottom: 12px;
   line-height: 1.1;
 }
 
-.cp-hero h1 .vs-sep { color: rgba(108,99,255,0.4); margin: 0 12px; }
+.cp-hero h1 .vs-sep { color: var(--text-dim); margin: 0 12px; }
 
 .cp-resume {
   font-size: 15px;
@@ -141,15 +129,15 @@ nav {
   flex: 1;
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: --radius;
+  border-radius: var(--radius);
   padding: 28px 24px;
   text-align: center;
   transition: border-color .2s;
 }
 
 .cp-tool-card.winner {
-  border-color: rgba(255,107,157,0.35);
-  background: linear-gradient(135deg, var(--bg2), rgba(255,107,157,0.04));
+  border-color: var(--border-hover);
+  background: var(--bg2);
   position: relative;
 }
 
@@ -158,13 +146,13 @@ nav {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--pink), var(--purple));
+  background: var(--text);
   border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .cp-tool-logo {
   width: 56px; height: 56px;
-  border-radius: --radius;
+  border-radius: var(--radius);
   object-fit: contain;
   margin: 0 auto 12px;
   display: block;
@@ -173,7 +161,7 @@ nav {
 
 .cp-tool-logo-fallback {
   width: 56px; height: 56px;
-  border-radius: --radius;
+  border-radius: var(--radius);
   background: var(--bg3);
   display: flex; align-items: center; justify-content: center;
   font-size: 28px;
@@ -181,7 +169,7 @@ nav {
 }
 
 .cp-tool-name {
-  font-family: 'Fraunces', sans-serif;
+  font-family: var(--serif);
   font-size: 18px; font-weight: 700;
   margin-bottom: 4px;
 }
@@ -197,17 +185,17 @@ nav {
 .cp-tool-note {
   display: inline-block;
   font-size: 13px; font-weight: 600;
-  padding: 3px 12px; border-radius: --radius-sm;
+  padding: 3px 12px; border-radius: var(--radius-sm);
 }
 
-.note-top { background: rgba(0,212,170,0.12); color: var(--teal); border: 1px solid rgba(0,212,170,0.25); }
-.note-bon { background: rgba(108,99,255,0.12); color: #a8a3ff; border: 1px solid rgba(108,99,255,0.25); }
-.note-ok  { background: rgba(245,166,35,0.12); color: var(--amber); border: 1px solid rgba(245,166,35,0.25); }
+.note-top { background: var(--bg3); color: var(--text); border: 1px solid var(--border-hover); }
+.note-bon { background: var(--bg3); color: var(--text); border: 1px solid var(--border-hover); }
+.note-ok  { background: var(--bg3); color: var(--text-muted); border: 1px solid var(--border-hover); }
 
 .cp-vs-divider {
-  font-family: 'Fraunces', sans-serif;
-  font-size: 22px; font-weight: 800;
-  color: rgba(255,107,157,0.4);
+  font-family: var(--serif);
+  font-size: 22px; font-weight: 600;
+  color: var(--text-dim);
   flex-shrink: 0;
 }
 
@@ -219,7 +207,7 @@ nav {
 }
 
 .cp-section-title {
-  font-family: 'Fraunces', sans-serif;
+  font-family: var(--serif);
   font-size: 11px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--text-dim);
@@ -255,7 +243,7 @@ nav {
 
 .cp-table th.th-tool img {
   width: 20px; height: 20px;
-  border-radius: --radius-sm; object-fit: contain;
+  border-radius: var(--radius-sm); object-fit: contain;
   display: inline-block;
   vertical-align: middle;
   margin-right: 6px;
@@ -267,8 +255,8 @@ nav {
 .cp-table td { padding: 12px 16px; font-size: 13px; text-align: center; }
 .cp-table td.td-label { text-align: left; color: var(--text-muted); font-weight: 400; }
 
-.check-yes { color: var(--teal); font-size: 16px; font-weight: 700; }
-.check-no  { color: #ff4d4d;    font-size: 16px; font-weight: 700; }
+.check-yes { color: var(--text); font-size: 16px; font-weight: 700; }
+.check-no  { color: var(--text-dim); font-size: 16px; font-weight: 700; }
 .check-na  { color: var(--text-dim); }
 
 /* ── AVANTAGES / INCONVÉNIENTS ── */
@@ -282,12 +270,12 @@ nav {
 .cp-pros-card {
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: --radius;
+  border-radius: var(--radius);
   padding: 22px;
 }
 
 .cp-pros-card-title {
-  font-family: 'Fraunces', sans-serif;
+  font-family: var(--serif);
   font-size: 14px; font-weight: 700;
   margin-bottom: 14px;
   display: flex; align-items: center; gap: 8px;
@@ -295,7 +283,7 @@ nav {
 
 .cp-pros-card-title img {
   width: 22px; height: 22px;
-  border-radius: --radius-sm; object-fit: contain;
+  border-radius: var(--radius-sm); object-fit: contain;
 }
 
 .cp-pros-list { list-style: none; }
@@ -308,8 +296,8 @@ nav {
   line-height: 1.5;
 }
 
-.cp-pros-list li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-.cp-cons-list li::before { content: '✗'; color: #ff4d4d; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.cp-pros-list li::before { content: '✓'; color: var(--text); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.cp-cons-list li::before { content: '✗'; color: var(--text-dim); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
 /* ── CAS D'USAGE ── */
 .cp-cas-grid {
@@ -322,12 +310,12 @@ nav {
 .cp-cas-card {
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: --radius;
+  border-radius: var(--radius);
   padding: 22px;
 }
 
-.cp-cas-card.card-a { border-top: 2px solid rgba(255,107,157,0.4); }
-.cp-cas-card.card-b { border-top: 2px solid rgba(108,99,255,0.4); }
+.cp-cas-card.card-a { border-top: 2px solid var(--border-hover); }
+.cp-cas-card.card-b { border-top: 2px solid var(--border-hover); }
 
 .cp-cas-label {
   font-size: 10px; font-weight: 700;
@@ -335,11 +323,11 @@ nav {
   margin-bottom: 8px;
 }
 
-.card-a .cp-cas-label { color: var(--pink); }
-.card-b .cp-cas-label { color: #a8a3ff; }
+.card-a .cp-cas-label { color: var(--text-muted); }
+.card-b .cp-cas-label { color: var(--text-muted); }
 
 .cp-cas-title {
-  font-family: 'Fraunces', sans-serif;
+  font-family: var(--serif);
   font-size: 14px; font-weight: 700;
   margin-bottom: 10px;
   display: flex; align-items: center; gap: 8px;
@@ -347,7 +335,7 @@ nav {
 
 .cp-cas-title img {
   width: 20px; height: 20px;
-  border-radius: --radius-sm; object-fit: contain;
+  border-radius: var(--radius-sm); object-fit: contain;
 }
 
 .cp-cas-text {
@@ -359,9 +347,9 @@ nav {
 
 /* ── VERDICT ── */
 .cp-verdict-card {
-  background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.05));
-  border: 1px solid rgba(108,99,255,0.2);
-  border-radius: --radius;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 32px;
   margin-bottom: 48px;
 }
@@ -369,11 +357,11 @@ nav {
 .cp-verdict-label {
   font-size: 10px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
-  color: #a8a3ff; margin-bottom: 10px;
+  color: var(--text-muted); margin-bottom: 10px;
 }
 
 .cp-verdict-title {
-  font-family: 'Fraunces', sans-serif;
+  font-family: var(--serif);
   font-size: 20px; font-weight: 700;
   margin-bottom: 14px;
   display: flex; align-items: center; gap: 10px;
@@ -381,7 +369,7 @@ nav {
 
 .cp-verdict-title img {
   width: 28px; height: 28px;
-  border-radius: --radius-sm; object-fit: contain;
+  border-radius: var(--radius-sm); object-fit: contain;
 }
 
 .cp-verdict-text {
@@ -397,7 +385,7 @@ nav {
 .cp-faq-item {
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: --radius;
+  border-radius: var(--radius);
   margin-bottom: 8px;
   overflow: hidden;
   transition: border-color .2s;
@@ -412,12 +400,12 @@ nav {
   color: var(--text);
   background: transparent; border: none;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--sans);
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   transition: color .15s;
 }
 
-.cp-faq-question:hover { color: #a8a3ff; }
+.cp-faq-question:hover { color: var(--text-muted); }
 
 .cp-faq-arrow {
   font-size: 12px; color: var(--text-dim);
@@ -450,7 +438,7 @@ nav {
 .cp-cta-btn {
   flex: 1; min-width: 200px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 20px; border-radius: --radius;
+  padding: 14px 20px; border-radius: var(--radius);
   font-size: 14px; font-weight: 600;
   text-decoration: none; transition: all .2s; border: 1px solid;
   gap: 10px;
@@ -458,13 +446,11 @@ nav {
 
 .cp-cta-btn img {
   width: 22px; height: 22px;
-  border-radius: --radius-sm; object-fit: contain;
+  border-radius: var(--radius-sm); object-fit: contain;
 }
 
-.cp-cta-a { background: rgba(255,107,157,0.1); border-color: rgba(255,107,157,0.3); color: var(--pink); }
-.cp-cta-a:hover { background: rgba(255,107,157,0.18); border-color: rgba(255,107,157,0.5); transform: translateY(-1px); }
-.cp-cta-b { background: rgba(108,99,255,0.1); border-color: rgba(108,99,255,0.3); color: #a8a3ff; }
-.cp-cta-b:hover { background: rgba(108,99,255,0.18); border-color: rgba(108,99,255,0.5); transform: translateY(-1px); }
+.cp-cta-a, .cp-cta-b { background: transparent; border-color: var(--border-hover); color: var(--text); }
+.cp-cta-a:hover, .cp-cta-b:hover { background: var(--bg3); border-color: var(--text-dim); transform: translateY(-1px); }
 
 /* ── BACK LINK ── */
 .cp-back {

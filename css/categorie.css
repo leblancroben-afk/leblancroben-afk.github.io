@@ -18,7 +18,7 @@
   padding: 4px 10px; border-radius: 20px; margin-bottom: 10px;
 }
 .cat-hero-title {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 34px;
+  font-family: var(--serif); font-weight: 600; font-size: 34px;
   letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 10px;
 }
 .cat-hero-desc { color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 560px; }
@@ -35,7 +35,7 @@
 }
 .cat-stat-muted { opacity: 0.55; }
 .cat-stat-ico { font-size: 18px; color: var(--cat-color, #6c63ff); }
-.cat-stat strong { display: block; font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; }
+.cat-stat strong { display: block; font-family: var(--serif); font-size: 17px; font-weight: 600; }
 .cat-stat span { display: block; font-size: 11px; color: var(--text-dim); }
 
 .cat-empty { color: var(--text-dim); font-size: 14px; padding: 40px 0; text-align: center; grid-column: 1 / -1; }
@@ -56,7 +56,7 @@
   gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
 }
 .cat-popular-head h2 {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+  font-family: var(--serif); font-weight: 600; font-size: 20px;
 }
 .cat-popular-all {
   font-size: 13px; font-weight: 600; color: #a8a3ff; text-decoration: none;
@@ -79,7 +79,7 @@
 /* Page hub /categorie/{langue}/ */
 .hub-header { padding: 24px 0 20px; text-align: center; }
 .hub-header h1 {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 32px;
+  font-family: var(--serif); font-weight: 600; font-size: 32px;
   letter-spacing: -0.03em; margin-bottom: 8px;
 }
 .hub-header p { color: var(--text-muted); font-size: 15px; }
@@ -88,7 +88,7 @@
   display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 32px;
 }
 .hub-section-title {
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+  font-family: var(--serif); font-weight: 600; font-size: 20px;
   margin-bottom: 16px;
 }
 .hub-grid {

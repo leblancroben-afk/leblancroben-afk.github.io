@@ -51,7 +51,6 @@ html[data-theme="light"] {
 
 /* Logo : le texte est en fill="#f0f0f5" dans le SVG (invisible sur papier). */
 html[data-theme="light"] .logo-text { fill: var(--text); }
-/* Logo du footer (même SVG, même classe) : couvert par la règle ci-dessus. */
 
 /* ── Bouton de bascule (monté par js/theme.js) ── */
 .theme-toggle {
@@ -295,22 +294,19 @@ html[data-theme="light"] .hub-card--ghost { border: 2px dashed rgba(25,23,18,0.1
 html[data-theme="light"] .hub-card-badge { background: rgba(25,23,18,0.05); border: 1px solid rgba(25,23,18,0.1); }
 html[data-theme="light"] .hub-cta-inner { background: linear-gradient(135deg,rgba(232,68,124,.1) 0%,rgba(232,68,124,.08) 50%,rgba(14,122,95,.06) 100%); border: 1px solid rgba(232,68,124,.2); }
 html[data-theme="light"] .hub-cta-glow { background: radial-gradient(ellipse,rgba(232,68,124,.15) 0%,transparent 70%); }
-html[data-theme="light"] .tool-card-plan-featured { border-color: rgba(232,68,124,0.3); background: linear-gradient(
-    160deg,
-    rgba(232,68,124,0.06) 0%,
-    var(--bg2, var(--surface)) 55%
-  ); box-shadow: 0 0 0 1px rgba(232,68,124,0.12),
-    0 4px 24px rgba(25,23,18,0.12); }
-html[data-theme="light"] .tool-card-plan-featured::before { background: linear-gradient(90deg, var(--accent), #f5a623, var(--accent)); }
-html[data-theme="light"] .tool-card-plan-featured:hover { border-color: rgba(232,68,124,0.5); box-shadow: 0 0 0 1px rgba(232,68,124,0.2),
-    0 12px 40px rgba(25,23,18,0.16); }
-html[data-theme="light"] .tool-card-plan-starter { border-color: rgba(232,68,124,0.25); background: linear-gradient(
-    160deg,
-    rgba(232,68,124,0.05) 0%,
-    var(--bg2, var(--surface)) 55%
-  ); }
-html[data-theme="light"] .tool-card-plan-starter::before { background: linear-gradient(90deg, var(--accent), #FF9DBC); }
-html[data-theme="light"] .tool-card-plan-starter:hover { border-color: rgba(232,68,124,0.4); }
+/* Cartes outils : blanches en mode clair, quel que soit le plan (aucun dégradé ni liseré rose) */
+html[data-theme="light"] .tool-card,
+html[data-theme="light"] .tool-card.tool-card-featured,
+html[data-theme="light"] .tool-card.tool-card-plan-featured,
+html[data-theme="light"] .tool-card.tool-card-plan-starter,
+html[data-theme="light"] .tool-card.tool-card-plan-gratuit { background: #FFFFFF; border-color: var(--border); box-shadow: none; }
+html[data-theme="light"] .tool-card:hover,
+html[data-theme="light"] .tool-card.tool-card-featured:hover,
+html[data-theme="light"] .tool-card.tool-card-plan-featured:hover,
+html[data-theme="light"] .tool-card.tool-card-plan-starter:hover,
+html[data-theme="light"] .tool-card.tool-card-plan-gratuit:hover { border-color: var(--border-hover); box-shadow: none; }
+html[data-theme="light"] .tool-card-plan-featured::before,
+html[data-theme="light"] .tool-card-plan-starter::before { content: none; display: none; }
 html[data-theme="light"] .tool-plan-badge-featured { background: rgba(25,23,18,0.05); color: var(--text-dim, var(--text-dim)); border: 1px solid rgba(25,23,18,0.08); }
 html[data-theme="light"] .tool-plan-badge-starter { background: rgba(25,23,18,0.05); color: var(--text-dim, var(--text-dim)); border: 1px solid rgba(25,23,18,0.08); }
 html[data-theme="light"] .tool-plan-badge-gratuit { background: rgba(25,23,18,0.05); color: var(--text-dim, var(--text-dim)); border: 1px solid rgba(25,23,18,0.08); }
@@ -517,40 +513,6 @@ html[data-theme="light"] .cp-faq-question:hover { color: #5a50d0; }
 html[data-theme="light"] .cp-cta-a { background: rgba(232,68,124,0.1); border-color: rgba(232,68,124,0.3); }
 html[data-theme="light"] .cp-cta-a:hover { background: rgba(232,68,124,0.18); border-color: rgba(232,68,124,0.5); }
 html[data-theme="light"] .cp-cta-b { color: #5a50d0; }
-
-/* ── css/alternatives.css ── */
-html[data-theme="light"] .alt-hero h1 .grad { background: linear-gradient(135deg, #6c63ff 0%, var(--accent) 50%, #00d4aa 100%); }
-html[data-theme="light"] .est-tool.selected { border-color: rgba(232,68,124,0.5); background: rgba(232,68,124,0.06); }
-html[data-theme="light"] .alt-cat-focus { background: rgba(25,23,18,0.04); }
-html[data-theme="light"] .guide-card { border: 1px solid rgba(232,68,124,0.2); }
-html[data-theme="light"] .guide-card::before { background: linear-gradient(90deg, var(--accent), #6c63ff); }
-html[data-theme="light"] .guide-card:hover { border-color: rgba(232,68,124,0.4); box-shadow: 0 8px 32px rgba(25,23,18,0.12); }
-html[data-theme="light"] .guide-card-economie { background: rgba(14,122,95,0.1); border: 1px solid rgba(14,122,95,0.2); }
-html[data-theme="light"] .alt-list-tag { background: rgba(25,23,18,0.04); }
-html[data-theme="light"] .proto-num { color: #5a50d0; }
-html[data-theme="light"] .alt-tip { background: rgba(180,83,9,0.07); border: 1px solid rgba(180,83,9,0.2); }
-
-/* ── css/guide-alternatif.css ── */
-html[data-theme="light"] .badge-green { background: rgba(14,122,95,0.12); border: 1px solid rgba(14,122,95,0.25); }
-html[data-theme="light"] .badge-pink { background: rgba(232,68,124,0.12); border: 1px solid rgba(232,68,124,0.25); }
-html[data-theme="light"] .badge-purple { color: #5a50d0; }
-html[data-theme="light"] .badge-amber { background: rgba(180,83,9,0.12); border: 1px solid rgba(180,83,9,0.25); }
-html[data-theme="light"] .btn-site:hover { border-color: rgba(25,23,18,0.3); background: rgba(25,23,18,0.04); }
-html[data-theme="light"] .btn-analyse { color: #5a50d0; }
-html[data-theme="light"] .compare-table tr:hover td { background: rgba(25,23,18,0.02); }
-html[data-theme="light"] .verdict-label { color: #5a50d0; }
-html[data-theme="light"] .elite-cta-block { background: linear-gradient(135deg, rgba(108,99,255,0.1) 0%, rgba(232,68,124,0.08) 100%); border: 1px solid rgba(232,68,124,0.25); }
-html[data-theme="light"] .elite-cta-block::before { background: linear-gradient(90deg, #6c63ff, var(--accent)); }
-html[data-theme="light"] .btn-elite { background: linear-gradient(135deg, #6c63ff, var(--accent)); }
-
-/* ── css/faq.css ── */
-html[data-theme="light"] .faq-total strong { color: var(--accent-ink); }
-html[data-theme="light"] .faq-link mark { color: #5a50d0; }
-html[data-theme="light"] .faq-answer-box { background: linear-gradient(135deg, rgba(108,99,255,0.08) 0%, rgba(232,68,124,0.06) 100%); }
-html[data-theme="light"] .faq-answer-label { color: var(--accent-ink); }
-html[data-theme="light"] .faq-content a { border-bottom: 1px solid rgba(232,68,124,0.3); }
-html[data-theme="light"] .faq-table tbody tr:hover td { background: rgba(25,23,18,0.02); }
-html[data-theme="light"] .faq-cta-block { background: linear-gradient(135deg, rgba(108,99,255,0.1) 0%, rgba(232,68,124,0.08) 100%); }
 
 /* ── css/tutoriels-hub.css ── */
 html[data-theme="light"] .th-btn.actif { color: var(--accent-ink); }

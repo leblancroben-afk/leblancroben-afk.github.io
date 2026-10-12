@@ -90,15 +90,16 @@ nav {
   position: absolute;
   top: 0; left: 50%; transform: translateX(-50%);
   width: 560px; height: 280px;
-  background: radial-gradient(ellipse, rgba(255,107,157,0.1) 0%, transparent 70%);
+  /* Accent coloré supprimé dans le hero. */
+  background: none;
   pointer-events: none;
 }
 
 .cp-vs-badge {
   display: inline-block;
-  background: rgba(255,107,157,0.1);
-  border: 1px solid rgba(255,107,157,0.3);
-  color: var(--pink);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
   font-size: 11px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
   padding: 4px 14px; border-radius: --radius;
@@ -114,7 +115,7 @@ nav {
   line-height: 1.1;
 }
 
-.cp-hero h1 .vs-sep { color: rgba(255,107,157,0.4); margin: 0 12px; }
+.cp-hero h1 .vs-sep { color: rgba(108,99,255,0.4); margin: 0 12px; }
 
 .cp-resume {
   font-size: 15px;

@@ -19,6 +19,12 @@ function slugify(str) {
     .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
+// Fusionne les anciennes catégories dans la nouvelle nomenclature (voir canonicalCategory, i18n.js).
+function normaliserCategories(list) {
+  return (list || []).map(t => (typeof window.canonicalCategory === 'function' && t.category)
+    ? { ...t, category: window.canonicalCategory(t.category) } : t);
+}
+
 // Libellé affiché d'une catégorie : la valeur Firestore (t.category) reste
 // l'identité de la catégorie (filtres, compteurs, slugs) ; seul le texte
 // visible est traduit via i18n.js. Repli sûr si i18n.js n'est pas chargé.
@@ -198,6 +204,15 @@ const catIcons = {
   _default:        '✨',
 };
 
+// Alias des nouveaux noms de catégories (couleurs d'icône des cartes + icônes de tuiles)
+[['Audio & Musique','Audio'],['Assistants IA et recherche','Recherche'],['Vidéo et animation','Vidéo'],
+ ['Images et design','Image'],['Rédaction et marketing','Marketing'],
+ ["Programmation et création d'applications",'Code'],['Productivité, études et traduction','Productivité']]
+  .forEach(([nouveau, ancien]) => {
+    if (catColors[ancien] && !catColors[nouveau]) catColors[nouveau] = catColors[ancien];
+    if (catIcons[ancien]  && !catIcons[nouveau])  catIcons[nouveau]  = catIcons[ancien];
+  });
+
 // Descriptions affichées dans l'entête dynamique de la page Outils.
 // À ajuster/compléter par Damon — texte générique en repli pour toute
 // catégorie non listée ici.
@@ -352,7 +367,7 @@ async function loadAllData() {
   // retélécharger tout Firestore ici. Le reste de l'app (blog/galerie) n'a
   // pas de sens sur ces pages.
   if (window.CATEGORY_TOOLS) {
-    state.tools = window.CATEGORY_TOOLS;
+    state.tools = normaliserCategories(window.CATEGORY_TOOLS);
     // La langue est fixée par l'URL de la page, pas par le choix du visiteur
     // (localStorage) — sinon un visiteur FR qui atterrit sur /categorie/en/seo/
     // verrait sa grille filtrée à vide par filtrerParLangue().
@@ -385,7 +400,7 @@ async function loadAllData() {
     ]);
 
     // Un outil encore en attente d'enrichissement IA est incomplet : jamais affiché.
-    state.tools   = toolsSnap.docs.map(d => d.data()).filter(t => t.status !== 'a_enrichir');
+    state.tools   = normaliserCategories(toolsSnap.docs.map(d => d.data()).filter(t => t.status !== 'a_enrichir'));
     state.gallery = gallerySnap.docs.map(d => d.data());
 
     // Articles créateurs (revendication + rédaction) — champs reconstruits

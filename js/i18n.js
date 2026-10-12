@@ -547,6 +547,13 @@ const UI_TRANSLATIONS = {
     'cat.vente': "Vente",
     'cat.video': "Vidéo et animation",
     'cat.web': "Web",
+    'cat.audio-musique': "Audio & Musique",
+    'cat.assistants-ia-et-recherche': "Assistants IA et recherche",
+    'cat.video-et-animation': "Vidéo et animation",
+    'cat.images-et-design': "Images et design",
+    'cat.redaction-et-marketing': "Rédaction et marketing",
+    'cat.programmation-et-creation-d-applications': "Programmation et création d'applications",
+    'cat.productivite-etudes-et-traduction': "Productivité, études et traduction",
     'idx.categoriesSubtitle': "Explore les meilleurs outils d'intelligence artificielle par catégorie.",
     'idx.galleryTypeAll': 'Tous',
     'idx.galleryTypeImage': 'Image',
@@ -1680,6 +1687,13 @@ const UI_TRANSLATIONS = {
     'cat.vente': "Sales",
     'cat.video': "Video & animation",
     'cat.web': "Web",
+    'cat.audio-musique': "Audio & Music",
+    'cat.assistants-ia-et-recherche': "AI assistants & research",
+    'cat.video-et-animation': "Video & animation",
+    'cat.images-et-design': "Images & design",
+    'cat.redaction-et-marketing': "Writing & marketing",
+    'cat.programmation-et-creation-d-applications': "Programming & app building",
+    'cat.productivite-etudes-et-traduction': "Productivity, study & translation",
     'idx.categoriesSubtitle': 'Explore the best AI tools by category.',
     'idx.galleryTypeAll': 'All',
     'idx.galleryTypeImage': 'Image',
@@ -2813,6 +2827,13 @@ const UI_TRANSLATIONS = {
     'cat.vente': "Ventas",
     'cat.video': "Vídeo y animación",
     'cat.web': "Web",
+    'cat.audio-musique': "Audio y música",
+    'cat.assistants-ia-et-recherche': "Asistentes de IA e investigación",
+    'cat.video-et-animation': "Vídeo y animación",
+    'cat.images-et-design': "Imágenes y diseño",
+    'cat.redaction-et-marketing': "Redacción y marketing",
+    'cat.programmation-et-creation-d-applications': "Programación y creación de aplicaciones",
+    'cat.productivite-etudes-et-traduction': "Productividad, estudios y traducción",
     'idx.categoriesSubtitle': 'Explora las mejores herramientas de inteligencia artificial por categoría.',
     'idx.galleryTypeAll': 'Todos',
     'idx.galleryTypeImage': 'Imagen',
@@ -3474,10 +3495,31 @@ function categoryId(value) {
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
+// Nouvelle nomenclature des catégories : plusieurs anciennes valeurs Firestore
+// (ex. Audio, Musique) et les nouveaux noms pointent vers UN SEUL nom canonique,
+// afin que les tuiles, filtres et libellés fusionnent sans toucher à la base.
+const CATEGORY_CANONICAL = {
+  'audio': "Audio & Musique", 'musique': "Audio & Musique", 'audio-musique': "Audio & Musique",
+  'recherche': "Assistants IA et recherche", 'assistants-ia-et-recherche': "Assistants IA et recherche",
+  'video': "Vidéo et animation", 'video-et-animation': "Vidéo et animation",
+  'image': "Images et design", 'images': "Images et design", 'design': "Images et design",
+  'design-3d': "Images et design", 'images-et-design': "Images et design",
+  'marketing': "Rédaction et marketing", 'redaction-et-marketing': "Rédaction et marketing",
+  'code': "Programmation et création d'applications",
+  'programmation-et-creation-d-applications': "Programmation et création d'applications",
+  'productivite': "Productivité, études et traduction", 'traduction': "Productivité, études et traduction",
+  'education': "Productivité, études et traduction",
+  'productivite-etudes-et-traduction': "Productivité, études et traduction"
+};
+function canonicalCategory(value) {
+  if (value == null || value === '') return value;
+  return CATEGORY_CANONICAL[categoryId(value)] || value;
+}
+window.canonicalCategory = canonicalCategory;
 function translateCategory(value, langue) {
   if (value == null || value === '') return '';
   const lang = langue || (typeof detecterLangue === 'function' ? detecterLangue() : 'fr');
-  const key = 'cat.' + categoryId(value);
+  const key = 'cat.' + categoryId(canonicalCategory(value));
   const dict = UI_TRANSLATIONS[lang] || UI_TRANSLATIONS.fr;
   return dict[key] ?? UI_TRANSLATIONS.fr[key] ?? String(value);
 }

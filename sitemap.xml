@@ -433,6 +433,11 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/categorie/fr/juridique/"/>
   </url>
   <url>
+    <loc>https://leblancroben-afk.github.io/categorie/fr/productivite-et-travail/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/categorie/fr/productivite-et-travail/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/categorie/fr/productivite-et-travail/"/>
+  </url>
+  <url>
     <loc>https://leblancroben-afk.github.io/categorie/fr/productivite-etudes-et-traduction/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/categorie/en/productivite-etudes-et-traduction/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/categorie/es/productivite-etudes-et-traduction/"/>
@@ -1583,6 +1588,11 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/mutiny/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/mutiny/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/mutiny/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/fr/notebooklm/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/notebooklm/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/notebooklm/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/notion-ai/tutoriels/</loc>

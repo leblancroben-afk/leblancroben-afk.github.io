@@ -1394,7 +1394,7 @@ ${buildListForLang(lang)}
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <script src="${R}js/i18n.js"></script>
   <link rel="stylesheet" href="${R}css/themes.css">
@@ -1985,7 +1985,7 @@ ${comparisonJsonLd}
 ${faqJsonLd}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${R}css/style.css" />
   <link rel="stylesheet" href="${R}css/comparer.css" />
   <link rel="stylesheet" href="${R}css/themes.css">
@@ -2338,7 +2338,7 @@ ${sharedJS()}
 const GLOSSAIRE_NIVEAUX = {
   debutant:      { emoji: '🌱', label: 'Débutant',      couleur: '#34D399' },
   intermediaire: { emoji: '🌿', label: 'Intermédiaire', couleur: '#E8B84B' },
-  avance:        { emoji: '🌳', label: 'Avancé',        couleur: '#ff6b9d' },
+  avance:        { emoji: '🌳', label: 'Avancé',        couleur: '#60A5FA' },
 };
 
 function glossaireNiveauBadgeHTML(niveau) {

@@ -18,8 +18,8 @@
   --border:    #26263A;
   --border-strong: #33334A;
 
-  --accent:    #FF6B9D;
-  --accent-ink:#E8447C;
+  --accent:    var(--text);
+  --accent-ink:var(--text);
   --accent2:   #34D399;
   --danger:    #F87171;
 
@@ -34,7 +34,7 @@
   --border-hover: #33334A;
   --accent3:   #34D399;
   --accent-amber: #E8B84B;
-  --purple:    #FF6B9D;
+  --purple:    var(--text);
   --teal:      #34D399;
 
   --radius:    4px;
@@ -175,15 +175,15 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
+  background: var(--text);
+  color: var(--bg);
   font-size: .95rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 2px solid rgba(255,107,157,0.5);
+  border: 2px solid var(--border-hover);
   transition: border-color .2s, transform .2s;
   cursor: pointer;
 }
@@ -240,7 +240,7 @@
   font-size: 13px;
 }
 
-  .step.active .step-num {background:var(--accent); color:#fff;}
+  .step.active .step-num {background:var(--text); color:var(--bg);}
   .step.pending .step-num {background:var(--bg3); border:1px solid var(--border-hover); color:var(--text-muted);}
   .step.done .step-num {background:rgba(52,211,153,0.15); border:1px solid rgba(52,211,153,0.4); color:var(--accent2);}
 
@@ -292,8 +292,8 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius);
-  background: rgba(255,107,157,0.15);
-  border: 1px solid rgba(255,107,157,0.3);
+  background: var(--bg3);
+  border: 1px solid var(--border-hover);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,8 +307,8 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
+  background: var(--text);
+  color: var(--bg);
   font-size: 12px;
   display: inline-flex;
   align-items: center;
@@ -426,9 +426,9 @@
   .btn-ghost {background:transparent; border:1px solid var(--border-strong); color:var(--text-muted);}
   .btn-ghost:hover {border-color:var(--text-muted); color:var(--text);}
   .btn-primary {background:var(--text); color:var(--bg); border:1px solid var(--text); border-radius:var(--radius-sm); letter-spacing:.04em;}
-  .btn-primary:hover {background:var(--accent); border-color:var(--accent); color:#fff;}
+  .btn-primary:hover {background:transparent; border-color:var(--text); color:var(--text);}
   .btn-cta {background:var(--text); color:var(--bg); border:1px solid var(--text); border-radius:var(--radius-sm); letter-spacing:.04em;}
-  .btn-cta:hover {background:var(--accent); border-color:var(--accent); color:#fff;}
+  .btn-cta:hover {background:transparent; border-color:var(--text); color:var(--text);}
   .btn:disabled {opacity:.6; cursor:not-allowed; transform:none !important;}
 
   /* Pricing — cartes générées dynamiquement par /js/plans-cards.js (données Firestore) */
@@ -450,8 +450,8 @@
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--accent);
-  color: #0a0a0f;
+  background: var(--text);
+  color: var(--bg);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .05em;
@@ -487,15 +487,15 @@
 }
   .btn-plan:hover {background:transparent; border-color:var(--text);}
   .plan-card.featured .btn-plan {background:var(--text); border-color:var(--text); color:var(--bg);}
-  .plan-card.featured .btn-plan:hover {background:var(--accent); border-color:var(--accent); color:#fff;}
+  .plan-card.featured .btn-plan:hover {background:transparent; border-color:var(--text); color:var(--text);}
   .btn-plan:disabled {opacity:.6; cursor:not-allowed;}
   @media (max-width: 900px) { .plans-grid {grid-template-columns:1fr;} }
 
   /* Connexion requise (Starter/Featured) */
   #zone-login-requis {
   display: none;
-  background: rgba(255,107,157,.08);
-  border: 1px solid rgba(255,107,157,.3);
+  background: var(--bg3);
+  border: 1px solid var(--border-hover);
   border-radius: var(--radius);
   padding: 1.2rem;
   margin: 0 0 24px;
@@ -575,7 +575,7 @@
   .address-box code {font-family:monospace; font-size:0.75rem; color:var(--accent); word-break:break-all;}
   .btn-copy {background:none; border:1px solid var(--border); color:var(--text-muted); border-radius:var(--radius-sm); padding:0.35rem 0.7rem; font-size:0.75rem; cursor:pointer; white-space:nowrap; transition:border-color 0.2s, color 0.2s; flex-shrink:0;}
   .btn-copy:hover {border-color:var(--text); color:var(--text);}
-  .network-tag {display:inline-block; background:rgba(255,107,157,0.1); color:var(--accent); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; font-weight:600; margin-bottom:1rem;}
+  .network-tag {display:inline-block; background:var(--bg3); color:var(--text); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; font-weight:600; margin-bottom:1rem;}
   .modal-note {font-size:0.78rem; color:var(--text-muted); text-align:center; font-style:italic;}
 
   footer {border-top:1px solid var(--border); text-align:center; padding:1.5rem; font-size:0.8rem; color:var(--text-muted); max-width:1040px; margin:0 auto;}
@@ -590,6 +590,10 @@
   }
 </style>
   <link rel="stylesheet" href="/css/themes.css">
+  <style>
+    /* Page Soumettre : aucun rose. themes.css redéfinit --accent en rose en mode clair → neutralisé ici. */
+    html, :root, html[data-theme="light"], html[data-theme="dark"] { --accent: var(--text); --accent-ink: var(--text); --purple: var(--text); --pink: var(--text); }
+  </style>
 </head>
 <body>
 
@@ -784,11 +788,11 @@
   <!-- Step 2 -->
   <div class="panel" id="panel2">
     <div class="panel-head">
-      <div class="panel-icon" style="background:rgba(255,107,157,0.15); border-color:rgba(255,107,157,0.3); color:var(--accent);">
+      <div class="panel-icon" style="background:var(--bg3); border-color:var(--border-hover); color:var(--text);">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2L12 16.4 5.7 20.8 8 13.6 2 9.2h7.6z"/></svg>
       </div>
       <div class="panel-title-group">
-        <h2><span class="panel-num" style="background:var(--accent); color:#0a0a0f;">2</span><span data-i18n="soum.step2Label">Choisissez votre visibilité</span></h2>
+        <h2><span class="panel-num">2</span><span data-i18n="soum.step2Label">Choisissez votre visibilité</span></h2>
         <p data-i18n="soum.step2Sub">Sélectionnez le plan qui correspond le mieux à vos objectifs.</p>
       </div>
     </div>

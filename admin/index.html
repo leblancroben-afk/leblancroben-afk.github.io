@@ -198,6 +198,9 @@
       max-width:180px; max-height:110px; border-radius:8px; border:1px solid var(--border);
       display:block; object-fit:cover;
     }
+    .g-dropzone { border:2px dashed var(--border-hover); border-radius:12px; padding:16px; display:flex; flex-wrap:wrap; align-items:center; gap:12px; transition:border-color .2s, background .2s; }
+    .g-dropzone.dragover { border-color:var(--accent); background:var(--bg3); }
+    .g-dropzone .field-hint { flex-basis:100%; margin:0; }
     .art-img-remove {
       position:absolute; top:-8px; right:-8px; width:24px; height:24px; border-radius:50%;
       background:#1a1a22; border:1px solid var(--border); color:#ff5050; cursor:pointer;
@@ -719,19 +722,37 @@
           </fieldset>
           <fieldset id="g-img-section" style="display:none;">
             <legend>Image</legend>
-            <label>URL directe de l'image *</label>
-            <input type="url" id="g-src">
-            <p class="field-hint">Uploadez sur <a href="https://imgbb.com" target="_blank">imgbb.com</a> → copiez le <strong>Direct link</strong></p>
-            <label>URL miniature (optionnel)</label>
-            <input type="url" id="g-thumb">
+<label>Image *</label>
+            <div class="g-dropzone" id="g-src-drop">
+              <div class="art-img-preview" id="g-src-preview" style="display:none">
+                <img id="g-src-preview-img" src="" alt="">
+                <button type="button" class="art-img-remove" id="g-src-remove" title="Retirer l'image">✕</button>
+              </div>
+              <button type="button" class="art-img-upload-btn" id="g-src-btn">⬆ Choisir une image</button>
+              <input type="file" id="g-src-file" accept="image/*" style="display:none">
+              <span class="art-img-status" id="g-src-status"></span>
+              <p class="field-hint">Glissez-déposez une image ici ou choisissez-la : elle est envoyée automatiquement (5 Mo max).</p>
+            </div>
+            <input type="hidden" id="g-src">
+            <input type="hidden" id="g-thumb">
           </fieldset>
           <fieldset id="g-audio-section" style="display:none;">
             <legend>Musique</legend>
             <label>URL directe du fichier audio *</label>
             <input type="url" id="g-audio-src">
             <p class="field-hint">Uploadez sur <a href="https://archive.org/upload" target="_blank">archive.org</a> → copiez le lien direct .mp3</p>
-            <label>URL image de couverture (optionnel)</label>
-            <input type="url" id="g-audio-cover">
+<label>Image de couverture (optionnel)</label>
+            <div class="g-dropzone" id="g-cover-drop">
+              <div class="art-img-preview" id="g-cover-preview" style="display:none">
+                <img id="g-cover-preview-img" src="" alt="">
+                <button type="button" class="art-img-remove" id="g-cover-remove" title="Retirer l'image">✕</button>
+              </div>
+              <button type="button" class="art-img-upload-btn" id="g-cover-btn">⬆ Choisir une image</button>
+              <input type="file" id="g-cover-file" accept="image/*" style="display:none">
+              <span class="art-img-status" id="g-cover-status"></span>
+              <p class="field-hint">Glissez-déposez une image ou choisissez-la : envoi automatique.</p>
+            </div>
+            <input type="hidden" id="g-audio-cover">
           </fieldset>
           <fieldset id="g-yt-section" style="display:none;">
             <legend>Vidéo YouTube</legend>
@@ -3121,6 +3142,40 @@ Support français|oui|non|bool"></textarea>
   document.getElementById('o-galerie').addEventListener('input', mediaRefresh);
   document.getElementById('form-outils').addEventListener('reset', () => setTimeout(mediaRefresh, 0));
 
+  // ── Galerie : image déposée → envoi automatique (même Worker que Outils et Articles) ──
+  function setupGalleryUploader(p, onChange) {
+    const hidden = document.getElementById(p.hidden), zone = document.getElementById(p.zone);
+    const btn = document.getElementById(p.btn), file = document.getElementById(p.file);
+    const status = document.getElementById(p.status);
+    const box = document.getElementById(p.preview), img = document.getElementById(p.previewImg);
+    const refresh = () => {
+      const u = hidden.value;
+      if (u) { img.src = u; box.style.display = ''; } else { img.removeAttribute('src'); box.style.display = 'none'; }
+      if (onChange) onChange(u);
+    };
+    const send = async f => {
+      if (!f) return;
+      status.textContent = 'Envoi en cours…'; btn.disabled = true;
+      try { hidden.value = await uploadMediaImage(f); refresh(); status.textContent = '✅ Image envoyée'; }
+      catch (err) { status.textContent = '⚠ ' + err.message; console.error(err); }
+      finally { btn.disabled = false; }
+    };
+    btn.addEventListener('click', () => file.click());
+    file.addEventListener('change', e => { send(e.target.files && e.target.files[0]); e.target.value = ''; });
+    ['dragenter', 'dragover'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('dragover'); }));
+    ['dragleave', 'drop'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('dragover'); }));
+    zone.addEventListener('drop', e => send(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]));
+    document.getElementById(p.remove).addEventListener('click', () => { hidden.value = ''; status.textContent = ''; refresh(); });
+    document.getElementById('form-galerie').addEventListener('reset', () => setTimeout(() => { hidden.value = ''; status.textContent = ''; refresh(); }, 0));
+  }
+  setupGalleryUploader(
+    { hidden:'g-src', zone:'g-src-drop', btn:'g-src-btn', file:'g-src-file', status:'g-src-status', preview:'g-src-preview', previewImg:'g-src-preview-img', remove:'g-src-remove' },
+    u => { document.getElementById('gp-img').src = u || ''; }
+  );
+  setupGalleryUploader(
+    { hidden:'g-audio-cover', zone:'g-cover-drop', btn:'g-cover-btn', file:'g-cover-file', status:'g-cover-status', preview:'g-cover-preview', previewImg:'g-cover-preview-img', remove:'g-cover-remove' }
+  );
+
   function exitEditMode() {
     editingTool = null;
     editingRelated = [];
@@ -3464,7 +3519,7 @@ Support français|oui|non|bool"></textarea>
       if (type==='image') {
         const src=document.getElementById('g-src').value.trim();
         const thumb=document.getElementById('g-thumb').value.trim();
-        if (!src) { showMsg('warn-galerie','ok-galerie','warn','URL de l\'image obligatoire.'); btn.disabled=false; return; }
+        if (!src) { showMsg('warn-galerie','ok-galerie','warn','Image obligatoire : déposez-la d\'abord (envoi automatique).'); btn.disabled=false; return; }
         docData.src=src; docData.thumb=thumb||src;
       } else if (type==='musique') {
         const src=document.getElementById('g-audio-src').value.trim();

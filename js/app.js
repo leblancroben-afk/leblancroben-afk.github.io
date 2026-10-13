@@ -1017,6 +1017,57 @@ function renderBlog() {
 // ═══════════════════════════════════════
 // ACCUEIL — catégories, outils les mieux notés, derniers articles
 // ═══════════════════════════════════════
+// « Outils les mieux notés » (accueil) : UNIQUEMENT des outils ayant au moins un avis réel,
+// classés par note moyenne décroissante (puis nombre d'avis). Les moyennes viennent des avis
+// Firestore (window._getRatingSummaries), jamais du champ statique note/rating des outils.
+let _topRatedToken = 0;
+async function renderTopRated(topEl, tools, lang, empty) {
+  const token = ++_topRatedToken;
+  // _getRatingSummaries est défini par un script module de la page : on attend un peu s'il n'est pas prêt.
+  for (let i = 0; i < 15 && typeof window._getRatingSummaries !== 'function'; i++) {
+    await new Promise(r => setTimeout(r, 200));
+  }
+  await ensureRatingsLoaded(tools);
+  if (token !== _topRatedToken) return; // un rendu plus récent a pris le relais
+
+  const priceLabel = {
+    free: window.t('alertes.priceFree', lang),
+    freemium: window.t('alertes.priceFreemium', lang),
+    paid: window.t('alertes.pricePaid', lang),
+  };
+  const avecAvis = tools
+    .map(x => ({ x, r: state.ratingsCache.get(slugify(x.name) || String(x.id)) }))
+    .filter(({ r }) => r && Number(r.ratingCount) > 0 && Number(r.ratingAverage) > 0);
+  avecAvis.sort((p, q) =>
+    (Number(q.r.ratingAverage) - Number(p.r.ratingAverage)) ||
+    (Number(q.r.ratingCount) - Number(p.r.ratingCount)) ||
+    String(p.x.name).localeCompare(String(q.x.name)));
+  const best = avecAvis.slice(0, 4);
+
+  topEl.innerHTML = best.length ? best.map(({ x, r }) => {
+    const col  = catColors[x.category] || { bg: 'rgba(255,255,255,0.08)' };
+    const href = buildToolPageUrl(x) || x.url || '#';
+    const note = Number(r.ratingAverage);
+    const noteTxt = lang === 'fr' ? note.toFixed(1).replace('.', ',') : note.toFixed(1);
+    const ico = x.favicon
+      ? `<img src="${escHtmlBlog(x.favicon)}" alt="" class="tool-favicon" loading="lazy"
+           onerror="this.replaceWith(document.createTextNode('${escHtmlBlog(x.emoji || '✨')}'))">`
+      : escHtmlBlog(x.emoji || '✨');
+    return `
+      <a class="home-top-card" href="${escHtmlBlog(href)}">
+        <div class="home-top-head">
+          <span class="home-top-ico" style="background:${col.bg}">${ico}</span>
+          <span class="home-top-name">${escHtmlBlog(x.name)}</span>
+        </div>
+        <p class="home-top-desc">${escHtmlBlog(x.description)}</p>
+        <div class="home-top-foot">
+          ${priceLabel[x.price] ? `<span class="price-tag price-${escHtmlBlog(x.price)}">${priceLabel[x.price]}</span>` : ''}
+          <span class="home-top-note">★ ${noteTxt} <small>(${Number(r.ratingCount)})</small></span>
+        </div>
+      </a>`;
+  }).join('') : empty;
+}
+
 function renderHome() {
   const catRow = document.getElementById('home-cat-row');
   const topEl  = document.getElementById('home-top-tools');
@@ -1090,38 +1141,7 @@ function renderHome() {
     }
   }
 
-  if (topEl) {
-    const priceLabel = {
-      free: window.t('alertes.priceFree', lang),
-      freemium: window.t('alertes.priceFreemium', lang),
-      paid: window.t('alertes.pricePaid', lang),
-    };
-    const best = [...tools]
-      .sort((x, y) => (Number(y.note || y.rating) || 0) - (Number(x.note || x.rating) || 0))
-      .slice(0, 4);
-    topEl.innerHTML = best.length ? best.map(x => {
-      const col  = catColors[x.category] || { bg: 'rgba(255,255,255,0.08)' };
-      const href = buildToolPageUrl(x) || x.url || '#';
-      const note = Number(x.note || x.rating) || 0;
-      const noteTxt = lang === 'fr' ? note.toFixed(1).replace('.', ',') : note.toFixed(1);
-      const ico = x.favicon
-        ? `<img src="${escHtmlBlog(x.favicon)}" alt="" class="tool-favicon" loading="lazy"
-             onerror="this.replaceWith(document.createTextNode('${escHtmlBlog(x.emoji || '✨')}'))">`
-        : escHtmlBlog(x.emoji || '✨');
-      return `
-        <a class="home-top-card" href="${escHtmlBlog(href)}">
-          <div class="home-top-head">
-            <span class="home-top-ico" style="background:${col.bg}">${ico}</span>
-            <span class="home-top-name">${escHtmlBlog(x.name)}</span>
-          </div>
-          <p class="home-top-desc">${escHtmlBlog(x.description)}</p>
-          <div class="home-top-foot">
-            ${priceLabel[x.price] ? `<span class="price-tag price-${escHtmlBlog(x.price)}">${priceLabel[x.price]}</span>` : ''}
-            ${note ? `<span class="home-top-note">★ ${noteTxt}</span>` : ''}
-          </div>
-        </a>`;
-    }).join('') : empty;
-  }
+  if (topEl) renderTopRated(topEl, tools, lang, empty);
 
   if (artEl) {
     const posts = filtrerParLangue(state.blog).slice(0, 4);

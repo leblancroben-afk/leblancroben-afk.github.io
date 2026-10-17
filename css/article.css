@@ -593,3 +593,193 @@ figure.article-image figcaption,
 @media (max-width: 380px) {
   .analyse-profils { grid-template-columns: 1fr; }
 }
+/* Albexia — blocs de fin d'article (À découvrir aussi / Le monde au-delà de l'IA)
+ * Fichier complet et autonome (nouveau). Remplace .article-nav-bottom.
+ * Couleurs : variables de themes.css (--bg2, --border, --text, --text-muted, --text-dim…).
+ * Repli sûr si une variable manque.
+ */
+
+.reco-section {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border, #2a2a2a);
+}
+.reco-title {
+  font-family: 'Syne', 'DM Sans', system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 18px;
+  color: var(--text, #f5f5f5);
+}
+
+/* Rail horizontal */
+.reco-rail { position: relative; }
+.reco-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 6px;
+}
+.reco-track::-webkit-scrollbar { display: none; }
+
+.reco-card {
+  flex: 0 0 220px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg2, #141414);
+  border: 1px solid var(--border, #2a2a2a);
+  border-radius: var(--radius-sm, 3px);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .2s;
+}
+.reco-card:hover { border-color: var(--border-hover, #444); }
+
+.reco-thumb {
+  aspect-ratio: 16 / 10;
+  background: var(--bg3, #1c1c1c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.reco-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.reco-noimg { font-size: 12px; color: var(--text-dim, #888); }
+
+.reco-body { padding: 12px 14px 14px; }
+.reco-body h3 {
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: var(--text, #f5f5f5);
+}
+.reco-body p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted, #aaa);
+  margin: 0 0 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.reco-meta {
+  font-size: 11px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--text-dim, #888);
+}
+
+.reco-more {
+  flex: 0 0 150px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 16px;
+  background: var(--bg3, #1c1c1c);
+}
+.reco-more span { font-weight: 600; font-size: 14px; color: var(--accent, #ff6b9d); }
+
+/* Flèches de défilement (ordinateur seulement) */
+.reco-arrow {
+  display: none;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border, #2a2a2a);
+  background: var(--bg2, #141414);
+  color: var(--text, #f5f5f5);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+}
+.reco-prev { left: -6px; }
+.reco-next-arrow { right: -6px; }
+@media (min-width: 900px) {
+  .reco-arrow { display: flex; }
+}
+
+/* Bouton icône centré */
+.reco-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+.reco-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border, #2a2a2a);
+  background: var(--bg2, #141414);
+  color: var(--text-muted, #aaa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.reco-icon-btn:hover { color: var(--text, #f5f5f5); border-color: var(--border-hover, #444); }
+.reco-icon-btn[hidden] { display: none; }
+
+/* Le monde au-delà de l'IA : liste image à gauche */
+.reco-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.reco-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+}
+.reco-row .reco-thumb {
+  flex: 0 0 112px;
+  height: 76px;
+  aspect-ratio: auto;
+  border-radius: var(--radius-sm, 3px);
+}
+.reco-row .reco-body { padding: 0; min-width: 0; }
+.reco-row .reco-body h3 {
+  font-family: 'Syne', 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.reco-row .reco-body p { -webkit-line-clamp: 2; }
+
+@media (min-width: 768px) {
+  .reco-row .reco-thumb { flex-basis: 160px; height: 100px; }
+  .reco-row .reco-body h3 { font-size: 18px; }
+}
+
+.reco-monde-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+.reco-link {
+  background: none;
+  border: none;
+  padding: 6px 0;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-muted, #aaa);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.reco-link:hover { color: var(--text, #f5f5f5); }
+
+.reco-monde { margin-top: 48px; }

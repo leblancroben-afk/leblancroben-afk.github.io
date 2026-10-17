@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v16'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
+const TEMPLATE_VERSION = 'layout-v17'; // v9 : mêmes sections pour les 3 plans, logos avec repli, page des avis
 
 function loadState() {
   try {
@@ -1047,6 +1047,12 @@ function recoJS() {
   return '<script>(' + run.toString() + ')();</' + 'script>';
 }
 
+// Les articles de la collection « articles » (admin) n'ont pas de champ statut :
+// ils sont publiés dès qu'ils ont un slug et un corps. Un statut explicite fait foi s'il existe.
+function estArticlePublie(a) {
+  return !a.statut || a.statut === 'publie';
+}
+
 // Date de tri : date_iso si présent, sinon created_at Firestore, sinon 0.
 function articleSortTime(a) {
   if (a.date_iso) { const t = Date.parse(a.date_iso); if (!isNaN(t)) return t; }
@@ -1086,7 +1092,7 @@ function recoRowServerHTML(item, L) {
 function buildRecoBlocks(article, allArticles, langue) {
   const L = RECO_LABELS[langue] || RECO_LABELS.fr;
   const pool = allArticles.filter(a =>
-    (a.langue || 'fr') === langue && a.slug && a.statut === 'publie' && String(a.id) !== String(article.id)
+    (a.langue || 'fr') === langue && a.slug && a.corps_html && estArticlePublie(a) && String(a.id) !== String(article.id)
   ).sort((x, y) => articleSortTime(y) - articleSortTime(x));
 
   const decouvrir = pool.filter(a => a.section !== 'monde').map(a => recoItem(a, langue));

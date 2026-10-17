@@ -936,10 +936,15 @@
             <legend>Champs communs</legend>
             <label>Titre FR *</label>
             <input type="text" id="a-title-fr" required>
+            <label>Rubrique *</label>
+            <select id="a-section">
+              <option value="blog" selected>Blog</option>
+              <option value="monde">Le monde au-delà de l'IA</option>
+            </select>
             <div class="row">
               <div>
-                <label>Catégorie *</label>
-                <select id="a-category" required>
+                <label>Catégorie (obligatoire pour le Blog)</label>
+                <select id="a-category">
                   <option value="" disabled selected>Choisir une catégorie…</option>
                   <option value="Découvrir l'IA">Découvrir l'IA</option>
                   <option value="Outils IA">Outils IA</option>
@@ -957,7 +962,7 @@
             <div class="row">
               <div>
                 <label>Date de publication</label>
-                <input type="text" id="a-date" placeholder="20 mai 2026">
+                <input type="date" id="a-date">
               </div>
               <div>
                 <label>Temps de lecture</label>
@@ -3656,12 +3661,19 @@ Support français|oui|non|bool"></textarea>
     frameDoc.close();
   }
 
+  // Date du sélecteur (AAAA-MM-JJ) -> texte affiché en français ("17 octobre 2026")
+  function dateIsoToFr(iso) {
+    if (!iso) return '';
+    const d = new Date(iso + 'T00:00:00');
+    return isNaN(d) ? '' : d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
   function updateArticlePreview() {
     document.getElementById('ap-emoji').textContent = document.getElementById('a-emoji').value || '📝';
     document.getElementById('ap-title').textContent  = document.getElementById('a-title-fr').value || 'Titre de l\'article';
     const cat  = document.getElementById('a-category').value || 'Catégorie';
-    const date = document.getElementById('a-date').value;
-    document.getElementById('ap-cat').textContent = date ? `${cat} · ${date}` : cat;
+    const date = dateIsoToFr(document.getElementById('a-date').value);
+    document.getElementById('ap-cat').textContent = date ? (cat ? `${cat} · ${date}` : date) : cat;
     document.getElementById('ap-excerpt').textContent = document.getElementById('a-excerpt-fr').value || 'L\'extrait apparaîtra ici.';
     const tags = document.getElementById('a-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
     document.getElementById('ap-tags').innerHTML = tags.map(t=>`<span class="preview-tag">#${t}</span>`).join('');
@@ -4240,7 +4252,8 @@ Support français|oui|non|bool"></textarea>
     setVal('a-title-fr', article.title);
     setVal('a-category', (window.AlbexiaArticleCats && AlbexiaArticleCats.normaliser(article.category)) || '');
     setVal('a-emoji', article.emoji);
-    setVal('a-date', article.date);
+    setVal('a-date', article.date_iso || '');
+    setVal('a-section', article.section === 'monde' ? 'monde' : 'blog');
     setVal('a-readtime', article.readTime);
     setVal('a-slug', article.slug);
     setVal('a-tags', (article.tags||[]).join(', '));
@@ -4327,7 +4340,8 @@ Support français|oui|non|bool"></textarea>
       const corpsFr = document.getElementById('a-corps-fr').value.trim();
       const category = document.getElementById('a-category').value.trim();
 
-      if (!titleFr || !excerptFr || !corpsFr || !category) {
+      const section = document.getElementById('a-section').value;
+      if (!titleFr || !excerptFr || !corpsFr || (section === 'blog' && !category)) {
         showMsg('warn-articles','ok-articles','warn','Titre, catégorie, extrait et corps HTML FR sont obligatoires.');
         btn.disabled=false; return;
       }
@@ -4343,7 +4357,8 @@ Support français|oui|non|bool"></textarea>
       }
 
       const emoji = document.getElementById('a-emoji').value.trim() || '📝';
-      const date  = document.getElementById('a-date').value.trim();
+      const dateIso = document.getElementById('a-date').value;
+      const date  = dateIsoToFr(dateIso);
       const readTime = document.getElementById('a-readtime').value.trim();
       const tags = document.getElementById('a-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
       const author = document.getElementById('a-author').value.trim() || 'Équipe Albexia';
@@ -4393,7 +4408,7 @@ Support français|oui|non|bool"></textarea>
         const enId = existingEn ? existingEn.id : `${mainId}-en`;
         traductions.en = enId;
         toWrite.push({
-          id:enId, title:titleEn, category, emoji, date, readTime,
+          id:enId, title:titleEn, category, emoji, date, date_iso:dateIso, section, readTime,
           excerpt:excerptEn, author, tags, slug, langue:'en',
           traductions:{fr:mainId},
           url:`articles/en/${slug}/index.html`,
@@ -4408,7 +4423,7 @@ Support français|oui|non|bool"></textarea>
         const esId = existingEs ? existingEs.id : `${mainId}-es`;
         traductions.es = esId;
         toWrite.push({
-          id:esId, title:titleEs, category, emoji, date, readTime,
+          id:esId, title:titleEs, category, emoji, date, date_iso:dateIso, section, readTime,
           excerpt:excerptEs, author, tags, slug, langue:'es',
           traductions:{fr:mainId},
           url:`articles/es/${slug}/index.html`,
@@ -4418,7 +4433,7 @@ Support français|oui|non|bool"></textarea>
       }
 
       toWrite.unshift({
-        id:mainId, title:titleFr, category, emoji, date, readTime,
+        id:mainId, title:titleFr, category, emoji, date, date_iso:dateIso, section, readTime,
         excerpt:excerptFr, author, tags, slug, langue:'fr',
         traductions,
         url:`articles/fr/${slug}/index.html`,
@@ -4431,7 +4446,7 @@ Support français|oui|non|bool"></textarea>
         if (existingEs && !(titleEs && excerptEs && corpsEs)) await deleteDoc(doc(db,'articles',String(existingEs.id)));
       }
 
-      for (const d of toWrite) await setDoc(doc(db,'articles',String(d.id)), {...d, updatedAt: serverTimestamp()});
+      for (const d of toWrite) await setDoc(doc(db,'articles',String(d.id)), {...d, updatedAt: serverTimestamp()}, { merge: true });
       invalidateArticlesCache();
 
       const action = editingArticle ? 'mis à jour' : 'publié';

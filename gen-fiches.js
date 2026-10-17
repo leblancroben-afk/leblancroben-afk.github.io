@@ -919,6 +919,222 @@ ${sharedJS()}
 </html>`;
 }
 
+const RECO_LABELS = {
+  fr: { decouvrirTitle: 'À découvrir aussi', mondeTitle: "Le monde au-delà de l'IA", more: 'Voir plus →',
+        noImg: 'Image', loadPre: 'Charger', loadPost: 'de plus', back: 'Revenir au début',
+        nextAria: "Découvrir d'autres articles", prevAria: 'Précédent', nextArrowAria: 'Suivant' },
+  en: { decouvrirTitle: 'You might also like', mondeTitle: 'Beyond AI', more: 'See more →',
+        noImg: 'Image', loadPre: 'Load', loadPost: 'more', back: 'Back to start',
+        nextAria: 'Discover more articles', prevAria: 'Previous', nextArrowAria: 'Next' },
+  es: { decouvrirTitle: 'También te puede interesar', mondeTitle: 'Más allá de la IA', more: 'Ver más →',
+        noImg: 'Imagen', loadPre: 'Cargar', loadPost: 'más', back: 'Volver al inicio',
+        nextAria: 'Descubrir más artículos', prevAria: 'Anterior', nextArrowAria: 'Siguiente' }
+};
+
+// Script inline des blocs de fin d'article (même principe que faqJS / tutorialJS).
+// Le code est sérialisé via Function.toString(), donc il reste écrit en JS normal.
+function recoJS() {
+  const run = function () {
+  'use strict';
+
+  var node = document.getElementById('reco-data');
+  if (!node) return;
+  var D = JSON.parse(node.textContent);
+  var L = D.labels || {};
+  var DECOUVRIR_BATCH = 10;
+  var MONDE_STEP = 7;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function safeUrl(u) {
+    return /^(https?:|\/|\.\/|\.\.\/|#|index\.html)/.test(u || '') ? u : '#';
+  }
+  function thumb(a) {
+    return a.img
+      ? '<img src="' + esc(a.img) + '" alt="" loading="lazy">'
+      : '<span class="reco-noimg">' + esc(L.noImg) + '</span>';
+  }
+  function meta(a) {
+    var parts = [];
+    if (a.date) parts.push(esc(a.date));
+    if (a.min) parts.push(esc(a.min));
+    return parts.join(' · ');
+  }
+  function cardHTML(a) {
+    return '<a class="reco-card" href="' + safeUrl(a.url) + '">' +
+      '<div class="reco-thumb">' + thumb(a) + '</div>' +
+      '<div class="reco-body"><h3>' + esc(a.title) + '</h3>' +
+      (a.desc ? '<p>' + esc(a.desc) + '</p>' : '') +
+      '<div class="reco-meta">' + meta(a) + '</div></div></a>';
+  }
+  function rowHTML(a) {
+    return '<a class="reco-row" href="' + safeUrl(a.url) + '">' +
+      '<div class="reco-thumb">' + thumb(a) + '</div>' +
+      '<div class="reco-body"><h3>' + esc(a.title) + '</h3>' +
+      (a.desc ? '<p>' + esc(a.desc) + '</p>' : '') +
+      '<div class="reco-meta">' + meta(a) + '</div></div></a>';
+  }
+
+  /* ── 1. À découvrir aussi ─────────────────────────────────────
+     Lots de 10 en boucle. Quand il reste moins de 10 articles,
+     le lot est complété par les premiers (sans doublon dans le lot). */
+  var dec = D.decouvrir || [];
+  var decTrack = document.getElementById('reco-track');
+  var decNext = document.getElementById('reco-next');
+  var decPtr = Math.min(DECOUVRIR_BATCH, dec.length); // le lot initial est rendu côté serveur
+
+  function decNextBatch() {
+    var n = dec.length;
+    if (!n || !decTrack) return;
+    var size = Math.min(DECOUVRIR_BATCH, n);
+    var batch = [];
+    for (var i = 0; i < size; i++) {
+      batch.push(dec[decPtr % n]);
+      decPtr++;
+    }
+    var more = '<a class="reco-card reco-more" href="' + safeUrl(D.blogUrl) + '"><span>' + esc(L.more) + '</span></a>';
+    decTrack.innerHTML = batch.map(cardHTML).join('') + more;
+    decTrack.scrollLeft = 0;
+  }
+  if (decNext) decNext.addEventListener('click', decNextBatch);
+
+  document.querySelectorAll('.reco-arrow').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (!decTrack) return;
+      decTrack.scrollBy({ left: Number(b.getAttribute('data-dir')) * decTrack.clientWidth * 0.8, behavior: 'smooth' });
+    });
+  });
+
+  /* ── 2. Le monde au-delà de l'IA ──────────────────────────────
+     Lots de 7 (mobile et ordinateur). Bouton « Charger X de plus »,
+     X = min(7, restants). Quand tout est affiché : « Revenir au début ». */
+  var mon = D.monde || [];
+  var monList = document.getElementById('reco-monde-list');
+  var monActions = document.getElementById('reco-monde-actions');
+  var monShown = Math.min(MONDE_STEP, mon.length);
+
+  function renderMonde() {
+    if (!monList || !monActions) return;
+    monList.innerHTML = mon.slice(0, monShown).map(rowHTML).join('');
+    var remaining = mon.length - monShown;
+    var html = '';
+    if (remaining > 0) {
+      html += '<button type="button" class="reco-link" data-act="more">' +
+        esc(L.loadPre) + ' ' + Math.min(MONDE_STEP, remaining) + ' ' + esc(L.loadPost) + '</button>';
+    }
+    if (remaining === 0 && mon.length > MONDE_STEP) {
+      html += '<button type="button" class="reco-link" data-act="back">' + esc(L.back) + '</button>';
+    }
+    monActions.innerHTML = html;
+  }
+  if (monActions) {
+    monActions.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-act]');
+      if (!btn) return;
+      if (btn.getAttribute('data-act') === 'more') {
+        monShown = Math.min(monShown + MONDE_STEP, mon.length);
+      } else {
+        monShown = Math.min(MONDE_STEP, mon.length);
+      }
+      renderMonde();
+    });
+  }
+  renderMonde();
+};
+  return '<script>(' + run.toString() + ')();</' + 'script>';
+}
+
+// Date de tri : date_iso si présent, sinon created_at Firestore, sinon 0.
+function articleSortTime(a) {
+  if (a.date_iso) { const t = Date.parse(a.date_iso); if (!isNaN(t)) return t; }
+  if (a.created_at?.toMillis) return a.created_at.toMillis();
+  if (a.created_at?.toDate) return a.created_at.toDate().getTime();
+  return 0;
+}
+
+function recoItem(a, langue) {
+  return {
+    title: a.title || '',
+    desc: a.excerpt || '',
+    url: `${R}articles/${langue}/${a.slug}/index.html`,
+    img: a.og_image || a.image || '',
+    date: a.date || '',
+    min: a.readTime || ''
+  };
+}
+
+function recoCardServerHTML(item, L) {
+  return `<a class="reco-card" href="${escHtml(item.url)}">
+        <div class="reco-thumb">${item.img ? `<img src="${escHtml(item.img)}" alt="" loading="lazy">` : `<span class="reco-noimg">${L.noImg}</span>`}</div>
+        <div class="reco-body"><h3>${escHtml(item.title)}</h3>${item.desc ? `<p>${escHtml(item.desc)}</p>` : ''}
+        <div class="reco-meta">${[escHtml(item.date), escHtml(item.min)].filter(Boolean).join(' · ')}</div></div>
+      </a>`;
+}
+
+function recoRowServerHTML(item, L) {
+  return `<a class="reco-row" href="${escHtml(item.url)}">
+        <div class="reco-thumb">${item.img ? `<img src="${escHtml(item.img)}" alt="" loading="lazy">` : `<span class="reco-noimg">${L.noImg}</span>`}</div>
+        <div class="reco-body"><h3>${escHtml(item.title)}</h3>${item.desc ? `<p>${escHtml(item.desc)}</p>` : ''}
+        <div class="reco-meta">${[escHtml(item.date), escHtml(item.min)].filter(Boolean).join(' · ')}</div></div>
+      </a>`;
+}
+
+// Retourne { decouvrirHTML, mondeHTML, dataHTML } — chaînes vides si rien à afficher.
+function buildRecoBlocks(article, allArticles, langue) {
+  const L = RECO_LABELS[langue] || RECO_LABELS.fr;
+  const pool = allArticles.filter(a =>
+    (a.langue || 'fr') === langue && a.slug && a.statut === 'publie' && String(a.id) !== String(article.id)
+  ).sort((x, y) => articleSortTime(y) - articleSortTime(x));
+
+  const decouvrir = pool.filter(a => a.section !== 'monde').map(a => recoItem(a, langue));
+  const monde = pool.filter(a => a.section === 'monde').map(a => recoItem(a, langue));
+
+  const BATCH = 10, STEP = 7;
+  const first = decouvrir.slice(0, BATCH);
+
+  const decouvrirHTML = decouvrir.length ? `
+  <section class="reco-section" id="reco-decouvrir" aria-labelledby="reco-h-decouvrir">
+    <h2 class="reco-title" id="reco-h-decouvrir">${L.decouvrirTitle}</h2>
+    <div class="reco-rail">
+      <button class="reco-arrow reco-prev" type="button" data-dir="-1" aria-label="${L.prevAria}">‹</button>
+      <div class="reco-track" id="reco-track">
+        ${first.map(i => recoCardServerHTML(i, L)).join('')}
+        <a class="reco-card reco-more" href="${R}index.html#blog"><span>${L.more}</span></a>
+      </div>
+      <button class="reco-arrow reco-next-arrow" type="button" data-dir="1" aria-label="${L.nextArrowAria}">›</button>
+    </div>
+    ${decouvrir.length > BATCH ? `<div class="reco-actions">
+      <button id="reco-next" class="reco-icon-btn" type="button" aria-label="${L.nextAria}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg>
+      </button>
+    </div>` : ''}
+  </section>` : '';
+
+  const mondeFirst = monde.slice(0, STEP);
+  const monRemaining = monde.length - mondeFirst.length;
+  const mondeHTML = monde.length ? `
+  <section class="reco-section reco-monde" id="reco-monde" aria-labelledby="reco-h-monde">
+    <h2 class="reco-title" id="reco-h-monde">${L.mondeTitle}</h2>
+    <div class="reco-list" id="reco-monde-list">
+      ${mondeFirst.map(i => recoRowServerHTML(i, L)).join('')}
+    </div>
+    <div class="reco-monde-actions" id="reco-monde-actions">
+      ${monRemaining > 0 ? `<button type="button" class="reco-link" data-act="more">${L.loadPre} ${Math.min(STEP, monRemaining)} ${L.loadPost}</button>` : ''}
+    </div>
+  </section>` : '';
+
+  const data = { labels: L, blogUrl: `${R}index.html#blog`, decouvrir, monde };
+  const dataHTML = (decouvrir.length || monde.length)
+    ? `<script type="application/json" id="reco-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`
+    : '';
+
+  const jsHTML = (decouvrir.length || monde.length) ? recoJS() : '';
+  return { decouvrirHTML, mondeHTML, dataHTML, jsHTML };
+}
+
 function generateArticle(article, allArticles) {
   const {
     title, category='', emoji='📝', date='', readTime='', excerpt='',
@@ -968,20 +1184,7 @@ function generateArticle(article, allArticles) {
 
   const titleTag = `${title} | Albexia`;
 
-  // Navigation article précédent/suivant : dans la même langue uniquement,
-  // en se basant sur l'ordre des articles de cette langue triés par date brute
-  // Firestore (le champ "date" est une chaîne d'affichage, donc on trie sur
-  // l'ID à défaut d'un champ date ISO dédié — voir note dans le README du repo).
-  const sameLang = allArticles.filter(a => (a.langue || 'fr') === langue && a.slug).sort((a,b) => Number(String(a.id).split('-')[0]) - Number(String(b.id).split('-')[0]));
-  const idx = sameLang.findIndex(a => String(a.id) === String(article.id));
-  const prevArticle = idx > 0 ? sameLang[idx - 1] : null;
-  const nextArticle = (idx >= 0 && idx < sameLang.length - 1) ? sameLang[idx + 1] : null;
-
-  const navBottomHTML = (prevArticle || nextArticle) ? `
-  <nav class="article-nav-bottom" aria-label="Navigation articles">
-    ${prevArticle ? `<a href="${R}articles/${langue}/${prevArticle.slug}/index.html" class="article-nav-btn">← ${prevArticle.title}</a>` : ''}
-    ${nextArticle ? `<a href="${R}articles/${langue}/${nextArticle.slug}/index.html" class="article-nav-btn">${nextArticle.title} →</a>` : ''}
-  </nav>` : '';
+  const recos = buildRecoBlocks(article, allArticles, langue);
 
   const tagsHTML = (tags || []).map(t => `<a href="#" class="article-tag">#${t}</a>`).join('\n      ');
 
@@ -1070,12 +1273,15 @@ ${corps_html}
     </div>
 ${ctaHTML}
   </div>
-${navBottomHTML}
+${recos.decouvrirHTML}
 
 </div>
 </main>
+${recos.mondeHTML}
+${recos.dataHTML}
 
 ${footerHTML(langue)}
+${recos.jsHTML}
 ${sharedJS()}
 </body>
 </html>`;

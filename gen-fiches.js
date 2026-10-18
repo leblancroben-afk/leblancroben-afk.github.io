@@ -4301,6 +4301,36 @@ async function main() {
   }
   console.log(`✅ Articles créateurs — ${articlesCreateursGeneres} généré(s).`);
 
+  // ─── INDEX DES ARTICLES AVEC PAGE HTML ───
+  // Lu par js/app.js : l'accueil et le blog n'affichent un article que si sa
+  // page existe réellement. Sans cela, une carte pointe vers un 404 tant que
+  // gen-fiches n'a pas tourné. Inclut les articles admin ET créateurs.
+  const pagesArticlesDisponibles = [];
+  for (const article of articles) {
+    const langue = article.langue || 'fr';
+    const slug   = article.slug || slugify(article.title);
+    if (!slug || !article.corps_html || !article.corps_html.trim()) continue;
+    if (fs.existsSync(path.join('articles', langue, slug, 'index.html'))) {
+      pagesArticlesDisponibles.push(`${langue}/${slug}`);
+    }
+  }
+  for (const article of articlesCreateurs) {
+    const slug = articleCreateurSlug(article);
+    if (fs.existsSync(path.join('articles', 'fr', slug, 'index.html'))) {
+      pagesArticlesDisponibles.push(`fr/${slug}`);
+    }
+  }
+  fs.mkdirSync('articles', { recursive: true });
+  fs.writeFileSync(
+    path.join('articles', 'publies.json'),
+    JSON.stringify({
+      genere_le: new Date().toISOString(),
+      pages: [...new Set(pagesArticlesDisponibles)].sort(),
+    }, null, 2),
+    'utf8'
+  );
+  console.log(`✓ articles/publies.json — ${new Set(pagesArticlesDisponibles).size} page(s) d'article disponible(s).`);
+
   // ─── NETTOYAGE DES ARTICLES ORPHELINS ───
   console.log(`\n🧹 Nettoyage des articles orphelins...`);
 

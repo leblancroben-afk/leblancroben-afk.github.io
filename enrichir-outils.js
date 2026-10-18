@@ -1,42 +1,31 @@
 #!/usr/bin/env node
 /* ═══════════════════════════════════════════════════════
-   enrichir-outils.js — Complète automatiquement un outil créé
-   en "ajout rapide" dans l'admin (nom + plan seulement).
+   enrichir-outils.js — Complète les outils créés en « ajout rapide »
+   dans l'admin (nom + plan seulement).
 
-   Source : Firestore "outils" où status === 'a_enrichir'
-   Écrit  : url, category, price, description, tags, maker,
-            plateformes, ideal_pour, favicon, emoji,
-            alternatives, fonctionnalites, faq,
-            interface_fr/api/mobile (si connus avec certitude),
-            url_tarifs, essai_gratuit, duree_essai — puis
-            bascule status='active' et generer_fiche=true (publication).
+   Source : Firestore « outils » où status === 'a_enrichir'
+   Écrit  : url, category, price, description, tags, maker, plateformes,
+            ideal_pour, favicon, emoji, alternatives, fonctionnalites, faq,
+            tarifs (non vérifiés), presentation, meta_description, etc.
+            puis status='active', generer_fiche=true, enrichi_ia=true.
 
-   ⚠️ STATS INCLUS TEMPORAIREMENT sur demande explicite, en attendant
-   le passage à une vraie API de recherche web (Perplexity Sonar ou
-   équivalent). C'est le champ le plus exposé à l'hallucination
-   silencieuse (chiffres inventés mais plausibles) puisque Gemini
-   répond ici depuis sa mémoire d'entraînement, sans vérification en
-   temps réel — voir avertissement dans le prompt ci-dessous. Vérifie
-   spécifiquement ce champ dans le bandeau "🤖 à vérifier" de l'admin.
-   Traductions EN/ES : géré séparément par traduire-fiches.js, workflow
-   distinct — pas automatiquement chaîné après un enrichissement.
-   Marque : enrichi_ia=true, enrichi_ia_le=<timestamp> — pour que
-            l'admin affiche le bandeau "🤖 X outil(s) à vérifier"
-            (voir admin-index-2.html / runDiagnosticIA()).
+   LOTS : 6 outils par requête Gemini (TAILLE_LOT). Les règles de
+   rédaction sont envoyées une seule fois dans systemInstruction.
 
-   ⚠️ PAS DE RECHERCHE WEB (voir historique : Google Custom Search
-   déprécié, Brave Search API sans tier gratuit, HF Docker verrouillé
-   PRO — plus d'option gratuite viable en 2026). Gemini répond depuis
-   sa mémoire d'entraînement uniquement. Fiable pour les outils connus
-   et établis (ChatGPT, Midjourney, Notion AI...), risqué pour un
-   outil très récent ou peu connu — le prompt pousse volontairement
-   Gemini à renvoyer {"trouve": false} plutôt que d'inventer une URL
-   ou un prix plausibles quand il n'est pas sûr. VÉRIFIE l'URL en
-   particulier dans le diagnostic "🤖 Enrichis par IA" de l'admin —
-   c'est le champ le plus à risque d'hallucination.
+   QUOTA PARTAGÉ : le quota gratuit Gemini est commun à tous les scripts.
+   Ce script s'arrête après MAX_REQUETES_PAR_RUN requêtes (variable
+   d'environnement GEMINI_MAX_REQUETES_PAR_RUN, 3 par défaut, soit 18 outils).
+   Les nouvelles tentatives (503) comptent dans ce budget.
+
+   ÉTATS :
+   - Réponse complète           → publié (status 'active').
+   - trouve: false ou incomplet → enrichissement_echec=true : l'outil sort
+     de la file, il n'est plus renvoyé à chaque run. Pour le relancer à la
+     main, supprimer ce champ dans Firestore.
+   - Absent de la réponse, lot tronqué ou JSON invalide → rien d'écrit,
+     l'outil reste dans la file pour le run suivant.
 
    Usage : node enrichir-outils.js
-   Cron  : GitHub Actions, nocturne + déclenchement manuel
    ═══════════════════════════════════════════════════════ */
 
 const { initializeApp, cert } = require('firebase-admin/app');
@@ -48,122 +37,235 @@ const db = getFirestore();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-3.5-flash';
-const MAX_OUTILS_PAR_RUN = 10;
+const TAILLE_LOT = 6;
+const MAX_REQUETES_PAR_RUN = parseInt(process.env.GEMINI_MAX_REQUETES_PAR_RUN || '3', 10);
+const MAX_TOKENS_SORTIE = 16384;
 
-// Liste officielle unique (js/categories-articles.js). Les outils ne doivent
-// recevoir qu'une de ces valeurs ; la collection « categories » Firestore
-// (anciennes catégories libres) n'est plus utilisée pour l'enrichissement.
 const ArticleCats = require('./js/categories-articles.js');
-async function fetchCategories() {
+const ICON_KEYS = require('./js/fiche-icons.js').FEATURE_KEYS;
+
+// Compteur de requêtes envoyées pendant ce run (retries inclus).
+let requetesUtilisees = 0;
+
+function categoriesDisponibles() {
   return ArticleCats.liste().map(c => c.fr);
 }
 
-// Valide la catégorie renvoyée par Gemini ; sinon fallback sur celle de l'admin,
-// jamais une valeur inventée.
+// Catégorie choisie dans l'admin en priorité ; l'IA ne sert qu'à compléter.
 function categorieAdminOuIA(categorieAdmin, propositionIA) {
-  // La catégorie choisie dans l'admin fait foi ; l'IA ne sert qu'à compléter.
   const admin = ArticleCats.normaliser(categorieAdmin);
   if (admin) return admin;
-  return categorieValide(propositionIA, '');
+  return ArticleCats.normaliser(propositionIA) || '';
 }
 
-function categorieValide(propositionIA, categorieAdmin) {
-  const norm = ArticleCats.normaliser(propositionIA);
-  if (norm) return norm;
-  const adminNorm = ArticleCats.normaliser(categorieAdmin);
-  return adminNorm || '';
+// Règles communes à tous les outils du lot (envoyées une seule fois).
+function construireInstruction(categories) {
+  return `Tu structures des fiches complètes pour un annuaire d'outils IA francophone (Albexia).
+Tu n'as PAS accès à une recherche web : utilise uniquement ce que tu sais avec certitude.
+
+RÈGLE ABSOLUE : si tu n'es pas sûr de l'identité exacte d'un outil (nom ambigu, outil trop récent ou trop
+obscur, risque de confusion avec un outil similaire), réponds {"trouve": false} pour cet outil. N'invente
+JAMAIS une information plausible. Cette règle vaut champ par champ : si tu ne connais pas un détail précis,
+mets null pour ce champ et remplis le reste.
+
+Par outil :
+- category : UNE valeur exacte choisie dans cette liste (recopie le texte) : ${JSON.stringify(categories)}. Si aucune ne convient, prends la plus proche, n'en invente jamais.
+- price : "free" (gratuit), "freemium" (gratuit avec palier payant) ou "paid" (payant uniquement).
+- description : 150 à 200 caractères, en français, factuelle, sans superlatifs exagérés.
+- tags : 3 à 6 mots-clés courts en français.
+- alternatives : 2 à 3 concurrents réellement comparables, séparés par des virgules.
+- fonctionnalites : 3 à 4 entrées {icon, titre, desc}. icon doit être EXACTEMENT une de ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji).
+- faq : 2 à 4 entrées {q, a} réellement utiles.
+- presentation : 2 à 3 paragraphes factuels séparés par un retour à la ligne.
+- meta_description : 155 caractères maximum.
+- tarifs : 2 à 4 formules publiques {nom, prix, periode, desc}. Si le montant exact est incertain, prix et periode à "" (chaîne vide). Un tableau vide vaut mieux qu'un tarif inventé.
+- interface_fr, api, mobile, essai_gratuit : true, false ou null si incertain.
+- modele : "proprietaire" ou "open_source", null si incertain. annee_creation : entier ou null.
+- url_tarifs, duree_essai, sous_categorie, support, type_outil, langues_disponibles, maker, plateformes, ideal_pour, emoji : chaîne ou null si incertain.
+
+Réponds UNIQUEMENT avec un tableau JSON, une entrée par outil demandé, en gardant le même "index".
+Aucune prose, aucun markdown.`;
 }
 
-// ══════════════════════════════════════
-// Gemini structure les champs depuis sa mémoire (pas de recherche web)
-// ══════════════════════════════════════
-const ICON_KEYS = require('./js/fiche-icons.js').FEATURE_KEYS; // clés d'icônes autorisées (source unique, partagée avec l'admin)
+// Schéma de sortie : Gemini doit renvoyer exactement cette forme.
+const SCHEMA_LOT = {
+  type: 'ARRAY',
+  items: {
+    type: 'OBJECT',
+    properties: {
+      index: { type: 'INTEGER' },
+      trouve: { type: 'BOOLEAN' },
+      url: { type: 'STRING', nullable: true },
+      category: { type: 'STRING', nullable: true },
+      price: { type: 'STRING', nullable: true },
+      description: { type: 'STRING', nullable: true },
+      tags: { type: 'ARRAY', items: { type: 'STRING' }, nullable: true },
+      maker: { type: 'STRING', nullable: true },
+      plateformes: { type: 'STRING', nullable: true },
+      ideal_pour: { type: 'STRING', nullable: true },
+      emoji: { type: 'STRING', nullable: true },
+      alternatives: { type: 'STRING', nullable: true },
+      fonctionnalites: {
+        type: 'ARRAY', nullable: true,
+        items: {
+          type: 'OBJECT',
+          properties: {
+            icon: { type: 'STRING' },
+            titre: { type: 'STRING' },
+            desc: { type: 'STRING' },
+          },
+        },
+      },
+      faq: {
+        type: 'ARRAY', nullable: true,
+        items: {
+          type: 'OBJECT',
+          properties: { q: { type: 'STRING' }, a: { type: 'STRING' } },
+        },
+      },
+      presentation: { type: 'STRING', nullable: true },
+      meta_description: { type: 'STRING', nullable: true },
+      sous_categorie: { type: 'STRING', nullable: true },
+      modele: { type: 'STRING', nullable: true },
+      annee_creation: { type: 'INTEGER', nullable: true },
+      support: { type: 'STRING', nullable: true },
+      tarifs: {
+        type: 'ARRAY', nullable: true,
+        items: {
+          type: 'OBJECT',
+          properties: {
+            nom: { type: 'STRING' },
+            prix: { type: 'STRING' },
+            periode: { type: 'STRING' },
+            desc: { type: 'STRING' },
+          },
+        },
+      },
+      interface_fr: { type: 'BOOLEAN', nullable: true },
+      api: { type: 'BOOLEAN', nullable: true },
+      mobile: { type: 'BOOLEAN', nullable: true },
+      url_tarifs: { type: 'STRING', nullable: true },
+      essai_gratuit: { type: 'BOOLEAN', nullable: true },
+      duree_essai: { type: 'STRING', nullable: true },
+      type_outil: { type: 'STRING', nullable: true },
+      langues_disponibles: { type: 'STRING', nullable: true },
+    },
+    required: ['index', 'trouve'],
+  },
+};
 
-async function enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative = 0) {
-  const prompt = `Tu structures une fiche complète pour un annuaire d'outils IA francophone (Albexia), à partir de ` +
-    `l'outil nommé "${nomOutil}" (plan : "${plan}"). Tu n'as PAS accès à une recherche web en temps réel — utilise uniquement ` +
-    `ce que tu sais avec certitude sur cet outil précis. ` +
-    `RÈGLE ABSOLUE : si tu n'es pas sûr à un niveau élevé de confiance de l'identité exacte de cet outil ` +
-    `(nom ambigu, outil trop récent ou trop obscur pour que tu le connaisses fiablement, ou risque de confusion ` +
-    `avec un outil similaire), réponds UNIQUEMENT {"trouve": false} — n'invente JAMAIS une information plausible ` +
-    `pour un outil que tu ne connais pas avec certitude. Une réponse honnête "je ne sais pas" vaut infiniment ` +
-    `mieux qu'une information inventée qui semble crédible. ` +
-    `Cette même règle vaut CHAMP PAR CHAMP si tu connais l'outil globalement mais pas un détail précis (ex. tu sais ` +
-    `ce qu'est l'outil mais pas s'il propose une API) : mets alors null pour CE champ précis plutôt que d'inventer, ` +
-    `le reste de la fiche peut quand même être rempli. ` +
-    `Si tu connais l'outil avec certitude : catégorie à choisir OBLIGATOIREMENT dans cette liste exacte ` +
-    `(recopie le texte exact, UNE SEULE valeur) : ${JSON.stringify(categoriesDisponibles)} — si aucune ne correspond bien, choisis ` +
-    `la plus proche, n'en invente jamais une nouvelle. ` +
-    `Prix : "free" (gratuit), "freemium" (gratuit avec palier payant), ou "paid" (payant uniquement). ` +
-    `Description : 150-200 caractères, en français, factuelle, sans superlatifs marketing exagérés. ` +
-    `Tags : 3 à 6 mots-clés courts en français. ` +
-    `alternatives : noms de 2-3 outils concurrents réellement comparables, séparés par des virgules. ` +
-    `fonctionnalites : 3 à 4 fonctionnalités clés, chacune avec une icône dans le champ \"icon\" choisie parmi EXACTEMENT ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji), un titre court, une description d'une phrase. ` +
-    `faq : 2 à 4 questions/réponses réellement utiles pour quelqu'un qui découvre cet outil. ` +
-    `presentation : 2-3 paragraphes de présentation détaillée, factuels (séparés par un retour à la ligne) — la fiche est unique pour tous les plans. ` +
-    `meta_description : une meta-description SEO de 155 caractères maximum. ` +
-    `sous_categorie : sous-catégorie courte en français (ex. "Assistant de rédaction"), null si incertain. ` +
-    `modele : "proprietaire" ou "open_source", null si tu ne sais pas avec certitude. ` +
-    `annee_creation : année de lancement (nombre entier) si tu la connais avec certitude, sinon null. ` +
-    `support : canaux de support connus (ex. "Email, Centre d'aide"), null si incertain. ` +
-    `tarifs : les formules tarifaires PUBLIQUES de l'outil (2 à 4), chacune {nom, prix, periode, desc}. Les prix changent souvent : ` +
-    `si tu n'es pas certain du montant exact, mets prix "" (chaîne vide) et periode "" plutôt que d'inventer un chiffre. Un tableau vide vaut mieux qu'un tarif inventé. ` +
-    `Ces tarifs seront relus et vérifiés par l'administrateur avant affichage. ` +
-    `interface_fr : true si l'interface existe en français, false sinon, null si tu ne sais pas avec certitude. ` +
-    `api : true si l'outil propose une API publique, false sinon, null si incertain. ` +
-    `mobile : true si une app mobile existe, false sinon, null si incertain. ` +
-    `url_tarifs : URL de la page tarifs si tu la connais avec certitude, sinon null. ` +
-    `essai_gratuit : true si l'outil propose un essai gratuit du plan payant, false sinon, null si incertain. ` +
-    `duree_essai : durée de l'essai si tu la connais avec certitude (ex. "14 jours"), sinon null. ` +
-    `type_outil : le type d'outil en 2-3 mots (ex. "Assistant IA", "Générateur d'images"), null si incertain. ` +
-    `langues_disponibles : langues de l'interface ou du service que tu connais avec certitude (ex. "Français, Anglais +"), null si incertain. ` +
-    `Réponds UNIQUEMENT avec un objet JSON valide, sans markdown, avec exactement cette forme :\n` +
-    `{"trouve": true, "url": "https://...", "category": "...", "price": "free|freemium|paid", ` +
-    `"description": "...", "tags": ["...","..."], "maker": "...", "plateformes": "...", "ideal_pour": "...", "emoji": "🤖", ` +
-    `"alternatives": "Nom1, Nom2, Nom3", ` +
-    `"fonctionnalites": [{"icon":"rocket","titre":"...","desc":"..."}], "faq": [{"q":"...","a":"..."}], ` +
-    `"presentation": "..."|null, "meta_description": "..."|null, "sous_categorie": "..."|null, "modele": "proprietaire|open_source"|null, ` +
-    `"annee_creation": 2023|null, "support": "..."|null, "tarifs": [{"nom":"Gratuit","prix":"$0","periode":"","desc":"..."}], ` +
-    `"interface_fr": true|false|null, "api": true|false|null, "mobile": true|false|null, "url_tarifs": "..."|null, ` +
-    `"essai_gratuit": true|false|null, "duree_essai": "..."|null, "type_outil": "..."|null, "langues_disponibles": "..."|null}`;
+// Un appel = un lot. Renvoie une Map index-local -> infos.
+// Lève une erreur avec err.quota = true si le quota est épuisé (arrêt du run).
+async function appelerGeminiLot(lot, categories, tentative = 0) {
+  if (requetesUtilisees >= MAX_REQUETES_PAR_RUN) {
+    const err = new Error('Budget de requêtes Gemini du run atteint.');
+    err.quota = true;
+    throw err;
+  }
+
+  const contenu = `Outils à structurer :\n${JSON.stringify(
+    lot.map((o, i) => ({ index: i, nom: o.nom, plan: o.plan })), null, 2
+  )}`;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  requetesUtilisees++;
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { responseMimeType: 'application/json' },
+      systemInstruction: { parts: [{ text: construireInstruction(categories) }] },
+      contents: [{ role: 'user', parts: [{ text: contenu }] }],
+      generationConfig: {
+        responseMimeType: 'application/json',
+        responseSchema: SCHEMA_LOT,
+        maxOutputTokens: MAX_TOKENS_SORTIE,
+        temperature: 0.2,
+      },
     }),
   });
 
   const data = await res.json();
   if (!res.ok) {
-    // 503 = surcharge temporaire côté Google, pas une erreur de config —
-    // jusqu'à 3 tentatives avec délai croissant avant d'abandonner.
-    if (res.status === 503 && tentative < 2) {
-      const pause = 5000 * (tentative + 1); // 5s, puis 10s
-      await new Promise(r => setTimeout(r, pause));
-      return enrichirOutil(nomOutil, plan, categoriesDisponibles, tentative + 1);
+    // 503 = surcharge temporaire : une seule nouvelle tentative, qui compte dans le budget.
+    if (res.status === 503 && tentative < 1) {
+      await new Promise(r => setTimeout(r, 8000));
+      return appelerGeminiLot(lot, categories, tentative + 1);
     }
-    const erreurApi = new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
-    // 429 / RESOURCE_EXHAUSTED = quota épuisé : inutile d'essayer les outils suivants.
-    erreurApi.quota = res.status === 429 || data?.error?.status === 'RESOURCE_EXHAUSTED';
-    throw erreurApi;
+    const err = new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+    err.quota = res.status === 429 || data?.error?.status === 'RESOURCE_EXHAUSTED';
+    throw err;
   }
 
-  const texte = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  const candidat = data?.candidates?.[0];
+  if (candidat?.finishReason === 'MAX_TOKENS') {
+    throw new Error('Réponse Gemini tronquée (MAX_TOKENS) : lot ignoré, outils restent en file.');
+  }
+  const texte = candidat?.content?.parts?.[0]?.text;
   if (!texte) throw new Error('Réponse Gemini vide ou inattendue.');
 
-  return JSON.parse(texte);
+  let tableau;
+  try {
+    tableau = JSON.parse(texte);
+  } catch {
+    throw new Error('JSON Gemini invalide : lot ignoré, outils restent en file.');
+  }
+  if (!Array.isArray(tableau)) throw new Error('Réponse Gemini non conforme (tableau attendu).');
+
+  const parIndex = new Map();
+  for (const item of tableau) {
+    if (item && Number.isInteger(item.index)) parIndex.set(item.index, item);
+  }
+  return parIndex;
 }
 
-function slugify(str) {
-  return String(str || '')
-    .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+function construireMiseAJour(outil, infos) {
+  let favicon = '';
+  try { favicon = `https://www.google.com/s2/favicons?sz=64&domain=${new URL(infos.url).hostname}`; } catch { /* URL invalide : pas de favicon */ }
+
+  return {
+    url: infos.url,
+    category: categorieAdminOuIA(outil.category, infos.category),
+    price: infos.price || 'freemium',
+    description: infos.description || '',
+    tags: Array.isArray(infos.tags) ? infos.tags : [],
+    maker: infos.maker || '',
+    plateformes: infos.plateformes || '',
+    ideal_pour: infos.ideal_pour || '',
+    emoji: infos.emoji || '🤖',
+    favicon,
+    alternatives: (infos.alternatives || '').split(',').map(s => s.trim()).filter(Boolean),
+    fonctionnalites: Array.isArray(infos.fonctionnalites)
+      ? infos.fonctionnalites.map(f => ({ ...f, icon: ICON_KEYS.includes(f && f.icon) ? f.icon : 'sparkles' }))
+      : [],
+    faq: Array.isArray(infos.faq) ? infos.faq : [],
+    // null volontaire (incertain) : le champ n'est pas écrit → « Non renseigné » dans l'admin.
+    ...(infos.interface_fr !== null && infos.interface_fr !== undefined ? { interface_fr: infos.interface_fr } : {}),
+    ...(infos.api !== null && infos.api !== undefined ? { api: infos.api } : {}),
+    ...(infos.mobile !== null && infos.mobile !== undefined ? { mobile: infos.mobile } : {}),
+    ...(infos.url_tarifs ? { url_tarifs: infos.url_tarifs } : {}),
+    ...(infos.essai_gratuit !== null && infos.essai_gratuit !== undefined ? { essai_gratuit: infos.essai_gratuit } : {}),
+    ...(infos.duree_essai ? { duree_essai: infos.duree_essai } : {}),
+    ...(infos.type_outil ? { type_outil: infos.type_outil } : {}),
+    ...(infos.langues_disponibles ? { langues_disponibles: infos.langues_disponibles } : {}),
+    ...(infos.presentation ? { presentation: infos.presentation } : {}),
+    ...(infos.sous_categorie ? { sous_categorie: infos.sous_categorie } : {}),
+    ...(infos.modele === 'proprietaire' || infos.modele === 'open_source' ? { modele: infos.modele } : {}),
+    ...(Number.isInteger(infos.annee_creation) ? { annee_creation: infos.annee_creation } : {}),
+    ...(infos.support ? { support: infos.support } : {}),
+    // Tarifs IA : jamais affichés tant que l'admin ne les a pas vérifiés.
+    tarifs: Array.isArray(infos.tarifs)
+      ? infos.tarifs.filter(t => t && t.nom).slice(0, 4).map(t => ({
+          nom: String(t.nom), prix: String(t.prix || ''), periode: String(t.periode || ''), desc: String(t.desc || ''),
+        }))
+      : [],
+    tarifs_verifie: false,
+    ...(infos.meta_description ? { meta_description: infos.meta_description } : {}),
+    status: 'active',
+    generer_fiche: true,
+    enrichi_ia: true,
+    enrichi_ia_le: FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp(),
+  };
 }
 
 async function main() {
@@ -172,106 +274,77 @@ async function main() {
     process.exit(1);
   }
 
-  const categoriesDisponibles = await fetchCategories();
-  if (!categoriesDisponibles.length) {
-    console.error('✗ Aucune catégorie trouvée dans Firestore (collection "categories"). Abandon.');
+  const categories = categoriesDisponibles();
+  if (!categories.length) {
+    console.error('✗ Liste de catégories vide (js/categories-articles.js). Abandon.');
     process.exit(1);
   }
 
   const snap = await db.collection('outils').where('status', '==', 'a_enrichir').get();
-  const aTraiter = snap.docs.slice(0, MAX_OUTILS_PAR_RUN);
+  // Les outils déjà marqués en échec sortent de la file : ils ne consomment plus de requête.
+  const file = snap.docs.filter(d => d.data().enrichissement_echec !== true);
+  const capacite = TAILLE_LOT * MAX_REQUETES_PAR_RUN;
+  const aTraiter = file.slice(0, capacite);
 
-  console.log(`${snap.docs.length} outil(s) en attente, ${aTraiter.length} traité(s) ce run.`);
+  console.log(`${file.length} outil(s) en file, ${aTraiter.length} traité(s) ce run `
+    + `(${MAX_REQUETES_PAR_RUN} requête(s) max, lots de ${TAILLE_LOT}).`);
 
-  let succes = 0, echecs = 0, nonTrouves = 0, quotaEpuise = false;
+  let succes = 0, nonTrouves = 0, incomplets = 0, nonRepondus = 0, echecs = 0, quotaEpuise = false;
 
-  for (const docSnap of aTraiter) {
-    const outil = docSnap.data();
+  for (let debut = 0; debut < aTraiter.length && !quotaEpuise; debut += TAILLE_LOT) {
+    const lot = aTraiter.slice(debut, debut + TAILLE_LOT);
+    const entrees = lot.map(d => ({ nom: d.data().name, plan: d.data().plan || 'standard' }));
+
+    let reponses;
     try {
-      const infos = await enrichirOutil(outil.name, outil.plan || 'standard', categoriesDisponibles);
-
-      if (!infos.trouve) {
-        console.log(`  – ${outil.name} : introuvable par l'IA, laissé en 'a_enrichir' pour retraitement ou vérification manuelle.`);
-        nonTrouves++;
-        continue;
-      }
-
-      // Garde-fou : sans URL, description et catégorie, on ne publie pas (reste 'a_enrichir').
-      if (!infos.url || !infos.description || !infos.category) {
-        console.log(`  – ${outil.name} : réponse IA incomplète (url/description/catégorie manquante), laissé en 'a_enrichir'.`);
-        nonTrouves++;
-        continue;
-      }
-
-      const favicon = infos.url
-        ? `https://www.google.com/s2/favicons?sz=64&domain=${new URL(infos.url).hostname}`
-        : '';
-
-      await docSnap.ref.update({
-        url: infos.url || '',
-        category: categorieAdminOuIA(outil.category, infos.category),
-        price: infos.price || 'freemium',
-        description: infos.description || '',
-        tags: Array.isArray(infos.tags) ? infos.tags : [],
-        maker: infos.maker || '',
-        plateformes: infos.plateformes || '',
-        ideal_pour: infos.ideal_pour || '',
-        emoji: infos.emoji || '🤖',
-        favicon,
-        alternatives: (infos.alternatives || '').split(',').map(s => s.trim()).filter(Boolean),
-        fonctionnalites: Array.isArray(infos.fonctionnalites)
-          ? infos.fonctionnalites.map(f => ({ ...f, icon: ICON_KEYS.includes(f && f.icon) ? f.icon : 'sparkles' }))
-          : [],
-        faq: Array.isArray(infos.faq) ? infos.faq : [],
-        // null volontaire de Gemini (incertain) → on n'écrit PAS le champ,
-        // ce qui laisse "Non renseigné" dans l'admin plutôt qu'une fausse valeur.
-        ...(infos.interface_fr !== null && infos.interface_fr !== undefined ? { interface_fr: infos.interface_fr } : {}),
-        ...(infos.api !== null && infos.api !== undefined ? { api: infos.api } : {}),
-        ...(infos.mobile !== null && infos.mobile !== undefined ? { mobile: infos.mobile } : {}),
-        ...(infos.url_tarifs ? { url_tarifs: infos.url_tarifs } : {}),
-        ...(infos.essai_gratuit !== null && infos.essai_gratuit !== undefined ? { essai_gratuit: infos.essai_gratuit } : {}),
-        ...(infos.duree_essai ? { duree_essai: infos.duree_essai } : {}),
-        ...(infos.type_outil ? { type_outil: infos.type_outil } : {}),
-        ...(infos.langues_disponibles ? { langues_disponibles: infos.langues_disponibles } : {}),
-        ...(infos.presentation ? { presentation: infos.presentation } : {}),
-        ...(infos.sous_categorie ? { sous_categorie: infos.sous_categorie } : {}),
-        ...(infos.modele === 'proprietaire' || infos.modele === 'open_source' ? { modele: infos.modele } : {}),
-        ...(Number.isInteger(infos.annee_creation) ? { annee_creation: infos.annee_creation } : {}),
-        ...(infos.support ? { support: infos.support } : {}),
-        // Tarifs générés par l'IA : jamais affichés tant que l'admin ne les a pas vérifiés
-        // (admin → Outils → « Statut des tarifs » = Vérifiés).
-        tarifs: Array.isArray(infos.tarifs)
-          ? infos.tarifs.filter(t => t && t.nom).slice(0, 4).map(t => ({ nom: String(t.nom), prix: String(t.prix || ''), periode: String(t.periode || ''), desc: String(t.desc || '') }))
-          : [],
-        tarifs_verifie: false,
-        ...(infos.meta_description ? { meta_description: infos.meta_description } : {}),
-        // « Statistiques clés » : section supprimée des fiches, stats n'est plus généré.
-        status: 'active',
-        generer_fiche: true, // publication — voir garde-fou existant dans gen-fiches.js
-        enrichi_ia: true,
-        enrichi_ia_le: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp(),
-      });
-
-      console.log(`  ✓ ${outil.name} → ${infos.category} / ${infos.price} / ${infos.url}`);
-      succes++;
-      await new Promise(r => setTimeout(r, 500)); // pause entre appels Gemini
+      reponses = await appelerGeminiLot(entrees, categories);
     } catch (err) {
-      console.error(`  ✗ ${outil.name} : ${err.message}`);
-      echecs++;
+      console.error(`  ✗ Lot de ${lot.length} : ${err.message}`);
+      echecs += lot.length;
       if (err.quota) {
-        // Quota Gemini épuisé : on arrête tout de suite. Les outils restants
-        // (et celui-ci) gardent status='a_enrichir' → ils seront repris au prochain run.
         quotaEpuise = true;
-        console.error('⛔ Quota Gemini épuisé — arrêt du run. Les outils restants restent en \'a_enrichir\'.');
-        console.log('::warning::Quota Gemini épuisé — enrichissement interrompu');
+        console.log('::warning::Quota Gemini épuisé ou budget du run atteint — enrichissement interrompu');
         break;
       }
+      continue; // lot non traité : les outils restent en file, sans marquage
+    }
+
+    for (let k = 0; k < lot.length; k++) {
+      const docSnap = lot[k];
+      const outil = docSnap.data();
+      const infos = reponses.get(k);
+
+      if (!infos) {
+        console.log(`  – ${outil.name} : absent de la réponse, reste en file.`);
+        nonRepondus++;
+        continue;
+      }
+
+      if (!infos.trouve) {
+        await docSnap.ref.update({ enrichissement_echec: true, enrichissement_echec_le: FieldValue.serverTimestamp(), enrichissement_echec_motif: 'introuvable' });
+        console.log(`  – ${outil.name} : introuvable par l'IA, sorti de la file (vérification manuelle).`);
+        nonTrouves++;
+        continue;
+      }
+
+      if (!infos.url || !infos.description || !infos.category) {
+        await docSnap.ref.update({ enrichissement_echec: true, enrichissement_echec_le: FieldValue.serverTimestamp(), enrichissement_echec_motif: 'incomplet' });
+        console.log(`  – ${outil.name} : réponse incomplète (url/description/catégorie), sorti de la file.`);
+        incomplets++;
+        continue;
+      }
+
+      await docSnap.ref.update(construireMiseAJour(outil, infos));
+      console.log(`  ✓ ${outil.name} → ${categorieAdminOuIA(outil.category, infos.category)} / ${infos.price} / ${infos.url}`);
+      succes++;
     }
   }
 
-  console.log(`\nTerminé — ${succes} enrichi(s) et publié(s), ${nonTrouves} introuvable(s), ${echecs} en erreur.${quotaEpuise ? ' (arrêt : quota épuisé)' : ''}`);
-  if (succes > 0) console.log('⚠️  gen-fiches.js doit tourner pour publier les nouvelles fiches HTML statiques.');
+  console.log(`\nTerminé — ${succes} publié(s), ${nonTrouves} introuvable(s), ${incomplets} incomplet(s), `
+    + `${nonRepondus} sans réponse (restent en file), ${echecs} en erreur de lot. `
+    + `Requêtes Gemini utilisées : ${requetesUtilisees}/${MAX_REQUETES_PAR_RUN}.`
+    + (quotaEpuise ? ' (arrêt : quota ou budget)' : ''));
+  if (succes > 0) console.log('⚠️  gen-fiches.js doit tourner pour publier les nouvelles fiches HTML.');
 }
 
 main().catch(err => {

@@ -327,6 +327,10 @@
                 <label>Emoji</label>
                 <input type="text" id="o-emoji" placeholder="🤖" maxlength="4">
               </div>
+              <div>
+                <label>Logo (URL image, facultatif)</label>
+                <input type="text" id="o-logo" placeholder="https://… (.png ou .svg)">
+              </div>
             </div>
             <div class="row">
               <div>
@@ -2813,6 +2817,16 @@ Support français|oui|non|bool"></textarea>
     return concernes.length;
   }
 
+  // Hébergeurs de code : leur icône est celle de la plateforme, pas celle de l'outil.
+  const HEBERGEURS_CODE = ['github.com', 'gitlab.com', 'huggingface.co', 'replit.com', 'kaggle.com'];
+  function faviconPourUrl(url) {
+    try {
+      const host = new URL(url).hostname.replace(/^www\./, '');
+      if (HEBERGEURS_CODE.some(h => host === h || host.endsWith('.' + h))) return '';
+      return `https://www.google.com/s2/favicons?sz=64&domain=${host}`;
+    } catch { return ''; }
+  }
+
   function escAttr(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   }
@@ -3096,6 +3110,7 @@ Support français|oui|non|bool"></textarea>
     setVal('o-url', tool.url);
     setVal('o-cat', tool.category);
     setVal('o-emoji', tool.emoji);
+    setVal('o-logo', tool.logo_url || '');
     const priceNormalized = { gratuit:'free', freemium:'freemium', payant:'paid', free:'free', paid:'paid' }[tool.price] || tool.price;
     setVal('o-price', priceNormalized);
     setVal('o-plan', tool.plan || '');
@@ -3421,7 +3436,9 @@ Support français|oui|non|bool"></textarea>
       }
 
       const emoji=document.getElementById('o-emoji').value.trim()||'🤖';
-      const favicon=`https://www.google.com/s2/favicons?sz=64&domain=${new URL(url).hostname}`;
+      // Logo : saisi à la main en priorité, sinon icône du site officiel (jamais celle d'un hébergeur de code).
+      const logoSaisi = document.getElementById('o-logo').value.trim();
+      const favicon = logoSaisi || faviconPourUrl(url);
       const price=document.getElementById('o-price').value;
       const plan=document.getElementById('o-plan').value;
       const tags=document.getElementById('o-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
@@ -3546,7 +3563,7 @@ Support français|oui|non|bool"></textarea>
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
 
-      toWrite.unshift({id:mainId,name:nameFr,category:cat,emoji,favicon,description:descFr,
+      toWrite.unshift({id:mainId,name:nameFr,category:cat,emoji,favicon,logo_url:logoSaisi,description:descFr,
         price,rating:editingTool?(editingTool.rating||0):0,url,tags,page:`tools/${folder}/${slug}.html`,
         plan,langue:'fr',essai_gratuit:essai,duree_essai:duree,ideal_pour:idealFr,traductions,
         acces_web:accesWeb,generation_images:generationImages,telechargement_fichiers:telechargementFichiers,
@@ -3758,7 +3775,7 @@ Support français|oui|non|bool"></textarea>
       const prixBarre  = document.getElementById('d-prix-barre').value.trim() || null;
       const expiration = permanent ? null : (document.getElementById('d-expiration').value || null);
       const emoji      = document.getElementById('d-emoji').value.trim() || '🔖';
-      const favicon    = `https://www.google.com/s2/favicons?sz=64&domain=${new URL(lien).hostname}`;
+      const favicon    = faviconPourUrl(lien);
 
       await setDoc(doc(db,'deals',String(nextId)), {
         id: nextId, nom, emoji, favicon, categorie, badge,

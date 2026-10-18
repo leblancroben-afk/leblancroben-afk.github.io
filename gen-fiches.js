@@ -1053,6 +1053,25 @@ function estArticlePublie(a) {
   return !a.statut || a.statut === 'publie';
 }
 
+// Régénération en cascade des articles : si un article d'une langue est ajouté,
+// modifié ou supprimé, TOUS les articles de cette langue sont régénérés, car leurs
+// blocs « À découvrir aussi » et « Le monde au-delà de l'IA » peuvent changer.
+// Retourne l'ensemble des langues à régénérer.
+function languesAModifiees(articles, previousState) {
+  const prev = previousState || {};
+  const courants = new Set(articles.map(a => String(a.id || a.slug)));
+  const modifiees = new Set();
+  for (const a of articles) {
+    const id = String(a.id || a.slug);
+    if (prev[id]?.hash !== hashDoc(a)) modifiees.add(a.langue || 'fr');
+  }
+  // Document supprimé : on ne connaît plus sa langue, on régénère tout
+  if (Object.keys(prev).some(id => !courants.has(id))) {
+    ['fr', 'en', 'es'].forEach(l => modifiees.add(l));
+  }
+  return modifiees;
+}
+
 // Date de tri : date_iso si présent, sinon created_at Firestore, sinon 0.
 function articleSortTime(a) {
   if (a.date_iso) { const t = Date.parse(a.date_iso); if (!isNaN(t)) return t; }
@@ -4195,14 +4214,16 @@ async function main() {
 
   let articlesGenerated = 0, articlesSkippedNoSlug = 0, articlesSkippedNoCorps = 0, articlesUnchanged = 0;
 
+  const languesMaj = languesAModifiees(articles, state.articles);
+
   for (const article of articles) {
     const articleHash = hashDoc(article);
     const articleId    = String(article.id || article.slug);
     newState.articles[articleId] = { hash: articleHash, updatedAtMs: updatedAtMs(article) };
-    const hasChanged = state.articles?.[articleId]?.hash !== articleHash;
 
     const langue = article.langue || 'fr';
     const slug   = article.slug || slugify(article.title);
+    const hasChanged = languesMaj.has(langue);
 
     if (!slug) { articlesSkippedNoSlug++; continue; }
     // Un article sans corps_html ne doit jamais être publié : ça produirait

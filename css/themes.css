@@ -467,7 +467,6 @@ html[data-theme="light"] .fo-alt-logo .fo-letter { color: var(--text); }
 html[data-theme="light"] .analyse-table tr:hover td { background: rgba(25,23,18,.02); }
 html[data-theme="light"] .btn-cta-secondary:hover { border-color: rgba(25,23,18,.25); }
 html[data-theme="light"] .article-body tr:hover td { background: rgba(25,23,18,.02); }
-html[data-theme="light"] .reco-more span { color: var(--accent, var(--accent-ink)); }
 
 /* ── css/categorie.css ── */
 html[data-theme="light"] .cat-stat-ico { color: var(--cat-color, #5a50d0); }

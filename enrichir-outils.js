@@ -84,7 +84,7 @@ Par outil :
 - tags : 3 à 6 mots-clés courts en français.
 - alternatives : 2 à 3 concurrents réellement comparables, séparés par des virgules.
 - fonctionnalites : 3 à 4 entrées {icon, titre, desc}. icon doit être EXACTEMENT une de ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji).
-- faq : 2 à 4 entrées {q, a} réellement utiles.
+- faq : 2 à 3 entrées {q, a}. Chaque réponse (a) fait 2 à 3 phrases courtes, 300 caractères maximum. Ne répète jamais une phrase ni une expression : une réponse qui tourne en boucle est rejetée.
 - presentation : 2 à 3 paragraphes factuels séparés par un retour à la ligne.
 - meta_description : 155 caractères maximum.
 - tarifs : 2 à 4 formules publiques {nom, prix, periode, desc}. Si le montant exact est incertain, prix et periode à "" (chaîne vide). Un tableau vide vaut mieux qu'un tarif inventé.
@@ -189,6 +189,7 @@ async function appelerGeminiLot(lot, categories, tentative = 0) {
         responseSchema: SCHEMA_LOT,
         maxOutputTokens: MAX_TOKENS_SORTIE,
         temperature: 0.2,
+        frequencyPenalty: 0.8, // limite les répétitions en boucle
       },
     }),
   });
@@ -227,6 +228,21 @@ async function appelerGeminiLot(lot, categories, tentative = 0) {
     if (item && Number.isInteger(item.index)) parIndex.set(item.index, item);
   }
   return parIndex;
+}
+
+// Détecte une FAQ bouclée : réponse trop longue, ou phrase répétée.
+function faqInvalide(faq) {
+  if (!Array.isArray(faq)) return false;
+  for (const f of faq) {
+    const a = String(f?.a || '');
+    if (a.length > 600) return true;
+    const vues = new Set();
+    for (const p of a.split(/[.!?]+/).map(x => x.trim().toLowerCase()).filter(x => x.length >= 20)) {
+      if (vues.has(p)) return true;
+      vues.add(p);
+    }
+  }
+  return false;
 }
 
 function faviconPourUrl(url) {
@@ -312,7 +328,7 @@ async function main() {
   console.log(`${file.length} outil(s) en file, ${aTraiter.length} traité(s) ce run `
     + `(${MAX_REQUETES_PAR_RUN} requête(s) max, lots de ${TAILLE_LOT}).`);
 
-  let succes = 0, nonTrouves = 0, incomplets = 0, categorieAbsente = 0, nonRepondus = 0, echecs = 0, quotaEpuise = false;
+  let succes = 0, nonTrouves = 0, incomplets = 0, categorieAbsente = 0, faqInvalides = 0, nonRepondus = 0, echecs = 0, quotaEpuise = false;
 
   for (let debut = 0; debut < aTraiter.length && !quotaEpuise; debut += TAILLE_LOT) {
     const lot = aTraiter.slice(debut, debut + TAILLE_LOT);
@@ -362,6 +378,17 @@ async function main() {
         continue;
       }
 
+      if (faqInvalide(infos.faq)) {
+        // Reste en file, sans publication : la FAQ sera regénérée au prochain passage.
+        await docSnap.ref.update({
+          faq_invalide_le: FieldValue.serverTimestamp(),
+          dernier_essai_le: FieldValue.serverTimestamp(),
+        });
+        console.log(`  – ${outil.name} : FAQ trop longue ou répétitive, reste en file.`);
+        faqInvalides++;
+        continue;
+      }
+
       if (!infos.url || !infos.description) {
         await docSnap.ref.update({ enrichissement_echec: true, enrichissement_echec_le: FieldValue.serverTimestamp(), enrichissement_echec_motif: 'incomplet' });
         console.log(`  – ${outil.name} : réponse incomplète (url/description/catégorie), sorti de la file.`);
@@ -376,7 +403,7 @@ async function main() {
   }
 
   console.log(`\nTerminé — ${succes} publié(s), ${nonTrouves} introuvable(s), ${incomplets} incomplet(s), `
-    + `${categorieAbsente} sans catégorie (restent en file), ${nonRepondus} sans réponse (restent en file), ${echecs} en erreur de lot. `
+    + `${categorieAbsente} sans catégorie (restent en file), ${faqInvalides} FAQ invalide(s) (restent en file), ${nonRepondus} sans réponse (restent en file), ${echecs} en erreur de lot. `
     + `Requêtes Gemini utilisées : ${requetesUtilisees}/${MAX_REQUETES_PAR_RUN}.`
     + (quotaEpuise ? ' (arrêt : quota ou budget)' : ''));
   if (succes > 0) console.log('⚠️  gen-fiches.js doit tourner pour publier les nouvelles fiches HTML.');

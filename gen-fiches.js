@@ -4779,8 +4779,21 @@ async function main() {
   // toutes langues confondues — pas `toolsUniques`, qui a dédupliqué à un
   // seul document par outil et perdrait les variantes EN/ES nécessaires ici).
   console.log(`\n📂 Génération des pages catégorie...`);
+  // Libellés FR/EN/ES saisis dans l'admin (collection « categories »).
+  const categoriesSnap = await db.collection('categories').get();
+  const libellesCategories = {};
+  for (const d of categoriesSnap.docs) {
+    const c = d.data();
+    if (!c.nom) continue;
+    libellesCategories[c.nom] = {
+      fr: { name: c.nom, desc: c.description_fr || '' },
+      en: { name: c.nom_en || '', desc: c.description_en || '' },
+      es: { name: c.nom_es || '', desc: c.description_es || '' },
+    };
+  }
   const catResult = genererPagesCategories(tools, {
     navHTML, footerHTML, seoHeadTags, sharedJS, R, SITE_ORIGIN, slugify, escHtml,
+    libellesFirestore: libellesCategories,
   });
   console.log(`✅ Catégories — ${catResult.genere} page(s) générée(s) sur ${catResult.langues} langue(s)${catResult.redirections ? `, ${catResult.redirections} redirection(s) d'anciennes URLs` : ''}.`);
   console.log(`  categorie/{langue}/{slug}/index.html`);

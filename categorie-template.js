@@ -210,13 +210,30 @@ const CATEGORY_NAMES = {
 
 // Nom d'une catégorie dans la langue de la page. FR = valeur de la base, inchangée.
 // Ordre : CATEGORY_I18N (nom exact) → CATEGORY_NAMES (slug) → valeur brute.
+// Libellés FR/EN/ES saisis dans l'admin (collection « categories »), fournis par gen-fiches.js
+// via helpers.libellesFirestore. Prioritaires sur CATEGORY_I18N.
+let LIBELLES_FIRESTORE = {};
+
 function categoryName(cat, langue) {
   const raw = String(canonicalCategory(cat == null ? '' : cat));
   if (!raw || !langue || langue === 'fr') return raw;
+  const saisi = LIBELLES_FIRESTORE[raw] && LIBELLES_FIRESTORE[raw][langue];
+  if (saisi && saisi.name) return saisi.name;
   const e = CATEGORY_I18N[raw] && CATEGORY_I18N[raw][langue];
   if (e && e.name) return e.name;
   const n = CATEGORY_NAMES[slugifyFallback(raw)];
   return (n && n[langue]) || raw;
+}
+
+// Nom + description d'une catégorie dans la langue de la page.
+// Ordre : libellés saisis dans l'admin → table en dur CATEGORY_I18N → nom seul.
+function libelleCategorie(nom, langue) {
+  const saisi = LIBELLES_FIRESTORE[nom] && LIBELLES_FIRESTORE[nom][langue];
+  const dur = CATEGORY_I18N[nom] && (CATEGORY_I18N[nom][langue] || CATEGORY_I18N[nom].fr);
+  if (saisi && saisi.name) return { name: saisi.name, desc: saisi.desc || (dur && dur.desc) || saisi.name };
+  if (dur) return dur;
+  const n = categoryName(nom, langue);
+  return { name: n, desc: n };
 }
 
 // Petites chaines d'interface propres a cette page (hors nav/footer, deja
@@ -245,6 +262,7 @@ function slugifyFallback(str) {
 }
 
 function genererPagesCategories(tousLesOutils, helpers) {
+  LIBELLES_FIRESTORE = helpers.libellesFirestore || {};
   const slugify = helpers.slugify || slugifyFallback;
   const outilsActifs = tousLesOutils.filter(t => t.status !== 'offline');
 
@@ -347,8 +365,7 @@ function genererPageCategorie(cat, tools, opts = {}) {
   const hubUrl = opts.hubUrl || `${R}categorie/${langue}/`;
 
   const meta = CATEGORY_META[cat.name] || CATEGORY_META._default;
-  const i18n = (CATEGORY_I18N[cat.name] && (CATEGORY_I18N[cat.name][langue] || CATEGORY_I18N[cat.name].fr))
-    || { name: categoryName(cat.name, langue), desc: categoryName(cat.name, langue) };
+  const i18n = libelleCategorie(cat.name, langue);
   const icon  = cat.icon  || meta.icon;
   const color = cat.color || meta.color;
   const name  = i18n.name;
@@ -481,7 +498,7 @@ function genererCategoriesPopulaires(autresCategories, langue, hubUrl) {
   const top = [...autresCategories].sort((a, b) => b.count - a.count).slice(0, 6);
   const tuiles = top.map(c => {
     const meta = CATEGORY_META[c.name] || CATEGORY_META._default;
-    const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: categoryName(c.name, langue) };
+    const i18n = libelleCategorie(c.name, langue);
     return `<a class="pop-cat-tile" href="/categorie/${langue}/${c.slug}/">
       <span class="pop-cat-name">${i18n.name}</span>
       <span class="pop-cat-count">${c.count} ${u('tools', langue)}</span>
@@ -535,7 +552,7 @@ function genererPageHub(langue, categories, helpers) {
 
   const tuiles = tri.map(c => {
     const meta = CATEGORY_META[c.name] || CATEGORY_META._default;
-    const i18n = (CATEGORY_I18N[c.name] && (CATEGORY_I18N[c.name][langue] || CATEGORY_I18N[c.name].fr)) || { name: categoryName(c.name, langue) };
+    const i18n = libelleCategorie(c.name, langue);
     return `<a class="hub-cat-tile" href="/categorie/${langue}/${c.slug}/" data-name="${escHtml(i18n.name.toLowerCase())}">
       <span class="hub-cat-name">${escHtml(i18n.name)}</span>
       <span class="hub-cat-count">${c.count} ${u('tools', langue)}</span>

@@ -303,6 +303,9 @@
               <option value="featured">Featured</option>
             </select>
           </div>
+          <select id="oq-cat" style="margin-top:8px;width:100%;">
+            <option value="">Catégorie : laisser l'IA choisir</option>
+          </select>
           <button type="button" id="oq-submit-btn" class="btn-primary" style="margin-top:10px;width:100%;">Créer (à enrichir par IA)</button>
           <div id="ok-outils-quick" class="msg-ok" style="display:none;"></div>
           <div id="warn-outils-quick" class="msg-warn" style="display:none;"></div>
@@ -1466,13 +1469,27 @@ Support français|oui|non|bool"></textarea>
 
     <p class="field-hint">Liste contrôlée des catégories d'outils, utilisée comme menu déroulant dans le formulaire Outils (onglet 🛠 Outils) — évite les doublons du type "Texte" / "texte" / "Text" qui fragmenteraient silencieusement une même catégorie.</p>
 
-    <div class="row" style="margin-bottom:16px;">
-      <div>
-        <label>Nouvelle catégorie</label>
-        <input type="text" id="cat-new-nom" placeholder="Ex: Génération de texte">
+    <div id="cat-form" style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px;">
+      <p class="field-hint" style="margin-bottom:10px;">Renseigne le nom et la description en <strong>français</strong> (langue source), puis clique sur « Traduire depuis le FR » pour générer l'anglais et l'espagnol. Les six champs sont <strong>obligatoires</strong>.</p>
+      <label>Nom (FR) *</label>
+      <input type="text" id="cat-nom-fr" placeholder="Ex: Génération de texte">
+      <label>Description (FR) *</label>
+      <textarea id="cat-desc-fr" rows="2" placeholder="Une phrase qui présente la catégorie"></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;">
+        <button type="button" class="btn-translate" data-source="fr" data-target-lang="en" data-form="categorie">🌐 Traduire depuis le FR (EN)</button>
+        <button type="button" class="btn-translate" data-source="fr" data-target-lang="es" data-form="categorie">🌐 Traduire depuis le FR (ES)</button>
       </div>
-      <div style="display:flex;align-items:flex-end;">
+      <label>Nom (EN) *</label>
+      <input type="text" id="cat-nom-en">
+      <label>Description (EN) *</label>
+      <textarea id="cat-desc-en" rows="2"></textarea>
+      <label>Nom (ES) *</label>
+      <input type="text" id="cat-nom-es">
+      <label>Description (ES) *</label>
+      <textarea id="cat-desc-es" rows="2"></textarea>
+      <div style="display:flex;gap:8px;margin-top:12px;">
         <button type="button" class="btn-submit" id="cat-add-btn" style="background:var(--accent3);margin-bottom:0;">+ Ajouter</button>
+        <button type="button" id="cat-cancel-btn" style="display:none;background:none;border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);cursor:pointer;">Annuler</button>
       </div>
     </div>
 
@@ -2722,6 +2739,82 @@ Support français|oui|non|bool"></textarea>
     select.innerHTML = '<option value="">— Choisir —</option>' +
       categories.map(c => `<option value="${c.nom}">${c.nom}</option>`).join('');
     if (valeurActuelle) select.value = valeurActuelle;
+    // Même liste pour l'ajout rapide (choix facultatif, vide = l'IA choisit)
+    const selectRapide = document.getElementById('oq-cat');
+    if (selectRapide) {
+      const valeurRapide = selectRapide.value;
+      selectRapide.innerHTML = '<option value="">Catégorie : laisser l\'IA choisir</option>' +
+        categories.map(c => `<option value="${c.nom}">${c.nom}</option>`).join('');
+      if (valeurRapide) selectRapide.value = valeurRapide;
+    }
+  }
+
+  // ══════════════════════════════════════
+  //  CATÉGORIES D'OUTILS — nom + description en FR, EN, ES (tous obligatoires)
+  //  FR = langue source. EN/ES : bouton « Traduire depuis le FR » (même moteur
+  //  LibreTranslate que les outils, articles et niches).
+  //  Le nom FR (champ `nom`) est la valeur stockée dans `category` des outils :
+  //  l'identifiant (`id`) ne change jamais, et un renommage met à jour les outils.
+  // ══════════════════════════════════════
+  const CATEGORIE_CHAMPS = [
+    { id: 'cat-nom-fr',  label: 'Nom (FR)',         cle: 'nom' },
+    { id: 'cat-desc-fr', label: 'Description (FR)', cle: 'description_fr' },
+    { id: 'cat-nom-en',  label: 'Nom (EN)',         cle: 'nom_en' },
+    { id: 'cat-desc-en', label: 'Description (EN)', cle: 'description_en' },
+    { id: 'cat-nom-es',  label: 'Nom (ES)',         cle: 'nom_es' },
+    { id: 'cat-desc-es', label: 'Description (ES)', cle: 'description_es' },
+  ];
+  let categorieEnEdition = null; // catégorie Firestore en cours de modification, sinon null
+
+  function lireFormulaireCategorie() {
+    const valeurs = {};
+    CATEGORIE_CHAMPS.forEach(c => { valeurs[c.cle] = document.getElementById(c.id).value.trim(); });
+    return valeurs;
+  }
+
+  // Champs obligatoires vides. Aucune catégorie n'est enregistrée tant que cette liste n'est pas vide.
+  function categorieChampsManquants(valeurs) {
+    return CATEGORIE_CHAMPS.filter(c => !valeurs[c.cle]).map(c => c.label);
+  }
+
+  // Vrai si les six champs sont renseignés.
+  function categorieComplete(cat) {
+    return CATEGORIE_CHAMPS.every(c => !!cat[c.cle]);
+  }
+
+  function remplirFormulaireCategorie(cat) {
+    CATEGORIE_CHAMPS.forEach(c => { document.getElementById(c.id).value = cat[c.cle] || ''; });
+  }
+
+  function viderFormulaireCategorie() {
+    CATEGORIE_CHAMPS.forEach(c => { document.getElementById(c.id).value = ''; });
+    categorieEnEdition = null;
+    document.getElementById('cat-add-btn').textContent = '+ Ajouter';
+    document.getElementById('cat-cancel-btn').style.display = 'none';
+  }
+
+  function passerEnModeEdition(cat) {
+    categorieEnEdition = cat;
+    remplirFormulaireCategorie(cat);
+    document.getElementById('cat-add-btn').textContent = 'Enregistrer les modifications';
+    document.getElementById('cat-cancel-btn').style.display = '';
+    document.getElementById('cat-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Renomme la catégorie dans les outils qui la portent (champ `category`).
+  // Les documents EN/ES d'un outil ont la même valeur : ils sont mis à jour aussi.
+  async function renommerCategorieDansOutils(ancienNom, nouveauNom) {
+    const snap = await getDocs(collection(db, 'outils'));
+    const concernes = snap.docs.filter(d => d.data().category === ancienNom);
+    for (const d of concernes) {
+      await updateDoc(d.ref, { category: nouveauNom, updatedAt: serverTimestamp() });
+    }
+    invalidateToolsCache();
+    return concernes.length;
+  }
+
+  function escAttr(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   }
 
   async function renderCategoriesList() {
@@ -2733,29 +2826,25 @@ Support français|oui|non|bool"></textarea>
     }
     list.innerHTML = categories.map(c => `
       <div style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;">
-        <input type="text" value="${c.nom}" data-id="${c.id}" class="cat-rename-input" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);">
-        <button type="button" class="cat-rename-btn" data-id="${c.id}" style="background:var(--accent3);border:none;border-radius:6px;padding:6px 10px;color:#fff;font-size:12px;cursor:pointer;">✓</button>
-        <button type="button" class="cat-delete-btn" data-id="${c.id}" data-nom="${c.nom}" style="background:none;border:1px solid rgba(255,90,90,0.4);border-radius:6px;padding:6px 10px;color:#ff6b6b;font-size:12px;cursor:pointer;">🗑</button>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;">${escAttr(c.nom)}</div>
+          <div class="field-hint" style="margin:2px 0 0;">EN : ${escAttr(c.nom_en || '—')} · ES : ${escAttr(c.nom_es || '—')}</div>
+          ${categorieComplete(c) ? '' : '<div style="color:#ffb86b;font-size:12px;">⚠ Traductions ou description manquantes</div>'}
+        </div>
+        <button type="button" class="cat-edit-btn" data-id="${escAttr(c.id)}" style="background:var(--accent3);border:none;border-radius:6px;padding:6px 10px;color:#fff;font-size:12px;cursor:pointer;">Modifier</button>
+        <button type="button" class="cat-delete-btn" data-id="${escAttr(c.id)}" data-nom="${escAttr(c.nom)}" style="background:none;border:1px solid rgba(255,90,90,0.4);border-radius:6px;padding:6px 10px;color:#ff6b6b;font-size:12px;cursor:pointer;">Supprimer</button>
       </div>
     `).join('');
 
-    list.querySelectorAll('.cat-rename-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const id = btn.dataset.id;
-        const input = list.querySelector(`.cat-rename-input[data-id="${id}"]`);
-        const nouveauNom = input.value.trim();
-        if (!nouveauNom) return;
-        try {
-          await setDoc(doc(db, 'categories', id), { id, nom: nouveauNom, updatedAt: serverTimestamp() });
-          invalidateCategoriesCache();
-          showMsg('warn-categories','ok-categories','ok', `✓ Catégorie renommée en "${nouveauNom}". Pense à mettre à jour les outils qui utilisaient l'ancien nom (le champ Catégorie de chaque outil concerné reste sur l'ancienne valeur tant que tu ne le resauvegardes pas).`);
-          renderCategoriesList();
-        } catch(err) { showMsg('warn-categories','ok-categories','warn','Erreur : '+err.message); }
+    list.querySelectorAll('.cat-edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = categories.find(c => c.id === btn.dataset.id);
+        if (cat) passerEnModeEdition(cat);
       });
     });
     list.querySelectorAll('.cat-delete-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
-        if (!confirm(`Supprimer la catégorie "${btn.dataset.nom}" ? Les outils qui l'utilisent déjà garderont ce texte, mais elle disparaîtra du menu déroulant pour les nouvelles saisies.`)) return;
+        if (!confirm(`Supprimer la catégorie "${btn.dataset.nom}" ? Les outils qui l'utilisent déjà garderont ce nom, mais elle disparaîtra du menu déroulant pour les nouvelles saisies.`)) return;
         try {
           await deleteDoc(doc(db, 'categories', btn.dataset.id));
           invalidateCategoriesCache();
@@ -2765,23 +2854,67 @@ Support français|oui|non|bool"></textarea>
     });
   }
 
+  document.getElementById('cat-cancel-btn').addEventListener('click', () => viderFormulaireCategorie());
+
   document.getElementById('cat-add-btn').addEventListener('click', async () => {
-    const input = document.getElementById('cat-new-nom');
-    const nom = input.value.trim();
-    if (!nom) { showMsg('warn-categories','ok-categories','warn','Tape un nom de catégorie.'); return; }
+    const valeurs = lireFormulaireCategorie();
+    const manquants = categorieChampsManquants(valeurs);
+    if (manquants.length) {
+      showMsg('warn-categories','ok-categories','warn', `Champs obligatoires manquants : ${manquants.join(', ')}. Une catégorie doit avoir son nom et sa description en FR, EN et ES.`);
+      return;
+    }
+
+    const btn = document.getElementById('cat-add-btn');
+    btn.disabled = true;
     try {
       const existing = await fetchAllCategories();
-      if (existing.some(c => c.nom.toLowerCase() === nom.toLowerCase())) {
-        showMsg('warn-categories','ok-categories','warn', `"${nom}" existe déjà.`);
+      const nomFr = valeurs.nom;
+      const doublon = existing.find(c =>
+        c.nom.toLowerCase() === nomFr.toLowerCase() && (!categorieEnEdition || c.id !== categorieEnEdition.id));
+      if (doublon) {
+        showMsg('warn-categories','ok-categories','warn', `"${nomFr}" existe déjà.`);
         return;
       }
-      const id = slugify(nom);
-      await setDoc(doc(db, 'categories', id), { id, nom, updatedAt: serverTimestamp() });
-      invalidateCategoriesCache();
-      input.value = '';
-      showMsg('warn-categories','ok-categories','ok', `✓ Catégorie "${nom}" ajoutée.`);
+
+      const donnees = {
+        nom: valeurs.nom,
+        description_fr: valeurs.description_fr,
+        nom_en: valeurs.nom_en,
+        description_en: valeurs.description_en,
+        nom_es: valeurs.nom_es,
+        description_es: valeurs.description_es,
+        updatedAt: serverTimestamp(),
+      };
+
+      if (categorieEnEdition) {
+        // L'identifiant ne change jamais : les outils restent rattachés à la catégorie.
+        const id = categorieEnEdition.id;
+        const ancienNom = categorieEnEdition.nom;
+        await setDoc(doc(db, 'categories', id), { ...donnees, id }, { merge: true });
+        let outilsMisAJour = 0;
+        if (ancienNom !== nomFr) outilsMisAJour = await renommerCategorieDansOutils(ancienNom, nomFr);
+        invalidateCategoriesCache();
+        viderFormulaireCategorie();
+        showMsg('warn-categories','ok-categories','ok',
+          `✓ Catégorie « ${nomFr} » enregistrée${outilsMisAJour ? ` — ${outilsMisAJour} document(s) d'outil mis à jour avec le nouveau nom` : ''}.`);
+      } else {
+        const id = slugify(nomFr);
+        if (existing.some(c => c.id === id)) {
+          showMsg('warn-categories','ok-categories','warn', `L'identifiant « ${id} » existe déjà. Choisis un autre nom.`);
+          return;
+        }
+        await setDoc(doc(db, 'categories', id), { ...donnees, id });
+        invalidateCategoriesCache();
+        viderFormulaireCategorie();
+        showMsg('warn-categories','ok-categories','ok', `✓ Catégorie « ${nomFr} » ajoutée (FR, EN, ES).`);
+      }
+      await populateCategorieSelect();
       renderCategoriesList();
-    } catch(err) { showMsg('warn-categories','ok-categories','warn','Erreur : '+err.message); }
+    } catch(err) {
+      showMsg('warn-categories','ok-categories','warn','Erreur : '+err.message);
+    } finally {
+      btn.disabled = false;
+    }
   });
 
   const CHAMPS_COMPARATEUR = [
@@ -3221,6 +3354,7 @@ Support français|oui|non|bool"></textarea>
     const btn = document.getElementById('oq-submit-btn');
     const name = document.getElementById('oq-name').value.trim();
     const plan = document.getElementById('oq-plan').value;
+    const categorieChoisie = document.getElementById('oq-cat').value;
     if (!name) { showMsg('warn-outils-quick','ok-outils-quick','warn','Le nom est obligatoire.'); return; }
     btn.disabled = true;
     try {
@@ -3239,12 +3373,13 @@ Support français|oui|non|bool"></textarea>
         langue: 'fr',
         status: 'a_enrichir',
         generer_fiche: false,
-        url: '', category: '', price: '', description: '', tags: [],
+        url: '', category: categorieChoisie, price: '', description: '', tags: [],
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
 
       document.getElementById('oq-name').value = '';
+      document.getElementById('oq-cat').value = '';
       invalidateToolsCache();
       showMsg('ok-outils-quick','warn-outils-quick','ok',`"${name}" créé — sera enrichi au prochain passage d'enrichir-outils.js.`);
       runDiagnosticOutils(); runDiagnosticLiens();
@@ -3763,6 +3898,12 @@ Support français|oui|non|bool"></textarea>
       ['o-meta-desc',       `o-meta-desc-${targetLang}`,    'text'],
     ];
   }
+  function categorieFieldsToTranslate(targetLang) {
+    return [
+      ['cat-nom-fr',  `cat-nom-${targetLang}`,  'text'],
+      ['cat-desc-fr', `cat-desc-${targetLang}`, 'text'],
+    ];
+  }
   function articleFieldsToTranslate(targetLang) {
     return [
       ['a-title-fr',    `a-title-${targetLang}`,     'text'],
@@ -3984,6 +4125,8 @@ Support français|oui|non|bool"></textarea>
         ? notificationFieldsToTranslate(targetLang)
         : formType === 'niche'
         ? nicheFieldsToTranslate(targetLang)
+        : formType === 'categorie'
+        ? categorieFieldsToTranslate(targetLang)
         : outilFieldsToTranslate(targetLang);
 
       btn.disabled = true;

@@ -3519,6 +3519,9 @@ window.canonicalCategory = canonicalCategory;
 function translateCategory(value, langue) {
   if (value == null || value === '') return '';
   const lang = langue || (typeof detecterLangue === 'function' ? detecterLangue() : 'fr');
+  // Libellé saisi dans l'admin (collection Firestore « categories », chargée par app.js) : prioritaire.
+  const saisi = window.CATEGORY_LABELS && window.CATEGORY_LABELS[canonicalCategory(value)];
+  if (saisi && saisi[lang] && saisi[lang].name) return saisi[lang].name;
   const key = 'cat.' + categoryId(canonicalCategory(value));
   const dict = UI_TRANSLATIONS[lang] || UI_TRANSLATIONS.fr;
   return dict[key] ?? UI_TRANSLATIONS.fr[key] ?? String(value);

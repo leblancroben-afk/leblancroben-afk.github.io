@@ -392,11 +392,12 @@ async function loadAllData() {
     // (grille d'outils, liste blog, galerie) est toujours lu en direct.
     const { db, collection, getDocs, query, where } = await import('./firebase-config.js');
 
-    const [toolsSnap, articlesSnap, gallerySnap, articlesCreateursSnap] = await Promise.all([
+    const [toolsSnap, articlesSnap, gallerySnap, articlesCreateursSnap, categoriesSnap] = await Promise.all([
       getDocs(collection(db, 'outils')).catch(() => ({ docs: [] })),
       getDocs(collection(db, 'articles')).catch(() => ({ docs: [] })),
       getDocs(collection(db, 'galerie')).catch(() => ({ docs: [] })),
       getDocs(query(collection(db, 'articles_createurs'), where('statut', '==', 'publie'))).catch(() => ({ docs: [] })),
+      getDocs(collection(db, 'categories')).catch(() => ({ docs: [] })),
     ]);
 
     // Un outil encore en attente d'enrichissement IA est incomplet : jamais affiché.
@@ -435,6 +436,13 @@ async function loadAllData() {
 
     // Nomenclature unique des catégories d'articles (js/categories-articles.js) :
     // les anciennes valeurs encore présentes en base sont converties à l'affichage.
+    // Libellés EN/ES des catégories d'outils saisis dans l'admin (utilisés par translateCategory()).
+    window.CATEGORY_LABELS = Object.fromEntries(
+      categoriesSnap.docs.map(d => d.data()).filter(c => c && c.nom).map(c => [c.nom, {
+        en: { name: c.nom_en || '' },
+        es: { name: c.nom_es || '' },
+      }])
+    );
     const _AC = window.AlbexiaArticleCats;
     // Seuls les articles dont la page HTML existe sont affichés (voir articles/publies.json).
     const pagesDisponibles = await chargerPagesArticles();

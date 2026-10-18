@@ -2172,11 +2172,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/udio/tutoriels/"/>
   </url>
   <url>
-    <loc>https://leblancroben-afk.github.io/tools/standard/fr/whisper/</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/whisper/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/whisper/"/>
-  </url>
-  <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/windsurf/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/windsurf/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/windsurf/"/>

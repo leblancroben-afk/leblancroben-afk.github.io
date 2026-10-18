@@ -1299,10 +1299,10 @@ ${corps_html}
 ${ctaHTML}
   </div>
 ${recos.decouvrirHTML}
+${recos.mondeHTML}
 
 </div>
 </main>
-${recos.mondeHTML}
 ${recos.dataHTML}
 
 ${footerHTML(langue)}

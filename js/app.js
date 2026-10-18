@@ -436,7 +436,10 @@ async function loadAllData() {
     // Nomenclature unique des catégories d'articles (js/categories-articles.js) :
     // les anciennes valeurs encore présentes en base sont converties à l'affichage.
     const _AC = window.AlbexiaArticleCats;
+    // Seuls les articles dont la page HTML existe sont affichés (voir articles/publies.json).
+    const pagesDisponibles = await chargerPagesArticles();
     state.blog = [...articlesSnap.docs.map(d => d.data()), ...articlesCreateurs]
+      .filter(p => pagesDisponibles.has(`${p.langue || 'fr'}/${p.slug || slugify(p.title || '')}`))
       .map(p => _AC ? { ...p, category: _AC.normaliser(p.category) || p.category } : p);
     renderTools();
     renderBlog();
@@ -450,6 +453,21 @@ async function loadAllData() {
     showError('gallery-grid', 'Impossible de charger la galerie.');
     showError('home-top-tools', 'Impossible de charger les outils.');
     showError('home-latest-articles', 'Impossible de charger les articles.');
+  }
+}
+
+// Liste des pages d'articles réellement générées par gen-fiches.js
+// (articles/publies.json). Un article absent de cette liste n'est pas affiché :
+// sa page n'existe pas encore, il provoquerait un 404.
+async function chargerPagesArticles() {
+  try {
+    const res = await fetch('/articles/publies.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    return new Set(Array.isArray(data.pages) ? data.pages : []);
+  } catch (err) {
+    console.error('Index des articles indisponible :', err);
+    return new Set();
   }
 }
 

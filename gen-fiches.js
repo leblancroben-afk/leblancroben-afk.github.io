@@ -1361,7 +1361,7 @@ function resoudreOutilComparaison(side, comp, tools, langue) {
       nom: found.name,
       slug: slugify(found.name),
       emoji: found.emoji || '🤖',
-      favicon: `https://www.google.com/s2/favicons?sz=64&domain=${(found.url||'').replace(/^https?:\/\//,'').split('/')[0]}`,
+      favicon: found.favicon || '',
       categorie: found.category || '',
       note: typeof found.note === 'number' ? found.note : (found.note ? Number(found.note) : 4.5),
       lien: found.url || comp[`outil_${side}_lien_fallback`] || '#',
@@ -1376,9 +1376,7 @@ function resoudreOutilComparaison(side, comp, tools, langue) {
   // ça) — on le dérive automatiquement du lien de secours, comme pour les
   // outils résolus, plutôt que de dépendre d'un champ qui n'existe pas.
   const lienFallback = comp[`outil_${side}_lien_fallback`] || '';
-  const faviconFallback = lienFallback
-    ? `https://www.google.com/s2/favicons?sz=64&domain=${lienFallback.replace(/^https?:\/\//,'').split('/')[0]}`
-    : '';
+  const faviconFallback = ''; // pas de logo pour un outil non indexé : emoji affiché
   return {
     nom: nomFallback || (side === 'a' ? 'Outil A' : 'Outil B'),
     slug: slugRef || slugify(nomFallback),
@@ -1481,7 +1479,7 @@ function buildToolsDataJSON(tools, langue = 'fr') {
       id: fr.id, // toujours l'id FR, stable entre les 3 langues
       name: t.name,
       emoji: t.emoji || fr.emoji || '🤖',
-      favicon: `https://www.google.com/s2/favicons?sz=64&domain=${(t.url||fr.url||'').replace(/^https?:\/\//,'').split('/')[0]}`,
+      favicon: t.favicon || fr.favicon || '',
       category: categoryName(t.category || fr.category || '', langue),
       description: t.description || fr.description || '',
       price: t.price || fr.price || '',
@@ -2278,7 +2276,7 @@ ${sharedJS()}
 // ════════════════════════════════════════════════════════════
 
 function nicheToolCardHTML(tool) {
-  const fav = `https://www.google.com/s2/favicons?sz=64&domain=${(tool.url||'').replace(/^https?:\/\//,'').split('/')[0]}`;
+  const fav = tool.favicon || '';
   const note = typeof tool.note === 'number' ? tool.note : (typeof tool.rating === 'number' ? tool.rating : null);
   const slug = slugify(tool.name);
   const plan = tool.plan === 'featured' ? 'featured' : tool.plan === 'starter' ? 'starter' : 'standard';
@@ -2376,7 +2374,7 @@ function nicheToolCardLocalizedHTML(tool, langue, allTools) {
   const slug = slugify(loc.name);
   const ficheUrl = `${R}tools/${plan}/${locLangue}/${slug}/`;
   const siteUrl = tool.url || loc.url || '';
-  const fav = `https://www.google.com/s2/favicons?sz=64&domain=${siteUrl.replace(/^https?:\/\//,'').split('/')[0]}`;
+  const fav = tool.favicon || '';
   const note = typeof tool.note === 'number' ? tool.note : (typeof tool.rating === 'number' ? tool.rating : null);
   return `<a href="${ficheUrl}" class="niche-tool-card">
   <div class="ntc-top">
@@ -3458,7 +3456,7 @@ function tutoCardHTML(tool, allTools, tousOutils) {
     <div class="tuto-card-header">
       <div class="tuto-card-identity">
         <div class="tuto-card-logo" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=${(tool.url||'').replace(/^https?:\/\//,'').split('/')[0]}" alt="${tool.name}" width="24" height="24" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${tool.emoji||'🤖'}'}))">
+          <img src="${tool.favicon || ''}" alt="${tool.name}" width="24" height="24" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${tool.emoji||'🤖'}'}))">
         </div>
         <div>
           <h3 class="tuto-card-nom">${tool.name}</h3>
@@ -3526,7 +3524,7 @@ function tutoCatalogCardHTML(tool, tousOutils, idx) {
   const recherche = [tool.name, tool.category, tool.description, ...(tool.tags || [])].join(' ').toLowerCase();
   return `<article class="th-card" id="carte-${info.slug}" data-id="${info.slug}" data-i="${idx}" data-cat="${slugify(tool.category || '')}" data-nom="${vtAttrEsc(recherche)}">
     <div class="th-card-top">
-      <span class="th-logo">${domaine ? `<img src="https://www.google.com/s2/favicons?sz=64&domain=${domaine}" alt="" width="22" height="22" loading="lazy" onerror="this.replaceWith(document.createTextNode('${lettre}'))">` : lettre}</span>
+      <span class="th-logo">${domaine ? `<img src="${tool.favicon || ''}" alt="" width="22" height="22" loading="lazy" onerror="this.replaceWith(document.createTextNode('${lettre}'))">` : lettre}</span>
       <h3 class="th-card-name">${tool.name}</h3>
       <span class="th-chip" ${vtTxtAttrs(tool, vues, 'category')}>${tool.category || ''}</span>
     </div>
@@ -3898,7 +3896,7 @@ ${navHTML(langue)}
   <div class="outil-hero-inner">
     <div class="outil-logo-wrap">
       <div id="outil-logo" class="outil-logo-grand" style="background:var(--bg3);color:var(--text);overflow:hidden;padding:0;">
-        <img src="https://www.google.com/s2/favicons?sz=128&domain=${(tool.url||'').replace(/^https?:\/\//,'').split('/')[0]}" alt="${tool.name}" width="48" height="48" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${tool.emoji||'🤖'}'}))">
+        <img src="${tool.favicon || ''}" alt="${tool.name}" width="48" height="48" loading="lazy" style="display:block;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${tool.emoji||'🤖'}'}))">
       </div>
     </div>
     <div class="outil-hero-infos">

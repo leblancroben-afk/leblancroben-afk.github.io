@@ -40,22 +40,31 @@ const GEMINI_MODEL = 'gemini-3.5-flash';
 const TAILLE_LOT = 6;
 const MAX_REQUETES_PAR_RUN = parseInt(process.env.GEMINI_MAX_REQUETES_PAR_RUN || '3', 10);
 const MAX_TOKENS_SORTIE = 16384;
+// Catégorie générique : jamais proposée à Gemini (elle sert de choix par défaut).
+// Elle reste utilisable si l'admin la choisit explicitement.
+const CATEGORIES_EXCLUES_IA = ['Outils IA'];
+// Hébergeurs de code : leur icône est celle de la plateforme, pas celle de l'outil.
+const HEBERGEURS_CODE = ['github.com', 'gitlab.com', 'huggingface.co', 'replit.com', 'kaggle.com'];
 
-const ArticleCats = require('./js/categories-articles.js');
 const ICON_KEYS = require('./js/fiche-icons.js').FEATURE_KEYS;
 
 // Compteur de requêtes envoyées pendant ce run (retries inclus).
 let requetesUtilisees = 0;
 
-function categoriesDisponibles() {
-  return ArticleCats.liste().map(c => c.fr);
+// Catégories d'OUTILS : collection Firestore « categories » (celle de l'admin).
+// Ne pas confondre avec js/categories-articles.js, qui ne sert qu'aux articles.
+async function fetchCategoriesOutils() {
+  const snap = await db.collection('categories').get();
+  return snap.docs.map(d => d.data().nom).filter(Boolean);
 }
 
-// Catégorie choisie dans l'admin en priorité ; l'IA ne sert qu'à compléter.
-function categorieAdminOuIA(categorieAdmin, propositionIA) {
-  const admin = ArticleCats.normaliser(categorieAdmin);
+// Catégorie finale. Le choix de l'admin prime, même s'il a été retiré de la liste.
+// Sinon la proposition de Gemini, si elle figure dans la liste des outils. Sinon ''.
+function categorieFinale(categorieAdmin, propositionIA, categoriesOutils) {
+  const admin = String(categorieAdmin || '').trim();
   if (admin) return admin;
-  return ArticleCats.normaliser(propositionIA) || '';
+  const ia = String(propositionIA || '').trim();
+  return categoriesOutils.includes(ia) ? ia : '';
 }
 
 // Règles communes à tous les outils du lot (envoyées une seule fois).
@@ -188,11 +197,13 @@ async function appelerGeminiLot(lot, categories, tentative = 0) {
   if (!res.ok) {
     // 503 = surcharge temporaire : une seule nouvelle tentative, qui compte dans le budget.
     if (res.status === 503 && tentative < 1) {
-      await new Promise(r => setTimeout(r, 8000));
+      await new Promise(r => setTimeout(r, 30000)); // surcharge temporaire : attendre davantage
       return appelerGeminiLot(lot, categories, tentative + 1);
     }
     const err = new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
     err.quota = res.status === 429 || data?.error?.status === 'RESOURCE_EXHAUSTED';
+    // 503 après relance : le service est saturé, inutile de continuer à consommer le budget.
+    err.arret = res.status === 503;
     throw err;
   }
 
@@ -218,13 +229,21 @@ async function appelerGeminiLot(lot, categories, tentative = 0) {
   return parIndex;
 }
 
-function construireMiseAJour(outil, infos) {
-  let favicon = '';
-  try { favicon = `https://www.google.com/s2/favicons?sz=64&domain=${new URL(infos.url).hostname}`; } catch { /* URL invalide : pas de favicon */ }
+function faviconPourUrl(url) {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '');
+    if (HEBERGEURS_CODE.some(h => host === h || host.endsWith('.' + h))) return '';
+    return `https://www.google.com/s2/favicons?sz=64&domain=${host}`;
+  } catch { return ''; }
+}
+
+function construireMiseAJour(outil, infos, categorie) {
+  // Logo saisi dans l'admin en priorité ; sinon icône du site officiel.
+  const favicon = outil.logo_url || faviconPourUrl(infos.url);
 
   return {
     url: infos.url,
-    category: categorieAdminOuIA(outil.category, infos.category),
+    category: categorie,
     price: infos.price || 'freemium',
     description: infos.description || '',
     tags: Array.isArray(infos.tags) ? infos.tags : [],
@@ -274,22 +293,26 @@ async function main() {
     process.exit(1);
   }
 
-  const categories = categoriesDisponibles();
+  const categories = (await fetchCategoriesOutils()).filter(c => !CATEGORIES_EXCLUES_IA.includes(c));
   if (!categories.length) {
-    console.error('✗ Liste de catégories vide (js/categories-articles.js). Abandon.');
+    console.error('✗ Aucune catégorie d\'outil dans Firestore (collection « categories »). Abandon.');
     process.exit(1);
   }
 
   const snap = await db.collection('outils').where('status', '==', 'a_enrichir').get();
   // Les outils déjà marqués en échec sortent de la file : ils ne consomment plus de requête.
-  const file = snap.docs.filter(d => d.data().enrichissement_echec !== true);
+  // Les outils sans catégorie ont un horodatage « dernier_essai_le » : ils passent
+  // après les autres, pour ne pas bloquer la file à chaque run.
+  const file = snap.docs
+    .filter(d => d.data().enrichissement_echec !== true)
+    .sort((a, b) => (a.data().dernier_essai_le?.toMillis?.() || 0) - (b.data().dernier_essai_le?.toMillis?.() || 0));
   const capacite = TAILLE_LOT * MAX_REQUETES_PAR_RUN;
   const aTraiter = file.slice(0, capacite);
 
   console.log(`${file.length} outil(s) en file, ${aTraiter.length} traité(s) ce run `
     + `(${MAX_REQUETES_PAR_RUN} requête(s) max, lots de ${TAILLE_LOT}).`);
 
-  let succes = 0, nonTrouves = 0, incomplets = 0, nonRepondus = 0, echecs = 0, quotaEpuise = false;
+  let succes = 0, nonTrouves = 0, incomplets = 0, categorieAbsente = 0, nonRepondus = 0, echecs = 0, quotaEpuise = false;
 
   for (let debut = 0; debut < aTraiter.length && !quotaEpuise; debut += TAILLE_LOT) {
     const lot = aTraiter.slice(debut, debut + TAILLE_LOT);
@@ -301,9 +324,9 @@ async function main() {
     } catch (err) {
       console.error(`  ✗ Lot de ${lot.length} : ${err.message}`);
       echecs += lot.length;
-      if (err.quota) {
+      if (err.quota || err.arret) {
         quotaEpuise = true;
-        console.log('::warning::Quota Gemini épuisé ou budget du run atteint — enrichissement interrompu');
+        console.log('::warning::Arrêt du run : quota Gemini épuisé, service saturé (503) ou budget du run atteint. Les outils restants restent en file.');
         break;
       }
       continue; // lot non traité : les outils restent en file, sans marquage
@@ -327,21 +350,33 @@ async function main() {
         continue;
       }
 
-      if (!infos.url || !infos.description || !infos.category) {
+      const categorie = categorieFinale(outil.category, infos.category, categories);
+      if (!categorie) {
+        // Reste en file, sans marquage définitif : motif consigné, traité après les autres.
+        await docSnap.ref.update({
+          categorie_absente_le: FieldValue.serverTimestamp(),
+          dernier_essai_le: FieldValue.serverTimestamp(),
+        });
+        console.log(`  – ${outil.name} : catégorie absente (ni admin, ni réponse valide), reste en file.`);
+        categorieAbsente++;
+        continue;
+      }
+
+      if (!infos.url || !infos.description) {
         await docSnap.ref.update({ enrichissement_echec: true, enrichissement_echec_le: FieldValue.serverTimestamp(), enrichissement_echec_motif: 'incomplet' });
         console.log(`  – ${outil.name} : réponse incomplète (url/description/catégorie), sorti de la file.`);
         incomplets++;
         continue;
       }
 
-      await docSnap.ref.update(construireMiseAJour(outil, infos));
-      console.log(`  ✓ ${outil.name} → ${categorieAdminOuIA(outil.category, infos.category)} / ${infos.price} / ${infos.url}`);
+      await docSnap.ref.update(construireMiseAJour(outil, infos, categorie));
+      console.log(`  ✓ ${outil.name} → ${categorie} / ${infos.price} / ${infos.url}`);
       succes++;
     }
   }
 
   console.log(`\nTerminé — ${succes} publié(s), ${nonTrouves} introuvable(s), ${incomplets} incomplet(s), `
-    + `${nonRepondus} sans réponse (restent en file), ${echecs} en erreur de lot. `
+    + `${categorieAbsente} sans catégorie (restent en file), ${nonRepondus} sans réponse (restent en file), ${echecs} en erreur de lot. `
     + `Requêtes Gemini utilisées : ${requetesUtilisees}/${MAX_REQUETES_PAR_RUN}.`
     + (quotaEpuise ? ' (arrêt : quota ou budget)' : ''));
   if (succes > 0) console.log('⚠️  gen-fiches.js doit tourner pour publier les nouvelles fiches HTML.');

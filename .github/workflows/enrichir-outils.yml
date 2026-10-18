@@ -35,6 +35,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tools/ articles/ comparateur/ niches/ tutoriels/ glossaire/ .gen-state.json
+          git add tools/ articles/ comparateur/ niches/ tutoriels/ glossaire/ categorie/ .gen-state.json   
           git diff --staged --quiet || git commit -m "🤖 Outils enrichis par IA + régénération fiches (auto)"
           git push
+          

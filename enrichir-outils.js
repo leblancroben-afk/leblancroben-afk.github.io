@@ -25,6 +25,9 @@
    - Absent de la réponse, lot tronqué ou JSON invalide → rien d'écrit,
      l'outil reste dans la file pour le run suivant.
 
+   ÉCHEC DU JOB : si des outils étaient en file mais qu'aucun n'a été
+   publié, le script sort avec un code d'erreur (le workflow est rouge).
+
    Usage : node enrichir-outils.js
    ═══════════════════════════════════════════════════════ */
 
@@ -189,7 +192,6 @@ async function appelerGeminiLot(lot, categories, tentative = 0) {
         responseSchema: SCHEMA_LOT,
         maxOutputTokens: MAX_TOKENS_SORTIE,
         temperature: 0.2,
-        frequencyPenalty: 0.8, // limite les répétitions en boucle
       },
     }),
   });
@@ -203,8 +205,9 @@ async function appelerGeminiLot(lot, categories, tentative = 0) {
     }
     const err = new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
     err.quota = res.status === 429 || data?.error?.status === 'RESOURCE_EXHAUSTED';
-    // 503 après relance : le service est saturé, inutile de continuer à consommer le budget.
-    err.arret = res.status === 503;
+    // 400 = requête mal formée : inutile de réessayer chaque lot, on arrête le run.
+    // 503 après relance : service saturé, inutile de consommer davantage le budget.
+    err.arret = res.status === 400 || res.status === 503;
     throw err;
   }
 
@@ -342,7 +345,7 @@ async function main() {
       echecs += lot.length;
       if (err.quota || err.arret) {
         quotaEpuise = true;
-        console.log('::warning::Arrêt du run : quota Gemini épuisé, service saturé (503) ou budget du run atteint. Les outils restants restent en file.');
+        console.log('::warning::Arrêt du run : quota Gemini épuisé, requête refusée (400), service saturé (503) ou budget du run atteint. Les outils restants restent en file.');
         break;
       }
       continue; // lot non traité : les outils restent en file, sans marquage
@@ -407,6 +410,12 @@ async function main() {
     + `Requêtes Gemini utilisées : ${requetesUtilisees}/${MAX_REQUETES_PAR_RUN}.`
     + (quotaEpuise ? ' (arrêt : quota ou budget)' : ''));
   if (succes > 0) console.log('⚠️  gen-fiches.js doit tourner pour publier les nouvelles fiches HTML.');
+
+  // Échec visible : des outils étaient en file mais rien n'a été publié.
+  if (succes === 0 && aTraiter.length > 0) {
+    console.error('✗ Aucun outil publié alors que la file n\'est pas vide. Job en échec.');
+    process.exit(1);
+  }
 }
 
 main().catch(err => {

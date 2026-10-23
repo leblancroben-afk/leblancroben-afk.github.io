@@ -41,7 +41,8 @@ const db = getFirestore();
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-3.5-flash';
 const TAILLE_LOT = 3;
-const MAX_REQUETES_PAR_RUN = parseInt(process.env.GEMINI_MAX_REQUETES_PAR_RUN || '3', 10);
+// Pas de limite : le run s'arrête seulement sur quota épuisé (429), erreur 400, ou 503 persistant.
+const MAX_REQUETES_PAR_RUN = Infinity;
 // Limite élevée : le modèle partage ce budget avec son raisonnement interne.
 const MAX_TOKENS_SORTIE = 32768;
 // Catégorie générique : jamais proposée à Gemini (elle sert de choix par défaut).
@@ -331,8 +332,7 @@ async function main() {
   const capacite = TAILLE_LOT * MAX_REQUETES_PAR_RUN;
   const aTraiter = file.slice(0, capacite);
 
-  console.log(`${file.length} outil(s) en file, ${aTraiter.length} traité(s) ce run `
-    + `(${MAX_REQUETES_PAR_RUN} requête(s) max, lots de ${TAILLE_LOT}).`);
+  console.log(`${file.length} outil(s) en file, ${aTraiter.length} traité(s) ce run (lots de ${TAILLE_LOT}).`);
 
   let succes = 0, nonTrouves = 0, incomplets = 0, categorieAbsente = 0, faqInvalides = 0, nonRepondus = 0, echecs = 0, quotaEpuise = false;
 
@@ -410,7 +410,7 @@ async function main() {
 
   console.log(`\nTerminé — ${succes} publié(s), ${nonTrouves} introuvable(s), ${incomplets} incomplet(s), `
     + `${categorieAbsente} sans catégorie (restent en file), ${faqInvalides} FAQ invalide(s) (restent en file), ${nonRepondus} sans réponse (restent en file), ${echecs} en erreur de lot. `
-    + `Requêtes Gemini utilisées : ${requetesUtilisees}/${MAX_REQUETES_PAR_RUN}.`
+    + `Requêtes Gemini utilisées : ${requetesUtilisees}.`
     + (quotaEpuise ? ' (arrêt : quota ou budget)' : ''));
   if (succes > 0) console.log('⚠️  gen-fiches.js doit tourner pour publier les nouvelles fiches HTML.');
 

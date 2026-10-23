@@ -200,8 +200,10 @@ async function appelerGeminiLot(lot, categories, tentative = 0) {
   const data = await res.json();
   if (!res.ok) {
     // 503 = surcharge temporaire : une seule nouvelle tentative, qui compte dans le budget.
-    if (res.status === 503 && tentative < 1) {
-      await new Promise(r => setTimeout(r, 30000)); // surcharge temporaire : attendre davantage
+    // Surcharge temporaire : attente croissante (30 s, 60 s, 120 s). Ces essais ne comptent pas dans le budget.
+    if (res.status === 503 && tentative < 3) {
+      requetesUtilisees--;
+      await new Promise(r => setTimeout(r, 30000 * 2 ** tentative));
       return appelerGeminiLot(lot, categories, tentative + 1);
     }
     const err = new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);

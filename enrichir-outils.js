@@ -40,9 +40,10 @@ const db = getFirestore();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-3.5-flash';
-const TAILLE_LOT = 6;
+const TAILLE_LOT = 3;
 const MAX_REQUETES_PAR_RUN = parseInt(process.env.GEMINI_MAX_REQUETES_PAR_RUN || '3', 10);
-const MAX_TOKENS_SORTIE = 16384;
+// Limite élevée : le modèle partage ce budget avec son raisonnement interne.
+const MAX_TOKENS_SORTIE = 32768;
 // Catégorie générique : jamais proposée à Gemini (elle sert de choix par défaut).
 // Elle reste utilisable si l'admin la choisit explicitement.
 const CATEGORIES_EXCLUES_IA = ['Outils IA'];

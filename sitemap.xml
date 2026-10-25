@@ -851,6 +851,12 @@
     <loc>https://leblancroben-afk.github.io/soumettre/</loc>
   </url>
   <url>
+    <loc>https://leblancroben-afk.github.io/tools/featured/en/aiva/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/aiva/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/aiva/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/aiva/"/>
+  </url>
+  <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/en/aiva/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/aiva/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/aiva/tutoriels/"/>
@@ -992,10 +998,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/midjourney/tutoriels/"/>
   </url>
   <url>
-    <loc>https://leblancroben-afk.github.io/tools/featured/en/moises/tutoriels/</loc>
+    <loc>https://leblancroben-afk.github.io/tools/featured/en/months/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/months/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/featured/en/months/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/moises/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/moises/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/months/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/meses/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/tutoriels/"/>
   </url>
   <url>
@@ -1012,10 +1024,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/murf-ai/tutoriels/"/>
   </url>
   <url>
+    <loc>https://leblancroben-afk.github.io/tools/featured/en/soundful/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/soundful/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/"/>
+  </url>
+  <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/en/soundful/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/soundful/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/soundful/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/sonido/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/tutoriels/"/>
   </url>
   <url>
@@ -1037,6 +1055,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/writesonic/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/writesonic/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/writesonic/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/featured/es/aiva/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/aiva/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/aiva/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/aiva/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/es/aiva/tutoriels/</loc>
@@ -1180,10 +1204,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/midjourney/tutoriels/"/>
   </url>
   <url>
-    <loc>https://leblancroben-afk.github.io/tools/featured/es/moises/tutoriels/</loc>
+    <loc>https://leblancroben-afk.github.io/tools/featured/es/meses/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/meses/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/featured/es/meses/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/moises/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/moises/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/months/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/meses/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/tutoriels/"/>
   </url>
   <url>
@@ -1200,10 +1230,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/murf-ai/tutoriels/"/>
   </url>
   <url>
-    <loc>https://leblancroben-afk.github.io/tools/featured/es/soundful/tutoriels/</loc>
+    <loc>https://leblancroben-afk.github.io/tools/featured/es/sonido/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/sonido/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/featured/es/sonido/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/soundful/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/soundful/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/sonido/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/tutoriels/"/>
   </url>
   <url>
@@ -1229,6 +1265,8 @@
   <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/fr/aiva/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/aiva/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/aiva/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/aiva/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/aiva/"/>
   </url>
   <url>
@@ -1386,13 +1424,15 @@
   <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/fr/moises/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/months/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/meses/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/fr/moises/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/moises/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/moises/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/months/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/meses/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/moises/tutoriels/"/>
   </url>
   <url>
@@ -1412,13 +1452,15 @@
   <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/fr/soundful/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/soundful/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/sonido/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/featured/fr/soundful/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/featured/en/soundful/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/soundful/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/featured/es/sonido/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/featured/fr/soundful/tutoriels/"/>
   </url>
   <url>
@@ -1643,10 +1685,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/letterdrop/"/>
   </url>
   <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/en/looka/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/looka/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/"/>
+  </url>
+  <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/en/looka/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/looka/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/looka/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/mira/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/"/>
   </url>
   <url>
@@ -2129,13 +2177,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/letterdrop/"/>
   </url>
   <url>
-    <loc>https://leblancroben-afk.github.io/tools/standard/es/looka/tutoriels/</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/looka/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/looka/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/"/>
-  </url>
-  <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/es/lovable/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/lovable/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/lovable/tutoriels/"/>
@@ -2154,6 +2195,19 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/microsoft-designer/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/microsoft-designer/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/microsoft-designer/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/es/mira/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/mira/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/"/>
+  </url>
+  <url>
+    <loc>https://leblancroben-afk.github.io/tools/standard/es/mira/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/looka/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/mira/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/es/mutiny/</loc>
@@ -2616,13 +2670,15 @@
   <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/looka/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/looka/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/mira/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/"/>
   </url>
   <url>
     <loc>https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/tools/standard/en/looka/tutoriels/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/looka/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/tools/standard/es/mira/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/tools/standard/fr/looka/tutoriels/"/>
   </url>
   <url>

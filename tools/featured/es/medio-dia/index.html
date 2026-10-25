@@ -98,17 +98,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Texto a la imagen</h3><p>Generar 4 propuestas gráficas únicas de un texto detallado o minimalista &quot;prompt&quot;.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Vary Region (Inpainting)</h3><p>Seleccione un área específica de su imagen para editar, añadir o eliminar un objeto por IA.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Pan &amp; Zoom (Outpainting)</h3><p>Ampliar el marco de tu imagen en cualquier dirección al permitir que AI invente la decoración.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div><div><h3>Referencia de estilo (--ref)</h3><p>Copia fielmente la estética, los colores y el estilo de una imagen existente para aplicarla a sus creaciones.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="tuto-0">
-      <div class="tutorial-header" onclick="toggleTutorial('tuto-0')">
-        <div class="tutorial-thumb"><img src="https://img.youtube.com/vi/midjTutorial101/mqdefault.jpg" alt="Guide Midjourney Web : Maîtriser l'interface sans Discord" loading="lazy">
-          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-        <div class="tutorial-meta"><div class="tutorial-title">Guide Midjourney Web : Maîtriser l'interface sans Discord</div><div class="tutorial-duration">18:20</div></div>
-        <button class="tutorial-toggle">▾</button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/h-54HxTNb-k/mqdefault.jpg" alt="1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr</div><div class="tutorial-duration" data-vid-dur>1:40:10</div></div>
       </div>
-      <div class="tutorial-video"><div class="tutorial-video-inner">
-        <iframe data-src="https://www.youtube.com/embed/midjTutorial101" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
-      </div></div>
-    </div></div></section>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"h-54HxTNb-k","titre":"1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr","duree":"1:40:10"},{"id":"NfmVWI9_UKY","titre":"Tout savoir sur MIDJOURNEY AI de A à Z en 30m | Formation COMPLÈTE de débutant à expert (gratuit)","duree":"34:43"},{"id":"X1IY4c48DOI","titre":"Découvrir Midjourney : le tuto simple pour générer des images IA incroyables","duree":"19:04"},{"id":"YfJZVSd1Jt4","titre":"Les bases de Midjourney [tuto Midjourney]","duree":"8:07"},{"id":"_QVrPzvgg5E","titre":"Tuto Midjourney : Créer des Images, Design et Avatar avec l'IA, Facile et Gratuit","duree":"4:23"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Preguntas frecuentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">¿Podemos usar Midjourney sin pasar por la discordia?</button><div class="faq-a">Sí, Midjourney ahora tiene una interfaz web completa accesible a todos los usuarios con una cuenta activa.</div></div><div class="faq-item"><button class="faq-q">¿Puedo usar las imágenes generadas con fines comerciales?</button><div class="faq-a">Sí, todas las suscripciones de pago Midjourney le otorgan derechos de propiedad comerciales a las imágenes que crea.</div></div><div class="faq-item"><button class="faq-q">¿Qué es el modo 'Relax'?</button><div class="faq-a">Modo de relajación (disponible en ciertos planos) permite generar imágenes ilimitadamente sin consumir sus horas de computación &quot;Fast&quot;, con un tiempo de espera ligeramente más largo.</div></div><div class="faq-item"><button class="faq-q">¿Cómo conseguir un estilo fotorrealista?</button><div class="faq-a">La versión 6 incorpora el fotorealismo por defecto. Use términos descriptivos simples (luz, tipo de cámara) en lugar de palabras clave mágicas.</div></div></div></section>
       
       
@@ -155,17 +181,6 @@
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
-</script>
-<script>
-  function toggleTutorial(id) {
-    const item = document.getElementById(id);
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.tutorial-item.open').forEach(el => {
-      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
-    });
-    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
-    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
-  }
 </script>
 
 

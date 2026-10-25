@@ -100,7 +100,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div><h3>Suppression des tics vocal</h3><p>Détecte et supprime automatiquement les hésitations, répétitions et tics verbeux.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><div><h3>Réduction de bruit</h3><p>Élimine les bruits de fond ambiants ainsi que les bruits de bouche désagréables.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Export pistes multiples</h3><p>Traite séparément vos pistes sonores tout en maintenant la synchronisation globale.</p></div></div></div>
 </section>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/GxBJSxZhJsM/mqdefault.jpg" alt="Cleanvoice AutoMixer: Fix Mic Bleed Easily!" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Cleanvoice AutoMixer: Fix Mic Bleed Easily!</div><div class="tutorial-duration" data-vid-dur>2:19</div></div>
+      </div>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"GxBJSxZhJsM","titre":"Cleanvoice AutoMixer: Fix Mic Bleed Easily!","duree":"2:19"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Cleanvoice fonctionne-t-il avec des enregistrements en français ?</button><div class="faq-a">Oui, Cleanvoice prend en charge le français ainsi que plusieurs autres langues internationales.</div></div><div class="faq-item"><button class="faq-q">Propose-t-il une offre d'essai gratuit ?</button><div class="faq-a">Oui, un crédit de minutes d'audio est offert gratuitement lors de votre inscription pour tester les fonctionnalités.</div></div></div></section>
       
       
@@ -149,7 +185,6 @@
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
-
 
 <script src="/js/articles-loader.js" data-outil="cleanvoice"></script>
 <script type="module" src="/js/reviews-widget.js"></script>

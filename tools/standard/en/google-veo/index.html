@@ -98,7 +98,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></div><div><h3>Text-to-Video Generation</h3><p>Create 1080p HD video sequences lasting more than a minute from simple text descriptions.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Editing and modification</h3><p>Add, delete or edit specific elements in an existing video using natural language instructions.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div><div><h3>Movement control</h3><p>Adjust cinematographic effects and camera movements to obtain custom visual plans.</p></div></div></div>
 </section>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/MCXO-RDOC6M/mqdefault.jpg" alt="Veo : L’outil text-to-video de Google qui défie Sora d’OpenAI ?" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Veo : L’outil text-to-video de Google qui défie Sora d’OpenAI ?</div><div class="tutorial-duration" data-vid-dur>3:19</div></div>
+      </div>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"MCXO-RDOC6M","titre":"Veo : L’outil text-to-video de Google qui défie Sora d’OpenAI ?","duree":"3:19"},{"id":"ZaeXbwdc49o","titre":"Comment utiliser TOUTES les IA payantes GRATUITEMENT (GPT-5, Claude, Gemini, Grok, Veo 3)","duree":"15:32"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">What is Google Veo?</button><div class="faq-a">Google Veo is Google DeepMind's most powerful video-generative AI model, able to create realistic 1080p videos.</div></div><div class="faq-item"><button class="faq-q">How to access Google Veo?</button><div class="faq-a">Google Veo is accessible via VideoFX on the Google Labs platform (on waiting list) and integrated into the Vertex AI suite on Google Cloud.</div></div><div class="faq-item"><button class="faq-q">Do the generated videos contain a watermark?</button><div class="faq-a">Yes, Google integrates SynthID technology to apply an invisible digital watermark to generated content.</div></div></div></section>
       
       
@@ -146,7 +182,6 @@
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
-
 
 
 <script type="module" src="/js/reviews-widget.js"></script>

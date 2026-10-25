@@ -98,17 +98,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div><div><h3>Generación de contenidos</h3><p>Escriba correos electrónicos, artículos, código y resúmenes de instrucciones sencillas.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Análisis multimodal</h3><p>Importar imágenes, archivos de audio o vídeos para un análisis y transcripción precisos.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><div><h3>Búsqueda en tiempo real</h3><p>Acceda directamente a la información actualizada a través del buscador de Google.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="tuto-0">
-      <div class="tutorial-header" onclick="toggleTutorial('tuto-0')">
-        <div class="tutorial-thumb"><img src="https://img.youtube.com/vi/DbcGMKx3Iyo/mqdefault.jpg" alt="Tuto : simplifiez-vous la vie avec Gemini !" loading="lazy">
-          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-        <div class="tutorial-meta"><div class="tutorial-title">Tuto : simplifiez-vous la vie avec Gemini !</div><div class="tutorial-duration">6:39</div></div>
-        <button class="tutorial-toggle">▾</button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/DbcGMKx3Iyo/mqdefault.jpg" alt="Tuto : simplifiez-vous la vie avec Gemini !" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Tuto : simplifiez-vous la vie avec Gemini !</div><div class="tutorial-duration" data-vid-dur>6:39</div></div>
       </div>
-      <div class="tutorial-video"><div class="tutorial-video-inner">
-        <iframe data-src="https://www.youtube.com/embed/DbcGMKx3Iyo" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
-      </div></div>
-    </div></div></section>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"DbcGMKx3Iyo","titre":"Tuto : simplifiez-vous la vie avec Gemini !","duree":"6:39"},{"id":"yaUXrv9UGLU","titre":"Google Gemini : Le Guide Ultime | Tutoriel pour débutants","duree":"26:25"},{"id":"MtbjTAhHTvA","titre":"Maîtrisez Google Gemini : Tout ce qu'il faut savoir (Tutoriel complet)","duree":"23:24"},{"id":"jmhHGpfXcoo","titre":"Comment Utiliser l'IA Google Gemini (ex-Bard)","duree":"3:04"},{"id":"2lWwlaOMMcQ","titre":"Comment utiliser Gemini comme un pro (Tutoriel complet 2026) Rien à voir avec ChatGPT","duree":"23:19"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Preguntas frecuentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">¿Está libre Gemini?</button><div class="faq-a">Sí, la versión estándar de Gemini es gratuita, mientras que la versión Avanzada requiere una suscripción de Google One AI Premium.</div></div><div class="faq-item"><button class="faq-q">¿Podemos usar Gemini en un smartphone?</button><div class="faq-a">Sí, Gemini está disponible a través de una aplicación dedicada a Android y a través de la aplicación iOS de Google.</div></div><div class="faq-item"><button class="faq-q">¿Pueden escanear archivos Gemini?</button><div class="faq-a">Sí, es posible importar documentos (PDF, hojas de cálculo) e imágenes para análisis.</div></div></div></section>
       
       
@@ -155,17 +181,6 @@
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
-</script>
-<script>
-  function toggleTutorial(id) {
-    const item = document.getElementById(id);
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.tutorial-item.open').forEach(el => {
-      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
-    });
-    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
-    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
-  }
 </script>
 
 

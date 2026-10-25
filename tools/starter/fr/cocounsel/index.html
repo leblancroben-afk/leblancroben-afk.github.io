@@ -100,7 +100,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M9 7h6"/></svg></div><div><h3>Recherche jurisprudentielle</h3><p>Recherche ancrée dans Westlaw et Practical Law avec sources citées</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div><div><h3>Rédaction assistée</h3><p>Génère des premiers jets de motions et courriers juridiques</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Revue de documents</h3><p>Analyse de gros volumes de pièces pour la préparation de litige</p></div></div></div>
 </section>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/KAe0DVEJqnk/mqdefault.jpg" alt="How to use CoCounsel for Legal Collaboration - Step By Step" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>How to use CoCounsel for Legal Collaboration - Step By Step</div><div class="tutorial-duration" data-vid-dur>2:18</div></div>
+      </div>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"KAe0DVEJqnk","titre":"How to use CoCounsel for Legal Collaboration - Step By Step","duree":"2:18"},{"id":"Fzx-JHeXRew","titre":"Casetext - Tutoriel complet","duree":"4:27"},{"id":"q3t8nVxkSQA","titre":"Inside Robinson & Cole's AI strategy with CoCounsel Legal and Westlaw","duree":"2:51"},{"id":"eugKs739mzU","titre":"\"Révolutionnez Votre Pratique Juridique : Les Meilleurs Outils d'IA pour Avocats et Magistrats\"","duree":"10:00"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">CoCounsel est-il la suite de Casetext ?</button><div class="faq-a">Oui, Thomson Reuters a racheté Casetext en 2023 et fermé la marque autonome le 31 mars 2025 pour intégrer sa technologie à CoCounsel.</div></div><div class="faq-item"><button class="faq-q">Existe-t-il un tarif fixe ?</button><div class="faq-a">Non, les prix passent par un configurateur en ligne (jusqu'à 10 avocats) ou un devis commercial au-delà.</div></div></div></section>
       
       
@@ -149,7 +185,6 @@
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
-
 
 <script src="/js/articles-loader.js" data-outil="cocounsel"></script>
 <script type="module" src="/js/reviews-widget.js"></script>

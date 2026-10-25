@@ -98,17 +98,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Creación de Visuales</h3><p>Diseño de imágenes de redes sociales, carteles y logotipos usando un editor de arrastrar y soltar intuitivo.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-3"/></svg></div><div><h3>Presentaciones interactivas</h3><p>Cree presentaciones dinámicas con animaciones en vivo, transiciones y herramientas de presentación.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Edición simple de vídeo</h3><p>Montar y editar vídeos cortos adaptados a formatos móviles y sociales con pistas de audio incorporadas.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Herramientas AI (Magic Studio)</h3><p>Genera imágenes, elimina fondos y vuelve a editar texto al instante con inteligencia artificial incorporada.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="tuto-0">
-      <div class="tutorial-header" onclick="toggleTutorial('tuto-0')">
-        <div class="tutorial-thumb"><img src="https://img.youtube.com/vi/_kPE0yJ0SEg/mqdefault.jpg" alt="15 fonctionnalités d’IA incroyables sur Canva" loading="lazy">
-          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-        <div class="tutorial-meta"><div class="tutorial-title">15 fonctionnalités d’IA incroyables sur Canva</div><div class="tutorial-duration">18:25</div></div>
-        <button class="tutorial-toggle">▾</button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/_kPE0yJ0SEg/mqdefault.jpg" alt="15 fonctionnalités d’IA incroyables sur Canva" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>15 fonctionnalités d’IA incroyables sur Canva</div><div class="tutorial-duration" data-vid-dur>18:25</div></div>
       </div>
-      <div class="tutorial-video"><div class="tutorial-video-inner">
-        <iframe data-src="https://www.youtube.com/embed/_kPE0yJ0SEg" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
-      </div></div>
-    </div></div></section>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"_kPE0yJ0SEg","titre":"15 fonctionnalités d’IA incroyables sur Canva","duree":"18:25"},{"id":"jRTzc-nJ7Hc","titre":"Canva IA : comment utiliser les 11 outils IA de Canva pour créer 10x plus vite","duree":"25:12"},{"id":"fx6duzf0Nic","titre":"L’IA de Canva est disponible, elle est juste MAGIQUE !","duree":"13:21"},{"id":"64f3QExJA-4","titre":"Comment utiliser l'IA de CANVA pour faire un montage vidéo viral","duree":"7:57"},{"id":"c9Fec-lFJ7g","titre":"Comment Utiliser Le Générateur D’Images IA De Canva En 2026 (Pour Débutants)","duree":"8:18"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Preguntas frecuentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">¿Está libre Canva?</button><div class="faq-a">Sí, Canva ofrece una versión gratuita muy completa con miles de modelos y fotos. Las suscripciones de pago (Canva Pro) desbloquean elementos y herramientas más avanzados.</div></div><div class="faq-item"><button class="faq-q">¿Podemos usar Canva en el móvil?</button><div class="faq-a">Sí, Canva está disponible como una aplicación gratuita para iOS (iPhone/iPad) y Android, sincronizada en tiempo real con la versión web.</div></div><div class="faq-item"><button class="faq-q">¿Pueden utilizarse creaciones Canva para fines comerciales?</button><div class="faq-a">Sí, los diseños creados con Canva pueden utilizarse con fines comerciales, con sujeción a las condiciones de licencia de los elementos específicos utilizados (gratis o Pro).</div></div></div></section>
       
       
@@ -123,9 +149,9 @@
   <div class="fo-alts"><a class="fo-alt" href="https://adobe-express.com" target="_blank" rel="noopener">
       <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=adobe-express.com https://icons.duckduckgo.com/ip3/adobe-express.com.ico"><span class="fo-letter" aria-hidden="true">A</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=adobe-express.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Adobe Express</b><small>Alternativa a Canva</small></div></div>
-      </a><a class="fo-alt" href="https://vistacreate.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=vistacreate.com https://icons.duckduckgo.com/ip3/vistacreate.com.ico"><span class="fo-letter" aria-hidden="true">V</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=vistacreate.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
-        <div><b>VistaCreate</b><small>Alternativa a Canva</small></div></div>
+      </a><a class="fo-alt" href="/tools/standard/es/vistacreate/">
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=create.vista.com https://icons.duckduckgo.com/ip3/create.vista.com.ico"><span class="fo-letter" aria-hidden="true">V</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=create.vista.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div><b>VistaCreate</b><small>Imágenes y diseño</small></div></div>
       </a><a class="fo-alt" href="https://figma.com" target="_blank" rel="noopener">
       <div class="fo-alt-id"><div class="fo-alt-logo fo-av2" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=figma.com https://icons.duckduckgo.com/ip3/figma.com.ico"><span class="fo-letter" aria-hidden="true">F</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=figma.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Figma</b><small>Alternativa a Canva</small></div></div>
@@ -155,17 +181,6 @@
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
-</script>
-<script>
-  function toggleTutorial(id) {
-    const item = document.getElementById(id);
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.tutorial-item.open').forEach(el => {
-      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
-    });
-    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
-    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
-  }
 </script>
 
 

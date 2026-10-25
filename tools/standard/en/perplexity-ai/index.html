@@ -98,7 +98,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Research Pro</h3><p>Activate the Pro mode to allow AI to deepen the subject by doing several successive and cross-searching.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><div><h3>Thematic focus</h3><p>Restrict your research to specific areas: academic articles (Writing), YouTube, Reddit or the global web.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Perplexity Pages</h3><p>Simply click on your search folders and turn them into beautiful, publishable and shareable web pages.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Shared collections</h3><p>Group your threads together by project and share them with your collaborators to centralize the day before.</p></div></div></div>
 </section>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/dnmcZ1KIhUU/mqdefault.jpg" alt="Perplexity AI : Le Tuto Complet (cette IA est PHÉNOMÉNALE)" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Perplexity AI : Le Tuto Complet (cette IA est PHÉNOMÉNALE)</div><div class="tutorial-duration" data-vid-dur>40:20</div></div>
+      </div>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"dnmcZ1KIhUU","titre":"Perplexity AI : Le Tuto Complet (cette IA est PHÉNOMÉNALE)","duree":"40:20"},{"id":"k8CPtD1Q7yY","titre":"TUTO PERPLEXITY : oubliez GOOGLE avec ce moteur de recherche  IA","duree":"4:32"},{"id":"pzpwKiguRmU","titre":"Comment exploiter Perplexity AI ? TUTORIEL de 10 MIN","duree":"10:37"},{"id":"-f-s6ZmcBjg","titre":"Perplexity : comment bien l’utiliser ?","duree":"2:04"},{"id":"VTDno50w-1o","titre":"PERPLEXITY : Tutoriel complet pour démarrer en douceur","duree":"36:37"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">What's the difference between Make and Zapier?</button><div class="faq-a">Make offers a much more visual interface and allows complex logics (loops, filters) for a cost per operation usually much lower than Zapier.</div></div><div class="faq-item"><button class="faq-q">What is an operation on Make?</button><div class="faq-a">An operation is counted every time a module in your scenario runs successfully (e.g., retrieve an email or create a Google Sheets line).</div></div><div class="faq-item"><button class="faq-q">Can we use tools not listed natively?</button><div class="faq-a">Yes, with the &quot;HTTP/ API&quot; modules, you can connect to any web service that has an open API.</div></div><div class="faq-item"><button class="faq-q">Is the free plan limited in time?</button><div class="faq-a">No, the free plan renews every month with a credit of 1,000 free transactions.</div></div></div></section>
       
       
@@ -146,7 +182,6 @@
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
-
 
 
 <script type="module" src="/js/reviews-widget.js"></script>

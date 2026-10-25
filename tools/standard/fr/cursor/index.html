@@ -100,7 +100,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><div><h3>Autocomplétion avancée</h3><p>Propose des prédictions intelligentes et modifie plusieurs lignes de code en temps réel.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h3>Chat sur le projet</h3><p>Interrogez l'IA en langage naturel sur l'ensemble du contexte de votre codebase.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Édition inline</h3><p>Générez ou modifiez du code à la volée via une simple commande textuelle.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><div><h3>Terminal intelligent</h3><p>Traduisez vos instructions verbales en commandes shell directement exécutables.</p></div></div></div>
 </section>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/i9AzXpALJCo/mqdefault.jpg" alt="Tuto Cursor - Les bases pour démarrer" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Tuto Cursor - Les bases pour démarrer</div><div class="tutorial-duration" data-vid-dur>15:16</div></div>
+      </div>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"i9AzXpALJCo","titre":"Tuto Cursor - Les bases pour démarrer","duree":"15:16"},{"id":"nSkj-EuwrrE","titre":"Découverte de Cursor, un éditeur basé sur l'IA","duree":"19:15"},{"id":"bnmIHAum99k","titre":"CURSOR expliqué en 5 minutes – L’IA au service des développeurs","duree":"5:06"},{"id":"Lhu7OzAbjXs","titre":"Ma méthode pour créer des Apps avec Cursor (Débutant)","duree":"12:21"},{"id":"vYzDGeTIsl0","titre":"MASTERCLASS IA : Coder un Site Fullstack de A à Z (Tuto Cursor, MCP, Claude 4.5, Supabase, Vercel)","duree":"33:47"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Qu'est-ce que Cursor ?</button><div class="faq-a">Cursor est un environnement de développement (IDE) fork de VS Code intégrant des modèles d'IA avancés pour accélérer l'écriture de code.</div></div><div class="faq-item"><button class="faq-q">Cursor est-il compatible avec mes extensions VS Code ?</button><div class="faq-a">Oui, Cursor est basé sur Visual Studio Code et prend en charge l'ensemble de ses extensions et configurations.</div></div><div class="faq-item"><button class="faq-q">Est-il possible d'utiliser Cursor gratuitement ?</button><div class="faq-a">Oui, un plan gratuit 'Hobby' permet de tester l'outil avec un nombre limité de requêtes d'IA par mois.</div></div></div></section>
       
       
@@ -149,7 +185,6 @@
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
-
 
 <script src="/js/articles-loader.js" data-outil="cursor"></script>
 <script type="module" src="/js/reviews-widget.js"></script>

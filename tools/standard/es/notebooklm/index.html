@@ -98,7 +98,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Análisis de documentos</h3><p>Importe su PDF, Google Docs, Slides o archivos de texto para consultas directas.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Generación de resúmenes de audio</h3><p>Crea automáticamente un chat de audio como podcast sintetizando tus fuentes.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Respuestas concretas</h3><p>Cada respuesta generada incluye citas precisas que se refieren directamente a sus documentos originales.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M9 7h6"/></svg></div><div><h3>Cuaderno inteligente</h3><p>Organiza tus ideas y convierte tus notas en guías de estudio o hojas de datos.</p></div></div></div>
 </section>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/0b_-Y6fG0nY/mqdefault.jpg" alt="NotebookLM : cette IA est INDISPENSABLE — Tuto Complet" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>NotebookLM : cette IA est INDISPENSABLE — Tuto Complet</div><div class="tutorial-duration" data-vid-dur>23:26</div></div>
+      </div>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"0b_-Y6fG0nY","titre":"NotebookLM : cette IA est INDISPENSABLE — Tuto Complet","duree":"23:26"},{"id":"YmgKqTFhZ5k","titre":"Tout ce que tu dois savoir sur NotebookLM - Guide Complet 2025","duree":"15:08"},{"id":"je6uHtwStKs","titre":"Comment utiliser NotebookLM ? La meilleure IA pour apprendre, synthétiser et créer","duree":"31:02"},{"id":"OJKOmTm91vc","titre":"Tutoriel NoteBook LM en français - découvre LE meilleur outil IA du moment","duree":"37:49"},{"id":"RKKK4uJ1ygU","titre":"Maitriser TOUT Gemini Notebook en 26 minutes (Tuto Complet)","duree":"26:29"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Preguntas frecuentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">¿Está libre NotebookLM?</button><div class="faq-a">Sí, NotebookLM está disponible gratuitamente para cualquier persona con una cuenta de Google.</div></div><div class="faq-item"><button class="faq-q">¿Qué tipos de archivos puedo importar?</button><div class="faq-a">Usted puede importar PDFs, Google Docs, Google Slides, archivos de texto llano, texto copiado y enlaces web.</div></div><div class="faq-item"><button class="faq-q">¿Se usan mis datos para conducir AI?</button><div class="faq-a">Según Google, sus datos personales y documentos importados en NotebookLM no se utilizan para impulsar modelos AI.</div></div></div></section>
       
       
@@ -146,7 +182,6 @@
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
-
 
 
 <script type="module" src="/js/reviews-widget.js"></script>

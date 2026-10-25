@@ -100,7 +100,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h3>Génération de texte et raisonnement</h3><p>Répond aux questions complexes et résout des problèmes logiques avec précision.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><div><h3>Assistance à la programmation</h3><p>Génère, explique et débogue du code informatique dans de nombreux langages.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.5-9A6 6 0 0 1 18 9.5 4 4 0 0 1 17.5 18z"/></svg></div><div><h3>Accès API développeurs</h3><p>Permet d'intégrer les modèles DeepSeek dans des applications tierces via API.</p></div></div></div>
 </section>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/Zyrrf1Amuxk/mqdefault.jpg" alt="Maitrisez VITE DeepSeek en 10 minutes (Tutoriel en Français)" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Maitrisez VITE DeepSeek en 10 minutes (Tutoriel en Français)</div><div class="tutorial-duration" data-vid-dur>16:42</div></div>
+      </div>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"Zyrrf1Amuxk","titre":"Maitrisez VITE DeepSeek en 10 minutes (Tutoriel en Français)","duree":"16:42"},{"id":"K0PMkIS_0C4","titre":"Utilisez DeepSeek, la nouvelle IA, en 13 minutes chrono !","duree":"13:34"},{"id":"jM0DmJjGzhY","titre":"Comment utiliser Deepseek sur mobile et ordinateur.(Guide complet)","duree":"12:50"},{"id":"XY0FHLXFWUg","titre":"Comment utiliser DeepSeek mieux que 99% de la population","duree":"35:06"},{"id":"k62svtiDHuY","titre":"DeepSeek AI : Le Guide Ultime Pour Débutants (Test & Avis en 7 Minutes !)","duree":"7:19"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">DeepSeek est-il gratuit ?</button><div class="faq-a">Oui, l'interface web de discussion est accessible gratuitement. L'utilisation de l'API est payante à la consommation.</div></div><div class="faq-item"><button class="faq-q">DeepSeek est-il open source ?</button><div class="faq-a">Les modèles de DeepSeek sont publiés en 'open-weight', ce qui permet aux développeurs de les télécharger et d'exécuter leurs propres instances.</div></div><div class="faq-item"><button class="faq-q">Quelles sont les spécialités de DeepSeek ?</button><div class="faq-a">DeepSeek excelle particulièrement dans la résolution de problèmes mathématiques, la logique avancée et la génération de code.</div></div></div></section>
       
       
@@ -149,7 +185,6 @@
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
 </script>
-
 
 <script src="/js/articles-loader.js" data-outil="deepseek"></script>
 <script type="module" src="/js/reviews-widget.js"></script>

@@ -98,17 +98,43 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2M14 4c3-1 6-1 6-1s0 3-1 6l-6 6-5-5z"/><circle cx="15" cy="9" r="1.5"/></svg></div><div><h3>Artículos</h3><p>Ver e interactuar directamente con el código, páginas web o gráficos generados en una ventana dedicada.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Análisis de documentos</h3><p>Descargar archivos PDF masivos, libros completos o bases de código para una síntesis precisa.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><div><h3>Code Generation</h3><p>Escrito, comentado, traducido y corregido código informático en docenas de idiomas con lógica avanzada.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.2.6 4 2.4 4 5.5"/></svg></div><div><h3>Proyectos (Planes de pago)</h3><p>Crear espacios de trabajo temáticos combinando documentos de referencia para guiar las respuestas de Claude.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="tuto-0">
-      <div class="tutorial-header" onclick="toggleTutorial('tuto-0')">
-        <div class="tutorial-thumb"><img src="https://img.youtube.com/vi/DxzPdoK_Awg/mqdefault.jpg" alt="Claude IA : Formation Ultime" loading="lazy">
-          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-        <div class="tutorial-meta"><div class="tutorial-title">Claude IA : Formation Ultime</div><div class="tutorial-duration">Tutoriel Complet pour débutants</div></div>
-        <button class="tutorial-toggle">▾</button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/DxzPdoK_Awg/mqdefault.jpg" alt="Claude IA : Formation Ultime | Tutoriel Complet pour débutants" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Claude IA : Formation Ultime | Tutoriel Complet pour débutants</div><div class="tutorial-duration" data-vid-dur>20:22</div></div>
       </div>
-      <div class="tutorial-video"><div class="tutorial-video-inner">
-        <iframe data-src="https://www.youtube.com/embed/DxzPdoK_Awg" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
-      </div></div>
-    </div></div></section>
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">[{"id":"DxzPdoK_Awg","titre":"Claude IA : Formation Ultime | Tutoriel Complet pour débutants","duree":"20:22"},{"id":"q0R8SBlQdnA","titre":"Claude IA : Les bases pour bien débuter facilement - Formation gratuite","duree":"39:49"},{"id":"pk-_1sanvCw","titre":"Claude crée maintenant tes propres outils IA (grâce aux artifacts)","duree":"15:14"},{"id":"lzp-O-_ENfI","titre":"Comment utiliser Claude ? La meilleure IA pour réfléchir, écrire et créer","duree":"31:40"},{"id":"nHXND_R4Jy8","titre":"Claude IA : le tutoriel facile pour débutant","duree":"44:02"}]</script>
+    <script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();</script>
+  </section>
       <section class="fo-card" id="fo-faq"><h2>Preguntas frecuentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">¿Por qué Claude es considerado mejor para escribir?</button><div class="faq-a">El antrópico entrenó a Claude con un enfoque de matices y seguridad, evitando el tono robótico a menudo criticado por otras IA.</div></div><div class="faq-item"><button class="faq-q">¿Qué es la funcionalidad Artifacts?</button><div class="faq-a">Es una pantalla separada que abre junto al chat para mostrar contenido independiente (código HTML/JS, SVG, sitios web interactivos) generados por AI.</div></div><div class="faq-item"><button class="faq-q">¿Claude respeta la confidencialidad de los datos?</button><div class="faq-a">Sí, Anthropic se compromete a no utilizar datos de usuario de la interfaz pública o API para entrenar sus modelos de negocio.</div></div><div class="faq-item"><button class="faq-q">¿Hay una solicitud de Claude?</button><div class="faq-a">Sí, una aplicación oficial está disponible para los usuarios de iOS y Android.</div></div></div></section>
       
       
@@ -155,17 +181,6 @@
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
   });
-</script>
-<script>
-  function toggleTutorial(id) {
-    const item = document.getElementById(id);
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.tutorial-item.open').forEach(el => {
-      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
-    });
-    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
-    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
-  }
 </script>
 
 

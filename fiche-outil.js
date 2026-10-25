@@ -37,19 +37,11 @@ const VIDEO_JOUR_JS = String.raw`
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
 })();`;
 
 const planOf = (t) => (t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard');
@@ -276,25 +268,25 @@ function generateFiche(tool, allTools = [], deps) {
   ${galerie.length > 3 ? `<div class="fo-car-dots" data-fo-dots>${galerie.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('')}</div>` : ''}
 </section>` : '';
 
-  // ── Vidéo du jour (vidéothèque, tous les plans) ──
+  // ── Tutoriel du jour (vidéothèque, tous les plans) ──
+  // Même rendu et même accordéon que l'ancien tutoriel Featured.
+  // La vidéo affichée change chaque jour : le navigateur choisit (VIDEO_JOUR_JS).
   const vidList = videotheque.map((v) => ({ id: String(v.youtube_id), titre: String(v.titre || ''), duree: String(v.duree || '') }));
   const v0 = vidList[0];
   // '<' échappé : aucun texte ne peut fermer la balise <script> de la liste JSON
   const vidJson = JSON.stringify(vidList).replace(/</g, '\\u003c');
-  const tutoSection = v0 ? `<section class="fo-card" id="fo-tutoriels"><h2>${E(T.tutorials)}</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/${E(v0.id)}/mqdefault.jpg" alt="${E(v0.titre)}" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+  const tutoHTML = v0 ? `<div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/${E(v0.id)}/mqdefault.jpg" alt="${E(v0.titre)}" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>${E(v0.titre)}</div><div class="tutorial-duration" data-vid-dur>${E(v0.duree)}</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">${vidJson}</script>
-    <script>${VIDEO_JOUR_JS}</script>
-  </section>` : '';
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/${E(v0.id)}" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div>` : '';
+  const tutoSection = v0 ? `<section class="fo-card" id="fo-tutoriels"><h2>${E(T.tutorials)}</h2><div class="tutorials-list">${tutoHTML}</div><script type="application/json" id="fo-videos">${vidJson}</script>${tutorialJS()}<script>${VIDEO_JOUR_JS}</script></section>` : '';
 
   // ── FAQ ──
   const faqHTML = faq.map((f) => `<div class="faq-item"><button class="faq-q">${E(f.q)}</button><div class="faq-a">${E(f.a)}</div></div>`).join('');

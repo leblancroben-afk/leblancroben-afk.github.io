@@ -97,19 +97,27 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><div><h3>Génération d'applications</h3><p>Crée des interfaces UI et du code full-stack à partir de prompts textuels.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2M14 4c3-1 6-1 6-1s0 3-1 6l-6 6-5-5z"/><circle cx="15" cy="9" r="1.5"/></svg></div><div><h3>Déploiement rapide</h3><p>Publie et héberge instantanément vos applications créées sur le web.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><div><h3>Intégrations GitHub et Supabase</h3><p>Synchronise le code directement sur votre dépôt GitHub et connecte une base de données.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h3>Édition itérative</h3><p>Ajuste et affine le code en discutant directement avec l'assistant IA.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/uMd8qU0sK00/mqdefault.jpg" alt="Lovable AI: Tutoriel Complet en Français pour Débutants (2026)" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/uMd8qU0sK00/mqdefault.jpg" alt="Lovable AI: Tutoriel Complet en Français pour Débutants (2026)" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Lovable AI: Tutoriel Complet en Français pour Débutants (2026)</div><div class="tutorial-duration" data-vid-dur>19:03</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"uMd8qU0sK00","titre":"Lovable AI: Tutoriel Complet en Français pour Débutants (2026)","duree":"19:03"},{"id":"xSbglxdxdjk","titre":"Comment créer un SaaS de A à Z sans coder 🚀 Guide complet avec Lovable","duree":"21:16"},{"id":"5CH-QaYaVW4","titre":"Créer une appli sans coder en 30 min chrono avec l'IA (guide Lovable débutant)","duree":"18:27"},{"id":"Kd4g1aCZm6k","titre":"Lovable AI Expliqué : Tutorial Complet pour Débutants","duree":"21:04"},{"id":"cLhvFAPAF50","titre":"Test de Lovable : Ce logiciel IA code TOUT à votre place (SaaS, app, sites, ...)","duree":"5:11"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/uMd8qU0sK00" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"uMd8qU0sK00","titre":"Lovable AI: Tutoriel Complet en Français pour Débutants (2026)","duree":"19:03"},{"id":"xSbglxdxdjk","titre":"Comment créer un SaaS de A à Z sans coder 🚀 Guide complet avec Lovable","duree":"21:16"},{"id":"5CH-QaYaVW4","titre":"Créer une appli sans coder en 30 min chrono avec l'IA (guide Lovable débutant)","duree":"18:27"},{"id":"Kd4g1aCZm6k","titre":"Lovable AI Expliqué : Tutorial Complet pour Débutants","duree":"21:04"},{"id":"cLhvFAPAF50","titre":"Test de Lovable : Ce logiciel IA code TOUT à votre place (SaaS, app, sites, ...)","duree":"5:11"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -119,21 +127,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Qu'est-ce que Lovable ?</button><div class="faq-a">Lovable est un outil d'intelligence artificielle qui permet de créer, modifier et déployer des applications web complètes par de simples instructions textuelles.</div></div><div class="faq-item"><button class="faq-q">Faut-il savoir coder pour utiliser Lovable ?</button><div class="faq-a">Non, aucune compétence technique préalable n'est requise, bien que la connaissance du code aide à personnaliser davantage les projets.</div></div></div></section>
       
       

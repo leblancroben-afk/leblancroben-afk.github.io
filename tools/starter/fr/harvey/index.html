@@ -100,19 +100,27 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Recherche juridique</h3><p>Interroge des questions complexes de droit, régulation et fiscalité sur plusieurs juridictions</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Analyse de contrats</h3><p>Relit, résume et signale les clauses à risque dans vos documents</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.2.6 4 2.4 4 5.5"/></svg></div><div><h3>Due diligence M&amp;A</h3><p>Automatise l'extraction de points critiques lors des audits de fusions-acquisitions</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/W4yFzi5DwdE/mqdefault.jpg" alt="Harvey AI - Tutoriel complet" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/W4yFzi5DwdE/mqdefault.jpg" alt="Harvey AI - Tutoriel complet" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Harvey AI - Tutoriel complet</div><div class="tutorial-duration" data-vid-dur>5:27</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"W4yFzi5DwdE","titre":"Harvey AI - Tutoriel complet","duree":"5:27"},{"id":"ghK4sIUOe7E","titre":"How To Use Harvey Ai - Full Tutorial (2025)","duree":"2:50"},{"id":"rCp1VXdj90o","titre":"Harvey AI Demo - How to Use Harvey AI for Beginners (Full Guide) 2026!","duree":"1:54"},{"id":"OquXpe3POPU","titre":"AL TV Product Walk Through: Harvey - Shared Spaces - Legal AI Collaboration","duree":"15:25"},{"id":"heyzleVGUCg","titre":"Harvey AI Review 2025 - Important Things to Know!","duree":"1:49"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/W4yFzi5DwdE" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"W4yFzi5DwdE","titre":"Harvey AI - Tutoriel complet","duree":"5:27"},{"id":"ghK4sIUOe7E","titre":"How To Use Harvey Ai - Full Tutorial (2025)","duree":"2:50"},{"id":"rCp1VXdj90o","titre":"Harvey AI Demo - How to Use Harvey AI for Beginners (Full Guide) 2026!","duree":"1:54"},{"id":"OquXpe3POPU","titre":"AL TV Product Walk Through: Harvey - Shared Spaces - Legal AI Collaboration","duree":"15:25"},{"id":"heyzleVGUCg","titre":"Harvey AI Review 2025 - Important Things to Know!","duree":"1:49"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -122,21 +130,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Harvey est-il accessible aux petits cabinets ?</button><div class="faq-a">Non, Harvey cible les grands cabinets et directions juridiques d'entreprise avec un minimum de sièges généralement élevé et un processus d'achat commercial.</div></div><div class="faq-item"><button class="faq-q">Combien coûte Harvey ?</button><div class="faq-a">Aucun tarif n'est publié ; le prix dépend d'un devis personnalisé selon la taille du cabinet et les modules choisis.</div></div></div></section>
       
       

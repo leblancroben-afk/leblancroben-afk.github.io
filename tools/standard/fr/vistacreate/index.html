@@ -100,19 +100,27 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Modèles personnalisables</h3><p>Accédez à un catalogue étendu de modèles pour les réseaux sociaux, imprimés et présentations.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Suppression d'arrière-plan</h3><p>Détourez automatiquement le fond de vos images en un clic grâce à l'IA.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Redimensionnement rapide</h3><p>Adaptez instantanément vos créations aux formats de différentes plateformes web.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/Z0kImAxE3O4/mqdefault.jpg" alt="How to easily get started with VistaCreate" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/Z0kImAxE3O4/mqdefault.jpg" alt="How to easily get started with VistaCreate" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>How to easily get started with VistaCreate</div><div class="tutorial-duration" data-vid-dur>2:51</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"Z0kImAxE3O4","titre":"How to easily get started with VistaCreate","duree":"2:51"},{"id":"GH6tbj5HmJA","titre":"How to animate texts and objects in VistaCreate","duree":"1:55"},{"id":"ODRAy74ZxWQ","titre":"Comment concevoir sont premier visuel sur Vistacreate app","duree":"10:38"},{"id":"6hCkWVZ6VFE","titre":"Comment créer des visuels impactants sur Vistacreate ?","duree":"4:05"},{"id":"aDfo68SKlK4","titre":"How To Create Instagram Reels Video With VistaCreate (Full Guide)","duree":"2:14"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/Z0kImAxE3O4" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"Z0kImAxE3O4","titre":"How to easily get started with VistaCreate","duree":"2:51"},{"id":"GH6tbj5HmJA","titre":"How to animate texts and objects in VistaCreate","duree":"1:55"},{"id":"ODRAy74ZxWQ","titre":"Comment concevoir sont premier visuel sur Vistacreate app","duree":"10:38"},{"id":"6hCkWVZ6VFE","titre":"Comment créer des visuels impactants sur Vistacreate ?","duree":"4:05"},{"id":"aDfo68SKlK4","titre":"How To Create Instagram Reels Video With VistaCreate (Full Guide)","duree":"2:14"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -122,21 +130,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Quelle est la différence entre la version gratuite et Pro ?</button><div class="faq-a">La version gratuite offre l'accès à un large catalogue de modèles de base. Le forfait Pro débloque la bibliothèque complète, le détourage IA et la gestion d'équipe.</div></div><div class="faq-item"><button class="faq-q">VistaCreate est-il disponible en français ?</button><div class="faq-a">Oui, l'interface utilisateur de VistaCreate ainsi que de nombreux modèles de création sont totalement traduits en français.</div></div></div></section>
       
       

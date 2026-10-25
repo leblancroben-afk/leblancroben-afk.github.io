@@ -98,19 +98,27 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></div><div><h3>Music Generation</h3><p>Create complete songs in various musical styles from text prompts.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div><h3>Voice synthesis and lyrics</h3><p>Generate realistic sung voices and personalized or automatic lyrics.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Extension and editing</h3><p>Extend existing tracks or modify specific sections accurately.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M4 20h16"/></svg></div><div><h3>Audio and video export</h3><p>Download your creations in audio or video formats with visual.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/9jxA7nLCiIw/mqdefault.jpg" alt="Tuto UDIO, la superbe IA générative de chansons !" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/9jxA7nLCiIw/mqdefault.jpg" alt="Tuto UDIO, la superbe IA générative de chansons !" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Tuto UDIO, la superbe IA générative de chansons !</div><div class="tutorial-duration" data-vid-dur>18:49</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"9jxA7nLCiIw","titre":"Tuto UDIO, la superbe IA générative de chansons !","duree":"18:49"},{"id":"6IlItfVfOkQ","titre":"5-Minute AI Music Tutorial | How to Udio","duree":"5:10"},{"id":"XXyq_x-7Mfg","titre":"Udio AI Tutorial – How to Make Music with AI (Free & Easy)","duree":"12:05"},{"id":"YBRfmIRzLoE","titre":"Udio Tutorial - How To Make A Full Song -  Detailed Guide","duree":"11:02"},{"id":"GuPGVc5Kal4","titre":"Udio AI: How To Make Full Song | Step by Step Guide","duree":"7:06"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/9jxA7nLCiIw" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"9jxA7nLCiIw","titre":"Tuto UDIO, la superbe IA générative de chansons !","duree":"18:49"},{"id":"6IlItfVfOkQ","titre":"5-Minute AI Music Tutorial | How to Udio","duree":"5:10"},{"id":"XXyq_x-7Mfg","titre":"Udio AI Tutorial – How to Make Music with AI (Free & Easy)","duree":"12:05"},{"id":"YBRfmIRzLoE","titre":"Udio Tutorial - How To Make A Full Song -  Detailed Guide","duree":"11:02"},{"id":"GuPGVc5Kal4","titre":"Udio AI: How To Make Full Song | Step by Step Guide","duree":"7:06"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -120,21 +128,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">What is Udio?</button><div class="faq-a">Udio is a platform powered by AI that allows to create complete music tracks from a text description.</div></div><div class="faq-item"><button class="faq-q">Is Udio free?</button><div class="faq-a">Yes, Udio offers a free version offering a limited number of renewable credits to generate songs.</div></div><div class="faq-item"><button class="faq-q">Can I download my creations?</button><div class="faq-a">Yes, it is possible to export your generated songs as audio or video files.</div></div></div></section>
       
       

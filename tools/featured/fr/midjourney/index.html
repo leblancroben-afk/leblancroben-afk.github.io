@@ -100,19 +100,27 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Text-to-Image</h3><p>Générez 4 propositions graphiques uniques à partir d'un &quot;prompt&quot; textuel détaillé ou minimaliste.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Vary Region (Inpainting)</h3><p>Sélectionnez une zone précise de votre image pour la modifier, ajouter ou supprimer un objet par IA.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Pan &amp; Zoom (Outpainting)</h3><p>Élargissez le cadre de votre image dans n'importe quelle direction en laissant l'IA inventer le décor.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div><div><h3>Style Reference (--sref)</h3><p>Copiez fidèlement l'esthétique, les couleurs et le style d'une image existante pour l'appliquer à vos créations.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/h-54HxTNb-k/mqdefault.jpg" alt="1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/h-54HxTNb-k/mqdefault.jpg" alt="1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr</div><div class="tutorial-duration" data-vid-dur>1:40:10</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"h-54HxTNb-k","titre":"1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr","duree":"1:40:10"},{"id":"NfmVWI9_UKY","titre":"Tout savoir sur MIDJOURNEY AI de A à Z en 30m | Formation COMPLÈTE de débutant à expert (gratuit)","duree":"34:43"},{"id":"X1IY4c48DOI","titre":"Découvrir Midjourney : le tuto simple pour générer des images IA incroyables","duree":"19:04"},{"id":"YfJZVSd1Jt4","titre":"Les bases de Midjourney [tuto Midjourney]","duree":"8:07"},{"id":"_QVrPzvgg5E","titre":"Tuto Midjourney : Créer des Images, Design et Avatar avec l'IA, Facile et Gratuit","duree":"4:23"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/h-54HxTNb-k" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"h-54HxTNb-k","titre":"1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr","duree":"1:40:10"},{"id":"NfmVWI9_UKY","titre":"Tout savoir sur MIDJOURNEY AI de A à Z en 30m | Formation COMPLÈTE de débutant à expert (gratuit)","duree":"34:43"},{"id":"X1IY4c48DOI","titre":"Découvrir Midjourney : le tuto simple pour générer des images IA incroyables","duree":"19:04"},{"id":"YfJZVSd1Jt4","titre":"Les bases de Midjourney [tuto Midjourney]","duree":"8:07"},{"id":"_QVrPzvgg5E","titre":"Tuto Midjourney : Créer des Images, Design et Avatar avec l'IA, Facile et Gratuit","duree":"4:23"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -122,21 +130,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Peut-on utiliser Midjourney sans passer par Discord ?</button><div class="faq-a">Oui, Midjourney dispose désormais d'une interface web complète accessible à tous les utilisateurs possédant un compte actif.</div></div><div class="faq-item"><button class="faq-q">Puis-je utiliser les images générées à des fins commerciales ?</button><div class="faq-a">Oui, tous les abonnements payants de Midjourney vous accordent les droits de propriété commerciale sur les images que vous créez.</div></div><div class="faq-item"><button class="faq-q">Qu'est-ce que le mode 'Relax' ?</button><div class="faq-a">Le mode Relax (disponible sur certains plans) permet de générer des images de manière illimitée sans consommer vos heures de calcul &quot;Fast&quot;, avec un temps d'attente un peu plus long.</div></div><div class="faq-item"><button class="faq-q">Comment obtenir un style photoréaliste ?</button><div class="faq-a">La version 6 intègre le photoréalisme par défaut. Utilisez des termes descriptifs simples (éclairage, type de caméra) plutôt que des mots-clés magiques.</div></div></div></section>
       
       

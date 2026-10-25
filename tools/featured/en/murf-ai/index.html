@@ -98,19 +98,27 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div><h3>Voice studio</h3><p>200+ professional voices</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></div><div><h3>Video dubbing</h3><p>Self Voice/Video Synchronization</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div><div><h3>Transcript</h3><p>Audio Conversion → text</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Integration</h3><p>Canva, PowerPoint, Zapier</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/u3r4jvlkI60/mqdefault.jpg" alt="GUIDE COMPLET de MURF AI : GÉNÉRER et TRADUIRE DES VOIX avec l'IA" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/u3r4jvlkI60/mqdefault.jpg" alt="GUIDE COMPLET de MURF AI : GÉNÉRER et TRADUIRE DES VOIX avec l'IA" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>GUIDE COMPLET de MURF AI : GÉNÉRER et TRADUIRE DES VOIX avec l'IA</div><div class="tutorial-duration" data-vid-dur>5:18</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"u3r4jvlkI60","titre":"GUIDE COMPLET de MURF AI : GÉNÉRER et TRADUIRE DES VOIX avec l'IA","duree":"5:18"},{"id":"qAAw-UXeznE","titre":"Murf.ai - Tutoriel complet","duree":"4:42"},{"id":"TLYKHhY8VZo","titre":"Tuto Murf.AI : Créer une Voix OFF avec l'IA","duree":"6:41"},{"id":"DX6It_GzzUA","titre":"Comment Utiliser Murf Ai ( Tuto Complet )","duree":"6:07"},{"id":"2ls_zFgoCOs","titre":"COMMENT UTILISER MURF AI pour CRÉER DES VOIX NATURELLES et PROFESSIONNELLES","duree":"1:51"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/u3r4jvlkI60" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"u3r4jvlkI60","titre":"GUIDE COMPLET de MURF AI : GÉNÉRER et TRADUIRE DES VOIX avec l'IA","duree":"5:18"},{"id":"qAAw-UXeznE","titre":"Murf.ai - Tutoriel complet","duree":"4:42"},{"id":"TLYKHhY8VZo","titre":"Tuto Murf.AI : Créer une Voix OFF avec l'IA","duree":"6:41"},{"id":"DX6It_GzzUA","titre":"Comment Utiliser Murf Ai ( Tuto Complet )","duree":"6:07"},{"id":"2ls_zFgoCOs","titre":"COMMENT UTILISER MURF AI pour CRÉER DES VOIX NATURELLES et PROFESSIONNELLES","duree":"1:51"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -120,21 +128,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Is there a free plan?</button><div class="faq-a">Yes, 10 minutes without commercial rights.</div></div><div class="faq-item"><button class="faq-q">Can we export to WAV?</button><div class="faq-a">Yeah, from the Creator plan.</div></div></div></section>
       
       

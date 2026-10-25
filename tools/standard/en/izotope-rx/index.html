@@ -98,19 +98,27 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div><h3>Denoise &amp; De-reverb</h3><p>Isolate the spoken or sung voice and eliminates reverberation and background noise.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Repair Assistant</h3><p>Analyze audio to automatically detect defects and propose suitable settings.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><div><h3>Separation of sources</h3><p>Separates and isolates individual elements such as voice, battery or bass on a mixed file.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/cuFxz6zdaEk/mqdefault.jpg" alt="Isolate a Vocal with Music Rebalance in RX" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/cuFxz6zdaEk/mqdefault.jpg" alt="Isolate a Vocal with Music Rebalance in RX" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Isolate a Vocal with Music Rebalance in RX</div><div class="tutorial-duration" data-vid-dur>2:08</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"cuFxz6zdaEk","titre":"Isolate a Vocal with Music Rebalance in RX","duree":"2:08"},{"id":"GRafHAzWgI4","titre":"Nettoyer des voix, des samples et créer de acapellas avec iZotope RX8","duree":"20:26"},{"id":"jIHxnyAQTSE","titre":"Clean Up Noisy Audio Fast Using Izotope RX Spectral De-Noise!","duree":"4:22"},{"id":"e9gG6JHsF6E","titre":"How to Use iZotope RX Spectral Editor ARA Plugin in Pro Tools","duree":"5:41"},{"id":"xcwV7f-DdV0","titre":"iZotope RX7 | How To Remix Any Track / Song With Music Rebalance Tutorial","duree":"3:50"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/cuFxz6zdaEk" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"cuFxz6zdaEk","titre":"Isolate a Vocal with Music Rebalance in RX","duree":"2:08"},{"id":"GRafHAzWgI4","titre":"Nettoyer des voix, des samples et créer de acapellas avec iZotope RX8","duree":"20:26"},{"id":"jIHxnyAQTSE","titre":"Clean Up Noisy Audio Fast Using Izotope RX Spectral De-Noise!","duree":"4:22"},{"id":"e9gG6JHsF6E","titre":"How to Use iZotope RX Spectral Editor ARA Plugin in Pro Tools","duree":"5:41"},{"id":"xcwV7f-DdV0","titre":"iZotope RX7 | How To Remix Any Track / Song With Music Rebalance Tutorial","duree":"3:50"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -120,21 +128,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Can iZotope RX be used as a plugin in an audio software?</button><div class="faq-a">Yes, RX modules are integrated with VST3, AU and AAX in most CAD/DAW software.</div></div><div class="faq-item"><button class="faq-q">Is there a free trial version?</button><div class="faq-a">A free trial version of 10 days is available without restriction on the official website.</div></div></div></section>
       
       

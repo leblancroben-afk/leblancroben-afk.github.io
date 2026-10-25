@@ -96,19 +96,27 @@
 </section>
       
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/9uCmdWYgY3s/mqdefault.jpg" alt="Devenez cinéaste avec RunwayML : TUTO complet Gen-3" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/9uCmdWYgY3s/mqdefault.jpg" alt="Devenez cinéaste avec RunwayML : TUTO complet Gen-3" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Devenez cinéaste avec RunwayML : TUTO complet Gen-3</div><div class="tutorial-duration" data-vid-dur>21:45</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"9uCmdWYgY3s","titre":"Devenez cinéaste avec RunwayML : TUTO complet Gen-3","duree":"21:45"},{"id":"klEY_zz0jos","titre":"Runway ML : l'IA pour la création de contenu visuel","duree":"12:23"},{"id":"48W-tp466UM","titre":"RUNWAY AI - Tutoriel complet pour débutants en 9 minutes ! [Guide complet 2026]","duree":"9:16"},{"id":"c38vtLw1nSk","titre":"Runway AI - Tutorial for Beginners in 13 MINUTES !  [ FULL GUIDE ]","duree":"13:35"},{"id":"FqYRkl12ON8","titre":"Runway AI - Tutorial for Beginners in 17 MINUTES !  [ FULL GUIDE ]","duree":"17:58"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/9uCmdWYgY3s" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"9uCmdWYgY3s","titre":"Devenez cinéaste avec RunwayML : TUTO complet Gen-3","duree":"21:45"},{"id":"klEY_zz0jos","titre":"Runway ML : l'IA pour la création de contenu visuel","duree":"12:23"},{"id":"48W-tp466UM","titre":"RUNWAY AI - Tutoriel complet pour débutants en 9 minutes ! [Guide complet 2026]","duree":"9:16"},{"id":"c38vtLw1nSk","titre":"Runway AI - Tutorial for Beginners in 13 MINUTES !  [ FULL GUIDE ]","duree":"13:35"},{"id":"FqYRkl12ON8","titre":"Runway AI - Tutorial for Beginners in 17 MINUTES !  [ FULL GUIDE ]","duree":"17:58"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -118,21 +126,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       
       
       

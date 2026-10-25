@@ -97,19 +97,27 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></div><div><h3>Génération Text-to-Video</h3><p>Transformez des prompts textuels détaillés en séquences vidéo haute définition au rendu réaliste.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Génération Image-to-Video</h3><p>Animez des images fixes avec des mouvements naturels et fluides contrôlés par vos consignes.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Extension de vidéo</h3><p>Prolongez la durée de vos vidéos existantes en conservant une cohérence visuelle parfaite.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Mouvements de caméra</h3><p>Appliquez des mouvements de caméra cinématographiques pour dynamiser vos créations visuelles.</p></div></div></div>
 </section>
       
-      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2>
-    <div class="tutorial-item" id="fo-video-jour">
-      <div class="tutorial-header">
-        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
-          <img data-vid-img src="https://img.youtube.com/vi/qzHEkQpT-i0/mqdefault.jpg" alt="Kling Ai le Meilleur Générateur de Vidéos IA gratuit   (Le guide Complet)" loading="lazy" style="width:100%;display:block;border-radius:8px;">
-          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-        </button>
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/qzHEkQpT-i0/mqdefault.jpg" alt="Kling Ai le Meilleur Générateur de Vidéos IA gratuit   (Le guide Complet)" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
         <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Kling Ai le Meilleur Générateur de Vidéos IA gratuit   (Le guide Complet)</div><div class="tutorial-duration" data-vid-dur>11:40</div></div>
+        <button class="tutorial-toggle">▾</button>
       </div>
-      <div class="tutorial-video" data-vid-player></div>
-    </div>
-    <script type="application/json" id="fo-videos">[{"id":"qzHEkQpT-i0","titre":"Kling Ai le Meilleur Générateur de Vidéos IA gratuit   (Le guide Complet)","duree":"11:40"},{"id":"zmrlQxPeN2s","titre":"Kling AI : Créez des Vidéos Bluffantes en 3 Minutes ! (Tutoriel Complet)","duree":"3:28"},{"id":"UjqsDhiMG1k","titre":"Comment utiliser Kling AI gratuitement en 2025 – guide complet","duree":"2:14"},{"id":"DhrI3EUk5sQ","titre":"Kling AI : mon avis et guide complet (le meilleur outil IA vidéo)","duree":"17:32"},{"id":"puFv_QfFm2A","titre":"Kling 3.0 : Maîtrise l'IA Vidéo N°1 en 2026 (Tuto Complet)","duree":"22:46"}]</script>
-    <script>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/qzHEkQpT-i0" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"qzHEkQpT-i0","titre":"Kling Ai le Meilleur Générateur de Vidéos IA gratuit   (Le guide Complet)","duree":"11:40"},{"id":"zmrlQxPeN2s","titre":"Kling AI : Créez des Vidéos Bluffantes en 3 Minutes ! (Tutoriel Complet)","duree":"3:28"},{"id":"UjqsDhiMG1k","titre":"Comment utiliser Kling AI gratuitement en 2025 – guide complet","duree":"2:14"},{"id":"DhrI3EUk5sQ","titre":"Kling AI : mon avis et guide complet (le meilleur outil IA vidéo)","duree":"17:32"},{"id":"puFv_QfFm2A","titre":"Kling 3.0 : Maîtrise l'IA Vidéo N°1 en 2026 (Tuto Complet)","duree":"22:46"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
 (function(){
   var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
   if(!box||!src) return;
@@ -119,21 +127,12 @@
   var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
   var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
   var v=list[((jour%list.length)+list.length)%list.length];
-  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  var img=box.querySelector('[data-vid-img]');
   img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
   box.querySelector('[data-vid-title]').textContent=v.titre;
   box.querySelector('[data-vid-dur]').textContent=v.duree;
-  btn.setAttribute('aria-label', v.titre);
-  btn.onclick=function(){
-    var pl=box.querySelector('[data-vid-player]');
-    var ifr=document.createElement('iframe');
-    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
-    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
-    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
-    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
-  };
-})();</script>
-  </section>
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Qu'est-ce que Kling AI ?</button><div class="faq-a">Kling AI est un outil de génération vidéo développé par Kuaishou capable de produire des vidéos réalistes jusqu'en haute résolution à partir de descriptions textuelles ou d'images.</div></div><div class="faq-item"><button class="faq-q">Kling AI est-il gratuit ?</button><div class="faq-a">Kling AI propose une formule freemium avec des crédits gratuits attribués régulièrement pour tester l'outil, ainsi que des abonnements payants.</div></div><div class="faq-item"><button class="faq-q">Quelles sont les alternatives à Kling AI ?</button><div class="faq-a">Les alternatives principales incluent Runway Gen-2, OpenAI Sora, Pika Labs et Luma Dream Machine.</div></div></div></section>
       
       

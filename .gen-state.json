@@ -257,20 +257,20 @@
       "updatedAtMs": 1792888876734
     },
     "78": {
-      "hash": "81ac0397cc89905c7ae01437fb5211a8305b04de649ee063371156bc5830cf14",
-      "updatedAtMs": 1792888877338
+      "hash": "2748eea96562bab8a035c9309cded867ec44f3c66160b9b580bdab9725b5ac50",
+      "updatedAtMs": 1792890869340
     },
     "80": {
-      "hash": "3662468795091c8f0adca710e5286df0afbf90bb2cf8b639445534907697bf5c",
-      "updatedAtMs": 1792888879348
+      "hash": "452d8b8965d4da7f7e7c83250f8e02343d3cf937ec4ba55a03fa8126c8fa380e",
+      "updatedAtMs": 1792890898270
     },
     "81": {
-      "hash": "91f9ac1cbe9d1ae0c89b35e06319271a68d488b295130883449c50aecb7bf8da",
-      "updatedAtMs": 1792888880705
+      "hash": "9e16dd715e4a7e7b4617d98924cd730db333cc43c4ee727f089b8a7854302ae7",
+      "updatedAtMs": 1792890922330
     },
     "82": {
-      "hash": "29c703a6be7cd2b0d277adedcd5e07e067cabaab086e4fad4bf7ee693fa8363e",
-      "updatedAtMs": 1792888881643
+      "hash": "380773c47777f67999428e6d8883a172cc5fc9212fe707dc7ff8c9aeaa5699ea",
+      "updatedAtMs": 1792971531081
     },
     "88": {
       "hash": "146fd14ad9fc354256a34ca42e53774284930ad106ceadeaf13ae0b5bd4c990d",
@@ -720,6 +720,14 @@
       "hash": "89aeba8bae568f1343ae0b48c7464aed503e7df9962588be6ed7e72ff25cf1ad",
       "updatedAtMs": 1792806008030
     },
+    "78-en": {
+      "hash": "3a9fc87ec29de4307da6aba4b7d38f62d47bc4f2a30dd8018e94b4e27d536911",
+      "updatedAtMs": 1792890855459
+    },
+    "78-es": {
+      "hash": "1ed972eb47c8925dbc7421105581f6d0d694045ba22efacbfd5105b4cdc98e37",
+      "updatedAtMs": 1792890868945
+    },
     "8-en": {
       "hash": "7dfa2b4cab6d6818fe21530cb640a583b66e5a41c871922b6811f797a24fa824",
       "updatedAtMs": 1783989342100
@@ -727,6 +735,30 @@
     "8-es": {
       "hash": "89d961f4c7ecbec313f6132deae6aa171ec2b3338d58d48d90e7730211920cc6",
       "updatedAtMs": 1783989342378
+    },
+    "80-en": {
+      "hash": "4001a45632498ca91cf9b2bd745b22aa9e20e138ac5526b499e8f097498f7e6a",
+      "updatedAtMs": 1792890884370
+    },
+    "80-es": {
+      "hash": "5448e323d619e69b47014dbf7e18dc698d58c04c458e87bf351d13dd9b06fa30",
+      "updatedAtMs": 1792890898040
+    },
+    "81-en": {
+      "hash": "bb4e2d55ed4833417e392e3549877db4d21a4990efc4c145415216b7bdc6f93f",
+      "updatedAtMs": 1792890908320
+    },
+    "81-es": {
+      "hash": "9c2b452380c3952aa49bd89bdfdc2a0573474fa8d5bda67ef14f73e02e8d4a03",
+      "updatedAtMs": 1792890922118
+    },
+    "82-en": {
+      "hash": "0ea29c31cd358a89793125bdf2671a90dcfb7ff4791ffc10955e95d0abfe2a3c",
+      "updatedAtMs": 1792971516949
+    },
+    "82-es": {
+      "hash": "6900700ff3098a04e42d3359583c2fd2ab4154974e85217467894943d6b5abd9",
+      "updatedAtMs": 1792971530368
     },
     "89-en": {
       "hash": "dc34427e84afe2559fe7d39bb1506bf8823faf235fed6a1ba609a6c09504bdc7",
@@ -1241,20 +1273,20 @@
       "updatedAtMs": 1792888876734
     },
     "78": {
-      "hash": "81ac0397cc89905c7ae01437fb5211a8305b04de649ee063371156bc5830cf14",
-      "updatedAtMs": 1792888877338
+      "hash": "2748eea96562bab8a035c9309cded867ec44f3c66160b9b580bdab9725b5ac50",
+      "updatedAtMs": 1792890869340
     },
     "80": {
-      "hash": "3662468795091c8f0adca710e5286df0afbf90bb2cf8b639445534907697bf5c",
-      "updatedAtMs": 1792888879348
+      "hash": "452d8b8965d4da7f7e7c83250f8e02343d3cf937ec4ba55a03fa8126c8fa380e",
+      "updatedAtMs": 1792890898270
     },
     "81": {
-      "hash": "91f9ac1cbe9d1ae0c89b35e06319271a68d488b295130883449c50aecb7bf8da",
-      "updatedAtMs": 1792888880705
+      "hash": "9e16dd715e4a7e7b4617d98924cd730db333cc43c4ee727f089b8a7854302ae7",
+      "updatedAtMs": 1792890922330
     },
     "82": {
-      "hash": "29c703a6be7cd2b0d277adedcd5e07e067cabaab086e4fad4bf7ee693fa8363e",
-      "updatedAtMs": 1792888881643
+      "hash": "380773c47777f67999428e6d8883a172cc5fc9212fe707dc7ff8c9aeaa5699ea",
+      "updatedAtMs": 1792971531081
     },
     "88": {
       "hash": "146fd14ad9fc354256a34ca42e53774284930ad106ceadeaf13ae0b5bd4c990d",
@@ -1319,16 +1351,16 @@
       "updatedAtMs": 1790479507615
     },
     "gpt": {
-      "hash": "0813b607b27acae3b7e359e06c4b3bc8535d25af770912dded12c8881f954755",
-      "updatedAtMs": 1790479527006
+      "hash": "422150dad4c899b6d10d81357a8a7bcdf42749ca782adab3f2ae02ee767be984",
+      "updatedAtMs": 1792971558305
     },
     "hallucination": {
       "hash": "438de9c6bd625c1ab226f7916989836f90727ee4a7b8b6eedd6f9cdd6051e15a",
       "updatedAtMs": 1790479546448
     },
     "ia-generative": {
-      "hash": "d5631b56ccf775539e7c5481a5e08d840e65b7fc97f6f0c5e017c80417c10638",
-      "updatedAtMs": 1790479566735
+      "hash": "9621882a8d83240a4bd83cfc423deaa1c58cca0382e70154e02b33272bad7412",
+      "updatedAtMs": 1792971577013
     },
     "inference": {
       "hash": "cf60048e26a9d7cf9cd09e7bb885f522f0588f71556afd6fe895482cda6a8e14",
@@ -1343,8 +1375,8 @@
       "updatedAtMs": 1790559639547
     },
     "llm": {
-      "hash": "8077ae3e9b036b8333785408558f533f2356247866643a8c84e84bd55111c306",
-      "updatedAtMs": 1790559660062
+      "hash": "f82d6ee962dd91f4ac9dd51894f6f59054ca70e025198a4ee16da94900f0bcae",
+      "updatedAtMs": 1792971596942
     },
     "midjourney": {
       "hash": "587967201d0f838c6ab808c07bcab034f490a280dd4f6a0ffe2cb2e63f2685eb",

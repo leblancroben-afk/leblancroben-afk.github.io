@@ -23,7 +23,34 @@ const PLAN_RULES = {
   featured: { badge: 'recommended' },
 };
 // Plafonds d'affichage, IDENTIQUES pour tous les plans.
-const LIMITES = { features: 6, faq: 6, gallery: 5, tutoriels: 3 };
+const LIMITES = { features: 6, faq: 6, gallery: 5, videotheque: 10 };
+
+// Vidéo du jour : choisie dans le navigateur (fuseau Paris), sans régénérer les pages.
+// Index = jour (depuis 1970) % nombre de vidéos. Le HTML affiche déjà la vidéo n°1 en secours.
+const VIDEO_JOUR_JS = String.raw`
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]'), btn=box.querySelector('[data-vid-play]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  btn.setAttribute('aria-label', v.titre);
+  btn.onclick=function(){
+    var pl=box.querySelector('[data-vid-player]');
+    var ifr=document.createElement('iframe');
+    ifr.src='https://www.youtube.com/embed/'+v.id+'?autoplay=1';
+    ifr.title=v.titre; ifr.setAttribute('allowfullscreen','');
+    ifr.style.cssText='width:100%;aspect-ratio:16/9;border:0;border-radius:8px;display:block;';
+    pl.innerHTML=''; pl.appendChild(ifr); btn.style.display='none';
+  };
+})();`;
 
 const planOf = (t) => (t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard');
 
@@ -149,7 +176,7 @@ function generateFiche(tool, allTools = [], deps) {
   const alternatives = g('alternatives') || [];
   const features = (g('fonctionnalites') || []).slice(0, LIMITES.features);
   const faq = (g('faq') || []).slice(0, LIMITES.faq);
-  const tutoriels = (g('tutoriels') || []).slice(0, LIMITES.tutoriels);
+  const videotheque = (g('videotheque') || []).filter((v) => v && v.youtube_id).slice(0, LIMITES.videotheque);
   const changelog = (g('changelog') || []).filter((c) => c && (c.titre || c.desc));
   const apiUrl = safeUrl(g('api_url'));
   const tarifsRaw = Array.isArray(g('tarifs')) ? g('tarifs').filter((p) => p && p.nom) : [];
@@ -249,22 +276,25 @@ function generateFiche(tool, allTools = [], deps) {
   ${galerie.length > 3 ? `<div class="fo-car-dots" data-fo-dots>${galerie.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('')}</div>` : ''}
 </section>` : '';
 
-  // ── Tutoriel YouTube (Featured, 1 seul) ──
-  const tutoHTML = tutoriels.map((t, i) => {
-    const id = `tuto-${i}`;
-    return `<div class="tutorial-item" id="${id}">
-      <div class="tutorial-header" onclick="toggleTutorial('${id}')">
-        <div class="tutorial-thumb"><img src="https://img.youtube.com/vi/${E(t.youtube_id)}/mqdefault.jpg" alt="${E(t.titre)}" loading="lazy">
-          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-        <div class="tutorial-meta"><div class="tutorial-title">${E(t.titre)}</div>${t.duree ? `<div class="tutorial-duration">${E(t.duree)}</div>` : ''}</div>
-        <button class="tutorial-toggle">▾</button>
+  // ── Vidéo du jour (vidéothèque, tous les plans) ──
+  const vidList = videotheque.map((v) => ({ id: String(v.youtube_id), titre: String(v.titre || ''), duree: String(v.duree || '') }));
+  const v0 = vidList[0];
+  // '<' échappé : aucun texte ne peut fermer la balise <script> de la liste JSON
+  const vidJson = JSON.stringify(vidList).replace(/</g, '\\u003c');
+  const tutoSection = v0 ? `<section class="fo-card" id="fo-tutoriels"><h2>${E(T.tutorials)}</h2>
+    <div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header">
+        <button type="button" class="tutorial-thumb" data-vid-play style="all:unset;cursor:pointer;display:block;position:relative;width:100%;">
+          <img data-vid-img src="https://img.youtube.com/vi/${E(v0.id)}/mqdefault.jpg" alt="${E(v0.titre)}" loading="lazy" style="width:100%;display:block;border-radius:8px;">
+          <span class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>${E(v0.titre)}</div><div class="tutorial-duration" data-vid-dur>${E(v0.duree)}</div></div>
       </div>
-      <div class="tutorial-video"><div class="tutorial-video-inner">
-        <iframe data-src="https://www.youtube.com/embed/${E(t.youtube_id)}" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
-      </div></div>
-    </div>`;
-  }).join('');
-  const tutoSection = tutoHTML ? `<section class="fo-card" id="fo-tutoriels"><h2>${E(T.tutorials)}</h2><div class="tutorials-list">${tutoHTML}</div></section>` : '';
+      <div class="tutorial-video" data-vid-player></div>
+    </div>
+    <script type="application/json" id="fo-videos">${vidJson}</script>
+    <script>${VIDEO_JOUR_JS}</script>
+  </section>` : '';
 
   // ── FAQ ──
   const faqHTML = faq.map((f) => `<div class="faq-item"><button class="faq-q">${E(f.q)}</button><div class="faq-a">${E(f.a)}</div></div>`).join('');

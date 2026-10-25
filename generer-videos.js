@@ -1,27 +1,32 @@
 #!/usr/bin/env node
 /* ═══════════════════════════════════════════════════════
    generer-videos.js — Attribution automatique de vidéos YouTube
-   Source : Firestore collection "outils" (docs langue='fr' uniquement,
-            les tutoriels/vidéothèque ne sont pas dupliqués sur EN/ES)
-   Sortie : écrit les champs `tutoriels` et/ou `videotheque` sur les
-            docs Firestore qui en manquent. Ne touche à AUCUN autre
-            champ (description, prix, tags, etc. restent 100% manuels).
+   Source : Firestore collection "outils" (docs langue='fr' uniquement)
+   Sortie : complète le champ `videotheque` (jusqu'à MAX_VIDEOS vidéos).
+            Ne touche à AUCUN autre champ.
    Usage  : node generer-videos.js
-   Cron   : GitHub Actions, tous les jours à minuit (voir .yml associé)
+   Cron   : GitHub Actions, chaque nuit (voir videos-nocturnes.yml)
 
    ── Logique ──
-   - videotheque : indépendant du plan, rempli si vide (jusqu'à 5 vidéos).
-   - tutoriels   : rempli uniquement si plan === 'featured' et vide
-                   (1 seule vidéo, car seule la 1ère ligne est utilisée
-                   par gen-fiches.js pour la fiche Featured).
-   - Filtre les vidéos < 90s (shorts) et trie par nombre de vues.
-   - Limite de traitement par run (MAX_OUTILS_PAR_RUN) pour rester très
-     large sous le quota gratuit YouTube (10 000 unités/jour ; une
-     recherche = 100 unités, un videos.list = ~1 unité).
+   - Priorité : les outils qui ont le moins de vidéos passent en premier
+     (0 vidéo, puis 1, 2, ...). Limite : MAX_OUTILS_PAR_RUN outils par run.
+   - Pour chaque outil : recherche YouTube (coût : ~100 unités par recherche),
+     filtre les Shorts (< 90 s) et les vidéos déjà présentes.
+   - Tri pertinence par Gemini, par GROUPES de GROUPE_GEMINI outils :
+     une seule requête pour 5 outils. Chaque vidéo n'est rattachée qu'à
+     l'outil dont elle faisait partie des candidats. Les index renvoyés
+     hors limites sont ignorés.
+   - Ajoute les vidéos retenues à la suite des existantes, sans dépasser
+     MAX_VIDEOS. Les vidéos existantes ne sont jamais supprimées.
+   - Sur quota Gemini (429) ou YouTube épuisé, le run s'arrête proprement :
+     ce qui est déjà écrit est conservé.
+   - Écrit `ajoutees=N` dans GITHUB_OUTPUT : le workflow ne régénère les
+     fiches que si N > 0.
    ═══════════════════════════════════════════════════════ */
 
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
+const fs = require('fs');
 
 // ── Init Firebase Admin (même pattern que gen-fiches.js) ──
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -31,15 +36,20 @@ const db = getFirestore();
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-3.5-flash';
-const MAX_OUTILS_PAR_RUN = 25; // marge large sous le quota gratuit (10 000 unités/jour)
-const DUREE_MIN_SECONDES = 90; // exclut les Shorts
+const MAX_VIDEOS = 10;               // vidéos par outil
+const MAX_OUTILS_PAR_RUN = parseInt(process.env.MAX_OUTILS || '25', 10); // outils par run (quota YouTube)
+const DRY_RUN = process.env.DRY_RUN === '1'; // mode test : rien n'est écrit dans Firestore
+const GROUPE_GEMINI = 5;             // outils analysés par requête Gemini
+const CANDIDATS_PAR_OUTIL = 10;      // résultats YouTube demandés par outil
+const DUREE_MIN_SECONDES = 90;       // exclut les Shorts
+
+const pause = ms => new Promise(r => setTimeout(r, ms));
 
 // ══════════════════════════════════════
 // UTILITAIRES
 // ══════════════════════════════════════
 
 // Convertit une durée ISO 8601 YouTube ("PT12M34S") en "mm:ss" ou "hh:mm:ss"
-// — même format que celui attendu par dureeVersSecondes() dans gen-fiches.js
 function isoDureeVersMMSS(iso) {
   const m = String(iso || '').match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
   if (!m) return '';
@@ -59,18 +69,24 @@ function isoDureeVersSecondes(iso) {
   return h * 3600 + mi * 60 + s;
 }
 
+function nbVideos(outil) {
+  return Array.isArray(outil.videotheque) ? outil.videotheque.length : 0;
+}
+
 async function fetchJSON(url) {
   const res = await fetch(url);
   const data = await res.json();
   if (!res.ok) {
-    throw new Error(`YouTube API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+    const err = new Error(`YouTube API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+    err.quota = /quota/i.test(data?.error?.message || '') || data?.error?.errors?.some(e => /quota/i.test(e.reason || ''));
+    throw err;
   }
   return data;
 }
 
-// Cherche des vidéos pertinentes pour un outil et retourne une liste
-// triée par vues décroissantes, déjà filtrée (pas de Shorts).
-async function chercherVideos(nomOutil, max = 8) {
+// Cherche des vidéos pour un outil. Renvoie une liste triée par vues,
+// sans Shorts.
+async function chercherVideos(nomOutil, max) {
   const q = encodeURIComponent(`${nomOutil} outil IA tutoriel`);
   const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${q}` +
     `&type=video&order=relevance&relevanceLanguage=fr&maxResults=${max}&safeSearch=moderate&key=${YOUTUBE_API_KEY}`;
@@ -97,38 +113,66 @@ async function chercherVideos(nomOutil, max = 8) {
     .sort((a, b) => b.vues - a.vues);
 }
 
-// Filtre par pertinence via Gemini : un nom d'outil ambigu (ex. "Mutiny",
-// "Albert") ramène souvent des vidéos hors-sujet (jeux vidéo, musique...)
-// si on ne trie QUE par nombre de vues. Gemini reçoit la description réelle
-// de l'outil + les candidats et ne garde que ceux qui en parlent vraiment.
-async function filtrerPertinence(nomOutil, descriptionOutil, candidats) {
-  if (!candidats.length) return [];
+// ══════════════════════════════════════
+// TRI DE PERTINENCE GEMINI (un groupe d'outils par requête)
+// ══════════════════════════════════════
 
-  const liste = candidats.map((v, i) =>
-    `[${i}] Titre: ${v.titre}\nChaîne: ${v.canal}\nDescription: ${v.description_video}`).join('\n\n');
+// groupe : [{ nom, description, candidats }]
+// Renvoie une Map : index de l'outil dans le groupe -> vidéos retenues.
+// Une vidéo n'est jamais rattachée à un autre outil que celui dont elle
+// était candidate.
+async function filtrerPertinenceGroupe(groupe) {
+  const blocs = groupe.map((o, k) => {
+    const liste = o.candidats
+      .map((v, i) => `  [${i}] Titre: ${v.titre} | Chaîne: ${v.canal} | Description: ${v.description_video}`)
+      .join('\n');
+    return `OUTIL ${k} : "${o.nom}" — ${o.description || 'pas de description disponible'}\nCandidats :\n${liste}`;
+  }).join('\n\n');
 
-  const prompt = `Un annuaire d'outils IA cherche des tutoriels YouTube pour l'outil "${nomOutil}", décrit ainsi : ` +
-    `"${descriptionOutil || 'pas de description disponible'}". ` +
-    `Voici des vidéos candidates trouvées sur YouTube :\n\n${liste}\n\n` +
-    `Certaines peuvent être hors-sujet si "${nomOutil}" est un mot ambigu (jeu vidéo, film, chanson, produit sans rapport...). ` +
-    `Renvoie UNIQUEMENT un tableau JSON des index (nombres) des vidéos qui parlent RÉELLEMENT de cet outil IA précis, ` +
-    `dans l'ordre où tu les recommanderais. Exemple : [2, 0, 4]. Si aucune ne correspond, renvoie [].`;
+  const prompt = `Un annuaire d'outils IA cherche des tutoriels YouTube. Pour chaque outil ci-dessous, ` +
+    `ne retiens que les vidéos candidates qui parlent RÉELLEMENT de cet outil IA précis. ` +
+    `Un nom ambigu (jeu vidéo, film, chanson, produit sans rapport...) ramène souvent du hors-sujet : écarte-le. ` +
+    `Une vidéo ne peut être retenue que pour l'outil dont elle figure dans la liste de candidats.\n\n${blocs}\n\n` +
+    `Réponds UNIQUEMENT avec un tableau JSON, un élément par outil, de la forme ` +
+    `[{"outil": 0, "videos": [2, 0]}, {"outil": 1, "videos": []}]. ` +
+    `"videos" contient les index des candidats retenus, dans l'ordre de recommandation. ` +
+    `Si aucune ne convient, "videos": [].`;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { responseMimeType: 'application/json' },
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: { responseMimeType: 'application/json', temperature: 0.1 },
     }),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+  if (!res.ok) {
+    const err = new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
+    err.quota = res.status === 429 || data?.error?.status === 'RESOURCE_EXHAUSTED';
+    throw err;
+  }
 
   const texte = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  const indices = JSON.parse(texte || '[]');
-  return indices.map(i => candidats[i]).filter(Boolean);
+  let parsed;
+  try {
+    parsed = JSON.parse(texte || '[]');
+  } catch {
+    throw new Error('JSON Gemini invalide pour ce groupe.');
+  }
+
+  const resultats = new Map();
+  for (const item of Array.isArray(parsed) ? parsed : []) {
+    const k = item?.outil;
+    if (!Number.isInteger(k) || k < 0 || k >= groupe.length) continue;
+    const cands = groupe[k].candidats;
+    const retenus = (Array.isArray(item.videos) ? item.videos : [])
+      .filter(i => Number.isInteger(i) && i >= 0 && i < cands.length)
+      .map(i => cands[i]);
+    resultats.set(k, retenus);
+  }
+  return resultats;
 }
 
 // ══════════════════════════════════════
@@ -148,59 +192,110 @@ async function main() {
   const snap = await db.collection('outils').where('langue', '==', 'fr').get();
   const tousLesOutils = snap.docs.map(d => ({ ref: d.ref, id: d.id, ...d.data() }));
 
-  const aTraiter = tousLesOutils.filter(o => {
-    const manqueVideotheque = !Array.isArray(o.videotheque) || o.videotheque.length === 0;
-    const manqueTutoriel = o.plan === 'featured' && (!Array.isArray(o.tutoriels) || o.tutoriels.length === 0);
-    return manqueVideotheque || manqueTutoriel;
-  }).slice(0, MAX_OUTILS_PAR_RUN);
+  // Les outils avec le moins de vidéos d'abord, puis limite par run.
+  const aTraiter = tousLesOutils
+    .filter(o => nbVideos(o) < MAX_VIDEOS)
+    .sort((a, b) => nbVideos(a) - nbVideos(b))
+    .slice(0, MAX_OUTILS_PAR_RUN);
 
-  console.log(`${tousLesOutils.length} outils au total, ${aTraiter.length} à traiter ce run.`);
+  console.log(`${tousLesOutils.length} outils au total, ${aTraiter.length} à compléter ce run (objectif : ${MAX_VIDEOS} vidéos par outil).`);
 
-  let succes = 0, echecs = 0, sansResultat = 0;
+  let ajoutees = 0, simulees = 0, sansResultat = 0, echecs = 0, arret = false;
 
+  // ── Étape 1 : candidats YouTube pour chaque outil ──
+  const prepares = [];
   for (const outil of aTraiter) {
     try {
-      const candidats = await chercherVideos(outil.name, 10); // pool plus large, Gemini trie ensuite
-      await new Promise(r => setTimeout(r, 300));
-      const videos = await filtrerPertinence(outil.name, outil.description, candidats);
+      const candidats = await chercherVideos(outil.name, CANDIDATS_PAR_OUTIL);
+      const dejaLa = new Set((outil.videotheque || []).map(v => v.youtube_id));
+      const nouveaux = candidats.filter(v => !dejaLa.has(v.youtube_id));
+      prepares.push({ outil, candidats: nouveaux });
+    } catch (err) {
+      console.error(`  ✗ ${outil.name} (YouTube) : ${err.message}`);
+      echecs++;
+      if (err.quota) {
+        arret = true;
+        console.log('::warning::Quota YouTube épuisé : arrêt de la recherche. Les outils restants restent à compléter.');
+        break;
+      }
+    }
+    await pause(300);
+  }
 
-      if (videos.length === 0) {
-        console.log(`  – ${outil.name} : aucune vidéo pertinente trouvée (${candidats.length} candidate(s) écartée(s) comme hors-sujet), ignoré.`);
+  // ── Étape 2 : tri Gemini par groupes ──
+  for (let debut = 0; debut < prepares.length && !arret; debut += GROUPE_GEMINI) {
+    const groupe = prepares.slice(debut, debut + GROUPE_GEMINI);
+
+    // Outils sans aucun candidat nouveau : rien à analyser.
+    const aAnalyser = groupe.filter(g => {
+      if (g.candidats.length === 0) {
+        console.log(`  – ${g.outil.name} : aucun nouveau candidat sur YouTube.`);
+        sansResultat++;
+        return false;
+      }
+      return true;
+    });
+    if (aAnalyser.length === 0) continue;
+
+    let resultats;
+    try {
+      resultats = await filtrerPertinenceGroupe(
+        aAnalyser.map(g => ({ nom: g.outil.name, description: g.outil.description, candidats: g.candidats }))
+      );
+    } catch (err) {
+      console.error(`  ✗ Groupe de ${aAnalyser.length} (Gemini) : ${err.message}`);
+      echecs += aAnalyser.length;
+      if (err.quota) {
+        arret = true;
+        console.log('::warning::Quota Gemini épuisé : arrêt du tri. Les outils restants restent à compléter.');
+        break;
+      }
+      continue;
+    }
+
+    for (let k = 0; k < aAnalyser.length; k++) {
+      const { outil } = aAnalyser[k];
+      const retenus = resultats.get(k) || [];
+      if (retenus.length === 0) {
+        console.log(`  – ${outil.name} : aucune vidéo pertinente parmi ${aAnalyser[k].candidats.length} candidate(s).`);
         sansResultat++;
         continue;
       }
 
-      const updates = { updatedAt: FieldValue.serverTimestamp() };
+      const existantes = Array.isArray(outil.videotheque) ? outil.videotheque : [];
+      const place = MAX_VIDEOS - existantes.length;
+      const ajout = retenus.slice(0, place).map(({ youtube_id, titre, canal, duree }) =>
+        ({ youtube_id, titre, canal, duree }));
 
-      const manqueVideotheque = !Array.isArray(outil.videotheque) || outil.videotheque.length === 0;
-      if (manqueVideotheque) {
-        updates.videotheque = videos.slice(0, 5).map(({ youtube_id, titre, canal, duree }) =>
-          ({ youtube_id, titre, canal, duree }));
+      if (DRY_RUN) {
+        console.log(`  [TEST] ${outil.name} : ajouterait ${ajout.length} vidéo(s) → ${ajout.map(v => v.titre).join(' | ')}`);
+        simulees += ajout.length;
+        continue;
       }
 
-      const manqueTutoriel = outil.plan === 'featured' && (!Array.isArray(outil.tutoriels) || outil.tutoriels.length === 0);
-      if (manqueTutoriel) {
-        const meilleure = videos[0];
-        updates.tutoriels = [{ youtube_id: meilleure.youtube_id, titre: meilleure.titre, duree: meilleure.duree }];
+      try {
+        await outil.ref.update({
+          videotheque: [...existantes, ...ajout],
+          updatedAt: FieldValue.serverTimestamp(),
+        });
+        ajoutees += ajout.length;
+        console.log(`  ✓ ${outil.name} : +${ajout.length} vidéo(s), total ${existantes.length + ajout.length}/${MAX_VIDEOS}`);
+      } catch (err) {
+        console.error(`  ✗ ${outil.name} (écriture) : ${err.message}`);
+        echecs++;
       }
-
-      await outil.ref.update(updates);
-      console.log(`  ✓ ${outil.name} : ${manqueVideotheque ? (updates.videotheque.length + ' vidéo(s) vidéothèque ') : ''}${manqueTutoriel ? '+ 1 tutoriel fiche' : ''}`);
-      succes++;
-
-      // Petite pause pour rester correct vis-à-vis de l'API
-      await new Promise(r => setTimeout(r, 300));
-    } catch (err) {
-      console.error(`  ✗ ${outil.name} : ${err.message}`);
-      echecs++;
     }
+    await pause(300);
   }
 
-  console.log(`\nTerminé — ${succes} mis à jour, ${sansResultat} sans résultat, ${echecs} en erreur.`);
-  console.log('⚠️  Relancez gen-fiches.js pour publier les changements sur les fiches HTML statiques.');
+  console.log(`\nTerminé — ${ajoutees} vidéo(s) ajoutée(s), ${sansResultat} sans nouveau résultat, ${echecs} en erreur.`);
+  if (arret) console.log('(arrêt anticipé : quota)');
+  if (DRY_RUN) console.log(`MODE TEST : ${simulees} vidéo(s) simulée(s), rien écrit dans Firestore.`);
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `ajoutees=${ajoutees}\n`);
 }
 
 main().catch(err => {
   console.error('Erreur fatale :', err);
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `ajoutees=0\n`);
   process.exit(1);
 });

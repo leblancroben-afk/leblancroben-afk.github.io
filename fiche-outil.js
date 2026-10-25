@@ -532,7 +532,6 @@ ${tabsNav}
 </main>
 ${footerHTML(langue)}
 ${faqHTML ? faqJS() : ''}
-${tutoHTML ? tutorialJS() : ''}
 ${sharedJS()}
 ${articlesScript}
 <script type="module" src="${R}js/reviews-widget.js"></script>

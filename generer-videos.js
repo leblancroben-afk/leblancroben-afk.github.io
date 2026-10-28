@@ -84,31 +84,39 @@ async function fetchJSON(url) {
   return data;
 }
 
-// Cherche des vidéos pour un outil. Renvoie une liste triée par vues,
-// sans Shorts.
+// Requêtes de recherche par outil (deux formulations pour élargir le pool).
+const REQUETES = (nom) => [`${nom} tutoriel`, `comment utiliser ${nom}`];
+
+// Cherche des vidéos pour un outil sur plusieurs requêtes, fusionne les doublons,
+// écarte les Shorts. Renvoie une liste triée par vues.
 async function chercherVideos(nomOutil, max) {
-  const q = encodeURIComponent(`${nomOutil} outil IA tutoriel`);
-  const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${q}` +
-    `&type=video&order=relevance&relevanceLanguage=fr&maxResults=${max}&safeSearch=moderate&key=${YOUTUBE_API_KEY}`;
+  const trouvees = new Map();
+  for (const requete of REQUETES(nomOutil)) {
+    const q = encodeURIComponent(requete);
+    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${q}` +
+      `&type=video&order=relevance&maxResults=${max}&safeSearch=moderate&key=${YOUTUBE_API_KEY}`;
+    const searchData = await fetchJSON(searchUrl);
+    const ids = (searchData.items || []).map(it => it.id?.videoId).filter(Boolean)
+      .filter(id => !trouvees.has(id));
+    if (ids.length === 0) continue;
 
-  const searchData = await fetchJSON(searchUrl);
-  const ids = (searchData.items || []).map(it => it.id?.videoId).filter(Boolean);
-  if (ids.length === 0) return [];
-
-  const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,statistics,snippet` +
-    `&id=${ids.join(',')}&key=${YOUTUBE_API_KEY}`;
-  const detailsData = await fetchJSON(detailsUrl);
-
-  return (detailsData.items || [])
-    .map(v => ({
-      youtube_id: v.id,
-      titre: v.snippet?.title || '',
-      canal: v.snippet?.channelTitle || '',
-      description_video: (v.snippet?.description || '').slice(0, 200),
-      duree: isoDureeVersMMSS(v.contentDetails?.duration),
-      secondes: isoDureeVersSecondes(v.contentDetails?.duration),
-      vues: parseInt(v.statistics?.viewCount || '0', 10),
-    }))
+    const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,statistics,snippet` +
+      `&id=${ids.join(',')}&key=${YOUTUBE_API_KEY}`;
+    const detailsData = await fetchJSON(detailsUrl);
+    for (const v of detailsData.items || []) {
+      trouvees.set(v.id, {
+        youtube_id: v.id,
+        titre: v.snippet?.title || '',
+        canal: v.snippet?.channelTitle || '',
+        description_video: (v.snippet?.description || '').slice(0, 200),
+        duree: isoDureeVersMMSS(v.contentDetails?.duration),
+        secondes: isoDureeVersSecondes(v.contentDetails?.duration),
+        vues: parseInt(v.statistics?.viewCount || '0', 10),
+      });
+    }
+    await pause(200);
+  }
+  return [...trouvees.values()]
     .filter(v => v.titre && v.youtube_id && v.secondes >= DUREE_MIN_SECONDES)
     .sort((a, b) => b.vues - a.vues);
 }
@@ -130,7 +138,7 @@ async function filtrerPertinenceGroupe(groupe) {
   }).join('\n\n');
 
   const prompt = `Un annuaire d'outils IA cherche des tutoriels YouTube. Pour chaque outil ci-dessous, ` +
-    `ne retiens que les vidéos candidates qui parlent RÉELLEMENT de cet outil IA précis. ` +
+    `ne retiens que les vidéos candidates qui parlent de cet outil IA précis (présentation, usage, démonstration ou tutoriel suffisent). ` +
     `Un nom ambigu (jeu vidéo, film, chanson, produit sans rapport...) ramène souvent du hors-sujet : écarte-le. ` +
     `Une vidéo ne peut être retenue que pour l'outil dont elle figure dans la liste de candidats.\n\n${blocs}\n\n` +
     `Réponds UNIQUEMENT avec un tableau JSON, un élément par outil, de la forme ` +
@@ -139,15 +147,21 @@ async function filtrerPertinenceGroupe(groupe) {
     `Si aucune ne convient, "videos": [].`;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: { responseMimeType: 'application/json', temperature: 0.1 },
-    }),
+  const corps = JSON.stringify({
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: { responseMimeType: 'application/json', temperature: 0.1 },
   });
-  const data = await res.json();
+  let res, data;
+  for (let essai = 0; essai < 4; essai++) {
+    res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: corps });
+    data = await res.json();
+    if (res.status !== 503) break;
+    if (essai < 3) {
+      const attente = 30 * 2 ** essai;
+      console.log(`  … Gemini 503 (surcharge), nouvelle tentative dans ${attente} s`);
+      await pause(attente * 1000);
+    }
+  }
   if (!res.ok) {
     const err = new Error(`Gemini API ${res.status}: ${data?.error?.message || 'erreur inconnue'}`);
     err.quota = res.status === 429 || data?.error?.status === 'RESOURCE_EXHAUSTED';
@@ -155,6 +169,7 @@ async function filtrerPertinenceGroupe(groupe) {
   }
 
   const texte = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!texte) console.log(`  [debug] Gemini : réponse vide. Détail : ${JSON.stringify(data).slice(0, 300)}`);
   let parsed;
   try {
     parsed = JSON.parse(texte || '[]');
@@ -172,6 +187,8 @@ async function filtrerPertinenceGroupe(groupe) {
       .map(i => cands[i]);
     resultats.set(k, retenus);
   }
+  const total = [...resultats.values()].reduce((n, l) => n + l.length, 0);
+  if (total === 0) console.log(`  [debug] Gemini n'a rien retenu pour ce groupe. Réponse brute : ${String(texte || '').slice(0, 500)}`);
   return resultats;
 }
 

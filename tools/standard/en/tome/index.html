@@ -76,9 +76,7 @@
           <a href="/comparateur/index.html" class="fo-btn fo-btn-ghost"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 7h14M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7zM8 21h8"/></svg><span>Compare</span></a>
         </div>
       </div>
-      <div class="fo-hero-right"><div class="fo-preview"><div class="fo-preview-bar"><div class="fo-dots"><i></i><i></i><i></i></div><span class="fo-preview-mono">Tome</span></div>
-        <div class="fo-preview-body"><h3>Tome</h3><p>Tome is an AI-powered presentation tool that automatically generates interactive presentations and visual storytelling.</p>
-        </div></div></div>
+      <div class="fo-hero-right"></div>
     </div>
   </div>
 </header>
@@ -98,7 +96,42 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Generation of slideshows</h3><p>Generates a fluid and structured slideshow with text and elements from a simple textual statement.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Flexible layout</h3><p>Automatically adjusts content blocks and layouts for smooth rendering.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Image Generation</h3><p>Create custom-made illustrations integrated directly into your slides with AI.</p></div></div></div>
 </section>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/cX2G-zSmjC4/mqdefault.jpg" alt="Tome.app : l'IA qui crée vos présentations en un clin d'œil avec DALL-E" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Tome.app : l'IA qui crée vos présentations en un clin d'œil avec DALL-E</div><div class="tutorial-duration" data-vid-dur>10:02</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/cX2G-zSmjC4" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"cX2G-zSmjC4","titre":"Tome.app : l'IA qui crée vos présentations en un clin d'œil avec DALL-E","duree":"10:02"},{"id":"MPRYz7fxuk4","titre":"TOME APP : Créer des présentations avec l'IA (Guide Complet)","duree":"10:51"},{"id":"cPv7RH3UgHM","titre":"How to Use Tome.app || Tome AI Tutorial for Beginners (Step by Step)","duree":"12:17"},{"id":"Vde4SbD7pCI","titre":"Tome.app : Crée tes présentations/slides/ storytelling en 60 secondes (tutoriel tome.app)","duree":"10:31"},{"id":"rhdmlVTooi4","titre":"Tome Ai Francais | Comment Utiliser Tome Ai ( 2026 )","duree":"4:27"},{"id":"mAXtz3gDiVs","titre":"Tome AI Tutorial: How To Make Money With Instant Presentations (2026)","duree":"8:57"},{"id":"5MflDTgkGQE","titre":"Tome Ai Francais | Comment Utiliser Tome Ai ( En 2026 )","duree":"7:30"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Does Tome manage the generation of content in French?</button><div class="faq-a">Yes, you can write your instructions in French to obtain a result directly generated in this language.</div></div><div class="faq-item"><button class="faq-q">Is it possible to use Tome for free?</button><div class="faq-a">Yes, a free plan gives access to an initial batch of IA credits to test the creation of presentations.</div></div></div></section>
       
       
@@ -110,9 +143,9 @@
       
       
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Popular alternatives</h3><a class="fo-link" href="/index.html#tools">See more</a></div>
-  <div class="fo-alts"><a class="fo-alt" href="https://gamma.com" target="_blank" rel="noopener">
-      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=gamma.com https://icons.duckduckgo.com/ip3/gamma.com.ico"><span class="fo-letter" aria-hidden="true">G</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=gamma.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
-        <div><b>Gamma</b><small>Alternative to Tome</small></div></div>
+  <div class="fo-alts"><a class="fo-alt" href="/tools/featured/en/gamma/">
+      <div class="fo-alt-id"><div class="fo-alt-logo fo-av0" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=gamma.app https://icons.duckduckgo.com/ip3/gamma.app.ico"><span class="fo-letter" aria-hidden="true">G</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=gamma.app" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div><b>Gamma</b><small>Presentation</small></div></div>
       </a><a class="fo-alt" href="https://beautiful-ai.com" target="_blank" rel="noopener">
       <div class="fo-alt-id"><div class="fo-alt-logo fo-av1" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=beautiful-ai.com https://icons.duckduckgo.com/ip3/beautiful-ai.com.ico"><span class="fo-letter" aria-hidden="true">B</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=beautiful-ai.com" alt="" loading="lazy" referrerpolicy="no-referrer"></div>
         <div><b>Beautiful.ai</b><small>Alternative to Tome</small></div></div>

@@ -28,6 +28,7 @@ const { getFirestore, FieldValue } = require('firebase-admin/firestore');
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 initializeApp({ credential: cert(serviceAccount) });
 const db = getFirestore();
+db.settings({ ignoreUndefinedProperties: true });
 
 const LIBRETRANSLATE_URL = 'https://damon-albexia-albexia-libretranslate.hf.space/translate';
 const MAX_OUTILS_PAR_RUN = 15;
@@ -133,16 +134,16 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
     faq: traduit.faq || [],
     presentation: traduit.presentation || '',
     meta_description: traduit.meta_description || '',
-    maker: outil.maker || '',
-    plateformes: outil.plateformes || '',
-    url_tarifs: outil.url_tarifs || '',
+    maker: outil.maker,
+    plateformes: outil.plateformes,
+    url_tarifs: outil.url_tarifs,
     interface_fr: outil.interface_fr,
     api: outil.api,
     mobile: outil.mobile,
     stats: outil.stats || [],
     tutoriels: outil.tutoriels || [], // jamais traduits — vidéos en FR
     alternatives: outil.alternatives || [],
-    screenshot_url: outil.screenshot_url || '',
+    screenshot_url: outil.screenshot_url,
     generer_fiche: outil.generer_fiche,
     slug_articles: outil.slug_articles || null,
     updatedAt: FieldValue.serverTimestamp(),
@@ -150,7 +151,7 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
 }
 
 // ══════════════════════════════════════
-// SCRIPT PRINCIPAL
+// SCRIPT PRINCIPAL — OUTILS
 // ══════════════════════════════════════
 
 async function traduireOutils() {

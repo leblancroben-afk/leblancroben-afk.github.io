@@ -191,11 +191,9 @@ function generateFiche(tool, allTools = [], deps) {
 
   const previewImg = galerie[0];
   const previewBlock = previewImg
-    ? `<div class="fo-preview has-img"><div class="fo-preview-bar"><div class="fo-dots"><i></i><i></i><i></i></div><span class="fo-preview-mono" id="fo-preview-cap">${E(previewImg.legende || name)}</span></div>
+    ? `<div class="fo-preview has-img"><div class="fo-preview-bar"><span class="fo-preview-mono" id="fo-preview-cap">${E(previewImg.legende || name)}</span></div>
         <img id="fo-preview-img" src="${E(safeUrl(previewImg.url))}" alt="${E(name)} — interface" fetchpriority="high"></div>`
-    : `<div class="fo-preview"><div class="fo-preview-bar"><div class="fo-dots"><i></i><i></i><i></i></div><span class="fo-preview-mono">${E(name)}</span></div>
-        <div class="fo-preview-body"><h3>${E(name)}</h3><p>${E(description)}</p>
-        </div></div>`;
+    : '';
   const thumbsBlock = galerie.length > 1
     ? `<div class="fo-thumbs">${galerie.map((x, i) => `<button type="button" class="fo-thumb${i === 0 ? ' active' : ''}" data-fo-thumb data-src="${E(safeUrl(x.url))}" data-cap="${E(x.legende || name)}" aria-label="${E(T.shotsAlt)} ${i + 1}"><img src="${E(safeUrl(x.url))}" alt="" loading="lazy"></button>`).join('')}</div>` : '';
 

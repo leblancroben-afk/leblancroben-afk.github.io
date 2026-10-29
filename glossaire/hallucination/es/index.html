@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <script src="/js/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Qué es Alucinación? Definición IA | Albexia</title>
+  <meta name="description" content="Un fenómeno donde un modelo AI genera información falsa, inventada o incorrecta con confianza aparente. Uno de los principales desafíos de los LML actuales" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://leblancroben-afk.github.io/glossaire/hallucination/es/" />
+  <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/glossaire/hallucination/" />
+  <link rel="alternate" hreflang="en" href="https://leblancroben-afk.github.io/glossaire/hallucination/en/" />
+  <link rel="alternate" hreflang="es" href="https://leblancroben-afk.github.io/glossaire/hallucination/es/" />
+  <link rel="alternate" hreflang="x-default" href="https://leblancroben-afk.github.io/glossaire/hallucination/" />
+  <meta property="og:title" content="Alucinación — Glosario IA Albexia" />
+  <meta property="og:description" content="Un fenómeno donde un modelo AI genera información falsa, inventada o incorrecta con confianza aparente. Uno de los principales desafíos de los LML actuales" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://leblancroben-afk.github.io/glossaire/hallucination/es/" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:locale:alternate" content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"DefinedTerm","name":"Alucinación","description":"Un fenómeno donde un modelo AI genera información falsa, inventada o incorrecta con confianza aparente. Uno de los principales desafíos de los LML actuales.","inDefinedTermSet":{"@type":"DefinedTermSet","name":"Glossaire IA Albexia","url":"https://leblancroben-afk.github.io/glossaire/"},"url":"https://leblancroben-afk.github.io/glossaire/hallucination/es/"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Por qué IA tiene tanta confianza en ello?","acceptedAnswer":{"@type":"Answer","text":"Los modelos AI están diseñados para generar textos fluidos y convincentes. No conscientes de la verdad, calculan las probabilidades de palabras, que da a sus errores el mismo tono asertivo y natural que sus respuestas exactas."}},{"@type":"Question","name":"¿Cómo puedo detectar y evitar alucinaciones a diario?","acceptedAnswer":{"@type":"Answer","text":"Preferir instrucciones específicas y pedir a AI que cite sus fuentes o descomponga su razonamiento. Sobre todo, siempre se cruzan datos críticos (figuras, fechas, leyes) con fuentes externas fiables antes de utilizarlos."}}]}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/niche.css" />
+  <style>
+    .glossaire-niveau-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:3px 10px; border-radius:var(--radius); border:1px solid; margin-bottom:16px;}
+    .glossaire-erreur-box{background:rgba(255,107,157,0.06); border:1px solid rgba(255,107,157,0.25); border-radius:var(--radius); padding:16px 20px; font-size:14px; line-height:1.7; color:var(--text);}
+    .glossaire-erreur-box strong{color:var(--accent);}
+  </style>
+  <link rel="stylesheet" href="/css/themes.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Inicio</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
+  </div>
+  <div class="nav-profile-slot">
+    <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+    </a>
+    <a href="/profil.html" id="nav-login-btn" class="nav-link" style="display:none">Iniciar sesión</a>
+  </div>
+  <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
+</nav>
+<script type="module" src="/js/auth-nav.js"></script>
+<script type="module" src="/js/notifications.js"></script>
+
+<section class="niche-hero">
+  <div class="niche-hero-glow"></div>
+  <span class="glossaire-niveau-badge" style="color:#34D399;border-color:#34D39966;background:#34D3991a">🌱 Débutant</span>
+  <h1>Alucinación</h1>
+  <p style="font-size:17px">Un fenómeno donde un modelo AI genera información falsa, inventada o incorrecta con confianza aparente. Uno de los principales desafíos de los LML actuales.</p>
+</section>
+
+<div class="niche-section">
+  <div class="niche-section-title">🎯 Por qué es importante</div>
+  <div class="niche-conseils">Comprender este fenómeno es esencial para evitar la confianza ciega en las respuestas de la AI. Esto fomenta una mentalidad crítica y una verificación sistemática de la información crítica, evitando así la propagación de errores en el trabajo o los estudios. Es la clave para usar la inteligencia artificial como herramienta de asistencia y no como fuente de verdad absoluta.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">💡 Ejemplo concreto</div>
+  <div class="niche-conseils" style="font-style:italic">Pedir a ChatGPT para citar fuentes puede llevar a URLs inexistentes inventadas de todas las partes.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">⚙️ En la práctica</div>
+  <div class="niche-conseils">Técnicamente, las alucinaciones provienen del hecho de que los modelos de lenguaje predicen estadísticamente la palabra más probable, sin una comprensión real de los hechos. Para limitar este riesgo, se puede utilizar técnicas de ingeniería rápida ordenando a AI responder 'No lo sé' si carece de información. La integración de bases de datos externas (RAG) y la disminución de la 'temperatura' del modelo también reducen la creatividad y por lo tanto la probabilidad de inventos.</div>
+</div>
+<div class="niche-section">
+  <div class="glossaire-erreur-box"><strong>Error frecuente:</strong> La alucinación a menudo se confunde con una mentira intencional. La AI no tiene conciencia ni intención de engañar; Simplemente reúne palabras de una manera estadísticamente coherente, sin ninguna noción de verdad.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">❓ Preguntas frecuentes</div>
+  <div class="niche-faq">
+    <div class="niche-faq-item" id="gfaq-0">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(0)">
+        <span>¿Por qué IA tiene tanta confianza en ello?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">Los modelos AI están diseñados para generar textos fluidos y convincentes. No conscientes de la verdad, calculan las probabilidades de palabras, que da a sus errores el mismo tono asertivo y natural que sus respuestas exactas.</div>
+    </div><div class="niche-faq-item" id="gfaq-1">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(1)">
+        <span>¿Cómo puedo detectar y evitar alucinaciones a diario?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">Preferir instrucciones específicas y pedir a AI que cite sus fuentes o descomponga su razonamiento. Sobre todo, siempre se cruzan datos críticos (figuras, fechas, leyes) con fuentes externas fiables antes de utilizarlos.</div>
+    </div>
+  </div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">🛠️ Herramientas IA para practicar</div>
+  <div class="niche-tools-grid">
+    <a href="/tools/featured/fr/chatgpt/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com" alt="ChatGPT" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">ChatGPT</span>
+    
+  </div>
+  <span class="ntc-cat">Contenu</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/fr/claude/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=claude.ai" alt="Claude" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Claude</span>
+    
+  </div>
+  <span class="ntc-cat">Programmation et création d'applications</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/fr/midjourney/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=midjourney.com" alt="Midjourney" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Midjourney</span>
+    
+  </div>
+  <span class="ntc-cat">Images et design</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/fr/gemini-ai/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com" alt="Gemini ai" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Gemini ai</span>
+    
+  </div>
+  <span class="ntc-cat">Productivité, études et traduction</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/fr/kimi/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=kimi.moonshot.cn" alt="Kimi" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Kimi</span>
+    
+  </div>
+  <span class="ntc-cat">Assistants IA et recherche</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+  </div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">🔗 Términos relacionados</div>
+  <div class="niche-related">
+    <a href="/glossaire/agent-ia/es/" class="niche-related-link">Agente IA</a><a href="/glossaire/api/es/" class="niche-related-link">API</a><a href="/glossaire/chatbot/es/" class="niche-related-link">Chatbot</a>
+  </div>
+</div>
+
+<a href="/glossaire/es/" class="niche-back">← Volver al glosario completo</a>
+
+<link rel="stylesheet" href="/css/footer.css">
+<footer id="site-footer">
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Aviso legal</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Privacidad</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contacto</a>
+  </div>
+</footer>
+<script src="/js/footer.js" defer></script>
+<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>
+
+</body>
+</html>

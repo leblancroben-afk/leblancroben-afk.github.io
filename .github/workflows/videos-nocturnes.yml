@@ -58,6 +58,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tools/ articles/ comparateur/ niches/ tutoriels/ glossaire/ categorie/ .gen-state.json
+          git add tools/ articles/ comparateur/ niches/ tutoriels/ glossaire/ categorie/ data/search-index.json .gen-state.json
           git diff --staged --quiet || git commit -m "🎬 Nouvelles vidéos de la vidéothèque + régénération fiches (auto)"
           git push

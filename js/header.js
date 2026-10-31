@@ -12,6 +12,12 @@
    ========================================================= */
 document.addEventListener('DOMContentLoaded', async () => {
 
+  /* Pages générées (layout.js) : la nav est déjà en HTML, on initialise seulement la recherche. */
+  if (document.getElementById('search-open') && !document.getElementById('site-header') && document.querySelector('body > nav')) {
+    initHeaderSearch();
+    return;
+  }
+
   let container = document.getElementById('site-header');
   const legacyNav = container ? null : document.querySelector('body > nav');
 
@@ -61,6 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     initHeaderLanguage();
+    initHeaderSearch();
 
     document.dispatchEvent(new CustomEvent('albexia:header-ready'));
 
@@ -353,3 +360,163 @@ document.addEventListener('click', event => {
   );
 
 });
+
+
+/* =========================================================
+   RECHERCHE GLOBALE (intégrée au header)
+   Index : /data/search-index.json (généré par build-search-index.js).
+   Trois langues : fr, en, es. Seuls les résultats de la langue
+   active sont affichés (aucun repli vers une autre langue).
+   ========================================================= */
+
+const SEARCH_INDEX_URL = '/data/search-index.json';
+const SEARCH_TYPES = ['outil', 'video', 'article', 'glossaire', 'comparaison', 'galerie'];
+const SEARCH_MAX_PAR_TYPE = 6;
+let searchIndexPromise = null;
+
+function searchLangue() {
+  const root = document.documentElement;
+  if (root.hasAttribute('data-static-lang') && ['fr', 'en', 'es'].includes(root.lang)) return root.lang;
+  try {
+    return localStorage.getItem('albexia_langue') || 'fr';
+  } catch (e) {
+    return 'fr';
+  }
+}
+
+function searchTr(key) {
+  return typeof window.t === 'function' ? window.t(key, searchLangue()) : key;
+}
+
+function searchNormaliser(str) {
+  return (str || '').toString().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+}
+
+function searchEchapper(str) {
+  return String(str || '').replace(/[&<>"']/g, c => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
+
+function chargerSearchIndex() {
+  if (!searchIndexPromise) {
+    searchIndexPromise = fetch(SEARCH_INDEX_URL, { cache: 'no-cache' })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(data => Array.isArray(data) ? data : (data.entries || []))
+      .catch(err => {
+        console.error('[Albexia] index de recherche indisponible :', err);
+        searchIndexPromise = null;
+        return [];
+      });
+  }
+  return searchIndexPromise;
+}
+
+function rechercherDansIndex(entries, requete) {
+  const q = searchNormaliser(requete);
+  if (!q) return {};
+  const lang = searchLangue();
+  const mots = q.split(/\s+/).filter(Boolean);
+
+  const filtrer = langue => entries.filter(e => e.lang === langue).filter(e => {
+    const cible = searchNormaliser([e.title, e.subtitle, (e.keywords || []).join(' ')].join(' '));
+    return mots.every(m => cible.includes(m));
+  });
+
+  const trouves = filtrer(lang); // pas de repli : sans traduction, pas de résultat
+
+  const groupes = {};
+  for (const e of trouves) {
+    const type = SEARCH_TYPES.includes(e.type) ? e.type : 'article';
+    (groupes[type] = groupes[type] || []).push(e);
+  }
+  for (const type of Object.keys(groupes)) {
+    groupes[type] = groupes[type].slice(0, SEARCH_MAX_PAR_TYPE);
+  }
+  return groupes;
+}
+
+function afficherSuggestions(zone, onPick) {
+  const pastilles = [1, 2, 3, 4, 5, 6].map(i => {
+    const label = searchTr('search.sug' + i);
+    return `<button type="button" class="search-chip" data-q="${searchEchapper(label)}">${searchEchapper(label)}</button>`;
+  }).join('');
+  zone.innerHTML = `
+    <p class="search-empty">${searchEchapper(searchTr('search.empty'))}</p>
+    <div class="search-chips">${pastilles}</div>`;
+  zone.querySelectorAll('.search-chip').forEach(b =>
+    b.addEventListener('click', () => onPick(b.dataset.q)));
+}
+
+function afficherResultats(zone, groupes) {
+  const types = Object.keys(groupes);
+  if (types.length === 0) {
+    zone.innerHTML = `<p class="search-empty">${searchEchapper(searchTr('search.noResult'))}</p>`;
+    return;
+  }
+  zone.innerHTML = types.map(type => `
+    <section class="search-group">
+      <h3 class="search-group-title">${searchEchapper(searchTr('search.type.' + type))}</h3>
+      ${groupes[type].map(e => `
+        <a class="search-item" href="${searchEchapper(e.url)}">
+          <span class="search-item-title">${searchEchapper(e.title)}</span>
+          ${e.subtitle ? `<span class="search-item-sub">${searchEchapper(e.subtitle)}</span>` : ''}
+        </a>`).join('')}
+    </section>`).join('');
+}
+
+function initHeaderSearch() {
+  const openBtn = document.getElementById('search-open');
+  const overlay = document.getElementById('search-overlay');
+  const form = document.getElementById('search-form');
+  const input = document.getElementById('search-input');
+  const closeBtn = document.getElementById('search-close');
+  const results = document.getElementById('search-results');
+  if (!openBtn || !overlay || !form || !input || !results) return;
+
+  let entries = [];
+
+  function ouvrir() {
+    overlay.hidden = false;
+    document.body.classList.add('search-open');
+    input.value = '';
+    afficherSuggestions(results, lancer);
+    setTimeout(() => input.focus(), 30);
+    results.innerHTML = `<p class="search-empty">${searchEchapper(searchTr('search.loading'))}</p>`;
+    chargerSearchIndex().then(data => {
+      entries = data;
+      afficherSuggestions(results, lancer);
+    });
+  }
+
+  function fermer() {
+    overlay.hidden = true;
+    document.body.classList.remove('search-open');
+  }
+
+  function lancer(requete) {
+    input.value = requete;
+    const q = requete.trim();
+    if (!q) {
+      afficherSuggestions(results, lancer);
+      return;
+    }
+    chargerSearchIndex().then(data => {
+      entries = data;
+      afficherResultats(results, rechercherDansIndex(entries, q));
+    });
+  }
+
+  openBtn.addEventListener('click', ouvrir);
+  closeBtn.addEventListener('click', fermer);
+  form.addEventListener('submit', e => { e.preventDefault(); lancer(input.value); });
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    if (!q) afficherSuggestions(results, lancer);
+    else lancer(q);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !overlay.hidden) fermer();
+  });
+}

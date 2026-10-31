@@ -4799,6 +4799,20 @@ async function main() {
   // ─── SAUVEGARDE DE L'ÉTAT DE GÉNÉRATION ───
   // newState ne contient que les docs actuellement en base : un doc supprimé
   // de Firestore disparaît automatiquement de l'état au prochain run.
+  // Index de recherche : réutilise les documents déjà lus (aucune lecture Firestore en plus)
+  try {
+    const galerieDocs = (await db.collection('galerie').get()).docs.map(d => d.data());
+    require('./build-search-index').buildSearchIndex({
+      outils: snap.docs.map(d => ({ id: d.id, ...d.data() })),
+      articles: articlesSnap.docs.map(d => d.data()),
+      glossaire: termesGlossaire,
+      comparaisons,
+      galerie: galerieDocs,
+    });
+  } catch (e) {
+    console.error('[Albexia] Index de recherche non généré :', e.message);
+  }
+
   saveState(newState);
   console.log(`\n💾 État de génération sauvegardé dans ${STATE_PATH} (à committer avec le reste).`);
 }

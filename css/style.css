@@ -3934,3 +3934,25 @@ a:active .blog-title { color: #fff; text-decoration: none; }
 .selected-bar-inner, .outil-cta-inner, .nav-avatar-menu {
   border-radius: var(--radius);
 }
+
+
+/* ═══ RECHERCHE GLOBALE (header) ═══ */
+.nav-search-btn { background: none; border: 1px solid var(--border); border-radius: 10px; width: 38px; height: 38px; cursor: pointer; font-size: 18px; color: var(--text); display: inline-flex; align-items: center; justify-content: center; }
+.search-overlay { position: fixed; inset: 0; z-index: 2000; background: var(--bg); overflow-y: auto; padding: 14px 16px 40px; }
+.search-overlay[hidden] { display: none; }
+.search-bar { display: flex; align-items: center; gap: 8px; border: 2px solid var(--accent); border-radius: 14px; padding: 6px 8px 6px 14px; background: var(--surface); max-width: 760px; margin: 0 auto; }
+.search-bar-icon { color: var(--text-muted); font-size: 18px; }
+.search-bar-input { flex: 1; min-width: 0; border: none; background: transparent; font-size: 16px; color: var(--text); outline: none; padding: 8px 0; }
+.search-bar-go, .search-bar-close { border: none; background: none; cursor: pointer; font-size: 18px; color: var(--text-muted); padding: 6px 8px; }
+.search-bar-go { background: none; color: var(--accent); border: 2px solid var(--accent); border-radius: 10px; }
+.search-results { max-width: 760px; margin: 20px auto 0; }
+.search-empty { text-align: center; color: var(--text-muted); margin: 24px 0; line-height: 1.5; }
+.search-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.search-chip { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 8px 14px; font-size: 14px; cursor: pointer; }
+.search-group { margin-bottom: 20px; }
+.search-group-title { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); margin: 0 0 8px; }
+.search-item { display: block; padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--text); }
+.search-item:hover { background: var(--surface); }
+.search-item-title { display: block; font-weight: 600; }
+.search-item-sub { display: block; font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+body.search-open { overflow: hidden; }

@@ -364,6 +364,7 @@ html[data-theme="light"] a:visited .blog-title,
 html[data-theme="light"] a:hover .blog-title,
 html[data-theme="light"] a:focus .blog-title,
 html[data-theme="light"] a:active .blog-title { color: var(--text); }
+html[data-theme="light"] .search-bar-go { color: var(--accent-ink); }
 
 /* ── css/tool-detail.css ── */
 html[data-theme="light"] nav { background: rgba(244,241,234,0.88); }

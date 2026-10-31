@@ -509,7 +509,17 @@ function initHeaderSearch() {
   }
 
   openBtn.addEventListener('click', ouvrir);
-  closeBtn.addEventListener('click', fermer);
+  /* Croix : si du texte est saisi, on efface la recherche et on revient
+     aux suggestions ; sinon on ferme l'overlay. */
+  closeBtn.addEventListener('click', () => {
+    if (input.value.trim() !== '') {
+      input.value = '';
+      afficherSuggestions(results, lancer);
+      input.focus();
+    } else {
+      fermer();
+    }
+  });
   form.addEventListener('submit', e => { e.preventDefault(); lancer(input.value); });
   input.addEventListener('input', () => {
     const q = input.value.trim();

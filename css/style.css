@@ -3943,6 +3943,7 @@ a:active .blog-title { color: #fff; text-decoration: none; }
 .search-bar { display: flex; align-items: center; gap: 8px; border: 2px solid var(--accent); border-radius: 14px; padding: 6px 8px 6px 14px; background: var(--surface); max-width: 760px; margin: 0 auto; }
 .search-bar-icon { color: var(--text-muted); font-size: 18px; }
 .search-bar-input { flex: 1; min-width: 0; border: none; background: transparent; font-size: 16px; color: var(--text); outline: none; padding: 8px 0; }
+.search-bar-input::-webkit-search-cancel-button, .search-bar-input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; display: none; }
 .search-bar-go, .search-bar-close { border: none; background: none; cursor: pointer; font-size: 18px; color: var(--text-muted); padding: 6px 8px; }
 .search-bar-go { background: none; color: var(--accent); border: 2px solid var(--accent); border-radius: 10px; }
 .search-results { max-width: 760px; margin: 20px auto 0; }

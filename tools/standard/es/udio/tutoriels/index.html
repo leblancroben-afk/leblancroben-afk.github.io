@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domina Udio: la videoteca completa | Albexia</title>
-  <meta name="description" content="Todos los tutoriales en vídeo para aprender y dominar Udio. 5 vídeos seleccionados, filtrables por duración. Gratis." />
+  <meta name="description" content="Todos los tutoriales en vídeo para aprender y dominar Udio. 10 vídeos seleccionados, filtrables por duración. Gratis." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/es/udio/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/udio/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Domina Udio: la videoteca completa | Albexia" />
-  <meta property="og:description" content="Todos los tutoriales en vídeo para aprender y dominar Udio. 5 vídeos seleccionados, filtrables por duración. Gratis." />
+  <meta property="og:description" content="Todos los tutoriales en vídeo para aprender y dominar Udio. 10 vídeos seleccionados, filtrables por duración. Gratis." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/es/udio/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "5-Minute AI Music Tutorial | How to Udio", "thumbnailUrl": "https://img.youtube.com/vi/6IlItfVfOkQ/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/6IlItfVfOkQ" },
       { "@type": "VideoObject", "position": 3, "name": "Udio AI Tutorial – How to Make Music with AI (Free & Easy)", "thumbnailUrl": "https://img.youtube.com/vi/XXyq_x-7Mfg/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/XXyq_x-7Mfg" },
       { "@type": "VideoObject", "position": 4, "name": "Udio Tutorial - How To Make A Full Song -  Detailed Guide", "thumbnailUrl": "https://img.youtube.com/vi/YBRfmIRzLoE/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/YBRfmIRzLoE" },
-      { "@type": "VideoObject", "position": 5, "name": "Udio AI: How To Make Full Song | Step by Step Guide", "thumbnailUrl": "https://img.youtube.com/vi/GuPGVc5Kal4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/GuPGVc5Kal4" }
+      { "@type": "VideoObject", "position": 5, "name": "Udio AI: How To Make Full Song | Step by Step Guide", "thumbnailUrl": "https://img.youtube.com/vi/GuPGVc5Kal4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/GuPGVc5Kal4" },
+      { "@type": "VideoObject", "position": 6, "name": "Créer une Chanson avec l'IA : UDIO 100% gratuit", "thumbnailUrl": "https://img.youtube.com/vi/Fp1Uk4EM0k4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Fp1Uk4EM0k4" },
+      { "@type": "VideoObject", "position": 7, "name": "Mastering UDIO: The Ultimate Guide to AI Music Creation", "thumbnailUrl": "https://img.youtube.com/vi/oDKtyfyTTEc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/oDKtyfyTTEc" },
+      { "@type": "VideoObject", "position": 8, "name": "Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)", "thumbnailUrl": "https://img.youtube.com/vi/XjSqzkf3bYM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/XjSqzkf3bYM" },
+      { "@type": "VideoObject", "position": 9, "name": "Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno", "thumbnailUrl": "https://img.youtube.com/vi/PxCWjUrAhCk/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/PxCWjUrAhCk" },
+      { "@type": "VideoObject", "position": 10, "name": "Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison", "thumbnailUrl": "https://img.youtube.com/vi/MoE8dKuKmRc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/MoE8dKuKmRc" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 resultados</span>
+    <span id="outil-video-count" class="filtres-count">10 resultados</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('53','Udio')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Enviar un vídeo
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="GuPGVc5Kal4" title="Guardar este vídeo" aria-label="Guardar este vídeo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;GuPGVc5Kal4&quot;,&quot;outilId&quot;:&quot;53&quot;,&quot;outilNom&quot;:&quot;Udio&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/udio/tutoriels/&quot;,&quot;titre&quot;:&quot;Udio AI: How To Make Full Song | Step by Step Guide&quot;,&quot;canal&quot;:&quot;AI Edge Mastery&quot;,&quot;duree&quot;:&quot;7:06&quot;,&quot;youtubeId&quot;:&quot;GuPGVc5Kal4&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Créer une Chanson avec l'IA : UDIO 100% gratuit" data-secondes="158">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Fp1Uk4EM0k4','Créer une Chanson avec l&#39;IA : UDIO 100% gratuit')">
+      <img src="https://img.youtube.com/vi/Fp1Uk4EM0k4/mqdefault.jpg" alt="Créer une Chanson avec l'IA : UDIO 100% gratuit" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:38</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Fp1Uk4EM0k4','Créer une Chanson avec l&#39;IA : UDIO 100% gratuit')">Créer une Chanson avec l'IA : UDIO 100% gratuit</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Labo Des Réseaux
+        </p>
+        <button class="btn-save-video" data-video-id="Fp1Uk4EM0k4" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Fp1Uk4EM0k4&quot;,&quot;outilId&quot;:&quot;53&quot;,&quot;outilNom&quot;:&quot;Udio&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/udio/tutoriels/&quot;,&quot;titre&quot;:&quot;Créer une Chanson avec l'IA : UDIO 100% gratuit&quot;,&quot;canal&quot;:&quot;Labo Des Réseaux&quot;,&quot;duree&quot;:&quot;2:38&quot;,&quot;youtubeId&quot;:&quot;Fp1Uk4EM0k4&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Mastering UDIO: The Ultimate Guide to AI Music Creation" data-secondes="1163">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('oDKtyfyTTEc','Mastering UDIO: The Ultimate Guide to AI Music Creation')">
+      <img src="https://img.youtube.com/vi/oDKtyfyTTEc/mqdefault.jpg" alt="Mastering UDIO: The Ultimate Guide to AI Music Creation" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">19:23</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('oDKtyfyTTEc','Mastering UDIO: The Ultimate Guide to AI Music Creation')">Mastering UDIO: The Ultimate Guide to AI Music Creation</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Theoretically Media
+        </p>
+        <button class="btn-save-video" data-video-id="oDKtyfyTTEc" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;oDKtyfyTTEc&quot;,&quot;outilId&quot;:&quot;53&quot;,&quot;outilNom&quot;:&quot;Udio&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/udio/tutoriels/&quot;,&quot;titre&quot;:&quot;Mastering UDIO: The Ultimate Guide to AI Music Creation&quot;,&quot;canal&quot;:&quot;Theoretically Media&quot;,&quot;duree&quot;:&quot;19:23&quot;,&quot;youtubeId&quot;:&quot;oDKtyfyTTEc&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)" data-secondes="1114">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('XjSqzkf3bYM','Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)')">
+      <img src="https://img.youtube.com/vi/XjSqzkf3bYM/mqdefault.jpg" alt="Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">18:34</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('XjSqzkf3bYM','Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)')">Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Johan : Solutions Digitales
+        </p>
+        <button class="btn-save-video" data-video-id="XjSqzkf3bYM" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;XjSqzkf3bYM&quot;,&quot;outilId&quot;:&quot;53&quot;,&quot;outilNom&quot;:&quot;Udio&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/udio/tutoriels/&quot;,&quot;titre&quot;:&quot;Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)&quot;,&quot;canal&quot;:&quot;Johan : Solutions Digitales&quot;,&quot;duree&quot;:&quot;18:34&quot;,&quot;youtubeId&quot;:&quot;XjSqzkf3bYM&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno" data-secondes="2205">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('PxCWjUrAhCk','Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno')">
+      <img src="https://img.youtube.com/vi/PxCWjUrAhCk/mqdefault.jpg" alt="Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">36:45</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('PxCWjUrAhCk','Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno')">Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Matteo Orlandi
+        </p>
+        <button class="btn-save-video" data-video-id="PxCWjUrAhCk" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;PxCWjUrAhCk&quot;,&quot;outilId&quot;:&quot;53&quot;,&quot;outilNom&quot;:&quot;Udio&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/udio/tutoriels/&quot;,&quot;titre&quot;:&quot;Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno&quot;,&quot;canal&quot;:&quot;Matteo Orlandi&quot;,&quot;duree&quot;:&quot;36:45&quot;,&quot;youtubeId&quot;:&quot;PxCWjUrAhCk&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison" data-secondes="975">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('MoE8dKuKmRc','Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison')">
+      <img src="https://img.youtube.com/vi/MoE8dKuKmRc/mqdefault.jpg" alt="Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">16:15</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('MoE8dKuKmRc','Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison')">Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Hardwire
+        </p>
+        <button class="btn-save-video" data-video-id="MoE8dKuKmRc" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;MoE8dKuKmRc&quot;,&quot;outilId&quot;:&quot;53&quot;,&quot;outilNom&quot;:&quot;Udio&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/udio/tutoriels/&quot;,&quot;titre&quot;:&quot;Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison&quot;,&quot;canal&quot;:&quot;Hardwire&quot;,&quot;duree&quot;:&quot;16:15&quot;,&quot;youtubeId&quot;:&quot;MoE8dKuKmRc&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

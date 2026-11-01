@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maîtrisez Gumloop : La vidéothèque complète | Albexia</title>
-  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Gumloop. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Gumloop. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/starter/fr/gumloop/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/starter/fr/gumloop/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Maîtrisez Gumloop : La vidéothèque complète | Albexia" />
-  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Gumloop. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Gumloop. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/starter/fr/gumloop/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "Construire un bot de veille YouTube en 15 minutes avec Gumloop et l'IA", "thumbnailUrl": "https://img.youtube.com/vi/xYgdtiY7SKo/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/xYgdtiY7SKo" },
       { "@type": "VideoObject", "position": 3, "name": "Gumloop et le futur de l'automatisation : entretien avec Aron Korenblit", "thumbnailUrl": "https://img.youtube.com/vi/bTPwUTFYUIs/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/bTPwUTFYUIs" },
       { "@type": "VideoObject", "position": 4, "name": "J'ai découvert un outil d'automatisation super intuitif", "thumbnailUrl": "https://img.youtube.com/vi/XTfaBMGuU_0/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/XTfaBMGuU_0" },
-      { "@type": "VideoObject", "position": 5, "name": "Build a YouTube Research Bot in 15 Minutes (Gumloop Tutorial)", "thumbnailUrl": "https://img.youtube.com/vi/DcByWzGOIXo/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/DcByWzGOIXo" }
+      { "@type": "VideoObject", "position": 5, "name": "Build a YouTube Research Bot in 15 Minutes (Gumloop Tutorial)", "thumbnailUrl": "https://img.youtube.com/vi/DcByWzGOIXo/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/DcByWzGOIXo" },
+      { "@type": "VideoObject", "position": 6, "name": "I built an AI Agent in 43 min to automate my workflows (Zero Coding)", "thumbnailUrl": "https://img.youtube.com/vi/QFc7jXZ2pdE/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/QFc7jXZ2pdE" },
+      { "@type": "VideoObject", "position": 7, "name": "How I Built a Fully Automated Marketing Machine (no code)", "thumbnailUrl": "https://img.youtube.com/vi/8NxEHtkgOBQ/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/8NxEHtkgOBQ" },
+      { "@type": "VideoObject", "position": 8, "name": "AI Automation/Gumloop Live Workshop #1", "thumbnailUrl": "https://img.youtube.com/vi/PjT1XVeSKsw/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/PjT1XVeSKsw" },
+      { "@type": "VideoObject", "position": 9, "name": "Créer des agents IA en NoCode, gratuitement, en 20 minutes !", "thumbnailUrl": "https://img.youtube.com/vi/ifpJjfsH2lM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/ifpJjfsH2lM" },
+      { "@type": "VideoObject", "position": 10, "name": "Learn Gumloop in 13 Minutes", "thumbnailUrl": "https://img.youtube.com/vi/Dvl6uK2vmhM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Dvl6uK2vmhM" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 résultats</span>
+    <span id="outil-video-count" class="filtres-count">10 résultats</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('6','Gumloop')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Soumettre une vidéo
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="DcByWzGOIXo" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;DcByWzGOIXo&quot;,&quot;outilId&quot;:&quot;6&quot;,&quot;outilNom&quot;:&quot;Gumloop&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/gumloop/tutoriels/&quot;,&quot;titre&quot;:&quot;Build a YouTube Research Bot in 15 Minutes (Gumloop Tutorial)&quot;,&quot;canal&quot;:&quot;The Rundown University&quot;,&quot;duree&quot;:&quot;5:06&quot;,&quot;youtubeId&quot;:&quot;DcByWzGOIXo&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="I built an AI Agent in 43 min to automate my workflows (Zero Coding)" data-secondes="2613">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('QFc7jXZ2pdE','I built an AI Agent in 43 min to automate my workflows (Zero Coding)')">
+      <img src="https://img.youtube.com/vi/QFc7jXZ2pdE/mqdefault.jpg" alt="I built an AI Agent in 43 min to automate my workflows (Zero Coding)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">43:33</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('QFc7jXZ2pdE','I built an AI Agent in 43 min to automate my workflows (Zero Coding)')">I built an AI Agent in 43 min to automate my workflows (Zero Coding)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Greg Isenberg
+        </p>
+        <button class="btn-save-video" data-video-id="QFc7jXZ2pdE" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;QFc7jXZ2pdE&quot;,&quot;outilId&quot;:&quot;6&quot;,&quot;outilNom&quot;:&quot;Gumloop&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/gumloop/tutoriels/&quot;,&quot;titre&quot;:&quot;I built an AI Agent in 43 min to automate my workflows (Zero Coding)&quot;,&quot;canal&quot;:&quot;Greg Isenberg&quot;,&quot;duree&quot;:&quot;43:33&quot;,&quot;youtubeId&quot;:&quot;QFc7jXZ2pdE&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="How I Built a Fully Automated Marketing Machine (no code)" data-secondes="541">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('8NxEHtkgOBQ','How I Built a Fully Automated Marketing Machine (no code)')">
+      <img src="https://img.youtube.com/vi/8NxEHtkgOBQ/mqdefault.jpg" alt="How I Built a Fully Automated Marketing Machine (no code)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">9:01</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('8NxEHtkgOBQ','How I Built a Fully Automated Marketing Machine (no code)')">How I Built a Fully Automated Marketing Machine (no code)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Garrett Rysko
+        </p>
+        <button class="btn-save-video" data-video-id="8NxEHtkgOBQ" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;8NxEHtkgOBQ&quot;,&quot;outilId&quot;:&quot;6&quot;,&quot;outilNom&quot;:&quot;Gumloop&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/gumloop/tutoriels/&quot;,&quot;titre&quot;:&quot;How I Built a Fully Automated Marketing Machine (no code)&quot;,&quot;canal&quot;:&quot;Garrett Rysko&quot;,&quot;duree&quot;:&quot;9:01&quot;,&quot;youtubeId&quot;:&quot;8NxEHtkgOBQ&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="AI Automation/Gumloop Live Workshop #1" data-secondes="3648">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('PjT1XVeSKsw','AI Automation/Gumloop Live Workshop #1')">
+      <img src="https://img.youtube.com/vi/PjT1XVeSKsw/mqdefault.jpg" alt="AI Automation/Gumloop Live Workshop #1" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">1:00:48</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('PjT1XVeSKsw','AI Automation/Gumloop Live Workshop #1')">AI Automation/Gumloop Live Workshop #1</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Gumloop
+        </p>
+        <button class="btn-save-video" data-video-id="PjT1XVeSKsw" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;PjT1XVeSKsw&quot;,&quot;outilId&quot;:&quot;6&quot;,&quot;outilNom&quot;:&quot;Gumloop&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/gumloop/tutoriels/&quot;,&quot;titre&quot;:&quot;AI Automation/Gumloop Live Workshop #1&quot;,&quot;canal&quot;:&quot;Gumloop&quot;,&quot;duree&quot;:&quot;1:00:48&quot;,&quot;youtubeId&quot;:&quot;PjT1XVeSKsw&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Créer des agents IA en NoCode, gratuitement, en 20 minutes !" data-secondes="1497">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('ifpJjfsH2lM','Créer des agents IA en NoCode, gratuitement, en 20 minutes !')">
+      <img src="https://img.youtube.com/vi/ifpJjfsH2lM/mqdefault.jpg" alt="Créer des agents IA en NoCode, gratuitement, en 20 minutes !" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">24:57</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('ifpJjfsH2lM','Créer des agents IA en NoCode, gratuitement, en 20 minutes !')">Créer des agents IA en NoCode, gratuitement, en 20 minutes !</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Elliott Pierret
+        </p>
+        <button class="btn-save-video" data-video-id="ifpJjfsH2lM" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;ifpJjfsH2lM&quot;,&quot;outilId&quot;:&quot;6&quot;,&quot;outilNom&quot;:&quot;Gumloop&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/gumloop/tutoriels/&quot;,&quot;titre&quot;:&quot;Créer des agents IA en NoCode, gratuitement, en 20 minutes !&quot;,&quot;canal&quot;:&quot;Elliott Pierret&quot;,&quot;duree&quot;:&quot;24:57&quot;,&quot;youtubeId&quot;:&quot;ifpJjfsH2lM&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Learn Gumloop in 13 Minutes" data-secondes="779">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Dvl6uK2vmhM','Learn Gumloop in 13 Minutes')">
+      <img src="https://img.youtube.com/vi/Dvl6uK2vmhM/mqdefault.jpg" alt="Learn Gumloop in 13 Minutes" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">12:59</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Dvl6uK2vmhM','Learn Gumloop in 13 Minutes')">Learn Gumloop in 13 Minutes</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Eliot Prince
+        </p>
+        <button class="btn-save-video" data-video-id="Dvl6uK2vmhM" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Dvl6uK2vmhM&quot;,&quot;outilId&quot;:&quot;6&quot;,&quot;outilNom&quot;:&quot;Gumloop&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/gumloop/tutoriels/&quot;,&quot;titre&quot;:&quot;Learn Gumloop in 13 Minutes&quot;,&quot;canal&quot;:&quot;Eliot Prince&quot;,&quot;duree&quot;:&quot;12:59&quot;,&quot;youtubeId&quot;:&quot;Dvl6uK2vmhM&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

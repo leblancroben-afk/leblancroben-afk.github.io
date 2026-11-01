@@ -42,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="61">
 
 <header class="fo-hero">
@@ -108,7 +119,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/XPVY1yXwxwY" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"XPVY1yXwxwY","titre":"Créer un agent IA avec n8n — Formation complète","duree":"43:02"},{"id":"EOxdOEoFRZI","titre":"Guide Complet n8n : Ton 1er Agent IA en 30 Minutes (No Code)","duree":"41:26"},{"id":"ycTHU-d5ymQ","titre":"Débuter avec n8n : Tuto Express en 30 min ! (Guide Débutant) 🚀 #n8n #NoCode","duree":"27:17"},{"id":"GBLKHPxokWw","titre":"Comprendre N8N en 7 minutes top chrono 🚀🚀","duree":"7:21"},{"id":"ev97gsizwbc","titre":"Créer un agent IA facilement en 10 min - Tutoriel n8n (l'IA t'aide à créer l'agent)","duree":"14:44"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"XPVY1yXwxwY","titre":"Créer un agent IA avec n8n — Formation complète","duree":"43:02"},{"id":"EOxdOEoFRZI","titre":"Guide Complet n8n : Ton 1er Agent IA en 30 Minutes (No Code)","duree":"41:26"},{"id":"ycTHU-d5ymQ","titre":"Débuter avec n8n : Tuto Express en 30 min ! (Guide Débutant) 🚀 #n8n #NoCode","duree":"27:17"},{"id":"GBLKHPxokWw","titre":"Comprendre N8N en 7 minutes top chrono 🚀🚀","duree":"7:21"},{"id":"ev97gsizwbc","titre":"Créer un agent IA facilement en 10 min - Tutoriel n8n (l'IA t'aide à créer l'agent)","duree":"14:44"},{"id":"UIf-SlmMays","titre":"n8n Tutorial – Zero to Hero Course","duree":"3:35:08"},{"id":"e3OV3LnrS7o","titre":"Master 80% of n8n in 36 Minutes","duree":"36:23"},{"id":"Fy1UCBcgF2o","titre":"n8n Tutorial for Beginners: How to Build AI Automations for FREE (Step-by-Step)","duree":"19:15"},{"id":"_Wf0NikMyAA","titre":"n8n Explained In 2 Minutes","duree":"2:05"},{"id":"4eRPQmzO_Nw","titre":"Curso de N8N desde CERO (completo)","duree":"1:48:16"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

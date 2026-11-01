@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maîtrisez Otter.ai : La vidéothèque complète | Albexia</title>
-  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Otter.ai. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Otter.ai. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/fr/otter-ai/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/otter-ai/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Maîtrisez Otter.ai : La vidéothèque complète | Albexia" />
-  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Otter.ai. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Otter.ai. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/fr/otter-ai/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "Otter.ai - Tutoriel complet", "thumbnailUrl": "https://img.youtube.com/vi/TtmGOKcp09c/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/TtmGOKcp09c" },
       { "@type": "VideoObject", "position": 3, "name": "Otter AI Tutorial: How To Use Otter AI For Beginners (AI Transcribe)", "thumbnailUrl": "https://img.youtube.com/vi/yUxlIDKIHhA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/yUxlIDKIHhA" },
       { "@type": "VideoObject", "position": 4, "name": "How To Use Otter AI To Transcribe Audio - Features and Overview", "thumbnailUrl": "https://img.youtube.com/vi/SyqipCxv0EY/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/SyqipCxv0EY" },
-      { "@type": "VideoObject", "position": 5, "name": "Otter  : l'outil d'intelligence artificielle qui va révolutionner vos visioconférences.", "thumbnailUrl": "https://img.youtube.com/vi/NImZTeUDM7Q/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/NImZTeUDM7Q" }
+      { "@type": "VideoObject", "position": 5, "name": "Otter  : l'outil d'intelligence artificielle qui va révolutionner vos visioconférences.", "thumbnailUrl": "https://img.youtube.com/vi/NImZTeUDM7Q/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/NImZTeUDM7Q" },
+      { "@type": "VideoObject", "position": 6, "name": "Otter AI Chat for Sales", "thumbnailUrl": "https://img.youtube.com/vi/B1qmBH2ROxU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/B1qmBH2ROxU" },
+      { "@type": "VideoObject", "position": 7, "name": "Otter.ai tutorial 2026 | Say goodbye to handwritten notes!", "thumbnailUrl": "https://img.youtube.com/vi/fD9k9yxgHE8/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/fD9k9yxgHE8" },
+      { "@type": "VideoObject", "position": 8, "name": "Ne prenez plus jamais de notes ennuyeuses en réunion avec Otter.ai 🚀📝", "thumbnailUrl": "https://img.youtube.com/vi/urW0E8VyDTY/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/urW0E8VyDTY" },
+      { "@type": "VideoObject", "position": 9, "name": "Otter AI tutorial For Beginners - COMPLETE Tutorial (2024)", "thumbnailUrl": "https://img.youtube.com/vi/T41PMhSBRS0/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/T41PMhSBRS0" },
+      { "@type": "VideoObject", "position": 10, "name": "Otter AI Tutorial for Beginners | 6 EASY Steps From Zero to Pro (2026)", "thumbnailUrl": "https://img.youtube.com/vi/r4XRaWrb4VI/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/r4XRaWrb4VI" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 résultats</span>
+    <span id="outil-video-count" class="filtres-count">10 résultats</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('64','Otter.ai')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Soumettre une vidéo
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="NImZTeUDM7Q" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;NImZTeUDM7Q&quot;,&quot;outilId&quot;:&quot;64&quot;,&quot;outilNom&quot;:&quot;Otter.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/otter-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Otter  : l'outil d'intelligence artificielle qui va révolutionner vos visioconférences.&quot;,&quot;canal&quot;:&quot;Daycodeur&quot;,&quot;duree&quot;:&quot;23:42&quot;,&quot;youtubeId&quot;:&quot;NImZTeUDM7Q&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Otter AI Chat for Sales" data-secondes="126">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('B1qmBH2ROxU','Otter AI Chat for Sales')">
+      <img src="https://img.youtube.com/vi/B1qmBH2ROxU/mqdefault.jpg" alt="Otter AI Chat for Sales" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:06</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('B1qmBH2ROxU','Otter AI Chat for Sales')">Otter AI Chat for Sales</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Otter_ai
+        </p>
+        <button class="btn-save-video" data-video-id="B1qmBH2ROxU" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;B1qmBH2ROxU&quot;,&quot;outilId&quot;:&quot;64&quot;,&quot;outilNom&quot;:&quot;Otter.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/otter-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Otter AI Chat for Sales&quot;,&quot;canal&quot;:&quot;Otter_ai&quot;,&quot;duree&quot;:&quot;2:06&quot;,&quot;youtubeId&quot;:&quot;B1qmBH2ROxU&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Otter.ai tutorial 2026 | Say goodbye to handwritten notes!" data-secondes="573">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('fD9k9yxgHE8','Otter.ai tutorial 2026 | Say goodbye to handwritten notes!')">
+      <img src="https://img.youtube.com/vi/fD9k9yxgHE8/mqdefault.jpg" alt="Otter.ai tutorial 2026 | Say goodbye to handwritten notes!" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">9:33</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('fD9k9yxgHE8','Otter.ai tutorial 2026 | Say goodbye to handwritten notes!')">Otter.ai tutorial 2026 | Say goodbye to handwritten notes!</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Cybernews
+        </p>
+        <button class="btn-save-video" data-video-id="fD9k9yxgHE8" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;fD9k9yxgHE8&quot;,&quot;outilId&quot;:&quot;64&quot;,&quot;outilNom&quot;:&quot;Otter.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/otter-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Otter.ai tutorial 2026 | Say goodbye to handwritten notes!&quot;,&quot;canal&quot;:&quot;Cybernews&quot;,&quot;duree&quot;:&quot;9:33&quot;,&quot;youtubeId&quot;:&quot;fD9k9yxgHE8&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Ne prenez plus jamais de notes ennuyeuses en réunion avec Otter.ai 🚀📝" data-secondes="481">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('urW0E8VyDTY','Ne prenez plus jamais de notes ennuyeuses en réunion avec Otter.ai 🚀📝')">
+      <img src="https://img.youtube.com/vi/urW0E8VyDTY/mqdefault.jpg" alt="Ne prenez plus jamais de notes ennuyeuses en réunion avec Otter.ai 🚀📝" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">8:01</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('urW0E8VyDTY','Ne prenez plus jamais de notes ennuyeuses en réunion avec Otter.ai 🚀📝')">Ne prenez plus jamais de notes ennuyeuses en réunion avec Otter.ai 🚀📝</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Courtier immobilier 
+        </p>
+        <button class="btn-save-video" data-video-id="urW0E8VyDTY" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;urW0E8VyDTY&quot;,&quot;outilId&quot;:&quot;64&quot;,&quot;outilNom&quot;:&quot;Otter.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/otter-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Ne prenez plus jamais de notes ennuyeuses en réunion avec Otter.ai 🚀📝&quot;,&quot;canal&quot;:&quot;Courtier immobilier &quot;,&quot;duree&quot;:&quot;8:01&quot;,&quot;youtubeId&quot;:&quot;urW0E8VyDTY&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Otter AI tutorial For Beginners - COMPLETE Tutorial (2024)" data-secondes="607">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('T41PMhSBRS0','Otter AI tutorial For Beginners - COMPLETE Tutorial (2024)')">
+      <img src="https://img.youtube.com/vi/T41PMhSBRS0/mqdefault.jpg" alt="Otter AI tutorial For Beginners - COMPLETE Tutorial (2024)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">10:07</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('T41PMhSBRS0','Otter AI tutorial For Beginners - COMPLETE Tutorial (2024)')">Otter AI tutorial For Beginners - COMPLETE Tutorial (2024)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Knowledge By Marcus
+        </p>
+        <button class="btn-save-video" data-video-id="T41PMhSBRS0" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;T41PMhSBRS0&quot;,&quot;outilId&quot;:&quot;64&quot;,&quot;outilNom&quot;:&quot;Otter.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/otter-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Otter AI tutorial For Beginners - COMPLETE Tutorial (2024)&quot;,&quot;canal&quot;:&quot;Knowledge By Marcus&quot;,&quot;duree&quot;:&quot;10:07&quot;,&quot;youtubeId&quot;:&quot;T41PMhSBRS0&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Otter AI Tutorial for Beginners | 6 EASY Steps From Zero to Pro (2026)" data-secondes="507">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('r4XRaWrb4VI','Otter AI Tutorial for Beginners | 6 EASY Steps From Zero to Pro (2026)')">
+      <img src="https://img.youtube.com/vi/r4XRaWrb4VI/mqdefault.jpg" alt="Otter AI Tutorial for Beginners | 6 EASY Steps From Zero to Pro (2026)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">8:27</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('r4XRaWrb4VI','Otter AI Tutorial for Beginners | 6 EASY Steps From Zero to Pro (2026)')">Otter AI Tutorial for Beginners | 6 EASY Steps From Zero to Pro (2026)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Thebusinessdive
+        </p>
+        <button class="btn-save-video" data-video-id="r4XRaWrb4VI" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;r4XRaWrb4VI&quot;,&quot;outilId&quot;:&quot;64&quot;,&quot;outilNom&quot;:&quot;Otter.ai&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/otter-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Otter AI Tutorial for Beginners | 6 EASY Steps From Zero to Pro (2026)&quot;,&quot;canal&quot;:&quot;Thebusinessdive&quot;,&quot;duree&quot;:&quot;8:27&quot;,&quot;youtubeId&quot;:&quot;r4XRaWrb4VI&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

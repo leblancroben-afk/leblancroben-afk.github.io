@@ -42,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="54">
 
 <header class="fo-hero">
@@ -108,7 +119,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/ZYma0jK7EKo" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"ZYma0jK7EKo","titre":"Suno ai (Guide complet)","duree":"27:30"},{"id":"dDd6HVuSZhM","titre":"SUNO AI (V3) : Crée ta chanson personnalisée avec l'IA gratuitement - Tuto","duree":"7:36"},{"id":"iKae7whHxgM","titre":"Suno : comment créer de la musique avec l'IA GRATUITEMENT en 2025 ?","duree":"12:54"},{"id":"NNX4tXwPdMg","titre":"Tuto IA - Suno, créer des chansons à texte ou musiques instrumentales (5 titres / jour en gratuit)","duree":"6:42"},{"id":"W85l8P3hclE","titre":"De ZÉRO à BANGER sur SUNO AI en 5 minutes ! (Tuto)","duree":"8:41"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"ZYma0jK7EKo","titre":"Suno ai (Guide complet)","duree":"27:30"},{"id":"dDd6HVuSZhM","titre":"SUNO AI (V3) : Crée ta chanson personnalisée avec l'IA gratuitement - Tuto","duree":"7:36"},{"id":"iKae7whHxgM","titre":"Suno : comment créer de la musique avec l'IA GRATUITEMENT en 2025 ?","duree":"12:54"},{"id":"NNX4tXwPdMg","titre":"Tuto IA - Suno, créer des chansons à texte ou musiques instrumentales (5 titres / jour en gratuit)","duree":"6:42"},{"id":"W85l8P3hclE","titre":"De ZÉRO à BANGER sur SUNO AI en 5 minutes ! (Tuto)","duree":"8:41"},{"id":"qR4BefPvSiI","titre":"Suno Studio Tutorial: A Complete Beginner's Guide (2026)","duree":"13:34"},{"id":"72R1NjNaUnE","titre":"Suno Ai Tutorial 2026 (For Complete Beginners)","duree":"7:25"},{"id":"Vfai49qhluA","titre":"How to Use Suno: From Beginner to Pro Features Explained","duree":"16:48"},{"id":"DrRRvM4oc4w","titre":"How to Use Suno AI Better than 99% of People","duree":"15:24"},{"id":"5OUpLRNdE9I","titre":"Suno Ai Tutorial 2025 | How To Use Suno V5 for Beginners","duree":"12:24"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

@@ -42,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="37">
 
 <header class="fo-hero">
@@ -108,7 +119,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/taPoDqaQoZ8" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"taPoDqaQoZ8","titre":"Tutoriel Grok 4 IA & Avis: Comment Utiliser Grok 4 IA","duree":"8:15"},{"id":"YOlzk0ThjOQ","titre":"Générateur de Vidéo IA 100 % GRATUIT et ILLIMITÉ 2025 | Tutoriel GROK IA pour Débutants","duree":"7:46"},{"id":"PZDFf5UEnaw","titre":"Comment Utiliser Grok AI Gratuitement ?","duree":"4:56"},{"id":"lvZfd65hB2I","titre":"Comment faire des vidéos IA avec Grok AI ?","duree":"6:14"},{"id":"3j6UhrDcGlI","titre":"Comment Utiliser Grok Gratuitement Pour Générer Des Vidéos IA Incroyables","duree":"10:43"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"taPoDqaQoZ8","titre":"Tutoriel Grok 4 IA & Avis: Comment Utiliser Grok 4 IA","duree":"8:15"},{"id":"YOlzk0ThjOQ","titre":"Générateur de Vidéo IA 100 % GRATUIT et ILLIMITÉ 2025 | Tutoriel GROK IA pour Débutants","duree":"7:46"},{"id":"PZDFf5UEnaw","titre":"Comment Utiliser Grok AI Gratuitement ?","duree":"4:56"},{"id":"lvZfd65hB2I","titre":"Comment faire des vidéos IA avec Grok AI ?","duree":"6:14"},{"id":"3j6UhrDcGlI","titre":"Comment Utiliser Grok Gratuitement Pour Générer Des Vidéos IA Incroyables","duree":"10:43"},{"id":"q1IwR88mhaA","titre":"The ONLY Grok Bot Tutorial You Need 2026 - How To Use Grok Bot For Beginners","duree":"14:01"},{"id":"TAirq97G7ow","titre":"How to Use Grok AI Better than 99% of People","duree":"6:08"},{"id":"xGgvKZ98Yzs","titre":"Grok AI Step-by-Step Guide 2025: Everything You Need to Know","duree":"16:50"},{"id":"BulDhh2b9Cc","titre":"How To Use Grok Bot For Beginners","duree":"6:38"},{"id":"NzO_kapnI_E","titre":"Ultimate GROK Tutorial (How to use Grok 4.3 for Beginners in 2026)","duree":"31:31"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maîtrisez Lovable : La vidéothèque complète | Albexia</title>
-  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Lovable. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Lovable. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/fr/lovable/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/lovable/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Maîtrisez Lovable : La vidéothèque complète | Albexia" />
-  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Lovable. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Lovable. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/fr/lovable/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "Comment créer un SaaS de A à Z sans coder 🚀 Guide complet avec Lovable", "thumbnailUrl": "https://img.youtube.com/vi/xSbglxdxdjk/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/xSbglxdxdjk" },
       { "@type": "VideoObject", "position": 3, "name": "Créer une appli sans coder en 30 min chrono avec l'IA (guide Lovable débutant)", "thumbnailUrl": "https://img.youtube.com/vi/5CH-QaYaVW4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/5CH-QaYaVW4" },
       { "@type": "VideoObject", "position": 4, "name": "Lovable AI Expliqué : Tutorial Complet pour Débutants", "thumbnailUrl": "https://img.youtube.com/vi/Kd4g1aCZm6k/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Kd4g1aCZm6k" },
-      { "@type": "VideoObject", "position": 5, "name": "Test de Lovable : Ce logiciel IA code TOUT à votre place (SaaS, app, sites, ...)", "thumbnailUrl": "https://img.youtube.com/vi/cLhvFAPAF50/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/cLhvFAPAF50" }
+      { "@type": "VideoObject", "position": 5, "name": "Test de Lovable : Ce logiciel IA code TOUT à votre place (SaaS, app, sites, ...)", "thumbnailUrl": "https://img.youtube.com/vi/cLhvFAPAF50/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/cLhvFAPAF50" },
+      { "@type": "VideoObject", "position": 6, "name": "Master Lovable AI in 20 Minutes (NEW 2.0 UPDATE)", "thumbnailUrl": "https://img.youtube.com/vi/mOak_imYmqU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/mOak_imYmqU" },
+      { "@type": "VideoObject", "position": 7, "name": "Master Lovable In 24 Minutes", "thumbnailUrl": "https://img.youtube.com/vi/rqvtLxwMklo/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/rqvtLxwMklo" },
+      { "@type": "VideoObject", "position": 8, "name": "Master Lovable in 17 minutes (Starter Tutorial)", "thumbnailUrl": "https://img.youtube.com/vi/Vf2K0pcTLEo/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Vf2K0pcTLEo" },
+      { "@type": "VideoObject", "position": 9, "name": "Lovable AI Tutorial for Beginners - Build Your First App", "thumbnailUrl": "https://img.youtube.com/vi/y4IJbZ1E1DM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/y4IJbZ1E1DM" },
+      { "@type": "VideoObject", "position": 10, "name": "J'ai créé une app complète, ça m'a pris 28 minutes. (Lovable.dev)", "thumbnailUrl": "https://img.youtube.com/vi/3Ih1LvYdyNg/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/3Ih1LvYdyNg" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 résultats</span>
+    <span id="outil-video-count" class="filtres-count">10 résultats</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('51','Lovable')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Soumettre une vidéo
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="cLhvFAPAF50" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;cLhvFAPAF50&quot;,&quot;outilId&quot;:&quot;51&quot;,&quot;outilNom&quot;:&quot;Lovable&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/lovable/tutoriels/&quot;,&quot;titre&quot;:&quot;Test de Lovable : Ce logiciel IA code TOUT à votre place (SaaS, app, sites, ...)&quot;,&quot;canal&quot;:&quot;LEPTIDIGITAL&quot;,&quot;duree&quot;:&quot;5:11&quot;,&quot;youtubeId&quot;:&quot;cLhvFAPAF50&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Master Lovable AI in 20 Minutes (NEW 2.0 UPDATE)" data-secondes="1264">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('mOak_imYmqU','Master Lovable AI in 20 Minutes (NEW 2.0 UPDATE)')">
+      <img src="https://img.youtube.com/vi/mOak_imYmqU/mqdefault.jpg" alt="Master Lovable AI in 20 Minutes (NEW 2.0 UPDATE)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">21:04</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('mOak_imYmqU','Master Lovable AI in 20 Minutes (NEW 2.0 UPDATE)')">Master Lovable AI in 20 Minutes (NEW 2.0 UPDATE)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Darrel Wilson
+        </p>
+        <button class="btn-save-video" data-video-id="mOak_imYmqU" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;mOak_imYmqU&quot;,&quot;outilId&quot;:&quot;51&quot;,&quot;outilNom&quot;:&quot;Lovable&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/lovable/tutoriels/&quot;,&quot;titre&quot;:&quot;Master Lovable AI in 20 Minutes (NEW 2.0 UPDATE)&quot;,&quot;canal&quot;:&quot;Darrel Wilson&quot;,&quot;duree&quot;:&quot;21:04&quot;,&quot;youtubeId&quot;:&quot;mOak_imYmqU&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Master Lovable In 24 Minutes" data-secondes="1479">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('rqvtLxwMklo','Master Lovable In 24 Minutes')">
+      <img src="https://img.youtube.com/vi/rqvtLxwMklo/mqdefault.jpg" alt="Master Lovable In 24 Minutes" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">24:39</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('rqvtLxwMklo','Master Lovable In 24 Minutes')">Master Lovable In 24 Minutes</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Lovable
+        </p>
+        <button class="btn-save-video" data-video-id="rqvtLxwMklo" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;rqvtLxwMklo&quot;,&quot;outilId&quot;:&quot;51&quot;,&quot;outilNom&quot;:&quot;Lovable&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/lovable/tutoriels/&quot;,&quot;titre&quot;:&quot;Master Lovable In 24 Minutes&quot;,&quot;canal&quot;:&quot;Lovable&quot;,&quot;duree&quot;:&quot;24:39&quot;,&quot;youtubeId&quot;:&quot;rqvtLxwMklo&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Master Lovable in 17 minutes (Starter Tutorial)" data-secondes="1020">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Vf2K0pcTLEo','Master Lovable in 17 minutes (Starter Tutorial)')">
+      <img src="https://img.youtube.com/vi/Vf2K0pcTLEo/mqdefault.jpg" alt="Master Lovable in 17 minutes (Starter Tutorial)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">17:00</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Vf2K0pcTLEo','Master Lovable in 17 minutes (Starter Tutorial)')">Master Lovable in 17 minutes (Starter Tutorial)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Lovable
+        </p>
+        <button class="btn-save-video" data-video-id="Vf2K0pcTLEo" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Vf2K0pcTLEo&quot;,&quot;outilId&quot;:&quot;51&quot;,&quot;outilNom&quot;:&quot;Lovable&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/lovable/tutoriels/&quot;,&quot;titre&quot;:&quot;Master Lovable in 17 minutes (Starter Tutorial)&quot;,&quot;canal&quot;:&quot;Lovable&quot;,&quot;duree&quot;:&quot;17:00&quot;,&quot;youtubeId&quot;:&quot;Vf2K0pcTLEo&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Lovable AI Tutorial for Beginners - Build Your First App" data-secondes="700">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('y4IJbZ1E1DM','Lovable AI Tutorial for Beginners - Build Your First App')">
+      <img src="https://img.youtube.com/vi/y4IJbZ1E1DM/mqdefault.jpg" alt="Lovable AI Tutorial for Beginners - Build Your First App" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">11:40</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('y4IJbZ1E1DM','Lovable AI Tutorial for Beginners - Build Your First App')">Lovable AI Tutorial for Beginners - Build Your First App</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Kevin Stratvert
+        </p>
+        <button class="btn-save-video" data-video-id="y4IJbZ1E1DM" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;y4IJbZ1E1DM&quot;,&quot;outilId&quot;:&quot;51&quot;,&quot;outilNom&quot;:&quot;Lovable&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/lovable/tutoriels/&quot;,&quot;titre&quot;:&quot;Lovable AI Tutorial for Beginners - Build Your First App&quot;,&quot;canal&quot;:&quot;Kevin Stratvert&quot;,&quot;duree&quot;:&quot;11:40&quot;,&quot;youtubeId&quot;:&quot;y4IJbZ1E1DM&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="J'ai créé une app complète, ça m'a pris 28 minutes. (Lovable.dev)" data-secondes="1688">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('3Ih1LvYdyNg','J&#39;ai créé une app complète, ça m&#39;a pris 28 minutes. (Lovable.dev)')">
+      <img src="https://img.youtube.com/vi/3Ih1LvYdyNg/mqdefault.jpg" alt="J'ai créé une app complète, ça m'a pris 28 minutes. (Lovable.dev)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">28:08</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('3Ih1LvYdyNg','J&#39;ai créé une app complète, ça m&#39;a pris 28 minutes. (Lovable.dev)')">J'ai créé une app complète, ça m'a pris 28 minutes. (Lovable.dev)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Henri · ExplorIA
+        </p>
+        <button class="btn-save-video" data-video-id="3Ih1LvYdyNg" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;3Ih1LvYdyNg&quot;,&quot;outilId&quot;:&quot;51&quot;,&quot;outilNom&quot;:&quot;Lovable&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/lovable/tutoriels/&quot;,&quot;titre&quot;:&quot;J'ai créé une app complète, ça m'a pris 28 minutes. (Lovable.dev)&quot;,&quot;canal&quot;:&quot;Henri · ExplorIA&quot;,&quot;duree&quot;:&quot;28:08&quot;,&quot;youtubeId&quot;:&quot;3Ih1LvYdyNg&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

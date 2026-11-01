@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Master NotebookLM: the complete video library | Albexia</title>
-  <meta name="description" content="All the video tutorials to learn and master NotebookLM. 5 selected videos, filterable by duration. Free." />
+  <meta name="description" content="All the video tutorials to learn and master NotebookLM. 10 selected videos, filterable by duration. Free." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/en/notebooklm/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/notebooklm/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Master NotebookLM: the complete video library | Albexia" />
-  <meta property="og:description" content="All the video tutorials to learn and master NotebookLM. 5 selected videos, filterable by duration. Free." />
+  <meta property="og:description" content="All the video tutorials to learn and master NotebookLM. 10 selected videos, filterable by duration. Free." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/en/notebooklm/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "Tout ce que tu dois savoir sur NotebookLM - Guide Complet 2025", "thumbnailUrl": "https://img.youtube.com/vi/YmgKqTFhZ5k/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/YmgKqTFhZ5k" },
       { "@type": "VideoObject", "position": 3, "name": "Comment utiliser NotebookLM ? La meilleure IA pour apprendre, synthétiser et créer", "thumbnailUrl": "https://img.youtube.com/vi/je6uHtwStKs/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/je6uHtwStKs" },
       { "@type": "VideoObject", "position": 4, "name": "Tutoriel NoteBook LM en français - découvre LE meilleur outil IA du moment", "thumbnailUrl": "https://img.youtube.com/vi/OJKOmTm91vc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/OJKOmTm91vc" },
-      { "@type": "VideoObject", "position": 5, "name": "Maitriser TOUT Gemini Notebook en 26 minutes (Tuto Complet)", "thumbnailUrl": "https://img.youtube.com/vi/RKKK4uJ1ygU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/RKKK4uJ1ygU" }
+      { "@type": "VideoObject", "position": 5, "name": "Maitriser TOUT Gemini Notebook en 26 minutes (Tuto Complet)", "thumbnailUrl": "https://img.youtube.com/vi/RKKK4uJ1ygU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/RKKK4uJ1ygU" },
+      { "@type": "VideoObject", "position": 6, "name": "Learn 80% of NotebookLM in Under 13 Minutes!", "thumbnailUrl": "https://img.youtube.com/vi/EOmgC3-hznM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/EOmgC3-hznM" },
+      { "@type": "VideoObject", "position": 7, "name": "Domina NotebookLM en Menos de 7 Minutos (Tutorial Completo)", "thumbnailUrl": "https://img.youtube.com/vi/Xv5ZrnzA2DA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Xv5ZrnzA2DA" },
+      { "@type": "VideoObject", "position": 8, "name": "Google Notebook LM Tutorial - [Become A Power User in 15 min]", "thumbnailUrl": "https://img.youtube.com/vi/UG0DP6nVnrc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/UG0DP6nVnrc" },
+      { "@type": "VideoObject", "position": 9, "name": "How To Master NotebookLM in 2026 (Free Course)", "thumbnailUrl": "https://img.youtube.com/vi/b2fGNHPlUGA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/b2fGNHPlUGA" },
+      { "@type": "VideoObject", "position": 10, "name": "How to Use Google NotebookLM (Full Tutorial)", "thumbnailUrl": "https://img.youtube.com/vi/uSVBfyHBiDU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/uSVBfyHBiDU" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 results</span>
+    <span id="outil-video-count" class="filtres-count">10 results</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('62','NotebookLM')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Submit a video
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="RKKK4uJ1ygU" title="Save this video" aria-label="Save this video"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;RKKK4uJ1ygU&quot;,&quot;outilId&quot;:&quot;62&quot;,&quot;outilNom&quot;:&quot;NotebookLM&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/notebooklm/tutoriels/&quot;,&quot;titre&quot;:&quot;Maitriser TOUT Gemini Notebook en 26 minutes (Tuto Complet)&quot;,&quot;canal&quot;:&quot;Ludo Salenne&quot;,&quot;duree&quot;:&quot;26:29&quot;,&quot;youtubeId&quot;:&quot;RKKK4uJ1ygU&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Learn 80% of NotebookLM in Under 13 Minutes!" data-secondes="756">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('EOmgC3-hznM','Learn 80% of NotebookLM in Under 13 Minutes!')">
+      <img src="https://img.youtube.com/vi/EOmgC3-hznM/mqdefault.jpg" alt="Learn 80% of NotebookLM in Under 13 Minutes!" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">12:36</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('EOmgC3-hznM','Learn 80% of NotebookLM in Under 13 Minutes!')">Learn 80% of NotebookLM in Under 13 Minutes!</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Jeff Su
+        </p>
+        <button class="btn-save-video" data-video-id="EOmgC3-hznM" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;EOmgC3-hznM&quot;,&quot;outilId&quot;:&quot;62&quot;,&quot;outilNom&quot;:&quot;NotebookLM&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/notebooklm/tutoriels/&quot;,&quot;titre&quot;:&quot;Learn 80% of NotebookLM in Under 13 Minutes!&quot;,&quot;canal&quot;:&quot;Jeff Su&quot;,&quot;duree&quot;:&quot;12:36&quot;,&quot;youtubeId&quot;:&quot;EOmgC3-hznM&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Domina NotebookLM en Menos de 7 Minutos (Tutorial Completo)" data-secondes="418">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Xv5ZrnzA2DA','Domina NotebookLM en Menos de 7 Minutos (Tutorial Completo)')">
+      <img src="https://img.youtube.com/vi/Xv5ZrnzA2DA/mqdefault.jpg" alt="Domina NotebookLM en Menos de 7 Minutos (Tutorial Completo)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">6:58</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Xv5ZrnzA2DA','Domina NotebookLM en Menos de 7 Minutos (Tutorial Completo)')">Domina NotebookLM en Menos de 7 Minutos (Tutorial Completo)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          UDIA
+        </p>
+        <button class="btn-save-video" data-video-id="Xv5ZrnzA2DA" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Xv5ZrnzA2DA&quot;,&quot;outilId&quot;:&quot;62&quot;,&quot;outilNom&quot;:&quot;NotebookLM&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/notebooklm/tutoriels/&quot;,&quot;titre&quot;:&quot;Domina NotebookLM en Menos de 7 Minutos (Tutorial Completo)&quot;,&quot;canal&quot;:&quot;UDIA&quot;,&quot;duree&quot;:&quot;6:58&quot;,&quot;youtubeId&quot;:&quot;Xv5ZrnzA2DA&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Google Notebook LM Tutorial - [Become A Power User in 15 min]" data-secondes="796">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('UG0DP6nVnrc','Google Notebook LM Tutorial - [Become A Power User in 15 min]')">
+      <img src="https://img.youtube.com/vi/UG0DP6nVnrc/mqdefault.jpg" alt="Google Notebook LM Tutorial - [Become A Power User in 15 min]" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">13:16</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('UG0DP6nVnrc','Google Notebook LM Tutorial - [Become A Power User in 15 min]')">Google Notebook LM Tutorial - [Become A Power User in 15 min]</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Santrel Media
+        </p>
+        <button class="btn-save-video" data-video-id="UG0DP6nVnrc" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;UG0DP6nVnrc&quot;,&quot;outilId&quot;:&quot;62&quot;,&quot;outilNom&quot;:&quot;NotebookLM&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/notebooklm/tutoriels/&quot;,&quot;titre&quot;:&quot;Google Notebook LM Tutorial - [Become A Power User in 15 min]&quot;,&quot;canal&quot;:&quot;Santrel Media&quot;,&quot;duree&quot;:&quot;13:16&quot;,&quot;youtubeId&quot;:&quot;UG0DP6nVnrc&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="How To Master NotebookLM in 2026 (Free Course)" data-secondes="2080">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('b2fGNHPlUGA','How To Master NotebookLM in 2026 (Free Course)')">
+      <img src="https://img.youtube.com/vi/b2fGNHPlUGA/mqdefault.jpg" alt="How To Master NotebookLM in 2026 (Free Course)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">34:40</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('b2fGNHPlUGA','How To Master NotebookLM in 2026 (Free Course)')">How To Master NotebookLM in 2026 (Free Course)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Paul J Lipsky
+        </p>
+        <button class="btn-save-video" data-video-id="b2fGNHPlUGA" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;b2fGNHPlUGA&quot;,&quot;outilId&quot;:&quot;62&quot;,&quot;outilNom&quot;:&quot;NotebookLM&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/notebooklm/tutoriels/&quot;,&quot;titre&quot;:&quot;How To Master NotebookLM in 2026 (Free Course)&quot;,&quot;canal&quot;:&quot;Paul J Lipsky&quot;,&quot;duree&quot;:&quot;34:40&quot;,&quot;youtubeId&quot;:&quot;b2fGNHPlUGA&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="How to Use Google NotebookLM (Full Tutorial)" data-secondes="476">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('uSVBfyHBiDU','How to Use Google NotebookLM (Full Tutorial)')">
+      <img src="https://img.youtube.com/vi/uSVBfyHBiDU/mqdefault.jpg" alt="How to Use Google NotebookLM (Full Tutorial)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">7:56</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('uSVBfyHBiDU','How to Use Google NotebookLM (Full Tutorial)')">How to Use Google NotebookLM (Full Tutorial)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Kevin Stratvert
+        </p>
+        <button class="btn-save-video" data-video-id="uSVBfyHBiDU" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;uSVBfyHBiDU&quot;,&quot;outilId&quot;:&quot;62&quot;,&quot;outilNom&quot;:&quot;NotebookLM&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/notebooklm/tutoriels/&quot;,&quot;titre&quot;:&quot;How to Use Google NotebookLM (Full Tutorial)&quot;,&quot;canal&quot;:&quot;Kevin Stratvert&quot;,&quot;duree&quot;:&quot;7:56&quot;,&quot;youtubeId&quot;:&quot;uSVBfyHBiDU&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

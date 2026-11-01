@@ -42,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="6">
 
 <header class="fo-hero">
@@ -108,7 +119,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/tQ4oT9H3o1c" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"tQ4oT9H3o1c","titre":"Gumloop vs Make : l’IA qui crée des workflows en langage naturel !","duree":"19:03"},{"id":"xYgdtiY7SKo","titre":"Construire un bot de veille YouTube en 15 minutes avec Gumloop et l'IA","duree":"1:39"},{"id":"bTPwUTFYUIs","titre":"Gumloop et le futur de l'automatisation : entretien avec Aron Korenblit","duree":"46:55"},{"id":"XTfaBMGuU_0","titre":"J'ai découvert un outil d'automatisation super intuitif","duree":"22:18"},{"id":"DcByWzGOIXo","titre":"Build a YouTube Research Bot in 15 Minutes (Gumloop Tutorial)","duree":"5:06"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"tQ4oT9H3o1c","titre":"Gumloop vs Make : l’IA qui crée des workflows en langage naturel !","duree":"19:03"},{"id":"xYgdtiY7SKo","titre":"Construire un bot de veille YouTube en 15 minutes avec Gumloop et l'IA","duree":"1:39"},{"id":"bTPwUTFYUIs","titre":"Gumloop et le futur de l'automatisation : entretien avec Aron Korenblit","duree":"46:55"},{"id":"XTfaBMGuU_0","titre":"J'ai découvert un outil d'automatisation super intuitif","duree":"22:18"},{"id":"DcByWzGOIXo","titre":"Build a YouTube Research Bot in 15 Minutes (Gumloop Tutorial)","duree":"5:06"},{"id":"QFc7jXZ2pdE","titre":"I built an AI Agent in 43 min to automate my workflows (Zero Coding)","duree":"43:33"},{"id":"8NxEHtkgOBQ","titre":"How I Built a Fully Automated Marketing Machine (no code)","duree":"9:01"},{"id":"PjT1XVeSKsw","titre":"AI Automation/Gumloop Live Workshop #1","duree":"1:00:48"},{"id":"ifpJjfsH2lM","titre":"Créer des agents IA en NoCode, gratuitement, en 20 minutes !","duree":"24:57"},{"id":"Dvl6uK2vmhM","titre":"Learn Gumloop in 13 Minutes","duree":"12:59"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maîtrisez Freepik AI : La vidéothèque complète | Albexia</title>
-  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Freepik AI. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Freepik AI. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/fr/freepik-ai/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/freepik-ai/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Maîtrisez Freepik AI : La vidéothèque complète | Albexia" />
-  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Freepik AI. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Freepik AI. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/fr/freepik-ai/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "Freepik : tous les outils IA au même endroit !", "thumbnailUrl": "https://img.youtube.com/vi/P2rzFXgWoEM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/P2rzFXgWoEM" },
       { "@type": "VideoObject", "position": 3, "name": "Freepik Spaces : Le Guide Complet pour Débuter (2026)", "thumbnailUrl": "https://img.youtube.com/vi/eJArec-1_gU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/eJArec-1_gU" },
       { "@type": "VideoObject", "position": 4, "name": "How to Create AI Images from Text Prompts Using Freepik", "thumbnailUrl": "https://img.youtube.com/vi/u4_il7plgKE/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/u4_il7plgKE" },
-      { "@type": "VideoObject", "position": 5, "name": "Freepik AI just got 10x Better (Try ASAP)", "thumbnailUrl": "https://img.youtube.com/vi/HLgQ-eVQkeI/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/HLgQ-eVQkeI" }
+      { "@type": "VideoObject", "position": 5, "name": "Freepik AI just got 10x Better (Try ASAP)", "thumbnailUrl": "https://img.youtube.com/vi/HLgQ-eVQkeI/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/HLgQ-eVQkeI" },
+      { "@type": "VideoObject", "position": 6, "name": "Magnific AI Tutorial: EVERY Node Explained (Freepik Spaces)", "thumbnailUrl": "https://img.youtube.com/vi/52WhUjkmsTk/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/52WhUjkmsTk" },
+      { "@type": "VideoObject", "position": 7, "name": "The Freepik AI Masterclass: 2026 Full Course", "thumbnailUrl": "https://img.youtube.com/vi/Z08JELD20Nc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Z08JELD20Nc" },
+      { "@type": "VideoObject", "position": 8, "name": "Freepik Spaces Tutorial: EVERY Node Explained (Magnific AI)", "thumbnailUrl": "https://img.youtube.com/vi/Kno8RVN6AA8/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Kno8RVN6AA8" },
+      { "@type": "VideoObject", "position": 9, "name": "Cómo Usar FREEPIK", "thumbnailUrl": "https://img.youtube.com/vi/3QeAwzNxvgU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/3QeAwzNxvgU" },
+      { "@type": "VideoObject", "position": 10, "name": "Guía completa de Freepik 2025", "thumbnailUrl": "https://img.youtube.com/vi/hC0B5RIPRbc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/hC0B5RIPRbc" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 résultats</span>
+    <span id="outil-video-count" class="filtres-count">10 résultats</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('41','Freepik AI')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Soumettre une vidéo
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="HLgQ-eVQkeI" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;HLgQ-eVQkeI&quot;,&quot;outilId&quot;:&quot;41&quot;,&quot;outilNom&quot;:&quot;Freepik AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/freepik-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Freepik AI just got 10x Better (Try ASAP)&quot;,&quot;canal&quot;:&quot;Thomas Creates&quot;,&quot;duree&quot;:&quot;9:02&quot;,&quot;youtubeId&quot;:&quot;HLgQ-eVQkeI&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Magnific AI Tutorial: EVERY Node Explained (Freepik Spaces)" data-secondes="2267">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('52WhUjkmsTk','Magnific AI Tutorial: EVERY Node Explained (Freepik Spaces)')">
+      <img src="https://img.youtube.com/vi/52WhUjkmsTk/mqdefault.jpg" alt="Magnific AI Tutorial: EVERY Node Explained (Freepik Spaces)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">37:47</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('52WhUjkmsTk','Magnific AI Tutorial: EVERY Node Explained (Freepik Spaces)')">Magnific AI Tutorial: EVERY Node Explained (Freepik Spaces)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Artturi Jalli
+        </p>
+        <button class="btn-save-video" data-video-id="52WhUjkmsTk" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;52WhUjkmsTk&quot;,&quot;outilId&quot;:&quot;41&quot;,&quot;outilNom&quot;:&quot;Freepik AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/freepik-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Magnific AI Tutorial: EVERY Node Explained (Freepik Spaces)&quot;,&quot;canal&quot;:&quot;Artturi Jalli&quot;,&quot;duree&quot;:&quot;37:47&quot;,&quot;youtubeId&quot;:&quot;52WhUjkmsTk&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="The Freepik AI Masterclass: 2026 Full Course" data-secondes="3231">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Z08JELD20Nc','The Freepik AI Masterclass: 2026 Full Course')">
+      <img src="https://img.youtube.com/vi/Z08JELD20Nc/mqdefault.jpg" alt="The Freepik AI Masterclass: 2026 Full Course" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">53:51</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Z08JELD20Nc','The Freepik AI Masterclass: 2026 Full Course')">The Freepik AI Masterclass: 2026 Full Course</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Ľudovít Nastišin
+        </p>
+        <button class="btn-save-video" data-video-id="Z08JELD20Nc" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Z08JELD20Nc&quot;,&quot;outilId&quot;:&quot;41&quot;,&quot;outilNom&quot;:&quot;Freepik AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/freepik-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;The Freepik AI Masterclass: 2026 Full Course&quot;,&quot;canal&quot;:&quot;Ľudovít Nastišin&quot;,&quot;duree&quot;:&quot;53:51&quot;,&quot;youtubeId&quot;:&quot;Z08JELD20Nc&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Freepik Spaces Tutorial: EVERY Node Explained (Magnific AI)" data-secondes="1554">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Kno8RVN6AA8','Freepik Spaces Tutorial: EVERY Node Explained (Magnific AI)')">
+      <img src="https://img.youtube.com/vi/Kno8RVN6AA8/mqdefault.jpg" alt="Freepik Spaces Tutorial: EVERY Node Explained (Magnific AI)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">25:54</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Kno8RVN6AA8','Freepik Spaces Tutorial: EVERY Node Explained (Magnific AI)')">Freepik Spaces Tutorial: EVERY Node Explained (Magnific AI)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Artturi Jalli
+        </p>
+        <button class="btn-save-video" data-video-id="Kno8RVN6AA8" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Kno8RVN6AA8&quot;,&quot;outilId&quot;:&quot;41&quot;,&quot;outilNom&quot;:&quot;Freepik AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/freepik-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Freepik Spaces Tutorial: EVERY Node Explained (Magnific AI)&quot;,&quot;canal&quot;:&quot;Artturi Jalli&quot;,&quot;duree&quot;:&quot;25:54&quot;,&quot;youtubeId&quot;:&quot;Kno8RVN6AA8&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Cómo Usar FREEPIK" data-secondes="488">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('3QeAwzNxvgU','Cómo Usar FREEPIK')">
+      <img src="https://img.youtube.com/vi/3QeAwzNxvgU/mqdefault.jpg" alt="Cómo Usar FREEPIK" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">8:08</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('3QeAwzNxvgU','Cómo Usar FREEPIK')">Cómo Usar FREEPIK</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          IA360 Academy
+        </p>
+        <button class="btn-save-video" data-video-id="3QeAwzNxvgU" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;3QeAwzNxvgU&quot;,&quot;outilId&quot;:&quot;41&quot;,&quot;outilNom&quot;:&quot;Freepik AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/freepik-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Cómo Usar FREEPIK&quot;,&quot;canal&quot;:&quot;IA360 Academy&quot;,&quot;duree&quot;:&quot;8:08&quot;,&quot;youtubeId&quot;:&quot;3QeAwzNxvgU&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Guía completa de Freepik 2025" data-secondes="604">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('hC0B5RIPRbc','Guía completa de Freepik 2025')">
+      <img src="https://img.youtube.com/vi/hC0B5RIPRbc/mqdefault.jpg" alt="Guía completa de Freepik 2025" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">10:04</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('hC0B5RIPRbc','Guía completa de Freepik 2025')">Guía completa de Freepik 2025</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Racks University
+        </p>
+        <button class="btn-save-video" data-video-id="hC0B5RIPRbc" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;hC0B5RIPRbc&quot;,&quot;outilId&quot;:&quot;41&quot;,&quot;outilNom&quot;:&quot;Freepik AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/freepik-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Guía completa de Freepik 2025&quot;,&quot;canal&quot;:&quot;Racks University&quot;,&quot;duree&quot;:&quot;10:04&quot;,&quot;youtubeId&quot;:&quot;hC0B5RIPRbc&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

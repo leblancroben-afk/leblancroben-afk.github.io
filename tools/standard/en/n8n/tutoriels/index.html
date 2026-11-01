@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Master n8n: the complete video library | Albexia</title>
-  <meta name="description" content="All the video tutorials to learn and master n8n. 5 selected videos, filterable by duration. Free." />
+  <meta name="description" content="All the video tutorials to learn and master n8n. 10 selected videos, filterable by duration. Free." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/en/n8n/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/n8n/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Master n8n: the complete video library | Albexia" />
-  <meta property="og:description" content="All the video tutorials to learn and master n8n. 5 selected videos, filterable by duration. Free." />
+  <meta property="og:description" content="All the video tutorials to learn and master n8n. 10 selected videos, filterable by duration. Free." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/en/n8n/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "Guide Complet n8n : Ton 1er Agent IA en 30 Minutes (No Code)", "thumbnailUrl": "https://img.youtube.com/vi/EOxdOEoFRZI/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/EOxdOEoFRZI" },
       { "@type": "VideoObject", "position": 3, "name": "Débuter avec n8n : Tuto Express en 30 min ! (Guide Débutant) 🚀 #n8n #NoCode", "thumbnailUrl": "https://img.youtube.com/vi/ycTHU-d5ymQ/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/ycTHU-d5ymQ" },
       { "@type": "VideoObject", "position": 4, "name": "Comprendre N8N en 7 minutes top chrono 🚀🚀", "thumbnailUrl": "https://img.youtube.com/vi/GBLKHPxokWw/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/GBLKHPxokWw" },
-      { "@type": "VideoObject", "position": 5, "name": "Créer un agent IA facilement en 10 min - Tutoriel n8n (l'IA t'aide à créer l'agent)", "thumbnailUrl": "https://img.youtube.com/vi/ev97gsizwbc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/ev97gsizwbc" }
+      { "@type": "VideoObject", "position": 5, "name": "Créer un agent IA facilement en 10 min - Tutoriel n8n (l'IA t'aide à créer l'agent)", "thumbnailUrl": "https://img.youtube.com/vi/ev97gsizwbc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/ev97gsizwbc" },
+      { "@type": "VideoObject", "position": 6, "name": "n8n Tutorial – Zero to Hero Course", "thumbnailUrl": "https://img.youtube.com/vi/UIf-SlmMays/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/UIf-SlmMays" },
+      { "@type": "VideoObject", "position": 7, "name": "Master 80% of n8n in 36 Minutes", "thumbnailUrl": "https://img.youtube.com/vi/e3OV3LnrS7o/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/e3OV3LnrS7o" },
+      { "@type": "VideoObject", "position": 8, "name": "n8n Tutorial for Beginners: How to Build AI Automations for FREE (Step-by-Step)", "thumbnailUrl": "https://img.youtube.com/vi/Fy1UCBcgF2o/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Fy1UCBcgF2o" },
+      { "@type": "VideoObject", "position": 9, "name": "n8n Explained In 2 Minutes", "thumbnailUrl": "https://img.youtube.com/vi/_Wf0NikMyAA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/_Wf0NikMyAA" },
+      { "@type": "VideoObject", "position": 10, "name": "Curso de N8N desde CERO (completo)", "thumbnailUrl": "https://img.youtube.com/vi/4eRPQmzO_Nw/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/4eRPQmzO_Nw" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 results</span>
+    <span id="outil-video-count" class="filtres-count">10 results</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('61','n8n')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Submit a video
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="ev97gsizwbc" title="Save this video" aria-label="Save this video"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;ev97gsizwbc&quot;,&quot;outilId&quot;:&quot;61&quot;,&quot;outilNom&quot;:&quot;n8n&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/n8n/tutoriels/&quot;,&quot;titre&quot;:&quot;Créer un agent IA facilement en 10 min - Tutoriel n8n (l'IA t'aide à créer l'agent)&quot;,&quot;canal&quot;:&quot;Louis Graffeuil&quot;,&quot;duree&quot;:&quot;14:44&quot;,&quot;youtubeId&quot;:&quot;ev97gsizwbc&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="n8n Tutorial – Zero to Hero Course" data-secondes="12908">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('UIf-SlmMays','n8n Tutorial – Zero to Hero Course')">
+      <img src="https://img.youtube.com/vi/UIf-SlmMays/mqdefault.jpg" alt="n8n Tutorial – Zero to Hero Course" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">3:35:08</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('UIf-SlmMays','n8n Tutorial – Zero to Hero Course')">n8n Tutorial – Zero to Hero Course</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          freeCodeCamp.org
+        </p>
+        <button class="btn-save-video" data-video-id="UIf-SlmMays" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;UIf-SlmMays&quot;,&quot;outilId&quot;:&quot;61&quot;,&quot;outilNom&quot;:&quot;n8n&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/n8n/tutoriels/&quot;,&quot;titre&quot;:&quot;n8n Tutorial – Zero to Hero Course&quot;,&quot;canal&quot;:&quot;freeCodeCamp.org&quot;,&quot;duree&quot;:&quot;3:35:08&quot;,&quot;youtubeId&quot;:&quot;UIf-SlmMays&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Master 80% of n8n in 36 Minutes" data-secondes="2183">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('e3OV3LnrS7o','Master 80% of n8n in 36 Minutes')">
+      <img src="https://img.youtube.com/vi/e3OV3LnrS7o/mqdefault.jpg" alt="Master 80% of n8n in 36 Minutes" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">36:23</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('e3OV3LnrS7o','Master 80% of n8n in 36 Minutes')">Master 80% of n8n in 36 Minutes</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Futurepedia
+        </p>
+        <button class="btn-save-video" data-video-id="e3OV3LnrS7o" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;e3OV3LnrS7o&quot;,&quot;outilId&quot;:&quot;61&quot;,&quot;outilNom&quot;:&quot;n8n&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/n8n/tutoriels/&quot;,&quot;titre&quot;:&quot;Master 80% of n8n in 36 Minutes&quot;,&quot;canal&quot;:&quot;Futurepedia&quot;,&quot;duree&quot;:&quot;36:23&quot;,&quot;youtubeId&quot;:&quot;e3OV3LnrS7o&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="n8n Tutorial for Beginners: How to Build AI Automations for FREE (Step-by-Step)" data-secondes="1155">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Fy1UCBcgF2o','n8n Tutorial for Beginners: How to Build AI Automations for FREE (Step-by-Step)')">
+      <img src="https://img.youtube.com/vi/Fy1UCBcgF2o/mqdefault.jpg" alt="n8n Tutorial for Beginners: How to Build AI Automations for FREE (Step-by-Step)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">19:15</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Fy1UCBcgF2o','n8n Tutorial for Beginners: How to Build AI Automations for FREE (Step-by-Step)')">n8n Tutorial for Beginners: How to Build AI Automations for FREE (Step-by-Step)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Charlie Chang
+        </p>
+        <button class="btn-save-video" data-video-id="Fy1UCBcgF2o" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Fy1UCBcgF2o&quot;,&quot;outilId&quot;:&quot;61&quot;,&quot;outilNom&quot;:&quot;n8n&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/n8n/tutoriels/&quot;,&quot;titre&quot;:&quot;n8n Tutorial for Beginners: How to Build AI Automations for FREE (Step-by-Step)&quot;,&quot;canal&quot;:&quot;Charlie Chang&quot;,&quot;duree&quot;:&quot;19:15&quot;,&quot;youtubeId&quot;:&quot;Fy1UCBcgF2o&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="n8n Explained In 2 Minutes" data-secondes="125">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('_Wf0NikMyAA','n8n Explained In 2 Minutes')">
+      <img src="https://img.youtube.com/vi/_Wf0NikMyAA/mqdefault.jpg" alt="n8n Explained In 2 Minutes" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:05</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('_Wf0NikMyAA','n8n Explained In 2 Minutes')">n8n Explained In 2 Minutes</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          CodeHead
+        </p>
+        <button class="btn-save-video" data-video-id="_Wf0NikMyAA" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;_Wf0NikMyAA&quot;,&quot;outilId&quot;:&quot;61&quot;,&quot;outilNom&quot;:&quot;n8n&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/n8n/tutoriels/&quot;,&quot;titre&quot;:&quot;n8n Explained In 2 Minutes&quot;,&quot;canal&quot;:&quot;CodeHead&quot;,&quot;duree&quot;:&quot;2:05&quot;,&quot;youtubeId&quot;:&quot;_Wf0NikMyAA&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Curso de N8N desde CERO (completo)" data-secondes="6496">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('4eRPQmzO_Nw','Curso de N8N desde CERO (completo)')">
+      <img src="https://img.youtube.com/vi/4eRPQmzO_Nw/mqdefault.jpg" alt="Curso de N8N desde CERO (completo)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">1:48:16</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('4eRPQmzO_Nw','Curso de N8N desde CERO (completo)')">Curso de N8N desde CERO (completo)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Soy Dalto
+        </p>
+        <button class="btn-save-video" data-video-id="4eRPQmzO_Nw" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;4eRPQmzO_Nw&quot;,&quot;outilId&quot;:&quot;61&quot;,&quot;outilNom&quot;:&quot;n8n&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/n8n/tutoriels/&quot;,&quot;titre&quot;:&quot;Curso de N8N desde CERO (completo)&quot;,&quot;canal&quot;:&quot;Soy Dalto&quot;,&quot;duree&quot;:&quot;1:48:16&quot;,&quot;youtubeId&quot;:&quot;4eRPQmzO_Nw&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

@@ -42,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="49">
 
 <header class="fo-hero">
@@ -108,7 +119,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/IGfZXOFjfTQ" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"IGfZXOFjfTQ","titre":"How To Improve Copy With DeepL Write (Full Guide 2025)","duree":"3:02"},{"id":"KlNtvW3srDY","titre":"How To Use DeepL Write For Grammar Checking (Full Guide)","duree":"2:12"},{"id":"fg99N2Hq-b8","titre":"How To Write With Confidence In Multiple Languages With Instant Writing Suggestions From DeepL Write","duree":"3:01"},{"id":"OtU2DSO1Roc","titre":"How To Use Deepl Write To Simplify Text! Tutorial","duree":"2:02"},{"id":"h2J42ixw44U","titre":"How To Use DeepL Write To Change Tone! Tutorial","duree":"2:10"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"IGfZXOFjfTQ","titre":"How To Improve Copy With DeepL Write (Full Guide 2025)","duree":"3:02"},{"id":"KlNtvW3srDY","titre":"How To Use DeepL Write For Grammar Checking (Full Guide)","duree":"2:12"},{"id":"fg99N2Hq-b8","titre":"How To Write With Confidence In Multiple Languages With Instant Writing Suggestions From DeepL Write","duree":"3:01"},{"id":"OtU2DSO1Roc","titre":"How To Use Deepl Write To Simplify Text! Tutorial","duree":"2:02"},{"id":"h2J42ixw44U","titre":"How To Use DeepL Write To Change Tone! Tutorial","duree":"2:10"},{"id":"BVr17BP14O0","titre":"Unlock clear, compelling business communication with DeepL Write","duree":"1:43"},{"id":"UnC86_dsffY","titre":"How To Use DeepL Write To Rewrite Text! Tutorial","duree":"1:51"},{"id":"q2oA0An3MH0","titre":"How to Use DeepL Write Full Guide 2026","duree":"1:39"},{"id":"PVKAZqCoxrY","titre":"How To Use Deepl Write To Shorten Text! Tutorial","duree":"2:18"},{"id":"x0lUf5Lc6Uk","titre":"How to Improve Writing With DeepL Write Full Guide 2026","duree":"1:35"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

@@ -42,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="53">
 
 <header class="fo-hero">
@@ -108,7 +119,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/9jxA7nLCiIw" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"9jxA7nLCiIw","titre":"Tuto UDIO, la superbe IA générative de chansons !","duree":"18:49"},{"id":"6IlItfVfOkQ","titre":"5-Minute AI Music Tutorial | How to Udio","duree":"5:10"},{"id":"XXyq_x-7Mfg","titre":"Udio AI Tutorial – How to Make Music with AI (Free & Easy)","duree":"12:05"},{"id":"YBRfmIRzLoE","titre":"Udio Tutorial - How To Make A Full Song -  Detailed Guide","duree":"11:02"},{"id":"GuPGVc5Kal4","titre":"Udio AI: How To Make Full Song | Step by Step Guide","duree":"7:06"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"9jxA7nLCiIw","titre":"Tuto UDIO, la superbe IA générative de chansons !","duree":"18:49"},{"id":"6IlItfVfOkQ","titre":"5-Minute AI Music Tutorial | How to Udio","duree":"5:10"},{"id":"XXyq_x-7Mfg","titre":"Udio AI Tutorial – How to Make Music with AI (Free & Easy)","duree":"12:05"},{"id":"YBRfmIRzLoE","titre":"Udio Tutorial - How To Make A Full Song -  Detailed Guide","duree":"11:02"},{"id":"GuPGVc5Kal4","titre":"Udio AI: How To Make Full Song | Step by Step Guide","duree":"7:06"},{"id":"Fp1Uk4EM0k4","titre":"Créer une Chanson avec l'IA : UDIO 100% gratuit","duree":"2:38"},{"id":"oDKtyfyTTEc","titre":"Mastering UDIO: The Ultimate Guide to AI Music Creation","duree":"19:23"},{"id":"XjSqzkf3bYM","titre":"Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)","duree":"18:34"},{"id":"PxCWjUrAhCk","titre":"Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno","duree":"36:45"},{"id":"MoE8dKuKmRc","titre":"Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison","duree":"16:15"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

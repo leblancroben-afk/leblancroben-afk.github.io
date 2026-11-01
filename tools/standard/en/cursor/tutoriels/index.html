@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Master Cursor: the complete video library | Albexia</title>
-  <meta name="description" content="All the video tutorials to learn and master Cursor. 5 selected videos, filterable by duration. Free." />
+  <meta name="description" content="All the video tutorials to learn and master Cursor. 10 selected videos, filterable by duration. Free." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/en/cursor/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/cursor/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Master Cursor: the complete video library | Albexia" />
-  <meta property="og:description" content="All the video tutorials to learn and master Cursor. 5 selected videos, filterable by duration. Free." />
+  <meta property="og:description" content="All the video tutorials to learn and master Cursor. 10 selected videos, filterable by duration. Free." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/en/cursor/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "Découverte de Cursor, un éditeur basé sur l'IA", "thumbnailUrl": "https://img.youtube.com/vi/nSkj-EuwrrE/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/nSkj-EuwrrE" },
       { "@type": "VideoObject", "position": 3, "name": "CURSOR expliqué en 5 minutes – L’IA au service des développeurs", "thumbnailUrl": "https://img.youtube.com/vi/bnmIHAum99k/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/bnmIHAum99k" },
       { "@type": "VideoObject", "position": 4, "name": "Ma méthode pour créer des Apps avec Cursor (Débutant)", "thumbnailUrl": "https://img.youtube.com/vi/Lhu7OzAbjXs/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Lhu7OzAbjXs" },
-      { "@type": "VideoObject", "position": 5, "name": "MASTERCLASS IA : Coder un Site Fullstack de A à Z (Tuto Cursor, MCP, Claude 4.5, Supabase, Vercel)", "thumbnailUrl": "https://img.youtube.com/vi/vYzDGeTIsl0/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/vYzDGeTIsl0" }
+      { "@type": "VideoObject", "position": 5, "name": "MASTERCLASS IA : Coder un Site Fullstack de A à Z (Tuto Cursor, MCP, Claude 4.5, Supabase, Vercel)", "thumbnailUrl": "https://img.youtube.com/vi/vYzDGeTIsl0/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/vYzDGeTIsl0" },
+      { "@type": "VideoObject", "position": 6, "name": "Cursor Tutorial for Beginners (AI Code Editor)", "thumbnailUrl": "https://img.youtube.com/vi/ocMOZpuAMw4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/ocMOZpuAMw4" },
+      { "@type": "VideoObject", "position": 7, "name": "Cursor 2.0 Tutorial for Beginners (Full Course)", "thumbnailUrl": "https://img.youtube.com/vi/2aldTxnbNt0/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/2aldTxnbNt0" },
+      { "@type": "VideoObject", "position": 8, "name": "Cursor 2.0 - Full Tutorial for Beginners", "thumbnailUrl": "https://img.youtube.com/vi/l30Eb76Tk5s/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/l30Eb76Tk5s" },
+      { "@type": "VideoObject", "position": 9, "name": "Cursor 3.0 - Full Course for Beginners", "thumbnailUrl": "https://img.youtube.com/vi/Tv8mLrLtyxo/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Tv8mLrLtyxo" },
+      { "@type": "VideoObject", "position": 10, "name": "Cursor AI Tutorial for Beginners: Build App with AI (2026)", "thumbnailUrl": "https://img.youtube.com/vi/oQDCAJnr1aU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/oQDCAJnr1aU" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 results</span>
+    <span id="outil-video-count" class="filtres-count">10 results</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('50','Cursor')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Submit a video
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="vYzDGeTIsl0" title="Save this video" aria-label="Save this video"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;vYzDGeTIsl0&quot;,&quot;outilId&quot;:&quot;50&quot;,&quot;outilNom&quot;:&quot;Cursor&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/cursor/tutoriels/&quot;,&quot;titre&quot;:&quot;MASTERCLASS IA : Coder un Site Fullstack de A à Z (Tuto Cursor, MCP, Claude 4.5, Supabase, Vercel)&quot;,&quot;canal&quot;:&quot;Business IA - Elgoz Media&quot;,&quot;duree&quot;:&quot;33:47&quot;,&quot;youtubeId&quot;:&quot;vYzDGeTIsl0&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Cursor Tutorial for Beginners (AI Code Editor)" data-secondes="920">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('ocMOZpuAMw4','Cursor Tutorial for Beginners (AI Code Editor)')">
+      <img src="https://img.youtube.com/vi/ocMOZpuAMw4/mqdefault.jpg" alt="Cursor Tutorial for Beginners (AI Code Editor)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">15:20</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('ocMOZpuAMw4','Cursor Tutorial for Beginners (AI Code Editor)')">Cursor Tutorial for Beginners (AI Code Editor)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Tech With Tim
+        </p>
+        <button class="btn-save-video" data-video-id="ocMOZpuAMw4" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;ocMOZpuAMw4&quot;,&quot;outilId&quot;:&quot;50&quot;,&quot;outilNom&quot;:&quot;Cursor&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/cursor/tutoriels/&quot;,&quot;titre&quot;:&quot;Cursor Tutorial for Beginners (AI Code Editor)&quot;,&quot;canal&quot;:&quot;Tech With Tim&quot;,&quot;duree&quot;:&quot;15:20&quot;,&quot;youtubeId&quot;:&quot;ocMOZpuAMw4&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Cursor 2.0 Tutorial for Beginners (Full Course)" data-secondes="9254">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('2aldTxnbNt0','Cursor 2.0 Tutorial for Beginners (Full Course)')">
+      <img src="https://img.youtube.com/vi/2aldTxnbNt0/mqdefault.jpg" alt="Cursor 2.0 Tutorial for Beginners (Full Course)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:34:14</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('2aldTxnbNt0','Cursor 2.0 Tutorial for Beginners (Full Course)')">Cursor 2.0 Tutorial for Beginners (Full Course)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Riley Brown
+        </p>
+        <button class="btn-save-video" data-video-id="2aldTxnbNt0" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;2aldTxnbNt0&quot;,&quot;outilId&quot;:&quot;50&quot;,&quot;outilNom&quot;:&quot;Cursor&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/cursor/tutoriels/&quot;,&quot;titre&quot;:&quot;Cursor 2.0 Tutorial for Beginners (Full Course)&quot;,&quot;canal&quot;:&quot;Riley Brown&quot;,&quot;duree&quot;:&quot;2:34:14&quot;,&quot;youtubeId&quot;:&quot;2aldTxnbNt0&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Cursor 2.0 - Full Tutorial for Beginners" data-secondes="1638">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('l30Eb76Tk5s','Cursor 2.0 - Full Tutorial for Beginners')">
+      <img src="https://img.youtube.com/vi/l30Eb76Tk5s/mqdefault.jpg" alt="Cursor 2.0 - Full Tutorial for Beginners" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">27:18</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('l30Eb76Tk5s','Cursor 2.0 - Full Tutorial for Beginners')">Cursor 2.0 - Full Tutorial for Beginners</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Tech With Tim
+        </p>
+        <button class="btn-save-video" data-video-id="l30Eb76Tk5s" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;l30Eb76Tk5s&quot;,&quot;outilId&quot;:&quot;50&quot;,&quot;outilNom&quot;:&quot;Cursor&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/cursor/tutoriels/&quot;,&quot;titre&quot;:&quot;Cursor 2.0 - Full Tutorial for Beginners&quot;,&quot;canal&quot;:&quot;Tech With Tim&quot;,&quot;duree&quot;:&quot;27:18&quot;,&quot;youtubeId&quot;:&quot;l30Eb76Tk5s&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Cursor 3.0 - Full Course for Beginners" data-secondes="3141">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Tv8mLrLtyxo','Cursor 3.0 - Full Course for Beginners')">
+      <img src="https://img.youtube.com/vi/Tv8mLrLtyxo/mqdefault.jpg" alt="Cursor 3.0 - Full Course for Beginners" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">52:21</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Tv8mLrLtyxo','Cursor 3.0 - Full Course for Beginners')">Cursor 3.0 - Full Course for Beginners</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Tech With Tim
+        </p>
+        <button class="btn-save-video" data-video-id="Tv8mLrLtyxo" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Tv8mLrLtyxo&quot;,&quot;outilId&quot;:&quot;50&quot;,&quot;outilNom&quot;:&quot;Cursor&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/cursor/tutoriels/&quot;,&quot;titre&quot;:&quot;Cursor 3.0 - Full Course for Beginners&quot;,&quot;canal&quot;:&quot;Tech With Tim&quot;,&quot;duree&quot;:&quot;52:21&quot;,&quot;youtubeId&quot;:&quot;Tv8mLrLtyxo&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Cursor AI Tutorial for Beginners: Build App with AI (2026)" data-secondes="1388">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('oQDCAJnr1aU','Cursor AI Tutorial for Beginners: Build App with AI (2026)')">
+      <img src="https://img.youtube.com/vi/oQDCAJnr1aU/mqdefault.jpg" alt="Cursor AI Tutorial for Beginners: Build App with AI (2026)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">23:08</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('oQDCAJnr1aU','Cursor AI Tutorial for Beginners: Build App with AI (2026)')">Cursor AI Tutorial for Beginners: Build App with AI (2026)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Mikey No Code
+        </p>
+        <button class="btn-save-video" data-video-id="oQDCAJnr1aU" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;oQDCAJnr1aU&quot;,&quot;outilId&quot;:&quot;50&quot;,&quot;outilNom&quot;:&quot;Cursor&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/cursor/tutoriels/&quot;,&quot;titre&quot;:&quot;Cursor AI Tutorial for Beginners: Build App with AI (2026)&quot;,&quot;canal&quot;:&quot;Mikey No Code&quot;,&quot;duree&quot;:&quot;23:08&quot;,&quot;youtubeId&quot;:&quot;oQDCAJnr1aU&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

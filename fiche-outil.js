@@ -436,6 +436,30 @@ function generateFiche(tool, allTools = [], deps) {
   const metaDesc = E(((tool.meta_description || description) || '').slice(0, 155));
   const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
 
+  // ── Données structurées JSON-LD (SoftwareApplication + FAQPage), uniquement à partir des champs de la fiche ──
+  const ldItems = [];
+  const ldSoft = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: tool.name || '',
+    description: tool.description || '',
+    url: canonicalUrl,
+    inLanguage: langue,
+  };
+  if (category) ldSoft.applicationCategory = category;
+  if (pk === 'free' || pk === 'freemium') ldSoft.offers = { '@type': 'Offer', price: '0', priceCurrency: 'USD' };
+  ldItems.push(ldSoft);
+  const ldFaq = (faq || []).filter((f) => f && f.q && f.a);
+  if (ldFaq.length) {
+    ldItems.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: ldFaq.map((f) => ({ '@type': 'Question', name: String(f.q), acceptedAnswer: { '@type': 'Answer', text: String(f.a) } })),
+    });
+  }
+  // « < » échappé pour ne jamais fermer la balise script depuis le contenu
+  const jsonLdBlock = ldItems.map((o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`).join('\n  ');
+
   const INLINE_JS = String.raw`
 (function(){
   var d=document, root=d.documentElement;
@@ -533,6 +557,7 @@ ${ogLocaleAlternates}
   <link rel="stylesheet" href="${R}css/tool-detail.css">
   <link rel="stylesheet" href="${R}css/fiche-outil.css">
   <link rel="stylesheet" href="${R}css/themes.css">
+  ${jsonLdBlock}
 </head>
 <body>
 ${navHTML(langue)}

@@ -531,6 +531,23 @@
           </fieldset>
 
           <fieldset>
+        <legend>✨ Sections enrichies</legend>
+        <p class="field-hint">Une entrée par ligne. Les versions EN et ES se traduisent depuis le FR avec le bouton de traduction. Les prompts ne sont pas traduits : saisis-les dans chaque langue.</p>
+        <label>Idées d'utilisation FR</label>
+        <textarea id="o-idees-utilisation" rows="4" placeholder="Rédiger un plan d'article à partir d'une liste de mots-clés"></textarea>
+        <label>Idées d'utilisation EN</label>
+        <textarea id="o-idees-utilisation-en" rows="4"></textarea>
+        <label>Idées d'utilisation ES</label>
+        <textarea id="o-idees-utilisation-es" rows="4"></textarea>
+        <label>Prompts utiles FR (un par ligne)</label>
+        <textarea id="o-prompts" rows="4" placeholder="Écris un plan d'article de 800 mots sur ..."></textarea>
+        <label>Prompts utiles EN (un par ligne)</label>
+        <textarea id="o-prompts-en" rows="4"></textarea>
+        <label>Prompts utiles ES (un par ligne)</label>
+        <textarea id="o-prompts-es" rows="4"></textarea>
+      </fieldset>
+
+      <fieldset>
             <legend>💳 Tarifs de l'outil</legend>
             <p class="field-hint" style="margin-top:-4px;">Les formules de l'outil lui-même (pas les plans Albexia). Affiché sur toutes les fiches, uniquement si « Vérifiés ». Rempli par Gemini → à vérifier avant d'afficher.</p>
             <label>Formules (format : nom|prix|période|description, une par ligne)</label>
@@ -3157,6 +3174,12 @@ Support français|oui|non|bool"></textarea>
 
     setVal('o-points-forts', joinLines(tool.points_forts, '\n'));
     setVal('o-limite', tool.limite || tool.limite_principale);
+    setVal('o-idees-utilisation', joinLines(tool.idees_utilisation, '\\n'));
+    setVal('o-prompts', joinLines(tool.prompts, '\\n'));
+    setVal('o-idees-utilisation-en', en ? joinLines(en.idees_utilisation, '\\n') : '');
+    setVal('o-prompts-en', en ? joinLines(en.prompts, '\\n') : '');
+    setVal('o-idees-utilisation-es', es ? joinLines(es.idees_utilisation, '\\n') : '');
+    setVal('o-prompts-es', es ? joinLines(es.prompts, '\\n') : '');
     setVal('o-alternatives', (tool.alternatives||[]).join(', '));
 
     setVal('o-stats', joinLines((tool.stats||[]).map(s=>`${s.valeur}|${s.label}`), '\n'));
@@ -3501,6 +3524,9 @@ Support français|oui|non|bool"></textarea>
       const pointsFortsEs = lignes('o-points-forts-es');
       const limiteEn = gv('o-limite-en');
       const limiteEs = gv('o-limite-es');
+      const ideesFr = lignes('o-idees-utilisation'), promptsFr = lignes('o-prompts');
+      const ideesEn = lignes('o-idees-utilisation-en'), promptsEn = lignes('o-prompts-en');
+      const ideesEs = lignes('o-idees-utilisation-es'), promptsEs = lignes('o-prompts-es');
       const galerie = lignes('o-galerie').map(l=>{const i=l.indexOf('|');const u=(i<0?l:l.slice(0,i)).trim();return /^https?:\/\//i.test(u)?{url:u,legende:i<0?'':l.slice(i+1).trim()}:null;}).filter(Boolean);
       const changelog = lignes('o-changelog').map(l=>{const[date,titre,desc]=l.split('|');return titre&&titre.trim()?{date:(date||'').trim(),titre:titre.trim(),desc:(desc||'').trim()}:null;}).filter(Boolean);
       const reseaux = {}; ['x','linkedin','youtube'].forEach(k=>{const v=gv('o-reseau-'+k); if(v) reseaux[k]=v;});
@@ -3545,7 +3571,7 @@ Support français|oui|non|bool"></textarea>
           fonctionnalites:fonctionnalitesEn,faq:faqEn,presentation:presentationEn,
           meta_description:metaDescEn,maker,plateformes,url_tarifs:urlTarifs,
           interface_fr:interfaceFr,api,mobile,stats:(statsEn.length?statsEn:stats),tutoriels,alternatives,screenshot_url:screenshot,
-          points_forts:pointsFortsEn,limite:limiteEn,tarifs:tarifsEn,...communsNouveaux,
+          points_forts:pointsFortsEn,limite:limiteEn,idees_utilisation:ideesEn,prompts:promptsEn,tarifs:tarifsEn,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
       const nameEs=document.getElementById('o-name-es').value.trim();
@@ -3559,7 +3585,7 @@ Support français|oui|non|bool"></textarea>
           fonctionnalites:fonctionnalitesEs,faq:faqEs,presentation:presentationEs,
           meta_description:metaDescEs,maker,plateformes,url_tarifs:urlTarifs,
           interface_fr:interfaceFr,api,mobile,stats:(statsEs.length?statsEs:stats),tutoriels,alternatives,screenshot_url:screenshot,
-          points_forts:pointsFortsEs,limite:limiteEs,tarifs:tarifsEs,...communsNouveaux,
+          points_forts:pointsFortsEs,limite:limiteEs,idees_utilisation:ideesEs,prompts:promptsEs,tarifs:tarifsEs,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
 
@@ -3568,7 +3594,7 @@ Support français|oui|non|bool"></textarea>
         plan,langue:'fr',essai_gratuit:essai,duree_essai:duree,ideal_pour:idealFr,traductions,
         acces_web:accesWeb,generation_images:generationImages,telechargement_fichiers:telechargementFichiers,
         langues_disponibles:languesDisponibles,integrations,
-        points_forts:pointsForts,limite,alternatives,maker,plateformes,url_tarifs:urlTarifs,
+        points_forts:pointsForts,limite,idees_utilisation:ideesFr,prompts:promptsFr,alternatives,maker,plateformes,url_tarifs:urlTarifs,
         interface_fr:interfaceFr,api,mobile,presentation,meta_description:metaDesc,
         screenshot_url:screenshot,stats,fonctionnalites,faq,tutoriels,videotheque,tarifs,...communsNouveaux,
         generer_fiche:genererFiche,slug_articles:slugArticles||null,
@@ -3912,6 +3938,7 @@ Support français|oui|non|bool"></textarea>
       ['o-fonctionnalites', `o-fonctionnalites-${targetLang}`, 'fonctionnalites'],
       ['o-faq',             `o-faq-${targetLang}`,          'faq'],
       ['o-presentation',    `o-presentation-${targetLang}`, 'text'],
+      ['o-idees-utilisation', `o-idees-utilisation-${targetLang}`, 'lignes'],
       ['o-meta-desc',       `o-meta-desc-${targetLang}`,    'text'],
     ];
   }

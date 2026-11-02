@@ -129,7 +129,7 @@ const nonEmpty = (v) => !(v == null || v === '' || (Array.isArray(v) && !v.lengt
 // on ne veut pas de texte français sur une page EN/ES). Tous les autres
 // champs sont communs et repris du document FR si la langue n'a pas le sien.
 const TRADUISIBLES = new Set(['name', 'description', 'ideal_pour', 'presentation', 'meta_description',
-  'fonctionnalites', 'faq', 'stats', 'tarifs']);
+  'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts']);
 
 function generateFiche(tool, allTools = [], deps) {
   const { esc, slugify, seoHeadTags, toolLangueUrls, toolFicheUrl, navHTML, footerHTML, faqJS, tutorialJS, sharedJS, R } = deps;
@@ -168,6 +168,19 @@ function generateFiche(tool, allTools = [], deps) {
   const alternatives = g('alternatives') || [];
   const features = (g('fonctionnalites') || []).slice(0, LIMITES.features);
   const faq = (g('faq') || []).slice(0, LIMITES.faq);
+  // ── Avantages, limites, idées d'utilisation, prompts (champs saisis dans l'admin) ──
+  const pointsForts = (g('points_forts') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 8);
+  const limiteRaw = g('limite');
+  const limitesList = (Array.isArray(limiteRaw) ? limiteRaw : String(limiteRaw || '').split('\n'))
+    .map((x) => String(x).trim()).filter(Boolean).slice(0, 8);
+  const usages = (g('idees_utilisation') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 5);
+  const prompts = (g('prompts') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 5);
+  const TX_ALL = {
+    fr: { strengths: 'Avantages et limites', pros: 'Points forts', cons: 'Limites', usages: "Idées d'utilisation", prompts: 'Prompts utiles', copy: 'Copier', copied: 'Copié' },
+    en: { strengths: 'Strengths and limitations', pros: 'Strengths', cons: 'Limitations', usages: 'Use ideas', prompts: 'Useful prompts', copy: 'Copy', copied: 'Copied' },
+    es: { strengths: 'Ventajas y límites', pros: 'Puntos fuertes', cons: 'Límites', usages: 'Ideas de uso', prompts: 'Prompts útiles', copy: 'Copiar', copied: 'Copiado' },
+  };
+  const TX = TX_ALL[langue] || TX_ALL.fr;
   const videotheque = (g('videotheque') || []).filter((v) => v && v.youtube_id).slice(0, LIMITES.videotheque);
   const changelog = (g('changelog') || []).filter((c) => c && (c.titre || c.desc));
   const apiUrl = safeUrl(g('api_url'));
@@ -253,6 +266,31 @@ function generateFiche(tool, allTools = [], deps) {
   <h2>${E(T.mainFeatures)}</h2>
   <div class="fo-feat-grid">${features.map((f) => `<div class="fo-feat"><div class="fo-feat-ico">${ic(FI.featureKey(f.icon))}</div><div><h3>${E(f.titre)}</h3><p>${E(f.desc || '')}</p></div></div>`).join('')}</div>
 </section>` : '';
+
+  // ── Avantages et limites ──
+  const avantagesSection = (pointsForts.length || limitesList.length) ? `
+<section class="fo-card" id="fo-avantages">
+  <h2>${E(TX.strengths)}</h2>
+  <div class="fo-pl-grid">
+    ${pointsForts.length ? `<div><h3>${E(TX.pros)}</h3><ul class="fo-pros">${pointsForts.map((p) => `<li>${E(p)}</li>`).join('')}</ul></div>` : ''}
+    ${limitesList.length ? `<div><h3>${E(TX.cons)}</h3><ul class="fo-cons">${limitesList.map((p) => `<li>${E(p)}</li>`).join('')}</ul></div>` : ''}
+  </div>
+</section>` : '';
+
+  // ── Idées d'utilisation ──
+  const usagesSection = usages.length ? `
+<section class="fo-card" id="fo-usages">
+  <h2>${E(TX.usages)}</h2>
+  <ul class="fo-usages">${usages.map((u) => `<li>${E(u)}</li>`).join('')}</ul>
+</section>` : '';
+
+  // ── Prompts utiles (copie au clic, sans stockage navigateur) ──
+  const promptsScript = prompts.length ? `<script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.fo-copy');if(!b)return;var t=b.getAttribute('data-copy')||'';var label=b.getAttribute('data-label')||'';var done=b.getAttribute('data-done')||'';if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent=done;setTimeout(function(){b.textContent=label;},1500);});}});</script>` : '';
+  const promptsSection = prompts.length ? `
+<section class="fo-card" id="fo-prompts">
+  <h2>${E(TX.prompts)}</h2>
+  <div class="fo-prompt-list">${prompts.map((p) => `<div class="fo-prompt"><pre>${E(p)}</pre><button type="button" class="fo-copy" data-copy="${E(p)}" data-label="${E(TX.copy)}" data-done="${E(TX.copied)}">${E(TX.copy)}</button></div>`).join('')}</div>
+</section>${promptsScript}` : '';
 
   // ── Captures (Featured) ──
   const shotsSection = galerie.length > 1 ? `
@@ -373,6 +411,9 @@ function generateFiche(tool, allTools = [], deps) {
   const tabs = [
     ['fo-presentation', T.tabs.presentation, true],
     ['fo-fonctionnalites', T.tabs.features, !!featuresSection],
+    ['fo-avantages', TX.strengths, !!avantagesSection],
+    ['fo-usages', TX.usages, !!usagesSection],
+    ['fo-prompts', TX.prompts, !!promptsSection],
     ['fo-tarifs', T.tabs.pricing, !!tarifsCard],
     ['fo-avis', T.tabs.reviews, true],
     ['fo-alternatives', T.tabs.alternatives, !!altsCard],
@@ -503,6 +544,9 @@ ${tabsNav}
     <div class="fo-col-main">
       ${aboutSection}
       ${featuresSection}
+      ${avantagesSection}
+      ${usagesSection}
+      ${promptsSection}
       ${shotsSection}
       ${tutoSection}
       ${faqSection}

@@ -284,12 +284,11 @@ function construireMiseAJour(outil, infos, categorie) {
       ? infos.fonctionnalites.map(f => ({ ...f, icon: ICON_KEYS.includes(f && f.icon) ? f.icon : 'sparkles' }))
       : [],
     faq: Array.isArray(infos.faq) ? infos.faq : [],
-    // Sections enrichies : générées par l'IA, donc marquées « à vérifier » comme les tarifs.
+    // Sections enrichies : écrites directement, sans statut « à vérifier ».
     ...(Array.isArray(infos.points_forts) && infos.points_forts.length ? { points_forts: infos.points_forts.filter(Boolean) } : {}),
     ...(infos.limite ? { limite: String(infos.limite) } : {}),
     ...(Array.isArray(infos.idees_utilisation) && infos.idees_utilisation.length ? { idees_utilisation: infos.idees_utilisation.filter(Boolean) } : {}),
     ...(Array.isArray(infos.prompts) && infos.prompts.length ? { prompts: infos.prompts.filter(Boolean) } : {}),
-    ...((infos.points_forts?.length || infos.limite || infos.idees_utilisation?.length || infos.prompts?.length) ? { points_verifie: false } : {}),
     // null volontaire (incertain) : le champ n'est pas écrit → « Non renseigné » dans l'admin.
     ...(infos.interface_fr !== null && infos.interface_fr !== undefined ? { interface_fr: infos.interface_fr } : {}),
     ...(infos.api !== null && infos.api !== undefined ? { api: infos.api } : {}),

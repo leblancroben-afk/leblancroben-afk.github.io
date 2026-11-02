@@ -151,7 +151,6 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
     limite: traduit.limite || '',
     idees_utilisation: traduit.idees_utilisation || [],
     prompts: traduit.prompts || [],
-    points_verifie: false,
     presentation: traduit.presentation || '',
     meta_description: traduit.meta_description || '',
     maker: outil.maker,

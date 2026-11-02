@@ -169,14 +169,12 @@ function generateFiche(tool, allTools = [], deps) {
   const features = (g('fonctionnalites') || []).slice(0, LIMITES.features);
   const faq = (g('faq') || []).slice(0, LIMITES.faq);
   // ── Avantages, limites, idées d'utilisation, prompts (champs saisis dans l'admin) ──
-  // Comme les tarifs : contenu rempli par l'IA affiché seulement après vérification dans l'admin.
-  const enrichVerifie = tool.points_verifie !== false;
-  const pointsForts = enrichVerifie ? (g('points_forts') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 8) : [];
-  const limiteRaw = enrichVerifie ? g('limite') : '';
+  const pointsForts = (g('points_forts') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 8);
+  const limiteRaw = g('limite');
   const limitesList = (Array.isArray(limiteRaw) ? limiteRaw : String(limiteRaw || '').split('\n'))
     .map((x) => String(x).trim()).filter(Boolean).slice(0, 8);
-  const usages = enrichVerifie ? (g('idees_utilisation') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 5) : [];
-  const prompts = enrichVerifie ? (g('prompts') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 5) : [];
+  const usages = (g('idees_utilisation') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 5);
+  const prompts = (g('prompts') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 5);
   const TX_ALL = {
     fr: { strengths: 'Avantages et limites', pros: 'Points forts', cons: 'Limites', usages: "Idées d'utilisation", prompts: 'Prompts utiles', copy: 'Copier', copied: 'Copié' },
     en: { strengths: 'Strengths and limitations', pros: 'Strengths', cons: 'Limitations', usages: 'Use ideas', prompts: 'Useful prompts', copy: 'Copy', copied: 'Copied' },

@@ -143,6 +143,11 @@ const SCHEMA_LOT = {
       },
       presentation: { type: 'STRING', nullable: true },
       meta_description: { type: 'STRING', nullable: true },
+      // Sections enrichies : doivent être déclarées ici, sinon Gemini ne les renvoie jamais
+      points_forts: { type: 'ARRAY', nullable: true, items: { type: 'STRING' } },
+      limite: { type: 'STRING', nullable: true },
+      idees_utilisation: { type: 'ARRAY', nullable: true, items: { type: 'STRING' } },
+      prompts: { type: 'ARRAY', nullable: true, items: { type: 'STRING' } },
       sous_categorie: { type: 'STRING', nullable: true },
       modele: { type: 'STRING', nullable: true },
       annee_creation: { type: 'INTEGER', nullable: true },

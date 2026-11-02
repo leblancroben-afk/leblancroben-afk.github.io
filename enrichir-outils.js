@@ -89,17 +89,19 @@ Par outil :
 - tags : 3 à 6 mots-clés courts en français.
 - alternatives : 2 à 3 concurrents réellement comparables, séparés par des virgules.
 - fonctionnalites : 3 à 4 entrées {icon, titre, desc}. icon doit être EXACTEMENT une de ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji).
-- faq : 2 à 3 entrées {q, a}. Chaque réponse (a) fait 2 à 3 phrases courtes, 300 caractères maximum. Ne répète jamais une phrase ni une expression : une réponse qui tourne en boucle est rejetée.
-- presentation : 2 à 3 paragraphes factuels séparés par un retour à la ligne.
-- points_forts : 3 à 4 points forts factuels, une phrase courte chacun, tableau de chaînes. Tableau vide si incertain.
-- limite : 1 à 2 limites réelles et vérifiables, en une phrase, chaîne. null si incertain.
-- idees_utilisation : 3 à 4 cas d'usage concrets, tableau de chaînes. Tableau vide si incertain.
-- prompts : 1 à 2 prompts prêts à copier-coller pour utiliser l'outil, tableau de chaînes, uniquement si l'outil se prête à un prompt (texte, image, code, etc.). Tableau vide sinon.
+- faq : 4 à 5 entrées {q, a}, avec des questions variées qui couvrent les fonctionnalités, les tarifs, les limites, l'utilisation, les alternatives, la compatibilité et les besoins spécifiques. Chaque réponse (a) fait 3 à 5 phrases utiles et précises, 600 caractères maximum. Ne répète jamais une phrase ni une expression : une réponse qui tourne en boucle est rejetée.
+- presentation : 3 à 4 paragraphes factuels et spécifiques à l'outil, séparés par un retour à la ligne.
+- points_forts : 4 à 6 analyses approfondies des atouts réels de l'outil, une à deux phrases chacun, tableau de chaînes. Explique pourquoi l'atout compte, sans reprendre le libellé d'une fonctionnalité. Tableau vide si incertain.
+- limite : 2 à 4 contraintes réelles et vérifiables (techniques, plateformes, tarifs, courbe d'apprentissage, dépendances, confidentialité des données…), une par ligne séparée par un retour à la ligne, chaîne. null si incertain.
+- idees_utilisation : 4 à 5 cas d'usage concrets et variés, chacun en une à deux phrases (situation, public, bénéfice précis), tableau de chaînes. Privilégie des situations réalistes adaptées aux capacités réelles de l'outil. Tableau vide si incertain.
+- prompts : 3 à 5 prompts prêts à copier-coller, spécifiques à l'outil, chacun avec le contexte, la tâche, le format attendu et les contraintes, tableau de chaînes. Uniquement si l'outil se prête à un prompt (texte, image, code, etc.). Tableau vide sinon.
 - meta_description : 155 caractères maximum.
 - tarifs : 2 à 4 formules publiques {nom, prix, periode, desc}. Si le montant exact est incertain, prix et periode à "" (chaîne vide). Un tableau vide vaut mieux qu'un tarif inventé.
 - interface_fr, api, mobile, essai_gratuit : true, false ou null si incertain.
 - modele : "proprietaire" ou "open_source", null si incertain. annee_creation : entier ou null.
 - url_tarifs, duree_essai, sous_categorie, support, type_outil, langues_disponibles, maker, plateformes, ideal_pour, emoji : chaîne ou null si incertain.
+
+Règle de non-répétition : chaque section apporte une information distincte. Ne reprends pas dans les points forts, les limites, les idées ou les prompts le libellé ou la formulation d'une fonctionnalité ; ne répète pas une phrase d'une section à l'autre.
 
 Réponds UNIQUEMENT avec un tableau JSON, une entrée par outil demandé, en gardant le même "index".
 Aucune prose, aucun markdown.`;

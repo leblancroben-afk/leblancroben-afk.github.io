@@ -304,6 +304,10 @@
       "hash": "644756ac55d14b525906b9d65ff9f7d71378b465db1670d1697c897b4e2c1760",
       "updatedAtMs": 1793644453986
     },
+    "96": {
+      "hash": "4f780f821ea5bc55a1d08301576654d31ca257c29f21fa375958b420c459b021",
+      "updatedAtMs": 1793649022823
+    },
     "1-en": {
       "hash": "1eb16aa473da1e04ec1a7e1c0312be615b2254e923eaead721174fa96a1c88ed",
       "updatedAtMs": 1783958620103
@@ -967,6 +971,14 @@
     "95-es": {
       "hash": "76fe3cf436b51105c8582df4bff6e6e319963e89fb43c08b52040c877f8ee8b1",
       "updatedAtMs": 1793644453328
+    },
+    "96-en": {
+      "hash": "fb8698d74007c754e445283f69a0a7162d2ad66c939d55858fe79f57c06b831c",
+      "updatedAtMs": 1793648984550
+    },
+    "96-es": {
+      "hash": "3361793b286a105fc0107face83099cad88616d89515ad90800c25ec72ccf3cd",
+      "updatedAtMs": 1793649022568
     }
   },
   "articles": {

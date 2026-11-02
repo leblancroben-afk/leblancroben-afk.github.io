@@ -94,6 +94,7 @@ Par outil :
 - points_forts : 3 à 4 points forts factuels, une phrase courte chacun, tableau de chaînes. Tableau vide si incertain.
 - limite : 1 à 2 limites réelles et vérifiables, en une phrase, chaîne. null si incertain.
 - idees_utilisation : 3 à 4 cas d'usage concrets, tableau de chaînes. Tableau vide si incertain.
+- prompts : 1 à 2 prompts prêts à copier-coller pour utiliser l'outil, tableau de chaînes, uniquement si l'outil se prête à un prompt (texte, image, code, etc.). Tableau vide sinon.
 - meta_description : 155 caractères maximum.
 - tarifs : 2 à 4 formules publiques {nom, prix, periode, desc}. Si le montant exact est incertain, prix et periode à "" (chaîne vide). Un tableau vide vaut mieux qu'un tarif inventé.
 - interface_fr, api, mobile, essai_gratuit : true, false ou null si incertain.
@@ -287,7 +288,8 @@ function construireMiseAJour(outil, infos, categorie) {
     ...(Array.isArray(infos.points_forts) && infos.points_forts.length ? { points_forts: infos.points_forts.filter(Boolean) } : {}),
     ...(infos.limite ? { limite: String(infos.limite) } : {}),
     ...(Array.isArray(infos.idees_utilisation) && infos.idees_utilisation.length ? { idees_utilisation: infos.idees_utilisation.filter(Boolean) } : {}),
-    ...((infos.points_forts?.length || infos.limite || infos.idees_utilisation?.length) ? { points_verifie: false } : {}),
+    ...(Array.isArray(infos.prompts) && infos.prompts.length ? { prompts: infos.prompts.filter(Boolean) } : {}),
+    ...((infos.points_forts?.length || infos.limite || infos.idees_utilisation?.length || infos.prompts?.length) ? { points_verifie: false } : {}),
     // null volontaire (incertain) : le champ n'est pas écrit → « Non renseigné » dans l'admin.
     ...(infos.interface_fr !== null && infos.interface_fr !== undefined ? { interface_fr: infos.interface_fr } : {}),
     ...(infos.api !== null && infos.api !== undefined ? { api: infos.api } : {}),

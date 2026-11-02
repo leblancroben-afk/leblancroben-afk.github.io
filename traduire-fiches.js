@@ -117,8 +117,9 @@ async function traduireContenu(outil, langueCible) {
   const points_forts = await translateListe(outil.points_forts, langueCible);
   const limite = outil.limite ? await translateText(outil.limite, langueCible) : '';
   const idees_utilisation = await translateListe(outil.idees_utilisation, langueCible);
+  const prompts = await translateListe(outil.prompts, langueCible);
 
-  return { name, description, ideal_pour, presentation, meta_description, fonctionnalites, faq, points_forts, limite, idees_utilisation };
+  return { name, description, ideal_pour, presentation, meta_description, fonctionnalites, faq, points_forts, limite, idees_utilisation, prompts };
 }
 
 // ══════════════════════════════════════
@@ -149,7 +150,7 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
     points_forts: traduit.points_forts || [],
     limite: traduit.limite || '',
     idees_utilisation: traduit.idees_utilisation || [],
-    prompts: [], // saisis à la main dans l'admin, jamais traduits automatiquement
+    prompts: traduit.prompts || [],
     points_verifie: false,
     presentation: traduit.presentation || '',
     meta_description: traduit.meta_description || '',

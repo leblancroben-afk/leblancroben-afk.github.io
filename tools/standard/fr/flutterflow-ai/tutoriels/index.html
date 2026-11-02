@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maîtrisez FlutterFlow AI : La vidéothèque complète | Albexia</title>
-  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser FlutterFlow AI. 6 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser FlutterFlow AI. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/fr/flutterflow-ai/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/flutterflow-ai/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Maîtrisez FlutterFlow AI : La vidéothèque complète | Albexia" />
-  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser FlutterFlow AI. 6 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser FlutterFlow AI. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/fr/flutterflow-ai/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -31,7 +31,11 @@
       { "@type": "VideoObject", "position": 3, "name": "Cette iA permet de créer des apps mobiles en 2 minutes (avec Flutterflow)", "thumbnailUrl": "https://img.youtube.com/vi/TNawJpVPaQc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/TNawJpVPaQc" },
       { "@type": "VideoObject", "position": 4, "name": "FLUTTERFLOW : Guide Complet (IA) Intelligence artificielle", "thumbnailUrl": "https://img.youtube.com/vi/yR5PSuNPNHY/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/yR5PSuNPNHY" },
       { "@type": "VideoObject", "position": 5, "name": "Créer des apps avec FlutterFlow + IA (Le MCP expliqué)", "thumbnailUrl": "https://img.youtube.com/vi/SQI3Zsv39lA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/SQI3Zsv39lA" },
-      { "@type": "VideoObject", "position": 6, "name": "Comment Créer Une App Gratuitement Avec FlutterFlow ?", "thumbnailUrl": "https://img.youtube.com/vi/qJXwmTPArK4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/qJXwmTPArK4" }
+      { "@type": "VideoObject", "position": 6, "name": "Comment Créer Une App Gratuitement Avec FlutterFlow ?", "thumbnailUrl": "https://img.youtube.com/vi/qJXwmTPArK4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/qJXwmTPArK4" },
+      { "@type": "VideoObject", "position": 7, "name": "AI Agent Builder Tutorial | New Feature | FlutterFlow Studio", "thumbnailUrl": "https://img.youtube.com/vi/_U2a4dd3uno/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/_U2a4dd3uno" },
+      { "@type": "VideoObject", "position": 8, "name": "FlutterFlow Studio's Native AI Agents: Build Apps with Claude Code & Codex", "thumbnailUrl": "https://img.youtube.com/vi/zK8neqREUHc/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/zK8neqREUHc" },
+      { "@type": "VideoObject", "position": 9, "name": "How to Use FlutterFlow AI Generator [2026 Guide]", "thumbnailUrl": "https://img.youtube.com/vi/vWVQR9ZWmKY/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/vWVQR9ZWmKY" },
+      { "@type": "VideoObject", "position": 10, "name": "Flutterflow Tutorial For Beginners 2026 | Features, Pricing & AI Agents Walkthrough", "thumbnailUrl": "https://img.youtube.com/vi/aP3FXktC6Os/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/aP3FXktC6Os" }
     ]
   }
   </script>
@@ -59,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -67,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -115,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">6 résultats</span>
+    <span id="outil-video-count" class="filtres-count">10 résultats</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('90','FlutterFlow AI')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Soumettre une vidéo
@@ -253,6 +268,94 @@
         <button class="btn-save-video" data-video-id="qJXwmTPArK4" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;qJXwmTPArK4&quot;,&quot;outilId&quot;:&quot;90&quot;,&quot;outilNom&quot;:&quot;FlutterFlow AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/flutterflow-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Comment Créer Une App Gratuitement Avec FlutterFlow ?&quot;,&quot;canal&quot;:&quot;Driss AS&quot;,&quot;duree&quot;:&quot;8:38&quot;,&quot;youtubeId&quot;:&quot;qJXwmTPArK4&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="AI Agent Builder Tutorial | New Feature | FlutterFlow Studio" data-secondes="1164">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('_U2a4dd3uno','AI Agent Builder Tutorial | New Feature | FlutterFlow Studio')">
+      <img src="https://img.youtube.com/vi/_U2a4dd3uno/mqdefault.jpg" alt="AI Agent Builder Tutorial | New Feature | FlutterFlow Studio" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">19:24</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('_U2a4dd3uno','AI Agent Builder Tutorial | New Feature | FlutterFlow Studio')">AI Agent Builder Tutorial | New Feature | FlutterFlow Studio</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          FlutterFlow
+        </p>
+        <button class="btn-save-video" data-video-id="_U2a4dd3uno" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;_U2a4dd3uno&quot;,&quot;outilId&quot;:&quot;90&quot;,&quot;outilNom&quot;:&quot;FlutterFlow AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/flutterflow-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;AI Agent Builder Tutorial | New Feature | FlutterFlow Studio&quot;,&quot;canal&quot;:&quot;FlutterFlow&quot;,&quot;duree&quot;:&quot;19:24&quot;,&quot;youtubeId&quot;:&quot;_U2a4dd3uno&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="FlutterFlow Studio's Native AI Agents: Build Apps with Claude Code & Codex" data-secondes="158">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('zK8neqREUHc','FlutterFlow Studio&#39;s Native AI Agents: Build Apps with Claude Code & Codex')">
+      <img src="https://img.youtube.com/vi/zK8neqREUHc/mqdefault.jpg" alt="FlutterFlow Studio's Native AI Agents: Build Apps with Claude Code & Codex" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:38</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('zK8neqREUHc','FlutterFlow Studio&#39;s Native AI Agents: Build Apps with Claude Code & Codex')">FlutterFlow Studio's Native AI Agents: Build Apps with Claude Code & Codex</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          FlutterFlow
+        </p>
+        <button class="btn-save-video" data-video-id="zK8neqREUHc" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;zK8neqREUHc&quot;,&quot;outilId&quot;:&quot;90&quot;,&quot;outilNom&quot;:&quot;FlutterFlow AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/flutterflow-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;FlutterFlow Studio's Native AI Agents: Build Apps with Claude Code & Codex&quot;,&quot;canal&quot;:&quot;FlutterFlow&quot;,&quot;duree&quot;:&quot;2:38&quot;,&quot;youtubeId&quot;:&quot;zK8neqREUHc&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="How to Use FlutterFlow AI Generator [2026 Guide]" data-secondes="140">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('vWVQR9ZWmKY','How to Use FlutterFlow AI Generator [2026 Guide]')">
+      <img src="https://img.youtube.com/vi/vWVQR9ZWmKY/mqdefault.jpg" alt="How to Use FlutterFlow AI Generator [2026 Guide]" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:20</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('vWVQR9ZWmKY','How to Use FlutterFlow AI Generator [2026 Guide]')">How to Use FlutterFlow AI Generator [2026 Guide]</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Easy Click Fix
+        </p>
+        <button class="btn-save-video" data-video-id="vWVQR9ZWmKY" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;vWVQR9ZWmKY&quot;,&quot;outilId&quot;:&quot;90&quot;,&quot;outilNom&quot;:&quot;FlutterFlow AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/flutterflow-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;How to Use FlutterFlow AI Generator [2026 Guide]&quot;,&quot;canal&quot;:&quot;Easy Click Fix&quot;,&quot;duree&quot;:&quot;2:20&quot;,&quot;youtubeId&quot;:&quot;vWVQR9ZWmKY&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Flutterflow Tutorial For Beginners 2026 | Features, Pricing & AI Agents Walkthrough" data-secondes="667">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('aP3FXktC6Os','Flutterflow Tutorial For Beginners 2026 | Features, Pricing & AI Agents Walkthrough')">
+      <img src="https://img.youtube.com/vi/aP3FXktC6Os/mqdefault.jpg" alt="Flutterflow Tutorial For Beginners 2026 | Features, Pricing & AI Agents Walkthrough" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">11:07</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('aP3FXktC6Os','Flutterflow Tutorial For Beginners 2026 | Features, Pricing & AI Agents Walkthrough')">Flutterflow Tutorial For Beginners 2026 | Features, Pricing & AI Agents Walkthrough</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          No Code Academy
+        </p>
+        <button class="btn-save-video" data-video-id="aP3FXktC6Os" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;aP3FXktC6Os&quot;,&quot;outilId&quot;:&quot;90&quot;,&quot;outilNom&quot;:&quot;FlutterFlow AI&quot;,&quot;outilPage&quot;:&quot;/tools/standard/fr/flutterflow-ai/tutoriels/&quot;,&quot;titre&quot;:&quot;Flutterflow Tutorial For Beginners 2026 | Features, Pricing & AI Agents Walkthrough&quot;,&quot;canal&quot;:&quot;No Code Academy&quot;,&quot;duree&quot;:&quot;11:07&quot;,&quot;youtubeId&quot;:&quot;aP3FXktC6Os&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

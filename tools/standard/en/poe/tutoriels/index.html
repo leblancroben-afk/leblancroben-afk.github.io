@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Master Poe: the complete video library | Albexia</title>
-  <meta name="description" content="All the video tutorials to learn and master Poe. 6 selected videos, filterable by duration. Free." />
+  <meta name="description" content="All the video tutorials to learn and master Poe. 7 selected videos, filterable by duration. Free." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/en/poe/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/poe/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Master Poe: the complete video library | Albexia" />
-  <meta property="og:description" content="All the video tutorials to learn and master Poe. 6 selected videos, filterable by duration. Free." />
+  <meta property="og:description" content="All the video tutorials to learn and master Poe. 7 selected videos, filterable by duration. Free." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/en/poe/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -31,7 +31,8 @@
       { "@type": "VideoObject", "position": 3, "name": "Comment utiliser Poe AI comme un PRO ?", "thumbnailUrl": "https://img.youtube.com/vi/inV-elTG4Sw/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/inV-elTG4Sw" },
       { "@type": "VideoObject", "position": 4, "name": "Comment Utiliser Poe Ai | Poe AI Francais ( Très Facile )", "thumbnailUrl": "https://img.youtube.com/vi/eLc36Np5sjk/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/eLc36Np5sjk" },
       { "@type": "VideoObject", "position": 5, "name": "Teste plusieurs IA en 5 Minutes avec Poe AI", "thumbnailUrl": "https://img.youtube.com/vi/iH0DdMswcd4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/iH0DdMswcd4" },
-      { "@type": "VideoObject", "position": 6, "name": "Comment Utiliser Poe Ai  | Poe AI Francais", "thumbnailUrl": "https://img.youtube.com/vi/S9IvFS0DTBA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/S9IvFS0DTBA" }
+      { "@type": "VideoObject", "position": 6, "name": "Comment Utiliser Poe Ai  | Poe AI Francais", "thumbnailUrl": "https://img.youtube.com/vi/S9IvFS0DTBA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/S9IvFS0DTBA" },
+      { "@type": "VideoObject", "position": 7, "name": "Poe 完整使用手冊 - AI 教學新手秒變專家  #廣東話 #poe教學 #新手教學 #自製AI機械人", "thumbnailUrl": "https://img.youtube.com/vi/aQX22beHUns/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/aQX22beHUns" }
     ]
   }
   </script>
@@ -59,6 +60,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -67,8 +69,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -115,7 +127,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">6 results</span>
+    <span id="outil-video-count" class="filtres-count">7 results</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('63','Poe')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Submit a video
@@ -253,6 +265,28 @@
         <button class="btn-save-video" data-video-id="S9IvFS0DTBA" title="Save this video" aria-label="Save this video"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;S9IvFS0DTBA&quot;,&quot;outilId&quot;:&quot;63&quot;,&quot;outilNom&quot;:&quot;Poe&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/poe/tutoriels/&quot;,&quot;titre&quot;:&quot;Comment Utiliser Poe Ai  | Poe AI Francais&quot;,&quot;canal&quot;:&quot;Steven Digital &quot;,&quot;duree&quot;:&quot;4:07&quot;,&quot;youtubeId&quot;:&quot;S9IvFS0DTBA&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Poe 完整使用手冊 - AI 教學新手秒變專家  #廣東話 #poe教學 #新手教學 #自製AI機械人" data-secondes="1678">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('aQX22beHUns','Poe 完整使用手冊 - AI 教學新手秒變專家  #廣東話 #poe教學 #新手教學 #自製AI機械人')">
+      <img src="https://img.youtube.com/vi/aQX22beHUns/mqdefault.jpg" alt="Poe 完整使用手冊 - AI 教學新手秒變專家  #廣東話 #poe教學 #新手教學 #自製AI機械人" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">27:58</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('aQX22beHUns','Poe 完整使用手冊 - AI 教學新手秒變專家  #廣東話 #poe教學 #新手教學 #自製AI機械人')">Poe 完整使用手冊 - AI 教學新手秒變專家  #廣東話 #poe教學 #新手教學 #自製AI機械人</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          RyanSham Martech教室
+        </p>
+        <button class="btn-save-video" data-video-id="aQX22beHUns" title="Save this video" aria-label="Save this video"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;aQX22beHUns&quot;,&quot;outilId&quot;:&quot;63&quot;,&quot;outilNom&quot;:&quot;Poe&quot;,&quot;outilPage&quot;:&quot;/tools/standard/en/poe/tutoriels/&quot;,&quot;titre&quot;:&quot;Poe 完整使用手冊 - AI 教學新手秒變專家  #廣東話 #poe教學 #新手教學 #自製AI機械人&quot;,&quot;canal&quot;:&quot;RyanSham Martech教室&quot;,&quot;duree&quot;:&quot;27:58&quot;,&quot;youtubeId&quot;:&quot;aQX22beHUns&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

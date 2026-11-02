@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maîtrisez Brand24 : La vidéothèque complète | Albexia</title>
-  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Brand24. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta name="description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Brand24. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/starter/fr/brand24/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/starter/fr/brand24/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Maîtrisez Brand24 : La vidéothèque complète | Albexia" />
-  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Brand24. 5 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
+  <meta property="og:description" content="Tous les tutoriels vidéo pour apprendre et maîtriser Brand24. 10 vidéos sélectionnées, filtrables par durée. Gratuit, en français." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/starter/fr/brand24/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "How to Use Brand24 to Track Brand Mentions & Monitor Social Media in 2026 (Easy Tutorial)", "thumbnailUrl": "https://img.youtube.com/vi/JTKdykXeRe4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/JTKdykXeRe4" },
       { "@type": "VideoObject", "position": 3, "name": "Brand24 Tutorial to Master Social Listening (Full Review & Demo)", "thumbnailUrl": "https://img.youtube.com/vi/QTsMDrP3YrM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/QTsMDrP3YrM" },
       { "@type": "VideoObject", "position": 4, "name": "Brand24 Tutorial (2026) | How To Use Brand24 For Social Listening", "thumbnailUrl": "https://img.youtube.com/vi/cmzZaNafmS0/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/cmzZaNafmS0" },
-      { "@type": "VideoObject", "position": 5, "name": "How to use Brand24 to improve your Social Media Marketing (2022) | Brand 24 Tutorial for beginners", "thumbnailUrl": "https://img.youtube.com/vi/hjX7iUDA8OM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/hjX7iUDA8OM" }
+      { "@type": "VideoObject", "position": 5, "name": "How to use Brand24 to improve your Social Media Marketing (2022) | Brand 24 Tutorial for beginners", "thumbnailUrl": "https://img.youtube.com/vi/hjX7iUDA8OM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/hjX7iUDA8OM" },
+      { "@type": "VideoObject", "position": 6, "name": "Brand24 Tutorial for Social Listening - Full 2026 Beginner's Guide.", "thumbnailUrl": "https://img.youtube.com/vi/Ff2MnOb4Cd0/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Ff2MnOb4Cd0" },
+      { "@type": "VideoObject", "position": 7, "name": "Brand24 Tutorial for beginners", "thumbnailUrl": "https://img.youtube.com/vi/7vLnx5g2i_I/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/7vLnx5g2i_I" },
+      { "@type": "VideoObject", "position": 8, "name": "Brand24 - Tutoriel complet", "thumbnailUrl": "https://img.youtube.com/vi/rK4vfiumtSk/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/rK4vfiumtSk" },
+      { "@type": "VideoObject", "position": 9, "name": "Avis Brand24 2026 : Test, Tarifs & Verdict", "thumbnailUrl": "https://img.youtube.com/vi/p8ymJLL3xUM/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/p8ymJLL3xUM" },
+      { "@type": "VideoObject", "position": 10, "name": "Creating Your First Project | Brand24 Tutorial", "thumbnailUrl": "https://img.youtube.com/vi/7kY3MDo-gng/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/7kY3MDo-gng" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 résultats</span>
+    <span id="outil-video-count" class="filtres-count">10 résultats</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('9','Brand24')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Soumettre une vidéo
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="hjX7iUDA8OM" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;hjX7iUDA8OM&quot;,&quot;outilId&quot;:&quot;9&quot;,&quot;outilNom&quot;:&quot;Brand24&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/brand24/tutoriels/&quot;,&quot;titre&quot;:&quot;How to use Brand24 to improve your Social Media Marketing (2022) | Brand 24 Tutorial for beginners&quot;,&quot;canal&quot;:&quot;ipsrsolutions&quot;,&quot;duree&quot;:&quot;5:49&quot;,&quot;youtubeId&quot;:&quot;hjX7iUDA8OM&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Brand24 Tutorial for Social Listening - Full 2026 Beginner's Guide." data-secondes="553">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Ff2MnOb4Cd0','Brand24 Tutorial for Social Listening - Full 2026 Beginner&#39;s Guide.')">
+      <img src="https://img.youtube.com/vi/Ff2MnOb4Cd0/mqdefault.jpg" alt="Brand24 Tutorial for Social Listening - Full 2026 Beginner's Guide." loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">9:13</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Ff2MnOb4Cd0','Brand24 Tutorial for Social Listening - Full 2026 Beginner&#39;s Guide.')">Brand24 Tutorial for Social Listening - Full 2026 Beginner's Guide.</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Michael_Uzodinma
+        </p>
+        <button class="btn-save-video" data-video-id="Ff2MnOb4Cd0" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Ff2MnOb4Cd0&quot;,&quot;outilId&quot;:&quot;9&quot;,&quot;outilNom&quot;:&quot;Brand24&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/brand24/tutoriels/&quot;,&quot;titre&quot;:&quot;Brand24 Tutorial for Social Listening - Full 2026 Beginner's Guide.&quot;,&quot;canal&quot;:&quot;Michael_Uzodinma&quot;,&quot;duree&quot;:&quot;9:13&quot;,&quot;youtubeId&quot;:&quot;Ff2MnOb4Cd0&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Brand24 Tutorial for beginners" data-secondes="736">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('7vLnx5g2i_I','Brand24 Tutorial for beginners')">
+      <img src="https://img.youtube.com/vi/7vLnx5g2i_I/mqdefault.jpg" alt="Brand24 Tutorial for beginners" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">12:16</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('7vLnx5g2i_I','Brand24 Tutorial for beginners')">Brand24 Tutorial for beginners</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          ToolDoc HQ
+        </p>
+        <button class="btn-save-video" data-video-id="7vLnx5g2i_I" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;7vLnx5g2i_I&quot;,&quot;outilId&quot;:&quot;9&quot;,&quot;outilNom&quot;:&quot;Brand24&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/brand24/tutoriels/&quot;,&quot;titre&quot;:&quot;Brand24 Tutorial for beginners&quot;,&quot;canal&quot;:&quot;ToolDoc HQ&quot;,&quot;duree&quot;:&quot;12:16&quot;,&quot;youtubeId&quot;:&quot;7vLnx5g2i_I&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Brand24 - Tutoriel complet" data-secondes="292">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('rK4vfiumtSk','Brand24 - Tutoriel complet')">
+      <img src="https://img.youtube.com/vi/rK4vfiumtSk/mqdefault.jpg" alt="Brand24 - Tutoriel complet" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">4:52</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('rK4vfiumtSk','Brand24 - Tutoriel complet')">Brand24 - Tutoriel complet</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Formation Braindcode
+        </p>
+        <button class="btn-save-video" data-video-id="rK4vfiumtSk" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;rK4vfiumtSk&quot;,&quot;outilId&quot;:&quot;9&quot;,&quot;outilNom&quot;:&quot;Brand24&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/brand24/tutoriels/&quot;,&quot;titre&quot;:&quot;Brand24 - Tutoriel complet&quot;,&quot;canal&quot;:&quot;Formation Braindcode&quot;,&quot;duree&quot;:&quot;4:52&quot;,&quot;youtubeId&quot;:&quot;rK4vfiumtSk&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Avis Brand24 2026 : Test, Tarifs & Verdict" data-secondes="253">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('p8ymJLL3xUM','Avis Brand24 2026 : Test, Tarifs & Verdict')">
+      <img src="https://img.youtube.com/vi/p8ymJLL3xUM/mqdefault.jpg" alt="Avis Brand24 2026 : Test, Tarifs & Verdict" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">4:13</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('p8ymJLL3xUM','Avis Brand24 2026 : Test, Tarifs & Verdict')">Avis Brand24 2026 : Test, Tarifs & Verdict</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Alucare Tech
+        </p>
+        <button class="btn-save-video" data-video-id="p8ymJLL3xUM" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;p8ymJLL3xUM&quot;,&quot;outilId&quot;:&quot;9&quot;,&quot;outilNom&quot;:&quot;Brand24&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/brand24/tutoriels/&quot;,&quot;titre&quot;:&quot;Avis Brand24 2026 : Test, Tarifs & Verdict&quot;,&quot;canal&quot;:&quot;Alucare Tech&quot;,&quot;duree&quot;:&quot;4:13&quot;,&quot;youtubeId&quot;:&quot;p8ymJLL3xUM&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Creating Your First Project | Brand24 Tutorial" data-secondes="112">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('7kY3MDo-gng','Creating Your First Project | Brand24 Tutorial')">
+      <img src="https://img.youtube.com/vi/7kY3MDo-gng/mqdefault.jpg" alt="Creating Your First Project | Brand24 Tutorial" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">1:52</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('7kY3MDo-gng','Creating Your First Project | Brand24 Tutorial')">Creating Your First Project | Brand24 Tutorial</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Brand24
+        </p>
+        <button class="btn-save-video" data-video-id="7kY3MDo-gng" title="Sauvegarder cette vidéo" aria-label="Sauvegarder cette vidéo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;7kY3MDo-gng&quot;,&quot;outilId&quot;:&quot;9&quot;,&quot;outilNom&quot;:&quot;Brand24&quot;,&quot;outilPage&quot;:&quot;/tools/starter/fr/brand24/tutoriels/&quot;,&quot;titre&quot;:&quot;Creating Your First Project | Brand24 Tutorial&quot;,&quot;canal&quot;:&quot;Brand24&quot;,&quot;duree&quot;:&quot;1:52&quot;,&quot;youtubeId&quot;:&quot;7kY3MDo-gng&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

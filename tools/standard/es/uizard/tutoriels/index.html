@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domina Uizard: la videoteca completa | Albexia</title>
-  <meta name="description" content="Todos los tutoriales en vídeo para aprender y dominar Uizard. 6 vídeos seleccionados, filtrables por duración. Gratis." />
+  <meta name="description" content="Todos los tutoriales en vídeo para aprender y dominar Uizard. 10 vídeos seleccionados, filtrables por duración. Gratis." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/es/uizard/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/uizard/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Domina Uizard: la videoteca completa | Albexia" />
-  <meta property="og:description" content="Todos los tutoriales en vídeo para aprender y dominar Uizard. 6 vídeos seleccionados, filtrables por duración. Gratis." />
+  <meta property="og:description" content="Todos los tutoriales en vídeo para aprender y dominar Uizard. 10 vídeos seleccionados, filtrables por duración. Gratis." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/es/uizard/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -31,7 +31,11 @@
       { "@type": "VideoObject", "position": 3, "name": "COMMENT CRÉER votre PREMIER SITE ou APP avec UIZARD sans PROGRAMMER", "thumbnailUrl": "https://img.youtube.com/vi/7nZQpVSLb7k/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/7nZQpVSLb7k" },
       { "@type": "VideoObject", "position": 4, "name": "How To Use Uizard To Convert Designs To Wireframes (Quick Guide)", "thumbnailUrl": "https://img.youtube.com/vi/SXKEwBcQQrI/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/SXKEwBcQQrI" },
       { "@type": "VideoObject", "position": 5, "name": "New A.I features for UI & UX Design (UIZARD)", "thumbnailUrl": "https://img.youtube.com/vi/KBQS61qM_a0/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/KBQS61qM_a0" },
-      { "@type": "VideoObject", "position": 6, "name": "Uizard Review: Best AI UI Design & Wireframe Tool in 2026? (Honest Review)", "thumbnailUrl": "https://img.youtube.com/vi/VZ5klpaDBcA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/VZ5klpaDBcA" }
+      { "@type": "VideoObject", "position": 6, "name": "Uizard Review: Best AI UI Design & Wireframe Tool in 2026? (Honest Review)", "thumbnailUrl": "https://img.youtube.com/vi/VZ5klpaDBcA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/VZ5klpaDBcA" },
+      { "@type": "VideoObject", "position": 7, "name": "A Beginner's Guide to Uizard (Full Walkthrough)", "thumbnailUrl": "https://img.youtube.com/vi/sgLs8CJ8W0Q/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/sgLs8CJ8W0Q" },
+      { "@type": "VideoObject", "position": 8, "name": "Uizard Autodesigner Full Walkthrough [out now!]", "thumbnailUrl": "https://img.youtube.com/vi/PD5j7Ll7wLs/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/PD5j7Ll7wLs" },
+      { "@type": "VideoObject", "position": 9, "name": "Uizard Autodesigner: Generate an App Design from a Text Prompt", "thumbnailUrl": "https://img.youtube.com/vi/NZfl3Jg8dEE/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/NZfl3Jg8dEE" },
+      { "@type": "VideoObject", "position": 10, "name": "How to Use Uizard AI to Create UI Designs & Wireframes in 2026 (Easy Tutorial)", "thumbnailUrl": "https://img.youtube.com/vi/2e5XfBw3FHw/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/2e5XfBw3FHw" }
     ]
   }
   </script>
@@ -59,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -67,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -115,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">6 resultados</span>
+    <span id="outil-video-count" class="filtres-count">10 resultados</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('76','Uizard')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Enviar un vídeo
@@ -253,6 +268,94 @@
         <button class="btn-save-video" data-video-id="VZ5klpaDBcA" title="Guardar este vídeo" aria-label="Guardar este vídeo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;VZ5klpaDBcA&quot;,&quot;outilId&quot;:&quot;76&quot;,&quot;outilNom&quot;:&quot;Uizard&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/uizard/tutoriels/&quot;,&quot;titre&quot;:&quot;Uizard Review: Best AI UI Design & Wireframe Tool in 2026? (Honest Review)&quot;,&quot;canal&quot;:&quot;WebCraft&quot;,&quot;duree&quot;:&quot;2:46&quot;,&quot;youtubeId&quot;:&quot;VZ5klpaDBcA&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="A Beginner's Guide to Uizard (Full Walkthrough)" data-secondes="422">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('sgLs8CJ8W0Q','A Beginner&#39;s Guide to Uizard (Full Walkthrough)')">
+      <img src="https://img.youtube.com/vi/sgLs8CJ8W0Q/mqdefault.jpg" alt="A Beginner's Guide to Uizard (Full Walkthrough)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">7:02</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('sgLs8CJ8W0Q','A Beginner&#39;s Guide to Uizard (Full Walkthrough)')">A Beginner's Guide to Uizard (Full Walkthrough)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Uizard
+        </p>
+        <button class="btn-save-video" data-video-id="sgLs8CJ8W0Q" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;sgLs8CJ8W0Q&quot;,&quot;outilId&quot;:&quot;76&quot;,&quot;outilNom&quot;:&quot;Uizard&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/uizard/tutoriels/&quot;,&quot;titre&quot;:&quot;A Beginner's Guide to Uizard (Full Walkthrough)&quot;,&quot;canal&quot;:&quot;Uizard&quot;,&quot;duree&quot;:&quot;7:02&quot;,&quot;youtubeId&quot;:&quot;sgLs8CJ8W0Q&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Uizard Autodesigner Full Walkthrough [out now!]" data-secondes="1405">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('PD5j7Ll7wLs','Uizard Autodesigner Full Walkthrough [out now!]')">
+      <img src="https://img.youtube.com/vi/PD5j7Ll7wLs/mqdefault.jpg" alt="Uizard Autodesigner Full Walkthrough [out now!]" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">23:25</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('PD5j7Ll7wLs','Uizard Autodesigner Full Walkthrough [out now!]')">Uizard Autodesigner Full Walkthrough [out now!]</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Uizard
+        </p>
+        <button class="btn-save-video" data-video-id="PD5j7Ll7wLs" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;PD5j7Ll7wLs&quot;,&quot;outilId&quot;:&quot;76&quot;,&quot;outilNom&quot;:&quot;Uizard&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/uizard/tutoriels/&quot;,&quot;titre&quot;:&quot;Uizard Autodesigner Full Walkthrough [out now!]&quot;,&quot;canal&quot;:&quot;Uizard&quot;,&quot;duree&quot;:&quot;23:25&quot;,&quot;youtubeId&quot;:&quot;PD5j7Ll7wLs&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Uizard Autodesigner: Generate an App Design from a Text Prompt" data-secondes="167">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('NZfl3Jg8dEE','Uizard Autodesigner: Generate an App Design from a Text Prompt')">
+      <img src="https://img.youtube.com/vi/NZfl3Jg8dEE/mqdefault.jpg" alt="Uizard Autodesigner: Generate an App Design from a Text Prompt" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:47</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('NZfl3Jg8dEE','Uizard Autodesigner: Generate an App Design from a Text Prompt')">Uizard Autodesigner: Generate an App Design from a Text Prompt</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Uizard
+        </p>
+        <button class="btn-save-video" data-video-id="NZfl3Jg8dEE" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;NZfl3Jg8dEE&quot;,&quot;outilId&quot;:&quot;76&quot;,&quot;outilNom&quot;:&quot;Uizard&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/uizard/tutoriels/&quot;,&quot;titre&quot;:&quot;Uizard Autodesigner: Generate an App Design from a Text Prompt&quot;,&quot;canal&quot;:&quot;Uizard&quot;,&quot;duree&quot;:&quot;2:47&quot;,&quot;youtubeId&quot;:&quot;NZfl3Jg8dEE&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="How to Use Uizard AI to Create UI Designs & Wireframes in 2026 (Easy Tutorial)" data-secondes="126">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('2e5XfBw3FHw','How to Use Uizard AI to Create UI Designs & Wireframes in 2026 (Easy Tutorial)')">
+      <img src="https://img.youtube.com/vi/2e5XfBw3FHw/mqdefault.jpg" alt="How to Use Uizard AI to Create UI Designs & Wireframes in 2026 (Easy Tutorial)" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:06</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('2e5XfBw3FHw','How to Use Uizard AI to Create UI Designs & Wireframes in 2026 (Easy Tutorial)')">How to Use Uizard AI to Create UI Designs & Wireframes in 2026 (Easy Tutorial)</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          WebCraft
+        </p>
+        <button class="btn-save-video" data-video-id="2e5XfBw3FHw" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;2e5XfBw3FHw&quot;,&quot;outilId&quot;:&quot;76&quot;,&quot;outilNom&quot;:&quot;Uizard&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/uizard/tutoriels/&quot;,&quot;titre&quot;:&quot;How to Use Uizard AI to Create UI Designs & Wireframes in 2026 (Easy Tutorial)&quot;,&quot;canal&quot;:&quot;WebCraft&quot;,&quot;duree&quot;:&quot;2:06&quot;,&quot;youtubeId&quot;:&quot;2e5XfBw3FHw&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

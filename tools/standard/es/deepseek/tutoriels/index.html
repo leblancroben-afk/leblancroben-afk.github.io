@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domina DeepSeek: la videoteca completa | Albexia</title>
-  <meta name="description" content="Todos los tutoriales en vídeo para aprender y dominar DeepSeek. 5 vídeos seleccionados, filtrables por duración. Gratis." />
+  <meta name="description" content="Todos los tutoriales en vídeo para aprender y dominar DeepSeek. 10 vídeos seleccionados, filtrables por duración. Gratis." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/es/deepseek/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/deepseek/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Domina DeepSeek: la videoteca completa | Albexia" />
-  <meta property="og:description" content="Todos los tutoriales en vídeo para aprender y dominar DeepSeek. 5 vídeos seleccionados, filtrables por duración. Gratis." />
+  <meta property="og:description" content="Todos los tutoriales en vídeo para aprender y dominar DeepSeek. 10 vídeos seleccionados, filtrables por duración. Gratis." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/es/deepseek/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "Utilisez DeepSeek, la nouvelle IA, en 13 minutes chrono !", "thumbnailUrl": "https://img.youtube.com/vi/K0PMkIS_0C4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/K0PMkIS_0C4" },
       { "@type": "VideoObject", "position": 3, "name": "Comment utiliser Deepseek sur mobile et ordinateur.(Guide complet)", "thumbnailUrl": "https://img.youtube.com/vi/jM0DmJjGzhY/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/jM0DmJjGzhY" },
       { "@type": "VideoObject", "position": 4, "name": "Comment utiliser DeepSeek mieux que 99% de la population", "thumbnailUrl": "https://img.youtube.com/vi/XY0FHLXFWUg/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/XY0FHLXFWUg" },
-      { "@type": "VideoObject", "position": 5, "name": "DeepSeek AI : Le Guide Ultime Pour Débutants (Test & Avis en 7 Minutes !)", "thumbnailUrl": "https://img.youtube.com/vi/k62svtiDHuY/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/k62svtiDHuY" }
+      { "@type": "VideoObject", "position": 5, "name": "DeepSeek AI : Le Guide Ultime Pour Débutants (Test & Avis en 7 Minutes !)", "thumbnailUrl": "https://img.youtube.com/vi/k62svtiDHuY/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/k62svtiDHuY" },
+      { "@type": "VideoObject", "position": 6, "name": "the ONLY way to run Deepseek...", "thumbnailUrl": "https://img.youtube.com/vi/7TR-FLWNVHY/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/7TR-FLWNVHY" },
+      { "@type": "VideoObject", "position": 7, "name": "DeepSeek Tutorial: How to Use Deep Seek For Beginners", "thumbnailUrl": "https://img.youtube.com/vi/_8tcA9-14JQ/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/_8tcA9-14JQ" },
+      { "@type": "VideoObject", "position": 8, "name": "How To Use DeepSeek For Beginners", "thumbnailUrl": "https://img.youtube.com/vi/ExhKoFKEvh8/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/ExhKoFKEvh8" },
+      { "@type": "VideoObject", "position": 9, "name": "Como usar o DEEPSEEK - IA que está DESTRUINDO o ChatGPT", "thumbnailUrl": "https://img.youtube.com/vi/gQJNdek6_XU/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/gQJNdek6_XU" },
+      { "@type": "VideoObject", "position": 10, "name": "Learn 97% of DeepSeek AI in 11 Minutes", "thumbnailUrl": "https://img.youtube.com/vi/d8XoXf0cSJI/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/d8XoXf0cSJI" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 resultados</span>
+    <span id="outil-video-count" class="filtres-count">10 resultados</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('36','DeepSeek')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Enviar un vídeo
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="k62svtiDHuY" title="Guardar este vídeo" aria-label="Guardar este vídeo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;k62svtiDHuY&quot;,&quot;outilId&quot;:&quot;36&quot;,&quot;outilNom&quot;:&quot;DeepSeek&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/deepseek/tutoriels/&quot;,&quot;titre&quot;:&quot;DeepSeek AI : Le Guide Ultime Pour Débutants (Test & Avis en 7 Minutes !)&quot;,&quot;canal&quot;:&quot;JCBuildsAI | IA et Automatisation&quot;,&quot;duree&quot;:&quot;7:19&quot;,&quot;youtubeId&quot;:&quot;k62svtiDHuY&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="the ONLY way to run Deepseek..." data-secondes="719">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('7TR-FLWNVHY','the ONLY way to run Deepseek...')">
+      <img src="https://img.youtube.com/vi/7TR-FLWNVHY/mqdefault.jpg" alt="the ONLY way to run Deepseek..." loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">11:59</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('7TR-FLWNVHY','the ONLY way to run Deepseek...')">the ONLY way to run Deepseek...</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          NetworkChuck
+        </p>
+        <button class="btn-save-video" data-video-id="7TR-FLWNVHY" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;7TR-FLWNVHY&quot;,&quot;outilId&quot;:&quot;36&quot;,&quot;outilNom&quot;:&quot;DeepSeek&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/deepseek/tutoriels/&quot;,&quot;titre&quot;:&quot;the ONLY way to run Deepseek...&quot;,&quot;canal&quot;:&quot;NetworkChuck&quot;,&quot;duree&quot;:&quot;11:59&quot;,&quot;youtubeId&quot;:&quot;7TR-FLWNVHY&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="DeepSeek Tutorial: How to Use Deep Seek For Beginners" data-secondes="1544">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('_8tcA9-14JQ','DeepSeek Tutorial: How to Use Deep Seek For Beginners')">
+      <img src="https://img.youtube.com/vi/_8tcA9-14JQ/mqdefault.jpg" alt="DeepSeek Tutorial: How to Use Deep Seek For Beginners" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">25:44</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('_8tcA9-14JQ','DeepSeek Tutorial: How to Use Deep Seek For Beginners')">DeepSeek Tutorial: How to Use Deep Seek For Beginners</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Charlie Chang
+        </p>
+        <button class="btn-save-video" data-video-id="_8tcA9-14JQ" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;_8tcA9-14JQ&quot;,&quot;outilId&quot;:&quot;36&quot;,&quot;outilNom&quot;:&quot;DeepSeek&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/deepseek/tutoriels/&quot;,&quot;titre&quot;:&quot;DeepSeek Tutorial: How to Use Deep Seek For Beginners&quot;,&quot;canal&quot;:&quot;Charlie Chang&quot;,&quot;duree&quot;:&quot;25:44&quot;,&quot;youtubeId&quot;:&quot;_8tcA9-14JQ&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="How To Use DeepSeek For Beginners" data-secondes="398">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('ExhKoFKEvh8','How To Use DeepSeek For Beginners')">
+      <img src="https://img.youtube.com/vi/ExhKoFKEvh8/mqdefault.jpg" alt="How To Use DeepSeek For Beginners" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">6:38</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('ExhKoFKEvh8','How To Use DeepSeek For Beginners')">How To Use DeepSeek For Beginners</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          corbin
+        </p>
+        <button class="btn-save-video" data-video-id="ExhKoFKEvh8" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;ExhKoFKEvh8&quot;,&quot;outilId&quot;:&quot;36&quot;,&quot;outilNom&quot;:&quot;DeepSeek&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/deepseek/tutoriels/&quot;,&quot;titre&quot;:&quot;How To Use DeepSeek For Beginners&quot;,&quot;canal&quot;:&quot;corbin&quot;,&quot;duree&quot;:&quot;6:38&quot;,&quot;youtubeId&quot;:&quot;ExhKoFKEvh8&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Como usar o DEEPSEEK - IA que está DESTRUINDO o ChatGPT" data-secondes="423">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('gQJNdek6_XU','Como usar o DEEPSEEK - IA que está DESTRUINDO o ChatGPT')">
+      <img src="https://img.youtube.com/vi/gQJNdek6_XU/mqdefault.jpg" alt="Como usar o DEEPSEEK - IA que está DESTRUINDO o ChatGPT" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">7:03</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('gQJNdek6_XU','Como usar o DEEPSEEK - IA que está DESTRUINDO o ChatGPT')">Como usar o DEEPSEEK - IA que está DESTRUINDO o ChatGPT</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Negócios em Mente
+        </p>
+        <button class="btn-save-video" data-video-id="gQJNdek6_XU" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;gQJNdek6_XU&quot;,&quot;outilId&quot;:&quot;36&quot;,&quot;outilNom&quot;:&quot;DeepSeek&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/deepseek/tutoriels/&quot;,&quot;titre&quot;:&quot;Como usar o DEEPSEEK - IA que está DESTRUINDO o ChatGPT&quot;,&quot;canal&quot;:&quot;Negócios em Mente&quot;,&quot;duree&quot;:&quot;7:03&quot;,&quot;youtubeId&quot;:&quot;gQJNdek6_XU&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="Learn 97% of DeepSeek AI in 11 Minutes" data-secondes="658">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('d8XoXf0cSJI','Learn 97% of DeepSeek AI in 11 Minutes')">
+      <img src="https://img.youtube.com/vi/d8XoXf0cSJI/mqdefault.jpg" alt="Learn 97% of DeepSeek AI in 11 Minutes" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">10:58</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('d8XoXf0cSJI','Learn 97% of DeepSeek AI in 11 Minutes')">Learn 97% of DeepSeek AI in 11 Minutes</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Parker Prompts
+        </p>
+        <button class="btn-save-video" data-video-id="d8XoXf0cSJI" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;d8XoXf0cSJI&quot;,&quot;outilId&quot;:&quot;36&quot;,&quot;outilNom&quot;:&quot;DeepSeek&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/deepseek/tutoriels/&quot;,&quot;titre&quot;:&quot;Learn 97% of DeepSeek AI in 11 Minutes&quot;,&quot;canal&quot;:&quot;Parker Prompts&quot;,&quot;duree&quot;:&quot;10:58&quot;,&quot;youtubeId&quot;:&quot;d8XoXf0cSJI&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

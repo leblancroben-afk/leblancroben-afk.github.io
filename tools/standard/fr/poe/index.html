@@ -42,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="63">
 
 <header class="fo-hero">
@@ -108,7 +119,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/C_qY2z61oN4" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"C_qY2z61oN4","titre":"Abacus AI vs Poe vs Perplexity | Which AI Tool Is Best for You in 2026?","duree":"3:44"},{"id":"aaj8zFSQTW0","titre":"POE AI : Le guide pour débutant","duree":"5:09"},{"id":"inV-elTG4Sw","titre":"Comment utiliser Poe AI comme un PRO ?","duree":"12:57"},{"id":"eLc36Np5sjk","titre":"Comment Utiliser Poe Ai | Poe AI Francais ( Très Facile )","duree":"4:40"},{"id":"iH0DdMswcd4","titre":"Teste plusieurs IA en 5 Minutes avec Poe AI","duree":"2:12"},{"id":"S9IvFS0DTBA","titre":"Comment Utiliser Poe Ai  | Poe AI Francais","duree":"4:07"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"C_qY2z61oN4","titre":"Abacus AI vs Poe vs Perplexity | Which AI Tool Is Best for You in 2026?","duree":"3:44"},{"id":"aaj8zFSQTW0","titre":"POE AI : Le guide pour débutant","duree":"5:09"},{"id":"inV-elTG4Sw","titre":"Comment utiliser Poe AI comme un PRO ?","duree":"12:57"},{"id":"eLc36Np5sjk","titre":"Comment Utiliser Poe Ai | Poe AI Francais ( Très Facile )","duree":"4:40"},{"id":"iH0DdMswcd4","titre":"Teste plusieurs IA en 5 Minutes avec Poe AI","duree":"2:12"},{"id":"S9IvFS0DTBA","titre":"Comment Utiliser Poe Ai  | Poe AI Francais","duree":"4:07"},{"id":"aQX22beHUns","titre":"Poe 完整使用手冊 - AI 教學新手秒變專家  #廣東話 #poe教學 #新手教學 #自製AI機械人","duree":"27:58"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

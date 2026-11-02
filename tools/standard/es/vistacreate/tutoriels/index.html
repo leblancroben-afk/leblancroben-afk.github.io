@@ -5,7 +5,7 @@
   <script src="/js/theme.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domina VistaCreate: la videoteca completa | Albexia</title>
-  <meta name="description" content="Todos los tutoriales en vídeo para aprender y dominar VistaCreate. 5 vídeos seleccionados, filtrables por duración. Gratis." />
+  <meta name="description" content="Todos los tutoriales en vídeo para aprender y dominar VistaCreate. 10 vídeos seleccionados, filtrables por duración. Gratis." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://leblancroben-afk.github.io/tools/standard/es/vistacreate/tutoriels/" />
   <link rel="alternate" hreflang="fr" href="https://leblancroben-afk.github.io/tools/standard/fr/vistacreate/tutoriels/" />
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Albexia" />
   <meta property="og:title" content="Domina VistaCreate: la videoteca completa | Albexia" />
-  <meta property="og:description" content="Todos los tutoriales en vídeo para aprender y dominar VistaCreate. 5 vídeos seleccionados, filtrables por duración. Gratis." />
+  <meta property="og:description" content="Todos los tutoriales en vídeo para aprender y dominar VistaCreate. 10 vídeos seleccionados, filtrables por duración. Gratis." />
   <meta property="og:url" content="https://leblancroben-afk.github.io/tools/standard/es/vistacreate/tutoriels/" />
   <script type="application/ld+json">
   {
@@ -30,7 +30,12 @@
       { "@type": "VideoObject", "position": 2, "name": "How to animate texts and objects in VistaCreate", "thumbnailUrl": "https://img.youtube.com/vi/GH6tbj5HmJA/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/GH6tbj5HmJA" },
       { "@type": "VideoObject", "position": 3, "name": "Comment concevoir sont premier visuel sur Vistacreate app", "thumbnailUrl": "https://img.youtube.com/vi/ODRAy74ZxWQ/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/ODRAy74ZxWQ" },
       { "@type": "VideoObject", "position": 4, "name": "Comment créer des visuels impactants sur Vistacreate ?", "thumbnailUrl": "https://img.youtube.com/vi/6hCkWVZ6VFE/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/6hCkWVZ6VFE" },
-      { "@type": "VideoObject", "position": 5, "name": "How To Create Instagram Reels Video With VistaCreate (Full Guide)", "thumbnailUrl": "https://img.youtube.com/vi/aDfo68SKlK4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/aDfo68SKlK4" }
+      { "@type": "VideoObject", "position": 5, "name": "How To Create Instagram Reels Video With VistaCreate (Full Guide)", "thumbnailUrl": "https://img.youtube.com/vi/aDfo68SKlK4/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/aDfo68SKlK4" },
+      { "@type": "VideoObject", "position": 6, "name": "VISTACREATE Tutorial | Learn VISTACREATE in 10 Mins | CRELLO Tutorial", "thumbnailUrl": "https://img.youtube.com/vi/Yf8DPGTnxE8/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/Yf8DPGTnxE8" },
+      { "@type": "VideoObject", "position": 7, "name": "How to Generate AI Images for Commercial Use ( VistaCreate Tutorial )", "thumbnailUrl": "https://img.youtube.com/vi/sZ9SSZKG6_M/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/sZ9SSZKG6_M" },
+      { "@type": "VideoObject", "position": 8, "name": "How to Build a Brand Kit From SCRATCH", "thumbnailUrl": "https://img.youtube.com/vi/oXCwW8tV34M/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/oXCwW8tV34M" },
+      { "@type": "VideoObject", "position": 9, "name": "4 principles of design for well-balanced visuals | VistaCreate Design Tips", "thumbnailUrl": "https://img.youtube.com/vi/tbURbMTmm0A/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/tbURbMTmm0A" },
+      { "@type": "VideoObject", "position": 10, "name": "7 Tips to Help You Choose the RIGHT Template", "thumbnailUrl": "https://img.youtube.com/vi/DRUzzsldA8o/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/DRUzzsldA8o" }
     ]
   }
   </script>
@@ -58,6 +63,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -66,8 +72,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 
 
 
@@ -114,7 +130,7 @@
         </div>
       </div>
     </div>
-    <span id="outil-video-count" class="filtres-count">5 resultados</span>
+    <span id="outil-video-count" class="filtres-count">10 resultados</span>
     <button class="tuto-btn-soumettre filtre-soumettre" onclick="ouvrirModalSoumission('77','VistaCreate')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       Enviar un vídeo
@@ -230,6 +246,116 @@
         <button class="btn-save-video" data-video-id="aDfo68SKlK4" title="Guardar este vídeo" aria-label="Guardar este vídeo"
           onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
           data-video-data="{&quot;videoId&quot;:&quot;aDfo68SKlK4&quot;,&quot;outilId&quot;:&quot;77&quot;,&quot;outilNom&quot;:&quot;VistaCreate&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/vistacreate/tutoriels/&quot;,&quot;titre&quot;:&quot;How To Create Instagram Reels Video With VistaCreate (Full Guide)&quot;,&quot;canal&quot;:&quot;SimplyStep&quot;,&quot;duree&quot;:&quot;2:14&quot;,&quot;youtubeId&quot;:&quot;aDfo68SKlK4&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="VISTACREATE Tutorial | Learn VISTACREATE in 10 Mins | CRELLO Tutorial" data-secondes="767">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('Yf8DPGTnxE8','VISTACREATE Tutorial | Learn VISTACREATE in 10 Mins | CRELLO Tutorial')">
+      <img src="https://img.youtube.com/vi/Yf8DPGTnxE8/mqdefault.jpg" alt="VISTACREATE Tutorial | Learn VISTACREATE in 10 Mins | CRELLO Tutorial" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">12:47</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('Yf8DPGTnxE8','VISTACREATE Tutorial | Learn VISTACREATE in 10 Mins | CRELLO Tutorial')">VISTACREATE Tutorial | Learn VISTACREATE in 10 Mins | CRELLO Tutorial</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Tej
+        </p>
+        <button class="btn-save-video" data-video-id="Yf8DPGTnxE8" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;Yf8DPGTnxE8&quot;,&quot;outilId&quot;:&quot;77&quot;,&quot;outilNom&quot;:&quot;VistaCreate&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/vistacreate/tutoriels/&quot;,&quot;titre&quot;:&quot;VISTACREATE Tutorial | Learn VISTACREATE in 10 Mins | CRELLO Tutorial&quot;,&quot;canal&quot;:&quot;Tej&quot;,&quot;duree&quot;:&quot;12:47&quot;,&quot;youtubeId&quot;:&quot;Yf8DPGTnxE8&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="How to Generate AI Images for Commercial Use ( VistaCreate Tutorial )" data-secondes="575">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('sZ9SSZKG6_M','How to Generate AI Images for Commercial Use ( VistaCreate Tutorial )')">
+      <img src="https://img.youtube.com/vi/sZ9SSZKG6_M/mqdefault.jpg" alt="How to Generate AI Images for Commercial Use ( VistaCreate Tutorial )" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">9:35</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('sZ9SSZKG6_M','How to Generate AI Images for Commercial Use ( VistaCreate Tutorial )')">How to Generate AI Images for Commercial Use ( VistaCreate Tutorial )</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          SaaS Master
+        </p>
+        <button class="btn-save-video" data-video-id="sZ9SSZKG6_M" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;sZ9SSZKG6_M&quot;,&quot;outilId&quot;:&quot;77&quot;,&quot;outilNom&quot;:&quot;VistaCreate&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/vistacreate/tutoriels/&quot;,&quot;titre&quot;:&quot;How to Generate AI Images for Commercial Use ( VistaCreate Tutorial )&quot;,&quot;canal&quot;:&quot;SaaS Master&quot;,&quot;duree&quot;:&quot;9:35&quot;,&quot;youtubeId&quot;:&quot;sZ9SSZKG6_M&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="How to Build a Brand Kit From SCRATCH" data-secondes="136">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('oXCwW8tV34M','How to Build a Brand Kit From SCRATCH')">
+      <img src="https://img.youtube.com/vi/oXCwW8tV34M/mqdefault.jpg" alt="How to Build a Brand Kit From SCRATCH" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:16</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('oXCwW8tV34M','How to Build a Brand Kit From SCRATCH')">How to Build a Brand Kit From SCRATCH</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          VistaCreate 
+        </p>
+        <button class="btn-save-video" data-video-id="oXCwW8tV34M" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;oXCwW8tV34M&quot;,&quot;outilId&quot;:&quot;77&quot;,&quot;outilNom&quot;:&quot;VistaCreate&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/vistacreate/tutoriels/&quot;,&quot;titre&quot;:&quot;How to Build a Brand Kit From SCRATCH&quot;,&quot;canal&quot;:&quot;VistaCreate &quot;,&quot;duree&quot;:&quot;2:16&quot;,&quot;youtubeId&quot;:&quot;oXCwW8tV34M&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="4 principles of design for well-balanced visuals | VistaCreate Design Tips" data-secondes="183">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('tbURbMTmm0A','4 principles of design for well-balanced visuals | VistaCreate Design Tips')">
+      <img src="https://img.youtube.com/vi/tbURbMTmm0A/mqdefault.jpg" alt="4 principles of design for well-balanced visuals | VistaCreate Design Tips" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">3:03</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('tbURbMTmm0A','4 principles of design for well-balanced visuals | VistaCreate Design Tips')">4 principles of design for well-balanced visuals | VistaCreate Design Tips</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          VistaCreate 
+        </p>
+        <button class="btn-save-video" data-video-id="tbURbMTmm0A" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;tbURbMTmm0A&quot;,&quot;outilId&quot;:&quot;77&quot;,&quot;outilNom&quot;:&quot;VistaCreate&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/vistacreate/tutoriels/&quot;,&quot;titre&quot;:&quot;4 principles of design for well-balanced visuals | VistaCreate Design Tips&quot;,&quot;canal&quot;:&quot;VistaCreate &quot;,&quot;duree&quot;:&quot;3:03&quot;,&quot;youtubeId&quot;:&quot;tbURbMTmm0A&quot;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div><div class="outil-video-card" title="7 Tips to Help You Choose the RIGHT Template" data-secondes="178">
+    <div class="outil-video-thumb" onclick="ouvrirPlayer('DRUzzsldA8o','7 Tips to Help You Choose the RIGHT Template')">
+      <img src="https://img.youtube.com/vi/DRUzzsldA8o/mqdefault.jpg" alt="7 Tips to Help You Choose the RIGHT Template" loading="lazy" onerror="this.src='/assets/placeholder-video.svg'">
+      <div class="outil-thumb-overlay">
+        <div class="outil-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      </div>
+      <span class="thumb-duree">2:58</span>
+    </div>
+    <div class="outil-video-info">
+      <p class="outil-video-titre" onclick="ouvrirPlayer('DRUzzsldA8o','7 Tips to Help You Choose the RIGHT Template')">7 Tips to Help You Choose the RIGHT Template</p>
+      <div class="outil-video-footer">
+        <p class="outil-video-canal">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          VistaCreate 
+        </p>
+        <button class="btn-save-video" data-video-id="DRUzzsldA8o" title="Guardar este vídeo" aria-label="Guardar este vídeo"
+          onclick="event.stopPropagation(); window._toggleSaveVideo(this, JSON.parse(this.dataset.videoData));"
+          data-video-data="{&quot;videoId&quot;:&quot;DRUzzsldA8o&quot;,&quot;outilId&quot;:&quot;77&quot;,&quot;outilNom&quot;:&quot;VistaCreate&quot;,&quot;outilPage&quot;:&quot;/tools/standard/es/vistacreate/tutoriels/&quot;,&quot;titre&quot;:&quot;7 Tips to Help You Choose the RIGHT Template&quot;,&quot;canal&quot;:&quot;VistaCreate &quot;,&quot;duree&quot;:&quot;2:58&quot;,&quot;youtubeId&quot;:&quot;DRUzzsldA8o&quot;}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
       </div>

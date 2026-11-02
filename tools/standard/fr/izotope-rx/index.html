@@ -42,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="68">
 
 <header class="fo-hero">
@@ -108,7 +119,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/cuFxz6zdaEk" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"cuFxz6zdaEk","titre":"Isolate a Vocal with Music Rebalance in RX","duree":"2:08"},{"id":"GRafHAzWgI4","titre":"Nettoyer des voix, des samples et créer de acapellas avec iZotope RX8","duree":"20:26"},{"id":"jIHxnyAQTSE","titre":"Clean Up Noisy Audio Fast Using Izotope RX Spectral De-Noise!","duree":"4:22"},{"id":"e9gG6JHsF6E","titre":"How to Use iZotope RX Spectral Editor ARA Plugin in Pro Tools","duree":"5:41"},{"id":"xcwV7f-DdV0","titre":"iZotope RX7 | How To Remix Any Track / Song With Music Rebalance Tutorial","duree":"3:50"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"cuFxz6zdaEk","titre":"Isolate a Vocal with Music Rebalance in RX","duree":"2:08"},{"id":"GRafHAzWgI4","titre":"Nettoyer des voix, des samples et créer de acapellas avec iZotope RX8","duree":"20:26"},{"id":"jIHxnyAQTSE","titre":"Clean Up Noisy Audio Fast Using Izotope RX Spectral De-Noise!","duree":"4:22"},{"id":"e9gG6JHsF6E","titre":"How to Use iZotope RX Spectral Editor ARA Plugin in Pro Tools","duree":"5:41"},{"id":"xcwV7f-DdV0","titre":"iZotope RX7 | How To Remix Any Track / Song With Music Rebalance Tutorial","duree":"3:50"},{"id":"0OnTbxlI8s0","titre":"How to Use Everything in iZotope RX 10 for Music Creators","duree":"57:41"},{"id":"Y-pbsAZH6bQ","titre":"iZotope RX Tutorial - How to Remove Tonal Background Noise from Dialogue","duree":"15:33"},{"id":"c00olPRn6oA","titre":"Introducing iZotope RX 12, every audio project made flawless | iZotope","duree":"8:56"},{"id":"wg9vOtvlXMs","titre":"How to use iZotope RX 11 for music production | iZotope","duree":"14:04"},{"id":"cALcFgDIWGs","titre":"Izotope RX 11 Repair Assistant Review and Demo - A Must have for dialogue","duree":"15:02"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

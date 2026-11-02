@@ -128,6 +128,26 @@ const nonEmpty = (v) => !(v == null || v === '' || (Array.isArray(v) && !v.lengt
 // Champs qui doivent être saisis dans CHAQUE langue (pas de repli sur le FR :
 // on ne veut pas de texte français sur une page EN/ES). Tous les autres
 // champs sont communs et repris du document FR si la langue n'a pas le sien.
+// Une entrée de FAQ est gardée seulement si elle est lisible : question et réponse courtes,
+// sans répétition de mots ni de groupes de mots (les réponses qui tournent en boucle sont rejetées).
+function faqEntreeValide(f) {
+  const q = String(f?.q || '').trim();
+  const a = String(f?.a || '').trim();
+  if (!q || !a) return false;
+  if (q.length > 160 || a.length > 600) return false;
+  const mots = a.toLowerCase().split(/\s+/).filter(Boolean);
+  if (mots.length < 8) return false;
+  if (new Set(mots).size / mots.length < 0.5) return false;
+  const vus = new Map();
+  for (let i = 0; i + 5 <= mots.length; i++) {
+    const k = mots.slice(i, i + 5).join(' ');
+    const n = (vus.get(k) || 0) + 1;
+    if (n > 2) return false;
+    vus.set(k, n);
+  }
+  return true;
+}
+
 const TRADUISIBLES = new Set(['name', 'description', 'ideal_pour', 'presentation', 'meta_description',
   'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts']);
 
@@ -167,7 +187,7 @@ function generateFiche(tool, allTools = [], deps) {
   const reseaux = g('reseaux') || {};
   const alternatives = g('alternatives') || [];
   const features = (g('fonctionnalites') || []).slice(0, LIMITES.features);
-  const faq = (g('faq') || []).slice(0, LIMITES.faq);
+  const faq = (g('faq') || []).filter(faqEntreeValide).slice(0, LIMITES.faq);
   // ── Avantages, limites, idées d'utilisation, prompts (champs saisis dans l'admin) ──
   const pointsForts = (g('points_forts') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 8);
   const limiteRaw = g('limite');
@@ -639,4 +659,4 @@ ${footerHTML('fr')}
 </html>`;
 }
 
-module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES };
+module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide };

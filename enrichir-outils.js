@@ -52,6 +52,7 @@ const CATEGORIES_EXCLUES_IA = ['Outils IA'];
 const HEBERGEURS_CODE = ['github.com', 'gitlab.com', 'huggingface.co', 'replit.com', 'kaggle.com'];
 
 const ICON_KEYS = require('./js/fiche-icons.js').FEATURE_KEYS;
+const { faqEntreeValide } = require('./fiche-outil.js');
 
 // Compteur de requêtes envoyées pendant ce run (retries inclus).
 let requetesUtilisees = 0;
@@ -251,6 +252,7 @@ async function appelerGeminiLot(lot, categories, tentative = 0) {
 // Détecte une FAQ bouclée : réponse trop longue, ou phrase répétée.
 function faqInvalide(faq) {
   if (!Array.isArray(faq)) return false;
+  if (faq.some((f) => !faqEntreeValide(f))) return true;
   for (const f of faq) {
     const a = String(f?.a || '');
     if (a.length > 600) return true;

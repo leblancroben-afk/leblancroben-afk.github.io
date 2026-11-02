@@ -545,6 +545,8 @@
         <textarea id="o-prompts-en" rows="4"></textarea>
         <label>Prompts utiles ES (un par ligne)</label>
         <textarea id="o-prompts-es" rows="4"></textarea>
+        <label>Statut des sections enrichies (points forts, limites, idées)</label>
+        <select id="o-points-verifie"><option value="true">Vérifiées</option><option value="false">À vérifier (rempli par l'IA)</option></select>
       </fieldset>
 
       <fieldset>
@@ -3180,6 +3182,7 @@ Support français|oui|non|bool"></textarea>
     setVal('o-prompts-en', en ? joinLines(en.prompts, '\\n') : '');
     setVal('o-idees-utilisation-es', es ? joinLines(es.idees_utilisation, '\\n') : '');
     setVal('o-prompts-es', es ? joinLines(es.prompts, '\\n') : '');
+    setVal('o-points-verifie', tool.points_verifie === false ? 'false' : 'true');
     setVal('o-alternatives', (tool.alternatives||[]).join(', '));
 
     setVal('o-stats', joinLines((tool.stats||[]).map(s=>`${s.valeur}|${s.label}`), '\n'));
@@ -3571,7 +3574,7 @@ Support français|oui|non|bool"></textarea>
           fonctionnalites:fonctionnalitesEn,faq:faqEn,presentation:presentationEn,
           meta_description:metaDescEn,maker,plateformes,url_tarifs:urlTarifs,
           interface_fr:interfaceFr,api,mobile,stats:(statsEn.length?statsEn:stats),tutoriels,alternatives,screenshot_url:screenshot,
-          points_forts:pointsFortsEn,limite:limiteEn,idees_utilisation:ideesEn,prompts:promptsEn,tarifs:tarifsEn,...communsNouveaux,
+          points_forts:pointsFortsEn,limite:limiteEn,idees_utilisation:ideesEn,prompts:promptsEn,points_verifie:gv('o-points-verifie') !== 'false',tarifs:tarifsEn,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
       const nameEs=document.getElementById('o-name-es').value.trim();
@@ -3585,7 +3588,7 @@ Support français|oui|non|bool"></textarea>
           fonctionnalites:fonctionnalitesEs,faq:faqEs,presentation:presentationEs,
           meta_description:metaDescEs,maker,plateformes,url_tarifs:urlTarifs,
           interface_fr:interfaceFr,api,mobile,stats:(statsEs.length?statsEs:stats),tutoriels,alternatives,screenshot_url:screenshot,
-          points_forts:pointsFortsEs,limite:limiteEs,idees_utilisation:ideesEs,prompts:promptsEs,tarifs:tarifsEs,...communsNouveaux,
+          points_forts:pointsFortsEs,limite:limiteEs,idees_utilisation:ideesEs,prompts:promptsEs,points_verifie:gv('o-points-verifie') !== 'false',tarifs:tarifsEs,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
 
@@ -3594,7 +3597,7 @@ Support français|oui|non|bool"></textarea>
         plan,langue:'fr',essai_gratuit:essai,duree_essai:duree,ideal_pour:idealFr,traductions,
         acces_web:accesWeb,generation_images:generationImages,telechargement_fichiers:telechargementFichiers,
         langues_disponibles:languesDisponibles,integrations,
-        points_forts:pointsForts,limite,idees_utilisation:ideesFr,prompts:promptsFr,alternatives,maker,plateformes,url_tarifs:urlTarifs,
+        points_forts:pointsForts,limite,idees_utilisation:ideesFr,prompts:promptsFr,points_verifie:gv('o-points-verifie') !== 'false',alternatives,maker,plateformes,url_tarifs:urlTarifs,
         interface_fr:interfaceFr,api,mobile,presentation,meta_description:metaDesc,
         screenshot_url:screenshot,stats,fonctionnalites,faq,tutoriels,videotheque,tarifs,...communsNouveaux,
         generer_fiche:genererFiche,slug_articles:slugArticles||null,
@@ -3939,6 +3942,8 @@ Support français|oui|non|bool"></textarea>
       ['o-faq',             `o-faq-${targetLang}`,          'faq'],
       ['o-presentation',    `o-presentation-${targetLang}`, 'text'],
       ['o-idees-utilisation', `o-idees-utilisation-${targetLang}`, 'lignes'],
+      ['o-points-forts', `o-points-forts-${targetLang}`, 'lignes'],
+      ['o-limite', `o-limite-${targetLang}`, 'text'],
       ['o-meta-desc',       `o-meta-desc-${targetLang}`,    'text'],
     ];
   }

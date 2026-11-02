@@ -96,6 +96,16 @@ async function translateFaq(items, targetLang) {
 // Traduit tous les champs textuels d'un outil vers une langue cible,
 // dans le même ordre/pause que le bouton admin pour rester cohérent
 // avec le comportement déjà connu du service (rate-limit Render 0.1 CPU).
+// Liste (une entrée par ligne) : même logique que translateLignes de l'admin
+async function translateListe(items, targetLang) {
+  const out = [];
+  for (const item of (Array.isArray(items) ? items : [])) {
+    if (!item || !String(item).trim()) continue;
+    out.push(await translateText(String(item), targetLang)); await pause(400);
+  }
+  return out;
+}
+
 async function traduireContenu(outil, langueCible) {
   const name = await translateText(outil.name || '', langueCible); await pause(400);
   const description = await translateText(outil.description || '', langueCible); await pause(400);
@@ -104,8 +114,11 @@ async function traduireContenu(outil, langueCible) {
   const meta_description = await translateText(outil.meta_description || '', langueCible); await pause(400);
   const fonctionnalites = await translateFonctionnalites(outil.fonctionnalites, langueCible);
   const faq = await translateFaq(outil.faq, langueCible);
+  const points_forts = await translateListe(outil.points_forts, langueCible);
+  const limite = outil.limite ? await translateText(outil.limite, langueCible) : '';
+  const idees_utilisation = await translateListe(outil.idees_utilisation, langueCible);
 
-  return { name, description, ideal_pour, presentation, meta_description, fonctionnalites, faq };
+  return { name, description, ideal_pour, presentation, meta_description, fonctionnalites, faq, points_forts, limite, idees_utilisation };
 }
 
 // ══════════════════════════════════════
@@ -132,6 +145,12 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
     ideal_pour: traduit.ideal_pour || '',
     fonctionnalites: traduit.fonctionnalites || [],
     faq: traduit.faq || [],
+    // Sections enrichies : même structure que l'admin. Traduites ici, vérifiées ensuite dans l'admin.
+    points_forts: traduit.points_forts || [],
+    limite: traduit.limite || '',
+    idees_utilisation: traduit.idees_utilisation || [],
+    prompts: [], // saisis à la main dans l'admin, jamais traduits automatiquement
+    points_verifie: false,
     presentation: traduit.presentation || '',
     meta_description: traduit.meta_description || '',
     maker: outil.maker,

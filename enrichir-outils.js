@@ -91,6 +91,9 @@ Par outil :
 - fonctionnalites : 3 à 4 entrées {icon, titre, desc}. icon doit être EXACTEMENT une de ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji).
 - faq : 2 à 3 entrées {q, a}. Chaque réponse (a) fait 2 à 3 phrases courtes, 300 caractères maximum. Ne répète jamais une phrase ni une expression : une réponse qui tourne en boucle est rejetée.
 - presentation : 2 à 3 paragraphes factuels séparés par un retour à la ligne.
+- points_forts : 3 à 4 points forts factuels, une phrase courte chacun, tableau de chaînes. Tableau vide si incertain.
+- limite : 1 à 2 limites réelles et vérifiables, en une phrase, chaîne. null si incertain.
+- idees_utilisation : 3 à 4 cas d'usage concrets, tableau de chaînes. Tableau vide si incertain.
 - meta_description : 155 caractères maximum.
 - tarifs : 2 à 4 formules publiques {nom, prix, periode, desc}. Si le montant exact est incertain, prix et periode à "" (chaîne vide). Un tableau vide vaut mieux qu'un tarif inventé.
 - interface_fr, api, mobile, essai_gratuit : true, false ou null si incertain.
@@ -280,6 +283,11 @@ function construireMiseAJour(outil, infos, categorie) {
       ? infos.fonctionnalites.map(f => ({ ...f, icon: ICON_KEYS.includes(f && f.icon) ? f.icon : 'sparkles' }))
       : [],
     faq: Array.isArray(infos.faq) ? infos.faq : [],
+    // Sections enrichies : générées par l'IA, donc marquées « à vérifier » comme les tarifs.
+    ...(Array.isArray(infos.points_forts) && infos.points_forts.length ? { points_forts: infos.points_forts.filter(Boolean) } : {}),
+    ...(infos.limite ? { limite: String(infos.limite) } : {}),
+    ...(Array.isArray(infos.idees_utilisation) && infos.idees_utilisation.length ? { idees_utilisation: infos.idees_utilisation.filter(Boolean) } : {}),
+    ...((infos.points_forts?.length || infos.limite || infos.idees_utilisation?.length) ? { points_verifie: false } : {}),
     // null volontaire (incertain) : le champ n'est pas écrit → « Non renseigné » dans l'admin.
     ...(infos.interface_fr !== null && infos.interface_fr !== undefined ? { interface_fr: infos.interface_fr } : {}),
     ...(infos.api !== null && infos.api !== undefined ? { api: infos.api } : {}),

@@ -2874,59 +2874,16 @@ nav .logo { display: flex; align-items: center; }
    ═══════════════════════════════════════════════════ */
 
 /* ── Plan FEATURED — bordure rose + glow ── */
-.tool-card-plan-featured {
-  border-color: rgba(255, 107, 157, 0.3);
-  background: linear-gradient(
-    160deg,
-    rgba(255, 107, 157, 0.06) 0%,
-    var(--bg2, #12121a) 55%
-  );
-  box-shadow:
-    0 0 0 1px rgba(255, 107, 157, 0.12),
-    0 4px 24px rgba(0, 0, 0, 0.3);
+/* Cartes outils : neutres pour tous les plans (plus de teinte rose ni de liseré d'accent) */
+.tool-card-plan-featured,
+.tool-card-plan-starter {
+  border-color: var(--border);
+  background: var(--bg2);
   position: relative;
 }
-
-/* Ligne de couleur rose en haut de la carte */
-.tool-card-plan-featured::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #ff6b9d, #f5a623, #ff6b9d);
-  border-radius: var(--radius, 4px) var(--radius, 4px) 0 0;
-}
-
-.tool-card-plan-featured:hover {
-  border-color: rgba(255, 107, 157, 0.5);
-  box-shadow:
-    0 0 0 1px rgba(255, 107, 157, 0.2),
-    0 12px 40px rgba(0, 0, 0, 0.4);
-  transform: translateY(-4px);
-}
-
-/* ── Plan STARTER — bordure violette discrète ── */
-.tool-card-plan-starter {
-  border-color: rgba(255, 107, 157, 0.25);
-  background: linear-gradient(
-    160deg,
-    rgba(255, 107, 157, 0.05) 0%,
-    var(--bg2, #12121a) 55%
-  );
-}
-
-.tool-card-plan-starter::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #FF6B9D, #FF9DBC);
-  border-radius: var(--radius, 4px) var(--radius, 4px) 0 0;
-}
-
+.tool-card-plan-featured:hover,
 .tool-card-plan-starter:hover {
-  border-color: rgba(255, 107, 157, 0.4);
-  transform: translateY(-3px);
+  border-color: var(--border-hover);
 }
 
 /* ── Plan GRATUIT — carte standard avec ligne grise ── */

@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Recraft","description":"Recraft is a tool for generating images and vector illustrations by IA. It allows you to create and modify 3D visuals, logos and elements on an infinite canvas.","url":"https://leblancroben-afk.github.io/tools/standard/en/recraft/","inLanguage":"en","applicationCategory":"Content","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does Recraft allow for vector export (SVG)?","acceptedAnswer":{"@type":"Answer","text":"Yes, Recraft is one of the few AI tools that can generate directly exportable illustrations in editable SVG vector format."}},{"@type":"Question","name":"Are the images generated for free private?","acceptedAnswer":{"@type":"Answer","text":"No, the creations generated with the free plan are public. Paid plans keep your generations private."}},{"@type":"Question","name":"Can we use it to create logos?","acceptedAnswer":{"@type":"Answer","text":"Yes, Recraft offers styles dedicated to the design of brand logos, icons and visuals."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="40-en">
 
 <header class="fo-hero">
@@ -95,6 +108,9 @@
   <h2>Key features</h2>
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Vector generation and raster</h3><p>Create editable SVG vector illustrations as well as high-definition matrix images.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></svg></div><div><h3>Infinite canvas and edition</h3><p>Organize your visuals on an unlimited work area and modify specific areas by inpainting.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Style control and colours</h3><p>Impose a strict colour palette and apply a consistent graphic style to all your projects.</p></div></div></div>
 </section>
+      
+      
+      
       
       <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">

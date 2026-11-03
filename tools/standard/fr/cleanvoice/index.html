@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Cleanvoice","description":"Cleanvoice est un outil basé sur l'IA qui élimine automatiquement les hésitations, bruits de fond et tics de langage dans vos enregistrements audio.","url":"https://leblancroben-afk.github.io/tools/standard/fr/cleanvoice/","inLanguage":"fr","applicationCategory":"Audio & Musique","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Cleanvoice fonctionne-t-il avec des enregistrements en français ?","acceptedAnswer":{"@type":"Answer","text":"Oui, Cleanvoice prend en charge le français ainsi que plusieurs autres langues internationales."}},{"@type":"Question","name":"Propose-t-il une offre d'essai gratuit ?","acceptedAnswer":{"@type":"Answer","text":"Oui, un crédit de minutes d'audio est offert gratuitement lors de votre inscription pour tester les fonctionnalités."}}]}</script>
 </head>
 <body>
 <nav>
@@ -42,6 +44,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +53,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="67">
 
 <header class="fo-hero">
@@ -97,6 +110,9 @@
   <h2>Fonctionnalités principales</h2>
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div><h3>Suppression des tics vocal</h3><p>Détecte et supprime automatiquement les hésitations, répétitions et tics verbeux.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><div><h3>Réduction de bruit</h3><p>Élimine les bruits de fond ambiants ainsi que les bruits de bouche désagréables.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Export pistes multiples</h3><p>Traite séparément vos pistes sonores tout en maintenant la synchronisation globale.</p></div></div></div>
 </section>
+      
+      
+      
       
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">

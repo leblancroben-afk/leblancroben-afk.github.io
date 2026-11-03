@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"perplexity.ai","description":"Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.","url":"https://leblancroben-afk.github.io/tools/standard/fr/perplexity-ai/","inLanguage":"fr","applicationCategory":"Assistants IA et recherche","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quelle est la différence entre Make et Zapier ?","acceptedAnswer":{"@type":"Answer","text":"Make offre une interface beaucoup plus visuelle et permet des logiques complexes (boucles, filtres) pour un coût par opération généralement bien inférieur à Zapier."}},{"@type":"Question","name":"Qu'est-ce qu'une opération sur Make ?","acceptedAnswer":{"@type":"Answer","text":"Une opération est comptabilisée chaque fois qu'un module de votre scénario s'exécute avec succès (par exemple : récupérer un e-mail ou créer une ligne Google Sheets)."}},{"@type":"Question","name":"Peut-on utiliser des outils non listés nativement ?","acceptedAnswer":{"@type":"Answer","text":"Oui, grâce aux modules \"HTTP / API\", vous pouvez vous connecter à n'importe quel service web qui possède une API ouverte."}},{"@type":"Question","name":"Le plan gratuit est-il limité dans le temps ?","acceptedAnswer":{"@type":"Answer","text":"Non, le plan gratuit se renouvelle tous les mois avec un crédit de 1 000 opérations gratuites."}}]}</script>
 </head>
 <body>
 <nav>
@@ -42,6 +44,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +53,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="21">
 
 <header class="fo-hero">
@@ -82,7 +95,7 @@
     </div>
   </div>
 </header>
-<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="perplexity.ai"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-fonctionnalites" class="fo-tab" data-label="Fonctionnalités">Fonctionnalités</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
+<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="perplexity.ai"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-fonctionnalites" class="fo-tab" data-label="Fonctionnalités">Fonctionnalités</a><a href="#fo-avantages" class="fo-tab" data-label="Avantages et limites">Avantages et limites</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
 <div class="fo-body"><div class="fo-wrap">
   <div class="fo-grid">
     <div class="fo-col-main">
@@ -97,6 +110,16 @@
   <h2>Fonctionnalités principales</h2>
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Recherche Pro</h3><p>Activez le mode Pro pour que l'IA approfondisse le sujet en effectuant plusieurs recherches successives et croisées.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><div><h3>Focus thématique</h3><p>Restreignez vos recherches à des domaines précis : articles académiques (Writing), YouTube, Reddit ou le web global.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Perplexity Pages</h3><p>Transformez d'un simple clic vos dossiers de recherche en superbes pages web publiables et partageables.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Collections partagées</h3><p>Regroupez vos fils de discussion par projet et partagez-les avec vos collaborateurs pour centraliser la veille.</p></div></div></div>
 </section>
+      
+<section class="fo-card" id="fo-avantages">
+  <h2>Avantages et limites</h2>
+  <div class="fo-pl-grid">
+    <div><h3>Points forts</h3><ul class="fo-pros"><li>Citations systématiques des sources pour éviter les fake news</li><li>Mode &quot;Pro&quot; guidé qui pose des questions de clarification</li><li>Espaces &quot;Pages&quot; pour transformer ses recherches en articles web</li></ul></div>
+    <div><h3>Limites</h3><ul class="fo-cons"><li>Moins adapté pour la création pure de contenu (rédaction créative) par rapport à Claude ou ChatGPT.</li></ul></div>
+  </div>
+</section>
+      
+      
       
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">

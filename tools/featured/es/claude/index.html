@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Claude","description":"Asistente IA de Antrópico conocido por su pluma natural, sus voluminosas capacidades de análisis de documentos y la funcionalidad revolucionaria Artifacts para previsualizar código.","url":"https://leblancroben-afk.github.io/tools/featured/es/claude/","inLanguage":"es","applicationCategory":"Programación y creación de aplicaciones","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Por qué Claude es considerado mejor para escribir?","acceptedAnswer":{"@type":"Answer","text":"El antrópico entrenó a Claude con un enfoque de matices y seguridad, evitando el tono robótico a menudo criticado por otras IA."}},{"@type":"Question","name":"¿Qué es la funcionalidad Artifacts?","acceptedAnswer":{"@type":"Answer","text":"Es una pantalla separada que abre junto al chat para mostrar contenido independiente (código HTML/JS, SVG, sitios web interactivos) generados por AI."}},{"@type":"Question","name":"¿Claude respeta la confidencialidad de los datos?","acceptedAnswer":{"@type":"Answer","text":"Sí, Anthropic se compromete a no utilizar datos de usuario de la interfaz pública o API para entrenar sus modelos de negocio."}},{"@type":"Question","name":"¿Hay una solicitud de Claude?","acceptedAnswer":{"@type":"Answer","text":"Sí, una aplicación oficial está disponible para los usuarios de iOS y Android."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="18-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2M14 4c3-1 6-1 6-1s0 3-1 6l-6 6-5-5z"/><circle cx="15" cy="9" r="1.5"/></svg></div><div><h3>Artículos</h3><p>Ver e interactuar directamente con el código, páginas web o gráficos generados en una ventana dedicada.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Análisis de documentos</h3><p>Descargar archivos PDF masivos, libros completos o bases de código para una síntesis precisa.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><div><h3>Code Generation</h3><p>Escrito, comentado, traducido y corregido código informático en docenas de idiomas con lógica avanzada.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.2.6 4 2.4 4 5.5"/></svg></div><div><h3>Proyectos (Planes de pago)</h3><p>Crear espacios de trabajo temáticos combinando documentos de referencia para guiar las respuestas de Claude.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/DxzPdoK_Awg/mqdefault.jpg" alt="Claude IA : Formation Ultime | Tutoriel Complet pour débutants" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/DxzPdoK_Awg" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"DxzPdoK_Awg","titre":"Claude IA : Formation Ultime | Tutoriel Complet pour débutants","duree":"20:22"},{"id":"q0R8SBlQdnA","titre":"Claude IA : Les bases pour bien débuter facilement - Formation gratuite","duree":"39:49"},{"id":"pk-_1sanvCw","titre":"Claude crée maintenant tes propres outils IA (grâce aux artifacts)","duree":"15:14"},{"id":"lzp-O-_ENfI","titre":"Comment utiliser Claude ? La meilleure IA pour réfléchir, écrire et créer","duree":"31:40"},{"id":"nHXND_R4Jy8","titre":"Claude IA : le tutoriel facile pour débutant","duree":"44:02"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"DxzPdoK_Awg","titre":"Claude IA : Formation Ultime | Tutoriel Complet pour débutants","duree":"20:22"},{"id":"q0R8SBlQdnA","titre":"Claude IA : Les bases pour bien débuter facilement - Formation gratuite","duree":"39:49"},{"id":"pk-_1sanvCw","titre":"Claude crée maintenant tes propres outils IA (grâce aux artifacts)","duree":"15:14"},{"id":"lzp-O-_ENfI","titre":"Comment utiliser Claude ? La meilleure IA pour réfléchir, écrire et créer","duree":"31:40"},{"id":"nHXND_R4Jy8","titre":"Claude IA : le tutoriel facile pour débutant","duree":"44:02"},{"id":"9oJySubZRSA","titre":"The Ultimate Beginner’s Guide to Claude AI","duree":"1:00:49"},{"id":"r2vYObllqJU","titre":"Claude AI Tutorial for Beginners (Step-by-Step)","duree":"8:37"},{"id":"-50BGEYgMr4","titre":"Tout Comprendre sur Claude IA en 22 Minutes","duree":"21:54"},{"id":"WSPChlfxJyA","titre":"Full Claude Tutorial: Beginner to Advanced in 19 Minutes","duree":"19:13"},{"id":"ntDIxaeo3Wg","titre":"Claude Code - Full Tutorial for Beginners","duree":"35:49"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

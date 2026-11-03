@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NotebookLM","description":"NotebookLM is a search and note-taking assistant powered by Google's AI. It analyzes your own documents to generate syntheses, answers and audio summaries.","url":"https://leblancroben-afk.github.io/tools/standard/en/notebooklm/","inLanguage":"en","applicationCategory":"Productivity, study & translation","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is NotebookLM free?","acceptedAnswer":{"@type":"Answer","text":"Yes, NotebookLM is currently available free of charge for anyone with a Google account."}},{"@type":"Question","name":"What types of files can I import?","acceptedAnswer":{"@type":"Answer","text":"You can import PDFs, Google Docs, Google Slides, plain text files, copied text and web links."}},{"@type":"Question","name":"Are my data used to drive AI?","acceptedAnswer":{"@type":"Answer","text":"According to Google, your personal data and documents imported into NotebookLM are not used to drive AI models."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="62-en">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Document analysis</h3><p>Import your PDF, Google Docs, Slides or text files for direct queries.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Generation of audio summaries</h3><p>Automatically create an audio chat as a podcast synthesizing your sources.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Drained responses</h3><p>Each response generated includes accurate quotes directly referring to your original documents.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5M9 7h6"/></svg></div><div><h3>Smart Notebook</h3><p>Organize your ideas and convert your notes into study guides or fact sheets.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/0b_-Y6fG0nY/mqdefault.jpg" alt="NotebookLM : cette IA est INDISPENSABLE — Tuto Complet" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/0b_-Y6fG0nY" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"0b_-Y6fG0nY","titre":"NotebookLM : cette IA est INDISPENSABLE — Tuto Complet","duree":"23:26"},{"id":"YmgKqTFhZ5k","titre":"Tout ce que tu dois savoir sur NotebookLM - Guide Complet 2025","duree":"15:08"},{"id":"je6uHtwStKs","titre":"Comment utiliser NotebookLM ? La meilleure IA pour apprendre, synthétiser et créer","duree":"31:02"},{"id":"OJKOmTm91vc","titre":"Tutoriel NoteBook LM en français - découvre LE meilleur outil IA du moment","duree":"37:49"},{"id":"RKKK4uJ1ygU","titre":"Maitriser TOUT Gemini Notebook en 26 minutes (Tuto Complet)","duree":"26:29"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"0b_-Y6fG0nY","titre":"NotebookLM : cette IA est INDISPENSABLE — Tuto Complet","duree":"23:26"},{"id":"YmgKqTFhZ5k","titre":"Tout ce que tu dois savoir sur NotebookLM - Guide Complet 2025","duree":"15:08"},{"id":"je6uHtwStKs","titre":"Comment utiliser NotebookLM ? La meilleure IA pour apprendre, synthétiser et créer","duree":"31:02"},{"id":"OJKOmTm91vc","titre":"Tutoriel NoteBook LM en français - découvre LE meilleur outil IA du moment","duree":"37:49"},{"id":"RKKK4uJ1ygU","titre":"Maitriser TOUT Gemini Notebook en 26 minutes (Tuto Complet)","duree":"26:29"},{"id":"EOmgC3-hznM","titre":"Learn 80% of NotebookLM in Under 13 Minutes!","duree":"12:36"},{"id":"Xv5ZrnzA2DA","titre":"Domina NotebookLM en Menos de 7 Minutos (Tutorial Completo)","duree":"6:58"},{"id":"UG0DP6nVnrc","titre":"Google Notebook LM Tutorial - [Become A Power User in 15 min]","duree":"13:16"},{"id":"b2fGNHPlUGA","titre":"How To Master NotebookLM in 2026 (Free Course)","duree":"34:40"},{"id":"uSVBfyHBiDU","titre":"How to Use Google NotebookLM (Full Tutorial)","duree":"7:56"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

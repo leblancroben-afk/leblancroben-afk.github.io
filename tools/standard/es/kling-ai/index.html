@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Kling AI","description":"Kling AI es un generador de video de inteligencia artificial desarrollado por Kuaishou, capaz de crear secuencias realistas de texto o imágenes.","url":"https://leblancroben-afk.github.io/tools/standard/es/kling-ai/","inLanguage":"es","applicationCategory":"Vídeo y animación","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es Kling AI?","acceptedAnswer":{"@type":"Answer","text":"Kling AI es una herramienta de generación de vídeo desarrollada por Kuaishou capaz de producir videos realistas hasta alta resolución de descripciones de texto o imágenes."}},{"@type":"Question","name":"¿Kling AI está libre?","acceptedAnswer":{"@type":"Answer","text":"Kling AI ofrece una fórmula de freemium con créditos gratuitos asignados regularmente para probar la herramienta, así como suscripciones pagadas."}},{"@type":"Question","name":"¿Cuáles son las alternativas a Kling AI?","acceptedAnswer":{"@type":"Answer","text":"Las principales alternativas incluyen Runway Gen-2, OpenAI Sora, Pika Labs y Luma Dream Machine."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="46-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></div><div><h3>Generación de texto a vídeo</h3><p>Convierta los mensajes de texto detallados en secuencias de vídeo de alta definición a renderización realista.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Generación de imagen a vídeo</h3><p>Animar imágenes fijas con movimientos naturales y fluidos controlados por sus instrucciones.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Extensión de vídeo</h3><p>Extender la duración de los vídeos existentes con perfecta consistencia visual.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Movimientos de cámara</h3><p>Aplique cámaras de movimiento para impulsar sus creaciones visuales.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/qzHEkQpT-i0/mqdefault.jpg" alt="Kling Ai le Meilleur Générateur de Vidéos IA gratuit   (Le guide Complet)" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/qzHEkQpT-i0" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"qzHEkQpT-i0","titre":"Kling Ai le Meilleur Générateur de Vidéos IA gratuit   (Le guide Complet)","duree":"11:40"},{"id":"zmrlQxPeN2s","titre":"Kling AI : Créez des Vidéos Bluffantes en 3 Minutes ! (Tutoriel Complet)","duree":"3:28"},{"id":"UjqsDhiMG1k","titre":"Comment utiliser Kling AI gratuitement en 2025 – guide complet","duree":"2:14"},{"id":"DhrI3EUk5sQ","titre":"Kling AI : mon avis et guide complet (le meilleur outil IA vidéo)","duree":"17:32"},{"id":"puFv_QfFm2A","titre":"Kling 3.0 : Maîtrise l'IA Vidéo N°1 en 2026 (Tuto Complet)","duree":"22:46"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"qzHEkQpT-i0","titre":"Kling Ai le Meilleur Générateur de Vidéos IA gratuit   (Le guide Complet)","duree":"11:40"},{"id":"zmrlQxPeN2s","titre":"Kling AI : Créez des Vidéos Bluffantes en 3 Minutes ! (Tutoriel Complet)","duree":"3:28"},{"id":"UjqsDhiMG1k","titre":"Comment utiliser Kling AI gratuitement en 2025 – guide complet","duree":"2:14"},{"id":"DhrI3EUk5sQ","titre":"Kling AI : mon avis et guide complet (le meilleur outil IA vidéo)","duree":"17:32"},{"id":"puFv_QfFm2A","titre":"Kling 3.0 : Maîtrise l'IA Vidéo N°1 en 2026 (Tuto Complet)","duree":"22:46"},{"id":"Em6pM_MPNmc","titre":"Kling O1 Tutorial: 13 Features & Tips for AI Video","duree":"5:20"},{"id":"PzOH1v5GaW0","titre":"Kling AI 4.0 Tutorial | How to Make Cinematic AI Videos","duree":"3:55"},{"id":"EWBsU0fSgPs","titre":"STOP Wasting Credits & Become a Kling AI Master in 8 Minutes","duree":"8:01"},{"id":"anACVZDNw6o","titre":"How to Use Kling AI (Tutorial): Free High Quality AI Video Generator","duree":"8:17"},{"id":"o0Bgm1idYdo","titre":"Kling AI review | The BEST AI video generator on a BUDGET?","duree":"5:18"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

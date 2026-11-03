@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Kira Systems","description":"Kira Systems, propiedad de Litera, es una plataforma de inteligencia contractual especializada en la extracción de cláusulas durante la debida diligencia de M divideA. Más de 1.400 campos predefinidos identifican automáticamente puntos críticos.","url":"https://leblancroben-afk.github.io/tools/standard/es/kira-systems/","inLanguage":"es","applicationCategory":"Legal"}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +41,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +50,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="4-es">
 
 <header class="fo-hero">
@@ -92,6 +104,9 @@
 </section>
       
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/hMp2OQ1Z1GU/mqdefault.jpg" alt="Best AI Tools for Lawyers &amp; Legal Professionals in 2026 – Work Smarter &amp; Faster" loading="lazy">
@@ -102,7 +117,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/hMp2OQ1Z1GU" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"hMp2OQ1Z1GU","titre":"Best AI Tools for Lawyers & Legal Professionals in 2026 – Work Smarter & Faster","duree":"8:23"},{"id":"sHDM1iWSDvM","titre":"Interview of Noah Wasiberg, Co Founder and CEO of Kira Systems, at ILTACon 2016","duree":"2:21"},{"id":"m3dlFT5HJ0Q","titre":"Kira Systems Interview at CLOC 2018 - Rich Hermann","duree":"3:10"},{"id":"NeLYrdCTnDg","titre":"Kira Systems vs Lawgeex - Which is Better?","duree":"1:56"},{"id":"X9zk89O2CSM","titre":"Luminance vs Kira Systems - Which is Better?","duree":"2:01"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"hMp2OQ1Z1GU","titre":"Best AI Tools for Lawyers & Legal Professionals in 2026 – Work Smarter & Faster","duree":"8:23"},{"id":"sHDM1iWSDvM","titre":"Interview of Noah Wasiberg, Co Founder and CEO of Kira Systems, at ILTACon 2016","duree":"2:21"},{"id":"m3dlFT5HJ0Q","titre":"Kira Systems Interview at CLOC 2018 - Rich Hermann","duree":"3:10"},{"id":"NeLYrdCTnDg","titre":"Kira Systems vs Lawgeex - Which is Better?","duree":"1:56"},{"id":"X9zk89O2CSM","titre":"Luminance vs Kira Systems - Which is Better?","duree":"2:01"},{"id":"RGs8VSlFamk","titre":"OCMS Integration with Kira","duree":"2:45"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

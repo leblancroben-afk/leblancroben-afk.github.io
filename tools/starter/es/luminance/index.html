@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Luminance","description":"Luminance es una IA legal británica especializada en la relectura y negociación de contratos. Su arquitectura \"Panel of Judges\" cruza varios modelos para detectar cláusulas de riesgo con mayor fiabilidad.","url":"https://leblancroben-afk.github.io/tools/starter/es/luminance/","inLanguage":"es","applicationCategory":"Legal"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿El Luminance ofrece un juicio gratis?","acceptedAnswer":{"@type":"Answer","text":"No, la evaluación pasa por una demostración y luego una prueba de la fase de concepto antes de la cita personalizada."}},{"@type":"Question","name":"¿El Luminance maneja litigios?","acceptedAnswer":{"@type":"Answer","text":"No, la herramienta se centra en el contratista (revisión, negociación, diligencia debida) y no cubre la gestión de los archivos de litigio."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="2-es">
 
 <header class="fo-hero">
@@ -95,6 +108,9 @@
   <h2>Funcionalidades principales</h2>
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5M9 13h.01M15 13h.01M9 17h6"/><circle cx="12" cy="4" r="1"/></svg></div><div><h3>Autopilot</h3><p>Negociar y cerrar los AOD rutinarios solos, sin intervención humana</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h3>Chatbot legal</h3><p>Responder preguntas y resumir contratos en lenguaje simple</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Inteligencia por contrata</h3><p>Pregunte al directorio completo de contratos, no sólo un documento</p></div></div></div>
 </section>
+      
+      
+      
       
       
       <section class="fo-card" id="fo-faq"><h2>Preguntas frecuentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">¿El Luminance ofrece un juicio gratis?</button><div class="faq-a">No, la evaluación pasa por una demostración y luego una prueba de la fase de concepto antes de la cita personalizada.</div></div><div class="faq-item"><button class="faq-q">¿El Luminance maneja litigios?</button><div class="faq-a">No, la herramienta se centra en el contratista (revisión, negociación, diligencia debida) y no cubre la gestión de los archivos de litigio.</div></div></div></section>

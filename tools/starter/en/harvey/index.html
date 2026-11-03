@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Harvey","description":"Harvey is a legal AI designed for law firms and corporate legal branches. It assists in regulatory research, contract analysis and complex due diligence.","url":"https://leblancroben-afk.github.io/tools/starter/en/harvey/","inLanguage":"en","applicationCategory":"Legal"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Harvey accessible to small offices?","acceptedAnswer":{"@type":"Answer","text":"No, Harvey targets major corporate law firms and branches with a generally high minimum of seats and a commercial purchasing process."}},{"@type":"Question","name":"How much does Harvey cost?","acceptedAnswer":{"@type":"Answer","text":"No tariff is published; the price depends on a personalized quote depending on the size of the firm and the selected modules."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="1-en">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Legal research</h3><p>Asks complex questions of law, regulation and taxation in several jurisdictions</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Analysis of contracts</h3><p>Re-read, summarize and report risk clauses in your documents</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.2.6 4 2.4 4 5.5"/></svg></div><div><h3>Due diligence M&amp;A</h3><p>Automation of critical point extraction in M &amp; A audits</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/W4yFzi5DwdE/mqdefault.jpg" alt="Harvey AI - Tutoriel complet" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/W4yFzi5DwdE" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"W4yFzi5DwdE","titre":"Harvey AI - Tutoriel complet","duree":"5:27"},{"id":"ghK4sIUOe7E","titre":"How To Use Harvey Ai - Full Tutorial (2025)","duree":"2:50"},{"id":"rCp1VXdj90o","titre":"Harvey AI Demo - How to Use Harvey AI for Beginners (Full Guide) 2026!","duree":"1:54"},{"id":"OquXpe3POPU","titre":"AL TV Product Walk Through: Harvey - Shared Spaces - Legal AI Collaboration","duree":"15:25"},{"id":"heyzleVGUCg","titre":"Harvey AI Review 2025 - Important Things to Know!","duree":"1:49"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"W4yFzi5DwdE","titre":"Harvey AI - Tutoriel complet","duree":"5:27"},{"id":"ghK4sIUOe7E","titre":"How To Use Harvey Ai - Full Tutorial (2025)","duree":"2:50"},{"id":"rCp1VXdj90o","titre":"Harvey AI Demo - How to Use Harvey AI for Beginners (Full Guide) 2026!","duree":"1:54"},{"id":"OquXpe3POPU","titre":"AL TV Product Walk Through: Harvey - Shared Spaces - Legal AI Collaboration","duree":"15:25"},{"id":"heyzleVGUCg","titre":"Harvey AI Review 2025 - Important Things to Know!","duree":"1:49"},{"id":"ydIT4EdLK54","titre":"Harvey Platform Overview","duree":"3:52"},{"id":"fFQM0LHOGBc","titre":"Build Your Own Legal AI Agents with Harvey Workflow Builder","duree":"2:57"},{"id":"B87ICNnr_GQ","titre":"Harvey’s Legal AI Is Now Inside Microsoft 365","duree":"2:32"},{"id":"JjwYr2_UlMo","titre":"LTH Product Briefing - Harvey 2026 Update","duree":"22:44"},{"id":"_iT_adwg_Os","titre":"Harvey In Practice: Build and Run Playbooks","duree":"2:01"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Uizard","description":"Uizard is an AI-based design platform that quickly creates models, prototype applications and web interfaces from sketches or text.","url":"https://leblancroben-afk.github.io/tools/standard/en/uizard/","inLanguage":"en","applicationCategory":"Images & design","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Uizard suitable for beginners?","acceptedAnswer":{"@type":"Answer","text":"Yes, Uizard is designed to be accessible without prior UI design skills. Artificial intelligence simplifies the creation of models."}},{"@type":"Question","name":"Can we export design projects?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can export your creations to image, PDF or interactive formats. This facilitates transmission to developers."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="76-en">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Self-designer</h3><p>Generate multi-screen application models from simple text descriptions.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Conversion of sketches</h3><p>Turn your paper drawings and screenshots into editable digital models.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.2.6 4 2.4 4 5.5"/></svg></div><div><h3>Real-time collaboration</h3><p>Work as a team on the same design projects and share interactive prototypes.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/q8vY-yXrEh8/mqdefault.jpg" alt="Uizard Wireframe: Digitize your Hand-drawn Wireframes in Seconds" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/q8vY-yXrEh8" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"q8vY-yXrEh8","titre":"Uizard Wireframe: Digitize your Hand-drawn Wireframes in Seconds","duree":"2:34"},{"id":"TkaQaxY76eY","titre":"Créer une app mobile avec l'IA Du concept au design UX/UI - avec uizard.io","duree":"9:59"},{"id":"7nZQpVSLb7k","titre":"COMMENT CRÉER votre PREMIER SITE ou APP avec UIZARD sans PROGRAMMER","duree":"2:59"},{"id":"SXKEwBcQQrI","titre":"How To Use Uizard To Convert Designs To Wireframes (Quick Guide)","duree":"2:04"},{"id":"KBQS61qM_a0","titre":"New A.I features for UI & UX Design (UIZARD)","duree":"6:43"},{"id":"VZ5klpaDBcA","titre":"Uizard Review: Best AI UI Design & Wireframe Tool in 2026? (Honest Review)","duree":"2:46"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"q8vY-yXrEh8","titre":"Uizard Wireframe: Digitize your Hand-drawn Wireframes in Seconds","duree":"2:34"},{"id":"TkaQaxY76eY","titre":"Créer une app mobile avec l'IA Du concept au design UX/UI - avec uizard.io","duree":"9:59"},{"id":"7nZQpVSLb7k","titre":"COMMENT CRÉER votre PREMIER SITE ou APP avec UIZARD sans PROGRAMMER","duree":"2:59"},{"id":"SXKEwBcQQrI","titre":"How To Use Uizard To Convert Designs To Wireframes (Quick Guide)","duree":"2:04"},{"id":"KBQS61qM_a0","titre":"New A.I features for UI & UX Design (UIZARD)","duree":"6:43"},{"id":"VZ5klpaDBcA","titre":"Uizard Review: Best AI UI Design & Wireframe Tool in 2026? (Honest Review)","duree":"2:46"},{"id":"sgLs8CJ8W0Q","titre":"A Beginner's Guide to Uizard (Full Walkthrough)","duree":"7:02"},{"id":"PD5j7Ll7wLs","titre":"Uizard Autodesigner Full Walkthrough [out now!]","duree":"23:25"},{"id":"NZfl3Jg8dEE","titre":"Uizard Autodesigner: Generate an App Design from a Text Prompt","duree":"2:47"},{"id":"2e5XfBw3FHw","titre":"How to Use Uizard AI to Create UI Designs & Wireframes in 2026 (Easy Tutorial)","duree":"2:06"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

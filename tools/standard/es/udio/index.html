@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Udio","description":"Udio es una inteligencia artificial capaz de generar canciones completas con letras y canciones de descripciones simples de texto.","url":"https://leblancroben-afk.github.io/tools/standard/es/udio/","inLanguage":"es","applicationCategory":"Audio y música","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es Udio?","acceptedAnswer":{"@type":"Answer","text":"Udio es una plataforma propulsada por AI que permite crear pistas de música completas desde una descripción de texto."}},{"@type":"Question","name":"¿Udio está libre?","acceptedAnswer":{"@type":"Answer","text":"Sí, Udio ofrece una versión gratuita que ofrece un número limitado de créditos renovables para generar canciones."}},{"@type":"Question","name":"¿Puedo descargar mis creaciones?","acceptedAnswer":{"@type":"Answer","text":"Sí, es posible exportar sus canciones generadas como archivos de audio o vídeo."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="53-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></div><div><h3>Generación musical</h3><p>Crear canciones completas en varios estilos musicales de los avisos de texto.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><div><h3>Síntesis de voz y letras</h3><p>Genera voces cantadas realistas y letras personalizadas o automáticas.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Ampliación y edición</h3><p>Extender las pistas existentes o modificar secciones específicas con precisión.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M4 20h16"/></svg></div><div><h3>Exportación de audio y vídeo</h3><p>Descargue sus creaciones en formatos de audio o video con visual.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/9jxA7nLCiIw/mqdefault.jpg" alt="Tuto UDIO, la superbe IA générative de chansons !" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/9jxA7nLCiIw" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"9jxA7nLCiIw","titre":"Tuto UDIO, la superbe IA générative de chansons !","duree":"18:49"},{"id":"6IlItfVfOkQ","titre":"5-Minute AI Music Tutorial | How to Udio","duree":"5:10"},{"id":"XXyq_x-7Mfg","titre":"Udio AI Tutorial – How to Make Music with AI (Free & Easy)","duree":"12:05"},{"id":"YBRfmIRzLoE","titre":"Udio Tutorial - How To Make A Full Song -  Detailed Guide","duree":"11:02"},{"id":"GuPGVc5Kal4","titre":"Udio AI: How To Make Full Song | Step by Step Guide","duree":"7:06"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"9jxA7nLCiIw","titre":"Tuto UDIO, la superbe IA générative de chansons !","duree":"18:49"},{"id":"6IlItfVfOkQ","titre":"5-Minute AI Music Tutorial | How to Udio","duree":"5:10"},{"id":"XXyq_x-7Mfg","titre":"Udio AI Tutorial – How to Make Music with AI (Free & Easy)","duree":"12:05"},{"id":"YBRfmIRzLoE","titre":"Udio Tutorial - How To Make A Full Song -  Detailed Guide","duree":"11:02"},{"id":"GuPGVc5Kal4","titre":"Udio AI: How To Make Full Song | Step by Step Guide","duree":"7:06"},{"id":"Fp1Uk4EM0k4","titre":"Créer une Chanson avec l'IA : UDIO 100% gratuit","duree":"2:38"},{"id":"oDKtyfyTTEc","titre":"Mastering UDIO: The Ultimate Guide to AI Music Creation","duree":"19:23"},{"id":"XjSqzkf3bYM","titre":"Arrêtez de poster vos sons Suno/Udio (avant de voir ça !)","duree":"18:34"},{"id":"PxCWjUrAhCk","titre":"Come CREARE MUSICA IA con UDIO, tutorial completo e confronto con Suno","duree":"36:45"},{"id":"MoE8dKuKmRc","titre":"Create Viral AI Songs in Seconds! Suno AI vs Udio AI Tutorial & Comparison","duree":"16:15"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

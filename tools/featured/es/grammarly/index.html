@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"grammarly","description":"Asistente de escritura IA para corrección, gramática, estilo y tono. usuarios de 40M+. Planes gratuitos (100 solicitudes/mes) y Pro (12 dólares/mo) con plagio y detección de IA.","url":"https://leblancroben-afk.github.io/tools/featured/es/grammarly/","inLanguage":"es","applicationCategory":"Texto","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Grammarly está libre?","acceptedAnswer":{"@type":"Answer","text":"Sí, plan gratuito con correcciones básicas + 100 IA/mes. Pro a $12/mo."}},{"@type":"Question","name":"¿Grammarly trabaja en francés?","acceptedAnswer":{"@type":"Answer","text":"En parte. Optimizado para inglés, correcciones limitadas en francés."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="30-es">
 
 <header class="fo-hero">
@@ -97,6 +110,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg></div><div><h3>Corrección</h3><p>Gramática, ortografía, puntuación</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><div><h3>Estilo</h3><p>Claridad, concisidad, tono, fluidez</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Plagiarismo</h3><p>Detección de texto e IA incluida</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-3"/></svg></div><div><h3>Análisis</h3><p>Equipo de estadística (Business)</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/GqJWE5tb3o4/mqdefault.jpg" alt="AI App of the Day: Grammarly AI Review | Best AI Writing &amp; Grammar Assistant #aitools #aiapps" loading="lazy">
@@ -107,7 +123,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/GqJWE5tb3o4" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"GqJWE5tb3o4","titre":"AI App of the Day: Grammarly AI Review | Best AI Writing & Grammar Assistant #aitools #aiapps","duree":"5:46"},{"id":"Agd6X7_sTZo","titre":"Transform Your Text With Our AI Writing Features: Paraphrasing, Tone Improvements, and More","duree":"2:30"},{"id":"hWMGRs5WvzQ","titre":"How to Write a Cover Letter With Generative AI","duree":"2:51"},{"id":"5LjKA1eLQ_0","titre":"How to Use Grammarly","duree":"9:17"},{"id":"AUejmYbxKtA","titre":"How to Use Grammarly AI to Improve Your Writing","duree":"10:23"},{"id":"Y29FFnvErXc","titre":"How To Use Grammarly For Academic Writing (Step By Step 2026)","duree":"2:37"},{"id":"IN5Vw9xSDxU","titre":"How To Use Grammarly For Blog Writing (Step By Step 2026)","duree":"2:23"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"GqJWE5tb3o4","titre":"AI App of the Day: Grammarly AI Review | Best AI Writing & Grammar Assistant #aitools #aiapps","duree":"5:46"},{"id":"Agd6X7_sTZo","titre":"Transform Your Text With Our AI Writing Features: Paraphrasing, Tone Improvements, and More","duree":"2:30"},{"id":"hWMGRs5WvzQ","titre":"How to Write a Cover Letter With Generative AI","duree":"2:51"},{"id":"5LjKA1eLQ_0","titre":"How to Use Grammarly","duree":"9:17"},{"id":"AUejmYbxKtA","titre":"How to Use Grammarly AI to Improve Your Writing","duree":"10:23"},{"id":"Y29FFnvErXc","titre":"How To Use Grammarly For Academic Writing (Step By Step 2026)","duree":"2:37"},{"id":"IN5Vw9xSDxU","titre":"How To Use Grammarly For Blog Writing (Step By Step 2026)","duree":"2:23"},{"id":"FJ_ZWAUO78s","titre":"How to Use Grammarly - Beginner's Guide","duree":"9:38"},{"id":"vjM7HFg5eqM","titre":"How to Use Grammarly’s New AI Tools (Step-by-Step Guide)","duree":"11:16"},{"id":"G6f7comeifM","titre":"7 Grammarly Tricks You Need to Start Using Today!","duree":"12:06"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

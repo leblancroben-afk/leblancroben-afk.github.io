@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"VistaCreate","description":"VistaCreate es una herramienta de diseño gráfico en línea que ofrece miles de modelos, visuales y herramientas AI para crear rápidamente contenidos de marketing y redes sociales.","url":"https://leblancroben-afk.github.io/tools/standard/es/vistacreate/","inLanguage":"es","applicationCategory":"Imágenes y diseño","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cuál es la diferencia entre la versión gratuita y Pro?","acceptedAnswer":{"@type":"Answer","text":"La versión gratuita ofrece acceso a un amplio catálogo de modelos básicos. El paquete Pro desbloquea la biblioteca completa, el desvío IA y la gestión del equipo."}},{"@type":"Question","name":"¿Está disponible VistaCreate en francés?","acceptedAnswer":{"@type":"Answer","text":"Sí, la interfaz de usuario de VistaCreate y muchos modelos creativos están totalmente traducidos al francés."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="77-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Modelos personalizables</h3><p>Acceso a un extenso catálogo de modelos para redes sociales, impresiones y presentaciones.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Eliminación de antecedentes</h3><p>Rotar automáticamente el fondo de sus imágenes con la IA en un clic.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Ajuste rápido</h3><p>Adapta tus creaciones instantáneamente a los formatos de diferentes plataformas web.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/Z0kImAxE3O4/mqdefault.jpg" alt="How to easily get started with VistaCreate" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/Z0kImAxE3O4" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"Z0kImAxE3O4","titre":"How to easily get started with VistaCreate","duree":"2:51"},{"id":"GH6tbj5HmJA","titre":"How to animate texts and objects in VistaCreate","duree":"1:55"},{"id":"ODRAy74ZxWQ","titre":"Comment concevoir sont premier visuel sur Vistacreate app","duree":"10:38"},{"id":"6hCkWVZ6VFE","titre":"Comment créer des visuels impactants sur Vistacreate ?","duree":"4:05"},{"id":"aDfo68SKlK4","titre":"How To Create Instagram Reels Video With VistaCreate (Full Guide)","duree":"2:14"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"Z0kImAxE3O4","titre":"How to easily get started with VistaCreate","duree":"2:51"},{"id":"GH6tbj5HmJA","titre":"How to animate texts and objects in VistaCreate","duree":"1:55"},{"id":"ODRAy74ZxWQ","titre":"Comment concevoir sont premier visuel sur Vistacreate app","duree":"10:38"},{"id":"6hCkWVZ6VFE","titre":"Comment créer des visuels impactants sur Vistacreate ?","duree":"4:05"},{"id":"aDfo68SKlK4","titre":"How To Create Instagram Reels Video With VistaCreate (Full Guide)","duree":"2:14"},{"id":"Yf8DPGTnxE8","titre":"VISTACREATE Tutorial | Learn VISTACREATE in 10 Mins | CRELLO Tutorial","duree":"12:47"},{"id":"sZ9SSZKG6_M","titre":"How to Generate AI Images for Commercial Use ( VistaCreate Tutorial )","duree":"9:35"},{"id":"oXCwW8tV34M","titre":"How to Build a Brand Kit From SCRATCH","duree":"2:16"},{"id":"tbURbMTmm0A","titre":"4 principles of design for well-balanced visuals | VistaCreate Design Tips","duree":"3:03"},{"id":"DRUzzsldA8o","titre":"7 Tips to Help You Choose the RIGHT Template","duree":"2:58"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

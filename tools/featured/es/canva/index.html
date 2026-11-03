@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Canva","description":"Canva es una plataforma de diseño gráfico en línea intuitiva para crear visuales, presentaciones, videos y documentos con miles de plantillas personalizables.","url":"https://leblancroben-afk.github.io/tools/featured/es/canva/","inLanguage":"es","applicationCategory":"Contenido","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Está libre Canva?","acceptedAnswer":{"@type":"Answer","text":"Sí, Canva ofrece una versión gratuita muy completa con miles de modelos y fotos. Las suscripciones de pago (Canva Pro) desbloquean elementos y herramientas más avanzados."}},{"@type":"Question","name":"¿Podemos usar Canva en el móvil?","acceptedAnswer":{"@type":"Answer","text":"Sí, Canva está disponible como una aplicación gratuita para iOS (iPhone/iPad) y Android, sincronizada en tiempo real con la versión web."}},{"@type":"Question","name":"¿Pueden utilizarse creaciones Canva para fines comerciales?","acceptedAnswer":{"@type":"Answer","text":"Sí, los diseños creados con Canva pueden utilizarse con fines comerciales, con sujeción a las condiciones de licencia de los elementos específicos utilizados (gratis o Pro)."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="26-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Creación de Visuales</h3><p>Diseño de imágenes de redes sociales, carteles y logotipos usando un editor de arrastrar y soltar intuitivo.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-3"/></svg></div><div><h3>Presentaciones interactivas</h3><p>Cree presentaciones dinámicas con animaciones en vivo, transiciones y herramientas de presentación.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Edición simple de vídeo</h3><p>Montar y editar vídeos cortos adaptados a formatos móviles y sociales con pistas de audio incorporadas.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Herramientas AI (Magic Studio)</h3><p>Genera imágenes, elimina fondos y vuelve a editar texto al instante con inteligencia artificial incorporada.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/_kPE0yJ0SEg/mqdefault.jpg" alt="15 fonctionnalités d’IA incroyables sur Canva" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/_kPE0yJ0SEg" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"_kPE0yJ0SEg","titre":"15 fonctionnalités d’IA incroyables sur Canva","duree":"18:25"},{"id":"jRTzc-nJ7Hc","titre":"Canva IA : comment utiliser les 11 outils IA de Canva pour créer 10x plus vite","duree":"25:12"},{"id":"fx6duzf0Nic","titre":"L’IA de Canva est disponible, elle est juste MAGIQUE !","duree":"13:21"},{"id":"64f3QExJA-4","titre":"Comment utiliser l'IA de CANVA pour faire un montage vidéo viral","duree":"7:57"},{"id":"c9Fec-lFJ7g","titre":"Comment Utiliser Le Générateur D’Images IA De Canva En 2026 (Pour Débutants)","duree":"8:18"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"_kPE0yJ0SEg","titre":"15 fonctionnalités d’IA incroyables sur Canva","duree":"18:25"},{"id":"jRTzc-nJ7Hc","titre":"Canva IA : comment utiliser les 11 outils IA de Canva pour créer 10x plus vite","duree":"25:12"},{"id":"fx6duzf0Nic","titre":"L’IA de Canva est disponible, elle est juste MAGIQUE !","duree":"13:21"},{"id":"64f3QExJA-4","titre":"Comment utiliser l'IA de CANVA pour faire un montage vidéo viral","duree":"7:57"},{"id":"c9Fec-lFJ7g","titre":"Comment Utiliser Le Générateur D’Images IA De Canva En 2026 (Pour Débutants)","duree":"8:18"},{"id":"jzWxBuvwuwQ","titre":"MASTER CANVA IN 15 MINUTES! Canva Tutorial For Beginners","duree":"16:22"},{"id":"kKKHqD-CJf8","titre":"Comment utiliser CANVA : Tuto en français, le guide complet de A à Z","duree":"23:17"},{"id":"pIl-JKvHj3A","titre":"CANVA TUTORIAL COMPLETO PARA PRINCIPIANTES 2026 (Como usar Canva desde cero - Curso GRATIS)","duree":"50:13"},{"id":"BLhoWAALKt0","titre":"Canva Tutorial for Beginners (How to use Canva step by step)","duree":"28:06"},{"id":"6j5AUi2cxvs","titre":"Canva Tutorial for Beginners 2026 | Everything you NEED to KNOW!","duree":"19:54"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

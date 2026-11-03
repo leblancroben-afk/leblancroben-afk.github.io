@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"perplexity.ai","description":"El motor de búsqueda dopa a AI que reemplaza a Google. Haga sus preguntas en lenguaje natural y obtenga respuestas sintetizadas, sourcing y verificables en tiempo real.","url":"https://leblancroben-afk.github.io/tools/standard/es/perplexity-ai/","inLanguage":"es","applicationCategory":"Asistentes de IA e investigación","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cuál es la diferencia entre Make y Zapier?","acceptedAnswer":{"@type":"Answer","text":"Hacer ofrece una interfaz mucho más visual y permite lógicas complejas (ops, filtros) por un costo por operación generalmente mucho menor que Zapier."}},{"@type":"Question","name":"¿Qué es una operación en Make?","acceptedAnswer":{"@type":"Answer","text":"Una operación se cuenta cada vez que un módulo en su escenario funciona correctamente (por ejemplo, recuperar un correo electrónico o crear una línea de hojas de Google)."}},{"@type":"Question","name":"¿Podemos usar herramientas que no se enumeran nativamente?","acceptedAnswer":{"@type":"Answer","text":"Sí, con los módulos \"HTTP/ API\", puede conectarse a cualquier servicio web que tenga una API abierta."}},{"@type":"Question","name":"¿El plan libre está limitado en el tiempo?","acceptedAnswer":{"@type":"Answer","text":"No, el plan gratuito se renueva cada mes con un crédito de 1.000 transacciones gratuitas."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="21-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Research Pro</h3><p>Activar el modo Pro para permitir que AI profundice el tema haciendo varias investigaciones sucesivas y cruzadas.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><div><h3>Enfoque temático</h3><p>Restrict your research to specific areas: academic articles (Writing), YouTube, Reddit o la web global.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div><div><h3>Páginas de perplejidad</h3><p>Simplemente haga clic en sus carpetas de búsqueda y convertirlas en páginas web hermosas, publicables y compartidos.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Colecciones compartidas</h3><p>Coloque sus hilos junto por proyecto y comparta con sus colaboradores para centralizar el día anterior.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/dnmcZ1KIhUU/mqdefault.jpg" alt="Perplexity AI : Le Tuto Complet (cette IA est PHÉNOMÉNALE)" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/dnmcZ1KIhUU" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"dnmcZ1KIhUU","titre":"Perplexity AI : Le Tuto Complet (cette IA est PHÉNOMÉNALE)","duree":"40:20"},{"id":"k8CPtD1Q7yY","titre":"TUTO PERPLEXITY : oubliez GOOGLE avec ce moteur de recherche  IA","duree":"4:32"},{"id":"pzpwKiguRmU","titre":"Comment exploiter Perplexity AI ? TUTORIEL de 10 MIN","duree":"10:37"},{"id":"-f-s6ZmcBjg","titre":"Perplexity : comment bien l’utiliser ?","duree":"2:04"},{"id":"VTDno50w-1o","titre":"PERPLEXITY : Tutoriel complet pour démarrer en douceur","duree":"36:37"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"dnmcZ1KIhUU","titre":"Perplexity AI : Le Tuto Complet (cette IA est PHÉNOMÉNALE)","duree":"40:20"},{"id":"k8CPtD1Q7yY","titre":"TUTO PERPLEXITY : oubliez GOOGLE avec ce moteur de recherche  IA","duree":"4:32"},{"id":"pzpwKiguRmU","titre":"Comment exploiter Perplexity AI ? TUTORIEL de 10 MIN","duree":"10:37"},{"id":"-f-s6ZmcBjg","titre":"Perplexity : comment bien l’utiliser ?","duree":"2:04"},{"id":"VTDno50w-1o","titre":"PERPLEXITY : Tutoriel complet pour démarrer en douceur","duree":"36:37"},{"id":"YoWdogtZRw8","titre":"Learn 80% of Perplexity in under 10 minutes!","duree":"9:52"},{"id":"qpN-pjev-vM","titre":"How To Use Perplexity AI For Beginners","duree":"8:16"},{"id":"EHpAQwXmseQ","titre":"Perplexity Computer for Beginners: Everything You Need to Know","duree":"15:52"},{"id":"LnURCxwsB34","titre":"Every Perplexity AI Feature Explained in One Video","duree":"19:47"},{"id":"nzgrB56LMbI","titre":"How To Use Perplexity AI (Best AI Research Tool)","duree":"14:25"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

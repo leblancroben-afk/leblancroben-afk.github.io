@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Midday","description":"IA's undisputed leader in image generation. Create ultra-realistic visuals, artistic illustrations and professional designs from simple text descriptions.","url":"https://leblancroben-afk.github.io/tools/featured/en/midday/","inLanguage":"en","applicationCategory":"Images & design"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can we use Midjourney without going through Discord?","acceptedAnswer":{"@type":"Answer","text":"Yes, Midjourney now has a complete web interface accessible to all users with an active account."}},{"@type":"Question","name":"Can I use the images generated for commercial purposes?","acceptedAnswer":{"@type":"Answer","text":"Yes, all Midjourney pay subscriptions grant you commercial property rights to the images you create."}},{"@type":"Question","name":"What is 'Relax' mode?","acceptedAnswer":{"@type":"Answer","text":"Relax mode (available on certain planes) allows you to generate images unlimitedly without consuming your \"Fast\" computing hours, with a slightly longer waiting time."}},{"@type":"Question","name":"How to get a photorealistic style?","acceptedAnswer":{"@type":"Answer","text":"Version 6 incorporates photorealism by default. Use simple descriptive terms (light, camera type) rather than magic keywords."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="19-en">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Text to Image</h3><p>Generate 4 unique graphical proposals from a detailed or minimalist text &quot;prompt&quot;.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Vary Region (Inpainting)</h3><p>Select a specific area of your image to edit, add or delete an object by IA.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Pan &amp; Zoom (Outpainting)</h3><p>Expand the frame of your image in any direction by letting AI invent the decor.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div><div><h3>Style Reference (--ref)</h3><p>Copy faithfully the aesthetics, colors and style of an existing image to apply it to your creations.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/h-54HxTNb-k/mqdefault.jpg" alt="1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/h-54HxTNb-k" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"h-54HxTNb-k","titre":"1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr","duree":"1:40:10"},{"id":"NfmVWI9_UKY","titre":"Tout savoir sur MIDJOURNEY AI de A à Z en 30m | Formation COMPLÈTE de débutant à expert (gratuit)","duree":"34:43"},{"id":"X1IY4c48DOI","titre":"Découvrir Midjourney : le tuto simple pour générer des images IA incroyables","duree":"19:04"},{"id":"YfJZVSd1Jt4","titre":"Les bases de Midjourney [tuto Midjourney]","duree":"8:07"},{"id":"_QVrPzvgg5E","titre":"Tuto Midjourney : Créer des Images, Design et Avatar avec l'IA, Facile et Gratuit","duree":"4:23"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"h-54HxTNb-k","titre":"1h40 de Formation Gratuite - Midjourney EXPERT de A à Z - Tuto Fr","duree":"1:40:10"},{"id":"NfmVWI9_UKY","titre":"Tout savoir sur MIDJOURNEY AI de A à Z en 30m | Formation COMPLÈTE de débutant à expert (gratuit)","duree":"34:43"},{"id":"X1IY4c48DOI","titre":"Découvrir Midjourney : le tuto simple pour générer des images IA incroyables","duree":"19:04"},{"id":"YfJZVSd1Jt4","titre":"Les bases de Midjourney [tuto Midjourney]","duree":"8:07"},{"id":"_QVrPzvgg5E","titre":"Tuto Midjourney : Créer des Images, Design et Avatar avec l'IA, Facile et Gratuit","duree":"4:23"},{"id":"vUj4VNXXC1c","titre":"The ULTIMATE Beginners Guide to Midjourney in 2025","duree":"55:34"},{"id":"9WVZbitXbck","titre":"Midjourney AI Tutorial: How to Use Midjourney to Create Stunning Art","duree":"10:33"},{"id":"BsptbUjfIXc","titre":"TUTO MIDJOURNEY en Français : Comment utiliser Midjourney AI et écrire un prompt sur Discord ?","duree":"2:09"},{"id":"xoZG5WQbgMw","titre":"How to Use Midjourney for Beginners in 2026","duree":"2:42"},{"id":"dFDVKrTnxdc","titre":"Tout comprendre à Midjourney : Le Guide Ultime de A à Z (Formation Gratuite)","duree":"27:09"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

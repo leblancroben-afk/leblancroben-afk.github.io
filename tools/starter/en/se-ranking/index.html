@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SE Ranking","description":"SE Ranking is an all-in-one SEO platform combining position tracking, technical audit and keyword search. Its SE Visible feature adds brand visibility tracking in ChatGPT, Gemini and Perplexity.","url":"https://leblancroben-afk.github.io/tools/starter/en/se-ranking/","inLanguage":"en","applicationCategory":"SEO","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does SE Ranking suit beginners?","acceptedAnswer":{"@type":"Answer","text":"Yes, the interface is considered more accessible than suites like Semrush or Ahrefs."}},{"@type":"Question","name":"Is SE Visible included in all plans?","acceptedAnswer":{"@type":"Answer","text":"No, this IA tracking feature is offered as a complement or in higher formulas depending on the current offer."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="13-en">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-3"/></svg></div><div><h3>Position tracking</h3><p>Follow the ranking of your keywords on Google and other engines</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Technical audit</h3><p>Detects SEO on-site problems impacting SEO</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5M9 13h.01M15 13h.01M9 17h6"/><circle cx="12" cy="4" r="1"/></svg></div><div><h3>SE Visible</h3><p>Follows branding in IA engine responses</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/UyHcl5FvjZM/mqdefault.jpg" alt="Avis SE Ranking : Comment utiliser cet outil SEO tout-en-un 🚀" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/UyHcl5FvjZM" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"UyHcl5FvjZM","titre":"Avis SE Ranking : Comment utiliser cet outil SEO tout-en-un 🚀","duree":"33:14"},{"id":"wKfJDd5YMrQ","titre":"SE Ranking : l’outil SEO qui m’a (presque) fait oublier Semrush","duree":"6:57"},{"id":"5DiIE_tNeFM","titre":"Conducting AI research with SE Ranking’s AI Search Competitive Research module","duree":"6:33"},{"id":"2VrpHhnUvro","titre":"Overview of SE Ranking Tools, Features & Navigation","duree":"7:34"},{"id":"rCRTXdMhVLw","titre":"Construire des outils SEO avec l'IA et l'API SE Ranking","duree":"25:07"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"UyHcl5FvjZM","titre":"Avis SE Ranking : Comment utiliser cet outil SEO tout-en-un 🚀","duree":"33:14"},{"id":"wKfJDd5YMrQ","titre":"SE Ranking : l’outil SEO qui m’a (presque) fait oublier Semrush","duree":"6:57"},{"id":"5DiIE_tNeFM","titre":"Conducting AI research with SE Ranking’s AI Search Competitive Research module","duree":"6:33"},{"id":"2VrpHhnUvro","titre":"Overview of SE Ranking Tools, Features & Navigation","duree":"7:34"},{"id":"rCRTXdMhVLw","titre":"Construire des outils SEO avec l'IA et l'API SE Ranking","duree":"25:07"},{"id":"3C6ebz2Pbvg","titre":"Comment faire une recherche de mots-clés avec SE Ranking (Tuto complet 2025) 🔍","duree":"47:36"},{"id":"Wdu7xscmYZY","titre":"How to Use SE Ranking 2026 (beginners tutorial)","duree":"11:24"},{"id":"ks-q7yjyce4","titre":"Alternative à Ahrefs : SE Ranking, l'outil indispensable à avoir en 2025","duree":"32:14"},{"id":"0pvXv2gwKPw","titre":"Guide du débutant SE Ranking","duree":"24:07"},{"id":"cjQm0wAQbPc","titre":"How to Get Quick SEO Wins with SE Ranking’s Insights Tool","duree":"4:55"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

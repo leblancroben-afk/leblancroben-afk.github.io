@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Lavadero","description":"Lovants es un asistente de desarrollo web que genera e implementa aplicaciones web completas de descripciones de lenguajes naturales.","url":"https://leblancroben-afk.github.io/tools/standard/es/lavadero/","inLanguage":"es","applicationCategory":"Programación y creación de aplicaciones","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es adorable?","acceptedAnswer":{"@type":"Answer","text":"Lovable es una herramienta de inteligencia artificial que le permite crear, modificar e implementar aplicaciones web completas mediante instrucciones sencillas de texto."}},{"@type":"Question","name":"¿Necesita saber cómo utilizar Lovable?","acceptedAnswer":{"@type":"Answer","text":"No, no se requiere experiencia técnica previa, aunque el conocimiento del código ayuda a personalizar aún más los proyectos."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="51-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><div><h3>Generación de aplicaciones</h3><p>Crear interfaces de interfaz de usuario y código completo desde instrucciones de texto.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2M14 4c3-1 6-1 6-1s0 3-1 6l-6 6-5-5z"/><circle cx="15" cy="9" r="1.5"/></svg></div><div><h3>Despliegue rápido</h3><p>Publish y hostear instantáneamente sus aplicaciones creadas en la web.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><div><h3>Integraciones de GitHub y Supabase</h3><p>Sincronice el código directamente al repositorio GitHub y conecte una base de datos.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h3>Edición iterativa</h3><p>Ajuste y refina el código hablando directamente con el asistente de IA.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/uMd8qU0sK00/mqdefault.jpg" alt="Lovable AI: Tutoriel Complet en Français pour Débutants (2026)" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/uMd8qU0sK00" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"uMd8qU0sK00","titre":"Lovable AI: Tutoriel Complet en Français pour Débutants (2026)","duree":"19:03"},{"id":"xSbglxdxdjk","titre":"Comment créer un SaaS de A à Z sans coder 🚀 Guide complet avec Lovable","duree":"21:16"},{"id":"5CH-QaYaVW4","titre":"Créer une appli sans coder en 30 min chrono avec l'IA (guide Lovable débutant)","duree":"18:27"},{"id":"Kd4g1aCZm6k","titre":"Lovable AI Expliqué : Tutorial Complet pour Débutants","duree":"21:04"},{"id":"cLhvFAPAF50","titre":"Test de Lovable : Ce logiciel IA code TOUT à votre place (SaaS, app, sites, ...)","duree":"5:11"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"uMd8qU0sK00","titre":"Lovable AI: Tutoriel Complet en Français pour Débutants (2026)","duree":"19:03"},{"id":"xSbglxdxdjk","titre":"Comment créer un SaaS de A à Z sans coder 🚀 Guide complet avec Lovable","duree":"21:16"},{"id":"5CH-QaYaVW4","titre":"Créer une appli sans coder en 30 min chrono avec l'IA (guide Lovable débutant)","duree":"18:27"},{"id":"Kd4g1aCZm6k","titre":"Lovable AI Expliqué : Tutorial Complet pour Débutants","duree":"21:04"},{"id":"cLhvFAPAF50","titre":"Test de Lovable : Ce logiciel IA code TOUT à votre place (SaaS, app, sites, ...)","duree":"5:11"},{"id":"mOak_imYmqU","titre":"Master Lovable AI in 20 Minutes (NEW 2.0 UPDATE)","duree":"21:04"},{"id":"rqvtLxwMklo","titre":"Master Lovable In 24 Minutes","duree":"24:39"},{"id":"Vf2K0pcTLEo","titre":"Master Lovable in 17 minutes (Starter Tutorial)","duree":"17:00"},{"id":"y4IJbZ1E1DM","titre":"Lovable AI Tutorial for Beginners - Build Your First App","duree":"11:40"},{"id":"3Ih1LvYdyNg","titre":"J'ai créé une app complète, ça m'a pris 28 minutes. (Lovable.dev)","duree":"28:08"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

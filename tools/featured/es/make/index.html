@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Make","description":"La plataforma de automatización visual sin código por excelencia. Conecta tus aplicaciones favoritas, manipula datos e integra inteligencia artificial para crear potentes flujos de trabajo.","url":"https://leblancroben-afk.github.io/tools/featured/es/make/","inLanguage":"es","applicationCategory":"Productividad, estudios y traducción","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es una operación en Make?","acceptedAnswer":{"@type":"Answer","text":"Una operación se cuenta cada vez que un módulo en su escenario funciona correctamente (por ejemplo, recuperar un correo electrónico o crear una línea de hojas de Google)."}},{"@type":"Question","name":"¿Podemos usar herramientas que no se enumeran nativamente?","acceptedAnswer":{"@type":"Answer","text":"Sí, con los módulos \"HTTP/ API\", puede conectarse a cualquier servicio web que tenga una API abierta."}},{"@type":"Question","name":"¿El plan libre está limitado en el tiempo?","acceptedAnswer":{"@type":"Answer","text":"No, el plan gratuito se renueva cada mes con un crédito de 1.000 transacciones gratuitas."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="20-es">
 
 <header class="fo-hero">
@@ -97,6 +110,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Escenarios visuales</h3><p>Cree cadenas de automatización complejas conectando módulos gráficos con un clic.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Filtros y Routers</h3><p>Separa tus flujos de trabajo según condiciones lógicas precisas para procesar tus datos en el lugar correcto.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5M9 13h.01M15 13h.01M9 17h6"/><circle cx="12" cy="4" r="1"/></svg></div><div><h3>Integraciones IA</h3><p>Conectar nativamente OpenAI, Antropopic o Pinecone para analizar, resumir o generar contenido automáticamente.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><h3>Task Planner</h3><p>Trigger sus escenarios a intervalos regulares, en momentos específicos o en tiempo real a través de webhooks instantáneos.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/fJIT3ix4X6k/mqdefault.jpg" alt="Formation Make.com 2025 🚀 Tutoriel Complet + AI Agents" loading="lazy">
@@ -107,7 +123,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/fJIT3ix4X6k" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"fJIT3ix4X6k","titre":"Formation Make.com 2025 🚀 Tutoriel Complet + AI Agents","duree":"35:33"},{"id":"WGDVTouHor4","titre":"Débuter sur Make.com et devenir Expert (Guide Complet)","duree":"18:33"},{"id":"dqmwhNcNwF4","titre":"Comment apprendre l’automatisation no-code sur Make - Tutoriel complet en 28 minutes","duree":"28:08"},{"id":"TtPiVDeOANE","titre":"Make de A à Z  le tutoriel complet pour débuter en 30 min en 2026","duree":"29:17"},{"id":"mi97wbY552A","titre":"Make 2.0 Tout savoir sur les automatisations IA (Formation gratuite 2025)","duree":"18:56"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"fJIT3ix4X6k","titre":"Formation Make.com 2025 🚀 Tutoriel Complet + AI Agents","duree":"35:33"},{"id":"WGDVTouHor4","titre":"Débuter sur Make.com et devenir Expert (Guide Complet)","duree":"18:33"},{"id":"dqmwhNcNwF4","titre":"Comment apprendre l’automatisation no-code sur Make - Tutoriel complet en 28 minutes","duree":"28:08"},{"id":"TtPiVDeOANE","titre":"Make de A à Z  le tutoriel complet pour débuter en 30 min en 2026","duree":"29:17"},{"id":"mi97wbY552A","titre":"Make 2.0 Tout savoir sur les automatisations IA (Formation gratuite 2025)","duree":"18:56"},{"id":"JSA2oezQWOU","titre":"Make.com Automation Tutorial for Beginners","duree":"24:46"},{"id":"MSnedgBRnCw","titre":"Apprenez Make (ex Integromat) en 25 minutes | Tout ce qu'il faut savoir pour débuter","duree":"25:51"},{"id":"CLutx-rqGgc","titre":"Make.com Tutorial for Beginners 2026 (Full Guide)","duree":"45:23"},{"id":"Ij0dRKiO_Hw","titre":"The Only Video You'll Need to Master Make.com & AI Workflows (Beginner to Pro)","duree":"3:14:11"},{"id":"3cjBI3xtr4Y","titre":"Make.com FULL COURSE 2026: Beginner to Pro (Build & Sell AI Automations)","duree":"1:23:31"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

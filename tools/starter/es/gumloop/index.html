@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Gumloop","description":"Gumloop es una plataforma de automatización sin código alimentada por AI. Permite crear flujos de trabajo complejos de agentes por arrastrar y soltar, sin código de escritura.","url":"https://leblancroben-afk.github.io/tools/starter/es/gumloop/","inLanguage":"es","applicationCategory":"Redacción y marketing","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Tiene Gumloop un plan de producción libre?","acceptedAnswer":{"@type":"Answer","text":"El plan libre (5.000 créditos/mes) es adecuado para pruebas, pero la mayoría de los equipos cambian al Pro para uso real."}},{"@type":"Question","name":"¿Gumloop reemplaza a Zapier?","acceptedAnswer":{"@type":"Answer","text":"Más bien, se dirige a complejos flujos de trabajo nativos de AI; para la automatización simple, Zapier a menudo sigue siendo más económico."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="6-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.6 0l3-3a4 4 0 0 0-5.6-5.6l-1 1M14 10a4 4 0 0 0-5.6 0l-3 3a4 4 0 0 0 5.6 5.6l1-1"/></svg></div><div><h3>Constructor visual</h3><p>Arrastre y suelte para conectar aplicaciones y bloques IA sin código</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5M9 13h.01M15 13h.01M9 17h6"/><circle cx="12" cy="4" r="1"/></svg></div><div><h3>Autoempleados</h3><p>Ruta inteligentemente flujos de trabajo y determinar los próximos pasos</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><div><h3>Activadores automáticos</h3><p>Ejecutar secuencias de eventos en tus aplicaciones conectadas</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/tQ4oT9H3o1c/mqdefault.jpg" alt="Gumloop vs Make : l’IA qui crée des workflows en langage naturel !" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/tQ4oT9H3o1c" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"tQ4oT9H3o1c","titre":"Gumloop vs Make : l’IA qui crée des workflows en langage naturel !","duree":"19:03"},{"id":"xYgdtiY7SKo","titre":"Construire un bot de veille YouTube en 15 minutes avec Gumloop et l'IA","duree":"1:39"},{"id":"bTPwUTFYUIs","titre":"Gumloop et le futur de l'automatisation : entretien avec Aron Korenblit","duree":"46:55"},{"id":"XTfaBMGuU_0","titre":"J'ai découvert un outil d'automatisation super intuitif","duree":"22:18"},{"id":"DcByWzGOIXo","titre":"Build a YouTube Research Bot in 15 Minutes (Gumloop Tutorial)","duree":"5:06"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"tQ4oT9H3o1c","titre":"Gumloop vs Make : l’IA qui crée des workflows en langage naturel !","duree":"19:03"},{"id":"xYgdtiY7SKo","titre":"Construire un bot de veille YouTube en 15 minutes avec Gumloop et l'IA","duree":"1:39"},{"id":"bTPwUTFYUIs","titre":"Gumloop et le futur de l'automatisation : entretien avec Aron Korenblit","duree":"46:55"},{"id":"XTfaBMGuU_0","titre":"J'ai découvert un outil d'automatisation super intuitif","duree":"22:18"},{"id":"DcByWzGOIXo","titre":"Build a YouTube Research Bot in 15 Minutes (Gumloop Tutorial)","duree":"5:06"},{"id":"QFc7jXZ2pdE","titre":"I built an AI Agent in 43 min to automate my workflows (Zero Coding)","duree":"43:33"},{"id":"8NxEHtkgOBQ","titre":"How I Built a Fully Automated Marketing Machine (no code)","duree":"9:01"},{"id":"PjT1XVeSKsw","titre":"AI Automation/Gumloop Live Workshop #1","duree":"1:00:48"},{"id":"ifpJjfsH2lM","titre":"Créer des agents IA en NoCode, gratuitement, en 20 minutes !","duree":"24:57"},{"id":"Dvl6uK2vmhM","titre":"Learn Gumloop in 13 Minutes","duree":"12:59"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Claude","description":"L'assistant IA d'Anthropic réputé pour sa plume naturelle, ses capacités d'analyse de documents volumineux et sa fonctionnalité révolutionnaire Artifacts pour prévisualiser du code.","url":"https://leblancroben-afk.github.io/tools/featured/fr/claude/","inLanguage":"fr","applicationCategory":"Programmation et création d'applications","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Pourquoi Claude est-il considéré comme meilleur pour la rédaction ?","acceptedAnswer":{"@type":"Answer","text":"Anthropic a entraîné Claude avec une approche axée sur la nuance et la sécurité, évitant le ton robotique souvent reproché aux autres IA."}},{"@type":"Question","name":"Qu'est-ce que la fonctionnalité Artifacts ?","acceptedAnswer":{"@type":"Answer","text":"C'est un écran séparé qui s'ouvre à côté du chat pour afficher du contenu autonome (code HTML/JS, SVG, sites web interactifs) généré par l'IA."}},{"@type":"Question","name":"Claude respecte-t-il la confidentialité des données ?","acceptedAnswer":{"@type":"Answer","text":"Oui, Anthropic s'engage à ne pas utiliser les données des utilisateurs de l'interface grand public ou API pour entraîner ses modèles commerciaux."}},{"@type":"Question","name":"Existe-t-il une application Claude ?","acceptedAnswer":{"@type":"Answer","text":"Oui, une application officielle est disponible pour les utilisateurs iOS et Android."}}]}</script>
 </head>
 <body>
 <nav>
@@ -42,6 +44,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +53,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="18">
 
 <header class="fo-hero">
@@ -82,7 +95,7 @@
     </div>
   </div>
 </header>
-<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="Claude"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-fonctionnalites" class="fo-tab" data-label="Fonctionnalités">Fonctionnalités</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
+<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="Claude"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-fonctionnalites" class="fo-tab" data-label="Fonctionnalités">Fonctionnalités</a><a href="#fo-avantages" class="fo-tab" data-label="Avantages et limites">Avantages et limites</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
 <div class="fo-body"><div class="fo-wrap">
   <div class="fo-grid">
     <div class="fo-col-main">
@@ -97,6 +110,16 @@
   <h2>Fonctionnalités principales</h2>
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2M14 4c3-1 6-1 6-1s0 3-1 6l-6 6-5-5z"/><circle cx="15" cy="9" r="1.5"/></svg></div><div><h3>Artifacts</h3><p>Visualisez et interagissez directement avec le code, les pages web ou les graphiques générés dans une fenêtre dédiée.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Analyse de documents</h3><p>Téléversez des fichiers PDF massifs, des livres entiers ou des bases de code pour obtenir des synthèses précises.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><div><h3>Génération de code</h3><p>Écrit, commente, traduit et corrige du code informatique dans des dizaines de langages avec une logique poussée.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.2.6 4 2.4 4 5.5"/></svg></div><div><h3>Projets (Plans payants)</h3><p>Créez des espaces de travail thématiques en y associant des documents de référence pour guider les réponses de Claude.</p></div></div></div>
 </section>
+      
+<section class="fo-card" id="fo-avantages">
+  <h2>Avantages et limites</h2>
+  <div class="fo-pl-grid">
+    <div><h3>Points forts</h3><ul class="fo-pros"><li>Style de rédaction très fluide et humain</li><li>Fenêtre de contexte géante (200k tokens)</li><li>Aperçu en direct du code avec Artifacts</li></ul></div>
+    <div><h3>Limites</h3><ul class="fo-cons"><li>Pas de génération d'images native et quotas stricts en version gratuite.</li></ul></div>
+  </div>
+</section>
+      
+      
       
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">

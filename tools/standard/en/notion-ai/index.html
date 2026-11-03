@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Notion AI","description":"IA integrated into Conception for writing, summary, translation, agents and meeting notes. Included in business plan ($20/member/mo). Free trial on Free and Plus.","url":"https://leblancroben-afk.github.io/tools/standard/en/notion-ai/","inLanguage":"en","applicationCategory":"Text","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +41,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +50,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="33-en">
 
 <header class="fo-hero">
@@ -92,6 +104,9 @@
 </section>
       
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/Y5FvtQomPh8/mqdefault.jpg" alt="Getting started with Notion AI" loading="lazy">
@@ -102,7 +117,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/Y5FvtQomPh8" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"Y5FvtQomPh8","titre":"Getting started with Notion AI","duree":"4:10"},{"id":"pt_GoaONb2Y","titre":"Comment utiliser les Notion Agents ? (Tuto Complet)","duree":"33:51"},{"id":"QrXqMg6zzoE","titre":"J'ai créé 2 agents IA dans Notion pour ma documentation (tuto complet)","duree":"18:34"},{"id":"fERiEKcGHVU","titre":"Créer des bases de données avec Notion AI | Tutoriel Notion IA","duree":"12:15"},{"id":"S0NLCZM32IA","titre":"L'agent IA de Notion travaille pour moi 🤖 (démo de la fonctionnalité)","duree":"19:09"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"Y5FvtQomPh8","titre":"Getting started with Notion AI","duree":"4:10"},{"id":"pt_GoaONb2Y","titre":"Comment utiliser les Notion Agents ? (Tuto Complet)","duree":"33:51"},{"id":"QrXqMg6zzoE","titre":"J'ai créé 2 agents IA dans Notion pour ma documentation (tuto complet)","duree":"18:34"},{"id":"fERiEKcGHVU","titre":"Créer des bases de données avec Notion AI | Tutoriel Notion IA","duree":"12:15"},{"id":"S0NLCZM32IA","titre":"L'agent IA de Notion travaille pour moi 🤖 (démo de la fonctionnalité)","duree":"19:09"},{"id":"VjQcV1WhRo8","titre":"Cómo Empezar En Notion (Sin Volverte Loco) - Primeros Pasos Para Principiantes - Tutorial 2026","duree":"28:13"},{"id":"SnbMRRZ2_Ag","titre":"Notion AI Tutorial: Is It Really Worth It?","duree":"16:58"},{"id":"yasGTeAsV6s","titre":"Getting started with Notion Agent","duree":"4:05"},{"id":"VSKIS5D-gQg","titre":"How to Use Notion AI to Save HOURS Every Week","duree":"9:39"},{"id":"ofzHbyxkpVg","titre":"I knew AI + Notion would be good, but this... wow.","duree":"14:21"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

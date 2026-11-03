@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Mutiny","description":"Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.","url":"https://leblancroben-afk.github.io/tools/standard/fr/mutiny/","inLanguage":"fr","applicationCategory":"Rédaction et marketing"}</script>
 </head>
 <body>
 <nav>
@@ -42,6 +43,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +52,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="10">
 
 <header class="fo-hero">
@@ -82,7 +94,7 @@
     </div>
   </div>
 </header>
-<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="Mutiny"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
+<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="Mutiny"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-avantages" class="fo-tab" data-label="Avantages et limites">Avantages et limites</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
 <div class="fo-body"><div class="fo-wrap">
   <div class="fo-grid">
     <div class="fo-col-main">
@@ -92,6 +104,16 @@
   <div class="fo-text"><p>Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.</p></div>
   <div class="fo-meta"><div class="fo-meta-item"><div class="fo-meta-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><div><small>Site officiel</small><a href="https://www.mutinyhq.com" target="_blank" rel="noopener">mutinyhq.com</a></div></div><div class="fo-meta-item"><div class="fo-meta-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h9M8.5 3v2M6 5c0 4 3 7 6 8M11 5c0 3-3 7-7 9M13 20l4-9 4 9M14.5 17h5"/></svg></div><div><small>Langue</small><span>—</span></div></div><div class="fo-meta-item"><div class="fo-meta-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div><div><small>Créé en</small><span>—</span></div></div><div class="fo-meta-item"><div class="fo-meta-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><div><small>Type</small><span>—</span></div></div></div>
 </section>
+      
+      
+<section class="fo-card" id="fo-avantages">
+  <h2>Avantages et limites</h2>
+  <div class="fo-pl-grid">
+    <div><h3>Points forts</h3><ul class="fo-pros"><li>Personnalisation no-code par compte ou segment visiteur</li><li>Génération de contenu par IA intégrée</li><li>Intégrations natives HubSpot, Salesforce, 6sense</li></ul></div>
+    <div><h3>Limites</h3><ul class="fo-cons"><li>Nécessite une pile de données d'enrichissement tierce (Clearbit, 6sense), ce qui augmente le coût total réel</li></ul></div>
+  </div>
+</section>
+      
       
       
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">

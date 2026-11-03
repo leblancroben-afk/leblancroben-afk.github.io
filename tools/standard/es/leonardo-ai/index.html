@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Leonardo AI","description":"Leonardo AI es una plataforma para la generación de imágenes y activos visuales a través de inteligencia artificial, ofreciendo modelos personalizables y control preciso para los creadores.","url":"https://leblancroben-afk.github.io/tools/standard/es/leonardo-ai/","inLanguage":"es","applicationCategory":"Contenido","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Está libre Leonardo AI?","acceptedAnswer":{"@type":"Answer","text":"Sí, la plataforma ofrece un plan gratuito que otorga crédito diario para reiniciar fichas cada 24 horas."}},{"@type":"Question","name":"¿Puede utilizar imágenes creadas con fines comerciales?","acceptedAnswer":{"@type":"Answer","text":"Sí, los usuarios tienen derechos de uso comercial en las imágenes que generan en la plataforma."}},{"@type":"Question","name":"¿Podemos entrenar nuestros propios modelos?","acceptedAnswer":{"@type":"Answer","text":"Sí, Leonardo AI le permite entrenar modelos personalizados descargando su propio conjunto de imágenes de entrenamiento."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="38-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div><div><h3>Generación de imagen de alta calidad</h3><p>Crear ilustraciones precisas de los impulsos de texto utilizando diversos modelos finos.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></svg></div><div><h3>Modelos de ajuste fino</h3><p>Entrena tus propias plantillas personalizadas para mantener una consistencia visual única.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l5 5L9 20l-5-5L15 4zM5 3v4M3 5h4M19 15v4M17 17h4"/></svg></div><div><h3>Lona en vivo y retoque</h3><p>Unpaint, outpaint y editar sus imágenes en tiempo real con control avanzado.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></div><div><h3>Generación de vídeo (Moción)</h3><p>Animate tus imágenes estáticas en secuencias de vídeo cortas con la herramienta Motion.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/F5JPBMC4A08/mqdefault.jpg" alt="LEONARDO.AI : LE GUIDE POUR BIEN DEBUTER" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/F5JPBMC4A08" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"F5JPBMC4A08","titre":"LEONARDO.AI : LE GUIDE POUR BIEN DEBUTER","duree":"9:58"},{"id":"ZG-Boq4pO28","titre":"Leonardo AI : Image IA, Vidéo IA, Musique IA, Assets 3D... Le Guide complet","duree":"29:30"},{"id":"Wkj0yW-MR3M","titre":"Le guide complet pour créer des images pro avec Leonardo.AI","duree":"16:47"},{"id":"sskx9Nb-_u0","titre":"Leonardo AI : Le Midjourney Gratuit (Tutoriel Complet)","duree":"4:26"},{"id":"Wnz4T788-Jo","titre":"Leonardo à révolutionner la génération d’image - Leonardo AI Flow State - Tuto complet","duree":"3:05"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"F5JPBMC4A08","titre":"LEONARDO.AI : LE GUIDE POUR BIEN DEBUTER","duree":"9:58"},{"id":"ZG-Boq4pO28","titre":"Leonardo AI : Image IA, Vidéo IA, Musique IA, Assets 3D... Le Guide complet","duree":"29:30"},{"id":"Wkj0yW-MR3M","titre":"Le guide complet pour créer des images pro avec Leonardo.AI","duree":"16:47"},{"id":"sskx9Nb-_u0","titre":"Leonardo AI : Le Midjourney Gratuit (Tutoriel Complet)","duree":"4:26"},{"id":"Wnz4T788-Jo","titre":"Leonardo à révolutionner la génération d’image - Leonardo AI Flow State - Tuto complet","duree":"3:05"},{"id":"xbUE56kmVl0","titre":"Leonardo AI - Tutorial for Beginners in 12 MINS!  [ FULL GUIDE 2025 ]","duree":"12:06"},{"id":"oitdcBS2yOk","titre":"Leonardo AI - Tutorial for Beginners - How to Use  [ FULL GUIDE 2026 ]","duree":"18:04"},{"id":"gv0wm-_ajgM","titre":"Mastering Leonardo AI: A Comprehensive Step-by-Step Tutorial for Beginners in 2024","duree":"26:03"},{"id":"yH9z7X48uzA","titre":"Leonardo AI Tutorial: From Concept to Cinematic Video","duree":"17:49"},{"id":"gtzNUq7OnFQ","titre":"Free Leonardo AI Course for Beginners (AI Art Generation Tutorial)","duree":"1:07:53"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

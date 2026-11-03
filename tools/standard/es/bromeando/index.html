@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Bromeando","description":"Outranking es un software de optimización SEO guiado por AI. Ayuda a planificar, escribir y estructurar contenidos altamente posicionados en los motores de búsqueda.","url":"https://leblancroben-afk.github.io/tools/standard/es/bromeando/","inLanguage":"es","applicationCategory":"SEO"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Qué es Outranking?","acceptedAnswer":{"@type":"Answer","text":"Outranking es una plataforma de optimización de contenidos basada en AI. Ayuda a los editores en el análisis de la competencia y la creación de artículos optimizados. El objetivo es mejorar la visibilidad orgánica en Google."}},{"@type":"Question","name":"¿Los principiantes de los trajes?","acceptedAnswer":{"@type":"Answer","text":"La interfaz está diseñada para ser accesible mientras ofrece métricas avanzadas de SEO. Consejos guiados ayudan a los usuarios a entender qué secciones optimizan. Sin embargo, sigue siendo recomendable tener bases SEO."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="75-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Análisis de SERP</h3><p>Estudie los mejores resultados de investigación para proporcionar un plan estructurado y pertinente.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div><div><h3>Redacción asistida</h3><p>Genera párrafos optimizados para SEO natural utilizando AI.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-3"/></svg></div><div><h3>Puntaje de optimización</h3><p>Evaluar la calidad general de su texto en contra de la competencia directa.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/VTMxYp7dors/mqdefault.jpg" alt="Outranking.io Review - GPT3, AI Writer (GPT3) &amp; SEO Content Tool" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/VTMxYp7dors" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"VTMxYp7dors","titre":"Outranking.io Review - GPT3, AI Writer (GPT3) & SEO Content Tool","duree":"32:22"},{"id":"_sItd2z8VVI","titre":"Outranking V7 Review: AI Content that Ranks in SERPs","duree":"24:52"},{"id":"yvzPUhGSmcI","titre":"Outranking Review Is This AI SEO Tool Worth It","duree":"2:27"},{"id":"dFL_1xgKn5g","titre":"Outranking.io AI Writer Scored with Frase, MarketMuse, and Surfer","duree":"10:48"},{"id":"kP5ErL2XU28","titre":"Outranking Platform Walkthrough - [Learning Outranking v4]","duree":"2:46"},{"id":"XCeccM5zrHY","titre":"Outranking V6 Walkthrough","duree":"2:12"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"VTMxYp7dors","titre":"Outranking.io Review - GPT3, AI Writer (GPT3) & SEO Content Tool","duree":"32:22"},{"id":"_sItd2z8VVI","titre":"Outranking V7 Review: AI Content that Ranks in SERPs","duree":"24:52"},{"id":"yvzPUhGSmcI","titre":"Outranking Review Is This AI SEO Tool Worth It","duree":"2:27"},{"id":"dFL_1xgKn5g","titre":"Outranking.io AI Writer Scored with Frase, MarketMuse, and Surfer","duree":"10:48"},{"id":"kP5ErL2XU28","titre":"Outranking Platform Walkthrough - [Learning Outranking v4]","duree":"2:46"},{"id":"XCeccM5zrHY","titre":"Outranking V6 Walkthrough","duree":"2:12"},{"id":"deKwmdYZV1E","titre":"Outranking Review & Tutorial From Co-Founder:Features, Factual AI Writing & Roadmap","duree":"51:12"},{"id":"hVXkSXKKjsw","titre":"OutRanking.io Tutorial & Walkthrough - Live Demo & SaaS Talk with Co-Founder","duree":"1:03:51"},{"id":"kVq3MUACFck","titre":"Outranking Review - Surfer SEO Alternative - AI Writer - SEO Content Optimizer","duree":"24:50"},{"id":"s4d5p8qcPMo","titre":"Outranking Review and Demo Tutorial | is it the Best AI Content Writing and SEO tool?","duree":"17:20"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

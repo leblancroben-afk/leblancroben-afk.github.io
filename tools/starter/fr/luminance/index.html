@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Luminance","description":"Luminance est une IA juridique britannique spécialisée dans la relecture et la négociation de contrats. Son architecture \"Panel of Judges\" croise plusieurs modèles pour détecter les clauses à risque avec une fiabilité renforcée.","url":"https://leblancroben-afk.github.io/tools/starter/fr/luminance/","inLanguage":"fr","applicationCategory":"Juridique"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Luminance propose-t-elle un essai gratuit ?","acceptedAnswer":{"@type":"Answer","text":"Non, l'évaluation passe par une démonstration puis une phase de preuve de concept avant devis personnalisé."}},{"@type":"Question","name":"Luminance gère-t-elle le contentieux ?","acceptedAnswer":{"@type":"Answer","text":"Non, l'outil est concentré sur le contractuel (revue, négociation, due diligence) et ne couvre pas la gestion de dossiers de litige."}}]}</script>
 </head>
 <body>
 <nav>
@@ -42,6 +44,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -50,8 +53,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="2">
 
 <header class="fo-hero">
@@ -82,7 +95,7 @@
     </div>
   </div>
 </header>
-<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="Luminance"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-fonctionnalites" class="fo-tab" data-label="Fonctionnalités">Fonctionnalités</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
+<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="Luminance"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-fonctionnalites" class="fo-tab" data-label="Fonctionnalités">Fonctionnalités</a><a href="#fo-avantages" class="fo-tab" data-label="Avantages et limites">Avantages et limites</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
 <div class="fo-body"><div class="fo-wrap">
   <div class="fo-grid">
     <div class="fo-col-main">
@@ -97,6 +110,16 @@
   <h2>Fonctionnalités principales</h2>
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5M9 13h.01M15 13h.01M9 17h6"/><circle cx="12" cy="4" r="1"/></svg></div><div><h3>Autopilot</h3><p>Négocie et clôture seul des NDA de routine, sans intervention humaine</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h3>Chatbot juridique</h3><p>Répond aux questions et résume les contrats en langage clair</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><div><h3>Intelligence contractuelle</h3><p>Interroge l'ensemble d'un répertoire de contrats, pas seulement un document</p></div></div></div>
 </section>
+      
+<section class="fo-card" id="fo-avantages">
+  <h2>Avantages et limites</h2>
+  <div class="fo-pl-grid">
+    <div><h3>Points forts</h3><ul class="fo-pros"><li>Négociation autonome de NDA via Autopilot</li><li>Relecture de contrats directement dans Microsoft Word</li><li>Analyse multilingue (80+ langues)</li></ul></div>
+    <div><h3>Limites</h3><ul class="fo-cons"><li>Tarification uniquement sur devis, déploiement mi-marché estimé à 5-6 chiffres annuels</li></ul></div>
+  </div>
+</section>
+      
+      
       
       
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Luminance propose-t-elle un essai gratuit ?</button><div class="faq-a">Non, l'évaluation passe par une démonstration puis une phase de preuve de concept avant devis personnalisé.</div></div><div class="faq-item"><button class="faq-q">Luminance gère-t-elle le contentieux ?</button><div class="faq-a">Non, l'outil est concentré sur le contractuel (revue, négociation, due diligence) et ne couvre pas la gestion de dossiers de litige.</div></div></div></section>

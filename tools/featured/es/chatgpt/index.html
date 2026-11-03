@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="/css/tool-detail.css">
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ChatGPT","description":"El pionero de OpenAI IA asistente para escribir textos, programar, analizar datos y automatizar sus tareas diarias a través de una interfaz de chat intuitiva.","url":"https://leblancroben-afk.github.io/tools/featured/es/chatgpt/","inLanguage":"es","applicationCategory":"Contenido","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cuál es la diferencia entre la versión gratuita y Plus?","acceptedAnswer":{"@type":"Answer","text":"La versión Plus da acceso prioritario a los últimos modelos (como GPT-4o), una generación de imagen con DALL-E 3 y un análisis avanzado de datos."}},{"@type":"Question","name":"¿ChatGPT utiliza mis datos para entrenar?","acceptedAnswer":{"@type":"Answer","text":"Por defecto sí, pero puede deshabilitar historia y entrenamiento en la configuración de privacidad de su cuenta."}},{"@type":"Question","name":"¿Podemos usar ChatGPT como equipo?","acceptedAnswer":{"@type":"Answer","text":"Sí, hay planes de Equipo y Empresa que ofrecen espacios de trabajo compartidos y una mayor seguridad de datos."}},{"@type":"Question","name":"¿Está conectado ChatGPT a Internet?","acceptedAnswer":{"@type":"Answer","text":"Sí, puede navegar por la web en tiempo real para verificar la información y citar sus fuentes."}}]}</script>
 </head>
 <body>
 <nav>
@@ -40,6 +42,7 @@
     <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
     <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
   </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <div class="nav-profile-slot">
     <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
       <div class="nav-avatar" id="nav-avatar">?</div>
@@ -48,8 +51,18 @@
   </div>
   <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
 </nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
 <script type="module" src="/js/auth-nav.js"></script>
 <script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
 <main class="fo-page fo-theme-template" data-fo-id="17-es">
 
 <header class="fo-hero">
@@ -96,6 +109,9 @@
   <div class="fo-feat-grid"><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h3>Voz avanzada</h3><p>Discuta naturalmente con AI oral con emociones e interrupciones en tiempo real.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></div><div><h3>Análisis de la visión</h3><p>Subir imágenes, gráficos o documentos para el análisis o traducción instantáneas.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></div><div><h3>Code interpreter</h3><p>Ejecute código Python directamente en el chat para escanear datos complejos o crear gráficos.</p></div></div><div class="fo-feat"><div class="fo-feat-ico"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><div><h3>GPTs Store</h3><p>Acceso a versiones personalizadas de ChatGPT creadas por la comunidad para necesidades específicas.</p></div></div></div>
 </section>
       
+      
+      
+      
       <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
       <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
         <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/cjLT7mmY0VU/mqdefault.jpg" alt="ChatGPT : Le Guide Ultime GRATUIT pour Débutants - Edition 2026" loading="lazy">
@@ -106,7 +122,7 @@
       <div class="tutorial-video"><div class="tutorial-video-inner">
         <iframe data-vid-frame data-src="https://www.youtube.com/embed/cjLT7mmY0VU" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
       </div></div>
-    </div></div><script type="application/json" id="fo-videos">[{"id":"cjLT7mmY0VU","titre":"ChatGPT : Le Guide Ultime GRATUIT pour Débutants - Edition 2026","duree":"32:14"},{"id":"p0D5zWVTkUU","titre":"22 minutes pour bien utiliser ChatGPT en 2026 (Tuto Complet)","duree":"22:13"},{"id":"bhaMrHjs6vw","titre":"Maîtrisez CHATGPT : Tout ce qu'il faut savoir (Tutoriel complet)","duree":"26:40"},{"id":"oeli5xkFZJo","titre":"Comment bien utiliser ChatGPT ? (Tuto Express)","duree":"14:00"},{"id":"Wg9M140pduU","titre":"ChatGPT : la formation complète pour débutants (prompts, images, GPT, réglages)","duree":"1:26:45"}]</script><script>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"cjLT7mmY0VU","titre":"ChatGPT : Le Guide Ultime GRATUIT pour Débutants - Edition 2026","duree":"32:14"},{"id":"p0D5zWVTkUU","titre":"22 minutes pour bien utiliser ChatGPT en 2026 (Tuto Complet)","duree":"22:13"},{"id":"bhaMrHjs6vw","titre":"Maîtrisez CHATGPT : Tout ce qu'il faut savoir (Tutoriel complet)","duree":"26:40"},{"id":"oeli5xkFZJo","titre":"Comment bien utiliser ChatGPT ? (Tuto Express)","duree":"14:00"},{"id":"Wg9M140pduU","titre":"ChatGPT : la formation complète pour débutants (prompts, images, GPT, réglages)","duree":"1:26:45"},{"id":"JTxsNm9IdYU","titre":"ChatGPT Tutorial - A Crash Course on Chat GPT for Beginners","duree":"34:05"},{"id":"Gaf_jCnA6mc","titre":"ChatGPT Tutorial: How to Use Chat GPT For Beginners","duree":"27:51"},{"id":"MxvWGMPJnfQ","titre":"Comment utiliser chatGPT (TUTO Complet)","duree":"6:29"},{"id":"poM2n8fBcag","titre":"ChatGPT Tutorial for Beginners: How to Actually Get Work Done with AI","duree":"14:31"},{"id":"KmcTu2EigTs","titre":"Learn 95% of ChatGPT Work in Under 20 Minutes","duree":"19:35"}]</script><script>
   function toggleTutorial(id) {
     const item = document.getElementById(id);
     const isOpen = item.classList.contains('open');

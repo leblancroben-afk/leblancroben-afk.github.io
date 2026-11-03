@@ -300,10 +300,6 @@
       "hash": "d40613effd6704174da509b48dde8a69033578647df6c13affe807d3f3cb4905",
       "updatedAtMs": 1793633145639
     },
-    "95": {
-      "hash": "644756ac55d14b525906b9d65ff9f7d71378b465db1670d1697c897b4e2c1760",
-      "updatedAtMs": 1793644453986
-    },
     "96": {
       "hash": "4f780f821ea5bc55a1d08301576654d31ca257c29f21fa375958b420c459b021",
       "updatedAtMs": 1793649022823
@@ -963,14 +959,6 @@
     "94-es": {
       "hash": "64835f1499609d9be178659b975b90f6e77ba262add26ea7b5a53ff727781a3e",
       "updatedAtMs": 1793633144981
-    },
-    "95-en": {
-      "hash": "7e61cb1806fcde2bc86138ef99face8f0fdea1f74a5b82d3a7e7512985781dbc",
-      "updatedAtMs": 1793644418581
-    },
-    "95-es": {
-      "hash": "76fe3cf436b51105c8582df4bff6e6e319963e89fb43c08b52040c877f8ee8b1",
-      "updatedAtMs": 1793644453328
     },
     "96-en": {
       "hash": "fb8698d74007c754e445283f69a0a7162d2ad66c939d55858fe79f57c06b831c",
@@ -1675,5 +1663,5 @@
       "updatedAtMs": 1790462872431
     }
   },
-  "templateVersion": "layout-v0"
+  "templateVersion": "layout-v1"
 }

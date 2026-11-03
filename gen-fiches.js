@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v1'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v2'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -740,7 +740,7 @@ ${bannerTag}
       width: 56px; height: 56px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
       background: linear-gradient(135deg,#1a1a26,#12121a); display: flex; align-items: center; justify-content: center; font-size: 18px;
     }
-    .pvac-related-cat { font-size: 10px; color: #ff6b9d; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    .pvac-related-cat { font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
     .pvac-related-titre { font-size: 12px; line-height: 1.4; color: #fff; margin: 3px 0 0; }
     .pvac-related-card, .pvac-related-card:visited, .pvac-related-card:hover { color: #fff; }
     .pvac-related-card:hover .pvac-related-titre, .pvac-related-card:visited .pvac-related-titre { color: #fff; }
@@ -2660,7 +2660,7 @@ function generateGlossaireHub(termes, tools) {
     .niveau-filter.active{background:var(--text); border-color:var(--text); color:var(--bg);}
     .niveau-filter[data-niveau="debutant"].active{background:rgba(52,211,153,0.1); border-color:rgba(52,211,153,0.4); color:var(--accent2);}
     .niveau-filter[data-niveau="intermediaire"].active{background:rgba(232,184,75,0.1); border-color:rgba(232,184,75,0.4); color:var(--accent-amber);}
-    .niveau-filter[data-niveau="avance"].active{background:rgba(255,107,157,0.1); border-color:rgba(255,107,157,0.4); color:var(--accent);}
+    .niveau-filter[data-niveau="avance"].active{background:var(--bg3); border-color:var(--border-hover); color:var(--text);}
     .glossaire-body{max-width:1100px; margin:0 auto; padding:0 32px 64px;}
     .letter-section{margin-bottom:40px;}
     .letter-anchor{display:flex; align-items:center; gap:16px; margin-bottom:16px;}
@@ -2668,7 +2668,7 @@ function generateGlossaireHub(termes, tools) {
     .letter-line{flex:1; height:1px; background:var(--border);}
     .terms-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:10px;}
     .term-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; transition:all .2s; position:relative;}
-    .term-card:hover{border-color:var(--text); box-shadow:0 8px 24px rgba(255,107,157,0.06);}
+    .term-card:hover{border-color:var(--text);}
     .term-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:8px;}
     .term-nom{font-family:var(--serif); font-size:15px; font-weight:600;}
     .term-nom-link{color:var(--text); text-decoration:none;}
@@ -2676,7 +2676,7 @@ function generateGlossaireHub(termes, tools) {
     .term-niveau{font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:2px 8px; border-radius:var(--radius-sm); flex-shrink:0;}
     .niveau-debutant{background:rgba(52,211,153,0.1); color:var(--accent2); border:1px solid rgba(52,211,153,0.2);}
     .niveau-intermediaire{background:rgba(232,184,75,0.1); color:var(--accent-amber); border:1px solid rgba(232,184,75,0.2);}
-    .niveau-avance{background:rgba(255,107,157,0.1); color:var(--accent); border:1px solid rgba(255,107,157,0.2);}
+    .niveau-avance{background:var(--bg3); color:var(--text-muted); border:1px solid var(--border);}
     .term-def{font-size:13px; color:var(--text-muted); line-height:1.6; font-weight:300; margin-bottom:10px;}
     .term-toggle{font-size:11px; color:var(--text); background:none; border:none; cursor:pointer; font-family:var(--sans); padding:0; margin-bottom:0; transition:color .15s;}
     .term-toggle:hover{color:var(--text); text-decoration:underline;}
@@ -3082,7 +3082,7 @@ ${ogLocaleAlternates}
   <link rel="stylesheet" href="${R}css/niche.css" />
   <style>
     .glossaire-niveau-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:3px 10px; border-radius:var(--radius); border:1px solid; margin-bottom:16px;}
-    .glossaire-erreur-box{background:rgba(255,107,157,0.06); border:1px solid rgba(255,107,157,0.25); border-radius:var(--radius); padding:16px 20px; font-size:14px; line-height:1.7; color:var(--text);}
+    .glossaire-erreur-box{background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; font-size:14px; line-height:1.7; color:var(--text);}
     .glossaire-erreur-box strong{color:var(--accent);}
   </style>
   <link rel="stylesheet" href="${R}css/themes.css">

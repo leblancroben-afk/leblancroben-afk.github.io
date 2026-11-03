@@ -16,7 +16,7 @@
 .niche-hero-glow {
   position: absolute; top: -100px; right: -100px;
   width: 500px; height: 400px;
-  background: radial-gradient(ellipse, rgba(255,107,157,0.1) 0%, transparent 65%);
+  background: none;
   pointer-events: none;
 }
 

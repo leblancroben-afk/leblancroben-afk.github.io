@@ -459,7 +459,6 @@ html[data-theme="light"] .cat-stat-ico { color: var(--cat-color, #5a50d0); }
 html[data-theme="light"] .cat-popular-all { color: #5a50d0; }
 
 /* ── js/niche.css ── */
-html[data-theme="light"] .niche-hero-glow { background: radial-gradient(ellipse, rgba(232,68,124,0.1) 0%, transparent 65%); }
 html[data-theme="light"] .niche-badge { color: #5a50d0; }
 
 /* ── css/comparateur.css ── */

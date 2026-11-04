@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v3'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v4'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -3959,8 +3959,9 @@ const FICHE_DEPS = { esc: escHtml, slugify, seoHeadTags, toolLangueUrls, toolFic
 
 // ── Alternatives : calcul unique par famille d'outil (FR / EN / ES) ──
 // Une « famille » = le document FR d'un outil et ses versions EN/ES.
-// Le classement est calculé une seule fois par famille, puis chaque langue prend
-// ses propres documents dans cet ordre : même classement dans les trois langues.
+// Le classement est calculé une seule fois par famille ; chaque langue prend ses propres
+// documents dans cet ordre, donc le classement est identique dans les trois langues.
+// Publié = status === 'active' (valeur écrite par enrichir-outils.js et check-liens.js).
 function hashSlugAlt(str) {
   let h = 2166136261;
   for (const c of String(str)) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
@@ -3983,68 +3984,98 @@ function familleIdAlt(t) {
   return t.id;
 }
 function publieAlt(t) {
-  return !!t.name && t.generer_fiche !== false &&
-    !['offline', 'warning', 'a_enrichir', 'draft', 'brouillon'].includes(t.status);
+  return t.status === 'active' && t.generer_fiche !== false && !!t.name;
 }
 function hostAlt(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); } catch (e) { return ''; }
 }
+function dossierAlt(t) {
+  return t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard';
+}
+function resumeAlt(text, max) {
+  const t = String(text || '').replace(/\s+/g, ' ').trim();
+  if (t.length <= max) return t;
+  const coupe = t.slice(0, max);
+  return coupe.slice(0, coupe.lastIndexOf(' ') > 0 ? coupe.lastIndexOf(' ') : max).trim() + '…';
+}
 
-/** Calcule le classement de toutes les familles, à partir de ratings_summary (une lecture par build). */
-function calculerAlternatives(tools, ratingsParSlug) {
+/**
+ * Notes par famille, en comptant chaque utilisateur une seule fois pour toute la famille.
+ * reviews : [{ uid, toolSlug, rating, ts, flagged }] (collection `reviews`, lue une fois par build)
+ */
+function notesParFamille(reviews, slugToFam) {
+  const parFam = new Map();
+  for (const r of reviews) {
+    if (!r || !r.uid || r.flagged || typeof r.rating !== 'number') continue;
+    const fid = slugToFam.get(r.toolSlug);
+    if (!fid) continue;
+    if (!parFam.has(fid)) parFam.set(fid, new Map());
+    const m = parFam.get(fid);
+    const prev = m.get(r.uid);
+    if (!prev || (r.ts || 0) >= prev.ts) m.set(r.uid, { rating: r.rating, ts: r.ts || 0 });
+  }
+  const notes = new Map();
+  for (const [fid, m] of parFam) {
+    const vals = [...m.values()].map(x => x.rating);
+    const count = vals.length;
+    notes.set(fid, { avg: count ? vals.reduce((x, y) => x + y, 0) / count : null, count });
+  }
+  return notes;
+}
+
+/** Calcule le classement de toutes les familles publiées. */
+function calculerAlternatives(tools, reviews) {
   const familles = new Map();
+  const slugToFam = new Map();
   for (const t of tools) {
     if (!publieAlt(t)) continue;
     const fid = familleIdAlt(t);
     if (!familles.has(fid)) familles.set(fid, { id: fid, docs: {} });
     familles.get(fid).docs[t.langue || 'fr'] = t;
+    slugToFam.set(slugFicheAlt(t), fid);
   }
-  // Note et nombre d'avis par famille : somme des résumés de toutes les versions (chaque page a son slug)
-  const notes = new Map();
-  for (const [fid, fam] of familles) {
-    let sum = 0, count = 0;
-    const vus = new Set();
-    for (const doc of Object.values(fam.docs)) {
-      const slug = slugFicheAlt(doc);
-      if (vus.has(slug)) continue;
-      vus.add(slug);
-      const r = ratingsParSlug[slug];
-      if (r) { sum += Number(r.ratingSum) || 0; count += Number(r.ratingCount) || 0; }
-    }
-    notes.set(fid, { avg: count > 0 ? sum / count : null, count });
-  }
-  // Classement par famille FR, avec la même règle pour toutes les langues
+  const notes = notesParFamille(reviews, slugToFam);
   const classement = new Map();
   for (const [fid, fam] of familles) {
     const fr = fam.docs.fr;
     if (!fr || !fr.category) { classement.set(fid, []); continue; }
     const candidats = [...familles.values()].filter(g => g.id !== fid && g.docs.fr && g.docs.fr.category === fr.category);
-    const avec = candidats.filter(g => notes.get(g.id).count > 0)
-      .sort((a, b) => (notes.get(b.id).avg - notes.get(a.id).avg)
-        || (notes.get(b.id).count - notes.get(a.id).count)
-        || a.docs.fr.name.localeCompare(b.docs.fr.name));
-    const sans = candidats.filter(g => notes.get(g.id).count === 0).sort((a, b) => a.id.localeCompare(b.id));
-    const rng = rngAlt(hashSlugAlt(slugFicheAlt(fr)));
-    for (let i = sans.length - 1; i > 0; i--) {         // mélange stable (graine = slug de la fiche)
+    const note = id => notes.get(id) || { avg: null, count: 0 };
+    const avec = candidats.filter(g => note(g.id).count > 0)
+      .sort((x, y) => (note(y.id).avg - note(x.id).avg)
+        || (note(y.id).count - note(x.id).count)
+        || x.docs.fr.name.localeCompare(y.docs.fr.name));
+    const sans = candidats.filter(g => note(g.id).count === 0).sort((x, y) => x.id.localeCompare(y.id));
+    const rng = rngAlt(hashSlugAlt(slugFicheAlt(fr)));      // graine stable : même résultat tant que les données ne changent pas
+    for (let i = sans.length - 1; i > 0; i--) {
       const j = Math.floor(rng() * (i + 1));
       [sans[i], sans[j]] = [sans[j], sans[i]];
     }
     classement.set(fid, [...avec, ...sans].map(g => g.id));
   }
-  return { familles, classement };
+  return { familles, classement, notes };
 }
 
-/** Alternatives d'une fiche dans sa propre langue : 6 maximum, format attendu par fiche-outil.js. */
+/** Alternatives d'une fiche dans sa propre langue : 6 maximum, avec les données nécessaires aux cartes. */
 function alternativesPourFiche(t, calcul) {
   const fid = familleIdAlt(t);
   const langue = t.langue || 'fr';
-  const ordre = calcul.classement.get(fid) || [];
   const sortie = [];
-  for (const gid of ordre) {
+  for (const gid of (calcul.classement.get(fid) || [])) {
     if (sortie.length >= 6) break;
     const doc = calcul.familles.get(gid) && calcul.familles.get(gid).docs[langue];
-    if (!doc) continue;                                    // pas de version dans cette langue
-    sortie.push({ nom: doc.name, domaine: hostAlt(doc.url), desc: '' });
+    if (!doc) continue;                                    // pas de version publiée dans cette langue
+    const n = calcul.notes.get(gid) || { avg: null, count: 0 };
+    sortie.push({
+      nom: doc.name,
+      domaine: hostAlt(doc.url),
+      desc: resumeAlt(doc.description, 160),
+      logo: doc.logo_url || doc.favicon || '',
+      prix: doc.price || '',
+      note: n.count ? Math.round(n.avg * 10) / 10 : null,
+      avis: n.count,
+      href: `/tools/${dossierAlt(doc)}/${langue}/${slugify(doc.name)}/`,
+    });
   }
   return sortie;
 }
@@ -4083,11 +4114,14 @@ async function main() {
   }).filter(t => t.name);
   console.log(`✓ ${tools.length} documents trouvés`);
 
-  // Alternatives : une lecture de ratings_summary par build, classement identique dans les 3 langues
-  const ratingsSnap = await db.collection('ratings_summary').get();
-  const ratingsParSlug = {};
-  ratingsSnap.docs.forEach(d => { ratingsParSlug[d.id] = d.data(); });
-  const calculAlt = calculerAlternatives(tools, ratingsParSlug);
+  // Alternatives : une lecture de la collection reviews par build (mise en cache pour les 3 langues)
+  const reviewsSnap = await db.collection('reviews').get();
+  const reviewsList = reviewsSnap.docs.map(d => {
+    const r = d.data();
+    return { uid: r.uid, toolSlug: r.toolSlug, rating: r.rating, flagged: !!r.flagged,
+             ts: r.updatedAt && typeof r.updatedAt.toMillis === 'function' ? r.updatedAt.toMillis() : 0 };
+  });
+  const calculAlt = calculerAlternatives(tools, reviewsList);
   for (const t of tools) t.alternatives = alternativesPourFiche(t, calculAlt);
   console.log(`✓ Alternatives calculées pour ${calculAlt.familles.size} familles d'outils`);
 

@@ -402,22 +402,33 @@ function generateFiche(tool, allTools = [], deps) {
     ? `<section class="fo-card"><a class="fo-btn fo-btn-soft" style="width:100%" href="${E(tarifsUrl)}" target="_blank" rel="noopener">${E(T.seePricing)} ${ic('ext')}</a></section>` : '';
 
   // ── Sidebar : alternatives (données Albexia : note et catégorie lues dans la base si l'outil y figure) ──
-  const altItems = alternatives.map((a, idx) => {   // couleurs dans l'ordre : vert, rose, turquoise… comme la maquette
-    const [nom, domaine, desc] = (typeof a === 'string' ? a : `${a.nom}|${a.domaine || ''}|${a.desc || ''}`).split('|');
-    if (!nom || !nom.trim()) return '';
-    const known = allTools.find((t) => (t.langue || 'fr') === langue && String(t.name).toLowerCase() === nom.trim().toLowerCase());
-    const dom = (domaine || '').replace(/^https?:\/\//, '') || (known ? hostOf(known.url) : `${slugify(nom)}.com`);
-    const hasPage = known && known.generer_fiche !== false;
-    const href = hasPage ? toolFicheUrl(known) : `https://${dom}`;
-    const kNote = known ? Number(known.note || known.rating || 0) : 0;
-    return `<a class="fo-alt" href="${E(href)}"${hasPage ? '' : ' target="_blank" rel="noopener"'}>
-      <div class="fo-alt-id">${logoBox(`fo-alt-logo fo-av${idx % 6}`, nom.trim().charAt(0).toUpperCase(), logoSources(known && known.favicon, dom, 64), '', false)}
-        <div><b>${E(nom.trim())}</b><small>${E((known && categoryName(known.category, langue)) || desc || T.altsFor(name))}</small></div></div>
-      ${kNote ? `<div class="fo-alt-note">${kNote.toFixed(1)} ${STAR}</div>` : ''}</a>`;
+  // ── Sidebar : alternatives en cartes (calculées par gen-fiches.js, déjà dans la langue de la fiche) ──
+  const ALT_TX = {
+    fr: { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant', none: 'Pas encore noté', reviews: 'avis' },
+    en: { free: 'Free', freemium: 'Freemium', paid: 'Paid', none: 'Not rated yet', reviews: 'reviews' },
+    es: { free: 'Gratis', freemium: 'Freemium', paid: 'De pago', none: 'Sin valorar', reviews: 'opiniones' },
+  }[langue] || { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant', none: 'Pas encore noté', reviews: 'avis' };
+  const altItems = alternatives.map((a) => {
+    if (!a || !a.nom || !a.href) return '';
+    const pk = { free: 'free', gratuit: 'free', freemium: 'freemium', paid: 'paid', payant: 'paid' }[String(a.prix || '').toLowerCase()] || '';
+    const logoUrl = safeUrl(a.logo);
+    const logo = logoUrl
+      ? `<img src="${E(logoUrl)}" alt="" loading="lazy">`
+      : `<span class="fo-alt-letter">${E(String(a.nom).trim().charAt(0).toUpperCase())}</span>`;
+    const note = (typeof a.note === 'number' && a.avis > 0)
+      ? `<span class="fo-alt-rating">${STAR} ${a.note.toFixed(1)} <small>(${a.avis} ${E(ALT_TX.reviews)})</small></span>`
+      : `<span class="fo-alt-rating fo-alt-none">${E(ALT_TX.none)}</span>`;
+    return `<a class="fo-alt-card" href="${E(a.href)}">
+      <span class="fo-alt-logo">${logo}</span>
+      <span class="fo-alt-body">
+        <b>${E(a.nom)}</b>
+        ${a.desc ? `<span class="fo-alt-desc">${E(a.desc)}</span>` : ''}
+        <span class="fo-alt-meta">${note}${pk ? `<span class="fo-alt-price">${E(ALT_TX[pk])}</span>` : ''}</span>
+      </span></a>`;
   }).join('');
   const altsCard = altItems ? `
 <section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">${E(T.alts)}</h3><a class="fo-link" href="${R}index.html#tools">${E(T.seeMore)}</a></div>
-  <div class="fo-alts">${altItems}</div><a class="fo-btn fo-btn-block" href="${R}comparateur/index.html">${E(T.altsMore)}</a></section>` : '';
+  <div class="fo-alt-grid">${altItems}</div><a class="fo-btn fo-btn-block" href="${R}comparateur/index.html">${E(T.altsMore)}</a></section>` : '';
 
   // ── Sidebar : articles liés — pour TOUS les plans (FR : articles.json est en français).
   // Le nombre affiché dépend uniquement des articles disponibles pour l'outil ; js/articles-loader.js

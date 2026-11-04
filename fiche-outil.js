@@ -411,8 +411,13 @@ function generateFiche(tool, allTools = [], deps) {
   const altItems = alternatives.map((a) => {
     if (!a || !a.nom || !a.href) return '';
     const pk = { free: 'free', gratuit: 'free', freemium: 'freemium', paid: 'paid', payant: 'paid' }[String(a.prix || '').toLowerCase()] || '';
-    // Même logique que la fiche principale : favicon enregistré → Google → DuckDuckGo, puis initiale
-    const logo = logoBox('fo-alt-logo', String(a.nom).trim().charAt(0).toUpperCase(), logoSources(a.logo, a.domaine, 64), a.nom);
+    // Même approche que l'index : l'image s'affiche directement ; en cas d'échec on passe à la source
+    // suivante (favicon enregistré → Google → DuckDuckGo), puis l'initiale reste visible.
+    const srcs = logoSources(a.logo, a.domaine, 64);
+    const initiale = E(String(a.nom).trim().charAt(0).toUpperCase());
+    const logo = srcs.length
+      ? `<span class="fo-card-logo"><img src="${E(srcs[0])}" alt="" loading="lazy" referrerpolicy="no-referrer" data-next="${E(srcs.slice(1).join(' '))}" onerror="var n=(this.dataset.next||'').split(' ').filter(Boolean);if(n.length){this.src=n.shift();this.dataset.next=n.join(' ');}else{this.remove();}"><span class="fo-card-letter">${initiale}</span></span>`
+      : `<span class="fo-card-logo"><span class="fo-card-letter">${initiale}</span></span>`;
     const note = (typeof a.note === 'number' && a.avis > 0)
       ? `<span class="fo-alt-rating">${STAR} ${a.note.toFixed(1)} <small>(${a.avis} ${E(ALT_TX.reviews)})</small></span>`
       : `<span class="fo-alt-rating fo-alt-none">${E(ALT_TX.none)}</span>`;

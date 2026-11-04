@@ -413,13 +413,13 @@ function generateFiche(tool, allTools = [], deps) {
     const pk = { free: 'free', gratuit: 'free', freemium: 'freemium', paid: 'paid', payant: 'paid' }[String(a.prix || '').toLowerCase()] || '';
     const logoUrl = safeUrl(a.logo);
     const logo = logoUrl
-      ? `<img src="${E(logoUrl)}" alt="" loading="lazy">`
-      : `<span class="fo-alt-letter">${E(String(a.nom).trim().charAt(0).toUpperCase())}</span>`;
+      ? `<img class="fo-acard-img" src="${E(logoUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer">`
+      : `<span class="fo-acard-letter">${E(String(a.nom).trim().charAt(0).toUpperCase())}</span>`;
     const note = (typeof a.note === 'number' && a.avis > 0)
       ? `<span class="fo-alt-rating">${STAR} ${a.note.toFixed(1)} <small>(${a.avis} ${E(ALT_TX.reviews)})</small></span>`
       : `<span class="fo-alt-rating fo-alt-none">${E(ALT_TX.none)}</span>`;
     return `<a class="fo-alt-card" href="${E(a.href)}">
-      <span class="fo-alt-logo">${logo}</span>
+      <span class="fo-acard-logo">${logo}</span>
       <span class="fo-alt-body">
         <b>${E(a.nom)}</b>
         ${a.desc ? `<span class="fo-alt-desc">${E(a.desc)}</span>` : ''}

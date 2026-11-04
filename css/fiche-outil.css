@@ -381,7 +381,8 @@
 .fo-alt-none { font-weight: 400; color: var(--text-muted); }
 .fo-alt-price { border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; font-size: 11px; }
 
-/* Logos des cartes d'alternatives : image directe, initiale en repli (même principe que l'index) */
-.fo-card-logo { flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: var(--bg3); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-.fo-card-logo img { position: absolute; inset: 0; width: 100%; height: 100%; padding: 4px; box-sizing: border-box; object-fit: contain; background: var(--bg2); }
-.fo-card-letter { font-family: var(--sans, 'Inter', sans-serif); font-weight: 700; font-size: 15px; color: var(--text-muted); }
+
+/* Logos des cartes d'alternatives : même système que la fiche, en petit format */
+.fo-logo.fo-logo-mini { width: 40px; height: 40px; border-radius: 8px; background: var(--bg3); }
+.fo-logo-mini .fo-letter { font-size: 15px; color: var(--text-muted); }
+.fo-logo-mini img { padding: 4px; background: var(--bg2); }

@@ -149,7 +149,7 @@ function faqEntreeValide(f) {
 }
 
 const TRADUISIBLES = new Set(['name', 'description', 'ideal_pour', 'presentation', 'meta_description',
-  'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts']);
+  'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts', 'alternatives']);
 
 function generateFiche(tool, allTools = [], deps) {
   const { esc, slugify, seoHeadTags, toolLangueUrls, toolFicheUrl, navHTML, footerHTML, faqJS, tutorialJS, sharedJS, R } = deps;
@@ -185,7 +185,7 @@ function generateFiche(tool, allTools = [], deps) {
   const maker = g('maker');
   const plateformes = g('plateformes');
   const reseaux = g('reseaux') || {};
-  const alternatives = g('alternatives') || [];
+  const alternatives = (g('alternatives') || []).slice(0, 6);
   const features = (g('fonctionnalites') || []).slice(0, LIMITES.features);
   const faq = (g('faq') || []).filter(faqEntreeValide).slice(0, LIMITES.faq);
   // ── Avantages, limites, idées d'utilisation, prompts (champs saisis dans l'admin) ──

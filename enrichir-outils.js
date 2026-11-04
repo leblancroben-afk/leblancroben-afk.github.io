@@ -5,7 +5,7 @@
 
    Source : Firestore « outils » où status === 'a_enrichir'
    Écrit  : url, category, price, description, tags, maker, plateformes,
-            ideal_pour, favicon, emoji, alternatives, fonctionnalites, faq,
+            ideal_pour, favicon, emoji, fonctionnalites, faq,
             tarifs (non vérifiés), presentation, meta_description, etc.
             puis status='active', generer_fiche=true, enrichi_ia=true.
 
@@ -88,7 +88,6 @@ Par outil :
 - price : "free" (gratuit), "freemium" (gratuit avec palier payant) ou "paid" (payant uniquement).
 - description : 150 à 200 caractères, en français, factuelle, sans superlatifs exagérés.
 - tags : 3 à 6 mots-clés courts en français.
-- alternatives : 2 à 3 concurrents réellement comparables, séparés par des virgules.
 - fonctionnalites : 3 à 4 entrées {icon, titre, desc}. icon doit être EXACTEMENT une de ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji).
 - faq : 4 à 5 entrées {q, a}, avec des questions variées qui couvrent les fonctionnalités, les tarifs, les limites, l'utilisation, les alternatives, la compatibilité et les besoins spécifiques. Chaque réponse (a) fait 3 à 5 phrases utiles et précises, 600 caractères maximum. Ne répète jamais une phrase ni une expression : une réponse qui tourne en boucle est rejetée.
 - presentation : 3 à 4 paragraphes factuels et spécifiques à l'outil, séparés par un retour à la ligne.
@@ -125,7 +124,6 @@ const SCHEMA_LOT = {
       plateformes: { type: 'STRING', nullable: true },
       ideal_pour: { type: 'STRING', nullable: true },
       emoji: { type: 'STRING', nullable: true },
-      alternatives: { type: 'STRING', nullable: true },
       fonctionnalites: {
         type: 'ARRAY', nullable: true,
         items: {
@@ -288,7 +286,6 @@ function construireMiseAJour(outil, infos, categorie) {
     ideal_pour: infos.ideal_pour || '',
     emoji: infos.emoji || '🤖',
     favicon,
-    alternatives: (infos.alternatives || '').split(',').map(s => s.trim()).filter(Boolean),
     fonctionnalites: Array.isArray(infos.fonctionnalites)
       ? infos.fonctionnalites.map(f => ({ ...f, icon: ICON_KEYS.includes(f && f.icon) ? f.icon : 'sparkles' }))
       : [],

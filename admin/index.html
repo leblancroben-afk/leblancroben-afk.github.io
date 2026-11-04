@@ -644,8 +644,6 @@
 
           <fieldset>
             <legend>🔗 Alternatives &amp; mises à jour</legend>
-            <label>Alternatives (noms séparés par virgules)</label>
-            <input type="text" id="o-alternatives">
             <label>Mises à jour (format : date|titre|description, une par ligne)</label>
             <textarea id="o-changelog" style="min-height:70px;" placeholder="2026-09|Nouveau modèle|Qualité de rédaction accrue"></textarea>
           </fieldset>
@@ -3180,7 +3178,6 @@ Support français|oui|non|bool"></textarea>
     setVal('o-prompts-en', en ? joinLines(en.prompts, '\\n') : '');
     setVal('o-idees-utilisation-es', es ? joinLines(es.idees_utilisation, '\\n') : '');
     setVal('o-prompts-es', es ? joinLines(es.prompts, '\\n') : '');
-    setVal('o-alternatives', (tool.alternatives||[]).join(', '));
 
     setVal('o-stats', joinLines((tool.stats||[]).map(s=>`${s.valeur}|${s.label}`), '\n'));
     setVal('o-fonctionnalites', joinLines((tool.fonctionnalites||[]).map(f=>`${f.icon}|${f.titre}|${f.desc}`), '\n'));
@@ -3485,7 +3482,6 @@ Support français|oui|non|bool"></textarea>
 
       const pointsForts  = (document.getElementById('o-points-forts').value||'').split('\n').map(s=>s.trim()).filter(Boolean);
       const limite       = document.getElementById('o-limite').value.trim();
-      const alternatives = (document.getElementById('o-alternatives').value||'').split(',').map(s=>s.trim()).filter(Boolean);
       const maker        = document.getElementById('o-maker').value.trim();
       const plateformes  = document.getElementById('o-plateformes').value.trim();
       const urlTarifs    = document.getElementById('o-url-tarifs').value.trim();
@@ -3570,7 +3566,7 @@ Support français|oui|non|bool"></textarea>
           plan,langue:'en',traductions:{fr:mainId},ideal_pour:document.getElementById('o-ideal-en').value.trim(),
           fonctionnalites:fonctionnalitesEn,faq:faqEn,presentation:presentationEn,
           meta_description:metaDescEn,maker,plateformes,url_tarifs:urlTarifs,
-          interface_fr:interfaceFr,api,mobile,stats:(statsEn.length?statsEn:stats),tutoriels,alternatives,screenshot_url:screenshot,
+          interface_fr:interfaceFr,api,mobile,stats:(statsEn.length?statsEn:stats),tutoriels,screenshot_url:screenshot,
           points_forts:pointsFortsEn,limite:limiteEn,idees_utilisation:ideesEn,prompts:promptsEn,tarifs:tarifsEn,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
@@ -3584,7 +3580,7 @@ Support français|oui|non|bool"></textarea>
           plan,langue:'es',traductions:{fr:mainId},ideal_pour:document.getElementById('o-ideal-es').value.trim(),
           fonctionnalites:fonctionnalitesEs,faq:faqEs,presentation:presentationEs,
           meta_description:metaDescEs,maker,plateformes,url_tarifs:urlTarifs,
-          interface_fr:interfaceFr,api,mobile,stats:(statsEs.length?statsEs:stats),tutoriels,alternatives,screenshot_url:screenshot,
+          interface_fr:interfaceFr,api,mobile,stats:(statsEs.length?statsEs:stats),tutoriels,screenshot_url:screenshot,
           points_forts:pointsFortsEs,limite:limiteEs,idees_utilisation:ideesEs,prompts:promptsEs,tarifs:tarifsEs,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
@@ -3594,7 +3590,7 @@ Support français|oui|non|bool"></textarea>
         plan,langue:'fr',essai_gratuit:essai,duree_essai:duree,ideal_pour:idealFr,traductions,
         acces_web:accesWeb,generation_images:generationImages,telechargement_fichiers:telechargementFichiers,
         langues_disponibles:languesDisponibles,integrations,
-        points_forts:pointsForts,limite,idees_utilisation:ideesFr,prompts:promptsFr,alternatives,maker,plateformes,url_tarifs:urlTarifs,
+        points_forts:pointsForts,limite,idees_utilisation:ideesFr,prompts:promptsFr,maker,plateformes,url_tarifs:urlTarifs,
         interface_fr:interfaceFr,api,mobile,presentation,meta_description:metaDesc,
         screenshot_url:screenshot,stats,fonctionnalites,faq,tutoriels,videotheque,tarifs,...communsNouveaux,
         generer_fiche:genererFiche,slug_articles:slugArticles||null,

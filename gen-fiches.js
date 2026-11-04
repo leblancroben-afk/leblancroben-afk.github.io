@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v6'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v7'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -4053,7 +4053,9 @@ function calculerAlternatives(tools, reviews) {
     }
     classement.set(fid, [...avec, ...sans].map(g => g.id));
   }
-  return { familles, classement, notes };
+  const parNom = new Map();
+  for (const [fid, fam] of familles) if (fam.docs.fr) parNom.set(String(fam.docs.fr.name).trim().toLowerCase(), fid);
+  return { familles, classement, notes, parNom };
 }
 
 /** Alternatives d'une fiche dans sa propre langue : 6 maximum, avec les données nécessaires aux cartes. */
@@ -4061,7 +4063,15 @@ function alternativesPourFiche(t, calcul) {
   const fid = familleIdAlt(t);
   const langue = t.langue || 'fr';
   const sortie = [];
-  for (const gid of (calcul.classement.get(fid) || [])) {
+  // Option C : d'abord la liste validée à la main (champ alternatives_validees, sur le document FR),
+  // puis le calcul automatique (catégorie + notes) pour compléter jusqu'à 6. Sans doublon, sans l'outil lui-même.
+  const fam = calcul.familles.get(fid);
+  const brut = fam && fam.docs.fr ? fam.docs.fr.alternatives_validees : null;
+  const voulues = Array.isArray(brut) ? brut : String(brut || '').split(',');
+  const valides = voulues.map(n => String(n).trim().toLowerCase()).filter(Boolean)
+    .map(n => calcul.parNom.get(n)).filter(id => id && id !== fid);
+  const ordre = [...new Set([...valides, ...(calcul.classement.get(fid) || [])])].filter(id => id !== fid);
+  for (const gid of ordre) {
     if (sortie.length >= 6) break;
     const doc = calcul.familles.get(gid) && calcul.familles.get(gid).docs[langue];
     if (!doc) continue;                                    // pas de version publiée dans cette langue

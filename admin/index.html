@@ -644,6 +644,8 @@
 
           <fieldset>
             <legend>🔗 Alternatives &amp; mises à jour</legend>
+            <label>Informations vérifiées le (date, saisie manuelle)</label>
+            <input type="date" id="o-verifie-le">
             <label>Alternatives validées (noms séparés par virgules, 6 max, facultatif : complété automatiquement)</label>
             <input type="text" id="o-alt-validees" placeholder="Claude, Gemini, Mistral">
             <label>Mises à jour (format : date|titre|description, une par ligne)</label>
@@ -3177,6 +3179,7 @@ Support français|oui|non|bool"></textarea>
     setVal('o-idees-utilisation', joinLines(tool.idees_utilisation, '\\n'));
     setVal('o-prompts', joinLines(tool.prompts, '\\n'));
     setVal('o-alt-validees', (tool.alternatives_validees || []).join(', '));
+    setVal('o-verifie-le', tool.verifie_le || '');
     setVal('o-idees-utilisation-en', en ? joinLines(en.idees_utilisation, '\\n') : '');
     setVal('o-prompts-en', en ? joinLines(en.prompts, '\\n') : '');
     setVal('o-idees-utilisation-es', es ? joinLines(es.idees_utilisation, '\\n') : '');
@@ -3593,7 +3596,7 @@ Support français|oui|non|bool"></textarea>
         plan,langue:'fr',essai_gratuit:essai,duree_essai:duree,ideal_pour:idealFr,traductions,
         acces_web:accesWeb,generation_images:generationImages,telechargement_fichiers:telechargementFichiers,
         langues_disponibles:languesDisponibles,integrations,
-        points_forts:pointsForts,limite,idees_utilisation:ideesFr,prompts:promptsFr,alternatives_validees:(document.getElementById('o-alt-validees').value||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,6),maker,plateformes,url_tarifs:urlTarifs,
+        points_forts:pointsForts,limite,idees_utilisation:ideesFr,prompts:promptsFr,verifie_le:(document.getElementById('o-verifie-le').value||'') || undefined,alternatives_validees:(document.getElementById('o-alt-validees').value||'').split(',').map(x=>x.trim()).filter(Boolean).slice(0,6),maker,plateformes,url_tarifs:urlTarifs,
         interface_fr:interfaceFr,api,mobile,presentation,meta_description:metaDesc,
         screenshot_url:screenshot,stats,fonctionnalites,faq,tutoriels,videotheque,tarifs,...communsNouveaux,
         generer_fiche:genererFiche,slug_articles:slugArticles||null,

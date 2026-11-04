@@ -425,6 +425,7 @@ function generateFiche(tool, allTools = [], deps) {
     row(T.platforms, platChips ? `<div class="fo-plats">${platChips}</div>` : ''),
     row(T.api, yn(g('api'))),
     row(T.support, E(g('support'))),
+    row(({ fr: 'Informations vérifiées le', en: 'Information verified on', es: 'Información verificada el' })[langue] || 'Informations vérifiées le', g('verifie_le') ? E(String(g('verifie_le'))) : ''),
     row(T.social, soc ? `<div class="fo-socials">${soc}</div>` : ''),
   ].join('');
   const infoCard = `<section class="fo-card" id="fo-infos"><h3 class="fo-h3">${E(T.keyInfo)}</h3><dl class="fo-info">${infoRows}</dl></section>`;
@@ -517,7 +518,8 @@ function generateFiche(tool, allTools = [], deps) {
     inLanguage: langue,
   };
   if (category) ldSoft.applicationCategory = category;
-  if (pk === 'free' || pk === 'freemium') ldSoft.offers = { '@type': 'Offer', price: '0', priceCurrency: 'USD' };
+  if (pk === 'free') ldSoft.offers = { '@type': 'Offer', price: '0', priceCurrency: 'USD' };   // freemium : pas de prix déclaré
+  if (g('verifie_le')) ldSoft.dateModified = String(g('verifie_le'));
   ldItems.push(ldSoft);
   const ldFaq = (faq || []).filter((f) => f && f.q && f.a);
   if (ldFaq.length) {

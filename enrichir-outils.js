@@ -87,7 +87,7 @@ Par outil :
 - category : UNE valeur exacte choisie dans cette liste (recopie le texte) : ${JSON.stringify(categories)}. Si aucune ne convient, prends la plus proche, n'en invente jamais.
 - price : "free" (gratuit), "freemium" (gratuit avec palier payant) ou "paid" (payant uniquement).
 - description : 150 à 200 caractères, en français, factuelle, sans superlatifs exagérés.
-- tags : 3 à 6 mots-clés courts en français.
+- tags : 4 à 6 mots-clés courts en français, formulés comme les internautes les tapent aujourd'hui (ex. « rédaction IA », « générateur de logo »). Privilégie les usages et termes actuels de l'outil ; évite les formules commerciales (« leader », « révolutionnaire », « meilleur »). Mots-clés factuels uniquement.
 - fonctionnalites : 3 à 4 entrées {icon, titre, desc}. icon doit être EXACTEMENT une de ces clés : ${ICON_KEYS.join(', ')} (jamais d'emoji).
 - faq : 4 à 5 entrées {q, a}, avec des questions variées qui couvrent les fonctionnalités, les tarifs, les limites, l'utilisation, les alternatives, la compatibilité et les besoins spécifiques. Chaque réponse (a) fait 3 à 5 phrases utiles et précises, 600 caractères maximum. Ne répète jamais une phrase ni une expression : une réponse qui tourne en boucle est rejetée.
 - presentation : 3 à 4 paragraphes factuels et spécifiques à l'outil, séparés par un retour à la ligne.

@@ -4090,6 +4090,38 @@ function alternativesPourFiche(t, calcul) {
   return sortie;
 }
 
+// ── llms.txt (français uniquement) : index des outils publiés, par catégorie ──
+// Format llms.txt : titre H1, résumé en blockquote, sections avec liste de liens.
+// Seuls les outils publiés (status 'active', fiche générée) sont listés.
+function genererLlmsTxt(tools, origin) {
+  const lignes = [
+    '# Albexia',
+    '',
+    "> Annuaire francophone d'outils d'intelligence artificielle : fiches, tarifs, avantages, limites, alternatives et tutoriels, classés par catégorie.",
+    '',
+    'Langue : français.',
+    '',
+  ];
+  const parCategorie = new Map();
+  for (const t of tools) {
+    if (!publieAlt(t) || (t.langue || 'fr') !== 'fr') continue;
+    const cat = canonicalCategory(t.category) || 'Autres';
+    if (!parCategorie.has(cat)) parCategorie.set(cat, []);
+    parCategorie.get(cat).push(t);
+  }
+  for (const cat of [...parCategorie.keys()].sort((a, b) => a.localeCompare(b, 'fr'))) {
+    lignes.push(`## ${cat}`, '');
+    const outils = parCategorie.get(cat).sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+    for (const t of outils) {
+      const url = `${origin}/tools/${dossierAlt(t)}/fr/${slugify(t.name)}/`;
+      const desc = resumeAlt(t.description, 300);
+      lignes.push(desc ? `- [${t.name}](${url}): ${desc}` : `- [${t.name}](${url})`);
+    }
+    lignes.push('');
+  }
+  return lignes.join('\n');
+}
+
 async function main() {
   const state = loadState();
   const newState = { outils: {}, articles: {}, comparaisons: {}, niches: {}, videotheques: {}, glossaire: {} };
@@ -4135,6 +4167,9 @@ async function main() {
   const calculAlt = calculerAlternatives(tools, reviewsList);
   for (const t of tools) t.alternatives = alternativesPourFiche(t, calculAlt);
   console.log(`✓ Alternatives calculées pour ${calculAlt.familles.size} familles d'outils`);
+  // llms.txt : index français des outils publiés (une seule version, à la racine du site)
+  fs.writeFileSync(path.join(__dirname, 'llms.txt'), genererLlmsTxt(tools, SITE_ORIGIN) + '\n', 'utf8');
+  console.log('✓ llms.txt écrit');
 
   let generated = 0, skipped = 0, noFiche = 0, unchanged = 0;
   const changedToolIds = new Set(); // pour la cascade vers comparaisons

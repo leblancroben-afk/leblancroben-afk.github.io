@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v5'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v6'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -145,7 +145,7 @@ function reecrireAnciensDomaines(html) {
 }
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
-const { generateFiche, avisOutilPageHTML } = require('./fiche-outil'); // template unique de fiche outil + page « tous les avis »
+const { generateFiche, avisOutilPageHTML, normaliserSousCategorie } = require('./fiche-outil'); // template unique de fiche outil + page « tous les avis »
 
 function sharedJS() {
   return '';
@@ -4102,6 +4102,7 @@ async function main() {
     const t = d.data();
     return {
       ...t,
+      sous_categorie: normaliserSousCategorie(t.sous_categorie),
       id:          d.id,
       name:        t.name || '',
       emoji:       t.emoji || '🤖',

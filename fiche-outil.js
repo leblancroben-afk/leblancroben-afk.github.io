@@ -151,6 +151,47 @@ function faqEntreeValide(f) {
 const TRADUISIBLES = new Set(['name', 'description', 'ideal_pour', 'presentation', 'meta_description',
   'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts', 'alternatives']);
 
+// ── Sous-catégories : liste fermée (11 valeurs) et correspondance des libellés existants ──
+const SOUS_CATEGORIES = [
+  'Assistant IA généraliste',
+  'Assistant de rédaction',
+  'Rédaction SEO et référencement',
+  'Assistant de code',
+  'Développement No-Code',
+  "Génération d'images",
+  'Création graphique et design',
+  'Génération de vidéo',
+  'Génération de musique et audio',
+  'Automatisation et productivité',
+  'Backend et base de données',
+];
+const SOUS_CATEGORIE_ALIAS = {
+  'llm / assistant ia': 'Assistant IA généraliste', 'assistant ia': 'Assistant IA généraliste', "agrégateur d'ia": 'Assistant IA généraliste',
+  'assistant de rédaction': 'Assistant de rédaction',
+  'rédaction seo': 'Rédaction SEO et référencement', 'optimisation de référencement': 'Rédaction SEO et référencement',
+  'assistant de code': 'Assistant de code', 'assistant de développement': 'Assistant de code', 'éditeur de code / ide': 'Assistant de code',
+  'développement no-code': 'Développement No-Code', 'low-code / no-code': 'Développement No-Code',
+  "générateur d'applications web": 'Développement No-Code', "génération d'interfaces web": 'Développement No-Code',
+  "génération d'images": "Génération d'images", "générateur d'images ia": "Génération d'images", "générateur d'images vectorielles": "Génération d'images",
+  'création graphique': 'Création graphique et design', 'création de logo': 'Création graphique et design',
+  'design graphique ia': 'Création graphique et design', 'prototypage & ui': 'Création graphique et design',
+  "traduction d'images et de mangas": 'Création graphique et design',
+  'générateur de vidéo ia': 'Génération de vidéo',
+  'générateur de musique ia': 'Génération de musique et audio', 'générateur de musique': 'Génération de musique et audio',
+  'mastering & production musique': 'Génération de musique et audio', 'restauration audio': 'Génération de musique et audio',
+  'édition audio & podcast': 'Génération de musique et audio',
+  'automatisation de workflows': 'Automatisation et productivité', 'assistant de réunion': 'Automatisation et productivité',
+  'assistant de recherche': 'Automatisation et productivité',
+  'backend et base de données': 'Backend et base de données',
+};
+/** Ramène une valeur saisie à la liste fermée. Inconnue → '' (la fiche retombe sur la catégorie). */
+function normaliserSousCategorie(valeur) {
+  if (!valeur) return '';
+  const cle = String(valeur).replace(/’/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim().toLowerCase();
+  if (SOUS_CATEGORIES.some(s => s.toLowerCase() === cle)) return SOUS_CATEGORIES.find(s => s.toLowerCase() === cle);
+  return SOUS_CATEGORIE_ALIAS[cle] || '';
+}
+
 function generateFiche(tool, allTools = [], deps) {
   const { esc, slugify, seoHeadTags, toolLangueUrls, toolFicheUrl, navHTML, footerHTML, faqJS, tutorialJS, sharedJS, R } = deps;
   const langue = ['fr', 'en', 'es'].includes(tool.langue) ? tool.langue : 'fr';
@@ -668,4 +709,4 @@ ${footerHTML('fr')}
 </html>`;
 }
 
-module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide };
+module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie };

@@ -501,7 +501,7 @@
             <input type="text" id="o-meta-desc" maxlength="155">
             <div class="row">
               <div><label>Type d'outil</label><input type="text" id="o-type-outil" placeholder="Assistant IA"></div>
-              <div><label>Sous-catégorie</label><input type="text" id="o-sous-cat" placeholder="Assistant de rédaction"></div>
+              <div><label>Sous-catégorie</label><select id="o-sous-cat"><option value="">— Choisir —</option><option value="Assistant IA généraliste">Assistant IA généraliste</option><option value="Assistant de rédaction">Assistant de rédaction</option><option value="Rédaction SEO et référencement">Rédaction SEO et référencement</option><option value="Assistant de code">Assistant de code</option><option value="Développement No-Code">Développement No-Code</option><option value="Génération d'images">Génération d'images</option><option value="Création graphique et design">Création graphique et design</option><option value="Génération de vidéo">Génération de vidéo</option><option value="Génération de musique et audio">Génération de musique et audio</option><option value="Automatisation et productivité">Automatisation et productivité</option><option value="Backend et base de données">Backend et base de données</option></select></div>
             </div>
             <div class="row">
               <div><label>Modèle</label>
@@ -3192,7 +3192,7 @@ Support français|oui|non|bool"></textarea>
       document.querySelectorAll('#o-plat-ico input').forEach(function(c){ c.checked = ico.indexOf(c.value) > -1; });
     })();
     setVal('o-type-outil', tool.type_outil || '');
-    setVal('o-sous-cat', tool.sous_categorie || '');
+    { const sc = document.getElementById('o-sous-cat'); const v = String(tool.sous_categorie || ''); sc.value = [...sc.options].some(o => o.value === v) ? v : ''; }
     setVal('o-modele', tool.modele || '');
     setVal('o-annee', tool.annee_creation || '');
     setVal('o-support', tool.support || '');

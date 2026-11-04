@@ -52,7 +52,7 @@ const CATEGORIES_EXCLUES_IA = ['Outils IA'];
 const HEBERGEURS_CODE = ['github.com', 'gitlab.com', 'huggingface.co', 'replit.com', 'kaggle.com'];
 
 const ICON_KEYS = require('./js/fiche-icons.js').FEATURE_KEYS;
-const { faqEntreeValide } = require('./fiche-outil.js');
+const { faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie } = require('./fiche-outil.js');
 
 // Compteur de requêtes envoyées pendant ce run (retries inclus).
 let requetesUtilisees = 0;
@@ -99,7 +99,7 @@ Par outil :
 - tarifs : 2 à 4 formules publiques {nom, prix, periode, desc}. Si le montant exact est incertain, prix et periode à "" (chaîne vide). Un tableau vide vaut mieux qu'un tarif inventé.
 - interface_fr, api, mobile, essai_gratuit : true, false ou null si incertain.
 - modele : "proprietaire" ou "open_source", null si incertain. annee_creation : entier ou null.
-- url_tarifs, duree_essai, sous_categorie, support, type_outil, langues_disponibles, maker, plateformes, ideal_pour, emoji : chaîne ou null si incertain.
+- url_tarifs, duree_essai, sous_categorie (une valeur exacte de la liste fournie : Assistant IA généraliste, Assistant de rédaction, Rédaction SEO et référencement, Assistant de code, Développement No-Code, Génération d'images, Création graphique et design, Génération de vidéo, Génération de musique et audio, Automatisation et productivité, Backend et base de données, ou null), support, type_outil, langues_disponibles, maker, plateformes, ideal_pour, emoji : chaîne ou null si incertain.
 
 Règle de non-répétition : chaque section apporte une information distincte. Ne reprends pas dans les points forts, les limites, les idées ou les prompts le libellé ou la formulation d'une fonctionnalité ; ne répète pas une phrase d'une section à l'autre.
 
@@ -149,7 +149,7 @@ const SCHEMA_LOT = {
       limite: { type: 'STRING', nullable: true },
       idees_utilisation: { type: 'ARRAY', nullable: true, items: { type: 'STRING' } },
       prompts: { type: 'ARRAY', nullable: true, items: { type: 'STRING' } },
-      sous_categorie: { type: 'STRING', nullable: true },
+      sous_categorie: { type: 'STRING', nullable: true, enum: SOUS_CATEGORIES },
       modele: { type: 'STRING', nullable: true },
       annee_creation: { type: 'INTEGER', nullable: true },
       support: { type: 'STRING', nullable: true },
@@ -305,7 +305,7 @@ function construireMiseAJour(outil, infos, categorie) {
     ...(infos.type_outil ? { type_outil: infos.type_outil } : {}),
     ...(infos.langues_disponibles ? { langues_disponibles: infos.langues_disponibles } : {}),
     ...(infos.presentation ? { presentation: infos.presentation } : {}),
-    ...(infos.sous_categorie ? { sous_categorie: infos.sous_categorie } : {}),
+    ...(normaliserSousCategorie(infos.sous_categorie) ? { sous_categorie: normaliserSousCategorie(infos.sous_categorie) } : {}),
     ...(infos.modele === 'proprietaire' || infos.modele === 'open_source' ? { modele: infos.modele } : {}),
     ...(Number.isInteger(infos.annee_creation) ? { annee_creation: infos.annee_creation } : {}),
     ...(infos.support ? { support: infos.support } : {}),

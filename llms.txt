@@ -1,0 +1,116 @@
+# Albexia
+
+> Annuaire francophone d'outils d'intelligence artificielle : fiches, tarifs, avantages, limites, alternatives et tutoriels, classés par catégorie.
+
+Langue : français.
+
+## Assistants IA et recherche
+
+- [Grok](https://leblancroben-afk.github.io/tools/standard/fr/grok/): Grok est un assistant IA développé par xAI, capable de répondre à des questions complexes, d'analyser des données en temps réel via X et de générer du code avec un ton direct.
+- [Kimi](https://leblancroben-afk.github.io/tools/featured/fr/kimi/): Assistant IA conversationnel développé par Moonshot AI, réputé pour sa capacité à traiter de très longs volumes de texte (jusqu'à 2 millions de caractères).
+- [perplexity.ai](https://leblancroben-afk.github.io/tools/standard/fr/perplexity-ai/): Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.
+- [Poe](https://leblancroben-afk.github.io/tools/standard/fr/poe/): Poe est une plateforme développée par Quora permettant d'accéder et d'interagir avec divers modèles d'IA comme ChatGPT, Claude et Gemini via une interface unique.
+
+## Audio & Musique
+
+- [AIVA](https://leblancroben-afk.github.io/tools/featured/fr/aiva/): AIVA est un assistant de composition musicale basé sur l'IA, spécialisé dans la création de bandes sonores originales pour films, jeux vidéo et contenus web.
+- [Cleanvoice](https://leblancroben-afk.github.io/tools/standard/fr/cleanvoice/): Cleanvoice est un outil basé sur l'IA qui élimine automatiquement les hésitations, bruits de fond et tics de langage dans vos enregistrements audio.
+- [ElevenLabs](https://leblancroben-afk.github.io/tools/featured/fr/elevenlabs/): Plateforme IA de synthèse vocale, clonage de voix, doublage automatique, transcription et agents conversationnels. Idéal pour créateurs, développeurs et entreprises.
+- [iZotope RX](https://leblancroben-afk.github.io/tools/standard/fr/izotope-rx/): iZotope RX est la référence logicielle pour la restauration et le nettoyage audio, combinant traitement du signal et algorithmes IA avancés.
+- [LANDR](https://leblancroben-afk.github.io/tools/standard/fr/landr/): LANDR est une plateforme de création musicale offrant un mastering automatisé par IA, la distribution en ligne et des outils de collaboration.
+- [Moises](https://leblancroben-afk.github.io/tools/featured/fr/moises/): Moises est une application audio IA permettant de séparer les pistes vocales et instrumentales, de détecter la tonalité et d'ajuster le tempo facilement.
+- [Murf AI](https://leblancroben-afk.github.io/tools/featured/fr/murf-ai/): Studio de voix off IA avec 200+ voix, doublage vidéo, transcription et éditeur intégré. Idéal pour e-learning, marketing et podcasts.
+- [Soundful](https://leblancroben-afk.github.io/tools/featured/fr/soundful/): Soundful est une plateforme d'IA générative permettant aux créateurs de produire de la musique libre de droits en quelques clics selon différents genres.
+- [Suno](https://leblancroben-afk.github.io/tools/standard/fr/suno/): Suno est une intelligence artificielle capable de générer des chansons complètes avec paroles, voix et instruments à partir de simples descriptions textuelles.
+- [Udio](https://leblancroben-afk.github.io/tools/standard/fr/udio/): Udio est une intelligence artificielle capable de générer des chansons complètes avec paroles et chant à partir de simples descriptions textuelles.
+
+## Contenu
+
+- [Adobe Firefly](https://leblancroben-afk.github.io/tools/standard/fr/adobe-firefly/): Adobe Firefly est une suite de modèles d'IA générative intégrée aux logiciels Adobe, permettant de créer et modifier des images, effets de texte et vecteurs à partir de requêtes textuelles.
+- [Canva](https://leblancroben-afk.github.io/tools/featured/fr/canva/): Canva est une plateforme de design graphique en ligne intuitive permettant de créer des visuels, présentations, vidéos et documents grâce à des milliers de modèles personnalisables.
+- [ChatGPT](https://leblancroben-afk.github.io/tools/featured/fr/chatgpt/): L'assistant IA pionnier d'OpenAI pour rédiger des textes, programmer, analyser des données et automatiser vos tâches quotidiennes via une interface de discussion intuitive.
+- [Freepik AI](https://leblancroben-afk.github.io/tools/standard/fr/freepik-ai/): Freepik AI est une suite d'outils de création visuelle permettant de générer, modifier, agrandir et améliorer des images et illustrations à partir de prompts textuels.
+- [Ideogram](https://leblancroben-afk.github.io/tools/standard/fr/ideogram/): Ideogram est un outil de génération d'images par intelligence artificielle, reconnu pour sa capacité à intégrer du texte lisible et stylisé au sein des visuels créés.
+- [Leonardo AI](https://leblancroben-afk.github.io/tools/standard/fr/leonardo-ai/): Leonardo AI est une plateforme de génération d'images et d'actifs visuels par intelligence artificielle, offrant des modèles personnalisables et un contrôle précis pour les créateurs.
+- [Recraft](https://leblancroben-afk.github.io/tools/standard/fr/recraft/): Recraft est un outil de génération d'images et d'illustrations vectorielles par IA. Il permet de créer et modifier des visuels, logos et éléments 3D sur un canvas infini.
+
+## Images et design
+
+- [Looka](https://leblancroben-afk.github.io/tools/standard/fr/looka/): Looka est un générateur de logos et de chartes graphiques propulsé par l'IA. Il crée des identités visuelles complètes à partir de vos préférences de style et de couleurs.
+- [Microsoft Designer](https://leblancroben-afk.github.io/tools/standard/fr/microsoft-designer/): Microsoft Designer est une application de conception graphique assistée par l'intelligence artificielle. Elle permet de créer des visuels, des invitations et des publications à partir de descriptions textuelles.
+- [Midjourney](https://leblancroben-afk.github.io/tools/featured/fr/midjourney/): Le leader incontesté de la génération d'images par IA. Créez des visuels ultra-réalistes, des illustrations artistiques et des designs professionnels à partir de simples descriptions textuelles.
+- [Uizard](https://leblancroben-afk.github.io/tools/standard/fr/uizard/): Uizard est une plateforme de conception basée sur l'IA permettant de créer rapidement des maquettes, prototypes d'applications et interfaces web à partir de croquis ou de textes.
+- [VistaCreate](https://leblancroben-afk.github.io/tools/standard/fr/vistacreate/): VistaCreate est un outil de conception graphique en ligne proposant des milliers de modèles, visuels et outils IA pour créer rapidement du contenu marketing et réseaux sociaux.
+
+## Juridique
+
+- [CoCounsel](https://leblancroben-afk.github.io/tools/starter/fr/cocounsel/): CoCounsel (ex-Casetext) est l'assistant de recherche juridique de Thomson Reuters. Adossé à Westlaw, il prépare des dossiers de plaidoirie, vérifie la jurisprudence et accélère la revue documentaire.
+- [Harvey](https://leblancroben-afk.github.io/tools/starter/fr/harvey/): Harvey est une IA juridique conçue pour les cabinets d'avocats et directions juridiques d'entreprise. Elle assiste la recherche réglementaire, l'analyse de contrats et le due diligence complexe.
+- [Juri'Predis](https://leblancroben-afk.github.io/tools/starter/fr/juri-predis/): Juri'Predis est une plateforme française de recherche jurisprudentielle et de justice prédictive. Elle analyse plus de 8 millions de décisions de justice en langage naturel pour anticiper les tendances des tribunaux.
+- [Kira Systems](https://leblancroben-afk.github.io/tools/standard/fr/kira-systems/): Kira Systems, propriété de Litera, est une plateforme d'intelligence contractuelle spécialisée dans l'extraction de clauses lors des due diligence M&A. Plus de 1400 champs prédéfinis identifient automatiquement les points critiques.
+- [Luminance](https://leblancroben-afk.github.io/tools/starter/fr/luminance/): Luminance est une IA juridique britannique spécialisée dans la relecture et la négociation de contrats. Son architecture "Panel of Judges" croise plusieurs modèles pour détecter les clauses à risque avec une fiabilité renforcée.
+
+## Présentation
+
+- [Gamma](https://leblancroben-afk.github.io/tools/featured/fr/gamma/): Gamma est un outil en ligne utilisant l'intelligence artificielle pour générer rapidement des présentations, des documents et des pages web à partir de descriptions textuelles.
+
+## Productivité et travail
+
+- [n8n](https://leblancroben-afk.github.io/tools/standard/fr/n8n/): n8n est une plateforme d'automatisation de workflows flexible et extensible, permettant de connecter des applications et d'intégrer des agents IA facilement.
+- [Otter.ai](https://leblancroben-afk.github.io/tools/standard/fr/otter-ai/): Otter.ai est un assistant de transcription automatique basé sur l'IA. Il enregistre, transcrit et résume vos réunions et notes vocales en temps réel pour optimiser votre productivité.
+
+## Productivité, études et traduction
+
+- [Magnus](https://leblancroben-afk.github.io/tools/starter/fr/magnus/): Magnus est un chef de cabinet IA pour les fondateurs, les startups et les PME. Il garde les objectifs de l'entreprise en vue et propose les prochaines étapes, rédige des documents (PDF, Word, Excel), s'appuie sur les notes de l'entreprise pour des réponses précises, se connecte à Google, Slack,…
+- [Make](https://leblancroben-afk.github.io/tools/featured/fr/make/): La plateforme d'automatisation no-code visuelle par excellence. Connectez vos applications préférées, manipulez des données et intégrez l'IA pour créer des workflows puissants.
+- [MangaTranslate](https://leblancroben-afk.github.io/tools/standard/fr/mangatranslate/): MangaTranslate traduit des mangas en français à partir d’images ou de PDF, avec reconnaissance des dialogues, effacement du texte et réinsertion dans les bulles.
+- [NotebookLM](https://leblancroben-afk.github.io/tools/standard/fr/notebooklm/): NotebookLM est un assistant de recherche et de prise de notes propulsé par l'IA de Google. Il analyse vos propres documents pour générer des synthèses, des réponses et des résumés audio.
+- [Todoist AI](https://leblancroben-afk.github.io/tools/featured/fr/todoist-ai/): Todoist AI est une extension intégrée à Todoist qui utilise l'intelligence artificielle pour reformuler, découper et planifier vos tâches quotidiennes efficacement.
+
+## Programmation et création d'applications
+
+- [Bubble](https://leblancroben-afk.github.io/tools/standard/fr/bubble/): Bubble est une plateforme no-code complète permettant d'imager, concevoir et déployer des applications web complexes et réactives sans écrire de code.
+- [Claude](https://leblancroben-afk.github.io/tools/featured/fr/claude/): L'assistant IA d'Anthropic réputé pour sa plume naturelle, ses capacités d'analyse de documents volumineux et sa fonctionnalité révolutionnaire Artifacts pour prévisualiser du code.
+- [Cursor](https://leblancroben-afk.github.io/tools/standard/fr/cursor/): Éditeur de code intelligent basé sur VS Code. Cursor intègre l'intelligence artificielle pour générer, refactoriser et analyser votre codebase avec précision.
+- [FlutterFlow AI](https://leblancroben-afk.github.io/tools/standard/fr/flutterflow-ai/): Créateur d’applications mobiles et web low-code avec IA pour générer des écrans, prototyper rapidement et déployer des agents.
+- [Lovable](https://leblancroben-afk.github.io/tools/standard/fr/lovable/): Lovable est un assistant IA de développement web qui génère et déploie des applications web complètes à partir de descriptions en langage naturel.
+- [Sourcegraph Cody](https://leblancroben-afk.github.io/tools/standard/fr/sourcegraph-cody/): Assistant de code qui exploite le contexte de votre codebase pour expliquer, écrire, corriger et compléter du code dans vos IDE.
+- [Supabase AI](https://leblancroben-afk.github.io/tools/standard/fr/supabase-ai/): Assistant et intégrations IA pour connecter des agents de code à une base Supabase, avec MCP, instructions réutilisables et plugins.
+- [v0](https://leblancroben-afk.github.io/tools/standard/fr/v0/): v0 est un outil d'intelligence artificielle développé par Vercel qui génère du code d'interface utilisateur en React et Tailwind CSS à partir de descriptions textuelles.
+- [Windsurf](https://leblancroben-afk.github.io/tools/standard/fr/windsurf/): Windsurf est un IDE alimenté par l'IA développé par Codeium, intégrant des agents intelligents pour faciliter le codage et l'analyse de projets.
+- [Zed](https://leblancroben-afk.github.io/tools/standard/fr/zed/): Zed est un éditeur de code open source haute performance développé en Rust. Il intègre des outils de collaboration en temps réel et un assistant IA.
+
+## Rédaction et marketing
+
+- [AdCreative.ai](https://leblancroben-afk.github.io/tools/starter/fr/adcreative-ai/): AdCreative.ai génère des bannières et visuels publicitaires optimisés pour la conversion à partir de vos données de marque. Plus de 4,2 millions d'utilisateurs s'appuient sur ses algorithmes entraînés sur des performances publicitaires réelles.
+- [Albert](https://leblancroben-afk.github.io/tools/standard/fr/albert/): Albert est une IA autonome qui gère et optimise des campagnes publicitaires cross-canal (recherche, social, programmatique). Racheté par Zoomd en 2022, l'outil combine automatisation robotisée et apprentissage automatique.
+- [Brand24](https://leblancroben-afk.github.io/tools/starter/fr/brand24/): Brand24 surveille en temps réel les mentions de votre marque sur les réseaux sociaux, forums, blogs et sites d'actualité. Son analyse de sentiment dopée à l'IA aide à protéger la réputation et détecter les signaux faibles.
+- [Gumloop](https://leblancroben-afk.github.io/tools/starter/fr/gumloop/): Gumloop est une plateforme d'automatisation no-code propulsée par l'IA. Elle permet de créer des workflows agentiques complexes par glisser-déposer, sans écrire de code.
+- [Mutiny](https://leblancroben-afk.github.io/tools/standard/fr/mutiny/): Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.
+- [Phrasee](https://leblancroben-afk.github.io/tools/standard/fr/phrasee/): Phrasee génère et optimise la micro-copie marketing (objets d'e-mails, notifications push) en s'appuyant sur les neurosciences cognitives. L'IA respecte la voix de marque tout en boostant l'engagement.
+
+## SEO
+
+- [Letterdrop](https://leblancroben-afk.github.io/tools/standard/fr/letterdrop/): Letterdrop est une plateforme d'automatisation du marketing de contenu et du SEO par IA. Elle aide les équipes B2B à créer, optimiser et publier des articles plus rapidement.
+- [MarketMuse](https://leblancroben-afk.github.io/tools/starter/fr/marketmuse/): MarketMuse analyse l'ensemble d'un site pour identifier les lacunes de contenu par rapport aux concurrents et bâtir l'autorité thématique. Il génère des briefs détaillés basés sur son modélisation de sujets propriétaire.
+- [SE Ranking](https://leblancroben-afk.github.io/tools/starter/fr/se-ranking/): SE Ranking est une plateforme SEO tout-en-un combinant suivi de position, audit technique et recherche de mots-clés. Sa fonctionnalité SE Visible ajoute le suivi de la visibilité de marque dans ChatGPT, Gemini et Perplexity.
+- [WordLift](https://leblancroben-afk.github.io/tools/standard/fr/wordlift/): WordLift automatise le balisage Schema.org et construit un graphe de connaissances à partir de votre contenu WordPress. L'outil connecte vos entités à des sources externes comme Wikidata pour renforcer la compréhension par les moteurs et les IA.
+- [Yoast AI](https://leblancroben-afk.github.io/tools/standard/fr/yoast-ai/): Yoast AI Generate est une fonctionnalité intégrée au plugin Yoast SEO. Elle utilise l'intelligence artificielle pour rédiger automatiquement des titres et méta-descriptions optimisés.
+
+## Texte
+
+- [DeepL Write](https://leblancroben-afk.github.io/tools/standard/fr/deepl-write/): Assistant de rédaction IA développé par DeepL. Il permet de corriger la grammaire, d'améliorer le style et de reformuler vos textes avec précision.
+- [DeepSeek](https://leblancroben-afk.github.io/tools/standard/fr/deepseek/): DeepSeek est une famille de modèles de langage d'intelligence artificielle performants et open-weight, conçus pour le raisonnement, la génération de texte et la programmation.
+- [grammarly](https://leblancroben-afk.github.io/tools/featured/fr/grammarly/): Assistant d'écriture IA pour correction, grammaire, style et ton. 40M+ utilisateurs. Plans Gratuit (100 prompts/mois) et Pro ($12/mo) avec détection plagiat et IA.
+- [Jasper](https://leblancroben-afk.github.io/tools/featured/fr/jasper/): Plateforme IA marketing pour équipes. Brand voice, workflows, agents marketing.
+- [Notion AI](https://leblancroben-afk.github.io/tools/standard/fr/notion-ai/): IA intégrée à Notion pour rédaction, résumé, traduction, agents et meeting notes. Inclus dans le plan Business ($20/membre/mo). Essai gratuit sur Free et Plus.
+- [QuillBot](https://leblancroben-afk.github.io/tools/standard/fr/quillbot/): QuillBot est un outil de reformulation de texte assisté par IA. Il propose des fonctionnalités de paraphrazage, de vérification grammaticale, de résumé et de traduction.
+- [Writesonic](https://leblancroben-afk.github.io/tools/featured/fr/writesonic/): Plateforme IA SEO et GEO pour articles longs et visibilité search.
+
+## Vidéo et animation
+
+- [Google Veo](https://leblancroben-afk.github.io/tools/standard/fr/google-veo/): Google Veo est un modèle d'intelligence artificielle développé par Google DeepMind pour générer et éditer des vidéos HD de haute qualité à partir d'indications textuelles.
+- [Kling AI](https://leblancroben-afk.github.io/tools/standard/fr/kling-ai/): Kling AI est un générateur de vidéos par intelligence artificielle développé par Kuaishou, capable de créer des séquences réalistes à partir de texte ou d'images.
+- [Pika](https://leblancroben-afk.github.io/tools/standard/fr/pika/): Pika est une plateforme de génération vidéo par intelligence artificielle permettant de créer et d'éditer des animations de haute qualité à partir de textes ou d'images.
+- [Runway](https://leblancroben-afk.github.io/tools/standard/fr/runway/): La suite créative leader pour la génération et l' édition de vidéos par IA. Donnez vie à vos textes et images avec les modèles cinématiques Gen-2 et Gen-3 Alpha.
+

@@ -38,7 +38,7 @@ Langue : français.
 
 - [Looka](https://leblancroben-afk.github.io/tools/standard/fr/looka/): Looka est un générateur de logos et de chartes graphiques propulsé par l'IA. Il crée des identités visuelles complètes à partir de vos préférences de style et de couleurs.
 - [Microsoft Designer](https://leblancroben-afk.github.io/tools/standard/fr/microsoft-designer/): Microsoft Designer est une application de conception graphique assistée par l'intelligence artificielle. Elle permet de créer des visuels, des invitations et des publications à partir de descriptions textuelles.
-- [Midjourney](https://leblancroben-afk.github.io/tools/featured/fr/midjourney/): Le leader incontesté de la génération d'images par IA. Créez des visuels ultra-réalistes, des illustrations artistiques et des designs professionnels à partir de simples descriptions textuelles.
+- [Midjourney](https://leblancroben-afk.github.io/tools/featured/fr/midjourney/)
 - [Uizard](https://leblancroben-afk.github.io/tools/standard/fr/uizard/): Uizard est une plateforme de conception basée sur l'IA permettant de créer rapidement des maquettes, prototypes d'applications et interfaces web à partir de croquis ou de textes.
 - [VistaCreate](https://leblancroben-afk.github.io/tools/standard/fr/vistacreate/): VistaCreate est un outil de conception graphique en ligne proposant des milliers de modèles, visuels et outils IA pour créer rapidement du contenu marketing et réseaux sociaux.
 
@@ -62,7 +62,7 @@ Langue : français.
 ## Productivité, études et traduction
 
 - [Magnus](https://leblancroben-afk.github.io/tools/starter/fr/magnus/): Magnus est un chef de cabinet IA pour les fondateurs, les startups et les PME. Il garde les objectifs de l'entreprise en vue et propose les prochaines étapes, rédige des documents (PDF, Word, Excel), s'appuie sur les notes de l'entreprise pour des réponses précises, se connecte à Google, Slack,…
-- [Make](https://leblancroben-afk.github.io/tools/featured/fr/make/): La plateforme d'automatisation no-code visuelle par excellence. Connectez vos applications préférées, manipulez des données et intégrez l'IA pour créer des workflows puissants.
+- [Make](https://leblancroben-afk.github.io/tools/featured/fr/make/)
 - [MangaTranslate](https://leblancroben-afk.github.io/tools/standard/fr/mangatranslate/): MangaTranslate traduit des mangas en français à partir d’images ou de PDF, avec reconnaissance des dialogues, effacement du texte et réinsertion dans les bulles.
 - [NotebookLM](https://leblancroben-afk.github.io/tools/standard/fr/notebooklm/): NotebookLM est un assistant de recherche et de prise de notes propulsé par l'IA de Google. Il analyse vos propres documents pour générer des synthèses, des réponses et des résumés audio.
 - [Todoist AI](https://leblancroben-afk.github.io/tools/featured/fr/todoist-ai/): Todoist AI est une extension intégrée à Todoist qui utilise l'intelligence artificielle pour reformuler, découper et planifier vos tâches quotidiennes efficacement.
@@ -70,7 +70,7 @@ Langue : français.
 ## Programmation et création d'applications
 
 - [Bubble](https://leblancroben-afk.github.io/tools/standard/fr/bubble/): Bubble est une plateforme no-code complète permettant d'imager, concevoir et déployer des applications web complexes et réactives sans écrire de code.
-- [Claude](https://leblancroben-afk.github.io/tools/featured/fr/claude/): L'assistant IA d'Anthropic réputé pour sa plume naturelle, ses capacités d'analyse de documents volumineux et sa fonctionnalité révolutionnaire Artifacts pour prévisualiser du code.
+- [Claude](https://leblancroben-afk.github.io/tools/featured/fr/claude/)
 - [Cursor](https://leblancroben-afk.github.io/tools/standard/fr/cursor/): Éditeur de code intelligent basé sur VS Code. Cursor intègre l'intelligence artificielle pour générer, refactoriser et analyser votre codebase avec précision.
 - [FlutterFlow AI](https://leblancroben-afk.github.io/tools/standard/fr/flutterflow-ai/): Créateur d’applications mobiles et web low-code avec IA pour générer des écrans, prototyper rapidement et déployer des agents.
 - [Lovable](https://leblancroben-afk.github.io/tools/standard/fr/lovable/): Lovable est un assistant IA de développement web qui génère et déploie des applications web complètes à partir de descriptions en langage naturel.
@@ -83,7 +83,7 @@ Langue : français.
 ## Rédaction et marketing
 
 - [AdCreative.ai](https://leblancroben-afk.github.io/tools/starter/fr/adcreative-ai/): AdCreative.ai génère des bannières et visuels publicitaires optimisés pour la conversion à partir de vos données de marque. Plus de 4,2 millions d'utilisateurs s'appuient sur ses algorithmes entraînés sur des performances publicitaires réelles.
-- [Albert](https://leblancroben-afk.github.io/tools/standard/fr/albert/): Albert est une IA autonome qui gère et optimise des campagnes publicitaires cross-canal (recherche, social, programmatique). Racheté par Zoomd en 2022, l'outil combine automatisation robotisée et apprentissage automatique.
+- [Albert](https://leblancroben-afk.github.io/tools/standard/fr/albert/)
 - [Brand24](https://leblancroben-afk.github.io/tools/starter/fr/brand24/): Brand24 surveille en temps réel les mentions de votre marque sur les réseaux sociaux, forums, blogs et sites d'actualité. Son analyse de sentiment dopée à l'IA aide à protéger la réputation et détecter les signaux faibles.
 - [Gumloop](https://leblancroben-afk.github.io/tools/starter/fr/gumloop/): Gumloop est une plateforme d'automatisation no-code propulsée par l'IA. Elle permet de créer des workflows agentiques complexes par glisser-déposer, sans écrire de code.
 - [Mutiny](https://leblancroben-afk.github.io/tools/standard/fr/mutiny/): Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.
@@ -101,9 +101,9 @@ Langue : français.
 
 - [DeepL Write](https://leblancroben-afk.github.io/tools/standard/fr/deepl-write/): Assistant de rédaction IA développé par DeepL. Il permet de corriger la grammaire, d'améliorer le style et de reformuler vos textes avec précision.
 - [DeepSeek](https://leblancroben-afk.github.io/tools/standard/fr/deepseek/): DeepSeek est une famille de modèles de langage d'intelligence artificielle performants et open-weight, conçus pour le raisonnement, la génération de texte et la programmation.
-- [grammarly](https://leblancroben-afk.github.io/tools/featured/fr/grammarly/): Assistant d'écriture IA pour correction, grammaire, style et ton. 40M+ utilisateurs. Plans Gratuit (100 prompts/mois) et Pro ($12/mo) avec détection plagiat et IA.
+- [grammarly](https://leblancroben-afk.github.io/tools/featured/fr/grammarly/)
 - [Jasper](https://leblancroben-afk.github.io/tools/featured/fr/jasper/): Plateforme IA marketing pour équipes. Brand voice, workflows, agents marketing.
-- [Notion AI](https://leblancroben-afk.github.io/tools/standard/fr/notion-ai/): IA intégrée à Notion pour rédaction, résumé, traduction, agents et meeting notes. Inclus dans le plan Business ($20/membre/mo). Essai gratuit sur Free et Plus.
+- [Notion AI](https://leblancroben-afk.github.io/tools/standard/fr/notion-ai/)
 - [QuillBot](https://leblancroben-afk.github.io/tools/standard/fr/quillbot/): QuillBot est un outil de reformulation de texte assisté par IA. Il propose des fonctionnalités de paraphrazage, de vérification grammaticale, de résumé et de traduction.
 - [Writesonic](https://leblancroben-afk.github.io/tools/featured/fr/writesonic/): Plateforme IA SEO et GEO pour articles longs et visibilité search.
 
@@ -112,5 +112,40 @@ Langue : français.
 - [Google Veo](https://leblancroben-afk.github.io/tools/standard/fr/google-veo/): Google Veo est un modèle d'intelligence artificielle développé par Google DeepMind pour générer et éditer des vidéos HD de haute qualité à partir d'indications textuelles.
 - [Kling AI](https://leblancroben-afk.github.io/tools/standard/fr/kling-ai/): Kling AI est un générateur de vidéos par intelligence artificielle développé par Kuaishou, capable de créer des séquences réalistes à partir de texte ou d'images.
 - [Pika](https://leblancroben-afk.github.io/tools/standard/fr/pika/): Pika est une plateforme de génération vidéo par intelligence artificielle permettant de créer et d'éditer des animations de haute qualité à partir de textes ou d'images.
-- [Runway](https://leblancroben-afk.github.io/tools/standard/fr/runway/): La suite créative leader pour la génération et l' édition de vidéos par IA. Donnez vie à vos textes et images avec les modèles cinématiques Gen-2 et Gen-3 Alpha.
+- [Runway](https://leblancroben-afk.github.io/tools/standard/fr/runway/)
+
+## Articles
+
+- [10 usages pratiques de l’IA dans la vie quotidienne](https://leblancroben-afk.github.io/articles/fr/10-usages-pratiques-de-l-ia-dans-la-vie-quotidienne/): Découvrez 10 façons simples d’utiliser l’intelligence artificielle pour gagner du temps, apprendre plus facilement et organiser vos activités quotidiennes.
+- [Agents IA autonomes : ce qui devient réellement possible en 2026](https://leblancroben-afk.github.io/articles/fr/agents-ia-autonomes-ce-qui-devient-reellement-possible-en-2026/)
+- [Annuaire IA : comment choisir l’outil adapté à vos besoins](https://leblancroben-afk.github.io/articles/fr/annuaire-ia-comment-choisir-l-outil-adapte-a-vos-besoins/): Découvrez les critères essentiels pour choisir un outil d’intelligence artificielle selon votre objectif, votre budget et votre niveau de compétence.
+- [Comment protéger vos données face aux services IA](https://leblancroben-afk.github.io/articles/fr/comment-proteger-vos-donnees-face-aux-services-ia/): Découvrez les bonnes pratiques essentielles pour protéger vos informations personnelles lorsque vous utilisez des outils d’intelligence artificielle en ligne.
+- [CustomGPT.ai : Comment créer un agent IA qui connaît votre entreprise par cœur (sans coder)](https://leblancroben-afk.github.io/articles/fr/avis-customgpt-ai-agent-entreprise/): On a tous testé ChatGPT. C’est bluffant, c’est rapide, mais soyons honnêtes : dès qu’on lui demande des détails précis sur les tarifs de notre entreprise, les spécificités de notre dernier produit ou les règles de notre politique interne, il commence à inventer des réponses ou à répondre à côté.
+- [De l'idée à l'application en 10 minutes : La révolution du No-Code propulsé par l'IA](https://leblancroben-afk.github.io/articles/fr/revolution-no-code-ia/): Pendant des décennies, lancer une application nécessitait une compétence rare et coûteuse : savoir coder. Aujourd'hui, tout change. En combinant la puissance de l'Intelligence Artificielle et la flexibilité du No-Code, créer un logiciel ne prend plus des mois : cela prend 10 minutes.
+- [France : la colère contre la vie chère dégénère en journée de chaos](https://leblancroben-afk.github.io/articles/fr/france-la-colere-contre-la-vie-chere-degenere-en-journee-de-chaos/): Des centaines de milliers de personnes ont manifesté en France contre la vie chère, avant une soirée marquée par des violences et des dégradations.
+- [GPT-6, Gemini 4 et Mistral : quel modèle choisir selon vos besoins ?](https://leblancroben-afk.github.io/articles/fr/gpt-6-gemini-4-et-mistral-quel-modele-choisir-selon-vos-besoins/): GPT-6, Gemini 4 Argon et Mistral Large 4 arrivent avec des usages différents. Voici comment choisir le bon modèle selon votre besoin et votre budget.
+- [Jeu vidéo et autonomie : quatre agents Gemini 4 Argon vainquent le Dragon de l’Ender dans Minecraft](https://leblancroben-afk.github.io/articles/fr/jeu-video-et-autonomie-quatre-agents-gemini-4-argon-vainquent-le-dragon-de-l-ender-dans-minecraft/): Quatre agents Gemini 4 Argon ont surmonté les défis de Minecraft sans scénario imposé, en coopérant, en écrivant du code et en corrigeant leurs erreurs.
+- [L'IA rend-elle vraiment les petits plus forts… ou simplement plus dépendants ?](https://leblancroben-afk.github.io/articles/fr/ia-petits-plus-forts/): L'IA promet aux petites structures la puissance de frappe d'une multinationale. Mais derrière cette promesse d'émancipation se cache une réalité plus nuancée : gagner en force aujourd'hui pourrait signifier perdre son autonomie demain.
+- [Les limites actuelles de l’intelligence artificielle expliquées simplement](https://leblancroben-afk.github.io/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/): Comprenez les principales limites de l’intelligence artificielle et découvrez pourquoi ses réponses doivent être vérifiées avant toute utilisation importante.
+- [Meta dévoile Muse Spark Open, un modèle open-weight de 816 milliards de paramètres](https://leblancroben-afk.github.io/articles/fr/meta-devoile-muse-spark-open-un-modele-open-weight-de-816-milliards-de-parametres/): Meta rend accessible un modèle de très grande taille pensé pour le codage, les agents IA et le déploiement local sur des stations de travail performantes.
+- [Prompting : comment poser les bonnes questions à une IA](https://leblancroben-afk.github.io/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/): Apprenez à rédiger des instructions claires pour obtenir des réponses plus utiles, précises et adaptées avec les outils d’intelligence artificielle.
+- [Qu’est‑ce que l’intelligence artificielle ? Explications simples pour tous](https://leblancroben-afk.github.io/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/): Une présentation claire des notions de base : IA, apprentissage automatique, réseaux de neurones et exemples concrets du quotidien.
+- [Régulation des agents IA : l’Union européenne et la FTC ouvrent des procédures parallèles visant OpenAI et Anthropic](https://leblancroben-afk.github.io/articles/fr/regulation-des-agents-ia-l-union-europeenne-et-la-ftc-ouvrent-des-procedures-paralleles-visant-openai-et-anthropic/): L’Union européenne et la FTC ouvrent des procédures parallèles visant OpenAI et Anthropic, après plusieurs incidents impliquant des agents IA sortis de leurs environnements de test.
+- [Windows 11 24H2 arrive en fin de mises à jour : pourquoi passer à Windows 11 26H2](https://leblancroben-afk.github.io/articles/fr/windows-11-24h2-arrive-en-fin-de-mises-a-jour-pourquoi-passer-a-windows-11-26h2/): Windows 11 24H2 Home et Pro ne reçoivent plus de mises à jour mensuelles. Voici pourquoi la migration vers Windows 11 26H2 devient importante.
+
+## Comparatifs
+
+- [ChatGPT vs gemini-ai](https://leblancroben-afk.github.io/comparateur/chatgpt-vs-gemini-ai/)
+- [ChatGPT vs gemini-ai](https://leblancroben-afk.github.io/comparateur/chatgpt-vs-gemini-ai-en/)
+- [ChatGPT vs gemini-ai](https://leblancroben-afk.github.io/comparateur/chatgpt-vs-gemini-ai-es/)
+
+## Glossaire
+
+- [Agent IA](https://leblancroben-afk.github.io/glossaire/agent-ia/): Système d'intelligence artificielle capable d'exécuter des tâches de manière autonome, de prendre des décisions et d'interagir avec son environnement sans intervention humaine constante.
+- [API](https://leblancroben-afk.github.io/glossaire/api/): Interface de Programmation d'Application. Protocole permettant à deux logiciels de communiquer entre eux. Les APIs IA permettent d'intégrer des capacités d'intelligence artificielle dans n'importe quelle application.
+- [Apprentissage automatique](https://leblancroben-afk.github.io/glossaire/apprentissage-automatique/): Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient précis.
+- [Apprentissage profond](https://leblancroben-afk.github.io/glossaire/apprentissage-profond/): Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les images, le son ou le texte.
+- [Chatbot](https://leblancroben-afk.github.io/glossaire/chatbot/): Programme informatique simulant une conversation humaine. Les chatbots modernes utilisent l'IA pour comprendre le langage naturel et répondre de manière contextuelle.
+- [GPT](https://leblancroben-afk.github.io/glossaire/gpt/): Generative Pre-trained Transformer. Architecture de modèle de langage développée par OpenAI, entraînée sur d'immenses quantités de texte pour générer du langage naturel.
+- [Hallucination](https://leblancroben-afk.github.io/glossaire/hallucination/): Phénomène où un modèle IA génère des informations fausses, inventées ou incorrectes avec une apparente confiance. Un des défis majeurs des LLMs actuels.
 

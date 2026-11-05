@@ -9,7 +9,7 @@
             tarifs (non vérifiés), presentation, meta_description, etc.
             puis status='active', generer_fiche=true, enrichi_ia=true.
 
-   LOTS : 6 outils par requête Gemini (TAILLE_LOT). Les règles de
+   LOTS : 1 outil par requête Gemini (TAILLE_LOT). Les règles de
    rédaction sont envoyées une seule fois dans systemInstruction.
 
    QUOTA PARTAGÉ : le quota gratuit Gemini est commun à tous les scripts.
@@ -40,7 +40,7 @@ const db = getFirestore();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-3.5-flash';
-const TAILLE_LOT = 3;
+const TAILLE_LOT = 1;
 // Pas de limite : le run s'arrête seulement sur quota épuisé (429), erreur 400, ou 503 persistant.
 const MAX_REQUETES_PAR_RUN = Infinity;
 // Limite élevée : le modèle partage ce budget avec son raisonnement interne.

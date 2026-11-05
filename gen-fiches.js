@@ -4090,10 +4090,16 @@ function alternativesPourFiche(t, calcul) {
   return sortie;
 }
 
-// ── llms.txt (français uniquement) : index des outils publiés, par catégorie ──
-// Format llms.txt : titre H1, résumé en blockquote, sections avec liste de liens.
-// Seuls les outils publiés (status 'active', fiche générée) sont listés.
-function genererLlmsTxt(tools, origin) {
+// ── llms.txt (français uniquement) : index des outils, articles, comparatifs et glossaire publiés ──
+// Format : titre H1, résumé en blockquote, sections avec liste de liens. Descriptions tronquées à 300 caractères.
+// Une description contenant un prix, une date ou une formule commerciale est retirée (le lien reste).
+const LLMS_MAX = 300;
+const LLMS_INTERDIT = /(\$|€|£)\s?\d|\d\s?(\$|€|£)|\/\s?mois|\/\s?mo\b|\bpar mois\b|\b(19|20)\d{2}\b|\bleader\b|\bmeilleur(e)?s?\b|révolutionnaire|incontesté|par excellence|numéro\s?1|n°\s?1|\b#1\b|\bnumber one\b/i;
+function descriptionLlms(texte) {
+  const t = resumeAlt(texte, LLMS_MAX);
+  return t && !LLMS_INTERDIT.test(t) ? t : '';
+}
+function genererLlmsTxt(tools, origin, autres = {}) {
   const lignes = [
     '# Albexia',
     '',
@@ -4102,6 +4108,11 @@ function genererLlmsTxt(tools, origin) {
     'Langue : français.',
     '',
   ];
+  const lien = (nom, url, desc) => {
+    const d = descriptionLlms(desc);
+    return d ? `- [${nom}](${url}): ${d}` : `- [${nom}](${url})`;
+  };
+  // Outils, par catégorie
   const parCategorie = new Map();
   for (const t of tools) {
     if (!publieAlt(t) || (t.langue || 'fr') !== 'fr') continue;
@@ -4109,13 +4120,39 @@ function genererLlmsTxt(tools, origin) {
     if (!parCategorie.has(cat)) parCategorie.set(cat, []);
     parCategorie.get(cat).push(t);
   }
-  for (const cat of [...parCategorie.keys()].sort((a, b) => a.localeCompare(b, 'fr'))) {
+  for (const cat of [...parCategorie.keys()].sort((x, y) => x.localeCompare(y, 'fr'))) {
     lignes.push(`## ${cat}`, '');
-    const outils = parCategorie.get(cat).sort((a, b) => a.name.localeCompare(b.name, 'fr'));
-    for (const t of outils) {
-      const url = `${origin}/tools/${dossierAlt(t)}/fr/${slugify(t.name)}/`;
-      const desc = resumeAlt(t.description, 300);
-      lignes.push(desc ? `- [${t.name}](${url}): ${desc}` : `- [${t.name}](${url})`);
+    for (const t of parCategorie.get(cat).sort((x, y) => x.name.localeCompare(y.name, 'fr'))) {
+      lignes.push(lien(t.name, `${origin}/tools/${dossierAlt(t)}/fr/${slugify(t.name)}/`, t.description));
+    }
+    lignes.push('');
+  }
+  // Articles publiés (statut absent ou « publie »), langue française
+  const articles = (autres.articles || []).filter(a => a.slug && a.title && (!a.statut || a.statut === 'publie') && (!a.langue || a.langue === 'fr'));
+  if (articles.length) {
+    lignes.push('## Articles', '');
+    for (const a of articles.sort((x, y) => String(x.title).localeCompare(String(y.title), 'fr'))) {
+      lignes.push(lien(a.title, `${origin}/articles/fr/${a.slug}/`, a.excerpt || ''));
+    }
+    lignes.push('');
+  }
+  // Comparatifs (titre construit à partir des noms des deux outils quand ils existent)
+  const nomParSlug = new Map(tools.filter(publieAlt).map(t => [slugify(t.name), t.name]));
+  const comparatifs = (autres.comparaisons || []).filter(c => c.slug && c.outil_a_slug && c.outil_b_slug);
+  if (comparatifs.length) {
+    lignes.push('## Comparatifs', '');
+    for (const c of comparatifs) {
+      const titre = `${nomParSlug.get(c.outil_a_slug) || c.outil_a_slug} vs ${nomParSlug.get(c.outil_b_slug) || c.outil_b_slug}`;
+      lignes.push(lien(titre, `${origin}/comparateur/${c.slug}/`, c.description || ''));
+    }
+    lignes.push('');
+  }
+  // Glossaire publié (français)
+  const termes = (autres.glossaire || []).filter(g => g.slug && g.terme && g.status === 'publie');
+  if (termes.length) {
+    lignes.push('## Glossaire', '');
+    for (const g of termes.sort((x, y) => String(x.terme).localeCompare(String(y.terme), 'fr'))) {
+      lignes.push(lien(g.terme, `${origin}/glossaire/${g.slug}/`, g.definitionFlash || ''));
     }
     lignes.push('');
   }
@@ -4167,9 +4204,6 @@ async function main() {
   const calculAlt = calculerAlternatives(tools, reviewsList);
   for (const t of tools) t.alternatives = alternativesPourFiche(t, calculAlt);
   console.log(`✓ Alternatives calculées pour ${calculAlt.familles.size} familles d'outils`);
-  // llms.txt : index français des outils publiés (une seule version, à la racine du site)
-  fs.writeFileSync(path.join(__dirname, 'llms.txt'), genererLlmsTxt(tools, SITE_ORIGIN) + '\n', 'utf8');
-  console.log('✓ llms.txt écrit');
 
   let generated = 0, skipped = 0, noFiche = 0, unchanged = 0;
   const changedToolIds = new Set(); // pour la cascade vers comparaisons
@@ -4980,6 +5014,14 @@ async function main() {
   // ─── SAUVEGARDE DE L'ÉTAT DE GÉNÉRATION ───
   // newState ne contient que les docs actuellement en base : un doc supprimé
   // de Firestore disparaît automatiquement de l'état au prochain run.
+  // llms.txt (français) : outils, articles, comparatifs et glossaire publiés — même lecture que ci-dessus
+  fs.writeFileSync(path.join(__dirname, 'llms.txt'), genererLlmsTxt(tools, SITE_ORIGIN, {
+    articles: articlesSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+    comparaisons,
+    glossaire: termesGlossaire,
+  }) + '\n', 'utf8');
+  console.log('✓ llms.txt écrit');
+
   // Index de recherche : réutilise les documents déjà lus (aucune lecture Firestore en plus)
   try {
     const galerieDocs = (await db.collection('galerie').get()).docs.map(d => d.data());

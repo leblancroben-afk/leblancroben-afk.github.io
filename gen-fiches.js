@@ -4030,6 +4030,10 @@ function cleCategorieAlt(valeur) {
   return slugifyFallback(canonicalCategory(valeur)).split('-')
     .filter(w => w && !['et', 'and', 'y'].includes(w)).join('-');
 }
+// Nom d'outil comparable : casse, accents, ponctuation et espaces ignorés (« Claude AI » ≈ « claude ai »).
+function cleNomAlt(nom) {
+  return String(nom || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
 /** Calcule le classement de toutes les familles publiées. */
 function calculerAlternatives(tools, reviews) {
   const familles = new Map();
@@ -4062,7 +4066,7 @@ function calculerAlternatives(tools, reviews) {
     classement.set(fid, [...avec, ...sans].map(g => g.id));
   }
   const parNom = new Map();
-  for (const [fid, fam] of familles) if (fam.docs.fr) parNom.set(String(fam.docs.fr.name).trim().toLowerCase(), fid);
+  for (const [fid, fam] of familles) if (fam.docs.fr) parNom.set(cleNomAlt(fam.docs.fr.name), fid);
   return { familles, classement, notes, parNom };
 }
 
@@ -4076,8 +4080,10 @@ function alternativesPourFiche(t, calcul) {
   const fam = calcul.familles.get(fid);
   const brut = fam && fam.docs.fr ? fam.docs.fr.alternatives_validees : null;
   const voulues = Array.isArray(brut) ? brut : String(brut || '').split(',');
-  const valides = voulues.map(n => String(n).trim().toLowerCase()).filter(Boolean)
-    .map(n => calcul.parNom.get(n)).filter(id => id && id !== fid);
+  const valides = voulues.map(n => String(n).trim()).filter(Boolean)
+    .map(n => ({ n, id: calcul.parNom.get(cleNomAlt(n)) }))
+    .filter(x => { if (!x.id) console.log(`  ⚠ alternative validée introuvable pour « ${fam && fam.docs.fr ? fam.docs.fr.name : fid} » : « ${x.n} » (vérifier l'orthographe, outil publié ?)`); return !!x.id && x.id !== fid; })
+    .map(x => x.id);
   const ordre = [...new Set([...valides, ...(calcul.classement.get(fid) || [])])].filter(id => id !== fid);
   for (const gid of ordre) {
     if (sortie.length >= 6) break;

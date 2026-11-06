@@ -661,6 +661,7 @@ function buildToolCardSSR(t, langue) {
 module.exports = {
   categoryName,
   canonicalCategory,
+  slugifyFallback,
   genererPagesCategories,
   genererPageCategorie,
   CATEGORY_META,

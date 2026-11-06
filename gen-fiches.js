@@ -33,7 +33,7 @@ const fs     = require('fs');
 const path   = require('path');
 const crypto = require('crypto');
 const ArticleCats = require('./js/categories-articles.js'); // nomenclature unique des catégories d'articles
-const { genererPagesCategories, categoryName, canonicalCategory } = require('./categorie-template.js');
+const { genererPagesCategories, categoryName, canonicalCategory, slugifyFallback } = require('./categorie-template.js');
 
 // ── Init Firebase Admin ──────────────────────────────────
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -4023,6 +4023,13 @@ function notesParFamille(reviews, slugToFam) {
   return notes;
 }
 
+// Clé de comparaison des catégories : libellés variants (« Vidéo & animation », « Vidéo et animation »,
+// « Vidéo ») doivent se retrouver dans le même groupe pour les alternatives. Connecteurs ignorés.
+function cleCategorieAlt(valeur) {
+  if (!valeur) return '';
+  return slugifyFallback(canonicalCategory(valeur)).split('-')
+    .filter(w => w && !['et', 'and', 'y'].includes(w)).join('-');
+}
 /** Calcule le classement de toutes les familles publiées. */
 function calculerAlternatives(tools, reviews) {
   const familles = new Map();
@@ -4039,7 +4046,8 @@ function calculerAlternatives(tools, reviews) {
   for (const [fid, fam] of familles) {
     const fr = fam.docs.fr;
     if (!fr || !fr.category) { classement.set(fid, []); continue; }
-    const candidats = [...familles.values()].filter(g => g.id !== fid && g.docs.fr && g.docs.fr.category === fr.category);
+    const cle = cleCategorieAlt(fr.category);
+    const candidats = [...familles.values()].filter(g => g.id !== fid && g.docs.fr && cleCategorieAlt(g.docs.fr.category) === cle);
     const note = id => notes.get(id) || { avg: null, count: 0 };
     const avec = candidats.filter(g => note(g.id).count > 0)
       .sort((x, y) => (note(y.id).avg - note(x.id).avg)

@@ -92,7 +92,7 @@
     </div>
   </div>
 </header>
-<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="Meta AI"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-fonctionnalites" class="fo-tab" data-label="Fonctionnalités">Fonctionnalités</a><a href="#fo-usages" class="fo-tab" data-label="Idées d'utilisation">Idées d'utilisation</a><a href="#fo-prompts" class="fo-tab" data-label="Prompts utiles">Prompts utiles</a><a href="#fo-tarifs" class="fo-tab" data-label="Tarifs">Tarifs</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a></nav></div></div>
+<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="Meta AI"><a href="#fo-presentation" class="fo-tab active" data-label="Présentation">Présentation</a><a href="#fo-fonctionnalites" class="fo-tab" data-label="Fonctionnalités">Fonctionnalités</a><a href="#fo-usages" class="fo-tab" data-label="Idées d'utilisation">Idées d'utilisation</a><a href="#fo-prompts" class="fo-tab" data-label="Prompts utiles">Prompts utiles</a><a href="#fo-tarifs" class="fo-tab" data-label="Tarifs">Tarifs</a><a href="#fo-avis" class="fo-tab" data-label="Avis">Avis</a><a href="#fo-alternatives" class="fo-tab" data-label="Alternatives">Alternatives</a></nav></div></div>
 <div class="fo-body"><div class="fo-wrap">
   <div class="fo-grid">
     <div class="fo-col-main">
@@ -119,7 +119,42 @@
   <div class="fo-prompt-list"><div class="fo-prompt"><pre>Résume cet article en 3 points clés</pre><button type="button" class="fo-copy" data-copy="Résume cet article en 3 points clés" data-label="Copier" data-done="Copié">Copier</button></div><div class="fo-prompt"><pre>Génère une image : un café cosy en bord de mer, style aquarelle</pre><button type="button" class="fo-copy" data-copy="Génère une image : un café cosy en bord de mer, style aquarelle" data-label="Copier" data-done="Copié">Copier</button></div><div class="fo-prompt"><pre>Traduis ce message en anglais professionnel</pre><button type="button" class="fo-copy" data-copy="Traduis ce message en anglais professionnel" data-label="Copier" data-done="Copié">Copier</button></div></div>
 </section><script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.fo-copy');if(!b)return;var t=b.getAttribute('data-copy')||'';var label=b.getAttribute('data-label')||'';var done=b.getAttribute('data-done')||'';if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent=done;setTimeout(function(){b.textContent=label;},1500);});}});</script>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/gVOW1Zw6_bY/mqdefault.jpg" alt="How To Use Meta AI For Beginners" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>How To Use Meta AI For Beginners</div><div class="tutorial-duration" data-vid-dur>12:51</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/gVOW1Zw6_bY" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"gVOW1Zw6_bY","titre":"How To Use Meta AI For Beginners","duree":"12:51"},{"id":"xBSLmwVTsRc","titre":"How to Use Meta Muse","duree":"7:59"},{"id":"1xmhOiHLoqA","titre":"Meta AI Video Generator is INSANE! 🤯 Create Unlimited Free Videos with No Watermark","duree":"4:44"},{"id":"ZM0RkeTmiKc","titre":"How To Use The Meta AI App! (Complete Beginners Guide)","duree":"2:48"},{"id":"jq3DGi5WUm0","titre":"How To Use Meta AI On Facebook","duree":"3:26"},{"id":"M2BBSEI6Tks","titre":"Tutorial Completo de META AI en Español: Guía Paso a Paso para Usar Inteligencia Artificial de Meta","duree":"15:41"},{"id":"T0uieux1d3U","titre":"Comment utiliser META IA pour transformer des images en vidéos | 100 % GRATUIT & Sans Filigrane !","duree":"4:18"},{"id":"-jLkh1-vxg8","titre":"The COMPLETE Meta AI Tutorial","duree":"11:01"},{"id":"bEv18sGAML8","titre":"Meta AI Tutorial - How To Use Meta AI","duree":"15:27"},{"id":"0rpvWaNWiD0","titre":"How To Use Meta.AI (Meta.AI Tutorial For Beginners 2025)","duree":"12:14"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Meta AI est-il gratuit ?</button><div class="faq-a">Oui, pour un usage quotidien. Des limites s'appliquent aux fonctions gourmandes en calcul ; l'abonnement Meta One (Core 7,99 $, Premium 19,99 $/mois) débloque plus d'usage.</div></div><div class="faq-item"><button class="faq-q">Où utiliser Meta AI ?</button><div class="faq-a">Sur meta.ai, l'app Meta AI (iOS, Android, Mac) et dans WhatsApp, Instagram, Messenger et Facebook.</div></div><div class="faq-item"><button class="faq-q">Quel modèle alimente Meta AI ?</button><div class="faq-a">Muse Spark, développé par le Meta Superintelligence Labs, avec une compréhension multimodale native.</div></div><div class="faq-item"><button class="faq-q">Existe-t-il une API Meta AI ?</button><div class="faq-a">Pas d'API grand public pour l'assistant ; les modèles Llama sont téléchargeables en poids ouverts sur llama.com.</div></div><div class="faq-item"><button class="faq-q">Puis-je télécharger des images ?</button><div class="faq-a">Oui, vous pouvez envoyer des images à analyser et télécharger les créations générées.</div></div></div></section>
       
       
@@ -143,6 +178,32 @@
       
 <section class="fo-card fo-articles"><h3 class="fo-h3">Articles liés</h3><div id="articles-sidebar"></div></section>
       
+<section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">Alternatives populaires</h3><a class="fo-link" href="/index.html#tools">Voir plus</a></div>
+  <div class="fo-alt-grid"><a class="fo-alt-card" href="/tools/standard/fr/perplexity-ai/">
+      <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=perplexity.ai https://www.google.com/s2/favicons?sz=128&amp;domain=perplexity.ai https://icons.duckduckgo.com/ip3/perplexity.ai.ico"><span class="fo-letter" aria-hidden="true">P</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=perplexity.ai" alt="perplexity.ai" loading="lazy" referrerpolicy="no-referrer"></div>
+      <span class="fo-alt-body">
+        <b>perplexity.ai</b>
+        <span class="fo-alt-desc">Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en…</span>
+        <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Freemium</span></span>
+      </span></a><a class="fo-alt-card" href="/tools/standard/fr/grok/">
+      <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=grok.com https://www.google.com/s2/favicons?sz=128&amp;domain=grok.com https://icons.duckduckgo.com/ip3/grok.com.ico"><span class="fo-letter" aria-hidden="true">G</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=grok.com" alt="Grok" loading="lazy" referrerpolicy="no-referrer"></div>
+      <span class="fo-alt-body">
+        <b>Grok</b>
+        <span class="fo-alt-desc">Grok est un assistant IA développé par xAI, capable de répondre à des questions complexes, d'analyser des données en temps réel via X et de générer du code…</span>
+        <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Freemium</span></span>
+      </span></a><a class="fo-alt-card" href="/tools/featured/fr/kimi/">
+      <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=kimi.moonshot.cn https://www.google.com/s2/favicons?sz=128&amp;domain=kimi.moonshot.cn https://icons.duckduckgo.com/ip3/kimi.moonshot.cn.ico"><span class="fo-letter" aria-hidden="true">K</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=kimi.moonshot.cn" alt="Kimi" loading="lazy" referrerpolicy="no-referrer"></div>
+      <span class="fo-alt-body">
+        <b>Kimi</b>
+        <span class="fo-alt-desc">Assistant IA conversationnel développé par Moonshot AI, réputé pour sa capacité à traiter de très longs volumes de texte (jusqu'à 2 millions de caractères).</span>
+        <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Gratuit</span></span>
+      </span></a><a class="fo-alt-card" href="/tools/standard/fr/poe/">
+      <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=poe.com https://www.google.com/s2/favicons?sz=128&amp;domain=poe.com https://icons.duckduckgo.com/ip3/poe.com.ico"><span class="fo-letter" aria-hidden="true">P</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=poe.com" alt="Poe" loading="lazy" referrerpolicy="no-referrer"></div>
+      <span class="fo-alt-body">
+        <b>Poe</b>
+        <span class="fo-alt-desc">Poe est une plateforme développée par Quora permettant d'accéder et d'interagir avec divers modèles d'IA comme ChatGPT, Claude et Gemini via une interface…</span>
+        <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Freemium</span></span>
+      </span></a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Comparer les alternatives</a></section>
     </aside>
   </div>
   

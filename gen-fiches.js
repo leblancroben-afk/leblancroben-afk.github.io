@@ -4038,11 +4038,14 @@ function cleNomAlt(nom) {
 function calculerAlternatives(tools, reviews) {
   const familles = new Map();
   const slugToFam = new Map();
+  // Toutes les fiches générées (sauf « a_enrichir ») reçoivent leurs alternatives ;
+  // seuls les outils publiés (« active ») peuvent être proposés comme alternative.
   for (const t of tools) {
-    if (!publieAlt(t)) continue;
+    if (!t.name || t.generer_fiche === false || t.status === 'a_enrichir') continue;
     const fid = familleIdAlt(t);
-    if (!familles.has(fid)) familles.set(fid, { id: fid, docs: {} });
+    if (!familles.has(fid)) familles.set(fid, { id: fid, docs: {}, proposable: false });
     familles.get(fid).docs[t.langue || 'fr'] = t;
+    if (publieAlt(t)) familles.get(fid).proposable = true;
     slugToFam.set(slugFicheAlt(t), fid);
   }
   const notes = notesParFamille(reviews, slugToFam);
@@ -4051,7 +4054,7 @@ function calculerAlternatives(tools, reviews) {
     const fr = fam.docs.fr;
     if (!fr || !fr.category) { classement.set(fid, []); continue; }
     const cle = cleCategorieAlt(fr.category);
-    const candidats = [...familles.values()].filter(g => g.id !== fid && g.docs.fr && cleCategorieAlt(g.docs.fr.category) === cle);
+    const candidats = [...familles.values()].filter(g => g.id !== fid && g.proposable && g.docs.fr && cleCategorieAlt(g.docs.fr.category) === cle);
     const note = id => notes.get(id) || { avg: null, count: 0 };
     const avec = candidats.filter(g => note(g.id).count > 0)
       .sort((x, y) => (note(y.id).avg - note(x.id).avg)

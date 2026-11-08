@@ -127,7 +127,42 @@
   <div class="fo-prompt-list"><div class="fo-prompt"><pre>Write a Rust function allowing you to read a JSON file and extract the main keys.</pre><button type="button" class="fo-copy" data-copy="Write a Rust function allowing you to read a JSON file and extract the main keys." data-label="Copy" data-done="Copied">Copy</button></div><div class="fo-prompt"><pre>Refactory this Python algorithm to optimize its temporal complexity and improve its readability.</pre><button type="button" class="fo-copy" data-copy="Refactory this Python algorithm to optimize its temporal complexity and improve its readability." data-label="Copy" data-done="Copied">Copy</button></div></div>
 </section><script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.fo-copy');if(!b)return;var t=b.getAttribute('data-copy')||'';var label=b.getAttribute('data-label')||'';var done=b.getAttribute('data-done')||'';if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent=done;setTimeout(function(){b.textContent=label;},1500);});}});</script>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/nQHjjEFYJAA/mqdefault.jpg" alt="Zed the IDE (Yes, I tried Cursor &amp; Antigravity)" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Zed the IDE (Yes, I tried Cursor &amp; Antigravity)</div><div class="tutorial-duration" data-vid-dur>8:45</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/nQHjjEFYJAA" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"nQHjjEFYJAA","titre":"Zed the IDE (Yes, I tried Cursor & Antigravity)","duree":"8:45"},{"id":"lRrElGM23h4","titre":"Should You Use Zed In 2026?","duree":"13:52"},{"id":"6JJxg3iG2nE","titre":"Zed Tutorial - 2026 | How to Code Smarter with This Code Editor | How to Use Zed","duree":"7:34"},{"id":"JHbFJ5nEERM","titre":"Je supprime Cursor : Zed devient une vraie alternative !","duree":"15:30"},{"id":"C5a39DrBizU","titre":"Formation Zed : IDE parfait pour les développeurs (R.I.P Cursor)","duree":"16:39"},{"id":"0b8uthIvixw","titre":"Zed AI Agents : La nouvelle feature Zed qui change TOUT","duree":"12:50"},{"id":"hmZ27wgdLQY","titre":"Configure ZED comme ça ou juste supprime-le !","duree":"18:22"},{"id":"l8kFLH_5VJY","titre":"Zed Editor Tutorial: What's the Full Setup Guide?","duree":"10:26"},{"id":"TboKCjFe0uk","titre":"Zed Editor for Windows: Web Dev & AI Setup Guide","duree":"7:52"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">What is Zed?</button><div class="faq-a">Zed is a modern code editor developed in Rust. It is distinguished by its speed of execution, GPU-optimized rendering and native AI integration.</div></div><div class="faq-item"><button class="faq-q">Is Zed free?</button><div class="faq-a">Yes, the Zed app is free and its code is open source. You can use it freely on compatible operating systems.</div></div></div></section>
       
       

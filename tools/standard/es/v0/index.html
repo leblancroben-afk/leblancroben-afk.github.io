@@ -112,7 +112,42 @@
       
       
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/cyFVtaLy-bA/mqdefault.jpg" alt="Build a fullstack app in 7 minutes with v0 (Figma to code)" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Build a fullstack app in 7 minutes with v0 (Figma to code)</div><div class="tutorial-duration" data-vid-dur>7:07</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/cyFVtaLy-bA" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"cyFVtaLy-bA","titre":"Build a fullstack app in 7 minutes with v0 (Figma to code)","duree":"7:07"},{"id":"41SR07p243Q","titre":"How To Use v0 by Vercel For Beginners","duree":"6:55"},{"id":"sCFS_U7d9Do","titre":"Vercel's VP of Product on how to use v0 to build your own ideas (Step-by-Step Guide)","duree":"29:13"},{"id":"i3jqeSbh9WA","titre":"DESIGN in v0, FINISH in Cursor | AI coding Tutorial","duree":"17:21"},{"id":"hlLRN8D_xPc","titre":"How To Use v0 by Vercel | Tutorial For Beginners","duree":"6:10"},{"id":"tFPGwS7Z0IA","titre":"Getting Started with v0: From Prompt to Production","duree":"6:33"},{"id":"4vB116avu78","titre":"How to use v0.dev by Vercel For Beginners (Include Latest Features)","duree":"12:28"},{"id":"d4U_lnJLG_o","titre":"V0 Vercel AI Tutorial | Build A Web App Using AI for Beginners (Step by Step)","duree":"25:34"},{"id":"re5pDwS3zJQ","titre":"Commencez avec v0.dev : Créez des Interfaces Facilement","duree":"9:46"},{"id":"Gb3tF3jp4XU","titre":"v0 Tutorial: Beginner to Pro in 15 Minutes (Build ANY UI with AI)","duree":"14:24"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Preguntas frecuentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">¿Qué es Vercel v0?</button><div class="faq-a">v0 es un asistente de generación de código UI desarrollado por Vercel. Transforma los impulsos de texto en componentes listos para usar React con Tailwind CSS. La herramienta facilita el procesamiento rápido para desarrolladores web.</div></div><div class="faq-item"><button class="faq-q">¿está libre v0?</button><div class="faq-a">v0 ofrece una fórmula gratuita con una cuota de crédito mensual. Las suscripciones pagadas proporcionan financiación adicional y acceso prioritario para proyectos más exigentes.</div></div></div></section>
       
       

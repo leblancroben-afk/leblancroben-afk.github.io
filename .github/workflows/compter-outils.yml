@@ -1,0 +1,24 @@
+name: Diagnostic outils (lecture seule)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  compter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer firebase-admin
+        run: npm install firebase-admin
+
+      - name: Compter les outils par statut (lecture seule)
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node compter-outils.js

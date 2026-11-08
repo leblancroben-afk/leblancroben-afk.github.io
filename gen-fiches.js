@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v11'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v10'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -3837,6 +3837,21 @@ function metaDescTutoriel(L, tool, n) {
   return (premiere && premiere.length <= 120) ? `${prefixe} ${premiere}` : prefixe;
 }
 
+// Nettoyage minimal de la description YouTube pour le JSON-LD : liens, emojis,
+// marques de mise en forme (**) et caractères invisibles. Aucun appel API.
+// Si le résultat fait moins de 60 caractères, on revient au titre.
+function descriptionVideoPropre(v) {
+  const brut = String(v.description_video || '');
+  const propre = brut
+    .replace(/https?:\/\/\S+/g, '')
+    .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu, '')
+    .replace(/\*\*/g, '')
+    .replace(/[\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return propre.length >= 60 ? propre : (v.titre || '');
+}
+
 // ── Page dédiée : vidéothèque d'un outil (structure identique à tutoriel-outil.html) ──
 function generateVideothequePage(tool, allToolsAvecVideo, opts = {}) {
   const info = toolVideothequeFolder(tool);
@@ -3883,7 +3898,7 @@ ${ogLocaleAlternates}
     "@type": "ItemList",
     "name": ${JSON.stringify(fill(L.ld))},
     "itemListElement": [
-${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "name": ${JSON.stringify(v.titre)}, "description": ${JSON.stringify(v.description_video || v.titre)}, "thumbnailUrl": "https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/${v.youtube_id}"${v.date_publication ? `, "uploadDate": ${JSON.stringify(v.date_publication)}` : ''} }`).join(',\n')}
+${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "name": ${JSON.stringify(v.titre)}, "description": ${JSON.stringify(descriptionVideoPropre(v))}, "thumbnailUrl": "https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/${v.youtube_id}"${v.date_publication ? `, "uploadDate": ${JSON.stringify(v.date_publication)}` : ''} }`).join(',\n')}
     ]
   }
   </script>

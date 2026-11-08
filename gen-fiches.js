@@ -3136,6 +3136,7 @@ const TUTO_OUTIL_I18N = {
     back: 'Voir la fiche complète de {tool}',
     h1: 'Maîtrisez {tool} : La vidéothèque complète',
     title: 'Maîtrisez {tool} : La vidéothèque complète | Albexia',
+    metaPrefix: '{n} tutoriels vidéo gratuits en français pour apprendre {tool}.',
     meta: 'Tous les tutoriels vidéo pour apprendre et maîtriser {tool}. {n} vidéos sélectionnées, filtrables par durée. Gratuit, en français.',
     ld: 'Tutoriels vidéo {tool}',
     duration: 'Durée', all: 'Tout', lt10: '< 10 min', r1020: '10 – 20 min', r2030: '20 – 30 min', r3045: '30 – 45 min', r4560: '45 min – 1h', gt1h: '1h+',
@@ -3155,6 +3156,7 @@ const TUTO_OUTIL_I18N = {
     back: 'View the full {tool} page',
     h1: 'Master {tool}: the complete video library',
     title: 'Master {tool}: the complete video library | Albexia',
+    metaPrefix: '{n} free video tutorials in English to learn {tool}.',
     meta: 'All the video tutorials to learn and master {tool}. {n} selected videos, filterable by duration. Free.',
     ld: '{tool} video tutorials',
     duration: 'Duration', all: 'All', lt10: '< 10 min', r1020: '10 – 20 min', r2030: '20 – 30 min', r3045: '30 – 45 min', r4560: '45 min – 1 h', gt1h: '1 h+',
@@ -3174,6 +3176,7 @@ const TUTO_OUTIL_I18N = {
     back: 'Ver la ficha completa de {tool}',
     h1: 'Domina {tool}: la videoteca completa',
     title: 'Domina {tool}: la videoteca completa | Albexia',
+    metaPrefix: '{n} tutoriales en vídeo gratuitos en español para aprender {tool}.',
     meta: 'Todos los tutoriales en vídeo para aprender y dominar {tool}. {n} vídeos seleccionados, filtrables por duración. Gratis.',
     ld: 'Tutoriales en vídeo de {tool}',
     duration: 'Duración', all: 'Todo', lt10: '< 10 min', r1020: '10 – 20 min', r2030: '20 – 30 min', r3045: '30 – 45 min', r4560: '45 min – 1 h', gt1h: '1 h+',
@@ -3825,6 +3828,15 @@ ${tutoFirestoreModuleHTML('hub')}
 </html>`;
 }
 
+// Meta description des pages vidéothèque : préfixe fixe par langue, puis la
+// première phrase de la description de l'outil si elle fait 120 caractères au plus.
+// Sinon, le préfixe seul. La balise n est jamais coupée en plein milieu d'une phrase.
+function metaDescTutoriel(L, tool, n) {
+  const prefixe = L.metaPrefix.replace(/\{tool\}/g, tool.name).replace(/\{n\}/g, n);
+  const premiere = String(tool.description || '').trim().split(/(?<=[.!?])\s+/)[0] || '';
+  return (premiere && premiere.length <= 120) ? `${prefixe} ${premiere}` : prefixe;
+}
+
 // ── Page dédiée : vidéothèque d'un outil (structure identique à tutoriel-outil.html) ──
 function generateVideothequePage(tool, allToolsAvecVideo, opts = {}) {
   const info = toolVideothequeFolder(tool);
@@ -3840,7 +3852,7 @@ function generateVideothequePage(tool, allToolsAvecVideo, opts = {}) {
   const langueUrls = opts.langueUrls || { [langue]: `${SITE_ORIGIN}/tools/${plan}/${langue}/${slug}/tutoriels/` };
   const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, langueUrls);
   const titleTag = fill(L.title);
-  const metaDesc = fill(L.meta);
+  const metaDesc = metaDescTutoriel(L, tool, videos.length);
   const videosHTML = videos.map(v => carteVideoHTML(v, tool, langue)).join('');
   const tagsHTML = (tool.tags||[]).map(t => `<span class="tuto-tag">${t}</span>`).join('');
 

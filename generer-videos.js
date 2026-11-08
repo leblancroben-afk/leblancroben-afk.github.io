@@ -87,6 +87,19 @@ async function fetchJSON(url) {
 // Requêtes de recherche par outil (deux formulations pour élargir le pool).
 const REQUETES = (nom) => [`${nom} tutoriel`, `comment utiliser ${nom}`];
 
+// Résume une description YouTube : 300 caractères max, coupée à la fin d'une phrase
+// ou, à défaut, à la fin d'un mot. Renvoie '' si la description est vide.
+function resumerDescription(texte, max = 300) {
+  const propre = String(texte || '').replace(/\s+/g, ' ').trim();
+  if (!propre) return '';
+  if (propre.length <= max) return propre;
+  const coupe = propre.slice(0, max);
+  const fin = Math.max(coupe.lastIndexOf('. '), coupe.lastIndexOf('! '), coupe.lastIndexOf('? '));
+  if (fin > 80) return coupe.slice(0, fin + 1);
+  const mot = coupe.lastIndexOf(' ');
+  return (mot > 80 ? coupe.slice(0, mot) : coupe) + '…';
+}
+
 // Cherche des vidéos pour un outil sur plusieurs requêtes, fusionne les doublons,
 // écarte les Shorts. Renvoie une liste triée par vues.
 async function chercherVideos(nomOutil, max) {
@@ -108,7 +121,7 @@ async function chercherVideos(nomOutil, max) {
         youtube_id: v.id,
         titre: v.snippet?.title || '',
         canal: v.snippet?.channelTitle || '',
-        description_video: (v.snippet?.description || '').slice(0, 200),
+        description_video: resumerDescription(v.snippet?.description || ''),
         date_publication: v.snippet?.publishedAt || '',
         duree: isoDureeVersMMSS(v.contentDetails?.duration),
         secondes: isoDureeVersSecondes(v.contentDetails?.duration),

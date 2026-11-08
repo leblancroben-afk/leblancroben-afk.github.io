@@ -1,0 +1,30 @@
+name: Supprimer outils en échec (manuel)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Simulation (1 = rien n est supprimé, 0 = suppression réelle)'
+        required: false
+        default: '1'
+
+jobs:
+  supprimer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer firebase-admin
+        run: npm install firebase-admin
+
+      - name: Supprimer les outils en échec (FR, EN, ES)
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: node supprimer-outils-echec.js

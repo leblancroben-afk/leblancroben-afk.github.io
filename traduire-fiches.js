@@ -133,6 +133,7 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
     name: traduit.name || outil.name,
     category: outil.category,
     emoji: outil.emoji,
+    status: outil.status ?? null,
     favicon: outil.favicon,
     description: traduit.description || outil.description,
     price: outil.price,
@@ -177,7 +178,13 @@ async function traduireOutils() {
   const snap = await db.collection('outils').where('langue', '==', 'fr').get();
   const tousLesOutils = snap.docs.map(d => ({ ref: d.ref, id: d.id, ...d.data() }));
 
+  // Outils en échec d'enrichissement (status 'a_enrichir') : jamais traduits,
+  // sinon leurs versions EN/ES se retrouvent publiées avec des champs vides.
+  const enEchec = tousLesOutils.filter(o => o.status === 'a_enrichir');
+  if (enEchec.length) console.log(`${enEchec.length} outil(s) ignoré(s) : en attente d'enrichissement (a_enrichir).`);
+
   const aTraiter = tousLesOutils.filter(o => {
+    if (o.status === 'a_enrichir') return false;
     const manqueEn = !o.traductions?.en;
     const manqueEs = !o.traductions?.es;
     return manqueEn || manqueEs;

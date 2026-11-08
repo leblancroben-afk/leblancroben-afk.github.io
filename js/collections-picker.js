@@ -99,8 +99,8 @@ window.buildToolCard = function(t, direct = false) {
     ? `<img src="${t.favicon}" alt="${t.name}" class="tool-favicon"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
            onload="this.nextElementSibling.style.display='none'">
-       <span class="tool-ico-fallback" style="display:none">${t.emoji}</span>`
-    : `<span class="tool-ico-fallback">${t.emoji}</span>`;
+       <span class="tool-ico-fallback" style="display:none">${t.emoji || '🤖'}</span>`
+    : `<span class="tool-ico-fallback">${t.emoji || '🤖'}</span>`;
 
   // Slug identique à buildToolCard dans app.js
   const slug = (typeof window.slugify === 'function' ? window.slugify(t.name) : '') || String(t.id);

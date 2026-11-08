@@ -668,7 +668,7 @@ function renderTools() {
 
   // Filtres de base : catégorie, prix, recherche texte
   let base = toolsLangue.filter(t =>
-    t.status !== 'offline' && // outil dont le lien est mort depuis 7 checks consécutifs
+    t.status !== 'offline' && t.status !== 'a_enrichir' && // outil dont le lien est mort depuis 7 checks consécutifs
                                // (check-liens.js) — carte masquée, fiche HTML reste publiée
     (state.activeToolCat === 'Tous' || t.category === state.activeToolCat) &&
     (state.priceFilter === 'tous' || t.price === PRICE_FIELD_MAP[state.priceFilter]) &&
@@ -697,8 +697,8 @@ function updateToolsPageHeader(toolsLangue) {
   const cat = state.activeToolCat;
   const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
   const count = cat === 'Tous'
-    ? toolsLangue.filter(t => t.status !== 'offline').length
-    : toolsLangue.filter(t => t.status !== 'offline' && t.category === cat).length;
+    ? toolsLangue.filter(t => t.status !== 'offline' && t.status !== 'a_enrichir').length
+    : toolsLangue.filter(t => t.status !== 'offline' && t.status !== 'a_enrichir' && t.category === cat).length;
 
   const titleEl = document.getElementById('tools-page-title');
   const subEl   = document.getElementById('tools-page-sub');
@@ -1101,7 +1101,7 @@ function renderHome() {
   if (!catRow && !topEl && !artEl) return; // page sans accueil (ex: page catégorie statique)
 
   const lang  = window.detecterLangue ? window.detecterLangue() : 'fr';
-  const tools = filtrerParLangue(state.tools).filter(x => x.status !== 'offline');
+  const tools = filtrerParLangue(state.tools).filter(x => x.status !== 'offline' && x.status !== 'a_enrichir');
   const empty = '<p class="home-empty">—</p>';
 
   if (catRow) {
@@ -1691,7 +1691,7 @@ function scoreOutil(tool, answers) {
 
 function showQuizResults() {
   const answers = quizState.answers;
-  const outils  = filtrerParLangue(state.tools).filter(t => t.status !== 'offline');
+  const outils  = filtrerParLangue(state.tools).filter(t => t.status !== 'offline' && t.status !== 'a_enrichir');
   const scored  = outils.map(t => ({ tool: t, score: scoreOutil(t, answers) }));
   scored.sort((a, b) => b.score - a.score);
 
@@ -1728,7 +1728,7 @@ function showQuizResults() {
       : `onclick="closeQuiz();window.open('${t.url}','_blank')"`;
     const iconHtml = t.favicon
       ? `<img src="${t.favicon}" alt="${t.name}" style="width:32px;height:32px;border-radius:6px;" onerror="this.style.display='none'">`
-      : `<span style="font-size:28px">${t.emoji}</span>`;
+      : `<span style="font-size:28px">${t.emoji || '🤖'}</span>`;
     return `
       <div class="quiz-result-card" ${action}>
         <div class="quiz-result-head">

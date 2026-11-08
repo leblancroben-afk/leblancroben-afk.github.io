@@ -3871,7 +3871,7 @@ ${ogLocaleAlternates}
     "@type": "ItemList",
     "name": ${JSON.stringify(fill(L.ld))},
     "itemListElement": [
-${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "name": ${JSON.stringify(v.titre)}, "thumbnailUrl": "https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/${v.youtube_id}" }`).join(',\n')}
+${videos.map((v, i) => `      { "@type": "VideoObject", "position": ${i+1}, "name": ${JSON.stringify(v.titre)}, "description": ${JSON.stringify(v.description_video || v.titre)}, "thumbnailUrl": "https://img.youtube.com/vi/${v.youtube_id}/mqdefault.jpg", "embedUrl": "https://www.youtube.com/embed/${v.youtube_id}"${v.date_publication ? `, "uploadDate": ${JSON.stringify(v.date_publication)}` : ''} }`).join(',\n')}
     ]
   }
   </script>

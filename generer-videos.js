@@ -109,6 +109,7 @@ async function chercherVideos(nomOutil, max) {
         titre: v.snippet?.title || '',
         canal: v.snippet?.channelTitle || '',
         description_video: (v.snippet?.description || '').slice(0, 200),
+        date_publication: v.snippet?.publishedAt || '',
         duree: isoDureeVersMMSS(v.contentDetails?.duration),
         secondes: isoDureeVersSecondes(v.contentDetails?.duration),
         vues: parseInt(v.statistics?.viewCount || '0', 10),

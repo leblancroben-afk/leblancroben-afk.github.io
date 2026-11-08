@@ -289,8 +289,8 @@ function normaliser(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]
 
 function logoOrFallback(t, cls, fbCls){
   return t.favicon
-    ? `<img src="${t.favicon}" alt="${t.name}" class="${cls}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="${fbCls}" style="display:none">${t.emoji}</span>`
-    : `<span class="${fbCls}">${t.emoji}</span>`;
+    ? `<img src="${t.favicon}" alt="${t.name}" class="${cls}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="${fbCls}" style="display:none">${t.emoji || '🤖'}</span>`
+    : `<span class="${fbCls}">${t.emoji || '🤖'}</span>`;
 }
 
 function initFilters(){

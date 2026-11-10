@@ -83,8 +83,9 @@ function syncHeader() {
   const stars = document.querySelector('[data-fo-stars]');
   const score = document.querySelector('[data-fo-score]');
   const fresh = document.querySelector('[data-fo-new]');
-  if (stars) { stars.hidden = false; stars.innerHTML = starsRow(avg); }
-  if (score) { score.hidden = false; score.innerHTML = `${avg.toFixed(1)} <small>(${lbl('countShort', { count: total })})</small>`; }
+  // Note d'en-tête déjà écrite dans le HTML (data-fo-static) : on ne la remplace pas, pour garder une seule note.
+  if (stars && !stars.hasAttribute('data-fo-static')) { stars.hidden = false; stars.innerHTML = starsRow(avg); }
+  if (score && !score.hasAttribute('data-fo-static')) { score.hidden = false; score.innerHTML = `${avg.toFixed(1)} <small>(${lbl('countShort', { count: total })})</small>`; }
   if (fresh) fresh.hidden = true;
   const tab = document.querySelector('.fo-tab[href="#fo-avis"]');
   if (tab) tab.textContent = `${tab.dataset.label || tab.textContent.replace(/\s*\(\d+\)$/, '')} (${total})`;
@@ -95,13 +96,23 @@ async function refreshWidget() {
   const container = document.getElementById('reviews-section');
   if (!container) return;
 
-  container.innerHTML = buildSkeletonHTML();
+  // Les avis écrits dans le HTML restent affichés pendant le chargement (pas de vide, pas de clignotement).
+  const statiqueVisible = !!container.querySelector('[data-fo-avis-static]');
+  if (!statiqueVisible) container.innerHTML = buildSkeletonHTML();
+  const slugs = (container.dataset.foSlugs || TOOL_SLUG).split(' ').filter(Boolean);
 
   try {
-    [allReviews, userReview] = await Promise.all([
-      getToolReviews(TOOL_SLUG),
-      currentUser ? getUserReview(currentUser.uid, TOOL_SLUG) : Promise.resolve(null),
-    ]);
+    const lots = await Promise.all(slugs.map(sl => getToolReviews(sl)));
+    // Toutes langues : un avis par utilisateur (le plus récent), même logique que la génération
+    const parUid = new Map();
+    lots.flat().forEach(r => {
+      const prev = parUid.get(r.uid);
+      const t = r.updatedAt && typeof r.updatedAt.toMillis === 'function' ? r.updatedAt.toMillis() : 0;
+      const tp = prev && prev.updatedAt && typeof prev.updatedAt.toMillis === 'function' ? prev.updatedAt.toMillis() : 0;
+      if (!prev || t >= tp) parUid.set(r.uid, r);
+    });
+    allReviews = [...parUid.values()];
+    userReview = currentUser ? await getUserReview(currentUser.uid, TOOL_SLUG) : null;
 
     if (currentUser && allReviews.length) {
       const results = await Promise.all(
@@ -112,7 +123,7 @@ async function refreshWidget() {
     }
   } catch (err) {
     console.error('reviews-widget: échec chargement avis', err);
-    container.innerHTML = '';
+    if (!statiqueVisible) container.innerHTML = '';
     return;
   }
 

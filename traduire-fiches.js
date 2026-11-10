@@ -107,7 +107,7 @@ async function translateListe(items, targetLang) {
 }
 
 async function traduireContenu(outil, langueCible) {
-  const name = await translateText(outil.name || '', langueCible); await pause(400);
+  const name = outil.name || ''; // nom de marque : identique dans toutes les langues, jamais traduit
   const description = await translateText(outil.description || '', langueCible); await pause(400);
   const ideal_pour = await translateText(outil.ideal_pour || '', langueCible); await pause(400);
   const presentation = await translateText(outil.presentation || '', langueCible); await pause(400);
@@ -130,7 +130,7 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
   const slug = slugify(outil.name);
   return {
     id: `${mainId}-${langue}`,
-    name: traduit.name || outil.name,
+    name: outil.name, // nom français pour toutes les versions
     category: outil.category,
     emoji: outil.emoji,
     status: outil.status ?? null,

@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v0'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v13'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -4076,6 +4076,22 @@ function calculerAlternatives(tools, reviews) {
     slugToFam.set(slugFicheAlt(t), fid);
   }
   const notes = notesParFamille(reviews, slugToFam);
+  // Avis récents par famille : un par utilisateur (le plus récent), sans signalés ni avis vides, 5 maximum
+  const avisParFam = new Map();
+  const derniers = new Map();
+  for (const r of reviews) {
+    if (!r || !r.uid || r.flagged || !String(r.comment || '').trim()) continue;
+    const fid = slugToFam.get(r.toolSlug);
+    if (!fid) continue;
+    const cle = fid + '|' + r.uid;
+    const prev = derniers.get(cle);
+    if (!prev || (r.ts || 0) >= (prev.ts || 0)) derniers.set(cle, r);
+  }
+  for (const r of derniers.values()) {
+    if (!avisParFam.has(slugToFam.get(r.toolSlug))) avisParFam.set(slugToFam.get(r.toolSlug), []);
+    avisParFam.get(slugToFam.get(r.toolSlug)).push({ nom: r.displayName || 'Anonyme', note: r.rating, texte: String(r.comment).trim().slice(0, 500), date: r.ts || 0 });
+  }
+  for (const [fid, liste] of avisParFam) avisParFam.set(fid, liste.sort((x, y) => y.date - x.date).slice(0, 5));
   const classement = new Map();
   for (const [fid, fam] of familles) {
     const fr = fam.docs.fr;
@@ -4097,7 +4113,7 @@ function calculerAlternatives(tools, reviews) {
   }
   const parNom = new Map();
   for (const [fid, fam] of familles) if (fam.docs.fr) parNom.set(cleNomAlt(fam.docs.fr.name), fid);
-  return { familles, classement, notes, parNom };
+  return { familles, classement, notes, parNom, avis: avisParFam };
 }
 
 /** Alternatives d'une fiche dans sa propre langue : 6 maximum, avec les données nécessaires aux cartes. */
@@ -4238,15 +4254,31 @@ async function main() {
   }).filter(t => t.name);
   console.log(`✓ ${tools.length} documents trouvés`);
 
+  // Nom de l'outil : celui du document FR pour toutes les langues (les noms de marque ne sont pas traduits).
+  // Le dossier et l'URL de chaque version en dérivent : une seule adresse de base, donc un seul slug d'avis.
+  const nomFrParFamille = new Map();
+  for (const t of tools) if ((t.langue || 'fr') === 'fr' && t.name) nomFrParFamille.set(familleIdAlt(t), t.name);
+  for (const t of tools) { const nf = nomFrParFamille.get(familleIdAlt(t)); if (nf) t.name = nf; }
+
   // Alternatives : une lecture de la collection reviews par build (mise en cache pour les 3 langues)
   const reviewsSnap = await db.collection('reviews').get();
   const reviewsList = reviewsSnap.docs.map(d => {
     const r = d.data();
     return { uid: r.uid, toolSlug: r.toolSlug, rating: r.rating, flagged: !!r.flagged,
+             comment: r.comment || '', displayName: r.displayName || '',
              ts: r.updatedAt && typeof r.updatedAt.toMillis === 'function' ? r.updatedAt.toMillis() : 0 };
   });
   const calculAlt = calculerAlternatives(tools, reviewsList);
   for (const t of tools) t.alternatives = alternativesPourFiche(t, calculAlt);
+  // Note globale : une par outil (utilisateurs uniques, toutes langues), écrite dans le HTML
+  for (const t of tools) t.note_globale = calculAlt.notes.get(familleIdAlt(t)) || null;
+  // Avis récents et slugs de la famille (pour la section « Avis » écrite dans le HTML et le widget)
+  for (const t of tools) {
+    const fid = familleIdAlt(t);
+    t.avis_recents = calculAlt.avis.get(fid) || [];
+    const fam = calculAlt.familles.get(fid);
+    t.slugs_famille = fam ? [...new Set(Object.values(fam.docs).map(d => slugFicheAlt(d)))] : [slugFicheAlt(t)];
+  }
   console.log(`✓ Alternatives calculées pour ${calculAlt.familles.size} familles d'outils`);
 
   let generated = 0, skipped = 0, noFiche = 0, unchanged = 0;

@@ -148,7 +148,30 @@ function faqEntreeValide(f) {
   return true;
 }
 
-const TRADUISIBLES = new Set(['name', 'description', 'ideal_pour', 'presentation', 'meta_description',
+/** Convertit les formules saisies (prix en texte libre) en offres JSON-LD. Ignore ce qui n'est pas sûr. */
+function offresJsonLd(formules) {
+  const sortie = [];
+  for (const p of formules) {
+    const texte = String(p && p.prix || '').trim();
+    if (!texte) continue;
+    let price;
+    if (/gratuit|free|gratis/i.test(texte)) price = 0;
+    else {
+      const m = texte.replace(/\s/g, '').match(/(\d+(?:[.,]\d{1,2})?)/);
+      if (!m) continue;
+      price = parseFloat(m[1].replace(',', '.'));
+      if (!isFinite(price)) continue;
+    }
+    const devise = /€|eur/i.test(texte) ? 'EUR' : /£|gbp/i.test(texte) ? 'GBP' : /\$|usd/i.test(texte) ? 'USD' : (price === 0 ? 'USD' : null);
+    if (!devise) continue;
+    const o = { '@type': 'Offer', name: String(p.nom), price: String(price), priceCurrency: devise };
+    if (p.periode) o.description = String(p.periode);
+    sortie.push(o);
+  }
+  return sortie;
+}
+
+const TRADUISIBLES = new Set(['description', 'ideal_pour', 'presentation', 'meta_description',
   'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts', 'alternatives']);
 
 // ── Sous-catégories : liste fermée (11 valeurs) et correspondance des libellés existants ──
@@ -254,10 +277,14 @@ function generateFiche(tool, allTools = [], deps) {
   galerie = galerie.slice(0, LIMITES.gallery);
 
   // ── Hero ──
-  const starsHTML = Array.from({ length: 5 }, (_, i) => `<span class="${i < Math.round(note) ? 'on' : ''}">${STAR}</span>`).join('');
+  // Note globale : une par outil (utilisateurs uniques, toutes langues), écrite dans le HTML. Sans avis : pas d'étoiles.
+  const ng = tool.note_globale && tool.note_globale.count > 0 ? tool.note_globale : null;
+  const noteAff = ng ? Math.round(ng.avg * 10) / 10 : (note || null);
+  const nbAff = ng ? ng.count : 0;
+  const starsHTML = Array.from({ length: 5 }, (_, i) => `<span class="${i < Math.round(noteAff || 0) ? 'on' : ''}">${STAR}</span>`).join('');
   // Étoiles + note + nombre d'avis : mis à jour par js/reviews-widget.js dès que les avis sont chargés.
-  const ratingHTML = `<span class="fo-stars" data-fo-stars aria-hidden="true"${note ? '' : ' hidden'}>${starsHTML}</span>`
-    + `<span class="fo-score" data-fo-score${note ? '' : ' hidden'}>${note ? note.toFixed(1) : ''}</span>`
+  const ratingHTML = `<span class="fo-stars" data-fo-stars data-fo-static aria-hidden="true"${noteAff ? '' : ' hidden'}>${starsHTML}</span>`
+    + `<span class="fo-score" data-fo-score data-fo-static${noteAff ? '' : ' hidden'}>${noteAff ? noteAff.toFixed(1) + ` <small>(${nbAff})</small>` : ''}</span>`
     + (note ? '' : `<span class="fo-badge fo-badge-new" data-fo-new>${E(T.newTool)}</span>`);
   const planBadge = rules.badge ? `<span class="fo-badge fo-badge-plan">${E(T[rules.badge])}</span>` : '';
   const verifBadge = tool.verifie === true || (frDoc && frDoc.verifie === true)
@@ -397,7 +424,19 @@ function generateFiche(tool, allTools = [], deps) {
 <section class="fo-card" id="fo-maj"><h2>${E(T.updates)}</h2><ul class="fo-log">${changelog.slice(0, 6).map((c) =>
     `<li>${c.date ? `<time>${E(c.date)}</time>` : ''}<h3>${E(c.titre || '')}</h3>${c.desc ? `<p>${E(c.desc)}</p>` : ''}</li>`).join('')}</ul></section>` : '';
 
-  const reviewsSection = `<section class="fo-card" id="fo-avis"><div id="reviews-section"><div class="fo-card-head"><h2>${E(T.reviews)}</h2></div></div></section>`;
+  // Avis écrits dans le HTML (5 derniers, toutes langues, un par utilisateur). Le widget les remplace au chargement.
+  const LOCALE_DATE = { fr: 'fr-FR', en: 'en-GB', es: 'es-ES' }[langue] || 'fr-FR';
+  const avisRecents = Array.isArray(tool.avis_recents) ? tool.avis_recents.slice(0, 5) : [];
+  const avisStatiqueHTML = avisRecents.length
+    ? `<div class="fo-avis-statique" data-fo-avis-static>${avisRecents.map(a => {
+        const d = a.date ? new Date(a.date) : null;
+        const iso = d && !isNaN(d) ? d.toISOString().slice(0, 10) : '';
+        const label = d && !isNaN(d) ? d.toLocaleDateString(LOCALE_DATE, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+        return `<article class="fo-avis-item"><div class="fo-avis-top"><b>${E(a.nom)}</b><span class="fo-avis-note">${E(String(a.note))}/5</span>${iso ? `<time datetime="${E(iso)}">${E(label)}</time>` : ''}</div><p>${E(a.texte)}</p></article>`;
+      }).join('')}</div>`
+    : '';
+  const slugsFamille = (Array.isArray(tool.slugs_famille) && tool.slugs_famille.length ? tool.slugs_famille : [slug]).join(' ');
+  const reviewsSection = `<section class="fo-card" id="fo-avis"><div id="reviews-section" data-fo-slugs="${E(slugsFamille)}"><div class="fo-card-head"><h2>${E(T.reviews)}</h2></div>${avisStatiqueHTML}</div></section>`;
 
   // ── Sidebar : informations clés ──
   const PLAT_KEYS = ['web', 'windows', 'apple', 'android'];
@@ -518,7 +557,12 @@ function generateFiche(tool, allTools = [], deps) {
     inLanguage: langue,
   };
   if (category) ldSoft.applicationCategory = category;
-  if (pk === 'free') ldSoft.offers = { '@type': 'Offer', price: '0', priceCurrency: 'USD' };   // freemium : pas de prix déclaré
+  // Offres : une par formule affichée sur la page (mêmes règles de visibilité). Seul un prix lisible et une devise
+  // certaine sont déclarés ; « Sur devis » ou un montant ambigu est ignoré. Pas de tarif = pas d'offers.
+  const offres = tarifsOk ? offresJsonLd(tarifsRaw.slice(0, 4)) : [];
+  if (ng && ng.count >= 5) ldSoft.aggregateRating = { '@type': 'AggregateRating', ratingValue: Math.round(ng.avg * 10) / 10, ratingCount: ng.count, reviewCount: ng.count, bestRating: 5, worstRating: 1 };
+  if (offres.length) ldSoft.offers = offres;
+  else if (pk === 'free') ldSoft.offers = { '@type': 'Offer', price: '0', priceCurrency: 'USD' };
   if (g('verifie_le')) ldSoft.dateModified = String(g('verifie_le'));
   ldItems.push(ldSoft);
   const ldFaq = (faq || []).filter((f) => f && f.q && f.a);
@@ -711,4 +755,4 @@ ${footerHTML('fr')}
 </html>`;
 }
 
-module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie };
+module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie, offresJsonLd };

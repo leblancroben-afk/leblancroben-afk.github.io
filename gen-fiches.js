@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v13'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v1'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -138,7 +138,7 @@ function stars(note, langue = 'fr') {
 
 // R = chemin absolu vers la racine du site (site servi à la racine du domaine)
 const R = '/';
-const SITE_ORIGIN = 'https://leblancroben-afk.github.io';
+const SITE_ORIGIN = 'https://albexia.com';
 
 function reecrireAnciensDomaines(html) {
   return html ? html.replace(/https:\/\/ia-directory\.github\.io\/(?:annuaire-ia\/)?/g, SITE_ORIGIN + '/') : html;

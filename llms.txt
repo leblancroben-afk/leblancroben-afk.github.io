@@ -6,149 +6,149 @@ Langue : français.
 
 ## Assistants IA et recherche
 
-- [Grok](https://leblancroben-afk.github.io/tools/standard/fr/grok/): Grok est un assistant IA développé par xAI, capable de répondre à des questions complexes, d'analyser des données en temps réel via X et de générer du code avec un ton direct.
-- [Kimi](https://leblancroben-afk.github.io/tools/featured/fr/kimi/): Assistant IA conversationnel développé par Moonshot AI, réputé pour sa capacité à traiter de très longs volumes de texte (jusqu'à 2 millions de caractères).
-- [Meta AI](https://leblancroben-afk.github.io/tools/standard/fr/meta-ai/): Meta AI est l'assistant gratuit de Meta, accessible sur meta.ai, en app mobile et directement dans WhatsApp, Instagram, Messenger et Facebook. Propulsé par Muse Spark, il discute, génère des images et des vidéos.
-- [perplexity.ai](https://leblancroben-afk.github.io/tools/standard/fr/perplexity-ai/): Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.
-- [Poe](https://leblancroben-afk.github.io/tools/standard/fr/poe/): Poe est une plateforme développée par Quora permettant d'accéder et d'interagir avec divers modèles d'IA comme ChatGPT, Claude et Gemini via une interface unique.
+- [Grok](https://albexia.com/tools/standard/fr/grok/): Grok est un assistant IA développé par xAI, capable de répondre à des questions complexes, d'analyser des données en temps réel via X et de générer du code avec un ton direct.
+- [Kimi](https://albexia.com/tools/featured/fr/kimi/): Assistant IA conversationnel développé par Moonshot AI, réputé pour sa capacité à traiter de très longs volumes de texte (jusqu'à 2 millions de caractères).
+- [Meta AI](https://albexia.com/tools/standard/fr/meta-ai/): Meta AI est l'assistant gratuit de Meta, accessible sur meta.ai, en app mobile et directement dans WhatsApp, Instagram, Messenger et Facebook. Propulsé par Muse Spark, il discute, génère des images et des vidéos.
+- [perplexity.ai](https://albexia.com/tools/standard/fr/perplexity-ai/): Le moteur de recherche dopé à l'IA qui remplace Google. Posez vos questions en langage naturel et obtenez des réponses synthétisées, sourcées et vérifiables en temps réel.
+- [Poe](https://albexia.com/tools/standard/fr/poe/): Poe est une plateforme développée par Quora permettant d'accéder et d'interagir avec divers modèles d'IA comme ChatGPT, Claude et Gemini via une interface unique.
 
 ## Audio & Musique
 
-- [AIVA](https://leblancroben-afk.github.io/tools/featured/fr/aiva/): AIVA est un assistant de composition musicale basé sur l'IA, spécialisé dans la création de bandes sonores originales pour films, jeux vidéo et contenus web.
-- [Cleanvoice](https://leblancroben-afk.github.io/tools/standard/fr/cleanvoice/): Cleanvoice est un outil basé sur l'IA qui élimine automatiquement les hésitations, bruits de fond et tics de langage dans vos enregistrements audio.
-- [ElevenLabs](https://leblancroben-afk.github.io/tools/featured/fr/elevenlabs/): Plateforme IA de synthèse vocale, clonage de voix, doublage automatique, transcription et agents conversationnels. Idéal pour créateurs, développeurs et entreprises.
-- [iZotope RX](https://leblancroben-afk.github.io/tools/standard/fr/izotope-rx/): iZotope RX est la référence logicielle pour la restauration et le nettoyage audio, combinant traitement du signal et algorithmes IA avancés.
-- [LANDR](https://leblancroben-afk.github.io/tools/standard/fr/landr/): LANDR est une plateforme de création musicale offrant un mastering automatisé par IA, la distribution en ligne et des outils de collaboration.
-- [Moises](https://leblancroben-afk.github.io/tools/featured/fr/moises/): Moises est une application audio IA permettant de séparer les pistes vocales et instrumentales, de détecter la tonalité et d'ajuster le tempo facilement.
-- [Murf AI](https://leblancroben-afk.github.io/tools/featured/fr/murf-ai/): Studio de voix off IA avec 200+ voix, doublage vidéo, transcription et éditeur intégré. Idéal pour e-learning, marketing et podcasts.
-- [Soundful](https://leblancroben-afk.github.io/tools/featured/fr/soundful/): Soundful est une plateforme d'IA générative permettant aux créateurs de produire de la musique libre de droits en quelques clics selon différents genres.
-- [Suno](https://leblancroben-afk.github.io/tools/standard/fr/suno/): Suno est une intelligence artificielle capable de générer des chansons complètes avec paroles, voix et instruments à partir de simples descriptions textuelles.
-- [Udio](https://leblancroben-afk.github.io/tools/standard/fr/udio/): Udio est une intelligence artificielle capable de générer des chansons complètes avec paroles et chant à partir de simples descriptions textuelles.
+- [AIVA](https://albexia.com/tools/featured/fr/aiva/): AIVA est un assistant de composition musicale basé sur l'IA, spécialisé dans la création de bandes sonores originales pour films, jeux vidéo et contenus web.
+- [Cleanvoice](https://albexia.com/tools/standard/fr/cleanvoice/): Cleanvoice est un outil basé sur l'IA qui élimine automatiquement les hésitations, bruits de fond et tics de langage dans vos enregistrements audio.
+- [ElevenLabs](https://albexia.com/tools/featured/fr/elevenlabs/): Plateforme IA de synthèse vocale, clonage de voix, doublage automatique, transcription et agents conversationnels. Idéal pour créateurs, développeurs et entreprises.
+- [iZotope RX](https://albexia.com/tools/standard/fr/izotope-rx/): iZotope RX est la référence logicielle pour la restauration et le nettoyage audio, combinant traitement du signal et algorithmes IA avancés.
+- [LANDR](https://albexia.com/tools/standard/fr/landr/): LANDR est une plateforme de création musicale offrant un mastering automatisé par IA, la distribution en ligne et des outils de collaboration.
+- [Moises](https://albexia.com/tools/featured/fr/moises/): Moises est une application audio IA permettant de séparer les pistes vocales et instrumentales, de détecter la tonalité et d'ajuster le tempo facilement.
+- [Murf AI](https://albexia.com/tools/featured/fr/murf-ai/): Studio de voix off IA avec 200+ voix, doublage vidéo, transcription et éditeur intégré. Idéal pour e-learning, marketing et podcasts.
+- [Soundful](https://albexia.com/tools/featured/fr/soundful/): Soundful est une plateforme d'IA générative permettant aux créateurs de produire de la musique libre de droits en quelques clics selon différents genres.
+- [Suno](https://albexia.com/tools/standard/fr/suno/): Suno est une intelligence artificielle capable de générer des chansons complètes avec paroles, voix et instruments à partir de simples descriptions textuelles.
+- [Udio](https://albexia.com/tools/standard/fr/udio/): Udio est une intelligence artificielle capable de générer des chansons complètes avec paroles et chant à partir de simples descriptions textuelles.
 
 ## Contenu
 
-- [Adobe Firefly](https://leblancroben-afk.github.io/tools/standard/fr/adobe-firefly/): Adobe Firefly est une suite de modèles d'IA générative intégrée aux logiciels Adobe, permettant de créer et modifier des images, effets de texte et vecteurs à partir de requêtes textuelles.
-- [Canva](https://leblancroben-afk.github.io/tools/featured/fr/canva/): Canva est une plateforme de design graphique en ligne intuitive permettant de créer des visuels, présentations, vidéos et documents grâce à des milliers de modèles personnalisables.
-- [ChatGPT](https://leblancroben-afk.github.io/tools/featured/fr/chatgpt/): L'assistant IA pionnier d'OpenAI pour rédiger des textes, programmer, analyser des données et automatiser vos tâches quotidiennes via une interface de discussion intuitive.
-- [Freepik AI](https://leblancroben-afk.github.io/tools/standard/fr/freepik-ai/): Freepik AI est une suite d'outils de création visuelle permettant de générer, modifier, agrandir et améliorer des images et illustrations à partir de prompts textuels.
-- [Ideogram](https://leblancroben-afk.github.io/tools/standard/fr/ideogram/): Ideogram est un outil de génération d'images par intelligence artificielle, reconnu pour sa capacité à intégrer du texte lisible et stylisé au sein des visuels créés.
-- [Leonardo AI](https://leblancroben-afk.github.io/tools/standard/fr/leonardo-ai/): Leonardo AI est une plateforme de génération d'images et d'actifs visuels par intelligence artificielle, offrant des modèles personnalisables et un contrôle précis pour les créateurs.
-- [Recraft](https://leblancroben-afk.github.io/tools/standard/fr/recraft/): Recraft est un outil de génération d'images et d'illustrations vectorielles par IA. Il permet de créer et modifier des visuels, logos et éléments 3D sur un canvas infini.
+- [Adobe Firefly](https://albexia.com/tools/standard/fr/adobe-firefly/): Adobe Firefly est une suite de modèles d'IA générative intégrée aux logiciels Adobe, permettant de créer et modifier des images, effets de texte et vecteurs à partir de requêtes textuelles.
+- [Canva](https://albexia.com/tools/featured/fr/canva/): Canva est une plateforme de design graphique en ligne intuitive permettant de créer des visuels, présentations, vidéos et documents grâce à des milliers de modèles personnalisables.
+- [ChatGPT](https://albexia.com/tools/featured/fr/chatgpt/): L'assistant IA pionnier d'OpenAI pour rédiger des textes, programmer, analyser des données et automatiser vos tâches quotidiennes via une interface de discussion intuitive.
+- [Freepik AI](https://albexia.com/tools/standard/fr/freepik-ai/): Freepik AI est une suite d'outils de création visuelle permettant de générer, modifier, agrandir et améliorer des images et illustrations à partir de prompts textuels.
+- [Ideogram](https://albexia.com/tools/standard/fr/ideogram/): Ideogram est un outil de génération d'images par intelligence artificielle, reconnu pour sa capacité à intégrer du texte lisible et stylisé au sein des visuels créés.
+- [Leonardo AI](https://albexia.com/tools/standard/fr/leonardo-ai/): Leonardo AI est une plateforme de génération d'images et d'actifs visuels par intelligence artificielle, offrant des modèles personnalisables et un contrôle précis pour les créateurs.
+- [Recraft](https://albexia.com/tools/standard/fr/recraft/): Recraft est un outil de génération d'images et d'illustrations vectorielles par IA. Il permet de créer et modifier des visuels, logos et éléments 3D sur un canvas infini.
 
 ## Images et design
 
-- [Looka](https://leblancroben-afk.github.io/tools/standard/fr/looka/): Looka est un générateur de logos et de chartes graphiques propulsé par l'IA. Il crée des identités visuelles complètes à partir de vos préférences de style et de couleurs.
-- [Microsoft Designer](https://leblancroben-afk.github.io/tools/standard/fr/microsoft-designer/): Microsoft Designer est une application de conception graphique assistée par l'intelligence artificielle. Elle permet de créer des visuels, des invitations et des publications à partir de descriptions textuelles.
-- [Midjourney](https://leblancroben-afk.github.io/tools/featured/fr/midjourney/)
-- [Uizard](https://leblancroben-afk.github.io/tools/standard/fr/uizard/): Uizard est une plateforme de conception basée sur l'IA permettant de créer rapidement des maquettes, prototypes d'applications et interfaces web à partir de croquis ou de textes.
-- [VistaCreate](https://leblancroben-afk.github.io/tools/standard/fr/vistacreate/): VistaCreate est un outil de conception graphique en ligne proposant des milliers de modèles, visuels et outils IA pour créer rapidement du contenu marketing et réseaux sociaux.
+- [Looka](https://albexia.com/tools/standard/fr/looka/): Looka est un générateur de logos et de chartes graphiques propulsé par l'IA. Il crée des identités visuelles complètes à partir de vos préférences de style et de couleurs.
+- [Microsoft Designer](https://albexia.com/tools/standard/fr/microsoft-designer/): Microsoft Designer est une application de conception graphique assistée par l'intelligence artificielle. Elle permet de créer des visuels, des invitations et des publications à partir de descriptions textuelles.
+- [Midjourney](https://albexia.com/tools/featured/fr/midjourney/)
+- [Uizard](https://albexia.com/tools/standard/fr/uizard/): Uizard est une plateforme de conception basée sur l'IA permettant de créer rapidement des maquettes, prototypes d'applications et interfaces web à partir de croquis ou de textes.
+- [VistaCreate](https://albexia.com/tools/standard/fr/vistacreate/): VistaCreate est un outil de conception graphique en ligne proposant des milliers de modèles, visuels et outils IA pour créer rapidement du contenu marketing et réseaux sociaux.
 
 ## Juridique
 
-- [CoCounsel](https://leblancroben-afk.github.io/tools/starter/fr/cocounsel/): CoCounsel (ex-Casetext) est l'assistant de recherche juridique de Thomson Reuters. Adossé à Westlaw, il prépare des dossiers de plaidoirie, vérifie la jurisprudence et accélère la revue documentaire.
-- [Harvey](https://leblancroben-afk.github.io/tools/starter/fr/harvey/): Harvey est une IA juridique conçue pour les cabinets d'avocats et directions juridiques d'entreprise. Elle assiste la recherche réglementaire, l'analyse de contrats et le due diligence complexe.
-- [Juri'Predis](https://leblancroben-afk.github.io/tools/starter/fr/juri-predis/): Juri'Predis est une plateforme française de recherche jurisprudentielle et de justice prédictive. Elle analyse plus de 8 millions de décisions de justice en langage naturel pour anticiper les tendances des tribunaux.
-- [Kira Systems](https://leblancroben-afk.github.io/tools/standard/fr/kira-systems/): Kira Systems, propriété de Litera, est une plateforme d'intelligence contractuelle spécialisée dans l'extraction de clauses lors des due diligence M&A. Plus de 1400 champs prédéfinis identifient automatiquement les points critiques.
-- [Luminance](https://leblancroben-afk.github.io/tools/starter/fr/luminance/): Luminance est une IA juridique britannique spécialisée dans la relecture et la négociation de contrats. Son architecture "Panel of Judges" croise plusieurs modèles pour détecter les clauses à risque avec une fiabilité renforcée.
+- [CoCounsel](https://albexia.com/tools/starter/fr/cocounsel/): CoCounsel (ex-Casetext) est l'assistant de recherche juridique de Thomson Reuters. Adossé à Westlaw, il prépare des dossiers de plaidoirie, vérifie la jurisprudence et accélère la revue documentaire.
+- [Harvey](https://albexia.com/tools/starter/fr/harvey/): Harvey est une IA juridique conçue pour les cabinets d'avocats et directions juridiques d'entreprise. Elle assiste la recherche réglementaire, l'analyse de contrats et le due diligence complexe.
+- [Juri'Predis](https://albexia.com/tools/starter/fr/juri-predis/): Juri'Predis est une plateforme française de recherche jurisprudentielle et de justice prédictive. Elle analyse plus de 8 millions de décisions de justice en langage naturel pour anticiper les tendances des tribunaux.
+- [Kira Systems](https://albexia.com/tools/standard/fr/kira-systems/): Kira Systems, propriété de Litera, est une plateforme d'intelligence contractuelle spécialisée dans l'extraction de clauses lors des due diligence M&A. Plus de 1400 champs prédéfinis identifient automatiquement les points critiques.
+- [Luminance](https://albexia.com/tools/starter/fr/luminance/): Luminance est une IA juridique britannique spécialisée dans la relecture et la négociation de contrats. Son architecture "Panel of Judges" croise plusieurs modèles pour détecter les clauses à risque avec une fiabilité renforcée.
 
 ## Présentation
 
-- [Gamma](https://leblancroben-afk.github.io/tools/featured/fr/gamma/): Gamma est un outil en ligne utilisant l'intelligence artificielle pour générer rapidement des présentations, des documents et des pages web à partir de descriptions textuelles.
+- [Gamma](https://albexia.com/tools/featured/fr/gamma/): Gamma est un outil en ligne utilisant l'intelligence artificielle pour générer rapidement des présentations, des documents et des pages web à partir de descriptions textuelles.
 
 ## Productivité et travail
 
-- [n8n](https://leblancroben-afk.github.io/tools/standard/fr/n8n/): n8n est une plateforme d'automatisation de workflows flexible et extensible, permettant de connecter des applications et d'intégrer des agents IA facilement.
-- [Otter.ai](https://leblancroben-afk.github.io/tools/standard/fr/otter-ai/): Otter.ai est un assistant de transcription automatique basé sur l'IA. Il enregistre, transcrit et résume vos réunions et notes vocales en temps réel pour optimiser votre productivité.
+- [n8n](https://albexia.com/tools/standard/fr/n8n/): n8n est une plateforme d'automatisation de workflows flexible et extensible, permettant de connecter des applications et d'intégrer des agents IA facilement.
+- [Otter.ai](https://albexia.com/tools/standard/fr/otter-ai/): Otter.ai est un assistant de transcription automatique basé sur l'IA. Il enregistre, transcrit et résume vos réunions et notes vocales en temps réel pour optimiser votre productivité.
 
 ## Productivité, études et traduction
 
-- [Magnus](https://leblancroben-afk.github.io/tools/starter/fr/magnus/): Magnus est un chef de cabinet IA pour les fondateurs, les startups et les PME. Il garde les objectifs de l'entreprise en vue et propose les prochaines étapes, rédige des documents (PDF, Word, Excel), s'appuie sur les notes de l'entreprise pour des réponses précises, se connecte à Google, Slack,…
-- [Make](https://leblancroben-afk.github.io/tools/featured/fr/make/)
-- [MangaTranslate](https://leblancroben-afk.github.io/tools/standard/fr/mangatranslate/): MangaTranslate traduit des mangas en français à partir d’images ou de PDF, avec reconnaissance des dialogues, effacement du texte et réinsertion dans les bulles.
-- [NotebookLM](https://leblancroben-afk.github.io/tools/standard/fr/notebooklm/): NotebookLM est un assistant de recherche et de prise de notes propulsé par l'IA de Google. Il analyse vos propres documents pour générer des synthèses, des réponses et des résumés audio.
-- [Todoist AI](https://leblancroben-afk.github.io/tools/featured/fr/todoist-ai/): Todoist AI est une extension intégrée à Todoist qui utilise l'intelligence artificielle pour reformuler, découper et planifier vos tâches quotidiennes efficacement.
+- [Magnus](https://albexia.com/tools/starter/fr/magnus/): Magnus est un chef de cabinet IA pour les fondateurs, les startups et les PME. Il garde les objectifs de l'entreprise en vue et propose les prochaines étapes, rédige des documents (PDF, Word, Excel), s'appuie sur les notes de l'entreprise pour des réponses précises, se connecte à Google, Slack,…
+- [Make](https://albexia.com/tools/featured/fr/make/)
+- [MangaTranslate](https://albexia.com/tools/standard/fr/mangatranslate/): MangaTranslate traduit des mangas en français à partir d’images ou de PDF, avec reconnaissance des dialogues, effacement du texte et réinsertion dans les bulles.
+- [NotebookLM](https://albexia.com/tools/standard/fr/notebooklm/): NotebookLM est un assistant de recherche et de prise de notes propulsé par l'IA de Google. Il analyse vos propres documents pour générer des synthèses, des réponses et des résumés audio.
+- [Todoist AI](https://albexia.com/tools/featured/fr/todoist-ai/): Todoist AI est une extension intégrée à Todoist qui utilise l'intelligence artificielle pour reformuler, découper et planifier vos tâches quotidiennes efficacement.
 
 ## Programmation et création d'applications
 
-- [Bubble](https://leblancroben-afk.github.io/tools/standard/fr/bubble/): Bubble est une plateforme no-code complète permettant d'imager, concevoir et déployer des applications web complexes et réactives sans écrire de code.
-- [Claude](https://leblancroben-afk.github.io/tools/featured/fr/claude/)
-- [Cursor](https://leblancroben-afk.github.io/tools/standard/fr/cursor/): Éditeur de code intelligent basé sur VS Code. Cursor intègre l'intelligence artificielle pour générer, refactoriser et analyser votre codebase avec précision.
-- [FlutterFlow AI](https://leblancroben-afk.github.io/tools/standard/fr/flutterflow-ai/): Créateur d’applications mobiles et web low-code avec IA pour générer des écrans, prototyper rapidement et déployer des agents.
-- [Lovable](https://leblancroben-afk.github.io/tools/standard/fr/lovable/): Lovable est un assistant IA de développement web qui génère et déploie des applications web complètes à partir de descriptions en langage naturel.
-- [Sourcegraph Cody](https://leblancroben-afk.github.io/tools/standard/fr/sourcegraph-cody/): Assistant de code qui exploite le contexte de votre codebase pour expliquer, écrire, corriger et compléter du code dans vos IDE.
-- [Supabase AI](https://leblancroben-afk.github.io/tools/standard/fr/supabase-ai/): Assistant et intégrations IA pour connecter des agents de code à une base Supabase, avec MCP, instructions réutilisables et plugins.
-- [v0](https://leblancroben-afk.github.io/tools/standard/fr/v0/): v0 est un outil d'intelligence artificielle développé par Vercel qui génère du code d'interface utilisateur en React et Tailwind CSS à partir de descriptions textuelles.
-- [Windsurf](https://leblancroben-afk.github.io/tools/standard/fr/windsurf/): Windsurf est un IDE alimenté par l'IA développé par Codeium, intégrant des agents intelligents pour faciliter le codage et l'analyse de projets.
-- [Zed](https://leblancroben-afk.github.io/tools/standard/fr/zed/): Zed est un éditeur de code open source haute performance développé en Rust. Il intègre des outils de collaboration en temps réel et un assistant IA.
+- [Bubble](https://albexia.com/tools/standard/fr/bubble/): Bubble est une plateforme no-code complète permettant d'imager, concevoir et déployer des applications web complexes et réactives sans écrire de code.
+- [Claude](https://albexia.com/tools/featured/fr/claude/)
+- [Cursor](https://albexia.com/tools/standard/fr/cursor/): Éditeur de code intelligent basé sur VS Code. Cursor intègre l'intelligence artificielle pour générer, refactoriser et analyser votre codebase avec précision.
+- [FlutterFlow AI](https://albexia.com/tools/standard/fr/flutterflow-ai/): Créateur d’applications mobiles et web low-code avec IA pour générer des écrans, prototyper rapidement et déployer des agents.
+- [Lovable](https://albexia.com/tools/standard/fr/lovable/): Lovable est un assistant IA de développement web qui génère et déploie des applications web complètes à partir de descriptions en langage naturel.
+- [Sourcegraph Cody](https://albexia.com/tools/standard/fr/sourcegraph-cody/): Assistant de code qui exploite le contexte de votre codebase pour expliquer, écrire, corriger et compléter du code dans vos IDE.
+- [Supabase AI](https://albexia.com/tools/standard/fr/supabase-ai/): Assistant et intégrations IA pour connecter des agents de code à une base Supabase, avec MCP, instructions réutilisables et plugins.
+- [v0](https://albexia.com/tools/standard/fr/v0/): v0 est un outil d'intelligence artificielle développé par Vercel qui génère du code d'interface utilisateur en React et Tailwind CSS à partir de descriptions textuelles.
+- [Windsurf](https://albexia.com/tools/standard/fr/windsurf/): Windsurf est un IDE alimenté par l'IA développé par Codeium, intégrant des agents intelligents pour faciliter le codage et l'analyse de projets.
+- [Zed](https://albexia.com/tools/standard/fr/zed/): Zed est un éditeur de code open source haute performance développé en Rust. Il intègre des outils de collaboration en temps réel et un assistant IA.
 
 ## Rédaction et marketing
 
-- [AdCreative.ai](https://leblancroben-afk.github.io/tools/starter/fr/adcreative-ai/): AdCreative.ai génère des bannières et visuels publicitaires optimisés pour la conversion à partir de vos données de marque. Plus de 4,2 millions d'utilisateurs s'appuient sur ses algorithmes entraînés sur des performances publicitaires réelles.
-- [Albert](https://leblancroben-afk.github.io/tools/standard/fr/albert/)
-- [Brand24](https://leblancroben-afk.github.io/tools/starter/fr/brand24/): Brand24 surveille en temps réel les mentions de votre marque sur les réseaux sociaux, forums, blogs et sites d'actualité. Son analyse de sentiment dopée à l'IA aide à protéger la réputation et détecter les signaux faibles.
-- [Gumloop](https://leblancroben-afk.github.io/tools/starter/fr/gumloop/): Gumloop est une plateforme d'automatisation no-code propulsée par l'IA. Elle permet de créer des workflows agentiques complexes par glisser-déposer, sans écrire de code.
-- [Mutiny](https://leblancroben-afk.github.io/tools/standard/fr/mutiny/): Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.
-- [Phrasee](https://leblancroben-afk.github.io/tools/standard/fr/phrasee/): Phrasee génère et optimise la micro-copie marketing (objets d'e-mails, notifications push) en s'appuyant sur les neurosciences cognitives. L'IA respecte la voix de marque tout en boostant l'engagement.
+- [AdCreative.ai](https://albexia.com/tools/starter/fr/adcreative-ai/): AdCreative.ai génère des bannières et visuels publicitaires optimisés pour la conversion à partir de vos données de marque. Plus de 4,2 millions d'utilisateurs s'appuient sur ses algorithmes entraînés sur des performances publicitaires réelles.
+- [Albert](https://albexia.com/tools/standard/fr/albert/)
+- [Brand24](https://albexia.com/tools/starter/fr/brand24/): Brand24 surveille en temps réel les mentions de votre marque sur les réseaux sociaux, forums, blogs et sites d'actualité. Son analyse de sentiment dopée à l'IA aide à protéger la réputation et détecter les signaux faibles.
+- [Gumloop](https://albexia.com/tools/starter/fr/gumloop/): Gumloop est une plateforme d'automatisation no-code propulsée par l'IA. Elle permet de créer des workflows agentiques complexes par glisser-déposer, sans écrire de code.
+- [Mutiny](https://albexia.com/tools/standard/fr/mutiny/): Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.
+- [Phrasee](https://albexia.com/tools/standard/fr/phrasee/): Phrasee génère et optimise la micro-copie marketing (objets d'e-mails, notifications push) en s'appuyant sur les neurosciences cognitives. L'IA respecte la voix de marque tout en boostant l'engagement.
 
 ## SEO
 
-- [Letterdrop](https://leblancroben-afk.github.io/tools/standard/fr/letterdrop/): Letterdrop est une plateforme d'automatisation du marketing de contenu et du SEO par IA. Elle aide les équipes B2B à créer, optimiser et publier des articles plus rapidement.
-- [MarketMuse](https://leblancroben-afk.github.io/tools/starter/fr/marketmuse/): MarketMuse analyse l'ensemble d'un site pour identifier les lacunes de contenu par rapport aux concurrents et bâtir l'autorité thématique. Il génère des briefs détaillés basés sur son modélisation de sujets propriétaire.
-- [Outranking](https://leblancroben-afk.github.io/tools/standard/fr/outranking/): Outranking est un logiciel d'optimisation SEO guidé par l'IA. Il aide à planifier, rédiger et structurer des contenus hautement positionnés sur les moteurs de recherche.
-- [SE Ranking](https://leblancroben-afk.github.io/tools/starter/fr/se-ranking/): SE Ranking est une plateforme SEO tout-en-un combinant suivi de position, audit technique et recherche de mots-clés. Sa fonctionnalité SE Visible ajoute le suivi de la visibilité de marque dans ChatGPT, Gemini et Perplexity.
-- [WordLift](https://leblancroben-afk.github.io/tools/standard/fr/wordlift/): WordLift automatise le balisage Schema.org et construit un graphe de connaissances à partir de votre contenu WordPress. L'outil connecte vos entités à des sources externes comme Wikidata pour renforcer la compréhension par les moteurs et les IA.
-- [Yoast AI](https://leblancroben-afk.github.io/tools/standard/fr/yoast-ai/): Yoast AI Generate est une fonctionnalité intégrée au plugin Yoast SEO. Elle utilise l'intelligence artificielle pour rédiger automatiquement des titres et méta-descriptions optimisés.
+- [Letterdrop](https://albexia.com/tools/standard/fr/letterdrop/): Letterdrop est une plateforme d'automatisation du marketing de contenu et du SEO par IA. Elle aide les équipes B2B à créer, optimiser et publier des articles plus rapidement.
+- [MarketMuse](https://albexia.com/tools/starter/fr/marketmuse/): MarketMuse analyse l'ensemble d'un site pour identifier les lacunes de contenu par rapport aux concurrents et bâtir l'autorité thématique. Il génère des briefs détaillés basés sur son modélisation de sujets propriétaire.
+- [Outranking](https://albexia.com/tools/standard/fr/outranking/): Outranking est un logiciel d'optimisation SEO guidé par l'IA. Il aide à planifier, rédiger et structurer des contenus hautement positionnés sur les moteurs de recherche.
+- [SE Ranking](https://albexia.com/tools/starter/fr/se-ranking/): SE Ranking est une plateforme SEO tout-en-un combinant suivi de position, audit technique et recherche de mots-clés. Sa fonctionnalité SE Visible ajoute le suivi de la visibilité de marque dans ChatGPT, Gemini et Perplexity.
+- [WordLift](https://albexia.com/tools/standard/fr/wordlift/): WordLift automatise le balisage Schema.org et construit un graphe de connaissances à partir de votre contenu WordPress. L'outil connecte vos entités à des sources externes comme Wikidata pour renforcer la compréhension par les moteurs et les IA.
+- [Yoast AI](https://albexia.com/tools/standard/fr/yoast-ai/): Yoast AI Generate est une fonctionnalité intégrée au plugin Yoast SEO. Elle utilise l'intelligence artificielle pour rédiger automatiquement des titres et méta-descriptions optimisés.
 
 ## Texte
 
-- [DeepL Write](https://leblancroben-afk.github.io/tools/standard/fr/deepl-write/): Assistant de rédaction IA développé par DeepL. Il permet de corriger la grammaire, d'améliorer le style et de reformuler vos textes avec précision.
-- [DeepSeek](https://leblancroben-afk.github.io/tools/standard/fr/deepseek/): DeepSeek est une famille de modèles de langage d'intelligence artificielle performants et open-weight, conçus pour le raisonnement, la génération de texte et la programmation.
-- [grammarly](https://leblancroben-afk.github.io/tools/featured/fr/grammarly/)
-- [Jasper](https://leblancroben-afk.github.io/tools/featured/fr/jasper/): Plateforme IA marketing pour équipes. Brand voice, workflows, agents marketing.
-- [Notion AI](https://leblancroben-afk.github.io/tools/standard/fr/notion-ai/)
-- [QuillBot](https://leblancroben-afk.github.io/tools/standard/fr/quillbot/): QuillBot est un outil de reformulation de texte assisté par IA. Il propose des fonctionnalités de paraphrazage, de vérification grammaticale, de résumé et de traduction.
-- [Writesonic](https://leblancroben-afk.github.io/tools/featured/fr/writesonic/): Plateforme IA SEO et GEO pour articles longs et visibilité search.
+- [DeepL Write](https://albexia.com/tools/standard/fr/deepl-write/): Assistant de rédaction IA développé par DeepL. Il permet de corriger la grammaire, d'améliorer le style et de reformuler vos textes avec précision.
+- [DeepSeek](https://albexia.com/tools/standard/fr/deepseek/): DeepSeek est une famille de modèles de langage d'intelligence artificielle performants et open-weight, conçus pour le raisonnement, la génération de texte et la programmation.
+- [grammarly](https://albexia.com/tools/featured/fr/grammarly/)
+- [Jasper](https://albexia.com/tools/featured/fr/jasper/): Plateforme IA marketing pour équipes. Brand voice, workflows, agents marketing.
+- [Notion AI](https://albexia.com/tools/standard/fr/notion-ai/)
+- [QuillBot](https://albexia.com/tools/standard/fr/quillbot/): QuillBot est un outil de reformulation de texte assisté par IA. Il propose des fonctionnalités de paraphrazage, de vérification grammaticale, de résumé et de traduction.
+- [Writesonic](https://albexia.com/tools/featured/fr/writesonic/): Plateforme IA SEO et GEO pour articles longs et visibilité search.
 
 ## Vidéo et animation
 
-- [Google Veo](https://leblancroben-afk.github.io/tools/standard/fr/google-veo/): Google Veo est un modèle d'intelligence artificielle développé par Google DeepMind pour générer et éditer des vidéos HD de haute qualité à partir d'indications textuelles.
-- [Kling AI](https://leblancroben-afk.github.io/tools/standard/fr/kling-ai/): Kling AI est un générateur de vidéos par intelligence artificielle développé par Kuaishou, capable de créer des séquences réalistes à partir de texte ou d'images.
-- [Pika](https://leblancroben-afk.github.io/tools/standard/fr/pika/): Pika est une plateforme de génération vidéo par intelligence artificielle permettant de créer et d'éditer des animations de haute qualité à partir de textes ou d'images.
-- [Runway](https://leblancroben-afk.github.io/tools/standard/fr/runway/)
-- [Viggle](https://leblancroben-afk.github.io/tools/standard/fr/viggle/)
+- [Google Veo](https://albexia.com/tools/standard/fr/google-veo/): Google Veo est un modèle d'intelligence artificielle développé par Google DeepMind pour générer et éditer des vidéos HD de haute qualité à partir d'indications textuelles.
+- [Kling AI](https://albexia.com/tools/standard/fr/kling-ai/): Kling AI est un générateur de vidéos par intelligence artificielle développé par Kuaishou, capable de créer des séquences réalistes à partir de texte ou d'images.
+- [Pika](https://albexia.com/tools/standard/fr/pika/): Pika est une plateforme de génération vidéo par intelligence artificielle permettant de créer et d'éditer des animations de haute qualité à partir de textes ou d'images.
+- [Runway](https://albexia.com/tools/standard/fr/runway/)
+- [Viggle](https://albexia.com/tools/standard/fr/viggle/)
 
 ## Articles
 
-- [10 usages pratiques de l’IA dans la vie quotidienne](https://leblancroben-afk.github.io/articles/fr/10-usages-pratiques-de-l-ia-dans-la-vie-quotidienne/): Découvrez 10 façons simples d’utiliser l’intelligence artificielle pour gagner du temps, apprendre plus facilement et organiser vos activités quotidiennes.
-- [Agents IA autonomes : ce qui devient réellement possible en 2026](https://leblancroben-afk.github.io/articles/fr/agents-ia-autonomes-ce-qui-devient-reellement-possible-en-2026/)
-- [Annuaire IA : comment choisir l’outil adapté à vos besoins](https://leblancroben-afk.github.io/articles/fr/annuaire-ia-comment-choisir-l-outil-adapte-a-vos-besoins/): Découvrez les critères essentiels pour choisir un outil d’intelligence artificielle selon votre objectif, votre budget et votre niveau de compétence.
-- [Comment protéger vos données face aux services IA](https://leblancroben-afk.github.io/articles/fr/comment-proteger-vos-donnees-face-aux-services-ia/): Découvrez les bonnes pratiques essentielles pour protéger vos informations personnelles lorsque vous utilisez des outils d’intelligence artificielle en ligne.
-- [CustomGPT.ai : Comment créer un agent IA qui connaît votre entreprise par cœur (sans coder)](https://leblancroben-afk.github.io/articles/fr/avis-customgpt-ai-agent-entreprise/): On a tous testé ChatGPT. C’est bluffant, c’est rapide, mais soyons honnêtes : dès qu’on lui demande des détails précis sur les tarifs de notre entreprise, les spécificités de notre dernier produit ou les règles de notre politique interne, il commence à inventer des réponses ou à répondre à côté.
-- [De l'idée à l'application en 10 minutes : La révolution du No-Code propulsé par l'IA](https://leblancroben-afk.github.io/articles/fr/revolution-no-code-ia/): Pendant des décennies, lancer une application nécessitait une compétence rare et coûteuse : savoir coder. Aujourd'hui, tout change. En combinant la puissance de l'Intelligence Artificielle et la flexibilité du No-Code, créer un logiciel ne prend plus des mois : cela prend 10 minutes.
-- [France : la colère contre la vie chère dégénère en journée de chaos](https://leblancroben-afk.github.io/articles/fr/france-la-colere-contre-la-vie-chere-degenere-en-journee-de-chaos/): Des centaines de milliers de personnes ont manifesté en France contre la vie chère, avant une soirée marquée par des violences et des dégradations.
-- [GPT-6, Gemini 4 et Mistral : quel modèle choisir selon vos besoins ?](https://leblancroben-afk.github.io/articles/fr/gpt-6-gemini-4-et-mistral-quel-modele-choisir-selon-vos-besoins/): GPT-6, Gemini 4 Argon et Mistral Large 4 arrivent avec des usages différents. Voici comment choisir le bon modèle selon votre besoin et votre budget.
-- [Jeu vidéo et autonomie : quatre agents Gemini 4 Argon vainquent le Dragon de l’Ender dans Minecraft](https://leblancroben-afk.github.io/articles/fr/jeu-video-et-autonomie-quatre-agents-gemini-4-argon-vainquent-le-dragon-de-l-ender-dans-minecraft/): Quatre agents Gemini 4 Argon ont surmonté les défis de Minecraft sans scénario imposé, en coopérant, en écrivant du code et en corrigeant leurs erreurs.
-- [L'IA rend-elle vraiment les petits plus forts… ou simplement plus dépendants ?](https://leblancroben-afk.github.io/articles/fr/ia-petits-plus-forts/): L'IA promet aux petites structures la puissance de frappe d'une multinationale. Mais derrière cette promesse d'émancipation se cache une réalité plus nuancée : gagner en force aujourd'hui pourrait signifier perdre son autonomie demain.
-- [Les limites actuelles de l’intelligence artificielle expliquées simplement](https://leblancroben-afk.github.io/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/): Comprenez les principales limites de l’intelligence artificielle et découvrez pourquoi ses réponses doivent être vérifiées avant toute utilisation importante.
-- [Meta dévoile Muse Spark Open, un modèle open-weight de 816 milliards de paramètres](https://leblancroben-afk.github.io/articles/fr/meta-devoile-muse-spark-open-un-modele-open-weight-de-816-milliards-de-parametres/): Meta rend accessible un modèle de très grande taille pensé pour le codage, les agents IA et le déploiement local sur des stations de travail performantes.
-- [Prompting : comment poser les bonnes questions à une IA](https://leblancroben-afk.github.io/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/): Apprenez à rédiger des instructions claires pour obtenir des réponses plus utiles, précises et adaptées avec les outils d’intelligence artificielle.
-- [Qu’est‑ce que l’intelligence artificielle ? Explications simples pour tous](https://leblancroben-afk.github.io/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/): Une présentation claire des notions de base : IA, apprentissage automatique, réseaux de neurones et exemples concrets du quotidien.
-- [Régulation des agents IA : l’Union européenne et la FTC ouvrent des procédures parallèles visant OpenAI et Anthropic](https://leblancroben-afk.github.io/articles/fr/regulation-des-agents-ia-l-union-europeenne-et-la-ftc-ouvrent-des-procedures-paralleles-visant-openai-et-anthropic/): L’Union européenne et la FTC ouvrent des procédures parallèles visant OpenAI et Anthropic, après plusieurs incidents impliquant des agents IA sortis de leurs environnements de test.
-- [Windows 11 24H2 arrive en fin de mises à jour : pourquoi passer à Windows 11 26H2](https://leblancroben-afk.github.io/articles/fr/windows-11-24h2-arrive-en-fin-de-mises-a-jour-pourquoi-passer-a-windows-11-26h2/): Windows 11 24H2 Home et Pro ne reçoivent plus de mises à jour mensuelles. Voici pourquoi la migration vers Windows 11 26H2 devient importante.
+- [10 usages pratiques de l’IA dans la vie quotidienne](https://albexia.com/articles/fr/10-usages-pratiques-de-l-ia-dans-la-vie-quotidienne/): Découvrez 10 façons simples d’utiliser l’intelligence artificielle pour gagner du temps, apprendre plus facilement et organiser vos activités quotidiennes.
+- [Agents IA autonomes : ce qui devient réellement possible en 2026](https://albexia.com/articles/fr/agents-ia-autonomes-ce-qui-devient-reellement-possible-en-2026/)
+- [Annuaire IA : comment choisir l’outil adapté à vos besoins](https://albexia.com/articles/fr/annuaire-ia-comment-choisir-l-outil-adapte-a-vos-besoins/): Découvrez les critères essentiels pour choisir un outil d’intelligence artificielle selon votre objectif, votre budget et votre niveau de compétence.
+- [Comment protéger vos données face aux services IA](https://albexia.com/articles/fr/comment-proteger-vos-donnees-face-aux-services-ia/): Découvrez les bonnes pratiques essentielles pour protéger vos informations personnelles lorsque vous utilisez des outils d’intelligence artificielle en ligne.
+- [CustomGPT.ai : Comment créer un agent IA qui connaît votre entreprise par cœur (sans coder)](https://albexia.com/articles/fr/avis-customgpt-ai-agent-entreprise/): On a tous testé ChatGPT. C’est bluffant, c’est rapide, mais soyons honnêtes : dès qu’on lui demande des détails précis sur les tarifs de notre entreprise, les spécificités de notre dernier produit ou les règles de notre politique interne, il commence à inventer des réponses ou à répondre à côté.
+- [De l'idée à l'application en 10 minutes : La révolution du No-Code propulsé par l'IA](https://albexia.com/articles/fr/revolution-no-code-ia/): Pendant des décennies, lancer une application nécessitait une compétence rare et coûteuse : savoir coder. Aujourd'hui, tout change. En combinant la puissance de l'Intelligence Artificielle et la flexibilité du No-Code, créer un logiciel ne prend plus des mois : cela prend 10 minutes.
+- [France : la colère contre la vie chère dégénère en journée de chaos](https://albexia.com/articles/fr/france-la-colere-contre-la-vie-chere-degenere-en-journee-de-chaos/): Des centaines de milliers de personnes ont manifesté en France contre la vie chère, avant une soirée marquée par des violences et des dégradations.
+- [GPT-6, Gemini 4 et Mistral : quel modèle choisir selon vos besoins ?](https://albexia.com/articles/fr/gpt-6-gemini-4-et-mistral-quel-modele-choisir-selon-vos-besoins/): GPT-6, Gemini 4 Argon et Mistral Large 4 arrivent avec des usages différents. Voici comment choisir le bon modèle selon votre besoin et votre budget.
+- [Jeu vidéo et autonomie : quatre agents Gemini 4 Argon vainquent le Dragon de l’Ender dans Minecraft](https://albexia.com/articles/fr/jeu-video-et-autonomie-quatre-agents-gemini-4-argon-vainquent-le-dragon-de-l-ender-dans-minecraft/): Quatre agents Gemini 4 Argon ont surmonté les défis de Minecraft sans scénario imposé, en coopérant, en écrivant du code et en corrigeant leurs erreurs.
+- [L'IA rend-elle vraiment les petits plus forts… ou simplement plus dépendants ?](https://albexia.com/articles/fr/ia-petits-plus-forts/): L'IA promet aux petites structures la puissance de frappe d'une multinationale. Mais derrière cette promesse d'émancipation se cache une réalité plus nuancée : gagner en force aujourd'hui pourrait signifier perdre son autonomie demain.
+- [Les limites actuelles de l’intelligence artificielle expliquées simplement](https://albexia.com/articles/fr/les-limites-actuelles-de-l-intelligence-artificielle-expliquees-simplement/): Comprenez les principales limites de l’intelligence artificielle et découvrez pourquoi ses réponses doivent être vérifiées avant toute utilisation importante.
+- [Meta dévoile Muse Spark Open, un modèle open-weight de 816 milliards de paramètres](https://albexia.com/articles/fr/meta-devoile-muse-spark-open-un-modele-open-weight-de-816-milliards-de-parametres/): Meta rend accessible un modèle de très grande taille pensé pour le codage, les agents IA et le déploiement local sur des stations de travail performantes.
+- [Prompting : comment poser les bonnes questions à une IA](https://albexia.com/articles/fr/prompting-comment-poser-les-bonnes-questions-a-une-ia/): Apprenez à rédiger des instructions claires pour obtenir des réponses plus utiles, précises et adaptées avec les outils d’intelligence artificielle.
+- [Qu’est‑ce que l’intelligence artificielle ? Explications simples pour tous](https://albexia.com/articles/fr/qu-est-ce-que-l-intelligence-artificielle-explications-simples-pour-tous/): Une présentation claire des notions de base : IA, apprentissage automatique, réseaux de neurones et exemples concrets du quotidien.
+- [Régulation des agents IA : l’Union européenne et la FTC ouvrent des procédures parallèles visant OpenAI et Anthropic](https://albexia.com/articles/fr/regulation-des-agents-ia-l-union-europeenne-et-la-ftc-ouvrent-des-procedures-paralleles-visant-openai-et-anthropic/): L’Union européenne et la FTC ouvrent des procédures parallèles visant OpenAI et Anthropic, après plusieurs incidents impliquant des agents IA sortis de leurs environnements de test.
+- [Windows 11 24H2 arrive en fin de mises à jour : pourquoi passer à Windows 11 26H2](https://albexia.com/articles/fr/windows-11-24h2-arrive-en-fin-de-mises-a-jour-pourquoi-passer-a-windows-11-26h2/): Windows 11 24H2 Home et Pro ne reçoivent plus de mises à jour mensuelles. Voici pourquoi la migration vers Windows 11 26H2 devient importante.
 
 ## Comparatifs
 
-- [ChatGPT vs gemini-ai](https://leblancroben-afk.github.io/comparateur/chatgpt-vs-gemini-ai/)
-- [ChatGPT vs gemini-ai](https://leblancroben-afk.github.io/comparateur/chatgpt-vs-gemini-ai-en/)
-- [ChatGPT vs gemini-ai](https://leblancroben-afk.github.io/comparateur/chatgpt-vs-gemini-ai-es/)
+- [ChatGPT vs gemini-ai](https://albexia.com/comparateur/chatgpt-vs-gemini-ai/)
+- [ChatGPT vs gemini-ai](https://albexia.com/comparateur/chatgpt-vs-gemini-ai-en/)
+- [ChatGPT vs gemini-ai](https://albexia.com/comparateur/chatgpt-vs-gemini-ai-es/)
 
 ## Glossaire
 
-- [Agent IA](https://leblancroben-afk.github.io/glossaire/agent-ia/): Système d'intelligence artificielle capable d'exécuter des tâches de manière autonome, de prendre des décisions et d'interagir avec son environnement sans intervention humaine constante.
-- [API](https://leblancroben-afk.github.io/glossaire/api/): Interface de Programmation d'Application. Protocole permettant à deux logiciels de communiquer entre eux. Les APIs IA permettent d'intégrer des capacités d'intelligence artificielle dans n'importe quelle application.
-- [Apprentissage automatique](https://leblancroben-afk.github.io/glossaire/apprentissage-automatique/): Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient précis.
-- [Apprentissage profond](https://leblancroben-afk.github.io/glossaire/apprentissage-profond/): Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les images, le son ou le texte.
-- [Chatbot](https://leblancroben-afk.github.io/glossaire/chatbot/): Programme informatique simulant une conversation humaine. Les chatbots modernes utilisent l'IA pour comprendre le langage naturel et répondre de manière contextuelle.
-- [GPT](https://leblancroben-afk.github.io/glossaire/gpt/): Generative Pre-trained Transformer. Architecture de modèle de langage développée par OpenAI, entraînée sur d'immenses quantités de texte pour générer du langage naturel.
-- [Hallucination](https://leblancroben-afk.github.io/glossaire/hallucination/): Phénomène où un modèle IA génère des informations fausses, inventées ou incorrectes avec une apparente confiance. Un des défis majeurs des LLMs actuels.
+- [Agent IA](https://albexia.com/glossaire/agent-ia/): Système d'intelligence artificielle capable d'exécuter des tâches de manière autonome, de prendre des décisions et d'interagir avec son environnement sans intervention humaine constante.
+- [API](https://albexia.com/glossaire/api/): Interface de Programmation d'Application. Protocole permettant à deux logiciels de communiquer entre eux. Les APIs IA permettent d'intégrer des capacités d'intelligence artificielle dans n'importe quelle application.
+- [Apprentissage automatique](https://albexia.com/glossaire/apprentissage-automatique/): Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient précis.
+- [Apprentissage profond](https://albexia.com/glossaire/apprentissage-profond/): Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les images, le son ou le texte.
+- [Chatbot](https://albexia.com/glossaire/chatbot/): Programme informatique simulant une conversation humaine. Les chatbots modernes utilisent l'IA pour comprendre le langage naturel et répondre de manière contextuelle.
+- [GPT](https://albexia.com/glossaire/gpt/): Generative Pre-trained Transformer. Architecture de modèle de langage développée par OpenAI, entraînée sur d'immenses quantités de texte pour générer du langage naturel.
+- [Hallucination](https://albexia.com/glossaire/hallucination/): Phénomène où un modèle IA génère des informations fausses, inventées ou incorrectes avec une apparente confiance. Un des défis majeurs des LLMs actuels.
 

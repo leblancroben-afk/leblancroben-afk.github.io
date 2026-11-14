@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr" data-static-lang>
+<head>
+<meta charset="UTF-8">
+  <script src="/js/theme.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toutes les catégories — Albexia (76 outils IA)</title>
+<meta name="description" content="Explorez toutes nos catégories d'outils IA — 76 outils IA classés dans 13 catégories.">
+<link rel="canonical" href="https://albexia.com/categorie/fr/">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/categorie.css">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/themes.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Accueil</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
+  </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  <div class="nav-profile-slot">
+    <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+    </a>
+    <a href="/profil.html" id="nav-login-btn" class="nav-link" style="display:none">Connexion</a>
+  </div>
+  <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
+</nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
+<script type="module" src="/js/auth-nav.js"></script>
+<script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
+
+<main class="cat-page">
+  <div class="container">
+    <div class="hub-header">
+      <h1>Toutes les catégories</h1>
+      <p>Explorez toutes nos catégories d'outils IA</p>
+    </div>
+
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" id="hub-search" type="text" placeholder="Rechercher une catégorie..." autocomplete="off">
+    </div>
+
+    <div class="hub-stats-bar">
+      <div class="cat-stat">
+        <span class="cat-stat-ico">▦</span>
+        <div><strong>76</strong><span>Outils au total</span></div>
+      </div>
+      <div class="cat-stat">
+        <span class="cat-stat-ico">☰</span>
+        <div><strong>13</strong><span>Catégories</span></div>
+      </div>
+      
+      <div class="cat-stat">
+        <span class="cat-stat-ico">✦</span>
+        <div><strong>0.0</strong><span>Note moyenne</span></div>
+      </div>
+    </div>
+
+    <h2 class="hub-section-title">Catégories populaires</h2>
+    <div class="hub-grid" id="hub-grid">
+      <a class="hub-cat-tile" href="/categorie/fr/programmation-et-creation-d-applications/" data-name="programmation et création d'applications">
+      <span class="hub-cat-name">Programmation et création d'applications</span>
+      <span class="hub-cat-count">10 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/audio-musique/" data-name="audio &amp; musique">
+      <span class="hub-cat-name">Audio &amp; Musique</span>
+      <span class="hub-cat-count">10 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/seo/" data-name="seo">
+      <span class="hub-cat-name">SEO</span>
+      <span class="hub-cat-count">8 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/contenu/" data-name="contenu">
+      <span class="hub-cat-name">Contenu</span>
+      <span class="hub-cat-count">7 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/texte/" data-name="texte">
+      <span class="hub-cat-name">Texte</span>
+      <span class="hub-cat-count">7 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/redaction-et-marketing/" data-name="rédaction et marketing">
+      <span class="hub-cat-name">Rédaction et marketing</span>
+      <span class="hub-cat-count">6 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/juridique/" data-name="juridique">
+      <span class="hub-cat-name">Juridique</span>
+      <span class="hub-cat-count">5 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/video-et-animation/" data-name="vidéo et animation">
+      <span class="hub-cat-name">Vidéo et animation</span>
+      <span class="hub-cat-count">5 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/assistants-ia-et-recherche/" data-name="assistants ia et recherche">
+      <span class="hub-cat-name">Assistants IA et recherche</span>
+      <span class="hub-cat-count">5 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/images-et-design/" data-name="images et design">
+      <span class="hub-cat-name">Images et design</span>
+      <span class="hub-cat-count">5 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/productivite-etudes-et-traduction/" data-name="productivité, études et traduction">
+      <span class="hub-cat-name">Productivité, études et traduction</span>
+      <span class="hub-cat-count">5 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/productivite-et-travail/" data-name="productivité et travail">
+      <span class="hub-cat-name">Productivité et travail</span>
+      <span class="hub-cat-count">2 outils</span>
+    </a><a class="hub-cat-tile" href="/categorie/fr/presentation/" data-name="présentation">
+      <span class="hub-cat-name">Présentation</span>
+      <span class="hub-cat-count">1 outils</span>
+    </a>
+    </div>
+  </div>
+</main>
+
+<link rel="stylesheet" href="/css/footer.css">
+<footer id="site-footer">
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script src="/js/footer.js" defer></script>
+
+<script>
+  const input = document.getElementById('hub-search');
+  if (input) {
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      document.querySelectorAll('#hub-grid .hub-cat-tile').forEach(tile => {
+        tile.style.display = tile.dataset.name.includes(q) ? '' : 'none';
+      });
+    });
+  }
+</script>
+</body>
+</html>

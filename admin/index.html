@@ -3176,8 +3176,8 @@ Support français|oui|non|bool"></textarea>
 
     setVal('o-points-forts', joinLines(tool.points_forts, '\n'));
     setVal('o-limite', tool.limite || tool.limite_principale);
-    setVal('o-idees-utilisation', joinLines(tool.idees_utilisation, '\\n'));
-    setVal('o-prompts', joinLines(tool.prompts, '\\n'));
+    setVal('o-idees-utilisation', joinLines((tool.idees_utilisation||[]).flatMap(x=>String(x).split(/\\n|\r?\n/)).map(s=>s.trim()).filter(Boolean), '\n'));
+    setVal('o-prompts', joinLines((tool.prompts||[]).flatMap(x=>String(x).split(/\\n|\r?\n/)).map(s=>s.trim()).filter(Boolean), '\n'));
     setVal('o-alt-validees', (tool.alternatives_validees || []).join(', '));
     setVal('o-verifie-le', tool.verifie_le || '');
     setVal('o-idees-utilisation-en', en ? joinLines(en.idees_utilisation, '\\n') : '');
@@ -3533,7 +3533,11 @@ Support français|oui|non|bool"></textarea>
       const changelog = lignes('o-changelog').map(l=>{const[date,titre,desc]=l.split('|');return titre&&titre.trim()?{date:(date||'').trim(),titre:titre.trim(),desc:(desc||'').trim()}:null;}).filter(Boolean);
       const reseaux = {}; ['x','linkedin','youtube'].forEach(k=>{const v=gv('o-reseau-'+k); if(v) reseaux[k]=v;});
       const anneeVal = parseInt(gv('o-annee'), 10);
+      // Statut : on garde celui de l'outil existant (ex. « a_enrichir », « offline ») ;
+      // un outil sans statut est publié par défaut. Sans ce champ, setDoc l'effaçait à chaque sauvegarde.
+      const statutOutil = (editingTool && editingTool.status) || 'active';
       const communsNouveaux = {
+        status: statutOutil,
         type_outil: gv('o-type-outil'), sous_categorie: gv('o-sous-cat'), modele: gv('o-modele') || undefined,
         annee_creation: Number.isInteger(anneeVal) ? anneeVal : undefined, support: gv('o-support'),
         api_url: gv('o-api-url'), a_partir_de: gv('o-a-partir-de'),

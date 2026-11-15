@@ -3945,6 +3945,7 @@ Support français|oui|non|bool"></textarea>
       ['o-limite', `o-limite-${targetLang}`, 'text'],
       ['o-prompts', `o-prompts-${targetLang}`, 'lignes'],
       ['o-meta-desc',       `o-meta-desc-${targetLang}`,    'text'],
+      ['o-tarifs',          `o-tarifs-${targetLang}`,       'tarifs'],
     ];
   }
   function categorieFieldsToTranslate(targetLang) {
@@ -4009,6 +4010,20 @@ Support français|oui|non|bool"></textarea>
       ['cp-meta-title',        `cp-meta-title-${targetLang}`,        'text'],
       ['cp-meta-description',  `cp-meta-description-${targetLang}`,  'text'],
     ];
+  }
+
+  // Lignes « nom|prix|période|description » : on traduit nom, période et description, le prix reste tel quel
+  async function translateTarifsTxt(text, targetLang) {
+    const lignes = (text || '').split('\n').map(l => l.trim()).filter(Boolean);
+    const out = [];
+    for (const ligne of lignes) {
+      const [nom = '', prix = '', periode = '', desc = ''] = ligne.split('|').map(s => s.trim());
+      const nomT  = nom     ? await translateText(nom, targetLang, 'text')     : ''; await pause(300);
+      const perT  = periode ? await translateText(periode, targetLang, 'text') : ''; await pause(300);
+      const descT = desc    ? await translateText(desc, targetLang, 'text')    : ''; await pause(300);
+      out.push([nomT || nom, prix, perT || periode, descT || desc].join('|'));
+    }
+    return out.join('\n');
   }
 
   async function translateLignes(text, targetLang) {
@@ -4196,6 +4211,8 @@ Support français|oui|non|bool"></textarea>
             destEl.value = await translateFonctionnalites(srcText, targetLang);
           } else if (format === 'faq') {
             destEl.value = await translateFaq(srcText, targetLang);
+          } else if (format === 'tarifs') {
+            destEl.value = await translateTarifsTxt(srcText, targetLang);
           } else if (format === 'lignes') {
             destEl.value = await translateLignes(srcText, targetLang);
           } else if (format === 'criteres') {

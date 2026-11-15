@@ -401,7 +401,8 @@ async function loadAllData() {
     ]);
 
     // Un outil encore en attente d'enrichissement IA est incomplet : jamais affiché.
-    state.tools   = normaliserCategories(toolsSnap.docs.map(d => d.data()).filter(t => t.status !== 'a_enrichir'));
+    // Ne montre que les outils dont la fiche existe sur le site (évite les 404 pendant la génération).
+    state.tools   = normaliserCategories(toolsSnap.docs.map(d => d.data()).filter(t => t.status !== 'a_enrichir' && t.fiche_generee === true));
     state.gallery = gallerySnap.docs.map(d => d.data());
 
     // Articles créateurs (revendication + rédaction) — champs reconstruits

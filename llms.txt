@@ -37,6 +37,7 @@ Langue : français.
 
 ## Images et design
 
+- [GetAIPhotoEditor](https://albexia.com/tools/standard/fr/getaiphotoeditor/): Éditez vos photos avec l'IA grâce à des instructions simples. Changez de fond, modifiez des vêtements et améliorez vos images avec crédits gratuits pour commencer, sans inscription.
 - [Looka](https://albexia.com/tools/standard/fr/looka/): Looka est un générateur de logos et de chartes graphiques propulsé par l'IA. Il crée des identités visuelles complètes à partir de vos préférences de style et de couleurs.
 - [Microsoft Designer](https://albexia.com/tools/standard/fr/microsoft-designer/): Microsoft Designer est une application de conception graphique assistée par l'intelligence artificielle. Elle permet de créer des visuels, des invitations et des publications à partir de descriptions textuelles.
 - [Midjourney](https://albexia.com/tools/featured/fr/midjourney/)

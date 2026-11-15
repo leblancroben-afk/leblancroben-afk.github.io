@@ -4093,23 +4093,38 @@ function calculerAlternatives(tools, reviews) {
   }
   for (const [fid, liste] of avisParFam) avisParFam.set(fid, liste.sort((x, y) => y.date - x.date).slice(0, 5));
   const classement = new Map();
+  // Doc de référence d'une famille : la version FR, sinon la première langue disponible.
+  const docRef = fam => fam.docs.fr || Object.values(fam.docs)[0] || null;
+  const cleSous = doc => cleCategorieAlt(doc.sous_categorie || '');
   for (const [fid, fam] of familles) {
-    const fr = fam.docs.fr;
-    if (!fr || !fr.category) { classement.set(fid, []); continue; }
-    const cle = cleCategorieAlt(fr.category);
-    const candidats = [...familles.values()].filter(g => g.id !== fid && g.proposable && g.docs.fr && cleCategorieAlt(g.docs.fr.category) === cle);
+    const ref = docRef(fam);
+    if (!ref || !ref.category) { classement.set(fid, []); continue; }
+    const cle = cleCategorieAlt(ref.category);
+    const sousCle = cleSous(ref);
+    // Candidats : même catégorie (sous-catégorie prioritaire, testée plus bas)
+    const candidats = [...familles.values()].filter(g => {
+      const gd = docRef(g);
+      return g.id !== fid && g.proposable && gd && cleCategorieAlt(gd.category) === cle && publieAlt(gd);
+    });
     const note = id => notes.get(id) || { avg: null, count: 0 };
-    const avec = candidats.filter(g => note(g.id).count > 0)
-      .sort((x, y) => (note(y.id).avg - note(x.id).avg)
-        || (note(y.id).count - note(x.id).count)
-        || x.docs.fr.name.localeCompare(y.docs.fr.name));
-    const sans = candidats.filter(g => note(g.id).count === 0).sort((x, y) => x.id.localeCompare(y.id));
-    const rng = rngAlt(hashSlugAlt(slugFicheAlt(fr)));      // graine stable : même résultat tant que les données ne changent pas
-    for (let i = sans.length - 1; i > 0; i--) {
-      const j = Math.floor(rng() * (i + 1));
-      [sans[i], sans[j]] = [sans[j], sans[i]];
-    }
-    classement.set(fid, [...avec, ...sans].map(g => g.id));
+    const nomDe = g => (docRef(g).name || '');
+    // 1) même sous-catégorie, 2) autres de la même catégorie
+    const memeSous = c => sousCle && cleSous(docRef(c)) === sousCle;
+    const trier = liste => {
+      const avec = liste.filter(g => note(g.id).count > 0)
+        .sort((x, y) => (note(y.id).avg - note(x.id).avg)
+          || (note(y.id).count - note(x.id).count)
+          || nomDe(x).localeCompare(nomDe(y)));
+      const sans = liste.filter(g => note(g.id).count === 0).sort((x, y) => x.id.localeCompare(y.id));
+      const rng = rngAlt(hashSlugAlt(slugFicheAlt(ref)));   // graine stable : même résultat tant que les données ne changent pas
+      for (let i = sans.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [sans[i], sans[j]] = [sans[j], sans[i]];
+      }
+      return [...avec, ...sans];
+    };
+    const ordre = [...trier(candidats.filter(memeSous)), ...trier(candidats.filter(g => !memeSous(g)))];
+    classement.set(fid, ordre.map(g => g.id));
   }
   const parNom = new Map();
   for (const [fid, fam] of familles) if (fam.docs.fr) parNom.set(cleNomAlt(fam.docs.fr.name), fid);
@@ -4134,7 +4149,7 @@ function alternativesPourFiche(t, calcul) {
   for (const gid of ordre) {
     if (sortie.length >= 6) break;
     const doc = calcul.familles.get(gid) && calcul.familles.get(gid).docs[langue];
-    if (!doc) continue;                                    // pas de version publiée dans cette langue
+    if (!doc || !publieAlt(doc)) continue;                // pas de version publiée dans cette langue (ou version en brouillon)
     const n = calcul.notes.get(gid) || { avg: null, count: 0 };
     sortie.push({
       nom: doc.name,
@@ -4287,6 +4302,10 @@ async function main() {
   // à la fin du run, lue ensuite par profil.html pour activer le lien
   // "Voir la fiche" (évite les 404 entre l'approbation admin et ce build).
   const soumissionsAMettreAJour = new Set();
+  // Flag fiche_generee sur chaque outil : true si la page existe sur le site, false sinon.
+  // L'annuaire n'affiche que les outils dont la page existe réellement.
+  const outilsAvecFiche = new Map();
+  const marquerFiche = (tool, ok) => { if (tool.fiche_generee !== ok) outilsAvecFiche.set(tool.id, ok); };
 
   for (const tool of tools) {
     const toolHash = hashDoc(tool);
@@ -4298,7 +4317,7 @@ async function main() {
     if (hasChanged) changedToolIds.add(toolId);
 
     // Toggle générer_fiche
-    if (tool.generer_fiche === false) { noFiche++; continue; }
+    if (tool.generer_fiche === false) { noFiche++; marquerFiche(tool, false); continue; }
 
     const plan   = tool.plan || '';
     const langue = tool.langue || 'fr';
@@ -4314,7 +4333,7 @@ async function main() {
 
     // Skip l'écriture si rien n'a changé ET le fichier existe déjà sur disque
     // (le fichier peut manquer après un nettoyage manuel ou un premier run partiel).
-    if (!hasChanged && fs.existsSync(filePath)) { unchanged++; continue; }
+    if (!hasChanged && fs.existsSync(filePath)) { unchanged++; marquerFiche(tool, true); continue; }
 
     let html;
     if (tool.status === 'offline')     html = generateOfflineTakeover(tool, tools);
@@ -4323,6 +4342,7 @@ async function main() {
     fs.mkdirSync(folder, { recursive: true });
     fs.writeFileSync(filePath, html, 'utf8');
     generated++;
+    marquerFiche(tool, true);
 
     if (tool.soumission_id) soumissionsAMettreAJour.add(tool.soumission_id);
 
@@ -4336,6 +4356,21 @@ async function main() {
   console.log(`  tools/featured/es/{slug}/index.html`);
   console.log(`  tools/starter/{langue}/{slug}/index.html`);
   console.log(`  tools/standard/{langue}/{slug}/index.html`);
+
+  // ─── FLAG fiche_generee SUR LES OUTILS ───
+  // Écrit uniquement les changements (pas de timestamp : évite de modifier le hash à chaque run).
+  if (outilsAvecFiche.size > 0) {
+    const entrees = [...outilsAvecFiche.entries()];
+    for (let i = 0; i < entrees.length; i += 400) {
+      const batch = db.batch();
+      for (const [id, ok] of entrees.slice(i, i + 400)) {
+        batch.set(db.collection('outils').doc(String(id)), { fiche_generee: ok }, { merge: true });
+      }
+      try { await batch.commit(); }
+      catch (err) { console.error('⚠️ Erreur flag fiche_generee sur outils :', err.message); }
+    }
+    console.log(`✓ fiche_generee mis à jour pour ${entrees.length} outil(s).`);
+  }
 
   // ─── CONFIRMATION DE PUBLICATION VERS "soumissions" ───
   // Permet à profil.html de savoir que la fiche existe réellement sur le

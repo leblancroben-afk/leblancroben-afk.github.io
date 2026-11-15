@@ -106,6 +106,21 @@ async function translateListe(items, targetLang) {
   return out;
 }
 
+// Traduit les formules tarifaires : nom, période et description.
+// Le prix (montant) ne se traduit pas : on le garde tel quel.
+async function translateTarifs(list, langueCible) {
+  if (!Array.isArray(list)) return [];
+  const out = [];
+  for (const t of list) {
+    if (!t || typeof t !== 'object') continue;
+    const nom = await translateText(t.nom || '', langueCible); await pause(300);
+    const periode = await translateText(t.periode || '', langueCible); await pause(300);
+    const desc = await translateText(t.desc || '', langueCible); await pause(300);
+    out.push({ nom: nom || t.nom || '', prix: t.prix || '', periode: periode || t.periode || '', desc: desc || t.desc || '' });
+  }
+  return out;
+}
+
 async function traduireContenu(outil, langueCible) {
   const name = outil.name || ''; // nom de marque : identique dans toutes les langues, jamais traduit
   const description = await translateText(outil.description || '', langueCible); await pause(400);
@@ -116,10 +131,11 @@ async function traduireContenu(outil, langueCible) {
   const faq = await translateFaq(outil.faq, langueCible);
   const points_forts = await translateListe(outil.points_forts, langueCible);
   const limite = outil.limite ? await translateText(outil.limite, langueCible) : '';
+  const tarifs = await translateTarifs(outil.tarifs, langueCible);
   const idees_utilisation = await translateListe(outil.idees_utilisation, langueCible);
   const prompts = await translateListe(outil.prompts, langueCible);
 
-  return { name, description, ideal_pour, presentation, meta_description, fonctionnalites, faq, points_forts, limite, idees_utilisation, prompts };
+  return { name, description, ideal_pour, presentation, meta_description, fonctionnalites, faq, points_forts, limite, idees_utilisation, prompts, tarifs };
 }
 
 // ══════════════════════════════════════
@@ -150,6 +166,7 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
     // Sections enrichies : même structure que l'admin. Traduites ici, vérifiées ensuite dans l'admin.
     points_forts: traduit.points_forts || [],
     limite: traduit.limite || '',
+    tarifs: traduit.tarifs || [],
     idees_utilisation: traduit.idees_utilisation || [],
     prompts: traduit.prompts || [],
     presentation: traduit.presentation || '',

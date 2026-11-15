@@ -386,3 +386,11 @@
 .fo-logo.fo-logo-mini { width: 40px; height: 40px; border-radius: 8px; background: var(--bg3); }
 .fo-logo-mini .fo-letter { font-size: 15px; color: var(--text-muted); }
 .fo-logo-mini img { padding: 4px; background: var(--bg2); }
+
+/* Avis écrits dans le HTML (remplacés par le widget au chargement) */
+.fo-avis-statique { display: flex; flex-direction: column; gap: 12px; }
+.fo-avis-item { border-top: 1px solid var(--border); padding-top: 12px; }
+.fo-avis-top { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; font-size: 13px; color: var(--text-muted); }
+.fo-avis-top b { color: var(--text); font-weight: 600; }
+.fo-avis-note { font-weight: 600; color: var(--text); }
+.fo-avis-item p { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: var(--text); white-space: pre-line; }

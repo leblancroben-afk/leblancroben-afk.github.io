@@ -295,6 +295,8 @@ function generateFiche(tool, allTools = [], deps) {
     ? `<span class="fo-badge fo-badge-ok">${ic('check')} ${E(T.verified)}</span>` : '';
 
   const previewImg = galerie[0];
+  // Image de partage (X, Facebook, WhatsApp) : la même que l'aperçu de la fiche.
+  const imageSociale = previewImg ? safeUrl(previewImg.url) : '';
   const previewBlock = previewImg
     ? `<div class="fo-preview has-img"><div class="fo-preview-bar"><span class="fo-preview-mono" id="fo-preview-cap">${E(previewImg.legende || name)}</span></div>
         <img id="fo-preview-img" src="${E(safeUrl(previewImg.url))}" alt="${E(name)} — interface" fetchpriority="high"></div>`
@@ -668,6 +670,9 @@ ${hreflangTags}
   <meta property="og:description" content="${metaDesc}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="${canonicalUrl}">
+${imageSociale
+    ? `  <meta property="og:image" content="${E(imageSociale)}">\n  <meta name="twitter:card" content="summary_large_image">\n  <meta name="twitter:image" content="${E(imageSociale)}">`
+    : `  <meta name="twitter:card" content="summary">`}
   <meta property="og:locale" content="${ogLocale}">
 ${ogLocaleAlternates}
   <link rel="icon" type="image/svg+xml" href="${FAVICON}">

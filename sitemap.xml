@@ -1639,6 +1639,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/freepik-ai/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/getaiphotoeditor/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/getaiphotoeditor/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/getaiphotoeditor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/getaiphotoeditor/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/google-veo/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/google-veo/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/google-veo/"/>
@@ -2272,6 +2278,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/freepik-ai/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/es/getaiphotoeditor/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/getaiphotoeditor/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/getaiphotoeditor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/getaiphotoeditor/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/es/google-veo/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/google-veo/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/google-veo/"/>
@@ -2886,6 +2898,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/freepik-ai/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/freepik-ai/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/freepik-ai/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/getaiphotoeditor/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/getaiphotoeditor/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/getaiphotoeditor/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/getaiphotoeditor/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/getaiphotoeditor/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/google-veo/</loc>

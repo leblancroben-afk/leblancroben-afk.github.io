@@ -275,7 +275,9 @@ function generateFiche(tool, allTools = [], deps) {
   const tarifsOk = tarifsRaw.length && tool.tarifs_verifie !== false;
 
   let galerie = (g('galerie') || []).map((x) => (typeof x === 'string' ? { url: x } : x)).filter((x) => x && safeUrl(x.url));
-  if (!galerie.length && safeUrl(g('screenshot_url'))) galerie = [{ url: g('screenshot_url'), legende: '' }];
+  // L'image principale (screenshot_url) est toujours la première : elle sert d'aperçu et apparaît dans les captures.
+  const principale = safeUrl(g('screenshot_url'));
+  if (principale && !galerie.some((x) => x.url === principale)) galerie.unshift({ url: principale, legende: '' });
   galerie = galerie.slice(0, LIMITES.gallery);
 
   // ── Hero ──

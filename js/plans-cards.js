@@ -1,19 +1,16 @@
 /**
  * ============================================================
- *  ALBEXIA — Cartes de formules (Standard / Starter / Featured)
+ *  ALBEXIA — Cartes de formules (Gratuit / Starter / Featured)
  *  Fichier : js/plans-cards.js
- *  Version : 2.0 — FR/EN/ES
+ *  Version : 3.0 — FR/EN/ES, paiement unique par carte (Freda Pay)
  * ============================================================
  *
  *  Source unique de vérité : le doc Firestore config/plans, éditable
- *  depuis admin-index.html (onglet "💳 Plans & Tarifs"), avec un
- *  bouton "🌐 Traduire depuis le FR" identique à celui des fiches
- *  outils (LibreTranslate auto-hébergé). Utilisé par soumettre.html
- *  et profil.html pour ne jamais avoir de prix/textes codés en dur.
+ *  depuis admin/index.html (onglet « Plans & Tarifs »). Les valeurs
+ *  ci-dessous ne servent que de repli si Firestore est indisponible.
  *
- *  Le Worker de paiement (worker-paiement-soumissions.js) lit le
- *  MÊME doc pour le montant réellement facturé — donc le prix
- *  affiché ici et le prix facturé ne peuvent jamais diverger.
+ *  Le Worker de paiement lit le MÊME doc pour le montant facturé :
+ *  le prix affiché ici et le prix facturé ne peuvent pas diverger.
  * ============================================================
  */
 
@@ -21,45 +18,44 @@ import { db, doc, getDoc } from './firebase-config.js';
 
 const PLANS_DEFAUT = {
   standard: {
-    features_fr: ['Fiche outil complète', 'Position standard dans la catégorie'],
-    features_en: ['Full tool listing', 'Standard position in category'],
-    features_es: ['Ficha completa de la herramienta', 'Posición estándar en la categoría'],
+    features_fr: ['Fiche outil complète à vie', 'Soumise à validation'],
+    features_en: ['Full tool listing for life', 'Subject to review'],
+    features_es: ['Ficha completa de por vida', 'Sujeta a validación'],
   },
   starter: {
-    prix: 9,
-    features_fr: ['Fiche outil complète', 'Badge Partenaire Albexia', 'Position prioritaire dans la catégorie'],
-    features_en: ['Full tool listing', 'Albexia Partner badge', 'Priority position in category'],
-    features_es: ['Ficha completa de la herramienta', 'Insignia de Socio Albexia', 'Posición prioritaria en la categoría'],
+    prix: 39,
+    features_fr: ['Fiche complète avec badge vérifié', 'Jusqu\'à 3 articles de blog liés à la fiche', 'Accès au tableau de suivi', 'Publiée sans mise en avant'],
+    features_en: ['Full listing with verified badge', 'Up to 3 blog articles linked to the listing', 'Access to the tracking dashboard', 'Published without spotlight'],
+    features_es: ['Ficha completa con insignia verificada', 'Hasta 3 artículos de blog vinculados a la ficha', 'Acceso al panel de seguimiento', 'Publicada sin destacado'],
   },
   featured: {
-    prix: 9,
+    prix: 59,
     badge_fr: 'Recommandé', badge_en: 'Recommended', badge_es: 'Recomendado',
-    features_fr: ['Tout Starter, plus :', 'Mise en avant éditoriale', 'Mention newsletter & réseaux sociaux', 'Article de blog dédié (si pertinent)', 'Notification en vedette sur le site'],
-    features_en: ['Everything in Starter, plus:', 'Editorial spotlight', 'Newsletter & social media mention', 'Dedicated blog post (if relevant)', 'Featured site notification'],
-    features_es: ['Todo lo de Starter, más:', 'Destaque editorial', 'Mención en boletín y redes sociales', 'Artículo de blog dedicado (según relevancia)', 'Notificación destacada en el sitio'],
+    features_fr: ['Fiche complète avec badge vérifié', 'Mise en avant sur l\'accueil, section sponsors', 'Présente dans la newsletter', 'Jusqu\'à 5 articles de blog liés à la fiche', 'Accès au tableau de suivi'],
+    features_en: ['Full listing with verified badge', 'Homepage spotlight, sponsors section', 'Featured in the newsletter', 'Up to 5 blog articles linked to the listing', 'Access to the tracking dashboard'],
+    features_es: ['Ficha completa con insignia verificada', 'Destacado en la página de inicio, sección de patrocinadores', 'Presente en el boletín', 'Hasta 5 artículos de blog vinculados a la ficha', 'Acceso al panel de seguimiento'],
   },
 };
 
-// Textes fixes de l'interface (pas du contenu éditable par l'admin) — un
-// petit i18n local, comme le reste du chrome du site.
+// Textes fixes de l'interface (pas du contenu éditable par l'admin)
 const TEXTES_UI = {
   fr: {
-    plansNote: 'Starter et Featured : paiement en crypto (USDT), lien envoyé après validation de votre soumission.',
-    std: { desc: "L'essentiel pour être découvert", price: 'Gratuit', sub: 'toujours', cta: 'Choisir Standard' },
-    starter: { desc: 'Pour une fiche qui se démarque', sub: 'paiement unique', cta: 'Choisir Starter' },
-    featured: { desc: 'Visibilité continue et mise en avant', sub: '/ mois', cta: 'Choisir Featured' },
+    plansNote: 'Starter et Featured : paiement unique par carte (Visa, Mastercard, USD). Lien envoyé après validation de votre soumission.',
+    std: { desc: 'L\'essentiel pour être découvert', price: 'Gratuit', sub: 'à vie', cta: 'Choisir Gratuit' },
+    starter: { desc: 'Pour une fiche qui se démarque', sub: 'paiement unique · 6 mois', cta: 'Choisir Starter' },
+    featured: { desc: 'Visibilité et mise en avant', sub: 'paiement unique · 12 mois', cta: 'Choisir Featured' },
   },
   en: {
-    plansNote: 'Starter and Featured: crypto payment (USDT), link sent after your submission is approved.',
-    std: { desc: 'The essentials to get discovered', price: 'Free', sub: 'always', cta: 'Choose Standard' },
-    starter: { desc: 'For a listing that stands out', sub: 'one-time payment', cta: 'Choose Starter' },
-    featured: { desc: 'Ongoing visibility and spotlight', sub: '/ month', cta: 'Choose Featured' },
+    plansNote: 'Starter and Featured: one-time card payment (Visa, Mastercard, USD). Link sent after your submission is approved.',
+    std: { desc: 'The essentials to get discovered', price: 'Free', sub: 'for life', cta: 'Choose Free' },
+    starter: { desc: 'For a listing that stands out', sub: 'one-time payment · 6 months', cta: 'Choose Starter' },
+    featured: { desc: 'Visibility and spotlight', sub: 'one-time payment · 12 months', cta: 'Choose Featured' },
   },
   es: {
-    plansNote: 'Starter y Featured: pago en cripto (USDT), enlace enviado tras la validación de tu envío.',
-    std: { desc: 'Lo esencial para ser descubierto', price: 'Gratis', sub: 'siempre', cta: 'Elegir Estándar' },
-    starter: { desc: 'Para una ficha que destaca', sub: 'pago único', cta: 'Elegir Starter' },
-    featured: { desc: 'Visibilidad continua y destaque', sub: '/ mes', cta: 'Elegir Featured' },
+    plansNote: 'Starter y Featured: pago único con tarjeta (Visa, Mastercard, USD). Enlace enviado tras la validación de tu envío.',
+    std: { desc: 'Lo esencial para ser descubierto', price: 'Gratis', sub: 'de por vida', cta: 'Elegir Gratis' },
+    starter: { desc: 'Para una ficha que destaca', sub: 'pago único · 6 meses', cta: 'Elegir Starter' },
+    featured: { desc: 'Visibilidad y destacado', sub: 'pago único · 12 meses', cta: 'Elegir Featured' },
   },
 };
 
@@ -106,12 +102,10 @@ function echapperHtml(str) {
 
 /**
  * Génère le HTML des 3 cartes dans la langue demandée ('fr'|'en'|'es'),
- * avec repli automatique sur le FR si une langue n'a jamais été traduite
- * par l'admin (features_en vide, par ex.).
+ * avec repli sur le FR si une langue n'est pas encore traduite.
  *
- * `onSelectFnName` est le nom (chaîne) d'une fonction globale déjà
- * définie par la page hôte, appelée avec le tier ('gratuit'|'starter'
- * |'featured') au clic sur le bouton.
+ * `onSelectFnName` est le nom d'une fonction globale définie par la page
+ * hôte, appelée avec le tier ('gratuit'|'starter'|'featured') au clic.
  */
 export function rendreCartesPlans(plans, onSelectFnName, langue = 'fr') {
   const l = ['fr', 'en', 'es'].includes(langue) ? langue : 'fr';
@@ -123,7 +117,7 @@ export function rendreCartesPlans(plans, onSelectFnName, langue = 'fr') {
   return `
     <div class="plans-grid">
       <div class="plan-card">
-        <div class="plan-name">Standard</div>
+        <div class="plan-name">Gratuit</div>
         <div class="plan-desc">${t.std.desc}</div>
         <div class="plan-price free">${t.std.price}</div>
         <div class="plan-price-sub">${t.std.sub}</div>

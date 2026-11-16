@@ -41,19 +41,19 @@ const PLANS_DEFAUT = {
 const TEXTES_UI = {
   fr: {
     plansNote: 'Starter et Featured : paiement unique par carte (Visa, Mastercard, USD). Lien envoyé après validation de votre soumission.',
-    std: { desc: 'L\'essentiel pour être découvert', price: 'Gratuit', sub: 'à vie', cta: 'Choisir Gratuit' },
+    std: { desc: 'L\'essentiel pour être découvert', price: '0$', sub: 'à vie', cta: 'Choisir Gratuit' },
     starter: { desc: 'Pour une fiche qui se démarque', sub: 'paiement unique · 6 mois', cta: 'Choisir Starter' },
     featured: { desc: 'Visibilité et mise en avant', sub: 'paiement unique · 12 mois', cta: 'Choisir Featured' },
   },
   en: {
     plansNote: 'Starter and Featured: one-time card payment (Visa, Mastercard, USD). Link sent after your submission is approved.',
-    std: { desc: 'The essentials to get discovered', price: 'Free', sub: 'for life', cta: 'Choose Free' },
+    std: { desc: 'The essentials to get discovered', price: '0$', sub: 'for life', cta: 'Choose Free' },
     starter: { desc: 'For a listing that stands out', sub: 'one-time payment · 6 months', cta: 'Choose Starter' },
     featured: { desc: 'Visibility and spotlight', sub: 'one-time payment · 12 months', cta: 'Choose Featured' },
   },
   es: {
     plansNote: 'Starter y Featured: pago único con tarjeta (Visa, Mastercard, USD). Enlace enviado tras la validación de tu envío.',
-    std: { desc: 'Lo esencial para ser descubierto', price: 'Gratis', sub: 'de por vida', cta: 'Elegir Gratis' },
+    std: { desc: 'Lo esencial para ser descubierto', price: '0$', sub: 'de por vida', cta: 'Elegir Gratis' },
     starter: { desc: 'Para una ficha que destaca', sub: 'pago único · 6 meses', cta: 'Elegir Starter' },
     featured: { desc: 'Visibilidad y destacado', sub: 'pago único · 12 meses', cta: 'Elegir Featured' },
   },

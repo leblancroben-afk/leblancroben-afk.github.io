@@ -1927,12 +1927,18 @@ Support français|oui|non|bool"></textarea>
       listEl.innerHTML = items.map(s => {
         const tier = s.tier_demande || 'gratuit';
         const isProcessing = s.status === 'processing';
+        const payant = tier === 'starter' || tier === 'featured';
+        const paye = s.payment_status === 'paye';
+        const bloque = payant && !paye;
+        const badgePaiement = !payant ? '' : paye
+          ? '<span style="margin-left:8px;font-size:11px;padding:2px 8px;border-radius:10px;background:#0e7a5f;color:#fff;">✅ Payé</span>'
+          : '<span style="margin-left:8px;font-size:11px;padding:2px 8px;border-radius:10px;background:#b7791f;color:#fff;">⏳ En attente de paiement</span>';
         const dateStr = s.created_at?.toDate ? s.created_at.toDate().toLocaleDateString('fr-FR', {day:'2-digit',month:'short',year:'numeric'}) : '';
         return `
         <div class="soumission-card ${tier === 'featured' ? 'featured' : ''}" data-id="${s.id}">
           <div class="soumission-top">
             <div>
-              <div class="soumission-name">${escapeHtml(s.nom_outil || 'Sans nom')}${isProcessing ? '<span class="soumission-status-badge">⏳ En cours</span>' : ''}</div>
+              <div class="soumission-name">${escapeHtml(s.nom_outil || 'Sans nom')}${isProcessing ? '<span class="soumission-status-badge">⏳ En cours</span>' : ''}${badgePaiement}</div>
               <div class="soumission-meta">
                 <a href="${escapeHtml(s.url_outil || '#')}" target="_blank" rel="noopener">${escapeHtml(s.url_outil || '')}</a>
                 · ${escapeHtml(s.categorie || '—')} · ${escapeHtml(s.email_contact || '—')}
@@ -1943,7 +1949,7 @@ Support français|oui|non|bool"></textarea>
           <p class="soumission-desc">${escapeHtml(s.description || '')}</p>
           ${s.extras ? `<div class="soumission-extras">💬 ${escapeHtml(s.extras)}</div>` : ''}
           <div class="soumission-actions">
-            <button class="btn-traiter" data-id="${s.id}">${isProcessing ? '→ Reprendre le traitement' : '→ Traiter (créer la fiche)'}</button>
+            <button class="btn-traiter" data-id="${s.id}" ${bloque ? 'disabled title="Paiement non confirmé" style="opacity:.4;cursor:not-allowed;"' : ''}>${isProcessing ? '→ Reprendre le traitement' : '→ Traiter (créer la fiche)'}</button>
             ${isProcessing ? `<button class="btn-reprendre" data-id="${s.id}">↩ Remettre en attente</button>` : ''}
             <button class="btn-rejeter" data-id="${s.id}">Rejeter</button>
             <button class="btn-rejeter" data-id="${s.id}" data-existant="1">Rejeter (déjà existant)</button>
@@ -1983,6 +1989,11 @@ Support français|oui|non|bool"></textarea>
 
   async function traiterSoumission(s) {
     if (!s) return;
+    const payant = s.tier_demande === 'starter' || s.tier_demande === 'featured';
+    if (payant && s.payment_status !== 'paye') {
+      alert('Paiement non confirmé pour cette soumission. Elle ne peut pas être traitée avant le paiement.');
+      return;
+    }
     document.querySelector('.tab-btn[data-tab="outils"]').click();
     exitEditMode();
 

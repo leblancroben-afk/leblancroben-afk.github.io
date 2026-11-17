@@ -550,6 +550,7 @@
     html, :root, html[data-theme="light"], html[data-theme="dark"] { --accent: var(--text); --accent-ink: var(--text); --purple: var(--text); --pink: var(--text); }
   </style>
   <link rel="canonical" href="https://albexia.com/soumettre/">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -699,6 +700,9 @@
       <p id="zone-login-erreur"></p>
     </div>
 
+    <div class="turnstile-zone" style="display:flex;justify-content:center;margin:12px 0;">
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAGFvyQqT8dICX8zc" data-callback="onTurnstileOk" data-theme="light"></div>
+    </div>
     <div id="plans-cards-container">
       <p style="text-align:center;color:var(--text-muted);padding:2rem 0; position:relative; z-index:1;" data-i18n="soum.loadingPlans">Chargement des formules…</p>
     </div>
@@ -998,19 +1002,51 @@ if (langSwitch && langCurrent) {
   // "Choisir Standard/Starter/Featured"). Remplace l'ancien choisirFormule()
   // qui se contentait de synchroniser un <select> — ici on valide l'étape 1
   // puis on soumet directement à Firestore.
+  const WORKER_SOUMISSION_URL = 'https://albexia-paiement.leblancroben.workers.dev/soumettre-payant';
+  let turnstileToken = null;
+  window.onTurnstileOk = function(token) { turnstileToken = token; };
+
+  async function payerSoumission(tier, btn) {
+    const original = btn ? btn.textContent : '';
+    document.querySelectorAll('#plans-cards-container .btn-plan').forEach(b => b.disabled = true);
+    if (btn) btn.textContent = '…';
+    try {
+      const donnees = ramasserDonnees(tier);
+      const res = await fetch(WORKER_SOUMISSION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...donnees, turnstile_token: turnstileToken }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.checkout_url) {
+        alert(data.error || 'Le paiement n\'a pas pu démarrer. Réessayez dans un instant.');
+        return;
+      }
+      window.location.href = data.checkout_url;
+    } catch (err) {
+      console.error('[soumettre] Paiement impossible :', err);
+      alert('Connexion impossible. Vérifiez votre réseau et réessayez.');
+    } finally {
+      document.querySelectorAll('#plans-cards-container .btn-plan').forEach(b => b.disabled = false);
+      if (btn) btn.textContent = original;
+    }
+  }
+
+  if (new URLSearchParams(location.search).get('paiement') === 'succes') {
+    alert('Paiement reçu. Votre soumission est en cours de vérification. Nous vous écrirons à l\'adresse indiquée.');
+  }
+
   window.choisirFormuleSoumission = function(tier, evt) {
     if (!form1.reportValidity()) { goToStep(1); return; }
     const estPayant = tier === 'starter' || tier === 'featured';
     const btn = evt && evt.target ? evt.target.closest('.btn-plan') : null;
 
-    // Starter/Featured nécessite un compte : sinon personne ne verrait
-    // jamais le bouton "Payer maintenant" (celui-ci vit dans profil.html,
-    // filtré par uid).
-    if (estPayant && !window._firebaseUser) {
-      tierEnAttente = tier;
-      zoneLogin.classList.add('show');
-      zoneLogin.style.display = 'block';
-      zoneLogin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (estPayant) {
+      if (!turnstileToken) {
+        alert('Veuillez valider la vérification anti-spam ci-dessus, puis réessayez.');
+        return;
+      }
+      payerSoumission(tier, btn);
       return;
     }
 

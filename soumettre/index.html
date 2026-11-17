@@ -550,6 +550,7 @@
     html, :root, html[data-theme="light"], html[data-theme="dark"] { --accent: var(--text); --accent-ink: var(--text); --purple: var(--text); --pink: var(--text); }
   </style>
   <link rel="canonical" href="https://albexia.com/soumettre/">
+  <script>window.onTurnstileOk = function(t) { window.__turnstileTok = t; };</script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
@@ -1003,8 +1004,8 @@ if (langSwitch && langCurrent) {
   // qui se contentait de synchroniser un <select> — ici on valide l'étape 1
   // puis on soumet directement à Firestore.
   const WORKER_SOUMISSION_URL = 'https://albexia-paiement.leblancroben.workers.dev/soumettre-payant';
-  let turnstileToken = null;
-  window.onTurnstileOk = function(token) { turnstileToken = token; };
+  let turnstileToken = window.__turnstileTok || null;
+  window.onTurnstileOk = function(token) { turnstileToken = token; window.__turnstileTok = token; };
 
   async function payerSoumission(tier, btn) {
     const original = btn ? btn.textContent : '';

@@ -1043,6 +1043,10 @@ if (langSwitch && langCurrent) {
     const btn = evt && evt.target ? evt.target.closest('.btn-plan') : null;
 
     if (estPayant) {
+      // Filet de sécurité : on lit directement le résultat du widget si le callback a été manqué
+      if (!turnstileToken && window.turnstile) {
+        turnstileToken = window.turnstile.getResponse() || null;
+      }
       if (!turnstileToken) {
         alert('Veuillez valider la vérification anti-spam ci-dessus, puis réessayez.');
         return;

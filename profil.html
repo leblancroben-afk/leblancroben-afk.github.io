@@ -2072,6 +2072,8 @@
           <button class="btn-sm btn-primary" id="btn-open-article-libre" onclick="ouvrirChoixTypeArticle()" data-i18n="profil.newArticleBtn">+ Nouvel article</button>
         </div>
 
+        <p class="mc-section-subtitle" style="margin:0 0 14px">Suivez le statut de vos outils en temps réel.</p>
+
         <div class="mc-quota-box" id="mc-quota-box" style="display:none">
           <div>
             <div class="mc-quota-label" data-i18n="profil.articleQuotaTitle">Quota d'articles créateur</div>
@@ -2085,26 +2087,19 @@
         </div>
 
         <div class="mc-section">
-          <div class="mc-section-header">
-            <div>
-              <h2 class="mc-section-title" id="mc-tools-title" data-i18n="profil.myToolsTitle">Mes outils</h2>
-              <p class="mc-section-subtitle" data-i18n="profil.myToolsDesc">Outils soumis ou associés à votre compte.</p>
-            </div>
-          </div>
-
           <div id="soumissions-container">
             <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
           </div>
 
           <div class="soum-note-box">
-            <svg class="ic ic-bulb" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bulb"/></svg> <span data-i18n="profil.soumNoteBox">Pour soumettre un outil, rendez-vous sur la <a href="/soumettre/" style="text-decoration:underline">page Soumettre</a>. Une formule payante (Starter ou Featured) nécessite un compte : ensuite, le statut de vos soumissions et de vos paiements s'affiche dans ce tableau de suivi.</span>
+            <svg class="ic ic-bulb" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bulb"/></svg> Pour augmenter votre catalogue, soumettez un autre outil <a href="/soumettre/">ici</a>.
           </div>
         </div>
 
         <div class="mc-section">
           <div class="mc-rules-box">
             <div class="mc-rules-title" data-i18n="profil.rulesTitle">Règles d'acceptation</div>
-            <p class="mc-rules-subtitle" data-i18n="profil.rulesDesc">Consultez les règles essentielles avant de soumettre un article.</p>
+            <p class="mc-rules-subtitle" data-i18n="profil.rulesDesc">Consultez les règles avant de soumettre.</p>
 
             <div class="mc-rules-list">
               <div class="mc-rule"><div class="mc-rule-check">✓</div><div class="mc-rule-text"><strong data-i18n="profil.rule1Title">Contenu original.</strong> <span data-i18n="profil.rule1Text">L'article doit apporter une réelle valeur et ne pas être copié ou fortement reproduit depuis une autre source.</span></div></div>
@@ -4313,14 +4308,45 @@
       }
 
       const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
+      injecterStyleSuivi();
+      const LOC = LOCALE_MAP[langue] || 'fr-FR';
+      const L = langue === 'en'
+        ? { titre: 'My articles', sous: 'Find your creator articles and your community contributions.', outil: 'Article', plan: 'Plan', cat: 'Category', date: 'Date', statut: 'Status', action: 'Action',
+            voir: 'View article', modifier: 'Edit', pub: 'Published', rel: 'In review', chg: 'Changes requested', rej: 'Rejected' }
+        : langue === 'es'
+        ? { titre: 'Mis artículos', sous: 'Encuentra tus artículos de creador y tus aportes a la comunidad.', outil: 'Artículo', plan: 'Plan', cat: 'Categoría', date: 'Fecha', statut: 'Estado', action: 'Acción',
+            voir: 'Ver artículo', modifier: 'Editar', pub: 'Publicado', rel: 'En revisión', chg: 'Cambios solicitados', rej: 'Rechazado' }
+        : { titre: 'Mes articles', sous: 'Retrouvez vos articles créateurs et vos contributions à la communauté.', outil: 'Article', plan: 'Plan', cat: 'Catégorie', date: 'Date', statut: 'Statut', action: 'Action',
+            voir: 'Voir l\'article', modifier: 'Modifier', pub: 'Publié', rel: 'En relecture', chg: 'Modifications demandées', rej: 'Rejeté' };
+      const PLAN_LBL = { gratuit: 'Gratuit', standard: 'Gratuit', starter: 'Starter', featured: 'Featured' };
+
+      const lignesArt = articles.map(a => {
+        const outil = outils.find(o => (a.outil_id && String(o.id || o.outil_id) === String(a.outil_id)) || (a.outil_slug && o.outil_slug === a.outil_slug));
+        const plan = outil ? (PLAN_LBL[outil.plan] || PLAN_LBL.standard) : '—';
+        const date = a.created_at?.seconds ? new Date(a.created_at.seconds * 1000).toLocaleDateString(LOC, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+        const tint = a.statut === 'publie' ? 'vert' : a.statut === 'modifications_demandees' ? 'orange' : a.statut === 'rejected' ? 'rouge' : 'bleu';
+        const label = a.statut === 'publie' ? L.pub : a.statut === 'modifications_demandees' ? L.chg : a.statut === 'rejected' ? L.rej : L.rel;
+        let action = '';
+        if (a.statut === 'publie') action = `<a class="suivi-action" href="${escHtmlStrict(urlPubliqueArticle(a))}" target="_blank" rel="noopener">${L.voir}</a>`;
+        else if (a.statut === 'modifications_demandees') action = `<button class="suivi-action" style="background:none;border:0;cursor:pointer" onclick="ouvrirRepriseArticle('${a.id}')">${L.modifier}</button>`;
+        return `<tr>
+          <td><strong>${escHtmlStrict(a.titre || '')}</strong></td>
+          <td class="hide-m"><span class="suivi-chip">${plan}</span></td>
+          <td class="hide-m">${escHtmlStrict(a.categorie || '')}</td>
+          <td class="hide-m">${date}</td>
+          <td><span class="suivi-pill ${tint}">${label}</span></td>
+          <td>${action}</td>
+        </tr>`;
+      }).join('');
+
       container.innerHTML = `
-        <div class="mc-section-header">
-          <div>
-            <h2 class="mc-section-title">${t('profil.myArticlesTitle', langue)} · ${articles.length}</h2>
-            <p class="mc-section-subtitle">${t('profil.myArticlesSubtitle', langue)}</p>
-          </div>
-        </div>
-        <div class="mc-articles">${articles.map(a => renderArticleCard(a, langue, faviconParSlug)).join('')}</div>`;
+        <div class="suivi-head"><div><h3>${L.titre}</h3><p>${L.sous}</p></div></div>
+        <div class="suivi-wrap">
+          <table class="suivi-table">
+            <thead><tr><th>${L.outil}</th><th class="hide-m">${L.plan}</th><th class="hide-m">${L.cat}</th><th class="hide-m">${L.date}</th><th>${L.statut}</th><th>${L.action}</th></tr></thead>
+            <tbody>${lignesArt}</tbody>
+          </table>
+        </div>`;
     } catch (e) {
       console.error('[Mes articles] Erreur de chargement :', e);
       container.innerHTML = '';
@@ -4439,7 +4465,15 @@
       .suivi-kpi{border-radius:10px;padding:12px 14px;border:1px solid rgba(0,0,0,.06)}
       .suivi-kpi b{display:block;font-size:22px}
       .suivi-kpi span{font-size:12px}
-      .suivi-kpi.rouge{background:#fbe9e7}.suivi-kpi.orange{background:#fdf3e1}.suivi-kpi.bleu{background:#e8f0fb}.suivi-kpi.vert{background:#e6f5ee}
+      .suivi-kpi{color:inherit}
+      .suivi-kpi.rouge{background:rgba(220,38,38,.12)}.suivi-kpi.orange{background:rgba(217,119,6,.14)}.suivi-kpi.bleu{background:rgba(37,99,235,.12)}.suivi-kpi.vert{background:rgba(22,163,74,.14)}
+      .suivi-pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap}
+      .suivi-pill.rouge{background:rgba(220,38,38,.12);color:#b91c1c}
+      .suivi-pill.orange{background:rgba(217,119,6,.14);color:#b45309}
+      .suivi-pill.bleu{background:rgba(37,99,235,.12);color:#1d4ed8}
+      .suivi-pill.vert{background:rgba(22,163,74,.14);color:#15803d}
+      [data-theme="dark"] .suivi-pill.rouge{color:#fca5a5}[data-theme="dark"] .suivi-pill.orange{color:#fcd34d}
+      [data-theme="dark"] .suivi-pill.bleu{color:#93c5fd}[data-theme="dark"] .suivi-pill.vert{color:#86efac}
       .suivi-tabs{display:flex;gap:6px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
       .suivi-tab{border:none;background:none;padding:6px 10px;border-radius:999px;cursor:pointer;font-size:13px;opacity:.7}
       .suivi-tab.on{background:#1a1a1a;color:#fff;opacity:1}
@@ -4522,8 +4556,11 @@
       const date = s.created_at?.seconds ? new Date(s.created_at.seconds * 1000).toLocaleDateString(LOC, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
       const expire = s.tier_expire_le && s.payment_status === 'paye' ? new Date(s.tier_expire_le + 'T00:00:00') : null;
       const expireTxt = expire && expire > new Date() ? `<div style="font-size:11px;opacity:.7">${expire.toLocaleDateString(LOC)}</div>` : '';
+      const tint = (paiementRequis(s) || s.status === 'rejected') ? 'rouge'
+        : s.status === 'processing' ? 'bleu'
+        : s.status === 'approved' ? 'vert' : 'orange';
       const st = paiementRequis(s)
-        ? { label: langue === 'en' ? 'PAYMENT REQUIRED' : langue === 'es' ? 'PAGO REQUERIDO' : 'PAIEMENT REQUIS', cls: 'status-payment' }
+        ? { label: langue === 'en' ? 'PAYMENT REQUIRED' : langue === 'es' ? 'PAGO REQUERIDO' : 'PAIEMENT REQUIS' }
         : (STATUS[s.status] || STATUS.pending);
       let action = '';
       if (paiementRequis(s) && s.payment_url) action = `<a class="suivi-action" href="${escHtml(s.payment_url)}" target="_blank" rel="noopener">${L.payer}</a>`;
@@ -4534,7 +4571,7 @@
         <td class="hide-m"><span class="suivi-chip">${TIERS[s.tier_demande] || ''}</span></td>
         <td class="hide-m">${escHtml(s.categorie || '')}</td>
         <td class="hide-m">${date}${expireTxt}</td>
-        <td><span class="status-pill ${st.cls}"><span class="status-dot"></span>${st.label}</span></td>
+        <td><span class="suivi-pill ${tint}">${st.label}</span></td>
         <td>${action}</td>
       </tr>`;
     }).join('');
@@ -4559,7 +4596,7 @@
           <tbody>${lignes}</tbody>
         </table>
       </div>
-      <p class="suivi-foot">${L.pied}</p>`;
+      `;
   }
 
   function renderSoumCard(s, langue) {

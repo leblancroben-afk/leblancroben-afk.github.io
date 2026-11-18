@@ -4424,26 +4424,142 @@
     return true;
   }
 
+  let filtreSoum = 'tout';
+  window.setFiltreSoum = function(f) { filtreSoum = f; renderSoumissions(); };
+
+  function injecterStyleSuivi() {
+    if (document.getElementById('style-suivi-maquette')) return;
+    const st = document.createElement('style');
+    st.id = 'style-suivi-maquette';
+    st.textContent = `
+      .suivi-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+      .suivi-head h3{margin:0;font-size:22px}
+      .suivi-head p{margin:4px 0 0;font-size:13px;opacity:.7}
+      .suivi-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+      .suivi-kpi{border-radius:10px;padding:12px 14px;border:1px solid rgba(0,0,0,.06)}
+      .suivi-kpi b{display:block;font-size:22px}
+      .suivi-kpi span{font-size:12px}
+      .suivi-kpi.rouge{background:#fbe9e7}.suivi-kpi.orange{background:#fdf3e1}.suivi-kpi.bleu{background:#e8f0fb}.suivi-kpi.vert{background:#e6f5ee}
+      .suivi-tabs{display:flex;gap:6px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+      .suivi-tab{border:none;background:none;padding:6px 10px;border-radius:999px;cursor:pointer;font-size:13px;opacity:.7}
+      .suivi-tab.on{background:#1a1a1a;color:#fff;opacity:1}
+      .suivi-tabs .suivi-add{margin-left:auto;font-size:13px;text-decoration:none;font-weight:600}
+      .suivi-table{width:100%;border-collapse:collapse;font-size:13px}
+      .suivi-table th{text-align:left;font-weight:600;opacity:.6;padding:10px 8px;border-bottom:1px solid rgba(0,0,0,.08);font-size:12px}
+      .suivi-table td{padding:10px 8px;border-bottom:1px solid rgba(0,0,0,.05);vertical-align:middle}
+      .suivi-chip{font-size:10px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.07);font-weight:600}
+      .suivi-action{font-size:12px;font-weight:600;text-decoration:none;color:#c2185b}
+      .suivi-wrap{overflow-x:auto}
+      .suivi-foot{font-size:11px;opacity:.6;margin-top:10px}
+      @media (max-width:700px){.suivi-kpis{grid-template-columns:repeat(2,1fr)}.suivi-table .hide-m{display:none}}
+    `;
+    document.head.appendChild(st);
+  }
+
   function renderSoumissions() {
     appliquerAccesSuivi();
+    injecterStyleSuivi();
     const container = document.getElementById('soumissions-container');
     if (!container) return;
     const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
-
     const countEl = document.getElementById('soum-count');
     if (countEl) countEl.textContent = userSoumissions.length;
 
     if (userSoumissions.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="icon">📮</div>
-          <p>${t('profil.noSubmissionsYet', langue)}</p>
-        </div>`;
+      container.innerHTML = `<div class="empty-state"><div class="icon">📮</div><p>${t('profil.noSubmissionsYet', langue)}</p></div>`;
       return;
     }
 
-    container.innerHTML = `<div class="soum-list">${userSoumissions.map(s => renderSoumCard(s, langue)).join('')}</div>`;
+    const STATUS = soumStatusLabels(langue);
+    const LOC = LOCALE_MAP[langue] || 'fr-FR';
+    const TIERS = { gratuit: 'Gratuit', starter: 'Starter', featured: 'Featured' };
+    const estPayant = s => s.tier_demande === 'starter' || s.tier_demande === 'featured';
+    const paiementRequis = s => s.status === 'approved' && estPayant(s) && s.payment_status !== 'paye';
 
+    // Catégorie de suivi d'une soumission
+    const categorie = s => {
+      if (paiementRequis(s) || s.status === 'rejected') return 'action';
+      if (s.status === 'pending' || s.status === 'processing') return 'attente';
+      if (s.status === 'approved') return 'publie';
+      return 'attente';
+    };
+
+    const compte = { tout: userSoumissions.length, action: 0, attente: 0, publie: 0 };
+    userSoumissions.forEach(s => { compte[categorie(s)]++; });
+    const enCours = compte.attente;
+    const nbPending = userSoumissions.filter(s => s.status === 'pending').length;
+    const nbProcessing = userSoumissions.filter(s => s.status === 'processing').length;
+
+    const L = langue === 'en'
+      ? { titre: 'My submissions', sous: 'Follow the status of your tools in real time.', ajouter: '+ Submit a tool',
+          kAction: 'Action required', kAttente: 'Pending', kCours: 'In progress', kPub: 'Published',
+          tout: 'All', aTraiter: 'To do', enCours: 'In progress', publies: 'Published',
+          outil: 'Tool', plan: 'Plan', cat: 'Category', date: 'Submitted on', statut: 'Status', action: 'Action',
+          payer: 'Pay now', voir: 'View listing', modifier: 'Edit & resubmit', motif: 'View reason', pied: 'Sorted by default: action required first, then date.' }
+      : langue === 'es'
+      ? { titre: 'Mis envíos', sous: 'Sigue el estado de tus herramientas en tiempo real.', ajouter: '+ Enviar una herramienta',
+          kAction: 'Acción requerida', kAttente: 'Pendiente', kCours: 'En proceso', kPub: 'Publicados',
+          tout: 'Todos', aTraiter: 'Por hacer', enCours: 'En proceso', publies: 'Publicados',
+          outil: 'Herramienta', plan: 'Plan', cat: 'Categoría', date: 'Enviado el', statut: 'Estado', action: 'Acción',
+          payer: 'Pagar ahora', voir: 'Ver ficha', modifier: 'Editar y reenviar', motif: 'Ver motivo', pied: 'Orden por defecto: acción requerida primero, luego fecha.' }
+      : { titre: 'Mes soumissions', sous: 'Suivez le statut de vos outils en temps réel.', ajouter: '+ Soumettre un outil',
+          kAction: 'Action requise', kAttente: 'En attente', kCours: 'En cours de traitement', kPub: 'Publiés',
+          tout: 'Tout', aTraiter: 'À traiter', enCours: 'En cours', publies: 'Publiés',
+          outil: 'Outil', plan: 'Plan', cat: 'Catégorie', date: 'Soumis le', statut: 'Statut', action: 'Action',
+          payer: 'Payer maintenant', voir: 'Voir la fiche', modifier: 'Modifier & resoumettre', motif: 'Voir le motif', pied: 'Tri par défaut : action requise d\'abord, puis date.' };
+
+    const filtres = [
+      ['tout', L.tout, compte.tout], ['action', L.aTraiter, compte.action],
+      ['attente', L.enCours, compte.attente], ['publie', L.publies, compte.publie]
+    ];
+
+    const liste = userSoumissions
+      .filter(s => filtreSoum === 'tout' || categorie(s) === filtreSoum)
+      .sort((a, b) => (categorie(a) === 'action' ? 0 : 1) - (categorie(b) === 'action' ? 0 : 1));
+
+    const lignes = liste.map(s => {
+      const cat = categorie(s);
+      const date = s.created_at?.seconds ? new Date(s.created_at.seconds * 1000).toLocaleDateString(LOC, { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+      const expire = s.tier_expire_le && s.payment_status === 'paye' ? new Date(s.tier_expire_le + 'T00:00:00') : null;
+      const expireTxt = expire && expire > new Date() ? `<div style="font-size:11px;opacity:.7">${expire.toLocaleDateString(LOC)}</div>` : '';
+      const st = paiementRequis(s)
+        ? { label: langue === 'en' ? 'PAYMENT REQUIRED' : langue === 'es' ? 'PAGO REQUERIDO' : 'PAIEMENT REQUIS', cls: 'status-payment' }
+        : (STATUS[s.status] || STATUS.pending);
+      let action = '';
+      if (paiementRequis(s) && s.payment_url) action = `<a class="suivi-action" href="${escHtml(s.payment_url)}" target="_blank" rel="noopener">${L.payer}</a>`;
+      else if (s.status === 'approved' && s.fiche_generee && s.fiche_page) action = `<a class="suivi-action" href="/${s.fiche_page}">${L.voir}</a>`;
+      else if (s.status === 'rejected') action = `<span class="suivi-action">${L.modifier}</span>`;
+      return `<tr>
+        <td><strong>${escHtml(s.nom_outil || '')}</strong></td>
+        <td class="hide-m"><span class="suivi-chip">${TIERS[s.tier_demande] || ''}</span></td>
+        <td class="hide-m">${escHtml(s.categorie || '')}</td>
+        <td class="hide-m">${date}${expireTxt}</td>
+        <td><span class="status-pill ${st.cls}"><span class="status-dot"></span>${st.label}</span></td>
+        <td>${action}</td>
+      </tr>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="suivi-head">
+        <div><h3>${L.titre}</h3><p>${L.sous}</p></div>
+      </div>
+      <div class="suivi-kpis">
+        <div class="suivi-kpi rouge"><b>${compte.action}</b><span>${L.kAction}</span></div>
+        <div class="suivi-kpi orange"><b>${nbPending}</b><span>${L.kAttente}</span></div>
+        <div class="suivi-kpi bleu"><b>${nbProcessing}</b><span>${L.kCours}</span></div>
+        <div class="suivi-kpi vert"><b>${compte.publie}</b><span>${L.kPub}</span></div>
+      </div>
+      <div class="suivi-tabs">
+        ${filtres.map(([k, lib, n]) => `<button class="suivi-tab ${filtreSoum === k ? 'on' : ''}" onclick="setFiltreSoum('${k}')">${lib} ${n}</button>`).join('')}
+        <a class="suivi-add" href="/soumettre/">${L.ajouter}</a>
+      </div>
+      <div class="suivi-wrap">
+        <table class="suivi-table">
+          <thead><tr><th>${L.outil}</th><th class="hide-m">${L.plan}</th><th class="hide-m">${L.cat}</th><th class="hide-m">${L.date}</th><th>${L.statut}</th><th>${L.action}</th></tr></thead>
+          <tbody>${lignes}</tbody>
+        </table>
+      </div>
+      <p class="suivi-foot">${L.pied}</p>`;
   }
 
   function renderSoumCard(s, langue) {

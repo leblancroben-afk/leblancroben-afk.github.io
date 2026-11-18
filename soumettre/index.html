@@ -688,7 +688,7 @@
     </div>
 
     <div id="zone-login-requis">
-      <p data-i18n="soum.loginRequiredText">Les formules Starter et Featured nécessitent un compte — c'est ce qui te permet de suivre le paiement et le statut de ta soumission depuis ton profil.</p>
+      <p>Pour Starter ou Featured, connectez-vous avant de payer. Votre fiche est ainsi rattachée à votre compte : vous pouvez suivre le statut de votre paiement, la date de fin de votre plan et le renouvellement, dans votre tableau de suivi. Sans connexion, le paiement ne peut pas être associé à votre compte.</p>
       <button type="button" class="btn-google" id="btnGoogleLogin">
         <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -935,7 +935,11 @@ if (langSwitch && langCurrent) {
       return;
     }
     zoneLogin.classList.remove('show');
-    if (tierEnAttente) soumettre(tierEnAttente);
+    if (tierEnAttente) {
+      const tierRepris = tierEnAttente;
+      tierEnAttente = null;
+      payerSoumission(tierRepris, null);
+    }
   });
 
   // Chargement des catégories depuis Firestore (même source que l'admin et le site)
@@ -1013,9 +1017,10 @@ if (langSwitch && langCurrent) {
     if (btn) btn.textContent = '…';
     try {
       const donnees = ramasserDonnees(tier);
+      const idToken = await window._firebaseUser.getIdToken();
       const res = await fetch(WORKER_SOUMISSION_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
         body: JSON.stringify({ ...donnees, turnstile_token: turnstileToken }),
       });
       const data = await res.json();
@@ -1041,6 +1046,14 @@ if (langSwitch && langCurrent) {
     if (!form1.reportValidity()) { goToStep(1); return; }
     const estPayant = tier === 'starter' || tier === 'featured';
     const btn = evt && evt.target ? evt.target.closest('.btn-plan') : null;
+
+    if (estPayant && !window._firebaseUser) {
+      tierEnAttente = tier;
+      zoneLogin.classList.add('show');
+      zoneLogin.style.display = 'block';
+      zoneLogin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
 
     if (estPayant) {
       // Filet de sécurité : on lit directement le résultat du widget si le callback a été manqué

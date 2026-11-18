@@ -1249,6 +1249,10 @@ const UI_TRANSLATIONS = {
     'soumP.faq4A': "Sept jours avant l'échéance, un lien de renouvellement apparaît dans votre tableau de suivi. Sans renouvellement, la fiche repasse au plan Gratuit, mais elle reste en ligne.",
     'soumP.faq5Q': "Mon outil doit-il être gratuit ?",
     'soumP.faq5A': "Non. Les outils gratuits, freemium et payants sont tous acceptés.",
+    'profil.navClaim': "Revendiquer",
+    'profil.claimSectionTitle': "Revendiquer un outil",
+    'profil.claimSectionDesc': "Vous êtes le créateur d'un outil déjà présent sur Albexia ? Revendiquez-le pour accéder aux fonctionnalités créateur. Votre demande est vérifiée avant validation.",
+    'profil.claimToolBtn': "Revendiquer un outil",
   },
   en: {
     'search.open': "Search",
@@ -2448,6 +2452,10 @@ const UI_TRANSLATIONS = {
     'soumP.faq4A': "Seven days before the due date, a renewal link appears in your tracking dashboard. Without renewal, the listing goes back to the Free plan but stays online.",
     'soumP.faq5Q': "Does my tool have to be free?",
     'soumP.faq5A': "No. Free, freemium and paid tools are all accepted.",
+    'profil.navClaim': "Claim",
+    'profil.claimSectionTitle': "Claim a tool",
+    'profil.claimSectionDesc': "Are you the creator of a tool already listed on Albexia? Claim it to access creator features. Your request is checked before approval.",
+    'profil.claimToolBtn': "Claim a tool",
   },
   es: {
     'search.open': "Buscar",
@@ -3647,6 +3655,10 @@ const UI_TRANSLATIONS = {
     'soumP.faq4A': "Siete días antes del vencimiento, aparece un enlace de renovación en tu panel de seguimiento. Sin renovación, la ficha vuelve al plan Gratuito, pero sigue en línea.",
     'soumP.faq5Q': "¿Mi herramienta debe ser gratuita?",
     'soumP.faq5A': "No. Se aceptan herramientas gratuitas, freemium y de pago.",
+    'profil.navClaim': "Reclamar",
+    'profil.claimSectionTitle': "Reclamar una herramienta",
+    'profil.claimSectionDesc': "¿Eres el creador de una herramienta ya presente en Albexia? Reclámala para acceder a las funciones de creador. Tu solicitud se verifica antes de su validación.",
+    'profil.claimToolBtn': "Reclamar una herramienta",
   },
 };
 window.UI_TRANSLATIONS = UI_TRANSLATIONS;

@@ -4359,7 +4359,7 @@
     }
     const langueQuota = window.detecterLangue ? window.detecterLangue() : 'fr';
     countEl.textContent = t('profil.quotaUsed', langueQuota).replace('{used}', consomme ? '1' : '0').replace('{total}', '1');
-    box.style.display = '';
+    box.style.display = 'none'; // quota global retiré : limite désormais par outil
   }
 
   window.toggleMcRules = function() {
@@ -6113,6 +6113,7 @@
 
     const payload = {
       claim_id: _artOutilChoisi.claim_id,
+      outil_id: _artOutilChoisi.outil_id,
       outil_slug: _artOutilChoisi.outil_slug,
       titre,
       categorie,
@@ -6154,7 +6155,13 @@
       // Message clair et spécifique pour le cas de quota trimestriel déjà
       // consommé (voir createArticleCreateur() dans firestore.js) plutôt
       // que l'erreur générique — c'est un refus attendu, pas un bug.
-      if (e.message === 'QUOTA_TRIMESTRE_ATTEINT') {
+      if (e.message === 'LIMITE_ARTICLES_OUTIL') {
+        showToast('Limite atteinte : cet outil a déjà ses articles inclus dans son plan.');
+      } else if (e.message === 'PLAN_SANS_ARTICLES') {
+        showToast('Cet outil est au plan Gratuit : les articles liés sont réservés aux plans Starter et Featured.');
+      } else if (e.message === 'OUTIL_REQUIS') {
+        showToast('Choisissez d\'abord l\'outil auquel rattacher cet article.');
+      } else if (e.message === 'QUOTA_TRIMESTRE_ATTEINT') {
         showToast(t('profil.toastQuotaReached', langue));
         // Le cache local était visiblement désynchronisé (une autre session
         // a consommé le quota entre-temps) — on le rafraîchit pour que la

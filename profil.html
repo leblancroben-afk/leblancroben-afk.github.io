@@ -1935,7 +1935,7 @@
           </div>
         </div>
         <div id="collections-container">
-          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading" data-i18n="profil.loading">Chargement…</span></div>
         </div>
       </div>
 
@@ -1952,7 +1952,7 @@
           <button class="btn-sm btn-outline" onclick="openNewAlerteModal()" data-i18n="alertes.create">+ Créer une alerte</button>
         </div>
         <div id="alertes-container">
-          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading" data-i18n="profil.loading">Chargement…</span></div>
         </div>
       </div>
 
@@ -2023,7 +2023,7 @@
           <button class="btn-sm btn-outline" onclick="openQuizInProfil()" data-i18n="profil.takeQuiz">Faire le quiz →</button>
         </div>
         <div id="quiz-history-container">
-          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading" data-i18n="profil.loading">Chargement…</span></div>
         </div>
       </div>
 
@@ -2038,7 +2038,7 @@
           </div>
         </div>
         <div id="avis-container">
-          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading" data-i18n="profil.loading">Chargement…</span></div>
         </div>
       </div>
 
@@ -2054,7 +2054,7 @@
           </div>
         </div>
         <div id="saved-videos-container">
-          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading" data-i18n="profil.loading">Chargement…</span></div>
         </div>
       </div>
 
@@ -2067,12 +2067,12 @@
             <svg viewBox="0 0 20 20" fill="none" width="18" height="18" style="display:inline-block;vertical-align:middle">
               <path d="M2.7 10L17.3 2.7L15 17.3L10 13.5L7.2 16.3V12.8L2.7 10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
             </svg>
-            <span>Tableau de suivi</span>
+            <span data-i18n="pg.trackingTitle">Tableau de suivi</span>
           </div>
           <button class="btn-sm btn-primary" id="btn-open-article-libre" onclick="ouvrirChoixTypeArticle()" data-i18n="profil.newArticleBtn">+ Nouvel article</button>
         </div>
 
-        <p class="mc-section-subtitle" style="margin:0 0 14px">Suivez le statut de vos articles et de vos outils en temps réel.</p>
+        <p class="mc-section-subtitle" style="margin:0 0 14px" data-i18n="pg.trackingSub">Suivez le statut de vos articles et de vos outils en temps réel.</p>
 
         <div class="mc-quota-box" id="mc-quota-box" style="display:none">
           <div>
@@ -2083,16 +2083,16 @@
         </div>
 
         <div id="mes-articles-container">
-          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+          <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading" data-i18n="profil.loading">Chargement…</span></div>
         </div>
 
         <div class="mc-section">
           <div id="soumissions-container">
-            <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading">Chargement…</span></div>
+            <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading" data-i18n="profil.loading">Chargement…</span></div>
           </div>
 
           <div class="soum-note-box">
-            <svg class="ic ic-bulb" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bulb"/></svg> Pour augmenter votre catalogue, soumettez un autre outil <a href="/soumettre/">ici</a>.
+            <svg class="ic ic-bulb" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bulb"/></svg> <span data-i18n="pg.catalogNote">Pour augmenter votre catalogue, soumettez un autre outil</span> <a href="/soumettre/" data-i18n="pg.here">ici</a>.
           </div>
         </div>
 
@@ -2250,15 +2250,15 @@
           <div class="settings-card">
             <div class="settings-card-title"><svg class="ic ic-bell" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-bell"/></svg> <span data-i18n="profil.sectionNotifications">Notifications</span></div>
             <div class="settings-row">
-              <div class="settings-row-name">Nouveaux outils</div>
+              <div class="settings-row-name" data-i18n="pg.newTools">Nouveaux outils</div>
               <div class="toggle" id="notif-pref-newTools" onclick="toggleNotifPref('newTools')"></div>
             </div>
             <div class="settings-row">
-              <div class="settings-row-name">Changements de prix</div>
+              <div class="settings-row-name" data-i18n="pg.priceChanges">Changements de prix</div>
               <div class="toggle" id="notif-pref-priceChanges" onclick="toggleNotifPref('priceChanges')"></div>
             </div>
             <div class="settings-row">
-              <div class="settings-row-name">Mises à jour des outils</div>
+              <div class="settings-row-name" data-i18n="pg.toolUpdates">Mises à jour des outils</div>
               <div class="toggle" id="notif-pref-updates" onclick="toggleNotifPref('updates')"></div>
             </div>
           </div>
@@ -6226,9 +6226,9 @@
       // consommé (voir createArticleCreateur() dans firestore.js) plutôt
       // que l'erreur générique — c'est un refus attendu, pas un bug.
       if (e.message === 'LIMITE_ARTICLES_OUTIL') {
-        showToast('Limite atteinte : cet outil a déjà ses articles inclus dans son plan.');
+        showToast(t('pg.toastLimit', (window.detecterLangue ? window.detecterLangue() : 'fr')));
       } else if (e.message === 'PLAN_SANS_ARTICLES') {
-        showToast('Cet outil est au plan Gratuit : les articles liés sont réservés aux plans Starter et Featured.');
+        showToast(t('pg.toastFreePlan', (window.detecterLangue ? window.detecterLangue() : 'fr')));
       } else if (e.message === 'OUTIL_REQUIS') {
         showToast('Choisissez d\'abord l\'outil auquel rattacher cet article.');
       } else if (e.message === 'QUOTA_TRIMESTRE_ATTEINT') {

@@ -4567,7 +4567,6 @@
       </div>
       <div class="suivi-tabs">
         ${filtres.map(([k, lib, n]) => `<button class="suivi-tab ${filtreSoum === k ? 'on' : ''}" onclick="setFiltreSoum('${k}')">${lib} ${n}</button>`).join('')}
-        <a class="suivi-add" href="/soumettre/">${T.soumettre}</a>
       </div>
       <div class="suivi-wrap">
         <table class="suivi-table">

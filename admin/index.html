@@ -2015,6 +2015,7 @@ Support français|oui|non|bool"></textarea>
 
     window.__soumissionEnCours = s.id;
     window.__soumissionEnCoursTier = s.tier_demande || 'gratuit';
+    window.__soumissionEnCoursPaye = s.payment_status === 'paye';
 
     showMsg('warn-outils', 'ok-outils', 'ok',
       `Formulaire pré-rempli depuis la soumission de « ${s.nom_outil} ». Vérifiez/complétez les champs puis cliquez sur "Créer l'outil".`);
@@ -3660,7 +3661,21 @@ Support français|oui|non|bool"></textarea>
           notifierSoumissionTraitee(soumissionIdApprouvee, true);
         } catch(_) {}
 
-        if (tierApprouve === 'starter' || tierApprouve === 'featured') {
+        const payeAvantValidation = window.__soumissionEnCoursPaye === true;
+        const estPayantTier = tierApprouve === 'starter' || tierApprouve === 'featured';
+
+        // Plan payé : appliqué à l'outil créé (le webhook n'avait pas d'outil à mettre à jour)
+        if (estPayantTier && payeAvantValidation) {
+          try {
+            await updateDoc(doc(db, 'outils', String(mainId)), { plan: tierApprouve });
+            invalidateToolsCache();
+          } catch (errPlan) {
+            console.error('Application du plan impossible :', errPlan);
+          }
+        }
+
+        // Ne relancer le paiement que pour une formule payante NON encore payée
+        if (estPayantTier && !payeAvantValidation) {
           try {
             const idToken = await auth.currentUser.getIdToken();
             const resPaiement = await fetch(`${WORKER_PAIEMENT_URL}/generer-paiement`, {

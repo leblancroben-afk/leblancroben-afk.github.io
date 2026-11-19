@@ -4916,10 +4916,12 @@
   function calculerCtaTexteFinal() {
     if (!_artOutilChoisi) return '';
     if (_artCtaPreset === 'personnalise') {
-      return (document.getElementById('art-cta-custom')?.value || '').trim().slice(0, 60);
+      // Ne jamais tronquer le texte : la limite est vérifiée uniquement
+      // au clic sur « Envoyer pour relecture ».
+      return (document.getElementById('art-cta-custom')?.value || '').trim();
     }
     const preset = CTA_PRESETS.find(p => p.id === _artCtaPreset);
-    return preset ? preset.label(_artOutilChoisi.nom).slice(0, 60) : '';
+    return preset ? preset.label(_artOutilChoisi.nom) : '';
   }
 
   async function chargerOutilsCreateurDansEditeur() {
@@ -5356,6 +5358,8 @@
     if (statusEl) statusEl.textContent = '…';
     const run = () => {
       const draftKey = _artTargetClaimId ? ('art-brouillon-' + _artTargetClaimId) : ART_DRAFT_KEY;
+      // Brouillon local : enregistrer les valeurs intégrales, même si elles
+      // dépassent les limites. Aucune validation ni troncature à l'autosave.
       const data = {
         titre: document.getElementById('art-titre').value,
         categorie: document.getElementById('art-categorie').value,
@@ -5366,7 +5370,7 @@
         sources: _artSources,
         motsCles: _artMotsCles,
         ctaPreset: _artCtaPreset,
-        ctaCustom: _artCtaCustom,
+        ctaCustom: document.getElementById('art-cta-custom')?.value || _artCtaCustom,
         banniereUrl: document.getElementById('art-banniere-url').value
       };
       localStorage.setItem(draftKey, JSON.stringify(data));
@@ -6188,6 +6192,25 @@
     const auteurBio = document.getElementById('art-auteur-bio').value.trim();
     const consent = document.getElementById('art-consent').checked;
     const nbMots = updateArtWordCount();
+
+    // Les limites ne bloquent jamais la frappe ni l'autosauvegarde.
+    // Elles sont contrôlées seulement au moment de l'envoi.
+    const champsLimites = [
+      { id: 'art-titre', nom: 'Titre', limite: 200 },
+      { id: 'art-extrait', nom: 'Extrait', limite: 250 },
+      { id: 'art-auteur-nom', nom: 'Nom de l’auteur', limite: 60 },
+      { id: 'art-auteur-bio', nom: 'Biographie', limite: 160 },
+      ...(_artCtaPreset === 'personnalise' ? [{ id: 'art-cta-custom', nom: 'Texte du bouton', limite: 60 }] : [])
+    ];
+    const depassement = champsLimites.find(champ => (document.getElementById(champ.id)?.value || '').length > champ.limite);
+    if (depassement) {
+      const champ = document.getElementById(depassement.id);
+      updateArtLimitCount(champ);
+      showToast(`${depassement.nom} : maximum ${depassement.limite} caractères. Réduisez le texte avant l’envoi.`);
+      champ?.focus();
+      champ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     if (!titre) { showToast('<svg class="ic ic-warn" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-warn"/></svg> ' + t('profil.titleRequired', langue)); return; }
     if (!categorie) { showToast(t('profil.toastChooseCategory', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }
     if (!extrait) { showToast(t('profil.toastAddExcerpt', window.detecterLangue ? window.detecterLangue() : 'fr')); return; }

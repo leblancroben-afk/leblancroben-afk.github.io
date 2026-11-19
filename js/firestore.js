@@ -587,41 +587,98 @@ export async function createArticleCreateur({
   // Limite par outil selon son plan : Starter 3, Featured 5, autres 0 (aucun article)
   const LIMITES = { starter: 3, featured: 5 };
 
-  // DIAGNOSTIC TEMPORAIRE : lecture préalable pour afficher les données
-  // réellement lues dans Firestore avant la transaction.
+  // DIAGNOSTIC TEMPORAIRE : vérifie chaque condition de la règle
+  // /articles_createurs avant d'exécuter la transaction.
   let diagnostic = {};
   try {
     const preflightSnap = await getDoc(outilRef);
     if (!preflightSnap.exists()) throw new Error('OUTIL_INTROUVABLE');
     const preflight = preflightSnap.data();
-    const limitePreflight = LIMITES[String(preflight.plan || '').toLowerCase()];
+    const planLu = String(preflight.plan || '').toLowerCase();
+    const limitePreflight = LIMITES[planLu];
     const compteurPreflight = Number(preflight.articles_count || 0);
+
+    // Valeurs effectives exactes qui seront envoyées à Firestore.
+    const article = {
+      uid,
+      claim_id: claim_id || null,
+      outil_id: String(outil_id),
+      outil_slug: String(outil_slug || '').trim(),
+      titre,
+      categorie: categorie || '',
+      extrait: extrait || '',
+      banniere_url: banniere_url || '',
+      auteur_nom: auteur_nom || '',
+      auteur_bio: auteur_bio || '',
+      sources: sources || [],
+      mots_cles: (mots_cles || []).slice(0, 5),
+      cta_text: cta_text || '',
+      nb_mots,
+      statut: 'en_relecture',
+      contenu,
+      vues: 0,
+      liked_by: [],
+      rejection_reasons: [],
+      admin_comment: ''
+    };
+
+    const checks = {
+      uid_present: typeof uid === 'string' && uid.length > 0,
+      claim_id_valide: article.claim_id === null || typeof article.claim_id === 'string',
+      outil_id_chaine: typeof article.outil_id === 'string',
+      outil_slug_chaine: typeof article.outil_slug === 'string',
+      proprietaire_ok: preflight.owner_uid === uid,
+      plan_autorise: ['starter', 'featured'].includes(planLu),
+      quota_disponible: !!limitePreflight && compteurPreflight < limitePreflight,
+      titre_valide: typeof article.titre === 'string' && article.titre.length > 0 && article.titre.length <= 200,
+      categorie_valide: typeof article.categorie === 'string' && article.categorie.length > 0 && article.categorie.length <= 100,
+      extrait_valide: typeof article.extrait === 'string' && article.extrait.length <= 250,
+      banniere_url_valide: typeof article.banniere_url === 'string',
+      auteur_nom_valide: typeof article.auteur_nom === 'string' && article.auteur_nom.length > 0 && article.auteur_nom.length <= 60,
+      auteur_bio_valide: typeof article.auteur_bio === 'string' && article.auteur_bio.length <= 160,
+      cta_text_valide: typeof article.cta_text === 'string' && article.cta_text.length <= 60,
+      sources_valides: Array.isArray(article.sources) && article.sources.length <= 20,
+      mots_cles_valides: Array.isArray(article.mots_cles) && article.mots_cles.length <= 5,
+      nb_mots_valide: typeof article.nb_mots === 'number' && article.nb_mots >= 500,
+      contenu_valide: Array.isArray(article.contenu) && article.contenu.length > 0 && article.contenu.length < 200
+    };
+
     diagnostic = {
       outil_id: String(outil_id),
-      uid_envoye: uid || null,
+      uid: uid || null,
       owner_uid: preflight.owner_uid || null,
       plan: preflight.plan || null,
       articles_count: preflight.articles_count ?? '(absent = 0)',
-      outil_slug_envoye: String(outil_slug || '').trim(),
-      limite: limitePreflight || 0,
-      champs_article: {
-        titre: typeof titre === 'string' ? titre.length : typeof titre,
-        categorie: categorie || '',
-        auteur_nom: auteur_nom || '',
-        nb_mots: nb_mots,
-        contenu_blocs: Array.isArray(contenu) ? contenu.length : 'non-list'
-      },
-      proprietaire_ok: preflight.owner_uid === uid,
-      plan_ok: ['starter', 'featured'].includes(String(preflight.plan || '').toLowerCase()),
-      quota_ok: !!limitePreflight && compteurPreflight < limitePreflight
+      checks,
+      champs: {
+        titre: typeof article.titre === 'string' ? article.titre.length + ' caractères' : typeof article.titre,
+        categorie: article.categorie,
+        extrait: typeof article.extrait === 'string' ? article.extrait.length + ' caractères' : typeof article.extrait,
+        auteur_nom: article.auteur_nom,
+        auteur_bio: typeof article.auteur_bio === 'string' ? article.auteur_bio.length + ' caractères' : typeof article.auteur_bio,
+        sources: Array.isArray(article.sources) ? article.sources.length : typeof article.sources,
+        mots_cles: Array.isArray(article.mots_cles) ? article.mots_cles.length : typeof article.mots_cles,
+        nb_mots: article.nb_mots,
+        contenu_blocs: Array.isArray(article.contenu) ? article.contenu.length : typeof article.contenu
+      }
     };
-    console.info('[ALBEXIA DIAGNOSTIC ARTICLE] Pré-vérification :', diagnostic);
+    console.info('[ALBEXIA DIAGNOSTIC ARTICLE] Vérification des règles :', diagnostic);
 
-    if (preflight.owner_uid !== uid) throw new Error('DIAGNOSTIC_OWNER_UID_INCORRECT');
-    if (!limitePreflight) throw new Error('PLAN_SANS_ARTICLES');
-    if (compteurPreflight >= limitePreflight) throw new Error('LIMITE_ARTICLES_OUTIL');
+    const echecs = Object.entries(checks).filter(([, ok]) => !ok).map(([nom]) => nom);
+    if (echecs.length) {
+      const erreur = new Error('DIAGNOSTIC_CHAMPS_INVALIDES: ' + echecs.join(', '));
+      erreur.code = 'albexia/invalid-article-fields';
+      erreur.diagnostic = diagnostic;
+      throw erreur;
+    }
   } catch (preflightError) {
     console.error('[ALBEXIA DIAGNOSTIC ARTICLE] Échec pré-vérification :', preflightError, diagnostic);
+    if (preflightError.diagnostic) {
+      alert('DIAGNOSTIC AVANT ENREGISTREMENT\n\n' +
+        'Certaines conditions ne correspondent pas aux règles Firestore :\n' +
+        Object.entries(diagnostic.checks).filter(([, ok]) => !ok).map(([nom]) => '• ' + nom).join('\n') +
+        '\n\nAucune écriture n’a été lancée. Envoie une capture.');
+    }
     throw preflightError;
   }
 
@@ -682,6 +739,8 @@ export async function createArticleCreateur({
         'Outil : ' + (diagnostic.outil_id || '') + '\n' +
         'Plan lu : ' + (diagnostic.plan || '') + '\n' +
         'Compteur : ' + (diagnostic.articles_count ?? '') + '\n\n' +
+        'Vérifications :\n' + Object.entries(diagnostic.checks || {}).map(([nom, ok]) => nom + ' : ' + (ok ? 'OK' : 'ÉCHEC')).join('\n') + '\n\n' +
+        'Tous les champs passent localement : le refus vient alors probablement d’une condition évaluée côté règles ou de l’une des deux écritures de la transaction.\n\n' +
         'Envoie une capture de ce message.'
       );
     }

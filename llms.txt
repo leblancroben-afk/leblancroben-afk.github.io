@@ -89,7 +89,7 @@ Langue : français.
 - [Brand24](https://albexia.com/tools/starter/fr/brand24/): Brand24 surveille en temps réel les mentions de votre marque sur les réseaux sociaux, forums, blogs et sites d'actualité. Son analyse de sentiment dopée à l'IA aide à protéger la réputation et détecter les signaux faibles.
 - [Gumloop](https://albexia.com/tools/starter/fr/gumloop/): Gumloop est une plateforme d'automatisation no-code propulsée par l'IA. Elle permet de créer des workflows agentiques complexes par glisser-déposer, sans écrire de code.
 - [Mutiny](https://albexia.com/tools/standard/fr/mutiny/): Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.
-- [Opinly](https://albexia.com/tools/featured/fr/opinly/): Opinly est une plateforme d'analyse concurrentielle assistée par intelligence artificielle. Elle permet de suivre en temps réel les prix, les fonctionnalités et les stratégies marketing des concurrents, et de les comparer.
+- [Opinly](https://albexia.com/tools/starter/fr/opinly/): Opinly est une plateforme d’automatisation SEO et de veille concurrentielle assistée par IA. Elle aide à suivre les mots-clés, backlinks, pages et performances des concurrents, puis à générer et programmer du contenu optimisé pour Google et les moteurs génératifs comme ChatGPT
 - [Phrasee](https://albexia.com/tools/standard/fr/phrasee/): Phrasee génère et optimise la micro-copie marketing (objets d'e-mails, notifications push) en s'appuyant sur les neurosciences cognitives. L'IA respecte la voix de marque tout en boostant l'engagement.
 
 ## SEO

@@ -587,7 +587,46 @@ export async function createArticleCreateur({
   // Limite par outil selon son plan : Starter 3, Featured 5, autres 0 (aucun article)
   const LIMITES = { starter: 3, featured: 5 };
 
-  await runTransaction(db, async (tx) => {
+  // DIAGNOSTIC TEMPORAIRE : lecture préalable pour afficher les données
+  // réellement lues dans Firestore avant la transaction.
+  let diagnostic = {};
+  try {
+    const preflightSnap = await getDoc(outilRef);
+    if (!preflightSnap.exists()) throw new Error('OUTIL_INTROUVABLE');
+    const preflight = preflightSnap.data();
+    const limitePreflight = LIMITES[String(preflight.plan || '').toLowerCase()];
+    const compteurPreflight = Number(preflight.articles_count || 0);
+    diagnostic = {
+      outil_id: String(outil_id),
+      uid_envoye: uid || null,
+      owner_uid: preflight.owner_uid || null,
+      plan: preflight.plan || null,
+      articles_count: preflight.articles_count ?? '(absent = 0)',
+      outil_slug_envoye: String(outil_slug || '').trim(),
+      limite: limitePreflight || 0,
+      champs_article: {
+        titre: typeof titre === 'string' ? titre.length : typeof titre,
+        categorie: categorie || '',
+        auteur_nom: auteur_nom || '',
+        nb_mots: nb_mots,
+        contenu_blocs: Array.isArray(contenu) ? contenu.length : 'non-list'
+      },
+      proprietaire_ok: preflight.owner_uid === uid,
+      plan_ok: ['starter', 'featured'].includes(String(preflight.plan || '').toLowerCase()),
+      quota_ok: !!limitePreflight && compteurPreflight < limitePreflight
+    };
+    console.info('[ALBEXIA DIAGNOSTIC ARTICLE] Pré-vérification :', diagnostic);
+
+    if (preflight.owner_uid !== uid) throw new Error('DIAGNOSTIC_OWNER_UID_INCORRECT');
+    if (!limitePreflight) throw new Error('PLAN_SANS_ARTICLES');
+    if (compteurPreflight >= limitePreflight) throw new Error('LIMITE_ARTICLES_OUTIL');
+  } catch (preflightError) {
+    console.error('[ALBEXIA DIAGNOSTIC ARTICLE] Échec pré-vérification :', preflightError, diagnostic);
+    throw preflightError;
+  }
+
+  try {
+    await runTransaction(db, async (tx) => {
     // Lectures avant écritures (obligatoire dans une transaction Firestore)
     const outilSnap = await tx.get(outilRef);
     if (!outilSnap.exists()) throw new Error('OUTIL_INTROUVABLE');
@@ -624,7 +663,30 @@ export async function createArticleCreateur({
 
     // Compteur sur l'outil, incrémenté dans la même transaction que l'article
     tx.update(outilRef, { articles_count: dejaPublies + 1 });
-  });
+    });
+  } catch (transactionError) {
+    console.error('[ALBEXIA DIAGNOSTIC ARTICLE] Échec transaction Firestore :', {
+      code: transactionError.code || 'inconnu',
+      message: transactionError.message || String(transactionError),
+      diagnostic
+    });
+    // Alerte temporaire lisible sur mobile. Le code ne révèle aucun secret.
+    if (transactionError.code === 'permission-denied') {
+      alert(
+        'ÉCHEC FIRESTORE — DIAGNOSTIC\n\n' +
+        'Code : ' + (transactionError.code || 'inconnu') + '\n' +
+        'Message : ' + (transactionError.message || String(transactionError)) + '\n\n' +
+        'Propriétaire correspondant : ' + diagnostic.proprietaire_ok + '\n' +
+        'Plan autorisé : ' + diagnostic.plan_ok + '\n' +
+        'Quota disponible : ' + diagnostic.quota_ok + '\n\n' +
+        'Outil : ' + (diagnostic.outil_id || '') + '\n' +
+        'Plan lu : ' + (diagnostic.plan || '') + '\n' +
+        'Compteur : ' + (diagnostic.articles_count ?? '') + '\n\n' +
+        'Envoie une capture de ce message.'
+      );
+    }
+    throw transactionError;
+  }
 
   return articleRef.id;
 }

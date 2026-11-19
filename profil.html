@@ -4958,11 +4958,14 @@
       _artOutilsDisponibles = (userSoumissions || [])
         .filter(s => s.status === 'approved' && s.outil_id)
         .map(s => ({
+          claim_id: s.id,
+          nom: s.nom_outil || '',
+          categorie: s.categorie || '',
+          favicon: '',
+          plan: s.tier_demande || 'gratuit',
           outil_id: String(s.outil_id),
           outil_slug: (s.nom_outil || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
-          outil_nom: s.nom_outil || '',
-          claim_id: null,
-          plan: s.tier_demande || 'gratuit'
+          outil_nom: s.nom_outil || ''
         }));
     } catch (e) {
       _artOutilsDisponibles = [];
@@ -4996,7 +4999,7 @@
         <input type="radio" name="art-outil-pick" ${_artOutilChoisi && _artOutilChoisi.claim_id === o.claim_id ? 'checked' : ''}
                onchange="artChoisirOutil('${o.claim_id}')">
         <img src="${escHtmlStrict(o.favicon)}" alt="" onerror="this.style.display='none'">
-        <div><div class="aopc-nom">${escHtmlStrict(o.nom)}</div><div class="aopc-cat">${escHtmlStrict(o.categorie)} · ${t('profil.claimedTag', langue)}</div></div>
+        <div><div class="aopc-nom">${escHtmlStrict(o.nom)}</div><div class="aopc-cat">${escHtmlStrict(o.categorie)} · ${({ starter: 'Starter', featured: 'Featured' })[o.plan] || 'Gratuit'}</div></div>
       </label>`).join('');
   }
 

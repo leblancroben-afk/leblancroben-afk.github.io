@@ -2002,10 +2002,11 @@ Support français|oui|non|bool"></textarea>
     setVal('o-url', s.url_outil || '');
     setVal('o-name-fr', s.nom_outil || '');
     setVal('o-desc-fr', s.description || '');
-    // La catégorie envoyée est l'identifiant (ex. "seo") ou le nom ; on cherche l'option qui correspond
-    const selCat = document.getElementById('o-cat');
-    const optCat = selCat && [...selCat.options].find(o => o.value === s.categorie || o.text === s.categorie);
-    setVal('o-cat', optCat ? optCat.value : mapCategorieSoumission(s.categorie));
+    // Les options de la liste ont pour valeur le NOM de la catégorie ; la soumission
+    // envoie son IDENTIFIANT (ex. "seo"). On fait donc la correspondance id -> nom.
+    const cats = await fetchAllCategories();
+    const cible = cats.find(c => c.id === s.categorie || c.nom === s.categorie);
+    setVal('o-cat', cible ? cible.nom : mapCategorieSoumission(s.categorie));
     const PLAN_SOUM = { gratuit: 'standard', starter: 'starter', featured: 'featured' };
     const PRIX_SOUM = { gratuit: 'free', freemium: 'freemium', payant: 'paid' };
     const payantSoum = s.tier_demande === 'starter' || s.tier_demande === 'featured';

@@ -2023,6 +2023,7 @@ Support français|oui|non|bool"></textarea>
     updateDoc(doc(db, 'soumissions', s.id), { status: 'processing' }).catch(()=>{});
 
     window.__soumissionEnCours = s.id;
+    window.__soumissionEnCoursUid = s.uid || null;
     window.__soumissionEnCoursTier = s.tier_demande || 'gratuit';
     window.__soumissionEnCoursPaye = s.payment_status === 'paye';
 
@@ -2466,7 +2467,7 @@ Support français|oui|non|bool"></textarea>
           <div class="soumission-top">
             <div>
               <div class="soumission-name">${escapeHtml(a.titre || 'Sans titre')}</div>
-              <div class="soumission-meta">Outil : ${escapeHtml(a.outil_slug || '')} · Trimestre : ${escapeHtml(a.trimestre || '')}</div>
+              <div class="soumission-meta">Outil : ${escapeHtml(a.outil_slug || '')}</div>
             </div>
           </div>
           <div class="soumission-actions">
@@ -3625,7 +3626,8 @@ Support français|oui|non|bool"></textarea>
         interface_fr:interfaceFr,api,mobile,presentation,meta_description:metaDesc,
         screenshot_url:screenshot,stats,fonctionnalites,faq,tutoriels,videotheque,tarifs,...communsNouveaux,
         generer_fiche:genererFiche,slug_articles:slugArticles||null,
-        soumission_id: window.__soumissionEnCours || null});
+        soumission_id: window.__soumissionEnCours || null,
+        ...(window.__soumissionEnCoursUid ? { owner_uid: window.__soumissionEnCoursUid } : {})});
 
       if (editingTool) {
         if (existingEn && !(nameEn && descEn)) await deleteDoc(doc(db,'outils',String(existingEn.id)));
@@ -3665,15 +3667,16 @@ Support français|oui|non|bool"></textarea>
       if (window.__soumissionEnCours) {
         const soumissionIdApprouvee = window.__soumissionEnCours;
         const tierApprouve = window.__soumissionEnCoursTier;
+        // L'outil principal reçoit owner_uid dès sa création (plus haut).
+        // On ne valide la soumission qu'après avoir créé la fiche avec son propriétaire.
         try {
           await updateDoc(doc(db, 'soumissions', soumissionIdApprouvee), { status: 'approved', outil_id: mainId });
-          // Propriétaire de l'outil : le créateur qui a soumis la fiche (contrôle des règles articles)
-          const snapSoum = await getDoc(doc(db, 'soumissions', soumissionIdApprouvee));
-          if (snapSoum.exists() && snapSoum.data().uid) {
-            await updateDoc(doc(db, 'outils', String(mainId)), { owner_uid: snapSoum.data().uid });
-          }
           notifierSoumissionTraitee(soumissionIdApprouvee, true);
-        } catch(_) {}
+        } catch (errApprobation) {
+          console.error('[Albexia] Outil créé, mais approbation de la soumission impossible :', errApprobation);
+          showMsg('warn-outils','ok-outils','warn',
+            `Outil créé, mais la soumission n'a pas pu être marquée comme approuvée : ${errApprobation.message}. Vérifiez la soumission ${soumissionIdApprouvee}.`);
+        }
 
         const payeAvantValidation = window.__soumissionEnCoursPaye === true;
         const estPayantTier = tierApprouve === 'starter' || tierApprouve === 'featured';
@@ -3712,6 +3715,7 @@ Support français|oui|non|bool"></textarea>
         }
 
         window.__soumissionEnCours = null;
+        window.__soumissionEnCoursUid = null;
         window.__soumissionEnCoursTier = null;
       }
 

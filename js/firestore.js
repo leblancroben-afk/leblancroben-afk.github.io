@@ -562,7 +562,7 @@ export async function getArticleCreateur(articleId) {
 }
 
 // CORRECTIF : la version précédente ne retenait que
-// {uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots, contenu} —
+// {uid, outil_slug, titre, banniere_url, nb_mots, contenu} —
 // categorie, extrait, auteur_nom, auteur_bio, sources et mots_cles étaient
 // silencieusement perdus alors que profil.html les envoie déjà. On les
 // capture tous ici, avec une valeur de repli sûre pour chacun (jamais
@@ -570,22 +570,8 @@ export async function getArticleCreateur(articleId) {
 //
 // vues et liked_by sont initialisés ici (jamais fournis par l'auteur) —
 // voir incrementArticleViews() et toggleLikeArticle() plus bas.
-// ── Quota transactionnel (1 article créateur par trimestre, tous outils
-// confondus) ──
-// Calcule le début du trimestre calendaire (UTC) contenant `date`, avec
-// EXACTEMENT la même logique que la fonction jumelle côté règles Firestore
-// (debutTrimestreCourant()) — les deux DOIVENT rester strictement
-// identiques, sinon le client et les règles ne s'accorderont jamais sur
-// la valeur attendue et toute soumission échouera.
-function debutTrimestreUTC(date) {
-  const y = date.getUTCFullYear();
-  const m = date.getUTCMonth() + 1; // 1-12
-  const moisDebut = m <= 3 ? 1 : m <= 6 ? 4 : m <= 9 ? 7 : 10;
-  return new Date(Date.UTC(y, moisDebut - 1, 1, 0, 0, 0));
-}
-
 // CORRECTIF : la version précédente ne retenait que
-// {uid, soumission_id, outil_slug, titre, banniere_url, trimestre, nb_mots, contenu} —
+// {uid, outil_slug, titre, banniere_url, nb_mots, contenu} —
 // categorie, extrait, auteur_nom, auteur_bio, sources et mots_cles étaient
 // silencieusement perdus alors que profil.html les envoie déjà. On les
 // capture tous ici, avec une valeur de repli sûre pour chacun (jamais
@@ -594,25 +580,12 @@ function debutTrimestreUTC(date) {
 // vues et liked_by sont initialisés ici (jamais fournis par l'auteur) —
 // voir incrementArticleViews() et toggleLikeArticle() plus bas.
 //
-// QUOTA : la création de l'article et la consommation du quota (1 article
-// créateur par trimestre, tous outils confondus) se font dans UNE SEULE
-// transaction Firestore. Les security rules exigent que la mise à jour du
-// quota sur users/{uid} ait bien eu lieu dans la même transaction pour que
-// la création de l'article soit acceptée — donc impossible de créer un
-// article sans consommer le quota, et impossible de consommer le quota
-// deux fois dans le même trimestre (voir règles /users/{userId} et
-// /articles_createurs/{articleId}). `fenetre_debut` envoyée ici n'est
-// qu'une PROPOSITION du client : les règles la valident indépendamment à
-// partir de request.time (temps serveur), jamais depuis l'horloge du
-// navigateur — un client malveillant ne peut donc pas mentir dessus.
-//
-// Si le quota du trimestre est déjà consommé, Firestore rejette la
-// transaction (permission-denied) — cette fonction laisse alors l'erreur
-// remonter telle quelle à l'appelant (profil.html), qui doit distinguer
-// ce cas pour afficher un message clair plutôt qu'une erreur générique.
+// QUOTA : seule la limite permanente liée au plan de l'outil s'applique.
+// Starter = 3 articles au total ; Featured = 5 articles au total.
+// Aucun quota trimestriel ou annuel n'est appliqué.
 export async function createArticleCreateur({
   uid, claim_id, outil_id, outil_slug, titre, categorie, extrait, banniere_url,
-  auteur_nom, auteur_bio, sources, mots_cles, cta_text, trimestre, nb_mots, contenu
+  auteur_nom, auteur_bio, sources, mots_cles, cta_text, nb_mots, contenu
 }) {
   if (!outil_id) throw new Error('OUTIL_REQUIS');
   const outilRef = doc(db, 'outils', String(outil_id));
@@ -635,7 +608,7 @@ export async function createArticleCreateur({
       uid,
       claim_id: claim_id || null,
       outil_id: String(outil_id),
-      outil_slug: outil_slug || null,
+      outil_slug: String(outil_slug || '').trim(),
       titre,
       categorie: categorie || '',
       extrait: extrait || '',
@@ -645,7 +618,6 @@ export async function createArticleCreateur({
       sources: sources || [],
       mots_cles: (mots_cles || []).slice(0, 5),
       cta_text: cta_text || '',
-      trimestre, // affichage seulement
       nb_mots,
       statut: 'en_relecture',
       contenu,
@@ -676,12 +648,12 @@ export async function createArticleCreateur({
 // Firestore, pas seulement ignorée.
 export async function updateArticleCreateur(articleId, {
   claim_id, outil_slug, titre, categorie, extrait, banniere_url,
-  auteur_nom, auteur_bio, sources, mots_cles, cta_text, trimestre, nb_mots, contenu
+  auteur_nom, auteur_bio, sources, mots_cles, cta_text, nb_mots, contenu
 }) {
   const ref = doc(db, 'articles_createurs', articleId);
   await updateDoc(ref, {
     claim_id: claim_id || null,
-    outil_slug: outil_slug || null,
+    outil_slug: String(outil_slug || '').trim(),
     titre,
     categorie: categorie || '',
     extrait: extrait || '',
@@ -691,7 +663,6 @@ export async function updateArticleCreateur(articleId, {
     sources: sources || [],
     mots_cles: (mots_cles || []).slice(0, 5),
     cta_text: cta_text || '',
-    trimestre,
     nb_mots,
     contenu,
     statut: 'en_relecture',

@@ -6178,7 +6178,13 @@
       await loadMesArticles();
       if (_artTargetClaimId) await loadSoumissions();
     } catch (e) {
-      // Les limites sont permanentes et propres au plan de l'outil.
+      // Diagnostic temporaire : afficher l'erreur Firebase directement sur mobile.
+      console.error('[Albexia] Erreur submitArticle :', e);
+      const code = e && e.code ? e.code : 'inconnu';
+      const message = e && e.message ? e.message : String(e);
+      alert('ÉCHEC DE L’ENVOI DE L’ARTICLE\n\nCode : ' + code + '\n\nMessage : ' + message);
+
+      // Conserver aussi les messages métier habituels dans l'interface.
       if (e.message === 'LIMITE_ARTICLES_OUTIL') {
         showToast(t('pg.toastLimit', (window.detecterLangue ? window.detecterLangue() : 'fr')));
       } else if (e.message === 'PLAN_SANS_ARTICLES') {

@@ -2074,14 +2074,6 @@
 
         <p class="mc-section-subtitle" style="margin:0 0 14px" data-i18n="pg.trackingSub">Suivez le statut de vos articles et de vos outils en temps réel.</p>
 
-        <div class="mc-quota-box" id="mc-quota-box" style="display:none">
-          <div>
-            <div class="mc-quota-label" data-i18n="profil.articleQuotaTitle">Quota d'articles créateur</div>
-            <div class="mc-quota-info" data-i18n="profil.articleQuotaDesc">1 article créateur par trimestre, tous outils confondus.</div>
-          </div>
-          <div class="mc-quota-count" id="mc-quota-count">—</div>
-        </div>
-
         <div id="mes-articles-container">
           <div class="loader"><div class="spinner"></div> <span data-i18n="profil.loading" data-i18n="profil.loading">Chargement…</span></div>
         </div>
@@ -3322,7 +3314,6 @@
       } catch (err) {
         console.error('Erreur getUserProfile:', err);
       }
-      renderMcQuotaBox();
 
       // Sync auto de la photo Google → Firestore, pour qu'elle soit
       // visible sur le profil public (profil-public.html ne peut lire
@@ -4248,32 +4239,6 @@
     publie: { emoji: '🟢', texte: 'Publié' },
   };
 
-  // ── Quota d'articles créateur (affichage — la vraie barrière est dans
-  // les security rules, voir createArticleCreateur() dans firestore.js) ──
-  // Même logique de calcul de trimestre que côté serveur (règles Firestore
-  // et debutTrimestreUTC() dans firestore.js) : premier jour du trimestre
-  // calendaire UTC contenant la date donnée.
-  function debutTrimestreUTC_Client(date) {
-    const y = date.getUTCFullYear();
-    const m = date.getUTCMonth() + 1;
-    const moisDebut = m <= 3 ? 1 : m <= 6 ? 4 : m <= 9 ? 7 : 10;
-    return Date.UTC(y, moisDebut - 1, 1, 0, 0, 0);
-  }
-
-  function renderMcQuotaBox() {
-    const box = document.getElementById('mc-quota-box');
-    const countEl = document.getElementById('mc-quota-count');
-    if (!box || !countEl) return;
-    const q = userProfile?.quota_articles_fenetre;
-    let consomme = false;
-    if (q) {
-      const fenetreStockee = q.toDate ? q.toDate().getTime() : (q.seconds ? q.seconds * 1000 : null);
-      if (fenetreStockee !== null) consomme = fenetreStockee === debutTrimestreUTC_Client(new Date());
-    }
-    const langueQuota = window.detecterLangue ? window.detecterLangue() : 'fr';
-    countEl.textContent = t('profil.quotaUsed', langueQuota).replace('{used}', consomme ? '1' : '0').replace('{total}', '1');
-    box.style.display = 'none'; // quota global retiré : limite désormais par outil
-  }
 
   window.toggleMcRules = function() {
     const details = document.getElementById('mcRulesDetails');
@@ -4747,11 +4712,6 @@
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`;
   }
 
-  function trimestreActuel() {
-    const d = new Date();
-    const q = Math.floor(d.getMonth() / 3) + 1;
-    return `${d.getFullYear()}-Q${q}`;
-  }
 
   // ═══════════════════════════════════════════════════════
   //  MODALE REVENDICATION
@@ -6205,7 +6165,6 @@
       mots_cles: _artMotsCles.slice(0, ART_MOTS_CLES_MAX),
       cta_text: ctaText,
       sources,
-      trimestre: trimestreActuel(),
       nb_mots: nbMots,
       contenu
     };
@@ -6221,10 +6180,6 @@
         await updateArticleCreateur_(_artEditingArticleId, payload);
       } else {
         await createArticleCreateur_({ uid: currentUser.uid, ...payload });
-        // La transaction vient de modifier users/{uid}.quota_articles_fenetre
-        // côté serveur — le cache local userProfile doit être rafraîchi pour
-        // que la case de quota affiche "1 / 1" immédiatement.
-        try { userProfile = await getUserProfile(currentUser.uid); renderMcQuotaBox(); } catch {}
       }
       const draftKey = _artTargetClaimId ? ('art-brouillon-' + _artTargetClaimId) : ART_DRAFT_KEY;
       localStorage.removeItem(draftKey);
@@ -6233,21 +6188,13 @@
       await loadMesArticles();
       if (_artTargetClaimId) await loadSoumissions();
     } catch (e) {
-      // Message clair et spécifique pour le cas de quota trimestriel déjà
-      // consommé (voir createArticleCreateur() dans firestore.js) plutôt
-      // que l'erreur générique — c'est un refus attendu, pas un bug.
+      // Les limites sont permanentes et propres au plan de l'outil.
       if (e.message === 'LIMITE_ARTICLES_OUTIL') {
         showToast(t('pg.toastLimit', (window.detecterLangue ? window.detecterLangue() : 'fr')));
       } else if (e.message === 'PLAN_SANS_ARTICLES') {
         showToast(t('pg.toastFreePlan', (window.detecterLangue ? window.detecterLangue() : 'fr')));
       } else if (e.message === 'OUTIL_REQUIS') {
         showToast('Choisissez d\'abord l\'outil auquel rattacher cet article.');
-      } else if (e.message === 'QUOTA_TRIMESTRE_ATTEINT') {
-        showToast(t('profil.toastQuotaReached', langue));
-        // Le cache local était visiblement désynchronisé (une autre session
-        // a consommé le quota entre-temps) — on le rafraîchit pour que la
-        // case de quota reflète la réalité sans attendre un rechargement.
-        try { userProfile = await getUserProfile(currentUser.uid); renderMcQuotaBox(); } catch {}
       } else {
         showToast('<svg class="ic ic-x-circle" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-x-circle"/></svg> ' + t('profil.errorPrefix', langue) + (e.message || e));
       }
@@ -6288,7 +6235,6 @@
       safe('avis',          () => renderAvis());
       safe('soumissions',   () => renderSoumissions());
       safe('videos',        () => renderSavedVideos());
-      safe('quota',         () => renderMcQuotaBox());
       safe('badges',        () => refreshBadges());
       safe('mes-articles',  () => { if (window.__mesArticlesCache) loadMesArticles(true); });
       safe('quiz-etape',    () => {

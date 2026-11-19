@@ -2003,12 +2003,17 @@ Support français|oui|non|bool"></textarea>
     setVal('o-name-fr', s.nom_outil || '');
     setVal('o-desc-fr', s.description || '');
     setVal('o-cat', mapCategorieSoumission(s.categorie));
-    setVal('o-plan', '');
+    const PLAN_SOUM = { gratuit: 'standard', starter: 'starter', featured: 'featured' };
+    const PRIX_SOUM = { gratuit: 'free', freemium: 'freemium', payant: 'paid' };
+    const payantSoum = s.tier_demande === 'starter' || s.tier_demande === 'featured';
+    setVal('o-plan', PLAN_SOUM[s.tier_demande] || 'standard');
+    setVal('o-verifie', payantSoum ? 'true' : '');
+    setVal('o-price', PRIX_SOUM[s.modele_prix] || 'freemium');
     updateToolPreview();
 
-    if (s.tier_demande === 'starter' || s.tier_demande === 'featured') {
+    if (payantSoum) {
       showMsg('ok-outils','warn-outils','ok',
-        `Formule "${s.tier_demande}" demandée — l'outil sera créé en Standard, et passera automatiquement en ${s.tier_demande} dès confirmation du paiement.`);
+        `Formule « ${s.tier_demande} » : plan et badge vérifié appliqués automatiquement.`);
     }
 
     updateDoc(doc(db, 'soumissions', s.id), { status: 'processing' }).catch(()=>{});

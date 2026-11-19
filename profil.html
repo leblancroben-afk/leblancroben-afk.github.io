@@ -706,6 +706,16 @@
     .soum-form-grid input:focus, .soum-form-grid select:focus, .soum-form-grid textarea:focus { border-color: var(--text); }
     .soum-form-grid textarea { resize: vertical; min-height: 70px; }
     .soum-char-count { font-size: .7rem; color: var(--muted); text-align: right; margin-top: 4px; }
+    /* Éditeur de limites : le texte excédentaire est signalé sans être tronqué. */
+    .art-limit-wrap { position: relative; width: 100%; }
+    .art-limit-mirror { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; color: var(--text); background: transparent; }
+    .art-limit-mirror .art-limit-overflow { color: #d98282; background: rgba(217,130,130,.13); border-radius: 2px; }
+    .art-limit-wrap > input, .art-limit-wrap > textarea { position: relative; z-index: 2; background: transparent !important; color: transparent !important; -webkit-text-fill-color: transparent !important; caret-color: var(--text) !important; }
+    .art-limit-wrap > input::placeholder, .art-limit-wrap > textarea::placeholder { color: var(--muted); -webkit-text-fill-color: var(--muted); }
+    .art-limit-wrap > input::selection, .art-limit-wrap > textarea::selection { background: rgba(108,99,255,.22); }
+    .art-limit-wrap .art-limit-mirror { white-space: pre-wrap; overflow-wrap: break-word; word-break: break-word; }
+    .art-limit-count.is-over { color: #c76f6f; font-weight: 700; }
+
     .soum-form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
     .soum-note-box {
       font-size: .78rem; color: var(--muted); line-height: 1.6;
@@ -2456,7 +2466,8 @@
       <div class="fe-card-title" data-i18n="profil.ctaLabel">CTA</div>
       <p class="fe-hint" data-i18n="profil.ctaDesc">Le lien du bouton pointe toujours automatiquement vers la fiche officielle de l'outil — vous ne choisissez que le texte affiché.</p>
       <select id="art-cta-preset" class="form-input" onchange="artOnCtaPresetChange()"></select>
-      <input type="text" id="art-cta-custom" class="form-input" maxlength="60" placeholder="Votre texte personnalisé" data-i18n-placeholder="profil.ctaPlaceholder" style="display:none;margin-top:8px" oninput="_artCtaCustom=this.value;scheduleArtAutosave()">
+      <input type="text" id="art-cta-custom" class="form-input" data-char-limit="60" data-count-id="art-cta-count" placeholder="Votre texte personnalisé" data-i18n-placeholder="profil.ctaPlaceholder" style="display:none;margin-top:8px" oninput="_artCtaCustom=this.value;updateArtLimitCount(this);scheduleArtAutosave()">
+      <div class="soum-char-count" id="art-cta-count-wrap" style="display:none"><span id="art-cta-count">0</span> / 60</div>
     </div>
 
     <div class="fe-card">
@@ -2464,7 +2475,8 @@
       <div class="fe-field-row">
         <div class="form-group full">
           <label class="form-label" data-i18n="profil.articleTitleLabel">Titre de l'article <span class="fe-req">*</span></label>
-          <input type="text" id="art-titre" class="form-input" maxlength="200" placeholder="ex. Notre outil V7 est disponible !" data-i18n-placeholder="profil.articleTitlePlaceholder" oninput="scheduleArtAutosave()">
+          <input type="text" id="art-titre" class="form-input" data-char-limit="200" data-count-id="art-titre-count" placeholder="ex. Notre outil V7 est disponible !" data-i18n-placeholder="profil.articleTitlePlaceholder" oninput="updateArtLimitCount(this);scheduleArtAutosave()">
+          <div class="soum-char-count"><span id="art-titre-count">0</span> / 200</div>
         </div>
         <div class="form-group full">
           <label class="form-label"><span data-i18n="profil.categoryLabel">Catégorie</span> <span class="fe-req">*</span></label>
@@ -2502,7 +2514,7 @@
         </div>
         <div class="form-group full">
           <label class="form-label"><span data-i18n="profil.excerptLabel">Extrait</span> <span class="fe-req">*</span></label>
-          <textarea id="art-extrait" class="form-input" rows="4" maxlength="250" placeholder="Présentez brièvement votre article…" data-i18n-placeholder="profil.excerptPlaceholder" oninput="updateArtExtraitCount();scheduleArtAutosave()"></textarea>
+          <textarea id="art-extrait" class="form-input" rows="4" data-char-limit="250" data-count-id="art-extrait-count" placeholder="Présentez brièvement votre article…" data-i18n-placeholder="profil.excerptPlaceholder" oninput="updateArtExtraitCount();scheduleArtAutosave()"></textarea>
           <div class="soum-char-count"><span id="art-extrait-count">0</span> / 250</div>
         </div>
       </div>
@@ -2552,11 +2564,12 @@
       <div class="fe-field-row">
         <div class="form-group full">
           <label class="form-label"><span data-i18n="profil.displayName">Nom affiché</span> <span class="fe-req">*</span></label>
-          <input type="text" id="art-auteur-nom" class="form-input" maxlength="60" placeholder="Votre nom ou nom de créateur" data-i18n-placeholder="profil.authorNamePlaceholder" oninput="scheduleArtAutosave()">
+          <input type="text" id="art-auteur-nom" class="form-input" data-char-limit="60" data-count-id="art-auteur-nom-count" placeholder="Votre nom ou nom de créateur" data-i18n-placeholder="profil.authorNamePlaceholder" oninput="updateArtLimitCount(this);scheduleArtAutosave()">
+          <div class="soum-char-count"><span id="art-auteur-nom-count">0</span> / 60</div>
         </div>
         <div class="form-group full">
           <label class="form-label" data-i18n="profil.shortBio">Bio courte</label>
-          <textarea id="art-auteur-bio" class="form-input" rows="2" maxlength="160" placeholder="Présentez-vous en quelques mots…" data-i18n-placeholder="profil.authorBioPlaceholder" oninput="updateArtBioCount();scheduleArtAutosave()"></textarea>
+          <textarea id="art-auteur-bio" class="form-input" rows="2" data-char-limit="160" data-count-id="art-bio-count" placeholder="Présentez-vous en quelques mots…" data-i18n-placeholder="profil.authorBioPlaceholder" oninput="updateArtBioCount();scheduleArtAutosave()"></textarea>
           <div class="soum-char-count"><span id="art-bio-count">0</span> / 160</div>
         </div>
       </div>
@@ -6002,14 +6015,80 @@
     }
   };
 
+  // ── Éditeur visuel des limites de caractères ──
+  window.updateArtLimitCount = function(el) {
+    if (!el) return;
+    const limit = Number(el.dataset.charLimit || 0);
+    const count = el.value.length;
+    const countEl = document.getElementById(el.dataset.countId || '');
+    if (countEl) {
+      countEl.textContent = count;
+      countEl.classList.toggle('is-over', count > limit);
+    }
+    const mirror = el._artLimitMirror;
+    if (mirror) {
+      const safe = value => value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      const normal = safe(el.value.slice(0, limit));
+      const overflow = safe(el.value.slice(limit));
+      mirror.innerHTML = normal + (overflow ? '<span class="art-limit-overflow">' + overflow + '</span>' : '');
+      mirror.scrollTop = el.scrollTop;
+      mirror.scrollLeft = el.scrollLeft;
+    }
+  };
+
+  function initArtLimitEditors() {
+    document.querySelectorAll('#art-cta-custom[data-char-limit], #art-titre[data-char-limit], #art-extrait[data-char-limit], #art-auteur-nom[data-char-limit], #art-auteur-bio[data-char-limit]').forEach(el => {
+      if (el.dataset.limitReady === '1') return;
+      el.dataset.limitReady = '1';
+      const wrap = document.createElement('div');
+      wrap.className = 'art-limit-wrap';
+      el.parentNode.insertBefore(wrap, el);
+      wrap.appendChild(el);
+      const mirror = document.createElement('div');
+      mirror.className = 'art-limit-mirror';
+      mirror.setAttribute('aria-hidden', 'true');
+      wrap.insertBefore(mirror, el);
+      el._artLimitMirror = mirror;
+
+      const syncStyle = () => {
+        const cs = getComputedStyle(el);
+        ['fontFamily','fontSize','fontWeight','fontStyle','letterSpacing','lineHeight','textAlign','textTransform','paddingTop','paddingRight','paddingBottom','paddingLeft','borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth','boxSizing'].forEach(k => mirror.style[k] = cs[k]);
+        mirror.style.borderStyle = 'solid';
+        mirror.style.borderColor = 'transparent';
+        mirror.style.borderRadius = cs.borderRadius;
+        mirror.style.width = '100%';
+        mirror.style.height = '100%';
+        mirror.style.whiteSpace = el.tagName === 'TEXTAREA' ? 'pre-wrap' : 'pre';
+        mirror.style.overflowWrap = el.tagName === 'TEXTAREA' ? 'break-word' : 'normal';
+      };
+      syncStyle();
+      el.addEventListener('input', () => updateArtLimitCount(el));
+      el.addEventListener('scroll', () => updateArtLimitCount(el));
+      if (window.ResizeObserver) new ResizeObserver(syncStyle).observe(el);
+      updateArtLimitCount(el);
+    });
+    const cta = document.getElementById('art-cta-custom');
+    const ctaWrap = document.getElementById('art-cta-count-wrap');
+    if (cta && ctaWrap) {
+      const show = () => { ctaWrap.style.display = cta.style.display === 'none' ? 'none' : 'block'; };
+      show();
+      if (!cta._countVisibilityObserver && window.MutationObserver) {
+        cta._countVisibilityObserver = new MutationObserver(show);
+        cta._countVisibilityObserver.observe(cta, { attributes: true, attributeFilter: ['style'] });
+      }
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initArtLimitEditors);
+  else initArtLimitEditors();
+
   // ── Compteurs de caractères ──
   window.updateArtExtraitCount = function() {
     const el = document.getElementById('art-extrait');
-    document.getElementById('art-extrait-count').textContent = el.value.length;
+    updateArtLimitCount(el);
   };
   window.updateArtBioCount = function() {
     const el = document.getElementById('art-auteur-bio');
-    document.getElementById('art-bio-count').textContent = el.value.length;
+    updateArtLimitCount(el);
   };
 
   // ── Sources et références (liste libre texte + URL) ──
@@ -6178,13 +6257,7 @@
       await loadMesArticles();
       if (_artTargetClaimId) await loadSoumissions();
     } catch (e) {
-      // Diagnostic temporaire : afficher l'erreur Firebase directement sur mobile.
-      console.error('[Albexia] Erreur submitArticle :', e);
-      const code = e && e.code ? e.code : 'inconnu';
-      const message = e && e.message ? e.message : String(e);
-      alert('ÉCHEC DE L’ENVOI DE L’ARTICLE\n\nCode : ' + code + '\n\nMessage : ' + message);
-
-      // Conserver aussi les messages métier habituels dans l'interface.
+      // Les limites sont permanentes et propres au plan de l'outil.
       if (e.message === 'LIMITE_ARTICLES_OUTIL') {
         showToast(t('pg.toastLimit', (window.detecterLangue ? window.detecterLangue() : 'fr')));
       } else if (e.message === 'PLAN_SANS_ARTICLES') {

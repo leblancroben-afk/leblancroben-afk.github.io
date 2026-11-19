@@ -1487,6 +1487,11 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/featured/fr/murf-ai/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/featured/fr/opinly/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/featured/fr/opinly/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/featured/fr/opinly/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/featured/fr/soundful/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/featured/fr/soundful/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/featured/en/soundful/"/>

@@ -504,36 +504,29 @@ function slugifyLocal(str) {
     .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
-// Outils qu'un utilisateur peut légitimement associer à un article
-// créateur : ses claims approuvés, résolus contre le document "outils"
-// officiel — jamais depuis des champs saisis par l'utilisateur. On
-// revérifie aussi que le claim est bien TOUJOURS le créateur vérifié actif
-// de cette fiche (verified_creator_uid) : si l'admin a changé de créateur
-// entre-temps sans que ce claim particulier ait été explicitement
-// révoqué (ne devrait pas arriver, mais on ne fait pas confiance
-// uniquement au statut local du claim), il n'apparaît plus ici.
+// Outils appartenant directement à l'utilisateur. Le parcours de revendication
+// n'est plus utilisé : owner_uid est la seule source d'autorité côté client,
+// et les règles Firestore revérifient ce propriétaire lors de la création.
 export async function getOutilsCreateur(uid) {
-  const ref = collection(db, 'claims');
-  const snap = await getDocs(query(ref, where('uid', '==', uid), where('status', '==', 'approved')));
-  const claims = snap.docs.map(d => ({ claim_id: d.id, ...d.data() }));
-
-  const resolus = await Promise.all(claims.map(async (c) => {
-    try {
-      const outilSnap = await getDoc(doc(db, 'outils', c.outil_id));
-      if (!outilSnap.exists()) return null;
-      const o = outilSnap.data();
-      if (o.verified_creator_uid !== c.uid) return null;
+  if (!uid) return [];
+  const ref = collection(db, 'outils');
+  const snap = await getDocs(query(ref, where('owner_uid', '==', uid)));
+  return snap.docs
+    .map(d => {
+      const o = d.data();
+      const plan = String(o.plan || '').toLowerCase();
+      if (!['starter', 'featured'].includes(plan)) return null;
       return {
-        claim_id: c.claim_id,
-        outil_id: c.outil_id,
-        outil_slug: slugifyLocal(o.name),
-        nom: o.name,
-        categorie: o.category || '',
-        favicon: `https://www.google.com/s2/favicons?sz=64&domain=${(o.url || '').replace(/^https?:\/\//, '').split('/')[0]}`,
+        claim_id: null, // compatibilité avec les anciens brouillons ; aucune revendication
+        outil_id: d.id,
+        outil_slug: String(o.outil_slug || slugifyLocal(o.name || '')).trim(),
+        nom: o.name || o.nom_outil || '',
+        categorie: o.category || o.categorie || '',
+        plan,
+        favicon: `https://www.google.com/s2/favicons?sz=64&domain=${String(o.url || '').replace(/^https?:\/\//, '').split('/')[0]}`
       };
-    } catch { return null; }
-  }));
-  return resolus.filter(Boolean);
+    })
+    .filter(Boolean);
 }
 
 export async function getArticlesForSoumission(uid, soumissionId) {

@@ -640,6 +640,15 @@
               <option value="" disabled selected data-i18n="sm.choose">— Choisir —</option>
             </select>
         </div>
+          <div class="field">
+            <label for="tool-prix">Modèle de tarification <span class="req">*</span></label>
+            <select id="tool-prix" required>
+              <option value="" disabled selected>— Choisir —</option>
+              <option value="gratuit">Gratuit</option>
+              <option value="freemium">Freemium</option>
+              <option value="payant">Payant</option>
+            </select>
+          </div>
 
 
 
@@ -975,7 +984,7 @@ if (langSwitch && langCurrent) {
       categorie:     document.getElementById('tool-cat').value,
       description:   document.getElementById('tool-desc').value.trim(),
       email_contact: document.getElementById('tool-email').value.trim(),
-      modele_prix:   'gratuit',
+      modele_prix:   document.getElementById('tool-prix').value,
       tier_demande:  tier,
       uid: window._firebaseUser?.uid || null,
       status: 'pending',

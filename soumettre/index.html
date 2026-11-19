@@ -696,7 +696,7 @@
       </div>
     </div>
 
-    <div id="zone-login-requis">
+    <div id="zone-login-requis" style="display:none">
       <p data-i18n="sm.loginReq">Pour Starter ou Featured, connectez-vous avant de payer.</p>
       <button type="button" class="btn-google" id="btnGoogleLogin">
         <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -945,6 +945,7 @@ if (langSwitch && langCurrent) {
       return;
     }
     zoneLogin.classList.remove('show');
+    zoneLogin.style.display = 'none';
     if (tierEnAttente) {
       const tierRepris = tierEnAttente;
       tierEnAttente = null;

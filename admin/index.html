@@ -3667,6 +3667,11 @@ Support français|oui|non|bool"></textarea>
         const tierApprouve = window.__soumissionEnCoursTier;
         try {
           await updateDoc(doc(db, 'soumissions', soumissionIdApprouvee), { status: 'approved', outil_id: mainId });
+          // Propriétaire de l'outil : le créateur qui a soumis la fiche (contrôle des règles articles)
+          const snapSoum = await getDoc(doc(db, 'soumissions', soumissionIdApprouvee));
+          if (snapSoum.exists() && snapSoum.data().uid) {
+            await updateDoc(doc(db, 'outils', String(mainId)), { owner_uid: snapSoum.data().uid });
+          }
           notifierSoumissionTraitee(soumissionIdApprouvee, true);
         } catch(_) {}
 

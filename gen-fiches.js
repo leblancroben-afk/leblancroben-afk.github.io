@@ -4307,6 +4307,31 @@ async function main() {
   const outilsAvecFiche = new Map();
   const marquerFiche = (tool, ok) => { if (tool.fiche_generee !== ok) outilsAvecFiche.set(tool.id, ok); };
 
+  // ── Articles créateurs liés à chaque outil (remplacent data/articles.json sur les fiches) ──
+  // Limite selon le plan : Starter 3, Featured 5, Gratuit 0. Les plus récents d'abord.
+  // Mis dans l'objet outil AVANT le calcul du hash : un nouvel article déclenche la régénération.
+  const LIMITE_ARTICLES_PLAN = { starter: 3, featured: 5 };
+  const snapArticlesLies = await db.collection('articles_createurs').where('statut', '==', 'publie').get();
+  const articlesParOutil = new Map();
+  for (const d of snapArticlesLies.docs) {
+    const a = { id: d.id, ...d.data() };
+    if (!a.outil_id) continue;
+    const cle = String(a.outil_id);
+    if (!articlesParOutil.has(cle)) articlesParOutil.set(cle, []);
+    articlesParOutil.get(cle).push(a);
+  }
+  for (const tool of tools) {
+    const liste = (articlesParOutil.get(String(tool.id)) || [])
+      .sort((x, y) => (y.created_at?.seconds || 0) - (x.created_at?.seconds || 0));
+    const limite = LIMITE_ARTICLES_PLAN[tool.plan] || 0;
+    tool.articles_lies = liste.slice(0, limite).map(a => ({
+      titre: a.titre || '',
+      categorie: a.categorie || '',
+      banniere_url: a.banniere_url || '',
+      slug: articleCreateurSlug(a),
+    }));
+  }
+
   for (const tool of tools) {
     const toolHash = hashDoc(tool);
     const toolId   = String(tool.id || slugify(tool.name));

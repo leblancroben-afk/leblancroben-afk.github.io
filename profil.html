@@ -4954,7 +4954,16 @@
     const emptyEl = document.getElementById('art-outil-picker-empty');
     if (listEl) listEl.innerHTML = `<p class="fe-hint">${t('profil.loadingClaimedTools', window.detecterLangue ? window.detecterLangue() : 'fr')}</p>`;
     try {
-      _artOutilsDisponibles = await getOutilsCreateur_(currentUser.uid);
+      // Outils du créateur : soumissions approuvées par l'admin (outil_id renseigné)
+      _artOutilsDisponibles = (userSoumissions || [])
+        .filter(s => s.status === 'approved' && s.outil_id)
+        .map(s => ({
+          outil_id: String(s.outil_id),
+          outil_slug: (s.nom_outil || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+          outil_nom: s.nom_outil || '',
+          claim_id: null,
+          plan: s.tier_demande || 'gratuit'
+        }));
     } catch (e) {
       _artOutilsDisponibles = [];
       console.error('[outils créateur] erreur de chargement :', e);
@@ -6181,7 +6190,7 @@
     const ctaText = calculerCtaTexteFinal();
 
     const payload = {
-      claim_id: _artOutilChoisi.claim_id,
+      claim_id: null,
       outil_id: _artOutilChoisi.outil_id,
       outil_slug: _artOutilChoisi.outil_slug,
       titre,

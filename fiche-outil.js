@@ -518,10 +518,16 @@ function generateFiche(tool, allTools = [], deps) {
   // ── Sidebar : articles liés — pour TOUS les plans (FR : articles.json est en français).
   // Le nombre affiché dépend uniquement des articles disponibles pour l'outil ; js/articles-loader.js
   // masque la carte s'il n'y en a aucun.
-  const articlesCard = langue === 'fr' ? `
-<section class="fo-card fo-articles"><h3 class="fo-h3">${E(T.articles)}</h3><div id="articles-sidebar"></div></section>` : '';
-  const articlesScript = langue === 'fr'
-    ? `<script src="${R}js/articles-loader.js" data-outil="${E(slug)}"></script>` : '';
+  // Articles créateurs publiés et rattachés à l'outil (limite selon le plan, voir gen-fiches.js)
+  const artsLies = (tool.articles_lies || []);
+  const articlesCard = (langue === 'fr' && artsLies.length) ? `
+<section class="fo-card fo-articles"><h3 class="fo-h3">${E(T.articles)}</h3><div>${artsLies.map(a => `
+  <a href="${R}articles/fr/${E(a.slug)}/" class="article-link-card">
+    <div class="article-link-thumb">${a.banniere_url ? `<img src="${E(a.banniere_url)}" alt="${E(a.titre)}" loading="lazy">` : ''}</div>
+    <div><div class="article-link-title">${E(a.titre)}</div><div class="article-link-sub">${E(a.categorie)}</div></div>
+  </a>`).join('')}</div></section>` : '';
+  // Plus de chargement de data/articles.json dans le navigateur
+  const articlesScript = '';
 
   // ── Onglets ──
   const tabs = [

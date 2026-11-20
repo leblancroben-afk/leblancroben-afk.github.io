@@ -1721,6 +1721,7 @@ Support français|oui|non|bool"></textarea>
           <fieldset><legend>Catégories du hub FAQ</legend>
             <label>Catégories (JSON) — modifiables ici</label><textarea id="faq-categories-json" rows="7" placeholder='[{"slug":"outils-ia-et-tarifs","name":"Outils IA et tarifs","description":"..."}]'></textarea>
             <button type="button" class="btn-submit" id="faq-categories-save" style="background:var(--accent3)">Enregistrer les catégories</button>
+            <p id="faq-categories-feedback" class="field-hint" role="status" aria-live="polite" style="display:none;margin-top:8px"></p>
           </fieldset>
           <button type="submit" class="btn-submit" id="faq-save-btn">Enregistrer la FAQ</button>
           <button type="button" class="btn-danger" id="faq-delete-btn" style="display:none">Supprimer cette FAQ</button>
@@ -5863,9 +5864,65 @@ Support français|oui|non|bool"></textarea>
     try { await deleteDoc(doc(db,'faq',faqEditingId)); faqMessage('ok','FAQ supprimée. La page statique sera nettoyée au prochain build.'); faqReset(); await loadFaqAdmin(); }
     catch(err){faqMessage('warn','Suppression impossible : '+err.message);}
   });
-  document.getElementById('faq-categories-save').addEventListener('click',async()=>{
-    try { const categories=JSON.parse(faqVal('faq-categories-json')||'[]'); if(!Array.isArray(categories)) throw new Error('Un tableau JSON est attendu.'); await setDoc(doc(db,'config','faq_categories'),{categories,updatedAt:serverTimestamp()}); faqMessage('ok','Catégories FAQ enregistrées. Le hub sera actualisé au prochain build.'); }
-    catch(err){faqMessage('warn','Catégories non enregistrées : '+err.message);}
+  document.getElementById('faq-categories-save').addEventListener('click', async (event) => {
+    const btn = event.currentTarget;
+    const feedback = document.getElementById('faq-categories-feedback');
+    const showCategoryFeedback = (type, message) => {
+      feedback.textContent = message;
+      feedback.style.display = 'block';
+      feedback.style.color = type === 'ok' ? 'var(--success, #0e9f6e)' : 'var(--danger, #dc2626)';
+      feedback.style.fontWeight = '600';
+    };
+
+    if (btn.disabled) return;
+    btn.disabled = true;
+    const originalText = btn.textContent;
+    btn.textContent = 'Enregistrement…';
+    showCategoryFeedback('info', 'Vérification des catégories…');
+
+    try {
+      const raw = faqVal('faq-categories-json').trim();
+      const categories = JSON.parse(raw || '[]');
+      if (!Array.isArray(categories)) throw new Error('Un tableau JSON est attendu : [ ... ].');
+
+      const slugs = new Set();
+      categories.forEach((category, index) => {
+        if (!category || typeof category !== 'object' || Array.isArray(category)) {
+          throw new Error(`La catégorie ${index + 1} doit être un objet JSON.`);
+        }
+        if (typeof category.slug !== 'string' || !category.slug.trim()) {
+          throw new Error(`La catégorie ${index + 1} doit avoir un slug.`);
+        }
+        if (typeof category.name !== 'string' || !category.name.trim()) {
+          throw new Error(`La catégorie ${index + 1} doit avoir un nom.`);
+        }
+        const slug = category.slug.trim();
+        if (slugs.has(slug)) throw new Error(`Le slug « ${slug} » est présent plusieurs fois.`);
+        slugs.add(slug);
+      });
+
+      showCategoryFeedback('info', 'Enregistrement dans Firestore…');
+      const categoryRef = doc(db, 'config', 'faq_categories');
+      await setDoc(categoryRef, { categories, updatedAt: serverTimestamp() });
+
+      showCategoryFeedback('info', 'Vérification de l’enregistrement…');
+      const savedSnapshot = await getDoc(categoryRef);
+      if (!savedSnapshot.exists()) throw new Error('Firestore n’a pas confirmé la création du document.');
+      const savedCategories = savedSnapshot.data().categories || [];
+      if (JSON.stringify(savedCategories) !== JSON.stringify(categories)) {
+        throw new Error('Le document existe, mais les catégories relues ne correspondent pas aux données saisies.');
+      }
+
+      showCategoryFeedback('ok', `✓ ${categories.length} catégorie(s) enregistrée(s) et vérifiée(s) dans Firestore. Le hub sera actualisé au prochain build.`);
+      faqMessage('ok', 'Catégories FAQ enregistrées et vérifiées dans Firestore.');
+    } catch (err) {
+      console.error('[FAQ] Échec de l’enregistrement des catégories :', err);
+      showCategoryFeedback('error', '✕ Enregistrement impossible : ' + (err?.message || String(err)));
+      faqMessage('warn', 'Catégories non enregistrées : ' + (err?.message || String(err)));
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
   });
 </script>
 </body>

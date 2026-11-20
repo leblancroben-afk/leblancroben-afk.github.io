@@ -335,6 +335,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/categorie/fr/contenu/"/>
   </url>
   <url>
+    <loc>https://albexia.com/categorie/en/developpement/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/categorie/fr/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/categorie/en/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/categorie/es/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/categorie/fr/developpement/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/categorie/en/images-et-design/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/categorie/fr/images-et-design/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/categorie/en/images-et-design/"/>
@@ -429,6 +436,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/categorie/fr/contenu/"/>
   </url>
   <url>
+    <loc>https://albexia.com/categorie/es/developpement/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/categorie/fr/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/categorie/en/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/categorie/es/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/categorie/fr/developpement/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/categorie/es/images-et-design/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/categorie/fr/images-et-design/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/categorie/en/images-et-design/"/>
@@ -521,6 +535,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/categorie/en/contenu/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/categorie/es/contenu/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/categorie/fr/contenu/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/categorie/fr/developpement/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/categorie/fr/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/categorie/en/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/categorie/es/developpement/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/categorie/fr/developpement/"/>
   </url>
   <url>
     <loc>https://albexia.com/categorie/fr/images-et-design/</loc>
@@ -2129,6 +2150,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/wordlift/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/xcrawl/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/xcrawl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/yoast-ai/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/yoast-ai/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/yoast-ai/"/>
@@ -2753,6 +2780,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/wordlift/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/wordlift/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/wordlift/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/es/xcrawl/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/xcrawl/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/es/yoast-ai/</loc>
@@ -3423,6 +3456,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/wordlift/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/wordlift/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/wordlift/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/xcrawl/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/xcrawl/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/xcrawl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/yoast-ai/</loc>

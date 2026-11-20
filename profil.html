@@ -622,6 +622,7 @@
 
     /* ── PLANS ───────────────────────────────────── */
     .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; margin-bottom: .8rem; }
+    .plans-grid-single { grid-template-columns: minmax(260px, 420px); justify-content: center; }
     @media (max-width: 700px) { .plans-grid { grid-template-columns: 1fr; } }
     .plan-card {
       background: var(--bg);
@@ -632,6 +633,20 @@
       position: relative;
     }
     .plan-card.featured { border: 1.5px solid var(--text); background: var(--surface); }
+    /* Plans payants fermés : carte conservée, X discret effet crayon. */
+    .plan-card-closed { overflow: hidden; background: var(--surface); }
+    .plan-card-closed::after {
+        content: ""; position: absolute; inset: 8% 5%; pointer-events: none; z-index: 2;
+        background: center / 100% 100% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220'%3E%3Cg fill='none' stroke='%238b8b86' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 18 C74 61 215 161 282 202' stroke-width='5' opacity='.28'/%3E%3Cpath d='M22 15 C91 70 210 151 278 205' stroke-width='2.2' opacity='.38'/%3E%3Cpath d='M280 17 C216 66 89 159 18 204' stroke-width='4.5' opacity='.3'/%3E%3Cpath d='M284 21 C207 81 95 155 21 208' stroke-width='2' opacity='.38'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .plan-unavailable-label {
+        display: inline-flex; align-self: flex-start; margin: 0 0 12px; padding: 4px 8px;
+        border: 1px solid var(--border-strong); border-radius: 3px; color: var(--text-muted);
+        background: var(--bg); font-size: 10px; font-weight: 700; letter-spacing: .04em;
+        text-transform: uppercase; position: relative; z-index: 3;
+    }
+    .plan-card-closed .btn-plan:disabled { opacity: .48; cursor: not-allowed; }
+
     .plan-badge {
       position: absolute; top: -9px; left: 50%;
       transform: translateX(-50%);
@@ -2682,7 +2697,7 @@
 <script type="module">
   import { loginWithGoogle, loginWithEmail, registerWithEmail, logout, watchAuthState }
     from './js/auth.js';
-  import { afficherCartesPlans } from './js/plans-cards.js';
+  import { afficherCartesPlans, PLANS_PAYANTS_OUVERTS } from './js/plans-cards.js';
   import {
     getCollections, createCollection, renameCollection, deleteCollection,
     removeToolFromCollection,
@@ -6299,6 +6314,10 @@
   let plansCartesChargees = false;
 
   window.choisirFormuleProfil = function(tier) {
+    if (!PLANS_PAYANTS_OUVERTS && (tier === 'starter' || tier === 'featured')) {
+      showToast('Les formules Starter et Featured sont temporairement indisponibles. La formule Gratuit reste ouverte.');
+      return;
+    }
     const select = document.getElementById('soum-tier');
     if (select) select.value = tier;
   };

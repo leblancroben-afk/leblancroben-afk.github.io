@@ -1,17 +1,47 @@
 {
   "origin": "https://albexia.com",
   "pages": [
-    { "path": "/" },
-    { "path": "/hub.html" },
-    { "path": "/soumettre/" },
-    { "path": "/contact.html" },
-    { "path": "/mentions-legales.html" },
-    { "path": "/politique-confidentialite.html" }
+    {
+      "path": "/"
+    },
+    {
+      "path": "/hub.html"
+    },
+    {
+      "path": "/soumettre/"
+    },
+    {
+      "path": "/contact.html"
+    },
+    {
+      "path": "/mentions-legales.html"
+    },
+    {
+      "path": "/politique-confidentialite.html"
+    }
   ],
-  "scan": ["tools", "articles", "comparateur", "niches", "glossaire", "categorie", "tutoriels"],
+  "scan": [
+    "tools",
+    "articles",
+    "comparateur",
+    "niches",
+    "glossaire",
+    "categorie",
+    "tutoriels",
+    "pages",
+    "faq"
+  ],
   "includeOffline": false,
-  "exclude": ["categorie/seo/"],
+  "exclude": [
+    "categorie/seo/"
+  ],
   "robots": {
-    "disallow": ["/admin/", "/auth.html", "/profil.html", "/profil-public.html", "/backups/"]
+    "disallow": [
+      "/admin/",
+      "/auth.html",
+      "/profil.html",
+      "/profil-public.html",
+      "/backups/"
+    ]
   }
 }

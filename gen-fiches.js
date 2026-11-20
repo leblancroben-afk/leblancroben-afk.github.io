@@ -145,7 +145,7 @@ function reecrireAnciensDomaines(html) {
 }
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
-const { generateFiche, avisOutilPageHTML, normaliserSousCategorie } = require('./fiche-outil'); // template unique de fiche outil + page « tous les avis »
+const { generateFiche, generateFAQ, avisOutilPageHTML, normaliserSousCategorie } = require('./fiche-outil'); // template unique de fiche outil + page « tous les avis »
 
 function sharedJS() {
   return '';
@@ -4236,7 +4236,7 @@ function genererLlmsTxt(tools, origin, autres = {}) {
 
 async function main() {
   const state = loadState();
-  const newState = { outils: {}, articles: {}, comparaisons: {}, niches: {}, videotheques: {}, glossaire: {} };
+  const newState = { outils: {}, articles: {}, comparaisons: {}, niches: {}, videotheques: {}, glossaire: {}, faq: {} };
 
   // Page « Voir tous les avis » (tools/avis-outil.html) : régénérée à chaque run avec le même
   // header/footer que les fiches — elle ne peut plus manquer ni devenir obsolète.
@@ -5122,6 +5122,72 @@ async function main() {
   } else {
     console.log(`✅ Hub glossaire — inchangé, régénération non nécessaire.`);
   }
+
+  // ─── FAQ ÉDITORIALES : pages individuelles + hub + nettoyage ───────────
+  console.log(`\n📚 Lecture de Firestore (FAQ)...`);
+  const faqSnap = await db.collection('faq').get();
+  const faqDocs = faqSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const faqCategoriesSnap = await db.collection('config').doc('faq_categories').get();
+  const faqCategories = faqCategoriesSnap.exists ? (faqCategoriesSnap.data().categories || []) : [];
+  const hashFaqDoc = data => { const { updatedAt, ...rest } = data || {}; return crypto.createHash('sha256').update(JSON.stringify(rest)).digest('hex'); };
+  const faqPublished = faqDocs.filter(f => f.status === 'publie' && f.slug);
+  const validFaqPaths = new Set();
+  let faqChanged = false;
+  for (const faq of faqPublished) {
+    const slug = slugify(faq.slug);
+    if (!slug) continue;
+    const translations = faq.translations || faq.traductions || {};
+    const available = ['fr','en','es'].filter(lang => {
+      const d = translations[lang] || (lang === 'fr' ? faq : null);
+      return d && (d.title || d.titre || (lang === 'fr' && faq.titre));
+    });
+    const urls = {};
+    for (const lang of available) urls[lang] = `${SITE_ORIGIN}/pages/${slug}/${lang === 'fr' ? '' : lang + '/'}`;
+    for (const lang of available) {
+      const folder = path.join('pages', slug, ...(lang === 'fr' ? [] : [lang]));
+      const output = path.join(folder, 'index.html');
+      const hash = hashFaqDoc({...faq, _renderLang:lang, _tools: (faq.toolIds || []).map(id => tools.find(t => String(t.id) === String(id))).filter(Boolean).map(t=>({id:t.id,name:t.name,description:t.description,plan:t.plan,langue:t.langue,emoji:t.emoji}))});
+      const key = `${faq.id}:${lang}`;
+      newState.faq[key] = { hash, updatedAtMs: updatedAtMs(faq), path: path.join('pages', slug, ...(lang === 'fr' ? [] : [lang])) };
+      validFaqPaths.add(path.join('pages', slug, ...(lang === 'fr' ? [] : [lang])));
+      const oldHash = state.faq?.[key]?.hash;
+      if (oldHash !== hash || !fs.existsSync(output)) {
+        fs.mkdirSync(folder, {recursive:true});
+        const category = faqCategories.find(c => c && c.slug === faq.categorie) || {};
+        const faqForRender = {...faq, categoryLabels:{fr:category.name || category.nom || faq.categorie || '', en:category.name_en || category.nom_en || category.name || faq.categorie || '', es:category.name_es || category.nom_es || category.name || faq.categorie || ''}};
+        const html = generateFAQ(faqForRender, tools, {...FICHE_DEPS, seoHeadTags}, lang, urls);
+        fs.writeFileSync(output, reecrireAnciensDomaines(html), 'utf8');
+        faqChanged = true;
+        console.log(`  ✓ FAQ ${slug} (${lang}) générée`);
+      }
+    }
+  }
+  // Nettoyage limité aux chemins précédemment générés par ce module FAQ.
+  // Les pages historiques/manuelles présentes dans /pages ne sont jamais supprimées.
+  let removedFaq = 0;
+  const oldFaqPaths = new Set(Object.values(state.faq || {}).map(x => x && x.path).filter(Boolean));
+  for (const oldPath of oldFaqPaths) {
+    if (!validFaqPaths.has(oldPath) && fs.existsSync(oldPath)) {
+      fs.rmSync(oldPath, {recursive:true, force:true});
+      removedFaq++;
+      const parent = path.dirname(oldPath);
+      if (fs.existsSync(parent) && fs.readdirSync(parent).length === 0) fs.rmSync(parent,{recursive:true,force:true});
+    }
+  }
+  // Hub FAQ : catégories administrables + questions publiées seulement.
+  const faqHubPath = path.join('faq','index.html');
+  const faqHubHash = hashFaqDoc({faqs:faqPublished,categories:faqCategories});
+  if (faqChanged || removedFaq || state.faqHubHash !== faqHubHash || !fs.existsSync(faqHubPath)) {
+    const categories = faqCategories.filter(c => c && c.slug).map(c => {
+      const items = faqPublished.filter(f => f.categorie === c.slug);
+      if (!items.length) return '';
+      return `<section class="faq-category"><div class="faq-category-heading"><h2>${escHtml(c.name || c.nom || c.slug)}</h2></div>${c.description ? `<p>${escHtml(c.description)}</p>` : ''}<ul class="faq-question-list">${items.map(f => { const t=(f.translations||f.traductions||{}).fr || f; return `<li><a href="/pages/${slugify(f.slug)}/">${escHtml(t.title || t.titre || f.slug)}</a></li>`; }).join('')}</ul></section>`;
+    }).join('');
+    const hub = `<!DOCTYPE html><html lang="fr" data-static-lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Centre d’aide — FAQ | Albexia</title><meta name="description" content="Réponses aux questions fréquentes sur les outils d’intelligence artificielle et leur utilisation."><link rel="canonical" href="${SITE_ORIGIN}/faq/"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/themes.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="/css/faq-hub.css"></head><body>${navHTML('fr')}<main class="faq-hub container"><header class="faq-hero"><div><p class="faq-eyebrow">CENTRE D’AIDE ALBEXIA</p><h1>Questions fréquentes</h1><p class="faq-lead">Des réponses claires pour mieux comprendre et utiliser les outils d’intelligence artificielle.</p></div></header><div class="faq-categories">${categories || '<p>Aucune question publiée pour le moment.</p>'}</div></main>${footerHTML('fr')}<script src="/js/i18n.js"></script><script src="/js/header.js" defer></script><script src="/js/footer.js" defer></script></body></html>`;
+    fs.mkdirSync('faq',{recursive:true}); fs.writeFileSync(faqHubPath,hub,'utf8');
+    newState.faqHubHash = faqHubHash;
+    console.log(`✓ Hub FAQ régénéré (${faqPublished.length} FAQ publiée(s), ${removedFaq} dossier(s) supprimé(s)).`);
+  } else newState.faqHubHash = faqHubHash;
 
   // ─── PAGES CATÉGORIE (une par langue avec du contenu réel) ───
   // Regénérées à chaque run à partir de `tools` (tous les documents bruts,

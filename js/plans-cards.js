@@ -16,6 +16,11 @@
 
 import { db, doc, getDoc } from './firebase-config.js';
 
+// Interrupteur temporaire des souscriptions payantes.
+// Pour rouvrir Starter et Featured : passer simplement à true.
+// Les définitions, prix et données Firestore des plans restent inchangés.
+export const PLANS_PAYANTS_OUVERTS = false;
+
 const PLANS_DEFAUT = {
   standard: {
     features_fr: ['Fiche outil complète à vie', 'Soumise à validation'],
@@ -40,19 +45,22 @@ const PLANS_DEFAUT = {
 // Textes fixes de l'interface (pas du contenu éditable par l'admin)
 const TEXTES_UI = {
   fr: {
-    plansNote: 'Starter et Featured : paiement unique par carte (Visa, Mastercard, USD). Lien envoyé après validation de votre soumission.',
+    plansNote: 'Starter et Featured sont temporairement indisponibles. Les outils déjà publiés conservent leur mise en avant active.',
+    unavailable: 'Temporairement indisponible',
     std: { desc: 'L\'essentiel pour être découvert', price: '0$', sub: 'à vie', cta: 'Choisir Gratuit' },
     starter: { desc: 'Pour une fiche qui se démarque', sub: 'paiement unique · 6 mois', cta: 'Choisir Starter' },
     featured: { desc: 'Visibilité et mise en avant', sub: 'paiement unique · 12 mois', cta: 'Choisir Featured' },
   },
   en: {
-    plansNote: 'Starter and Featured: one-time card payment (Visa, Mastercard, USD). Link sent after your submission is approved.',
+    plansNote: 'Starter and Featured are temporarily unavailable. Already published tools keep their active promotion.',
+    unavailable: 'Temporarily unavailable',
     std: { desc: 'The essentials to get discovered', price: '0$', sub: 'for life', cta: 'Choose Free' },
     starter: { desc: 'For a listing that stands out', sub: 'one-time payment · 6 months', cta: 'Choose Starter' },
     featured: { desc: 'Visibility and spotlight', sub: 'one-time payment · 12 months', cta: 'Choose Featured' },
   },
   es: {
-    plansNote: 'Starter y Featured: pago único con tarjeta (Visa, Mastercard, USD). Enlace enviado tras la validación de tu envío.',
+    plansNote: 'Starter y Featured no están disponibles temporalmente. Las herramientas ya publicadas conservan su promoción activa.',
+    unavailable: 'Temporalmente no disponible',
     std: { desc: 'Lo esencial para ser descubierto', price: '0$', sub: 'de por vida', cta: 'Elegir Gratis' },
     starter: { desc: 'Para una ficha que destaca', sub: 'pago único · 6 meses', cta: 'Elegir Starter' },
     featured: { desc: 'Visibilidad y destacado', sub: 'pago único · 12 meses', cta: 'Elegir Featured' },
@@ -114,35 +122,38 @@ export function rendreCartesPlans(plans, onSelectFnName, langue = 'fr') {
   const feat = obj => obj[`features_${l}`]?.length ? obj[`features_${l}`] : obj.features_fr;
   const badge = obj => obj[`badge_${l}`] || obj.badge_fr;
 
+  const carteGratuite = `
+    <div class="plan-card">
+      <div class="plan-name">Gratuit</div>
+      <div class="plan-desc">${t.std.desc}</div>
+      <div class="plan-price free">${t.std.price}</div>
+      <div class="plan-price-sub">${t.std.sub}</div>
+      <ul class="plan-features">${li(feat(plans.standard))}</ul>
+      <button type="button" class="btn-plan" onclick="${onSelectFnName}('gratuit')">${t.std.cta}</button>
+    </div>`;
+
+  const cartePayante = (tier, obj, textes, estFeatured = false) => {
+    const classe = `plan-card${estFeatured ? ' featured' : ''}${!PLANS_PAYANTS_OUVERTS ? ' plan-card-closed' : ''}`;
+    const bouton = PLANS_PAYANTS_OUVERTS
+      ? `<button type="button" class="btn-plan" onclick="${onSelectFnName}('${tier}')">${textes.cta}</button>`
+      : `<button type="button" class="btn-plan" disabled aria-disabled="true">${textes.cta}</button>`;
+    return `<div class="${classe}"${!PLANS_PAYANTS_OUVERTS ? ' aria-label="' + echapperHtml(t.unavailable) + '"' : ''}>
+      ${!PLANS_PAYANTS_OUVERTS ? `<span class="plan-unavailable-label">${echapperHtml(t.unavailable)}</span>` : ''}
+      ${estFeatured ? `<div class="plan-badge">${echapperHtml(badge(obj))}</div>` : ''}
+      <div class="plan-name">${estFeatured ? 'Featured' : 'Starter'}</div>
+      <div class="plan-desc">${textes.desc}</div>
+      <div class="plan-price">${obj.prix}$</div>
+      <div class="plan-price-sub">${textes.sub}</div>
+      <ul class="plan-features">${li(feat(obj))}</ul>
+      ${bouton}
+    </div>`;
+  };
+
   return `
     <div class="plans-grid">
-      <div class="plan-card">
-        <div class="plan-name">Gratuit</div>
-        <div class="plan-desc">${t.std.desc}</div>
-        <div class="plan-price free">${t.std.price}</div>
-        <div class="plan-price-sub">${t.std.sub}</div>
-        <ul class="plan-features">${li(feat(plans.standard))}</ul>
-        <button type="button" class="btn-plan" onclick="${onSelectFnName}('gratuit')">${t.std.cta}</button>
-      </div>
-
-      <div class="plan-card">
-        <div class="plan-name">Starter</div>
-        <div class="plan-desc">${t.starter.desc}</div>
-        <div class="plan-price">${plans.starter.prix}$</div>
-        <div class="plan-price-sub">${t.starter.sub}</div>
-        <ul class="plan-features">${li(feat(plans.starter))}</ul>
-        <button type="button" class="btn-plan" onclick="${onSelectFnName}('starter')">${t.starter.cta}</button>
-      </div>
-
-      <div class="plan-card featured">
-        <div class="plan-badge">${echapperHtml(badge(plans.featured))}</div>
-        <div class="plan-name">Featured</div>
-        <div class="plan-desc">${t.featured.desc}</div>
-        <div class="plan-price">${plans.featured.prix}$</div>
-        <div class="plan-price-sub">${t.featured.sub}</div>
-        <ul class="plan-features">${li(feat(plans.featured))}</ul>
-        <button type="button" class="btn-plan" onclick="${onSelectFnName}('featured')">${t.featured.cta}</button>
-      </div>
+      ${carteGratuite}
+      ${cartePayante('starter', plans.starter, t.starter)}
+      ${cartePayante('featured', plans.featured, t.featured, true)}
     </div>
     <p class="plans-note">${t.plansNote}</p>
   `;

@@ -228,6 +228,7 @@
     <button class="tab-btn" data-tab="niches">🎯 Niches</button>
     <button class="tab-btn" data-tab="categories">📁 Catégories</button>
     <button class="tab-btn" data-tab="glossaire">📖 Glossaire</button>
+    <button class="tab-btn" data-tab="faq">❓ FAQ</button>
     <button class="tab-btn" data-tab="plans">💳 Plans &amp; Tarifs</button>
     <button class="tab-btn" data-tab="notifications">🔔 Notifications</button>
   </div>
@@ -1682,6 +1683,54 @@ Support français|oui|non|bool"></textarea>
     </div>
   </div>
 
+  <div class="tab-panel" id="tab-faq">
+    <div class="msg msg-warn" id="warn-faq"></div><div class="msg msg-ok" id="ok-faq"></div>
+    <div class="form-layout">
+      <div class="form-col">
+        <h2>Pages FAQ</h2>
+        <p class="field-hint">Une question publiée crée une page statique. Les contenus FR, EN et ES sont regroupés dans un seul document Firestore de la collection <code>faq</code>.</p>
+        <label>FAQ existantes</label><select id="faq-existing"><option value="">Créer une nouvelle FAQ…</option></select>
+        <form id="form-faq">
+          <fieldset><legend>Publication</legend>
+            <label>Titre français *</label><input id="faq-title" required>
+            <label>Slug URL *</label><input id="faq-slug" required placeholder="outils-ia-gratuits">
+            <label>Catégorie (slug) *</label><input id="faq-category" required placeholder="outils-ia-et-tarifs">
+            <label>Statut</label><select id="faq-status"><option value="brouillon">Brouillon</option><option value="publie">Publié</option></select>
+            <label>Outils associés (sélection multiple)</label><select id="faq-tools" multiple size="7" style="min-height:140px"></select>
+          </fieldset>
+          <fieldset><legend>Contenu FR</legend>
+            <label>Introduction</label><textarea id="faq-intro" rows="3"></textarea>
+            <label>Réponse rapide (HTML autorisé)</label><textarea id="faq-short" rows="4"></textarea>
+            <label>Sections (JSON) — tableau de {"title":"…","content":"…"}</label><textarea id="faq-sections" rows="10" placeholder='[{"title":"Première section","content":"<p>Contenu...</p>"}]'></textarea>
+            <label>À retenir (HTML autorisé)</label><textarea id="faq-takeaway" rows="3"></textarea>
+            <label>Pour aller plus loin (JSON) — tableau de {"title":"…","slug":"…"}</label><textarea id="faq-more" rows="5" placeholder='[{"title":"Autre question","slug":"autre-question"}]'></textarea>
+          </fieldset>
+          <fieldset><legend>Leçon vidéo (facultatif)</legend>
+            <label>URL YouTube</label><input id="faq-video-url" placeholder="https://youtu.be/xxxxxxxxxxx">
+            <label>Transcription</label><textarea id="faq-transcript" rows="5"></textarea>
+            <label>Ce que vous allez découvrir (HTML ou liste)</label><textarea id="faq-discover" rows="3"></textarea>
+            <label>Ce que vous saurez faire (HTML ou liste)</label><textarea id="faq-can-do" rows="3"></textarea>
+            <p class="field-hint">Le bloc vidéo et ses cartes ne seront affichés que si l'URL YouTube et la transcription sont renseignées.</p>
+          </fieldset>
+          <fieldset><legend>SEO et traductions</legend>
+            <label>Meta title FR</label><input id="faq-meta-title">
+            <label>Meta description FR</label><textarea id="faq-meta-desc" rows="2"></textarea>
+            <label>Traductions EN et ES (JSON facultatif)</label><textarea id="faq-translations" rows="12" placeholder='{"en":{"title":"...","introduction":"...","shortAnswer":"...","sections":[]},"es":{"title":"...","introduction":"...","shortAnswer":"...","sections":[]}}'></textarea>
+            <p class="field-hint">Chaque traduction doit contenir son propre tableau <code>sections</code>. Les traductions absentes ne génèrent pas de page.</p>
+          </fieldset>
+          <fieldset><legend>Catégories du hub FAQ</legend>
+            <label>Catégories (JSON) — modifiables ici</label><textarea id="faq-categories-json" rows="7" placeholder='[{"slug":"outils-ia-et-tarifs","name":"Outils IA et tarifs","description":"..."}]'></textarea>
+            <button type="button" class="btn-submit" id="faq-categories-save" style="background:var(--accent3)">Enregistrer les catégories</button>
+          </fieldset>
+          <button type="submit" class="btn-submit" id="faq-save-btn">Enregistrer la FAQ</button>
+          <button type="button" class="btn-danger" id="faq-delete-btn" style="display:none">Supprimer cette FAQ</button>
+          <button type="button" class="btn-submit" id="faq-new-btn" style="background:var(--bg3);color:var(--text)">Nouvelle FAQ</button>
+        </form>
+      </div>
+      <div class="preview-col"><div class="preview-label">Pages générées</div><div class="preview-card"><p>Les pages seront créées au prochain lancement de <code>gen-fiches.js</code>.</p><p id="faq-admin-status">Aucune FAQ sélectionnée.</p></div></div>
+    </div>
+  </div>
+
   <div class="tab-panel" id="tab-plans">
     <div class="msg msg-warn" id="warn-plans"></div>
     <div class="msg msg-ok"   id="ok-plans"></div>
@@ -1890,6 +1939,7 @@ Support français|oui|non|bool"></textarea>
       if (btn.dataset.tab === 'categories') renderCategoriesList();
       if (btn.dataset.tab === 'notifications') renderNotificationsList();
       if (btn.dataset.tab === 'glossaire') invalidateGlossaireCache();
+      if (btn.dataset.tab === 'faq') loadFaqAdmin();
       if (btn.dataset.tab === 'plans') loadPlansAdmin();
     });
   });
@@ -5756,6 +5806,67 @@ Support français|oui|non|bool"></textarea>
     ta.insertAdjacentElement('afterend', hint); hint.insertAdjacentElement('afterend', box);
   });
 })();
+
+  // ── Administration FAQ ────────────────────────────────────────────────
+  let faqEditingId = null;
+  let faqAdminCache = [];
+  const faqVal = id => document.getElementById(id).value;
+  const faqSet = (id, value) => { const el=document.getElementById(id); if(el) el.value=value ?? ''; };
+  function faqMessage(type, message) { showMsg('warn-faq','ok-faq',type,message); }
+  function faqReset() {
+    faqEditingId=null; document.getElementById('form-faq').reset();
+    document.getElementById('faq-existing').value=''; document.getElementById('faq-delete-btn').style.display='none';
+    document.getElementById('faq-admin-status').textContent='Nouvelle FAQ.';
+  }
+  async function loadFaqAdmin() {
+    try {
+      const [snap, catSnap, tools] = await Promise.all([getDocs(collection(db,'faq')),getDoc(doc(db,'config','faq_categories')),fetchAllTools()]);
+      faqAdminCache=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.titre||'').localeCompare(b.titre||''));
+      const select=document.getElementById('faq-existing');
+      select.innerHTML='<option value="">Créer une nouvelle FAQ…</option>'+faqAdminCache.map(f=>`<option value="${f.id}">${String(f.titre||f.slug||f.id).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))} — ${f.status||'brouillon'}</option>`).join('');
+      const toolSelect=document.getElementById('faq-tools');
+      toolSelect.innerHTML=tools.filter(t=>t.name && t.status!=='a_enrichir').map(t=>`<option value="${String(t.id)}">${String(t.name).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</option>`).join('');
+      faqSet('faq-categories-json',JSON.stringify(catSnap.exists()?(catSnap.data().categories||[]):[],null,2));
+      document.getElementById('faq-admin-status').textContent=`${faqAdminCache.length} FAQ dans Firestore.`;
+    } catch(err) { faqMessage('warn','Erreur de chargement FAQ : '+err.message); }
+  }
+  function faqLoadDocument(id) {
+    const f=faqAdminCache.find(x=>x.id===id); if(!f) return faqReset();
+    faqEditingId=id;
+    const tr=f.translations||f.traductions||{}; const fr=tr.fr||f; const video=fr.video||f.video||{};
+    faqSet('faq-title',fr.title||fr.titre||f.titre); faqSet('faq-slug',f.slug); faqSet('faq-category',f.categorie); faqSet('faq-status',f.status||'brouillon');
+    faqSet('faq-intro',fr.introduction); faqSet('faq-short',fr.shortAnswer||fr.reponseRapide); faqSet('faq-sections',JSON.stringify(fr.sections||[],null,2)); faqSet('faq-takeaway',fr.takeaway); faqSet('faq-more',JSON.stringify(fr.more||[],null,2));
+    faqSet('faq-video-url',video.url); faqSet('faq-transcript',video.transcript||video.transcription); faqSet('faq-discover',video.discover||video.decouvrir); faqSet('faq-can-do',video.canDo||video.savoirFaire);
+    faqSet('faq-meta-title',fr.metaTitle||fr.meta_title); faqSet('faq-meta-desc',fr.metaDescription||fr.meta_description);
+    const other={...tr}; delete other.fr; faqSet('faq-translations',JSON.stringify(other,null,2));
+    const ids=f.toolIds||[]; [...document.getElementById('faq-tools').options].forEach(o=>o.selected=ids.map(String).includes(o.value));
+    document.getElementById('faq-delete-btn').style.display='inline-flex'; document.getElementById('faq-admin-status').textContent=`Édition : ${f.slug}`;
+  }
+  document.getElementById('faq-existing').addEventListener('change',e=>e.target.value?faqLoadDocument(e.target.value):faqReset());
+  document.getElementById('faq-new-btn').addEventListener('click',faqReset);
+  document.getElementById('faq-title').addEventListener('input',()=>{if(!faqVal('faq-slug'))faqSet('faq-slug',slugify(faqVal('faq-title')));});
+  document.getElementById('faq-form')?.addEventListener('submit',()=>{});
+  document.getElementById('form-faq').addEventListener('submit',async e=>{
+    e.preventDefault(); const btn=document.getElementById('faq-save-btn'); btn.disabled=true;
+    try {
+      const sections=JSON.parse(faqVal('faq-sections')||'[]'); if(!Array.isArray(sections)) throw new Error('Les sections doivent être un tableau JSON.'); const more=JSON.parse(faqVal('faq-more')||'[]'); if(!Array.isArray(more)) throw new Error('Les liens « Pour aller plus loin » doivent être un tableau JSON.');
+      const other=JSON.parse(faqVal('faq-translations')||'{}'); if(!other||typeof other!=='object'||Array.isArray(other)) throw new Error('Les traductions EN/ES doivent être un objet JSON.');
+      const fr={title:faqVal('faq-title').trim(),introduction:faqVal('faq-intro').trim(),shortAnswer:faqVal('faq-short').trim(),sections,takeaway:faqVal('faq-takeaway').trim(),more,metaTitle:faqVal('faq-meta-title').trim(),metaDescription:faqVal('faq-meta-desc').trim(),video:{url:faqVal('faq-video-url').trim(),transcript:faqVal('faq-transcript').trim(),discover:faqVal('faq-discover').trim(),canDo:faqVal('faq-can-do').trim()}};
+      const payload={titre:fr.title,slug:slugify(faqVal('faq-slug')),categorie:faqVal('faq-category').trim(),status:faqVal('faq-status'),translations:{fr,...other},toolIds:[...document.getElementById('faq-tools').selectedOptions].map(o=>o.value),updatedAt:serverTimestamp()};
+      if(!payload.slug) throw new Error('Le slug est obligatoire.');
+      if(faqEditingId) await updateDoc(doc(db,'faq',faqEditingId),payload); else {payload.createdAt=serverTimestamp(); const ref=await addDoc(collection(db,'faq'),payload); faqEditingId=ref.id;}
+      faqMessage('ok','FAQ enregistrée dans Firestore. Les pages HTML seront générées au prochain lancement de gen-fiches.js.'); await loadFaqAdmin(); document.getElementById('faq-existing').value=faqEditingId;
+    } catch(err) { faqMessage('warn','Enregistrement impossible : '+err.message); } finally {btn.disabled=false;}
+  });
+  document.getElementById('faq-delete-btn').addEventListener('click',async()=>{
+    if(!faqEditingId||!confirm('Supprimer cette FAQ ? Sa page sera supprimée au prochain build.')) return;
+    try { await deleteDoc(doc(db,'faq',faqEditingId)); faqMessage('ok','FAQ supprimée. La page statique sera nettoyée au prochain build.'); faqReset(); await loadFaqAdmin(); }
+    catch(err){faqMessage('warn','Suppression impossible : '+err.message);}
+  });
+  document.getElementById('faq-categories-save').addEventListener('click',async()=>{
+    try { const categories=JSON.parse(faqVal('faq-categories-json')||'[]'); if(!Array.isArray(categories)) throw new Error('Un tableau JSON est attendu.'); await setDoc(doc(db,'config','faq_categories'),{categories,updatedAt:serverTimestamp()}); faqMessage('ok','Catégories FAQ enregistrées. Le hub sera actualisé au prochain build.'); }
+    catch(err){faqMessage('warn','Catégories non enregistrées : '+err.message);}
+  });
 </script>
 </body>
 </html>

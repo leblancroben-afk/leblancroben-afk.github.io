@@ -35,6 +35,10 @@ Langue : français.
 - [Leonardo AI](https://albexia.com/tools/standard/fr/leonardo-ai/): Leonardo AI est une plateforme de génération d'images et d'actifs visuels par intelligence artificielle, offrant des modèles personnalisables et un contrôle précis pour les créateurs.
 - [Recraft](https://albexia.com/tools/standard/fr/recraft/): Recraft est un outil de génération d'images et d'illustrations vectorielles par IA. Il permet de créer et modifier des visuels, logos et éléments 3D sur un canvas infini.
 
+## Développement
+
+- [XCrawl](https://albexia.com/tools/standard/fr/xcrawl/): XCrawl est une API de web scraping prête pour l’IA : elle extrait les données de pages et de recherches web en Markdown, JSON, HTML ou captures d’écran, pour les agents IA, RAG et automatisations.
+
 ## Images et design
 
 - [GetAIPhotoEditor](https://albexia.com/tools/standard/fr/getaiphotoeditor/): Éditez vos photos avec l'IA grâce à des instructions simples. Changez de fond, modifiez des vêtements et améliorez vos images avec crédits gratuits pour commencer, sans inscription.

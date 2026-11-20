@@ -3596,6 +3596,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/marketmuse/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/starter/en/opinly/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/starter/en/opinly/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/starter/fr/opinly/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/opinly/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/starter/en/se-ranking/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/starter/en/se-ranking/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/starter/fr/se-ranking/"/>
@@ -3710,6 +3716,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/starter/en/marketmuse/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/starter/es/marketmuse/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/marketmuse/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/starter/es/opinly/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/starter/es/opinly/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/starter/fr/opinly/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/opinly/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/starter/es/se-ranking/</loc>

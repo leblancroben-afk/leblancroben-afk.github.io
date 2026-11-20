@@ -80,10 +80,10 @@
           <p>Les solutions locales sont une bonne piste pour éviter les quotas des plateformes en ligne. Mais l’absence d’abonnement ne garantit pas une utilisation sans aucune limite : les capacités de votre ordinateur et les conditions de chaque logiciel comptent aussi.</p>
         </aside>
 
-        <section class="faq-video-section" id="faq-video-section" data-youtube-url="">
-          <h2>Voir la vidéo</h2>
+        <section class="faq-video-section" id="faq-video-section" data-youtube-url="https://youtu.be/ZyIxfRi41uk?si=Zgd4yrbF8zm5PdQh" data-transcript-present="true">
+          <h2>11 applications IA à découvrir sur smartphone</h2>
           <div class="faq-youtube-frame" id="faq-youtube-frame" aria-label="Vidéo YouTube associée à cette réponse">
-            <p class="faq-youtube-empty">La vidéo YouTube sera affichée ici lorsqu’un lien sera renseigné dans l’administration.</p>
+            <p class="faq-youtube-empty">Chargement de la vidéo YouTube…</p>
           </div>
 
           <div class="faq-learning-grid">
@@ -91,18 +91,21 @@
               <span>01</span>
               <h3>Ce que vous allez découvrir</h3>
               <ul>
-                <li>La différence entre un logiciel gratuit et une offre gratuite.</li>
-                <li>Pourquoi les outils locaux fonctionnent différemment des plateformes en ligne.</li>
-                <li>Des exemples de solutions à explorer.</li>
+                <li>Des applications pour créer de la musique, des visuels et des vidéos directement depuis un téléphone.</li>
+                <li>Des assistants conversationnels utilisables à la voix, ainsi que des outils pour rechercher et vérifier des informations.</li>
+                <li>Des applications pour transformer des scènes en 3D, transcrire des échanges ou comparer plusieurs modèles d’IA.</li>
+                <li>Des solutions qui fonctionnent localement, parfois même sans connexion Internet, et des outils qui facilitent les échanges entre plusieurs langues.</li>
               </ul>
             </div>
             <div class="faq-learning-card">
               <span>02</span>
               <h3>Ce que vous saurez faire</h3>
               <ul>
-                <li>Repérer les principales limites d’une formule gratuite.</li>
-                <li>Identifier les contraintes d’une installation locale.</li>
-                <li>Comparer les solutions selon votre besoin.</li>
+                <li>Choisir une application mobile adaptée à une tâche précise : créer, apprendre, rechercher ou travailler.</li>
+                <li>Formuler une demande pour générer une musique, une image ou une vidéo depuis son smartphone.</li>
+                <li>Utiliser un assistant vocal pour poser une question, pratiquer une langue ou obtenir de l’aide pendant une activité.</li>
+                <li>Explorer des usages pratiques comme la recherche avec sources, la transcription de discussions et la comparaison de réponses entre modèles.</li>
+                <li>Identifier les possibilités et les contraintes des applications locales ou de traduction en temps réel.</li>
               </ul>
             </div>
           </div>
@@ -127,7 +130,7 @@
           <a href="#faq-outils-gratuits">Quels outils utiliser gratuitement&nbsp;?</a>
           <a href="#faq-limites-offres">Les limites des offres gratuites</a>
           <a href="#faq-trouver-outils">Trouver des outils sur Albexia</a>
-          <a href="#faq-video-section">Voir la vidéo</a>
+          <a href="#faq-video-section">11 applications IA sur smartphone</a>
           <a href="#faq-more-title">Pour aller plus loin</a>
         </div>
       </aside>
@@ -144,7 +147,8 @@
       const frame = document.getElementById('faq-youtube-frame');
       if (!section || !frame) return;
       const rawUrl = (section.dataset.youtubeUrl || '').trim();
-      if (!rawUrl) { section.hidden = true; return; }
+      const transcriptPresent = section.dataset.transcriptPresent === 'true';
+      if (!rawUrl || !transcriptPresent) { section.hidden = true; return; }
       let videoId = '';
       try {
         const url = new URL(rawUrl);

@@ -433,6 +433,7 @@
 
   /* Pricing — cartes générées dynamiquement par /js/plans-cards.js (données Firestore) */
   .plans-grid {display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-bottom:28px; position:relative; z-index:1;}
+  .plans-grid-single {grid-template-columns:minmax(260px, 420px); justify-content:center;}
   .plan-card {
   background: var(--bg3);
   border: 1px solid var(--border);
@@ -445,6 +446,20 @@
 }
   .plan-card:hover {}
   .plan-card.featured {border:1px solid var(--accent); background:var(--surface);}
+  /* Plans payants fermés : carte conservée, X discret effet crayon. */
+  .plan-card-closed { overflow: hidden; background: var(--surface); }
+  .plan-card-closed::after {
+    content: ""; position: absolute; inset: 8% 5%; pointer-events: none; z-index: 2;
+    background: center / 100% 100% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 220'%3E%3Cg fill='none' stroke='%238b8b86' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 18 C74 61 215 161 282 202' stroke-width='5' opacity='.28'/%3E%3Cpath d='M22 15 C91 70 210 151 278 205' stroke-width='2.2' opacity='.38'/%3E%3Cpath d='M280 17 C216 66 89 159 18 204' stroke-width='4.5' opacity='.3'/%3E%3Cpath d='M284 21 C207 81 95 155 21 208' stroke-width='2' opacity='.38'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .plan-unavailable-label {
+    display: inline-flex; align-self: flex-start; margin: 0 0 12px; padding: 4px 8px;
+    border: 1px solid var(--border-strong); border-radius: 3px; color: var(--text-muted);
+    background: var(--bg); font-size: 10px; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; position: relative; z-index: 3;
+  }
+  .plan-card-closed .btn-plan:disabled { opacity: .48; cursor: not-allowed; }
+
   .plan-badge {
   position: absolute;
   top: -12px;
@@ -895,7 +910,7 @@ if (langSwitch && langCurrent) {
 <script type="module">
   import { db, collection, addDoc, getDocs, serverTimestamp } from '/js/firebase-config.js';
   import { loginWithGoogle } from '/js/auth.js';
-  import { afficherCartesPlans } from '/js/plans-cards.js';
+  import { afficherCartesPlans, PLANS_PAYANTS_OUVERTS } from '/js/plans-cards.js';
 
   const panel1 = document.getElementById('panel1');
   const panel2 = document.getElementById('panel2');
@@ -1023,6 +1038,10 @@ if (langSwitch && langCurrent) {
   window.onTurnstileOk = function(token) { turnstileToken = token; window.__turnstileTok = token; };
 
   async function payerSoumission(tier, btn) {
+    if (!PLANS_PAYANTS_OUVERTS && (tier === 'starter' || tier === 'featured')) {
+      alert('Les formules Starter et Featured sont temporairement indisponibles. La formule Gratuit reste ouverte.');
+      return;
+    }
     const original = btn ? btn.textContent : '';
     document.querySelectorAll('#plans-cards-container .btn-plan').forEach(b => b.disabled = true);
     if (btn) btn.textContent = '…';
@@ -1054,6 +1073,10 @@ if (langSwitch && langCurrent) {
   }
 
   window.choisirFormuleSoumission = function(tier, evt) {
+    if (!PLANS_PAYANTS_OUVERTS && (tier === 'starter' || tier === 'featured')) {
+      alert('Les formules Starter et Featured sont temporairement indisponibles. La formule Gratuit reste ouverte.');
+      return;
+    }
     if (!form1.reportValidity()) { goToStep(1); return; }
     const estPayant = tier === 'starter' || tier === 'featured';
     const btn = evt && evt.target ? evt.target.closest('.btn-plan') : null;

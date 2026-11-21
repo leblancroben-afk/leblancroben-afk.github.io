@@ -5858,9 +5858,8 @@ Support français|oui|non|bool"></textarea>
     btn.disabled=false;
   });
 
-</script>
 
-<script>
+
 /* Sélecteur d'icônes (fonctionnalités) et icônes des plateformes — bibliothèque partagée /js/fiche-icons.js */
 (function(){
   var FI = window.FICHE_ICONS; if(!FI) return;
@@ -5901,13 +5900,55 @@ Support français|oui|non|bool"></textarea>
     box.querySelectorAll('[data-remove-tool]').forEach(b=>b.addEventListener('click',()=>{faqSelectedToolIds=faqSelectedToolIds.filter(x=>String(x)!==String(b.dataset.removeTool));faqRenderTools();}));
   }
   function faqRenderToolSearch() {
-    const input=document.getElementById('faq-tool-search'), results=document.getElementById('faq-tool-search-results');
-    input.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();if(!q){results.classList.remove('open');results.innerHTML='';return;}
-      const matches=faqToolCache.filter(t=>(t.name||'').toLowerCase().includes(q)&&(!t.langue||t.langue==='fr')&&!faqSelectedToolIds.map(String).includes(String(t.id))).slice(0,8);
-      results.innerHTML=matches.length?matches.map(t=>`<div class="search-result-item" data-faq-tool-id="${faqEsc(t.id)}"><span class="search-result-name">${faqEsc(t.emoji||'🤖')} ${faqEsc(t.name)}</span><span class="search-result-meta">${faqEsc(t.plan||'standard')}</span></div>`).join(''):'<div class="search-result-item" style="cursor:default">Aucun outil trouvé.</div>';
-      results.classList.add('open');results.querySelectorAll('[data-faq-tool-id]').forEach(el=>el.addEventListener('click',()=>{if(!faqSelectedToolIds.map(String).includes(String(el.dataset.faqToolId)))faqSelectedToolIds.push(el.dataset.faqToolId);input.value='';results.classList.remove('open');results.innerHTML='';faqRenderTools();}));
+    // Reprise du mécanisme de la recherche principale « Outils » :
+    // recherche Firestore via fetchAllTools(), debounce de 200 ms,
+    // filtrage sur le nom FR et affichage des 8 premières suggestions.
+    const input=document.getElementById('faq-tool-search');
+    const results=document.getElementById('faq-tool-search-results');
+    let faqSearchDebounce=null;
+    input.addEventListener('input',()=>{
+      clearTimeout(faqSearchDebounce);
+      const q=input.value.trim();
+      if(!q){results.classList.remove('open');results.innerHTML='';return;}
+      faqSearchDebounce=setTimeout(async()=>{
+        try {
+          const tools=await fetchAllTools();
+          faqToolCache=tools.filter(t=>t.name&&t.status!=='a_enrichir');
+          const qNorm=q.toLowerCase();
+          const selected=faqSelectedToolIds.map(String);
+          const matches=tools
+            .filter(t=>(t.name||'').toLowerCase().includes(qNorm))
+            .filter(t=>!t.langue||t.langue==='fr')
+            .filter(t=>!selected.includes(String(t.id)))
+            .slice(0,8);
+          if(!matches.length){
+            results.innerHTML='<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Aucun outil trouvé.</div>';
+            results.classList.add('open');
+            return;
+          }
+          results.innerHTML=matches.map(t=>`
+            <div class="search-result-item" data-faq-tool-id="${faqEsc(t.id)}">
+              <span class="search-result-name">${faqEsc(t.emoji||'🤖')} ${faqEsc(t.name)}</span>
+              <span class="search-result-meta">${faqEsc(t.plan||'standard')} · ID ${faqEsc(t.id)}</span>
+            </div>
+          `).join('');
+          results.classList.add('open');
+          results.querySelectorAll('.search-result-item[data-faq-tool-id]').forEach(el=>{
+            el.addEventListener('click',()=>{
+              const id=el.dataset.faqToolId;
+              if(!faqSelectedToolIds.map(String).includes(String(id)))faqSelectedToolIds.push(id);
+              input.value='';results.classList.remove('open');results.innerHTML='';faqRenderTools();
+            });
+          });
+        } catch(err) {
+          results.innerHTML=`<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Erreur de recherche : ${faqEsc(err.message)}</div>`;
+          results.classList.add('open');
+        }
+      },200);
     });
-    document.addEventListener('click',e=>{if(!input.contains(e.target)&&!results.contains(e.target))results.classList.remove('open');});
+    document.addEventListener('click',e=>{
+      if(!input.contains(e.target)&&!results.contains(e.target))results.classList.remove('open');
+    });
   }
   function faqRenderRows(containerId, rows, kind='sections') {
     const box=document.getElementById(containerId); if(!box)return;

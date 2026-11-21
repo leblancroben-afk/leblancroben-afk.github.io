@@ -206,6 +206,11 @@
       background:#1a1a22; border:1px solid var(--border); color:#ff5050; cursor:pointer;
       font-size:.75rem; display:flex; align-items:center; justify-content:center; padding:0;
     }
+    .faq-editor-row{border:1px solid var(--border);border-radius:8px;padding:12px;margin:10px 0;background:var(--bg2)}
+    .faq-editor-row label{display:block;margin:8px 0 5px}.faq-editor-row textarea,.faq-editor-row input{width:100%;box-sizing:border-box}
+    .faq-editor-row .faq-row-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+    .faq-selected-tools{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.faq-tool-chip{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--border-hover);border-radius:6px;background:var(--bg2)}
+    .faq-tool-chip button{border:0;background:none;color:var(--accent2);cursor:pointer;font-size:16px}
   </style>
 </head>
 <body>
@@ -1696,27 +1701,60 @@ Support français|oui|non|bool"></textarea>
             <label>Slug URL *</label><input id="faq-slug" required placeholder="outils-ia-gratuits">
             <label>Catégorie (slug) *</label><input id="faq-category" required placeholder="outils-ia-et-tarifs">
             <label>Statut</label><select id="faq-status"><option value="brouillon">Brouillon</option><option value="publie">Publié</option></select>
-            <label>Outils associés (sélection multiple)</label><select id="faq-tools" multiple size="7" style="min-height:140px"></select>
+            <label>Rechercher un outil existant (nom)</label>
+            <input type="text" id="faq-tool-search" placeholder="Tapez le nom d’un outil…" autocomplete="off">
+            <div id="faq-tool-search-results" class="search-results"></div>
+            <div id="faq-tools-selected" class="faq-selected-tools" aria-live="polite"></div>
           </fieldset>
           <fieldset><legend>Contenu FR</legend>
             <label>Introduction</label><textarea id="faq-intro" rows="3"></textarea>
             <label>Réponse rapide (HTML autorisé)</label><textarea id="faq-short" rows="4"></textarea>
-            <label>Sections (JSON) — tableau de {"title":"…","content":"…"}</label><textarea id="faq-sections" rows="10" placeholder='[{"title":"Première section","content":"<p>Contenu...</p>"}]'></textarea>
+            <label>Sections de la page</label>
+            <div id="faq-sections-editor"></div>
+            <button type="button" class="btn-submit" id="faq-add-section" style="background:var(--accent3);margin:8px 0 16px">+ Ajouter une section</button>
             <label>À retenir (HTML autorisé)</label><textarea id="faq-takeaway" rows="3"></textarea>
-            <label>Pour aller plus loin (JSON) — tableau de {"title":"…","slug":"…"}</label><textarea id="faq-more" rows="5" placeholder='[{"title":"Autre question","slug":"autre-question"}]'></textarea>
+            <label>Pour aller plus loin</label>
+            <div id="faq-more-editor"></div>
+            <button type="button" class="btn-submit" id="faq-add-more" style="background:var(--accent3);margin:8px 0 16px">+ Ajouter un lien FAQ</button>
           </fieldset>
           <fieldset><legend>Leçon vidéo (facultatif)</legend>
             <label>URL YouTube</label><input id="faq-video-url" placeholder="https://youtu.be/xxxxxxxxxxx">
-            <label>Transcription</label><textarea id="faq-transcript" rows="5"></textarea>
+            <label>Transcription FR</label><textarea id="faq-transcript" rows="5"></textarea>
+            <label>Transcription EN</label><textarea id="faq-transcript-en" rows="5"></textarea>
+            <label>Transcription ES</label><textarea id="faq-transcript-es" rows="5"></textarea>
             <label>Ce que vous allez découvrir (HTML ou liste)</label><textarea id="faq-discover" rows="3"></textarea>
             <label>Ce que vous saurez faire (HTML ou liste)</label><textarea id="faq-can-do" rows="3"></textarea>
             <p class="field-hint">Le bloc vidéo et ses cartes ne seront affichés que si l'URL YouTube et la transcription sont renseignées.</p>
           </fieldset>
-          <fieldset><legend>SEO et traductions</legend>
+          <fieldset><legend>SEO FR</legend>
             <label>Meta title FR</label><input id="faq-meta-title">
             <label>Meta description FR</label><textarea id="faq-meta-desc" rows="2"></textarea>
-            <label>Traductions EN et ES (JSON facultatif)</label><textarea id="faq-translations" rows="12" placeholder='{"en":{"title":"...","introduction":"...","shortAnswer":"...","sections":[]},"es":{"title":"...","introduction":"...","shortAnswer":"...","sections":[]}}'></textarea>
-            <p class="field-hint">Chaque traduction doit contenir son propre tableau <code>sections</code>. Les traductions absentes ne génèrent pas de page.</p>
+          </fieldset>
+          <fieldset><legend>Contenu EN</legend>
+            <button type="button" class="btn-translate" data-target-lang="en" data-form="faq">🌐 Traduire depuis le FR</button>
+            <label>Titre EN</label><input id="faq-title-en">
+            <label>Introduction EN</label><textarea id="faq-intro-en" rows="3"></textarea>
+            <label>Réponse rapide EN</label><textarea id="faq-short-en" rows="4"></textarea>
+            <div id="faq-sections-editor-en"></div>
+            <label>À retenir EN</label><textarea id="faq-takeaway-en" rows="3"></textarea>
+            <div id="faq-more-editor-en"></div>
+            <label>Meta title EN</label><input id="faq-meta-title-en">
+            <label>Meta description EN</label><textarea id="faq-meta-desc-en" rows="2"></textarea>
+            <label>Découvrir EN</label><textarea id="faq-discover-en" rows="3"></textarea>
+            <label>Savoir faire EN</label><textarea id="faq-can-do-en" rows="3"></textarea>
+          </fieldset>
+          <fieldset><legend>Contenu ES</legend>
+            <button type="button" class="btn-translate" data-target-lang="es" data-form="faq">🌐 Traduire depuis le FR</button>
+            <label>Titre ES</label><input id="faq-title-es">
+            <label>Introduction ES</label><textarea id="faq-intro-es" rows="3"></textarea>
+            <label>Réponse rapide ES</label><textarea id="faq-short-es" rows="4"></textarea>
+            <div id="faq-sections-editor-es"></div>
+            <label>À retenir ES</label><textarea id="faq-takeaway-es" rows="3"></textarea>
+            <div id="faq-more-editor-es"></div>
+            <label>Meta title ES</label><input id="faq-meta-title-es">
+            <label>Meta description ES</label><textarea id="faq-meta-desc-es" rows="2"></textarea>
+            <label>Découvrir ES</label><textarea id="faq-discover-es" rows="3"></textarea>
+            <label>Savoir faire ES</label><textarea id="faq-can-do-es" rows="3"></textarea>
           </fieldset>
           <fieldset><legend>Catégories du hub FAQ</legend>
             <label>Catégories (JSON) — modifiables ici</label><textarea id="faq-categories-json" rows="7" placeholder='[{"slug":"outils-ia-et-tarifs","name":"Outils IA et tarifs","description":"..."}]'></textarea>
@@ -4082,6 +4120,20 @@ Support français|oui|non|bool"></textarea>
     return resultats.join('\n');
   }
 
+  function faqFieldsToTranslate(targetLang) {
+    return [
+      ['faq-title', `faq-title-${targetLang}`, 'text'],
+      ['faq-intro', `faq-intro-${targetLang}`, 'text'],
+      ['faq-short', `faq-short-${targetLang}`, 'html'],
+      ['faq-takeaway', `faq-takeaway-${targetLang}`, 'html'],
+      ['faq-meta-title', `faq-meta-title-${targetLang}`, 'text'],
+      ['faq-meta-desc', `faq-meta-desc-${targetLang}`, 'text'],
+      ['faq-discover', `faq-discover-${targetLang}`, 'html'],
+      ['faq-can-do', `faq-can-do-${targetLang}`, 'html'],
+      ['faq-transcript', `faq-transcript-${targetLang}`, 'text'],
+    ];
+  }
+
   function nicheFieldsToTranslate(targetLang) {
     return [
       ['nc-metier',            `nc-metier-${targetLang}`,            'text'],
@@ -4278,7 +4330,9 @@ Support français|oui|non|bool"></textarea>
     btn.addEventListener('click', async () => {
       const targetLang = btn.dataset.targetLang;
       const formType    = btn.dataset.form;
-      const fields = formType === 'article'
+      const fields = formType === 'faq'
+        ? faqFieldsToTranslate(targetLang)
+        : formType === 'article'
         ? articleFieldsToTranslate(targetLang)
         : formType === 'plans'
         ? plansFieldsToTranslate(targetLang)
@@ -4326,6 +4380,30 @@ Support français|oui|non|bool"></textarea>
           console.error(`Erreur LibreTranslate sur le champ ${srcId}:`, err);
         }
         await pause(400);
+      }
+
+      if (formType === 'faq') {
+        for (const kind of ['sections','more']) {
+          const sourceId = kind === 'sections' ? 'faq-sections-editor' : 'faq-more-editor';
+          const targetId = `${sourceId}-${targetLang}`;
+          const rows = faqReadRows(sourceId, kind);
+          const translated = [];
+          for (const row of rows) {
+            try {
+              const title = await translateText(row.title, targetLang, 'text'); await pause(350);
+              if (kind === 'sections') translated.push({title, content: await translateText(row.content, targetLang, 'html')});
+              else translated.push({title, slug: row.slug});
+              succes++;
+            } catch (err) { echecs++; console.error('Traduction FAQ structurée :', err); }
+            await pause(350);
+          }
+          faqRenderRows(targetId, translated, kind);
+        }
+        const transcript = faqVal('faq-transcript');
+        if (transcript.trim()) {
+          try { faqSet(`faq-transcript-${targetLang}`, await translateText(transcript, targetLang, 'text')); succes++; }
+          catch (err) { echecs++; console.error('Traduction transcription FAQ :', err); }
+        }
       }
 
       if (echecs === 0) {
@@ -5780,7 +5858,9 @@ Support français|oui|non|bool"></textarea>
     btn.disabled=false;
   });
 
+</script>
 
+<script>
 /* Sélecteur d'icônes (fonctionnalités) et icônes des plateformes — bibliothèque partagée /js/fiche-icons.js */
 (function(){
   var FI = window.FICHE_ICONS; if(!FI) return;
@@ -5809,59 +5889,76 @@ Support français|oui|non|bool"></textarea>
   // ── Administration FAQ ────────────────────────────────────────────────
   let faqEditingId = null;
   let faqAdminCache = [];
-  const faqVal = id => document.getElementById(id).value;
+  let faqToolCache = [];
+  let faqSelectedToolIds = [];
+  const faqVal = id => document.getElementById(id)?.value || '';
   const faqSet = (id, value) => { const el=document.getElementById(id); if(el) el.value=value ?? ''; };
+  const faqEsc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function faqMessage(type, message) { showMsg('warn-faq','ok-faq',type,message); }
+  function faqRenderTools() {
+    const box=document.getElementById('faq-tools-selected');
+    box.innerHTML=faqSelectedToolIds.map(id=>{const t=faqToolCache.find(x=>String(x.id)===String(id));return t?`<span class="faq-tool-chip">${faqEsc(t.emoji||'🤖')} ${faqEsc(t.name)} <button type="button" data-remove-tool="${faqEsc(id)}" aria-label="Retirer">×</button></span>`:''}).join('');
+    box.querySelectorAll('[data-remove-tool]').forEach(b=>b.addEventListener('click',()=>{faqSelectedToolIds=faqSelectedToolIds.filter(x=>String(x)!==String(b.dataset.removeTool));faqRenderTools();}));
+  }
+  function faqRenderToolSearch() {
+    const input=document.getElementById('faq-tool-search'), results=document.getElementById('faq-tool-search-results');
+    input.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();if(!q){results.classList.remove('open');results.innerHTML='';return;}
+      const matches=faqToolCache.filter(t=>(t.name||'').toLowerCase().includes(q)&&(!t.langue||t.langue==='fr')&&!faqSelectedToolIds.map(String).includes(String(t.id))).slice(0,8);
+      results.innerHTML=matches.length?matches.map(t=>`<div class="search-result-item" data-faq-tool-id="${faqEsc(t.id)}"><span class="search-result-name">${faqEsc(t.emoji||'🤖')} ${faqEsc(t.name)}</span><span class="search-result-meta">${faqEsc(t.plan||'standard')}</span></div>`).join(''):'<div class="search-result-item" style="cursor:default">Aucun outil trouvé.</div>';
+      results.classList.add('open');results.querySelectorAll('[data-faq-tool-id]').forEach(el=>el.addEventListener('click',()=>{if(!faqSelectedToolIds.map(String).includes(String(el.dataset.faqToolId)))faqSelectedToolIds.push(el.dataset.faqToolId);input.value='';results.classList.remove('open');results.innerHTML='';faqRenderTools();}));
+    });
+    document.addEventListener('click',e=>{if(!input.contains(e.target)&&!results.contains(e.target))results.classList.remove('open');});
+  }
+  function faqRenderRows(containerId, rows, kind='sections') {
+    const box=document.getElementById(containerId); if(!box)return;
+    box.innerHTML='';
+    rows.forEach((row,i)=>{const el=document.createElement('div');el.className='faq-editor-row';
+      if(kind==='sections')el.innerHTML=`<label>Titre de section</label><input data-faq-row-title value="${faqEsc(row.title||'')}"><label>Contenu (HTML autorisé)</label><textarea data-faq-row-content rows="5">${faqEsc(row.content||'')}</textarea><div class="faq-row-actions"><button type="button" class="btn-danger" data-faq-remove>Supprimer cette section</button></div>`;
+      else el.innerHTML=`<label>Titre du lien</label><input data-faq-row-title value="${faqEsc(row.title||'')}"><label>Slug de la FAQ cible</label><input data-faq-row-slug value="${faqEsc(row.slug||'')}"><div class="faq-row-actions"><button type="button" class="btn-danger" data-faq-remove>Supprimer ce lien</button></div>`;
+      el.querySelector('[data-faq-remove]').addEventListener('click',()=>el.remove());box.appendChild(el);
+    });
+  }
+  function faqReadRows(containerId,kind='sections') {return [...document.querySelectorAll(`#${containerId} .faq-editor-row`)].map(el=>kind==='sections'?{title:el.querySelector('[data-faq-row-title]').value.trim(),content:el.querySelector('[data-faq-row-content]').value.trim()}:{title:el.querySelector('[data-faq-row-title]').value.trim(),slug:el.querySelector('[data-faq-row-slug]').value.trim()}).filter(x=>x.title&&(kind==='sections'?x.content:x.slug));}
   function faqReset() {
-    faqEditingId=null; document.getElementById('form-faq').reset();
-    document.getElementById('faq-existing').value=''; document.getElementById('faq-delete-btn').style.display='none';
+    faqEditingId=null;document.getElementById('form-faq').reset();document.getElementById('faq-existing').value='';document.getElementById('faq-delete-btn').style.display='none';
+    faqSelectedToolIds=[];faqRenderTools();['fr','en','es'].forEach(l=>{faqRenderRows(`faq-sections-editor${l==='fr'?'':'-'+l}`,[],'sections');faqRenderRows(`faq-more-editor${l==='fr'?'':'-'+l}`,[],'more');});
     document.getElementById('faq-admin-status').textContent='Nouvelle FAQ.';
   }
   async function loadFaqAdmin() {
     try {
-      const [snap, catSnap, tools] = await Promise.all([getDocs(collection(db,'faq')),getDoc(doc(db,'config','faq_categories')),fetchAllTools()]);
-      faqAdminCache=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.titre||'').localeCompare(b.titre||''));
-      const select=document.getElementById('faq-existing');
-      select.innerHTML='<option value="">Créer une nouvelle FAQ…</option>'+faqAdminCache.map(f=>`<option value="${f.id}">${String(f.titre||f.slug||f.id).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))} — ${f.status||'brouillon'}</option>`).join('');
-      const toolSelect=document.getElementById('faq-tools');
-      toolSelect.innerHTML=tools.filter(t=>t.name && t.status!=='a_enrichir').map(t=>`<option value="${String(t.id)}">${String(t.name).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</option>`).join('');
-      faqSet('faq-categories-json',JSON.stringify(catSnap.exists()?(catSnap.data().categories||[]):[],null,2));
-      document.getElementById('faq-admin-status').textContent=`${faqAdminCache.length} FAQ dans Firestore.`;
-    } catch(err) { faqMessage('warn','Erreur de chargement FAQ : '+err.message); }
+      const [snap,catSnap,tools]=await Promise.all([getDocs(collection(db,'faq')),getDoc(doc(db,'config','faq_categories')),fetchAllTools()]);
+      faqAdminCache=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.titre||'').localeCompare(b.titre||''));faqToolCache=tools.filter(t=>t.name&&t.status!=='a_enrichir');
+      const select=document.getElementById('faq-existing');select.innerHTML='<option value="">Créer une nouvelle FAQ…</option>'+faqAdminCache.map(f=>`<option value="${faqEsc(f.id)}">${faqEsc(f.titre||f.slug||f.id)} — ${faqEsc(f.status||'brouillon')}</option>`).join('');
+      faqSet('faq-categories-json',JSON.stringify(catSnap.exists()?(catSnap.data().categories||[]):[],null,2));document.getElementById('faq-admin-status').textContent=`${faqAdminCache.length} FAQ dans Firestore.`;
+    } catch(err){faqMessage('warn','Erreur de chargement FAQ : '+err.message);}
   }
   function faqLoadDocument(id) {
-    const f=faqAdminCache.find(x=>x.id===id); if(!f) return faqReset();
-    faqEditingId=id;
-    const tr=f.translations||f.traductions||{}; const fr=tr.fr||f; const video=fr.video||f.video||{};
-    faqSet('faq-title',fr.title||fr.titre||f.titre); faqSet('faq-slug',f.slug); faqSet('faq-category',f.categorie); faqSet('faq-status',f.status||'brouillon');
-    faqSet('faq-intro',fr.introduction); faqSet('faq-short',fr.shortAnswer||fr.reponseRapide); faqSet('faq-sections',JSON.stringify(fr.sections||[],null,2)); faqSet('faq-takeaway',fr.takeaway); faqSet('faq-more',JSON.stringify(fr.more||[],null,2));
-    faqSet('faq-video-url',video.url); faqSet('faq-transcript',video.transcript||video.transcription); faqSet('faq-discover',video.discover||video.decouvrir); faqSet('faq-can-do',video.canDo||video.savoirFaire);
-    faqSet('faq-meta-title',fr.metaTitle||fr.meta_title); faqSet('faq-meta-desc',fr.metaDescription||fr.meta_description);
-    const other={...tr}; delete other.fr; faqSet('faq-translations',JSON.stringify(other,null,2));
-    const ids=f.toolIds||[]; [...document.getElementById('faq-tools').options].forEach(o=>o.selected=ids.map(String).includes(o.value));
-    document.getElementById('faq-delete-btn').style.display='inline-flex'; document.getElementById('faq-admin-status').textContent=`Édition : ${f.slug}`;
+    const f=faqAdminCache.find(x=>x.id===id);if(!f)return faqReset();faqEditingId=id;
+    const tr=f.translations||f.traductions||{},fr=tr.fr||f,video=fr.video||f.video||{};
+    faqSet('faq-title',fr.title||fr.titre||f.titre);faqSet('faq-slug',f.slug);faqSet('faq-category',f.categorie);faqSet('faq-status',f.status||'brouillon');faqSet('faq-intro',fr.introduction);faqSet('faq-short',fr.shortAnswer||fr.reponseRapide);faqSet('faq-takeaway',fr.takeaway);faqSet('faq-meta-title',fr.metaTitle||fr.meta_title);faqSet('faq-meta-desc',fr.metaDescription||fr.meta_description);
+    faqSet('faq-video-url',video.url);faqSet('faq-transcript',video.transcript||video.transcription);faqSet('faq-transcript-en',tr.en?.video?.transcript||'');faqSet('faq-transcript-es',tr.es?.video?.transcript||'');faqSet('faq-discover',video.discover||video.decouvrir);faqSet('faq-can-do',video.canDo||video.savoirFaire);
+    faqRenderRows('faq-sections-editor',fr.sections||[],'sections');faqRenderRows('faq-more-editor',fr.more||fr.pourAllerPlusLoin||[],'more');
+    ['en','es'].forEach(l=>{const d=tr[l]||{};faqSet(`faq-title-${l}`,d.title||d.titre);faqSet(`faq-intro-${l}`,d.introduction);faqSet(`faq-short-${l}`,d.shortAnswer||d.reponseRapide);faqSet(`faq-takeaway-${l}`,d.takeaway);faqSet(`faq-meta-title-${l}`,d.metaTitle);faqSet(`faq-meta-desc-${l}`,d.metaDescription);faqSet(`faq-discover-${l}`,d.video?.discover||'');faqSet(`faq-can-do-${l}`,d.video?.canDo||'');faqRenderRows(`faq-sections-editor-${l}`,d.sections||[],'sections');faqRenderRows(`faq-more-editor-${l}`,d.more||[],'more');});
+    faqSelectedToolIds=(f.toolIds||[]).map(String);faqRenderTools();document.getElementById('faq-delete-btn').style.display='inline-flex';document.getElementById('faq-admin-status').textContent=`Édition : ${f.slug}`;
   }
   document.getElementById('faq-existing').addEventListener('change',e=>e.target.value?faqLoadDocument(e.target.value):faqReset());
   document.getElementById('faq-new-btn').addEventListener('click',faqReset);
+  document.getElementById('faq-add-section').addEventListener('click',()=>{const rows=faqReadRows('faq-sections-editor');rows.push({title:'',content:''});faqRenderRows('faq-sections-editor',rows,'sections');});
+  document.getElementById('faq-add-more').addEventListener('click',()=>{const rows=faqReadRows('faq-more-editor','more');rows.push({title:'',slug:''});faqRenderRows('faq-more-editor',rows,'more');});
   document.getElementById('faq-title').addEventListener('input',()=>{if(!faqVal('faq-slug'))faqSet('faq-slug',slugify(faqVal('faq-title')));});
-  document.getElementById('faq-form')?.addEventListener('submit',()=>{});
   document.getElementById('form-faq').addEventListener('submit',async e=>{
-    e.preventDefault(); const btn=document.getElementById('faq-save-btn'); btn.disabled=true;
+    e.preventDefault();const btn=document.getElementById('faq-save-btn');btn.disabled=true;
     try {
-      const sections=JSON.parse(faqVal('faq-sections')||'[]'); if(!Array.isArray(sections)) throw new Error('Les sections doivent être un tableau JSON.'); const more=JSON.parse(faqVal('faq-more')||'[]'); if(!Array.isArray(more)) throw new Error('Les liens « Pour aller plus loin » doivent être un tableau JSON.');
-      const other=JSON.parse(faqVal('faq-translations')||'{}'); if(!other||typeof other!=='object'||Array.isArray(other)) throw new Error('Les traductions EN/ES doivent être un objet JSON.');
-      const fr={title:faqVal('faq-title').trim(),introduction:faqVal('faq-intro').trim(),shortAnswer:faqVal('faq-short').trim(),sections,takeaway:faqVal('faq-takeaway').trim(),more,metaTitle:faqVal('faq-meta-title').trim(),metaDescription:faqVal('faq-meta-desc').trim(),video:{url:faqVal('faq-video-url').trim(),transcript:faqVal('faq-transcript').trim(),discover:faqVal('faq-discover').trim(),canDo:faqVal('faq-can-do').trim()}};
-      const payload={titre:fr.title,slug:slugify(faqVal('faq-slug')),categorie:faqVal('faq-category').trim(),status:faqVal('faq-status'),translations:{fr,...other},toolIds:[...document.getElementById('faq-tools').selectedOptions].map(o=>o.value),updatedAt:serverTimestamp()};
-      if(!payload.slug) throw new Error('Le slug est obligatoire.');
-      if(faqEditingId) await updateDoc(doc(db,'faq',faqEditingId),payload); else {payload.createdAt=serverTimestamp(); const ref=await addDoc(collection(db,'faq'),payload); faqEditingId=ref.id;}
-      faqMessage('ok','FAQ enregistrée dans Firestore. Les pages HTML seront générées au prochain lancement de gen-fiches.js.'); await loadFaqAdmin(); document.getElementById('faq-existing').value=faqEditingId;
-    } catch(err) { faqMessage('warn','Enregistrement impossible : '+err.message); } finally {btn.disabled=false;}
+      const fr={title:faqVal('faq-title').trim(),introduction:faqVal('faq-intro').trim(),shortAnswer:faqVal('faq-short').trim(),sections:faqReadRows('faq-sections-editor'),takeaway:faqVal('faq-takeaway').trim(),more:faqReadRows('faq-more-editor','more'),metaTitle:faqVal('faq-meta-title').trim(),metaDescription:faqVal('faq-meta-desc').trim(),video:{url:faqVal('faq-video-url').trim(),transcript:faqVal('faq-transcript').trim(),discover:faqVal('faq-discover').trim(),canDo:faqVal('faq-can-do').trim()}};
+      const translations={fr};['en','es'].forEach(l=>{const d={title:faqVal(`faq-title-${l}`).trim(),introduction:faqVal(`faq-intro-${l}`).trim(),shortAnswer:faqVal(`faq-short-${l}`).trim(),sections:faqReadRows(`faq-sections-editor-${l}`),takeaway:faqVal(`faq-takeaway-${l}`).trim(),more:faqReadRows(`faq-more-editor-${l}`,'more'),metaTitle:faqVal(`faq-meta-title-${l}`).trim(),metaDescription:faqVal(`faq-meta-desc-${l}`).trim(),video:{transcript:faqVal(`faq-transcript-${l}`).trim(),discover:faqVal(`faq-discover-${l}`).trim(),canDo:faqVal(`faq-can-do-${l}`).trim()}};if(d.title||d.introduction||d.shortAnswer||d.sections.length||d.takeaway)translations[l]=d;});
+      const payload={titre:fr.title,slug:slugify(faqVal('faq-slug')),categorie:faqVal('faq-category').trim(),status:faqVal('faq-status'),translations,toolIds:faqSelectedToolIds,updatedAt:serverTimestamp()};if(!payload.slug)throw new Error('Le slug est obligatoire.');
+      if(faqEditingId)await updateDoc(doc(db,'faq',faqEditingId),payload);else{payload.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'faq'),payload);faqEditingId=ref.id;}
+      faqMessage('ok','FAQ enregistrée dans Firestore. Les pages seront générées au prochain lancement de gen-fiches.js.');await loadFaqAdmin();document.getElementById('faq-existing').value=faqEditingId;
+    }catch(err){faqMessage('warn','Enregistrement impossible : '+err.message);}finally{btn.disabled=false;}
   });
-  document.getElementById('faq-delete-btn').addEventListener('click',async()=>{
-    if(!faqEditingId||!confirm('Supprimer cette FAQ ? Sa page sera supprimée au prochain build.')) return;
-    try { await deleteDoc(doc(db,'faq',faqEditingId)); faqMessage('ok','FAQ supprimée. La page statique sera nettoyée au prochain build.'); faqReset(); await loadFaqAdmin(); }
-    catch(err){faqMessage('warn','Suppression impossible : '+err.message);}
-  });
+  document.getElementById('faq-delete-btn').addEventListener('click',async()=>{if(!faqEditingId||!confirm('Supprimer cette FAQ ? Sa page sera supprimée au prochain build.'))return;try{await deleteDoc(doc(db,'faq',faqEditingId));faqMessage('ok','FAQ supprimée.');faqReset();await loadFaqAdmin();}catch(err){faqMessage('warn','Suppression impossible : '+err.message);}});
+  faqRenderToolSearch();
+
   document.getElementById('faq-categories-save').addEventListener('click', async (event) => {
     const btn = event.currentTarget;
     const feedback = document.getElementById('faq-categories-feedback');

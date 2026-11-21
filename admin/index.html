@@ -1701,9 +1701,11 @@ Support français|oui|non|bool"></textarea>
             <label>Slug URL *</label><input id="faq-slug" required placeholder="outils-ia-gratuits">
             <label>Catégorie (slug) *</label><input id="faq-category" required placeholder="outils-ia-et-tarifs">
             <label>Statut</label><select id="faq-status"><option value="brouillon">Brouillon</option><option value="publie">Publié</option></select>
-            <label>Rechercher un outil existant (nom)</label>
-            <input type="text" id="faq-tool-search" placeholder="Tapez le nom d’un outil…" autocomplete="off">
-            <div id="faq-tool-search-results" class="search-results"></div>
+            <div class="search-wrap" id="faq-tool-search-wrap">
+              <label for="faq-tool-search">Rechercher un outil existant (nom)</label>
+              <input type="text" id="faq-tool-search" placeholder="Tapez le nom d’un outil…" autocomplete="off">
+              <div id="faq-tool-search-results" class="search-results"></div>
+            </div>
             <div id="faq-tools-selected" class="faq-selected-tools" aria-live="polite"></div>
           </fieldset>
           <fieldset><legend>Contenu FR</legend>
@@ -5898,9 +5900,11 @@ Support français|oui|non|bool"></textarea>
     const snap = await getDocs(collection(db, 'outils'));
     faqToolCache = snap.docs.map(d => {
       const data = d.data() || {};
+      // Les fiches outils utilisent leur champ id quand il existe ; sinon,
+      // l'identifiant du document Firestore est la référence fiable.
       return { ...data, id: String(data.id || d.id), _docId: d.id,
         name: data.name || data.nom || data.titre || '' };
-    }).filter(t => t.name);
+    }).filter(t => t.name && (!t.langue || t.langue === 'fr'));
     return faqToolCache;
   }
 

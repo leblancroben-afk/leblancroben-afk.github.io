@@ -140,7 +140,42 @@
   </div>
   <div class="fo-car-dots" data-fo-dots><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
 </section>
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriales en vídeo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/TsD4VDX2Fn0/mqdefault.jpg" alt="XCrawl: 1 API, 5 Modules: Web Data for AI Agents Without the Infrastructure" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>XCrawl: 1 API, 5 Modules: Web Data for AI Agents Without the Infrastructure</div><div class="tutorial-duration" data-vid-dur>5:36</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/TsD4VDX2Fn0" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"TsD4VDX2Fn0","titre":"XCrawl: 1 API, 5 Modules: Web Data for AI Agents Without the Infrastructure","duree":"5:36"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Preguntas frecuentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">¿Qué es XCrawl?</button><div class="faq-a">XCrawl es una API de chatarra web que le permite recuperar datos de páginas web, búsquedas y sitios enteros. Devuelve JSON estructurado, Markdown, HTML o screenshots, que se pueden utilizar directamente en una aplicación, agente AI o tubería RAG.</div></div><div class="faq-item"><button class="faq-q">¿Cómo funcionan los créditos XCrawl?</button><div class="faq-a">XCrawl trabaja con un sistema de crédito. El Plan Libre incluye 1.000 créditos de uso único durante 30 días. Los planes pagados incluyen una cuota de crédito mensual; los créditos consumidos más allá de la cuota se cobrarán a la tasa de excedencia del plan elegido.</div></div><div class="faq-item"><button class="faq-q">¿El número de créditos corresponde a varias páginas?</button><div class="faq-a">No, no sistemáticamente. El número de créditos consumidos depende del tipo de API utilizado, la complejidad de la página, la renderización de JavaScript, las opciones habilitadas y el volumen de datos recuperados. Así que es más justo hablar de créditos que de páginas.</div></div><div class="faq-item"><button class="faq-q">¿Pueden los sitios de chatarra XCrawl en JavaScript?</button><div class="faq-a">Sí. XCrawl utiliza el navegador renderizado sin cabeza para extraer contenido de aplicaciones web dinámicas, incluyendo sitios desarrollados con React, Angular, View u otras bibliotecas JavaScript.</div></div><div class="faq-item"><button class="faq-q">¿XCrawl trabaja con agentes de IA?</button><div class="faq-a">Sí. XCrawl proporciona datos estructurados en JSON y Markdown, adaptados a agentes de IA, modelos de lenguaje y sistemas RAG. Un servidor MCP también puede conectar XCrawl a asistentes IA compatibles.</div></div><div class="faq-item"><button class="faq-q">¿Está libre XCrawl?</button><div class="faq-a">Sí, XCrawl ofrece un ensayo gratuito de 30 días con 1.000 créditos, sin tarjeta de crédito. Los planes pagados comienzan a 8 dólares al mes.</div></div></div></section>
       
 <section class="fo-card" id="fo-api"><h2>API</h2>

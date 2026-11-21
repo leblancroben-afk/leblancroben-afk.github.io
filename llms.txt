@@ -55,6 +55,7 @@ Langue : français.
 - [Juri'Predis](https://albexia.com/tools/starter/fr/juri-predis/): Juri'Predis est une plateforme française de recherche jurisprudentielle et de justice prédictive. Elle analyse plus de 8 millions de décisions de justice en langage naturel pour anticiper les tendances des tribunaux.
 - [Kira Systems](https://albexia.com/tools/standard/fr/kira-systems/): Kira Systems, propriété de Litera, est une plateforme d'intelligence contractuelle spécialisée dans l'extraction de clauses lors des due diligence M&A. Plus de 1400 champs prédéfinis identifient automatiquement les points critiques.
 - [Luminance](https://albexia.com/tools/starter/fr/luminance/): Luminance est une IA juridique britannique spécialisée dans la relecture et la négociation de contrats. Son architecture "Panel of Judges" croise plusieurs modèles pour détecter les clauses à risque avec une fiabilité renforcée.
+- [Spellbook](https://albexia.com/tools/standard/fr/spellbook/): Spellbook est un copilote IA pour les juristes : il rédige, révise, compare et négocie des contrats directement dans Word et Google Docs.
 
 ## Présentation
 
@@ -101,7 +102,7 @@ Langue : français.
 - [Letterdrop](https://albexia.com/tools/standard/fr/letterdrop/): Letterdrop est une plateforme d'automatisation du marketing de contenu et du SEO par IA. Elle aide les équipes B2B à créer, optimiser et publier des articles plus rapidement.
 - [MarketMuse](https://albexia.com/tools/starter/fr/marketmuse/): MarketMuse analyse l'ensemble d'un site pour identifier les lacunes de contenu par rapport aux concurrents et bâtir l'autorité thématique. Il génère des briefs détaillés basés sur son modélisation de sujets propriétaire.
 - [Outranking](https://albexia.com/tools/standard/fr/outranking/): Outranking est un logiciel d'optimisation SEO guidé par l'IA. Il aide à planifier, rédiger et structurer des contenus hautement positionnés sur les moteurs de recherche.
-- [SE Ranking](https://albexia.com/tools/starter/fr/se-ranking/): SE Ranking est une plateforme SEO tout-en-un combinant suivi de position, audit technique et recherche de mots-clés. Sa fonctionnalité SE Visible ajoute le suivi de la visibilité de marque dans ChatGPT, Gemini et Perplexity.
+- [SE Ranking](https://albexia.com/tools/starter/fr/se-ranking/): SE Ranking est une plateforme SEO tout-en-un pour suivre les positions, auditer un site, analyser les backlinks, rechercher des mots-clés et créer des rapports clients.
 - [WordLift](https://albexia.com/tools/standard/fr/wordlift/): WordLift automatise le balisage Schema.org et construit un graphe de connaissances à partir de votre contenu WordPress. L'outil connecte vos entités à des sources externes comme Wikidata pour renforcer la compréhension par les moteurs et les IA.
 - [Yoast AI](https://albexia.com/tools/standard/fr/yoast-ai/): Yoast AI Generate est une fonctionnalité intégrée au plugin Yoast SEO. Elle utilise l'intelligence artificielle pour rédiger automatiquement des titres et méta-descriptions optimisés.
 

@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v12'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v13'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -5139,7 +5139,7 @@ async function main() {
     const translations = faq.translations || faq.traductions || {};
     const available = ['fr','en','es'].filter(lang => {
       const d = translations[lang] || (lang === 'fr' ? faq : null);
-      return d && (d.title || d.titre || (lang === 'fr' && faq.titre));
+      return !!(d && String(d.title || d.titre || (lang === 'fr' ? faq.titre : '') || '').trim());
     });
     const urls = {};
     for (const lang of available) urls[lang] = `${SITE_ORIGIN}/pages/${slug}/${lang === 'fr' ? '' : lang + '/'}`;
@@ -5167,7 +5167,7 @@ async function main() {
   let removedFaq = 0;
   const oldFaqPaths = new Set(Object.values(state.faq || {}).map(x => x && x.path).filter(Boolean));
   for (const oldPath of oldFaqPaths) {
-    if (!validFaqPaths.has(oldPath) && fs.existsSync(oldPath)) {
+    if (!validFaqPaths.has(oldPath) && fs.existsSync(oldPath) && path.resolve(oldPath).startsWith(path.resolve('pages') + path.sep) && /^pages[\\/][^\\/]+(?:[\\/](?:en|es))?$/.test(oldPath)) {
       fs.rmSync(oldPath, {recursive:true, force:true});
       removedFaq++;
       const parent = path.dirname(oldPath);
@@ -5183,7 +5183,7 @@ async function main() {
       if (!items.length) return '';
       return `<section class="faq-category"><div class="faq-category-heading"><h2>${escHtml(c.name || c.nom || c.slug)}</h2></div>${c.description ? `<p>${escHtml(c.description)}</p>` : ''}<ul class="faq-question-list">${items.map(f => { const t=(f.translations||f.traductions||{}).fr || f; return `<li><a href="/pages/${slugify(f.slug)}/">${escHtml(t.title || t.titre || f.slug)}</a></li>`; }).join('')}</ul></section>`;
     }).join('');
-    const hub = `<!DOCTYPE html><html lang="fr" data-static-lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Centre d’aide — FAQ | Albexia</title><meta name="description" content="Réponses aux questions fréquentes sur les outils d’intelligence artificielle et leur utilisation."><link rel="canonical" href="${SITE_ORIGIN}/faq/"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/themes.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="/css/faq-hub.css"></head><body>${navHTML('fr')}<main class="faq-hub container"><header class="faq-hero"><div><p class="faq-eyebrow">CENTRE D’AIDE ALBEXIA</p><h1>Questions fréquentes</h1><p class="faq-lead">Des réponses claires pour mieux comprendre et utiliser les outils d’intelligence artificielle.</p></div></header><div class="faq-categories">${categories || '<p>Aucune question publiée pour le moment.</p>'}</div></main>${footerHTML('fr')}<script src="/js/i18n.js"></script><script src="/js/header.js" defer></script><script src="/js/footer.js" defer></script></body></html>`;
+    const hub = `<!DOCTYPE html><html lang="fr" data-static-lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Centre d’aide — FAQ | Albexia</title><meta name="description" content="Réponses aux questions fréquentes sur les outils d’intelligence artificielle et leur utilisation."><link rel="canonical" href="${SITE_ORIGIN}/faq/"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/themes.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="/css/faq-hub.css"></head><body>${navHTML('fr')}<main class="faq-hub container"><header class="faq-hero"><div><h1>Questions fréquentes</h1><p class="faq-lead">Des réponses claires pour mieux comprendre et utiliser les outils d’intelligence artificielle.</p></div></header><div class="faq-categories">${categories || '<p>Aucune question publiée pour le moment.</p>'}</div></main>${footerHTML('fr')}<script src="/js/i18n.js"></script><script src="/js/header.js" defer></script><script src="/js/footer.js" defer></script></body></html>`;
     fs.mkdirSync('faq',{recursive:true}); fs.writeFileSync(faqHubPath,hub,'utf8');
     newState.faqHubHash = faqHubHash;
     console.log(`✓ Hub FAQ régénéré (${faqPublished.length} FAQ publiée(s), ${removedFaq} dossier(s) supprimé(s)).`);

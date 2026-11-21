@@ -771,6 +771,22 @@
   <url>
     <loc>https://albexia.com/glossaire/fine-tuning/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/fine-tuning/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/fine-tuning/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/fine-tuning/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/fine-tuning/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/fine-tuning/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/fine-tuning/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/fine-tuning/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/fine-tuning/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/fine-tuning/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/fine-tuning/es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/fine-tuning/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/fine-tuning/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/fine-tuning/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/fine-tuning/"/>
   </url>
   <url>
@@ -818,21 +834,85 @@
   <url>
     <loc>https://albexia.com/glossaire/ia-generative/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/ia-generative/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/ia-generative/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/ia-generative/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/ia-generative/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/ia-generative/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/ia-generative/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/ia-generative/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/ia-generative/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/ia-generative/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/ia-generative/es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/ia-generative/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/ia-generative/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/ia-generative/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/ia-generative/"/>
   </url>
   <url>
     <loc>https://albexia.com/glossaire/prompt-engineering/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/prompt-engineering/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/prompt-engineering/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/prompt-engineering/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/prompt-engineering/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/prompt-engineering/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/prompt-engineering/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/prompt-engineering/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/prompt-engineering/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/prompt-engineering/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/prompt-engineering/es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/prompt-engineering/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/prompt-engineering/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/prompt-engineering/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/prompt-engineering/"/>
   </url>
   <url>
     <loc>https://albexia.com/glossaire/rag-retrieval/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/rag-retrieval/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/rag-retrieval/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/rag-retrieval/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/rag-retrieval/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/rag-retrieval/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/rag-retrieval/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/rag-retrieval/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/rag-retrieval/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/rag-retrieval/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/rag-retrieval/es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/rag-retrieval/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/rag-retrieval/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/rag-retrieval/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/rag-retrieval/"/>
   </url>
   <url>
     <loc>https://albexia.com/glossaire/text-to-speech/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/text-to-speech/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/text-to-speech/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/text-to-speech/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/text-to-speech/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/text-to-speech/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/text-to-speech/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/text-to-speech/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/text-to-speech/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/text-to-speech/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/text-to-speech/es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/text-to-speech/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/text-to-speech/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/text-to-speech/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/text-to-speech/"/>
   </url>
   <url>

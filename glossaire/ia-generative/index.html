@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <script src="/js/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C'est quoi l'IA générative ? Définition IA | Albexia</title>
+  <meta name="description" content="Branche de l'intelligence artificielle capable de créer du nouveau contenu — texte, images, musique, vidéo, code — à partir d'une requête en langage nature" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://albexia.com/glossaire/ia-generative/" />
+  <link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/ia-generative/" />
+  <link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/ia-generative/" />
+  <meta property="og:title" content="IA générative — Glossaire IA Albexia" />
+  <meta property="og:description" content="Branche de l'intelligence artificielle capable de créer du nouveau contenu — texte, images, musique, vidéo, code — à partir d'une requête en langage nature" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://albexia.com/glossaire/ia-generative/" />
+  <meta property="og:locale" content="fr_FR" />
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"DefinedTerm","name":"IA générative","description":"Branche de l'intelligence artificielle capable de créer du nouveau contenu — texte, images, musique, vidéo, code — à partir d'une requête en langage naturel.","inDefinedTermSet":{"@type":"DefinedTermSet","name":"Glossaire IA Albexia","url":"https://albexia.com/glossaire/"},"url":"https://albexia.com/glossaire/ia-generative/"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"L'IA générative est-elle capable de créer des œuvres réellement originales ?","acceptedAnswer":{"@type":"Answer","text":"L'IA ne crée rien à partir de rien ; elle combine et réorganise des motifs appris durant son entraînement. Bien que le résultat final puisse sembler inédit, il s'agit d'une imitation sophistiquée plutôt que d'une véritable inspiration artistique ou intellectuelle."}},{"@type":"Question","name":"Qui possède les droits d'auteur sur un contenu généré par IA ?","acceptedAnswer":{"@type":"Answer","text":"Dans la plupart des pays, le droit d'auteur protège uniquement les créations issues d'une originalité humaine. Un contenu généré entièrement par une machine tombe généralement dans le domaine public, bien que l'utilisation de requêtes complexes puisse parfois ouvrir un débat juridique."}}]}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/niche.css" />
+  <style>
+    .glossaire-niveau-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:3px 10px; border-radius:var(--radius); border:1px solid; margin-bottom:16px;}
+    .glossaire-erreur-box{background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; font-size:14px; line-height:1.7; color:var(--text);}
+    .glossaire-erreur-box strong{color:var(--accent);}
+  </style>
+  <link rel="stylesheet" href="/css/themes.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Accueil</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Outils</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
+  </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  <div class="nav-profile-slot">
+    <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+    </a>
+    <a href="/profil.html" id="nav-login-btn" class="nav-link" style="display:none">Connexion</a>
+  </div>
+  <a href="/soumettre/" class="nav-cta">Soumettre un outil +</a>
+</nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
+<script type="module" src="/js/auth-nav.js"></script>
+<script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
+
+<section class="niche-hero">
+  <div class="niche-hero-glow"></div>
+  <span class="glossaire-niveau-badge" style="color:#34D399;border-color:#34D39966;background:#34D3991a">🌱 Débutant</span>
+  <h1>IA générative</h1>
+  <p style="font-size:17px">Branche de l'intelligence artificielle capable de créer du nouveau contenu — texte, images, musique, vidéo, code — à partir d'une requête en langage naturel.</p>
+</section>
+
+<div class="niche-section">
+  <div class="niche-section-title">🎯 Pourquoi c'est important</div>
+  <div class="niche-conseils">Cette technologie transforme notre façon de travailler et de concevoir des projets en agissant comme un collaborateur disponible à tout moment. Elle permet à chacun de surmonter le syndrome de la page blanche et de concrétiser une idée, que ce soit pour rédiger un texte ou concevoir un visuel, sans compétences techniques préalables.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">💡 Exemple concret</div>
+  <div class="niche-conseils" style="font-style:italic">Jasper génère des articles, Midjourney crée des images, Suno compose de la musique — tous sont de l'IA générative.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">⚙️ En pratique</div>
+  <div class="niche-conseils">Sous le capot, ces systèmes s'appuient sur des réseaux de neurones profonds entraînés sur d'immenses bases de données pour repérer des structures et des motifs. Lorsqu'on lui soumet une requête (un 'prompt'), l'IA ne réfléchit pas, mais calcule statistiquement la suite de mots ou de pixels la plus probable. Pour l'utiliser efficacement, il convient de lui fournir un contexte précis, un rôle clair et des exemples du résultat attendu.</div>
+</div>
+<div class="niche-section">
+  <div class="glossaire-erreur-box"><strong>Erreur fréquente :</strong> Une erreur courante est de croire que l'IA générative comprend réellement ce qu'elle produit ou qu'elle dit toujours la vérité. En réalité, elle cherche la cohérence statistique, ce qui peut l'amener à inventer des faits avec une assurance trompeuse : c'est ce qu'on appelle les hallucinations.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">❓ Questions fréquentes</div>
+  <div class="niche-faq">
+    <div class="niche-faq-item" id="gfaq-0">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(0)">
+        <span>L'IA générative est-elle capable de créer des œuvres réellement originales ?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">L'IA ne crée rien à partir de rien ; elle combine et réorganise des motifs appris durant son entraînement. Bien que le résultat final puisse sembler inédit, il s'agit d'une imitation sophistiquée plutôt que d'une véritable inspiration artistique ou intellectuelle.</div>
+    </div><div class="niche-faq-item" id="gfaq-1">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(1)">
+        <span>Qui possède les droits d'auteur sur un contenu généré par IA ?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">Dans la plupart des pays, le droit d'auteur protège uniquement les créations issues d'une originalité humaine. Un contenu généré entièrement par une machine tombe généralement dans le domaine public, bien que l'utilisation de requêtes complexes puisse parfois ouvrir un débat juridique.</div>
+    </div>
+  </div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">🛠️ Outils IA pour pratiquer</div>
+  <div class="niche-tools-grid">
+    <a href="/tools/featured/fr/chatgpt/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com" alt="ChatGPT" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">ChatGPT</span>
+    
+  </div>
+  <span class="ntc-cat">Contenu</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/fr/midjourney/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=midjourney.com" alt="Midjourney" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Midjourney</span>
+    
+  </div>
+  <span class="ntc-cat">Images et design</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/en/midday/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=midjourney.com" alt="Midday" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Midday</span>
+    
+  </div>
+  <span class="ntc-cat">Images & design</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/runway/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=runwayml.com" alt="Runway" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Runway</span>
+    
+  </div>
+  <span class="ntc-cat">Vidéo et animation</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/fr/gamma/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=gamma.app" alt="Gamma" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">📊</span>
+    <span class="ntc-name">Gamma</span>
+    
+  </div>
+  <span class="ntc-cat">Présentation</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/fr/gemini-ai/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=gemini.google.com" alt="Gemini ai" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Gemini ai</span>
+    
+  </div>
+  <span class="ntc-cat">Productivité, études et traduction</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/featured/fr/kimi/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=kimi.moonshot.cn" alt="Kimi" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Kimi</span>
+    
+  </div>
+  <span class="ntc-cat">Assistants IA et recherche</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/deepseek/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=chat.deepseek.com" alt="DeepSeek" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">DeepSeek</span>
+    
+  </div>
+  <span class="ntc-cat">Texte</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/grok/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=grok.com" alt="Grok" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🤖</span>
+    <span class="ntc-name">Grok</span>
+    
+  </div>
+  <span class="ntc-cat">Assistants IA et recherche</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/freepik-ai/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=www.freepik.com" alt="Freepik AI" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🖼️</span>
+    <span class="ntc-name">Freepik AI</span>
+    
+  </div>
+  <span class="ntc-cat">Contenu</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/adobe-firefly/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=firefly.adobe.com" alt="Adobe Firefly" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🎨</span>
+    <span class="ntc-name">Adobe Firefly</span>
+    
+  </div>
+  <span class="ntc-cat">Contenu</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/google-veo/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=deepmind.google" alt="Google Veo" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🎥</span>
+    <span class="ntc-name">Google Veo</span>
+    
+  </div>
+  <span class="ntc-cat">Vidéo et animation</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/pika/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=pika.art" alt="Pika" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🎬</span>
+    <span class="ntc-name">Pika</span>
+    
+  </div>
+  <span class="ntc-cat">Vidéo et animation</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/quillbot/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=quillbot.com" alt="QuillBot" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">✏️</span>
+    <span class="ntc-name">QuillBot</span>
+    
+  </div>
+  <span class="ntc-cat">Texte</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+    <a href="/tools/standard/fr/udio/" class="niche-tool-card">
+  <div class="ntc-top">
+    <img src="https://www.google.com/s2/favicons?sz=64&domain=www.udio.com" alt="Udio" class="ntc-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="ntc-logo-fallback" style="display:none">🎵</span>
+    <span class="ntc-name">Udio</span>
+    
+  </div>
+  <span class="ntc-cat">Audio & Musique</span>
+  <span class="ntc-cta">Voir la fiche →</span>
+</a>
+  </div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">🔗 Termes connexes</div>
+  <div class="niche-related">
+    <a href="/glossaire/agent-ia/" class="niche-related-link">Agent IA</a><a href="/glossaire/api/" class="niche-related-link">API</a><a href="/glossaire/apprentissage-automatique/" class="niche-related-link">Apprentissage automatique</a><a href="/glossaire/apprentissage-profond/" class="niche-related-link">Apprentissage profond</a>
+  </div>
+</div>
+
+<a href="/glossaire/" class="niche-back">← Retour au glossaire complet</a>
+
+<link rel="stylesheet" href="/css/footer.css">
+<footer id="site-footer">
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Mentions légales</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Confidentialité</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script src="/js/footer.js" defer></script>
+<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>
+
+</body>
+</html>

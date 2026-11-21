@@ -155,6 +155,11 @@ Langue : français.
 - [Apprentissage automatique](https://albexia.com/glossaire/apprentissage-automatique/): Sous-domaine de l'IA où les systèmes apprennent à partir de données sans être explicitement programmés. Plus le modèle voit de données, plus il devient précis.
 - [Apprentissage profond](https://albexia.com/glossaire/apprentissage-profond/): Technique d'apprentissage automatique utilisant des réseaux de neurones artificiels à plusieurs couches pour analyser des données complexes comme les images, le son ou le texte.
 - [Chatbot](https://albexia.com/glossaire/chatbot/): Programme informatique simulant une conversation humaine. Les chatbots modernes utilisent l'IA pour comprendre le langage naturel et répondre de manière contextuelle.
+- [Fine-tuning](https://albexia.com/glossaire/fine-tuning/): Processus d'entraînement supplémentaire d'un modèle IA pré-existant sur des données spécifiques pour le spécialiser dans un domaine précis.
 - [GPT](https://albexia.com/glossaire/gpt/): Generative Pre-trained Transformer. Architecture de modèle de langage développée par OpenAI, entraînée sur d'immenses quantités de texte pour générer du langage naturel.
 - [Hallucination](https://albexia.com/glossaire/hallucination/): Phénomène où un modèle IA génère des informations fausses, inventées ou incorrectes avec une apparente confiance. Un des défis majeurs des LLMs actuels.
+- [IA générative](https://albexia.com/glossaire/ia-generative/): Branche de l'intelligence artificielle capable de créer du nouveau contenu — texte, images, musique, vidéo, code — à partir d'une requête en langage naturel.
+- [Prompt engineering](https://albexia.com/glossaire/prompt-engineering/)
+- [RAG](https://albexia.com/glossaire/rag-retrieval/): Retrieval-Augmented Generation. Technique couplant un LLM à une base de connaissances externe pour produire des réponses plus précises et factuelles.
+- [Text-to-speech](https://albexia.com/glossaire/text-to-speech/): Technologie convertissant du texte écrit en parole synthétisée par IA. Les voix modernes sont quasi indiscernables de voix humaines réelles.
 

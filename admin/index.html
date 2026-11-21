@@ -211,6 +211,21 @@
     .faq-editor-row .faq-row-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
     .faq-selected-tools{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.faq-tool-chip{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--border-hover);border-radius:6px;background:var(--bg2)}
     .faq-tool-chip button{border:0;background:none;color:var(--accent2);cursor:pointer;font-size:16px}
+
+    .faq-rich-editor{margin:8px 0 16px;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface)}
+    .faq-rich-toolbar{display:flex;flex-wrap:wrap;gap:5px;padding:9px;border-bottom:1px solid var(--border);background:var(--bg2)}
+    .faq-rich-tool{min-height:32px;padding:5px 9px;border:1px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);font:600 12px/1.2 inherit;cursor:pointer}
+    .faq-rich-tool:hover,.faq-rich-tool:focus-visible{border-color:var(--accent2);color:var(--accent2);outline:none}
+    .faq-rich-canvas{min-height:230px;padding:18px 20px;background:var(--surface);color:var(--text);font:400 14px/1.8 inherit;outline:none;overflow-wrap:anywhere}
+    .faq-rich-canvas:focus{box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--accent2) 25%,transparent)}
+    .faq-rich-canvas p{margin:0 0 1.15em}.faq-rich-canvas p:last-child{margin-bottom:0}
+    .faq-rich-canvas h2,.faq-rich-canvas h3,.faq-rich-canvas h4{margin:1.35em 0 .55em;line-height:1.3}
+    .faq-rich-canvas ul,.faq-rich-canvas ol{padding-left:1.6em;margin:.6em 0 1.15em}
+    .faq-rich-canvas blockquote{margin:1em 0;padding:12px 16px;border-left:3px solid var(--accent2);background:var(--bg2)}
+    .faq-rich-canvas pre{padding:13px;overflow:auto;background:var(--bg2);border:1px solid var(--border);border-radius:5px;font:12px/1.6 monospace}
+    .faq-rich-canvas hr{border:0;border-top:1px solid var(--border);margin:1.6em 0}
+    .faq-rich-hint{padding:7px 12px;border-top:1px solid var(--border);color:var(--text-muted);font-size:11px;background:var(--bg2)}
+    @media(max-width:600px){.faq-rich-canvas{min-height:190px;padding:14px}.faq-rich-toolbar{gap:4px}.faq-rich-tool{padding:6px 8px}}
   </style>
 </head>
 <body>
@@ -5896,18 +5911,82 @@ Support français|oui|non|bool"></textarea>
     box.querySelectorAll('.faq-category-admin-row').forEach(row=>{row.querySelectorAll('[data-cat]').forEach(el=>el.addEventListener('input',()=>{const i=+row.dataset.catIndex;faqCategoryRows[i][el.dataset.cat]=el.value;}));row.querySelector('[data-cat-remove]').addEventListener('click',()=>{if(!confirm('Supprimer cette catégorie ? Les FAQ qui y sont associées ne seront pas supprimées.'))return;faqCategoryRows.splice(+row.dataset.catIndex,1);faqRenderCategories();});});
   }
   document.getElementById('faq-category-add')?.addEventListener('click',()=>{faqCategoryRows.push({name:'',slug:'',description:'',name_en:'',name_es:''});faqRenderCategories();});
-  // Éditeur riche léger : commandes natives, HTML stocké dans le champ content existant.
+  // Éditeur FAQ enrichi, inspiré de l'éditeur d'articles de profil.html.
+  // Le textarea historique reste la source de sauvegarde Firestore pour préserver le schéma.
+  function faqSanitizeHtml(html) {
+    const allowed = new Set(['P','BR','H2','H3','H4','STRONG','B','EM','I','S','UL','OL','LI','A','BLOCKQUOTE','PRE','CODE','HR','DIV']);
+    const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+    const walk = node => [...node.childNodes].forEach(child => {
+      if (child.nodeType === Node.COMMENT_NODE) { child.remove(); return; }
+      if (child.nodeType !== Node.ELEMENT_NODE) return;
+      if (!allowed.has(child.tagName)) { child.replaceWith(...child.childNodes); return; }
+      [...child.attributes].forEach(attr => {
+        const safeHref = child.tagName === 'A' && attr.name === 'href' && /^(https?:|mailto:)/i.test(attr.value);
+        if (!safeHref && !(child.tagName === 'A' && attr.name === 'target' && attr.value === '_blank') && !(child.tagName === 'A' && attr.name === 'rel')) child.removeAttribute(attr.name);
+      });
+      if (child.tagName === 'A') { child.setAttribute('rel','noopener noreferrer'); child.setAttribute('target','_blank'); }
+      walk(child);
+    });
+    walk(doc.body);
+    return doc.body.innerHTML.trim();
+  }
   function faqRichEditor(textarea) {
-    if(!textarea || textarea.dataset.richReady)return; textarea.dataset.richReady='1';
-    const wrap=document.createElement('div');wrap.className='faq-rich-editor';wrap.style.cssText='border:1px solid var(--border);border-radius:6px;padding:8px;margin:6px 0 14px';
-    const toolbar=document.createElement('div');toolbar.style.cssText='display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px';
-    const area=document.createElement('div');area.contentEditable='true';area.setAttribute('role','textbox');area.setAttribute('aria-multiline','true');area.style.cssText='min-height:140px;padding:10px;border:1px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);outline-offset:2px';area.innerHTML=textarea.value;
-    [['Gras','bold'],['Italique','italic'],['Titre','formatBlock:H2'],['Sous-titre','formatBlock:H3'],['Liste','insertUnorderedList'],['Numéros','insertOrderedList'],['Lien','createLink']].forEach(([label,cmd])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.className='btn-submit';b.style.cssText='padding:5px 9px';b.addEventListener('click',()=>{area.focus();if(cmd==='createLink'){const url=prompt('Adresse du lien (https://…)');if(url&&/^https?:\/\//i.test(url))document.execCommand('createLink',false,url);}else if(cmd.startsWith('formatBlock:'))document.execCommand('formatBlock',false,cmd.split(':')[1]);else document.execCommand(cmd,false,null);textarea.value=area.innerHTML;});toolbar.appendChild(b);});
-    area.addEventListener('input',()=>textarea.value=area.innerHTML);textarea.hidden=true;textarea.insertAdjacentElement('afterend',wrap);wrap.append(toolbar,area);
+    if (!textarea || textarea.dataset.richReady) return;
+    textarea.dataset.richReady = '1';
+    const wrap = document.createElement('div'); wrap.className = 'faq-rich-editor';
+    const toolbar = document.createElement('div'); toolbar.className = 'faq-rich-toolbar'; toolbar.setAttribute('role','toolbar'); toolbar.setAttribute('aria-label','Mise en forme du contenu FAQ');
+    const area = document.createElement('div'); area.className = 'faq-rich-canvas'; area.contentEditable = 'true'; area.setAttribute('role','textbox'); area.setAttribute('aria-multiline','true'); area.setAttribute('aria-label','Contenu de la section FAQ');
+    area.innerHTML = faqSanitizeHtml(textarea.value || '<p></p>');
+    const controls = [
+      ['Gras','bold','B'],['Italique','italic','I'],['Barré','strikeThrough','S'],['Paragraphe','formatBlock:P','¶'],['Titre 2','formatBlock:H2','H2'],['Titre 3','formatBlock:H3','H3'],['Titre 4','formatBlock:H4','H4'],
+      ['Liste à puces','insertUnorderedList','• Liste'],['Liste numérotée','insertOrderedList','1. Liste'],['Citation','formatBlock:BLOCKQUOTE','Citation'],['Bloc de code','formatBlock:PRE','Code'],['Séparateur','insertHorizontalRule','—'],['Lien','createLink','Lien'],['Annuler','undo','↶'],['Rétablir','redo','↷']
+    ];
+    const sync = () => { textarea.value = faqSanitizeHtml(area.innerHTML); };
+    controls.forEach(([label,cmd,caption]) => {
+      const b = document.createElement('button'); b.type='button'; b.className='faq-rich-tool'; b.textContent=caption; b.title=label; b.setAttribute('aria-label',label);
+      b.addEventListener('mousedown', e => e.preventDefault());
+      b.addEventListener('click', () => {
+        area.focus();
+        if (cmd === 'createLink') {
+          const url = prompt('Adresse du lien (https://…)');
+          if (url && /^(https?:\/\/|mailto:)/i.test(url)) document.execCommand('createLink',false,url);
+        } else if (cmd.startsWith('formatBlock:')) document.execCommand('formatBlock',false,cmd.split(':')[1]);
+        else document.execCommand(cmd,false,null);
+        sync();
+      });
+      toolbar.appendChild(b);
+    });
+    const hint = document.createElement('div'); hint.className='faq-rich-hint'; hint.textContent='Entrée : nouveau paragraphe avec espacement · Maj + Entrée : retour à la ligne';
+    area.addEventListener('focus', () => document.execCommand('defaultParagraphSeparator',false,'p'));
+    area.addEventListener('input',sync);
+    area.addEventListener('blur',sync);
+    area.addEventListener('paste', event => {
+      event.preventDefault();
+      const html = event.clipboardData?.getData('text/html');
+      const plain = event.clipboardData?.getData('text/plain') || '';
+      if (html) {
+        const clean = faqSanitizeHtml(html);
+        document.execCommand('insertHTML',false,clean);
+      } else {
+        const paragraphs = plain.split(/\r?\n/).map(line => `<p>${faqEscapeHtml(line)}</p>`).join('');
+        document.execCommand('insertHTML',false,paragraphs || '<p></p>');
+      }
+      sync();
+    });
+    textarea.hidden = true;
+    textarea.insertAdjacentElement('afterend',wrap);
+    wrap.append(toolbar,area,hint);
+    wrap._faqSync = sync;
+  }
+  function faqEscapeHtml(value) { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function faqSyncRichEditors() { document.querySelectorAll('.faq-rich-editor').forEach(editor => editor._faqSync && editor._faqSync()); }
+  function faqEnableRichEditors() {
+    document.querySelectorAll('#faq-sections-editor [data-faq-row-content],#faq-sections-editor-en [data-faq-row-content],#faq-sections-editor-es [data-faq-row-content]').forEach(faqRichEditor);
   }
   function faqEnableRichEditors(){document.querySelectorAll('#faq-sections-editor [data-faq-row-content],#faq-sections-editor-en [data-faq-row-content],#faq-sections-editor-es [data-faq-row-content]').forEach(faqRichEditor);}
   const faqRowsObserver=new MutationObserver(faqEnableRichEditors);['faq-sections-editor','faq-sections-editor-en','faq-sections-editor-es'].forEach(id=>{const el=document.getElementById(id);if(el)faqRowsObserver.observe(el,{childList:true,subtree:true});});
   document.getElementById('faq-preview-btn')?.addEventListener('click',()=>{
+    faqSyncRichEditors();
     const title=faqVal('faq-title').trim()||'Aperçu FAQ';const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const sections=faqReadRows('faq-sections-editor').map((r,i)=>`<section><h2>${esc(r.title)}</h2><div>${r.content}</div></section>`).join('');
     const html=`<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${esc(title)} — Aperçu</title><style>body{font:16px/1.7 system-ui;max-width:850px;margin:40px auto;padding:0 20px;color:#252525}h1,h2{line-height:1.25}section{margin:32px 0;padding-bottom:20px;border-bottom:1px solid #ddd}.intro{color:#555}.box{padding:18px;background:#f4f1ea;border-radius:6px;margin:20px 0}</style><body><small>APERÇU NON PUBLIÉ · ALBEXIA</small><h1>${esc(title)}</h1><p class="intro">${esc(faqVal('faq-intro'))}</p>${faqVal('faq-short')?`<div class="box">${faqVal('faq-short')}</div>`:''}${sections}${faqVal('faq-takeaway')?`<aside class="box">${faqVal('faq-takeaway')}</aside>`:''}</body></html>`;
@@ -6034,7 +6113,7 @@ Support français|oui|non|bool"></textarea>
       el.querySelector('[data-faq-remove]').addEventListener('click',()=>el.remove());box.appendChild(el);
     });
   }
-  function faqReadRows(containerId,kind='sections') {return [...document.querySelectorAll(`#${containerId} .faq-editor-row`)].map(el=>kind==='sections'?{title:el.querySelector('[data-faq-row-title]').value.trim(),content:el.querySelector('[data-faq-row-content]').value.trim()}:{title:el.querySelector('[data-faq-row-title]').value.trim(),slug:el.querySelector('[data-faq-row-slug]').value.trim()}).filter(x=>x.title&&(kind==='sections'?x.content:x.slug));}
+  function faqReadRows(containerId,kind='sections') {faqSyncRichEditors();return [...document.querySelectorAll(`#${containerId} .faq-editor-row`)].map(el=>kind==='sections'?{title:el.querySelector('[data-faq-row-title]').value.trim(),content:el.querySelector('[data-faq-row-content]').value.trim()}:{title:el.querySelector('[data-faq-row-title]').value.trim(),slug:el.querySelector('[data-faq-row-slug]').value.trim()}).filter(x=>x.title&&(kind==='sections'?x.content:x.slug));}
   function faqReset() {
     faqEditingId=null;document.getElementById('form-faq').reset();document.getElementById('faq-existing').value='';document.getElementById('faq-delete-btn').style.display='none';
     faqSelectedToolIds=[];faqRenderTools();['fr','en','es'].forEach(l=>{faqRenderRows(`faq-sections-editor${l==='fr'?'':'-'+l}`,[],'sections');faqRenderRows(`faq-more-editor${l==='fr'?'':'-'+l}`,[],'more');});

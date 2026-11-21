@@ -769,6 +769,11 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/chatbot/"/>
   </url>
   <url>
+    <loc>https://albexia.com/glossaire/fine-tuning/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/fine-tuning/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/fine-tuning/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/glossaire/gpt/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/gpt/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/gpt/en/"/>
@@ -809,6 +814,26 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/hallucination/en/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/hallucination/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/hallucination/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/ia-generative/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/ia-generative/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/ia-generative/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/prompt-engineering/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/prompt-engineering/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/prompt-engineering/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/rag-retrieval/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/rag-retrieval/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/rag-retrieval/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/glossaire/text-to-speech/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/text-to-speech/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/text-to-speech/"/>
   </url>
   <url>
     <loc>https://albexia.com/hub.html</loc>
@@ -2177,6 +2202,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/xcrawl/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/tutoriels/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/yoast-ai/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/yoast-ai/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/yoast-ai/"/>
@@ -2807,6 +2839,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/xcrawl/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/es/xcrawl/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/tutoriels/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/es/yoast-ai/</loc>
@@ -3484,6 +3523,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/xcrawl/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/xcrawl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/xcrawl/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/xcrawl/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/xcrawl/tutoriels/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/yoast-ai/</loc>

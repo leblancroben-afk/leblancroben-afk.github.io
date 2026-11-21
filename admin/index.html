@@ -5888,82 +5888,110 @@ Support français|oui|non|bool"></textarea>
   // ── Administration FAQ ────────────────────────────────────────────────
   let faqEditingId = null;
   let faqAdminCache = [];
-  let faqToolCache = [];
-  let faqToolsLoaded = false;
+  let faqToolCache = null;
   let faqSelectedToolIds = [];
+
+  // Même source et même logique de recherche que la section Outils,
+  // avec conservation de l'identifiant Firestore pour l'association à la FAQ.
   async function faqLoadTools() {
-    if (faqToolsLoaded) return faqToolCache;
+    if (faqToolCache) return faqToolCache;
     const snap = await getDocs(collection(db, 'outils'));
     faqToolCache = snap.docs.map(d => {
-      const data = d.data();
-      return { ...data, id: data.id || d.id, _docId: d.id, name: data.name || data.nom || '' };
-    }).filter(t => t.name && t.status !== 'a_enrichir');
-    faqToolsLoaded = true;
+      const data = d.data() || {};
+      return { ...data, id: String(data.id || d.id), _docId: d.id,
+        name: data.name || data.nom || data.titre || '' };
+    }).filter(t => t.name);
     return faqToolCache;
   }
+
   const faqVal = id => document.getElementById(id)?.value || '';
   const faqSet = (id, value) => { const el=document.getElementById(id); if(el) el.value=value ?? ''; };
   const faqEsc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function faqMessage(type, message) { showMsg('warn-faq','ok-faq',type,message); }
-  function faqRenderTools() {
-    const box=document.getElementById('faq-tools-selected');
-    box.innerHTML=faqSelectedToolIds.map(id=>{const t=faqToolCache.find(x=>String(x.id)===String(id));return t?`<span class="faq-tool-chip">${faqEsc(t.emoji||'🤖')} ${faqEsc(t.name)} <button type="button" data-remove-tool="${faqEsc(id)}" aria-label="Retirer">×</button></span>`:''}).join('');
-    box.querySelectorAll('[data-remove-tool]').forEach(b=>b.addEventListener('click',()=>{faqSelectedToolIds=faqSelectedToolIds.filter(x=>String(x)!==String(b.dataset.removeTool));faqRenderTools();}));
-  }
-  function faqRenderToolSearch() {
-    const input = document.getElementById('faq-tool-search');
-    const results = document.getElementById('faq-tool-search-results');
-    let faqSearchDebounce = null;
-    let searchRun = 0;
 
-    input.addEventListener('input', () => {
-      clearTimeout(faqSearchDebounce);
-      const q = input.value.trim();
-      if (!q) { results.classList.remove('open'); results.innerHTML = ''; return; }
-      faqSearchDebounce = setTimeout(async () => {
+  function faqRenderTools() {
+    const box = document.getElementById('faq-tools-selected');
+    if (!box) return;
+    box.innerHTML = faqSelectedToolIds.map(id => {
+      const tool = (faqToolCache || []).find(t => String(t.id) === String(id));
+      if (!tool) return '';
+      return `<span class="faq-tool-chip">${faqEsc(tool.emoji || '🤖')} ${faqEsc(tool.name)} <button type="button" data-remove-tool="${faqEsc(id)}" aria-label="Retirer">×</button></span>`;
+    }).join('');
+    box.querySelectorAll('[data-remove-tool]').forEach(button => {
+      button.addEventListener('click', () => {
+        faqSelectedToolIds = faqSelectedToolIds.filter(id => String(id) !== String(button.dataset.removeTool));
+        faqRenderTools();
+      });
+    });
+  }
+
+  function faqRenderToolSearch() {
+    const searchInput = document.getElementById('faq-tool-search');
+    const searchResults = document.getElementById('faq-tool-search-results');
+    let searchDebounce = null;
+    let searchRun = 0;
+    if (!searchInput || !searchResults) return;
+
+    // Reprise du comportement de #o-search : saisie, délai 200 ms,
+    // recherche par nom, 8 suggestions maximum. Le clic associe à la FAQ.
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchDebounce);
+      const q = searchInput.value.trim();
+      if (!q) {
+        searchResults.classList.remove('open');
+        searchResults.innerHTML = '';
+        return;
+      }
+      searchDebounce = setTimeout(async () => {
         const run = ++searchRun;
-        results.innerHTML = '<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Recherche…</div>';
-        results.classList.add('open');
+        searchResults.innerHTML = '<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Recherche…</div>';
+        searchResults.classList.add('open');
         try {
           const tools = await faqLoadTools();
           if (run !== searchRun) return;
           const qNorm = q.toLocaleLowerCase('fr');
-          const selected = faqSelectedToolIds.map(String);
+          const selectedIds = faqSelectedToolIds.map(String);
           const matches = tools
-            .filter(t => !t.langue || String(t.langue).toLowerCase() === 'fr')
-            .filter(t => String(t.name || '').toLocaleLowerCase('fr').includes(qNorm))
-            .filter(t => !selected.includes(String(t.id)))
+            .filter(tool => !tool.langue || String(tool.langue).toLowerCase() === 'fr')
+            .filter(tool => String(tool.name || '').toLocaleLowerCase('fr').includes(qNorm))
+            .filter(tool => !selectedIds.includes(String(tool.id)))
             .slice(0, 8);
+
           if (!matches.length) {
-            results.innerHTML = '<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Aucun outil trouvé.</div>';
+            searchResults.innerHTML = '<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Aucun outil trouvé.</div>';
             return;
           }
-          results.innerHTML = matches.map(t => `
-            <div class="search-result-item" data-faq-tool-id="${faqEsc(t.id)}">
-              <span class="search-result-name">${faqEsc(t.emoji || '🤖')} ${faqEsc(t.name)}</span>
-              <span class="search-result-meta">${faqEsc(t.plan || 'standard')} · ID ${faqEsc(t.id)}</span>
+          searchResults.innerHTML = matches.map(tool => `
+            <div class="search-result-item" data-faq-tool-id="${faqEsc(tool.id)}">
+              <span class="search-result-name">${faqEsc(tool.emoji || '🤖')} ${faqEsc(tool.name)}</span>
+              <span class="search-result-meta">${faqEsc(tool.plan || 'standard')} · ID ${faqEsc(tool.id)}</span>
             </div>
           `).join('');
-          results.querySelectorAll('[data-faq-tool-id]').forEach(el => {
-            el.addEventListener('click', () => {
-              const id = el.dataset.faqToolId;
-              if (!faqSelectedToolIds.map(String).includes(String(id))) faqSelectedToolIds.push(id);
-              input.value = '';
-              results.classList.remove('open');
-              results.innerHTML = '';
+          searchResults.querySelectorAll('.search-result-item[data-faq-tool-id]').forEach(item => {
+            item.addEventListener('click', () => {
+              const selectedTool = tools.find(tool => String(tool.id) === String(item.dataset.faqToolId));
+              if (!selectedTool) return;
+              if (!faqSelectedToolIds.map(String).includes(String(selectedTool.id))) {
+                faqSelectedToolIds.push(String(selectedTool.id));
+              }
+              searchInput.value = '';
+              searchResults.classList.remove('open');
+              searchResults.innerHTML = '';
               faqRenderTools();
-              input.focus();
+              searchInput.focus();
             });
           });
-        } catch (err) {
+        } catch (error) {
           if (run !== searchRun) return;
-          results.innerHTML = `<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Erreur de recherche : ${faqEsc(err.message)}</div>`;
+          searchResults.innerHTML = `<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Erreur de recherche : ${faqEsc(error.message)}</div>`;
         }
       }, 200);
     });
 
-    document.addEventListener('click', e => {
-      if (!input.contains(e.target) && !results.contains(e.target)) results.classList.remove('open');
+    document.addEventListener('click', event => {
+      if (!searchInput.contains(event.target) && !searchResults.contains(event.target)) {
+        searchResults.classList.remove('open');
+      }
     });
   }
   function faqRenderRows(containerId, rows, kind='sections') {

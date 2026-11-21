@@ -1567,8 +1567,8 @@
       "updatedAtMs": 1790479488819
     },
     "fine-tuning": {
-      "hash": "212521c5749392f3b95e215eb069417aa05bcb72b8cbb85b415d99d9c03185b7",
-      "updatedAtMs": 1795235371141
+      "hash": "f35a4796c477cbd1af69300c64e4be4183cb72b56226a1dd852c4f5aa6c79c59",
+      "updatedAtMs": 1795235732931
     },
     "gpt": {
       "hash": "d60545da59a93fcf5c21ca28e911bcdf3d1cac7aaf9806550d64333cfed33b11",
@@ -1579,8 +1579,8 @@
       "updatedAtMs": 1793241113413
     },
     "ia-generative": {
-      "hash": "76131550b05a65bc0170cd0366965e7e580a8cd1ad845bfaf85fc1d76e164277",
-      "updatedAtMs": 1795235306037
+      "hash": "42f62c52d00ad6991c951e94a859a5e546706f0dcba675be332b0c5264e62f2e",
+      "updatedAtMs": 1795235753198
     },
     "inference": {
       "hash": "cf60048e26a9d7cf9cd09e7bb885f522f0588f71556afd6fe895482cda6a8e14",
@@ -1627,8 +1627,8 @@
       "updatedAtMs": 1790559793550
     },
     "prompt-engineering": {
-      "hash": "8bea52e12e06673fabb32b03d9cbba8080b0f51ed9ede480fb1fa702e079f669",
-      "updatedAtMs": 1795235527592
+      "hash": "a96104c5b031cacc049820a33430218d36802360ded1154dc089edd0b13023eb",
+      "updatedAtMs": 1795235771457
     },
     "quantization": {
       "hash": "6afc96b1c0772dd9b56d1314de6a173ad99d7d1d6ffe47b81d29f3e0f3fc4a38",
@@ -1639,8 +1639,8 @@
       "updatedAtMs": 1790559846610
     },
     "rag-retrieval": {
-      "hash": "477a41281861c63649b1a7da79eb75c06d80a6712fb040610429e94205514dbd",
-      "updatedAtMs": 1795235252247
+      "hash": "291e688ea1afa29db2fcd25474944b1da566f3c08513243fbd951ebf4657b23c",
+      "updatedAtMs": 1795235788422
     },
     "reseau-de-neurones": {
       "hash": "2777aef16489b413f8bd34d5a07e135c6bfc1f8bd5c3e7f754c2b9c84b5dfd73",
@@ -1667,8 +1667,8 @@
       "updatedAtMs": 1790462763072
     },
     "text-to-speech": {
-      "hash": "26f7a4ef71c0ccbc7d21c3dd432735f30cbc2755594411f81d541d179d278aa9",
-      "updatedAtMs": 1795235476947
+      "hash": "d84ba2469eb8ddd03d0a223f90925954f1f710bd6750c30ea5cc9572174bfa92",
+      "updatedAtMs": 1795235806944
     },
     "text-to-video": {
       "hash": "54c7a48353fe8cb696875179e6e5237a9bce994617521aa850200c35413dae39",

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <script src="/js/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>¿Qué es RAG? Definición IA | Albexia</title>
+  <meta name="description" content="Retrieval-Increased Generation. Técnica que une un LLM a una base de conocimiento externa para producir respuestas más precisas y factuales." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://albexia.com/glossaire/rag-retrieval/es/" />
+  <link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/rag-retrieval/" />
+  <link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/rag-retrieval/en/" />
+  <link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/rag-retrieval/es/" />
+  <link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/rag-retrieval/" />
+  <meta property="og:title" content="RAG — Glosario IA Albexia" />
+  <meta property="og:description" content="Retrieval-Increased Generation. Técnica que une un LLM a una base de conocimiento externa para producir respuestas más precisas y factuales." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://albexia.com/glossaire/rag-retrieval/es/" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:locale:alternate" content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"DefinedTerm","name":"RAG","description":"Retrieval-Increased Generation. Técnica que une un LLM a una base de conocimiento externa para producir respuestas más precisas y factuales.","inDefinedTermSet":{"@type":"DefinedTermSet","name":"Glossaire IA Albexia","url":"https://albexia.com/glossaire/"},"url":"https://albexia.com/glossaire/rag-retrieval/es/"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Cómo aseguramos que la recuperación encuentre los documentos correctos?","acceptedAnswer":{"@type":"Answer","text":"Es necesario tratar el corte de textos originales y utilizar un poderoso modelo de codificación, adaptado al lenguaje de sus documentos."}},{"@type":"Question","name":"¿Qué está reubicando en esta etapa?","acceptedAnswer":{"@type":"Answer","text":"Es un filtro secundario que reevalua la relevancia de los primeros documentos encontrados para asegurar que la información más importante se coloca primero en el impulso."}}]}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/niche.css" />
+  <style>
+    .glossaire-niveau-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:3px 10px; border-radius:var(--radius); border:1px solid; margin-bottom:16px;}
+    .glossaire-erreur-box{background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; font-size:14px; line-height:1.7; color:var(--text);}
+    .glossaire-erreur-box strong{color:var(--accent);}
+  </style>
+  <link rel="stylesheet" href="/css/themes.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Inicio</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Herramientas</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
+  </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  <div class="nav-profile-slot">
+    <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mi perfil">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+    </a>
+    <a href="/profil.html" id="nav-login-btn" class="nav-link" style="display:none">Iniciar sesión</a>
+  </div>
+  <a href="/soumettre/" class="nav-cta">Enviar una herramienta +</a>
+</nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
+<script type="module" src="/js/auth-nav.js"></script>
+<script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
+
+<section class="niche-hero">
+  <div class="niche-hero-glow"></div>
+  <span class="glossaire-niveau-badge" style="color:#60A5FA;border-color:#60A5FA66;background:#60A5FA1a">🌳 Avancé</span>
+  <h1>RAG</h1>
+  <p style="font-size:17px">Retrieval-Increased Generation. Técnica que une un LLM a una base de conocimiento externa para producir respuestas más precisas y factuales.</p>
+</section>
+
+<div class="niche-section">
+  <div class="niche-section-title">🎯 Por qué es importante</div>
+  <div class="niche-conseils">Este paso de recuperación es el motor de búsqueda interna de AI. Sin ella, el modelo sólo adivinaría respuestas de su conocimiento congelado, mientras que con él, accede instantáneamente a la información exacta que necesita.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">💡 Ejemplo concreto</div>
+  <div class="niche-conseils" style="font-style:italic">Un asistente de la empresa AI usando RAG puede responder de documentos internos sin alucinaciones.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">⚙️ En la práctica</div>
+  <div class="niche-conseils">La recuperación se basa en la codificación de la pregunta del usuario como vector. Este vector se compara con la base de conocimientos utilizando mediciones de similitud para extraer los documentos más relevantes. Técnicas avanzadas como "re-ranking" permiten que estos resultados sean reordenados para transmitir sólo los datos más cruciales al modelo.</div>
+</div>
+<div class="niche-section">
+  <div class="glossaire-erreur-box"><strong>Error frecuente:</strong> Búsqueda semántica profunda con una simple búsqueda de palabras clave, que no entiende el significado de las oraciones.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">❓ Preguntas frecuentes</div>
+  <div class="niche-faq">
+    <div class="niche-faq-item" id="gfaq-0">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(0)">
+        <span>¿Cómo aseguramos que la recuperación encuentre los documentos correctos?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">Es necesario tratar el corte de textos originales y utilizar un poderoso modelo de codificación, adaptado al lenguaje de sus documentos.</div>
+    </div><div class="niche-faq-item" id="gfaq-1">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(1)">
+        <span>¿Qué está reubicando en esta etapa?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">Es un filtro secundario que reevalua la relevancia de los primeros documentos encontrados para asegurar que la información más importante se coloca primero en el impulso.</div>
+    </div>
+  </div>
+</div>
+
+<div class="niche-section">
+  <div class="niche-section-title">🔗 Términos relacionados</div>
+  <div class="niche-related">
+    <a href="/glossaire/agent-ia/es/" class="niche-related-link">Agente IA</a><a href="/glossaire/api/es/" class="niche-related-link">API</a><a href="/glossaire/apprentissage-automatique/es/" class="niche-related-link">Aprendizaje automático</a><a href="/glossaire/apprentissage-profond/es/" class="niche-related-link">El aprendizaje profundo</a><a href="/glossaire/chatbot/es/" class="niche-related-link">Chatbot</a><a href="/glossaire/hallucination/es/" class="niche-related-link">Alucinación</a>
+  </div>
+</div>
+
+<a href="/glossaire/es/" class="niche-back">← Volver al glosario completo</a>
+
+<link rel="stylesheet" href="/css/footer.css">
+<footer id="site-footer">
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Aviso legal</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Privacidad</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contacto</a>
+  </div>
+</footer>
+<script src="/js/footer.js" defer></script>
+<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>
+
+</body>
+</html>

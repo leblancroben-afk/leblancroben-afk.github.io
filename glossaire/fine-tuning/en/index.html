@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script src="/js/theme.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What is Fine tuning? AI Definition | Albexia</title>
+  <meta name="description" content="Additional training process for a pre-existing AI model on specific data to specialize in a specific area." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://albexia.com/glossaire/fine-tuning/en/" />
+  <link rel="alternate" hreflang="fr" href="https://albexia.com/glossaire/fine-tuning/" />
+  <link rel="alternate" hreflang="en" href="https://albexia.com/glossaire/fine-tuning/en/" />
+  <link rel="alternate" hreflang="es" href="https://albexia.com/glossaire/fine-tuning/es/" />
+  <link rel="alternate" hreflang="x-default" href="https://albexia.com/glossaire/fine-tuning/" />
+  <meta property="og:title" content="Fine tuning — Albexia AI Glossary" />
+  <meta property="og:description" content="Additional training process for a pre-existing AI model on specific data to specialize in a specific area." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://albexia.com/glossaire/fine-tuning/en/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="fr_FR" />
+  <meta property="og:locale:alternate" content="es_ES" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"DefinedTerm","name":"Fine tuning","description":"Additional training process for a pre-existing AI model on specific data to specialize in a specific area.","inDefinedTermSet":{"@type":"DefinedTermSet","name":"Glossaire IA Albexia","url":"https://albexia.com/glossaire/"},"url":"https://albexia.com/glossaire/fine-tuning/en/"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it take a lot of data to do fine tuning?","acceptedAnswer":{"@type":"Answer","text":"A few hundred to a few thousand quality examples may suffice to specialize in a model. The quality and diversity of data is far more important than their gross quantity."}},{"@type":"Question","name":"Does fine-tuning add real-time knowledge to AI?","acceptedAnswer":{"@type":"Answer","text":"No, fine tuning is a time frozen training process. To integrate constantly changing information, it is better to use an RAG architecture."}}]}]}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/niche.css" />
+  <style>
+    .glossaire-niveau-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; padding:3px 10px; border-radius:var(--radius); border:1px solid; margin-bottom:16px;}
+    .glossaire-erreur-box{background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; font-size:14px; line-height:1.7; color:var(--text);}
+    .glossaire-erreur-box strong{color:var(--accent);}
+  </style>
+  <link rel="stylesheet" href="/css/themes.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Home</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
+  </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  <div class="nav-profile-slot">
+    <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+    </a>
+    <a href="/profil.html" id="nav-login-btn" class="nav-link" style="display:none">Log in</a>
+  </div>
+  <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
+</nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
+<script type="module" src="/js/auth-nav.js"></script>
+<script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script>
+
+<section class="niche-hero">
+  <div class="niche-hero-glow"></div>
+  <span class="glossaire-niveau-badge" style="color:#60A5FA;border-color:#60A5FA66;background:#60A5FA1a">🌳 Avancé</span>
+  <h1>Fine tuning</h1>
+  <p style="font-size:17px">Additional training process for a pre-existing AI model on specific data to specialize in a specific area.</p>
+</section>
+
+<div class="niche-section">
+  <div class="niche-section-title">🎯 Why it matters</div>
+  <div class="niche-conseils">This method makes it possible to transform a generalist AI into a highly specialized expert for your business or business. It avoids having to retrain a model from the beginning, which would cost millions of dollars and require enormous resources.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">💡 Concrete example</div>
+  <div class="niche-conseils" style="font-style:italic">A law firm can terminate a LLM on thousands of contracts to create a specialized legal assistant.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">⚙️ In practice</div>
+  <div class="niche-conseils">The fine tuning consists of adjusting the internal weights of an already trained model by submitting it to a high quality, targeted data set. Lightweight techniques such as LoRA are often used to generate only a small fraction of the parameters, reducing memory and computing power requirements. This is the ideal approach to impose a very specific tone, comply with strict safety instructions or master complex technical jargon.</div>
+</div>
+<div class="niche-section">
+  <div class="glossaire-erreur-box"><strong>Common mistake:</strong> Consolidate the fine tuning, which changes the behavior and style of the model, with the RAG, which simply gives it access to external documents to answer a question.</div>
+</div>
+<div class="niche-section">
+  <div class="niche-section-title">❓ Frequently asked questions</div>
+  <div class="niche-faq">
+    <div class="niche-faq-item" id="gfaq-0">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(0)">
+        <span>Does it take a lot of data to do fine tuning?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">A few hundred to a few thousand quality examples may suffice to specialize in a model. The quality and diversity of data is far more important than their gross quantity.</div>
+    </div><div class="niche-faq-item" id="gfaq-1">
+      <button class="niche-faq-question" onclick="toggleGlossaireFAQ(1)">
+        <span>Does fine-tuning add real-time knowledge to AI?</span>
+        <span class="niche-faq-arrow">▼</span>
+      </button>
+      <div class="niche-faq-answer">No, fine tuning is a time frozen training process. To integrate constantly changing information, it is better to use an RAG architecture.</div>
+    </div>
+  </div>
+</div>
+
+
+
+<a href="/glossaire/en/" class="niche-back">← Back to the full glossary</a>
+
+<link rel="stylesheet" href="/css/footer.css">
+<footer id="site-footer">
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Legal notice</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Privacy</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script src="/js/footer.js" defer></script>
+<script>function toggleGlossaireFAQ(i){document.getElementById("gfaq-"+i).classList.toggle("open");}</script>
+
+</body>
+</html>

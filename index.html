@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <script src="/js/theme.js"></script>
 
   <!-- ═══ ESSENTIEL ═══ -->
   <title>Albexia</title>
@@ -21,8 +22,7 @@
   <link rel="canonical" href="https://albexia.com/">
 
   <!-- ═══ FAVICON SVG ═══ -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpolygon points='16,10 24,28 8,28' fill='%23ff6b9d' opacity='0.2'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
-
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1 1 26 32'%3E%3Cpolygon points='2,10 14,32 10,32' fill='%23ff6b9d'/%3E%3Cpolygon points='14,2 18,12 10,12' fill='%23ff6b9d' opacity='0.6'/%3E%3Cpolygon points='26,10 14,32 18,32' fill='%23ff6b9d'/%3E%3C/svg%3E">
   <!-- ═══ OPEN GRAPH (Facebook, WhatsApp, LinkedIn) ═══ -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Albexia">
@@ -34,9 +34,9 @@
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="fr_FR">
 
-  <!-- ═══ TWITTER / X CARDS ═══ -->
+ <!-- ═══ TWITTER / X CARDS ═══ -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@albexia">
+  <meta name="twitter:site" content="@albexia_ai">
   <meta name="twitter:title" content="Albexia — Outils & Galerie IA 2026">
   <meta name="twitter:description" content="Découvrez les meilleures intelligences artificielles du moment.">
   <meta name="twitter:image" content="https://albexia.com/assets/preview.jpg">
@@ -56,7 +56,7 @@
       "url": "https://albexia.com/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://albexia.com/assets/preview.jpg"
+        "url": "https://albexia.com/assets/logo-512.png"
       }
     },
     "potentialAction": {
@@ -89,404 +89,20 @@
       align-items: center;
       text-decoration: none;
     }
-    .nav-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #6c63ff;
-      color: #fff;
-      font-size: .95rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border: 2px solid rgba(108,99,255,0.5);
-      transition: border-color .2s, transform .2s;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-    }
+    
     .nav-avatar-link:hover .nav-avatar {
       border-color: #6c63ff;
       transform: scale(1.08);
     }
   </style>
+  <link rel="stylesheet" href="/css/themes.css">
+  <link rel="icon" type="image/png" sizes="512x512" href="https://albexia.com/assets/logo-512.png">
 </head>
 <body>
 
-  <!-- ─── NAVIGATION ─── -->
-  <nav>
-   
-   <div class="logo">
-      <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
-  <style>
-    /* Animation de construction pour les polygones */
-    .poly-part {
-      animation: buildIn 1.2s ease-out forwards;
-      opacity: 0;
-    }
 
-    /* Animation d'apparition pour le texte */
-    .logo-text {
-      animation: fadeIn 1s ease-out 0.8s forwards; /* Démarre après 0.8s */
-      opacity: 0;
-    }
-
-    @keyframes buildIn {
-      0% {
-        opacity: 0;
-        transform: translateY(10px) scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateX(-5px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    /* Délais spécifiques pour chaque pièce pour un effet "construction" */
-    .part-1 { animation-delay: 0.1s; }
-    .part-2 { animation-delay: 0.3s; }
-    .part-3 { animation-delay: 0.5s; }
-  </style>
-
-  <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
-  
-  <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
-  
-  <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
-
-  <text class="logo-text" x="36" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">
-  Albe<tspan fill="#ff6b9d">x</tspan>ia
-</text>
-      </svg>
-   </div>
-    <div class="nav-links">
-      <button class="nav-link active" data-page="home" data-i18n="nav.home">Accueil</button>
-      <button class="nav-link" data-page="tools" data-i18n="nav.tools">Outils</button>
-      <button class="nav-link" data-page="blog" data-i18n="nav.blog">Blog</button>
-      <button class="nav-link" data-page="gallery" data-i18n="nav.gallery">Galerie</button>
-    </div>
-    <!-- Sélecteur de langue — caché jusqu'à l'ajout de contenu EN/ES -->
-    <div class="lang-selector" id="lang-selector" style="display:flex">
-      <button class="lang-btn active" data-lang="fr" onclick="changerLangue('fr')">FR</button>
-      <button class="lang-btn" data-lang="en" onclick="changerLangue('en')">EN</button>
-      <button class="lang-btn" data-lang="es" onclick="changerLangue('es')">ES</button>
-    </div>
-    <div class="nav-profile-slot">
-  <!-- Avatar connecté — caché par défaut -->
-  <a href="profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="Mon profil">
-    <div class="nav-avatar" id="nav-avatar">?</div>
-  </a>
-  <!-- Bouton connexion — visible par défaut -->
-  <a href="profil.html" id="nav-login-btn" class="nav-link" data-i18n="nav.login">Connexion</a>
-</div>
-    <button class="nav-cta" id="open-submit-btn" data-i18n="nav.submit">Soumettre un outil +</button>
-
-
- <!-- ═══════════════════════════════════════════════════
-     NOUVEAU MENU KEBAB — Albexia
-     Remplace l'ancien kebab-wrap dans toutes les pages.
-     Top 3 des incontournables + lien vers le Hub complet.
-     ═══════════════════════════════════════════════════ -->
-
-<div class="kebab-wrap" id="kebab-wrap">
-  <button class="kebab-btn" id="kebab-btn" aria-label="Plus de pages" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-
-  <div class="kebab-menu" id="kebab-menu" role="menu">
-
-    <!-- Top 3 des pages incontournables -->
-    <div class="kebab-label" data-i18n="kebab.mustHave">Incontournables</div>
-
-    <a href="/glossaire/" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">📖</span>
-      <div>
-        <div class="kebab-item-name" data-i18n="kebab.glossary">Glossaire IA</div>
-        <div class="kebab-item-sub" data-i18n="kebab.glossarySub">Tous les termes en français</div>
-      </div>
-    </a>
-
-    <a href="/comparateur/" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">⚖️</span>
-      <div>
-        <div class="kebab-item-name" data-i18n="kebab.compare">Comparateur</div>
-        <div class="kebab-item-sub" data-i18n="kebab.compareSub">Comparer les outils côte à côte</div>
-      </div>
-    </a>
-
-    <a href="/deals/" class="kebab-item" role="menuitem">
-      <span class="kebab-ico">🔥</span>
-      <div>
-        <div class="kebab-item-name" data-i18n="kebab.deals">Deals &amp; Promos</div>
-        <div class="kebab-item-sub" data-i18n="kebab.dealsSub">Essais gratuits · Offres exclusives</div>
-      </div>
-    </a>
-
-    <!-- Séparateur -->
-    <div class="kebab-divider"></div>
-
-    <!-- Lien Hub complet -->
-    <a href="hub.html" class="kebab-item kebab-hub-link" role="menuitem">
-      <span class="kebab-ico">📂</span>
-      <div>
-        <div class="kebab-item-name" data-i18n="kebab.hub">Voir toutes les sections</div>
-        <div class="kebab-item-sub" data-i18n="kebab.hubSub">Carte complète d'Albexia →</div>
-      </div>
-    </a>
-
-  </div>
-</div>
-  </nav>
-
-  <style>
-    /* ── KEBAB BUTTON ── */
-    .kebab-wrap {
-      position: relative;
-      margin-left: 8px;
-    }
-
-    .kebab-btn {
-      width: 36px; height: 36px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 4px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      cursor: pointer;
-      transition: all .2s;
-      padding: 0;
-      flex-shrink: 0;
-    }
-
-    .kebab-btn span {
-      display: block;
-      width: 14px; height: 2px;
-      background: var(--text-muted);
-      border-radius: 2px;
-      transition: all .2s;
-    }
-
-    .kebab-btn:hover {
-      border-color: rgba(255,107,157,0.4);
-      background: rgba(255,107,157,0.06);
-    }
-
-    .kebab-btn:hover span,
-    .kebab-btn.open span { background: #ff6b9d; }
-
-    .kebab-btn.open {
-      border-color: rgba(255,107,157,0.4);
-      background: rgba(255,107,157,0.08);
-    }
-
-    /* ── KEBAB MENU ── */
-    .kebab-menu {
-      position: absolute;
-      top: calc(100% + 10px);
-      right: 0;
-      width: 260px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 8px;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,107,157,0.08);
-      opacity: 0;
-      transform: translateY(-8px) scale(0.97);
-      pointer-events: none;
-      transition: all .2s cubic-bezier(0.16,1,0.3,1);
-      z-index: 200;
-    }
-
-    .kebab-menu.open {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
-    }
-
-    .kebab-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      padding: 6px 10px 4px;
-    }
-
-    .kebab-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all .15s;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .kebab-item:hover {
-      background: rgba(255,107,157,0.08);
-    }
-
-    .kebab-item--soon {
-      opacity: 0.45;
-      cursor: default;
-      pointer-events: none;
-    }
-
-    .kebab-ico {
-      font-size: 18px;
-      width: 32px; height: 32px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--bg3);
-      border-radius: 8px;
-      flex-shrink: 0;
-    }
-
-    .kebab-item-name {
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .kebab-item-sub {
-      font-size: 11px;
-      color: var(--text-dim);
-      margin-top: 1px;
-      font-weight: 300;
-    }
-
-    .kebab-badge {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 2px 6px;
-      background: rgba(108,99,255,0.15);
-      color: #a8a3ff;
-      border-radius: 4px;
-    }
-
-    .kebab-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 6px 4px;
-    }
-
-    /* ── RESPONSIVE : cacher le texte nav sur mobile ── */
-    @media (max-width: 768px) {
-      .kebab-wrap { margin-left: 4px; }
-    }
-  </style>
-
-  <script>
-    (function() {
-      const btn  = document.getElementById('kebab-btn');
-      const menu = document.getElementById('kebab-menu');
-
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        const isOpen = menu.classList.toggle('open');
-        btn.classList.toggle('open', isOpen);
-        btn.setAttribute('aria-expanded', isOpen);
-      });
-
-      document.addEventListener('click', e => {
-        if (!document.getElementById('kebab-wrap').contains(e.target)) {
-          menu.classList.remove('open');
-          btn.classList.remove('open');
-          btn.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-          menu.classList.remove('open');
-          btn.classList.remove('open');
-          btn.setAttribute('aria-expanded', 'false');
-        }
-      });
-    })();
-  </script>
-
-  <!-- ─── MODAL : SOUMETTRE UN OUTIL ─── -->
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <div class="modal-header">
-        <h3 id="modal-title">Soumettre un outil IA</h3>
-        <button class="modal-close" id="modal-close" aria-label="Fermer">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-row">
-          <label class="form-label" for="f-name">Nom de l'outil <span class="req">*</span></label>
-          <input class="form-input" id="f-name" type="text" placeholder="ex: ChatGPT" maxlength="60">
-        </div>
-        <div class="form-row">
-          <label class="form-label" for="f-url">URL officielle <span class="req">*</span></label>
-          <input class="form-input" id="f-url" type="url" placeholder="https://...">
-        </div>
-        <div class="form-row two-col">
-          <div>
-            <label class="form-label" for="f-cat">Catégorie <span class="req">*</span></label>
-            <select class="form-input" id="f-cat">
-              <option value="">-- Choisir --</option>
-              <option>Texte</option>
-              <option>Image</option>
-              <option>Vidéo</option>
-              <option>Audio</option>
-              <option>Musique</option>
-              <option>Code</option>
-              <option>Recherche</option>
-              <option>Productivité</option>
-              <option>Autre</option>
-            </select>
-          </div>
-          <div>
-            <label class="form-label" for="f-price">Tarification <span class="req">*</span></label>
-            <select class="form-input" id="f-price">
-              <option value="">-- Choisir --</option>
-              <option value="free">Gratuit</option>
-              <option value="freemium">Freemium</option>
-              <option value="paid">Payant</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row">
-          <label class="form-label" for="f-desc">Description courte <span class="req">*</span></label>
-          <textarea class="form-input form-textarea" id="f-desc" placeholder="Décrivez l'outil en 1 ou 2 phrases..." maxlength="200" rows="3"></textarea>
-          <span class="char-count" id="f-desc-count">0 / 200</span>
-        </div>
-        <div class="form-row">
-          <label class="form-label" for="f-emoji">Emoji représentatif</label>
-          <input class="form-input" id="f-emoji" type="text" placeholder="🤖" maxlength="4" style="width:80px">
-        </div>
-        <div class="form-row">
-          <label class="form-label" for="f-email">Votre email (optionnel)</label>
-          <input class="form-input" id="f-email" type="email" placeholder="vous@email.com">
-        </div>
-        <div id="form-error" class="form-error" style="display:none"></div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-outline" id="modal-cancel">Annuler</button>
-        <button class="btn-main" id="modal-submit">Envoyer la soumission</button>
-      </div>
-    </div>
-  </div>
+        
+  <div id="site-header"></div>
 
   <!-- ─── TOAST NOTIFICATION ─── -->
   <div class="toast" id="toast"></div>
@@ -494,49 +110,91 @@
   <!-- ─── PAGE : ACCUEIL ─── -->
   <section id="home" class="page active">
 
-    <!-- Hero -->
-    <div class="hero">
-      <div class="hero-badge">
-        <span class="pulse"></span>
-        <span data-i18n="hero.badge">Nouvelle plateforme · 2026</span>
-      </div>
-      <h1 data-i18n-html="hero.title">Explorez<br>l'univers de <span class="grad">l'IA</span></h1>
-      <p data-i18n="hero.subtitle">Outils, articles et œuvres générées par intelligence artificielle — tout en un seul endroit pour le grand public.</p>
-      <div class="hero-actions">
+    <!-- Hero (refonte accueil) -->
+    <div class="container home-hero">
+      <div class="home-hero-text">
+        <h1 data-i18n="home.heroTitle">Trouvez l’outil IA qu’il vous faut.</h1>
+        <p data-i18n="home.heroSub">Des outils IA classés par besoin, évalués par la communauté et présentés avec leurs tarifs.</p>
         <button class="btn-main" onclick="showPage('tools')" data-i18n="hero.ctaTools">Explorer les outils</button>
-        <button class="btn-outline" onclick="showPage('gallery')" data-i18n="hero.ctaGallery">Voir la galerie</button>
       </div>
-      <div class="hero-quiz-cta">
-        <button class="btn-quiz" onclick="openQuiz()">
-          🎯 <span data-i18n="hero.quizCta">Trouver mon outil IA en 30 secondes</span>
-        </button>
-        <span class="hero-quiz-sub" data-i18n="hero.quizSub">5 questions · Recommandations personnalisées · Gratuit</span>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-blue"><div class="stat-n">120+</div><div class="stat-l" data-i18n="hero.statTools">Outils IA</div></div>
-        <div class="stat-pink"><div class="stat-n">48</div><div class="stat-l" data-i18n="hero.statArticles">Articles</div></div>
-        <div class="stat-green"><div class="stat-n">300+</div><div class="stat-l" data-i18n="hero.statWorks">Œuvres créatives</div></div>
+      <div class="home-hero-visual" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%" focusable="false">
+          <defs>
+            <filter id="hv-shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35"/>
+            </filter>
+            <clipPath id="hv-win-chatgpt"><rect x="0" y="0" width="480" height="340" rx="12"/></clipPath>
+            <clipPath id="hv-win-midjourney"><rect x="0" y="0" width="440" height="380" rx="12"/></clipPath>
+            <clipPath id="hv-win-runway"><rect x="0" y="0" width="440" height="260" rx="12"/></clipPath>
+          </defs>
+
+          <!-- 1. ChatGPT -->
+          <g transform="translate(40 50)" filter="url(#hv-shadow)">
+            <rect x="0" y="0" width="480" height="340" rx="12" fill="#FFFFFF"/>
+            <g clip-path="url(#hv-win-chatgpt)">
+              <image href="https://albexia.com/medias/blog/1791903968770_1_11zon_11zon_11zon.webp" x="0" y="0" width="480" height="340" preserveAspectRatio="xMidYMin slice"/>
+            </g>
+          </g>
+
+          <!-- 2. Midjourney -->
+          <g transform="translate(320 80)" filter="url(#hv-shadow)">
+            <rect x="0" y="0" width="440" height="380" rx="12" fill="#FFFFFF"/>
+            <g clip-path="url(#hv-win-midjourney)">
+              <image href="https://albexia.com/medias/blog/Screenshot_20261013-112810_Gallery_11zon.webp" x="0" y="0" width="440" height="380" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </g>
+
+          <!-- 3. Runway -->
+          <g transform="translate(180 330)" filter="url(#hv-shadow)">
+            <rect x="0" y="0" width="440" height="260" rx="12" fill="#FFFFFF"/>
+            <g clip-path="url(#hv-win-runway)">
+              <image href="https://albexia.com/medias/blog/Screenshot_20261013-112726_Gallery_11zon.webp" x="0" y="0" width="440" height="260" preserveAspectRatio="xMidYMid slice"/>
+            </g>
+          </g>
+        </svg>
       </div>
     </div>
 
-    <!-- Texte éditorial -->
-    <div class="home-editorial">
-      <div class="container">
+    <!-- Bandeau outils sponsorisés -->
+    <div class="home-sponsors" id="home-sponsors" hidden>
+      <div class="home-sponsors-bar">
+        <span data-i18n="home.sponsored">Outils sponsorisés</span>
+        <button type="button" class="home-sponsors-pause" id="home-sponsors-pause">Pause</button>
+      </div>
+      <div class="home-marquee"><div class="home-marquee-track" id="home-marquee-1"></div></div>
+      <div class="home-marquee"><div class="home-marquee-track reverse" id="home-marquee-2"></div></div>
+    </div>
 
-        <div class="editorial-intro">
-          <h2 class="editorial-title" data-i18n-html="editorial.introTitle">L'intelligence artificielle, <span class="grad">enfin accessible à tous</span></h2>
-          <p class="editorial-lead" data-i18n-html="editorial.introLead">L'IA n'est plus réservée aux ingénieurs et aux grandes entreprises. Un chat, une phrase tapée au clavier suffisent aujourd'hui à générer une image, rédiger un texte ou automatiser une tâche répétitive. Pas besoin de coder, pas besoin de diplôme technique — juste une idée à formuler.</p>
-        </div>
+    <!-- Catégories -->
+    <div class="container home-block">
+      <div class="home-block-head">
+        <h2 data-i18n="home.catTitle">Parcourir les catégories</h2>
+        <a href="#" onclick="showPage('tools');return false;" data-i18n="home.seeAll">Voir tout</a>
+      </div>
+      <div class="home-cat-row" id="home-cat-row">
+        <div class="home-skel"></div><div class="home-skel"></div><div class="home-skel"></div>
+      </div>
+    </div>
 
-        <div class="editorial-grid">
+    <!-- Outils les mieux notés -->
+    <div class="container home-block">
+      <div class="home-block-head">
+        <h2 data-i18n="home.topTitle">Les outils les mieux notés</h2>
+        <a href="#" onclick="showPage('tools');return false;" data-i18n="home.allTools">Tous les outils</a>
+      </div>
+      <div class="home-top-grid" id="home-top-tools">
+        <div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div>
+      </div>
+    </div>
 
-          <div class="editorial-block">
-            <h3 data-i18n="editorial.block1Title">Un annuaire, un blog, une galerie</h3>
-            <p data-i18n-html="editorial.block1P1">Albexia réunit plus de 120 outils IA classés par catégorie, des articles pour s'y retrouver, et une galerie d'œuvres générées par IA. Chaque outil a une note et un prix clair, mis à jour à mesure que l'écosystème change. L'objectif est simple : rester un guide honnête sur l'IA, sans jargon ni promesse en l'air, pour que chacun puisse en tirer parti dès aujourd'hui.</p>
-          </div>
-
-        </div>
-
+    <!-- Derniers articles -->
+    <div class="container home-block">
+      <div class="home-block-head">
+        <h2 data-i18n="home.articlesTitle">Derniers articles</h2>
+        <a href="#" onclick="showPage('blog');return false;" data-i18n="home.allArticles">Tous les articles</a>
+      </div>
+      <div class="home-art-grid" id="home-latest-articles">
+        <div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div>
       </div>
     </div>
   </section>
@@ -548,8 +206,8 @@
       <!-- Bloc catégories -->
       <div class="home-cat-header cat-header-flex" style="padding-top:24px">
         <div>
-          <h2 class="home-cat-title">Catégories <span class="grad">IA</span></h2>
-          <p class="home-cat-sub">Explore les meilleurs outils d'intelligence artificielle par catégorie.</p>
+          <h2 class="home-cat-title"><span data-i18n="idx.categoriesTitle">Catégories</span> <span class="grad">IA</span></h2>
+          <p class="home-cat-sub" data-i18n="idx.categoriesSubtitle">Explore les meilleurs outils d'intelligence artificielle par catégorie.</p>
         </div>
         <span class="cat-count-badge" id="cat-count-badge">— catégories</span>
       </div>
@@ -633,7 +291,7 @@
       <!-- En-tête -->
       <div class="modal-header">
         <h3 id="quiz-title">🎯 <span data-i18n="quiz.title">Trouver mon outil IA</span></h3>
-        <button class="modal-close" onclick="closeQuiz()" aria-label="Fermer">✕</button>
+        <button class="modal-close" onclick="closeQuiz()" aria-label="Fermer" data-i18n-aria-label="profil.closeBtn">✕</button>
       </div>
 
       <!-- Corps du quiz -->
@@ -667,91 +325,13 @@
     </div>
   </div>
 
-  <!-- ─── FOOTER ─── -->
-  <footer class="site-footer">
-    <div class="footer-top">
-      <div class="container">
-        <div class="footer-grid">
 
-          <!-- Colonne 1 : Brand + Newsletter + Réseaux -->
-          <div class="footer-brand">
-            <div class="footer-logo">
-              <svg viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg" height="30" aria-label="Albexia">
-                <polygon points="14,2 24,32 4,32" fill="none" stroke="#ff6b9d" stroke-width="2" stroke-linejoin="round"/>
-                <polygon points="14,10 21,30 7,30" fill="#ff6b9d" opacity="0.2"/>
-                <circle cx="14" cy="24" r="2.5" fill="#ff6b9d"/>
-                <text x="32" y="26" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
-              </svg>
-            </div>
-            
+  
+      
+<script src="/js/header.js" defer></script>
+<script src="/js/footer.js" defer></script>
 
-            <div class="footer-newsletter">
-              <div class="footer-nl-label" data-i18n="footer.newsletterLabel">Newsletter hebdomadaire</div>
-              <form class="footer-nl-row" action="https://formspree.io/f/xojbojld" method="POST" id="newsletter-form" onsubmit="handleFooterNewsletter(event)">
-                <input type="email" name="email" id="footer-email" class="footer-nl-input" placeholder="votre@email.com" required>
-                <input type="hidden" name="_subject" value="Nouvelle inscription newsletter Albexia">
-                <button type="submit" class="footer-nl-btn" data-i18n="footer.subscribe">S'abonner</button>
-              </form>
-              <div class="footer-nl-badge" id="nl-feedback" data-i18n="footer.newsletterBadge">✓ Gratuit · Sans spam · Désabonnement en 1 clic</div>
-            </div>
 
-            
-
-          <!-- Colonne 2 : Navigation -->
-          <div class="footer-col">
-            <div class="footer-col-title" data-i18n="footer.navTitle">Navigation</div>
-            <button class="footer-link" onclick="showPage('home')" data-i18n="nav.home">Accueil</button>
-            <button class="footer-link" onclick="showPage('tools')" data-i18n="footer.toolsLink">Outils IA</button>
-            <button class="footer-link" onclick="showPage('blog')" data-i18n="nav.blog">Blog</button>
-            <button class="footer-link" onclick="showPage('gallery')" data-i18n="nav.gallery">Galerie</button>
-            <a class="footer-link" href="profile.html#favorites" data-i18n="footer.favorites">Mes favoris</a>
-            <button class="footer-link" onclick="openModal()" data-i18n="footer.submitTool">Soumettre un outil</button>
-          </div>
-
-          <!-- Colonne 3 : Catégories -->
-          <div class="footer-col">
-            <div class="footer-col-title" data-i18n="footer.categoriesTitle">Catégories</div>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Texte')" data-i18n="footer.catText">Texte & Rédaction</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Image')" data-i18n="footer.catImage">Image & Design</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Vidéo')" data-i18n="footer.catVideo">Vidéo</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Musique')" data-i18n="footer.catMusic">Musique & Audio</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Code')" data-i18n="footer.catCode">Code</button>
-            <button class="footer-link" onclick="showPage('tools');setToolCat('Productivité')" data-i18n="footer.catProductivity">Productivité</button>
-          </div>
-
-          <!-- Colonne 4 : Légal + Contact -->
-          <div class="footer-col">
-            <div class="footer-col-title" data-i18n="footer.legalTitle">Légal</div>
-            <a href="mentions-legales.html" class="footer-link" data-i18n="footer.legalNotice">Mentions légales</a>
-            <a href="politique-confidentialite.html" class="footer-link" data-i18n="footer.privacyPolicy">Politique de confidentialité</a>
-            <a href="mentions-legales.html#cgu" class="footer-link" data-i18n="footer.terms">Conditions d'utilisation</a>
-            <a href="mentions-legales.html#cookies" class="footer-link" data-i18n="footer.cookies">Gestion des cookies</a>
-
-            <div class="footer-col-title" style="margin-top: 20px;" data-i18n="footer.contactTitle">Contact</div>
-            <a href="contact.html" class="footer-link" data-i18n="footer.contactUs">Nous contacter</a>
-            <a href="mailto:contact@annuaireia.com" class="footer-link">contact@annuaireia.com</a>
-            <a href="mailto:partenariats@annuaireia.com" class="footer-link" data-i18n="footer.partnerships">Partenariats</a>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- Barre de bas de footer -->
-    <div class="footer-bottom">
-      <div class="container footer-bottom-inner">
-        <span class="footer-copy" data-i18n="footer.copyright">&copy; 2025-2026 Albexia — Tous droits réservés</span>
-        <div class="footer-legal-links">
-          <a href="politique-confidentialite.html" class="footer-legal-link" data-i18n="footer.privacy">Vie privée</a>
-          <a href="mentions-legales.html#cgu" class="footer-legal-link">CGU</a>
-          <a href="mentions-legales.html#cookies" class="footer-legal-link">Cookies</a>
-        </div>
-        <span class="footer-made" data-i18n="footer.madeWith">Fait avec ❤️ pour la communauté IA</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/notifications.js" defer></script>
   <!-- Script lecteur blog -->
   <script src="js/blog-reader.js"></script>
 
@@ -770,15 +350,15 @@
   <!-- Barre haute -->
   <div id="lb-topbar">
     <div id="lb-counter"></div>
-    <button id="lb-close" aria-label="Fermer">✕</button>
+    <button id="lb-close" aria-label="Fermer" data-i18n-aria-label="profil.closeBtn">✕</button>
   </div>
 
   <!-- Zone média -->
   <div id="lb-media-wrap">
 
     <!-- Flèches de navigation -->
-    <button id="lb-prev" aria-label="Précédent">&#8249;</button>
-    <button id="lb-next" aria-label="Suivant">&#8250;</button>
+    <button id="lb-prev" aria-label="Précédent" data-i18n-aria-label="idx.lbPrev">&#8249;</button>
+    <button id="lb-next" aria-label="Suivant" data-i18n-aria-label="idx.lbNext">&#8250;</button>
 
     <!-- Image -->
     <img id="lb-img" alt="" draggable="false">
@@ -802,10 +382,10 @@
       <span id="lb-tool"></span>
     </div>
     <div id="lb-zoom-controls">
-      <button id="lb-zoom-out" aria-label="Dézoomer">−</button>
+      <button id="lb-zoom-out" aria-label="Dézoomer" data-i18n-aria-label="idx.lbZoomOut">−</button>
       <span id="lb-zoom-level">100%</span>
-      <button id="lb-zoom-in" aria-label="Zoomer">+</button>
-      <button id="lb-zoom-reset" aria-label="Réinitialiser">↺</button>
+      <button id="lb-zoom-in" aria-label="Zoomer" data-i18n-aria-label="idx.lbZoomIn">+</button>
+      <button id="lb-zoom-reset" aria-label="Réinitialiser" data-i18n-aria-label="idx.lbZoomReset">↺</button>
     </div>
   </div>
 
@@ -813,6 +393,7 @@
 
 <!-- Doit être AVANT app.js -->
 <script type="module" src="js/reviews.js"></script>
+<script src="js/categories-articles.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/app.js"></script>
 
@@ -873,6 +454,7 @@
 function handleFooterNewsletter(e) {
   e.preventDefault();
   const form = document.getElementById('newsletter-form');
+  const langue = window.detecterLangue ? window.detecterLangue() : 'fr';
   fetch(form.action, {
     method: 'POST',
     body: new FormData(form),
@@ -880,9 +462,40 @@ function handleFooterNewsletter(e) {
   }).finally(() => {
     form.style.display = 'none';
     const fb = document.getElementById('nl-feedback');
-    if (fb) { fb.textContent = '✓ Inscription confirmée !'; fb.style.color = '#00d4aa'; }
+    if (fb) { fb.textContent = window.t ? window.t('idx.newsletterConfirmedShort', langue) : '✓ Inscription confirmée !'; fb.style.color = '#00d4aa'; }
   });
 }
+</script>
+
+  <script>
+(function () {
+  const selector = document.getElementById('lang-selector');
+  const current = document.getElementById('lang-current');
+  const label = document.getElementById('lang-current-label');
+
+  if (!selector || !current) return;
+
+  current.addEventListener('click', function (e) {
+    e.stopPropagation();
+
+    const isOpen = selector.classList.toggle('open');
+    current.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  document.addEventListener('click', function () {
+    selector.classList.remove('open');
+    current.setAttribute('aria-expanded', 'false');
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      if (label) label.textContent = this.dataset.lang.toUpperCase();
+
+      selector.classList.remove('open');
+      current.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 </script>
 
 

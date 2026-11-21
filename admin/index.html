@@ -5889,7 +5889,18 @@ Support français|oui|non|bool"></textarea>
   let faqEditingId = null;
   let faqAdminCache = [];
   let faqToolCache = [];
+  let faqToolsLoaded = false;
   let faqSelectedToolIds = [];
+  async function faqLoadTools() {
+    if (faqToolsLoaded) return faqToolCache;
+    const snap = await getDocs(collection(db, 'outils'));
+    faqToolCache = snap.docs.map(d => {
+      const data = d.data();
+      return { ...data, id: data.id || d.id, _docId: d.id, name: data.name || data.nom || '' };
+    }).filter(t => t.name && t.status !== 'a_enrichir');
+    faqToolsLoaded = true;
+    return faqToolCache;
+  }
   const faqVal = id => document.getElementById(id)?.value || '';
   const faqSet = (id, value) => { const el=document.getElementById(id); if(el) el.value=value ?? ''; };
   const faqEsc = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -5900,54 +5911,59 @@ Support français|oui|non|bool"></textarea>
     box.querySelectorAll('[data-remove-tool]').forEach(b=>b.addEventListener('click',()=>{faqSelectedToolIds=faqSelectedToolIds.filter(x=>String(x)!==String(b.dataset.removeTool));faqRenderTools();}));
   }
   function faqRenderToolSearch() {
-    // Reprise du mécanisme de la recherche principale « Outils » :
-    // recherche Firestore via fetchAllTools(), debounce de 200 ms,
-    // filtrage sur le nom FR et affichage des 8 premières suggestions.
-    const input=document.getElementById('faq-tool-search');
-    const results=document.getElementById('faq-tool-search-results');
-    let faqSearchDebounce=null;
-    input.addEventListener('input',()=>{
+    const input = document.getElementById('faq-tool-search');
+    const results = document.getElementById('faq-tool-search-results');
+    let faqSearchDebounce = null;
+    let searchRun = 0;
+
+    input.addEventListener('input', () => {
       clearTimeout(faqSearchDebounce);
-      const q=input.value.trim();
-      if(!q){results.classList.remove('open');results.innerHTML='';return;}
-      faqSearchDebounce=setTimeout(async()=>{
+      const q = input.value.trim();
+      if (!q) { results.classList.remove('open'); results.innerHTML = ''; return; }
+      faqSearchDebounce = setTimeout(async () => {
+        const run = ++searchRun;
+        results.innerHTML = '<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Recherche…</div>';
+        results.classList.add('open');
         try {
-          const tools=await fetchAllTools();
-          faqToolCache=tools.filter(t=>t.name&&t.status!=='a_enrichir');
-          const qNorm=q.toLowerCase();
-          const selected=faqSelectedToolIds.map(String);
-          const matches=tools
-            .filter(t=>(t.name||'').toLowerCase().includes(qNorm))
-            .filter(t=>!t.langue||t.langue==='fr')
-            .filter(t=>!selected.includes(String(t.id)))
-            .slice(0,8);
-          if(!matches.length){
-            results.innerHTML='<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Aucun outil trouvé.</div>';
-            results.classList.add('open');
+          const tools = await faqLoadTools();
+          if (run !== searchRun) return;
+          const qNorm = q.toLocaleLowerCase('fr');
+          const selected = faqSelectedToolIds.map(String);
+          const matches = tools
+            .filter(t => !t.langue || String(t.langue).toLowerCase() === 'fr')
+            .filter(t => String(t.name || '').toLocaleLowerCase('fr').includes(qNorm))
+            .filter(t => !selected.includes(String(t.id)))
+            .slice(0, 8);
+          if (!matches.length) {
+            results.innerHTML = '<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Aucun outil trouvé.</div>';
             return;
           }
-          results.innerHTML=matches.map(t=>`
+          results.innerHTML = matches.map(t => `
             <div class="search-result-item" data-faq-tool-id="${faqEsc(t.id)}">
-              <span class="search-result-name">${faqEsc(t.emoji||'🤖')} ${faqEsc(t.name)}</span>
-              <span class="search-result-meta">${faqEsc(t.plan||'standard')} · ID ${faqEsc(t.id)}</span>
+              <span class="search-result-name">${faqEsc(t.emoji || '🤖')} ${faqEsc(t.name)}</span>
+              <span class="search-result-meta">${faqEsc(t.plan || 'standard')} · ID ${faqEsc(t.id)}</span>
             </div>
           `).join('');
-          results.classList.add('open');
-          results.querySelectorAll('.search-result-item[data-faq-tool-id]').forEach(el=>{
-            el.addEventListener('click',()=>{
-              const id=el.dataset.faqToolId;
-              if(!faqSelectedToolIds.map(String).includes(String(id)))faqSelectedToolIds.push(id);
-              input.value='';results.classList.remove('open');results.innerHTML='';faqRenderTools();
+          results.querySelectorAll('[data-faq-tool-id]').forEach(el => {
+            el.addEventListener('click', () => {
+              const id = el.dataset.faqToolId;
+              if (!faqSelectedToolIds.map(String).includes(String(id))) faqSelectedToolIds.push(id);
+              input.value = '';
+              results.classList.remove('open');
+              results.innerHTML = '';
+              faqRenderTools();
+              input.focus();
             });
           });
-        } catch(err) {
-          results.innerHTML=`<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Erreur de recherche : ${faqEsc(err.message)}</div>`;
-          results.classList.add('open');
+        } catch (err) {
+          if (run !== searchRun) return;
+          results.innerHTML = `<div class="search-result-item" style="cursor:default;color:var(--text-dim);">Erreur de recherche : ${faqEsc(err.message)}</div>`;
         }
-      },200);
+      }, 200);
     });
-    document.addEventListener('click',e=>{
-      if(!input.contains(e.target)&&!results.contains(e.target))results.classList.remove('open');
+
+    document.addEventListener('click', e => {
+      if (!input.contains(e.target) && !results.contains(e.target)) results.classList.remove('open');
     });
   }
   function faqRenderRows(containerId, rows, kind='sections') {
@@ -5967,8 +5983,9 @@ Support français|oui|non|bool"></textarea>
   }
   async function loadFaqAdmin() {
     try {
-      const [snap,catSnap,tools]=await Promise.all([getDocs(collection(db,'faq')),getDoc(doc(db,'config','faq_categories')),fetchAllTools()]);
-      faqAdminCache=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.titre||'').localeCompare(b.titre||''));faqToolCache=tools.filter(t=>t.name&&t.status!=='a_enrichir');
+      const [snap,catSnap]=await Promise.all([getDocs(collection(db,'faq')),getDoc(doc(db,'config','faq_categories'))]);
+      faqAdminCache=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.titre||'').localeCompare(b.titre||''));
+      await faqLoadTools();
       const select=document.getElementById('faq-existing');select.innerHTML='<option value="">Créer une nouvelle FAQ…</option>'+faqAdminCache.map(f=>`<option value="${faqEsc(f.id)}">${faqEsc(f.titre||f.slug||f.id)} — ${faqEsc(f.status||'brouillon')}</option>`).join('');
       faqSet('faq-categories-json',JSON.stringify(catSnap.exists()?(catSnap.data().categories||[]):[],null,2));document.getElementById('faq-admin-status').textContent=`${faqAdminCache.length} FAQ dans Firestore.`;
     } catch(err){faqMessage('warn','Erreur de chargement FAQ : '+err.message);}

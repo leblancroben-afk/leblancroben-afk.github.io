@@ -18,3 +18,11 @@
 
 /* Contenu libre saisi dans l’éditeur FAQ */
 .faq-rich-content{color:var(--text-muted);font-size:14px;line-height:2}.faq-rich-content p{margin:0 0 20px}.faq-rich-content ul,.faq-rich-content ol{padding-left:24px;margin:18px 0 24px}.faq-rich-content li{margin:10px 0}.faq-rich-content h3,.faq-rich-content h4{margin:22px 0 10px;color:var(--text);font-family:var(--serif)}.faq-rich-content img{max-width:100%;height:auto;border-radius:var(--radius)}.faq-rich-content table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}.faq-rich-content th,.faq-rich-content td{padding:9px 12px;border:1px solid var(--border)}
+
+/* Rythme éditorial des contenus FAQ : paragraphes clairement séparés. */
+.faq-section .faq-section-content p{margin:0 0 1.15em;line-height:1.85}
+.faq-section .faq-section-content p:last-child{margin-bottom:0}
+.faq-section .faq-section-content h2,.faq-section .faq-section-content h3,.faq-section .faq-section-content h4{margin:1.45em 0 .6em;line-height:1.3}
+.faq-section .faq-section-content ul,.faq-section .faq-section-content ol{margin:.65em 0 1.2em;padding-left:1.65em;line-height:1.8}
+.faq-section .faq-section-content blockquote{margin:1.1em 0;padding:13px 17px;border-left:3px solid var(--accent2);background:var(--bg2)}
+.faq-section .faq-section-content pre{margin:1em 0;padding:14px;overflow:auto;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);font-size:.88em}

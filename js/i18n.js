@@ -53,6 +53,12 @@ window.LANGUES_SUPPORTEES = LANGUES_SUPPORTEES;
 // Firestore qui est déjà traduit via le champ "langue" de chaque item).
 const UI_TRANSLATIONS = {
   fr: {
+    'faq.seeTool': "Consulter la fiche",
+    'faq.readPage': "Lire la réponse",
+    'faq.questionN': "Question",
+    'faq.videoLead': "Découvrez la leçon vidéo",
+    'faq.discoverVideo': "Ce que vous allez découvrir dans cette vidéo",
+    'faq.canDoVideo': "Ce que vous saurez faire après cette leçon",
     'faq.center': "Centre d’aide",
     'faq.breadcrumbLabel': "Fil d’Ariane",
     'faq.shortAnswer': "Réponse courte",
@@ -1301,6 +1307,12 @@ const UI_TRANSLATIONS = {
     "sm.alertCaptcha": "Veuillez valider la vérification anti-spam ci-dessus, puis réessayez.",
   },
   en: {
+    'faq.seeTool': "View the listing for",
+    'faq.readPage': "Read the answer",
+    'faq.questionN': "Question",
+    'faq.videoLead': "Discover the video lesson",
+    'faq.discoverVideo': "What you will discover in this video",
+    'faq.canDoVideo': "What you will be able to do after this lesson",
     'faq.center': "Help center",
     'faq.breadcrumbLabel': "Breadcrumb",
     'faq.shortAnswer': "Short answer",
@@ -2550,6 +2562,12 @@ const UI_TRANSLATIONS = {
     "sm.alertCaptcha": "Please complete the anti-spam check above, then try again.",
   },
   es: {
+    'faq.seeTool': "Ver la ficha de",
+    'faq.readPage': "Leer la respuesta",
+    'faq.questionN': "Pregunta",
+    'faq.videoLead': "Descubra la lección en vídeo",
+    'faq.discoverVideo': "Lo que descubrirá en este vídeo",
+    'faq.canDoVideo': "Lo que podrá hacer después de esta lección",
     'faq.center': "Centro de ayuda",
     'faq.breadcrumbLabel': "Migas de pan",
     'faq.shortAnswer': "Respuesta corta",

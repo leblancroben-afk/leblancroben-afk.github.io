@@ -1705,7 +1705,7 @@ Support français|oui|non|bool"></textarea>
 
   <div class="tab-panel" id="tab-faq">
   <div class="msg msg-warn" id="warn-faq"></div><div class="msg msg-ok" id="ok-faq"></div>
-  <p class="field-hint">Une FAQ publiée crée une page par langue <strong>traduite</strong>. Sans traduction EN ou ES, aucune page n'est créée dans cette langue.</p>
+  <p class="field-hint">Une page = un sujet, avec autant de questions que nécessaire. Une page EN ou ES n'est créée que si toutes ses questions sont traduites.</p>
   <label>FAQ existantes</label>
   <select id="faq-existing"><option value="">Créer une nouvelle FAQ…</option></select>
   <button type="button" id="faq-new-btn">Nouvelle FAQ</button>
@@ -1716,12 +1716,16 @@ Support français|oui|non|bool"></textarea>
       <select id="faq-status"><option value="brouillon">Brouillon</option><option value="publie">Publié</option></select>
       <label>Slug URL *</label><input id="faq-slug" required>
     </fieldset>
-    <fieldset><legend>Question et réponse (FR)</legend>
+    <fieldset><legend>Page (FR)</legend>
       <label>Catégorie *</label><input id="faq-category" required>
       <label>Sous-catégorie</label><input id="faq-subcategory">
-      <label>Question *</label><input id="faq-title" required>
+      <label>Titre de la page (H1) *</label><input id="faq-title" required>
       <label>Réponse courte *</label><textarea id="faq-short" rows="3" required></textarea>
-      <label>Réponse détaillée (un paragraphe par ligne)</label><textarea id="faq-paragraphs" rows="6"></textarea>
+    </fieldset>
+    <fieldset><legend>Questions et réponses (FR)</legend>
+      <p class="field-hint">Une ligne par paragraphe. Une ligne commençant par « - » devient une puce.</p>
+      <div id="faq-questions"></div>
+      <button type="button" id="faq-add-question">+ Ajouter une question</button>
     </fieldset>
     <fieldset><legend>Leçon vidéo (FR, facultatif)</legend>
       <label>URL YouTube</label><input id="faq-video-url">
@@ -1730,45 +1734,48 @@ Support français|oui|non|bool"></textarea>
       <label>Durée</label><input id="faq-video-duration" placeholder="12 min 35 s">
       <label>Langue</label><input id="faq-video-lang" value="Français">
       <label>Phrase d'introduction</label><textarea id="faq-video-intro" rows="2"></textarea>
+      <p class="field-hint">Les deux listes ci-dessous s'affichent seulement si une URL de vidéo est renseignée. Rédigez-les à partir de la transcription.</p>
+      <label>Ce que vous allez découvrir dans cette vidéo</label><textarea id="faq-discover" rows="3"></textarea>
+      <label>Ce que vous saurez faire après cette leçon</label><textarea id="faq-can-do" rows="3"></textarea>
     </fieldset>
-    <fieldset><legend>Points (FR, une ligne par point)</legend>
-      <label>Ce que vous allez découvrir</label><textarea id="faq-discover" rows="3"></textarea>
-      <label>Ce que vous saurez faire après</label><textarea id="faq-can-do" rows="3"></textarea>
-      <label>Points essentiels à retenir</label><textarea id="faq-takeaway" rows="3"></textarea>
+    <fieldset><legend>Points essentiels à retenir (FR)</legend>
+      <label>Une ligne par point</label><textarea id="faq-takeaway" rows="3"></textarea>
     </fieldset>
     <fieldset><legend>Outils à découvrir et à comparer</legend>
       <div id="faq-tool-search-wrap"><input id="faq-tool-search" placeholder="Rechercher un outil…" autocomplete="off"><div id="faq-tool-search-results" class="search-results"></div></div>
       <div id="faq-tools-selected" class="faq-selected-tools"></div>
+      <label>Présentation de chaque outil dans cette page (FR) : une ligne par outil, format « id | texte »</label>
+      <textarea id="faq-tools-texts" rows="4" placeholder="ollama | Permet d'exécuter des modèles localement."></textarea>
     </fieldset>
     <fieldset><legend>Questions associées (FR)</legend>
       <label>Une par ligne : question | accroche | slug</label><textarea id="faq-related" rows="4"></textarea>
     </fieldset>
     <fieldset><legend>Traduction EN</legend>
-      <button type="button" class="btn-translate" data-target-lang="en" data-form="faq">🌐 Traduire depuis le FR</button>
+      <button type="button" class="btn-translate-faq" data-target-lang="en">🌐 Traduire depuis le FR (page et toutes les questions)</button>
       <label>Catégorie (EN)</label><input id="faq-category-en">
       <label>Sous-catégorie (EN)</label><input id="faq-subcategory-en">
-      <label>Question (EN)</label><input id="faq-title-en">
+      <label>Titre de la page (EN)</label><input id="faq-title-en">
       <label>Réponse courte (EN)</label><textarea id="faq-short-en" rows="3"></textarea>
-      <label>Réponse détaillée (EN)</label><textarea id="faq-paragraphs-en" rows="6"></textarea>
       <label>Titre vidéo (EN)</label><input id="faq-video-title-en">
       <label>Phrase d'introduction vidéo (EN)</label><textarea id="faq-video-intro-en" rows="2"></textarea>
-      <label>Découvrir (EN)</label><textarea id="faq-discover-en" rows="3"></textarea>
-      <label>Savoir faire (EN)</label><textarea id="faq-can-do-en" rows="3"></textarea>
-      <label>À retenir (EN)</label><textarea id="faq-takeaway-en" rows="3"></textarea>
+      <label>Ce que vous allez découvrir dans cette vidéo (EN)</label><textarea id="faq-discover-en" rows="3"></textarea>
+      <label>Ce que vous saurez faire après cette leçon (EN)</label><textarea id="faq-can-do-en" rows="3"></textarea>
+      <label>Points essentiels (EN)</label><textarea id="faq-takeaway-en" rows="3"></textarea>
+      <label>Présentation des outils (EN) : « id | texte » par ligne</label><textarea id="faq-tools-texts-en" rows="4"></textarea>
       <label>Questions associées (EN)</label><textarea id="faq-related-en" rows="4"></textarea>
     </fieldset>
     <fieldset><legend>Traduction ES</legend>
-      <button type="button" class="btn-translate" data-target-lang="es" data-form="faq">🌐 Traduire depuis le FR</button>
+      <button type="button" class="btn-translate-faq" data-target-lang="es">🌐 Traduire depuis le FR (page et toutes les questions)</button>
       <label>Catégorie (ES)</label><input id="faq-category-es">
       <label>Sous-catégorie (ES)</label><input id="faq-subcategory-es">
-      <label>Question (ES)</label><input id="faq-title-es">
+      <label>Titre de la page (ES)</label><input id="faq-title-es">
       <label>Réponse courte (ES)</label><textarea id="faq-short-es" rows="3"></textarea>
-      <label>Réponse détaillée (ES)</label><textarea id="faq-paragraphs-es" rows="6"></textarea>
       <label>Titre vidéo (ES)</label><input id="faq-video-title-es">
       <label>Phrase d'introduction vidéo (ES)</label><textarea id="faq-video-intro-es" rows="2"></textarea>
-      <label>Découvrir (ES)</label><textarea id="faq-discover-es" rows="3"></textarea>
-      <label>Savoir faire (ES)</label><textarea id="faq-can-do-es" rows="3"></textarea>
-      <label>À retenir (ES)</label><textarea id="faq-takeaway-es" rows="3"></textarea>
+      <label>Ce que vous allez découvrir dans cette vidéo (ES)</label><textarea id="faq-discover-es" rows="3"></textarea>
+      <label>Ce que vous saurez faire après cette leçon (ES)</label><textarea id="faq-can-do-es" rows="3"></textarea>
+      <label>Points essentiels (ES)</label><textarea id="faq-takeaway-es" rows="3"></textarea>
+      <label>Présentation des outils (ES) : « id | texte » par ligne</label><textarea id="faq-tools-texts-es" rows="4"></textarea>
       <label>Questions associées (ES)</label><textarea id="faq-related-es" rows="4"></textarea>
     </fieldset>
     <button type="submit" id="faq-save-btn">Enregistrer la FAQ</button>
@@ -6050,17 +6057,14 @@ Support français|oui|non|bool"></textarea>
     }
   });
 
-// ───── FAQ : formulaire à champs fixes (même principe que les fiches outils) ─────
-// Une traduction EN/ES n'est enregistrée que si elle a un titre ET une réponse courte.
-// Sans cela, aucune page dans cette langue n'est générée (gen-fiches.js).
-function faqFieldsToTranslate(targetLang) {
-  const s = targetLang;
+// ───── FAQ : pages à plusieurs questions (blocs répétables) ─────
+// Une page EN/ES n'est enregistrée que si la page ET toutes les questions sont traduites.
+function faqFieldsToTranslate(s) {
   return [
     ['faq-title', `faq-title-${s}`, 'text'],
     ['faq-category', `faq-category-${s}`, 'text'],
     ['faq-subcategory', `faq-subcategory-${s}`, 'text'],
     ['faq-short', `faq-short-${s}`, 'text'],
-    ['faq-paragraphs', `faq-paragraphs-${s}`, 'lignes'],
     ['faq-video-title', `faq-video-title-${s}`, 'text'],
     ['faq-video-intro', `faq-video-intro-${s}`, 'text'],
     ['faq-discover', `faq-discover-${s}`, 'lignes'],
@@ -6071,65 +6075,99 @@ function faqFieldsToTranslate(targetLang) {
 function faqLines(id) {
   return (document.getElementById(id)?.value || '').split('\n').map(s => s.trim()).filter(Boolean);
 }
+function faqToolsTexts(id) {
+  return faqLines(id)
+    .map(l => { const i = l.indexOf('|'); return i > 0 ? { id: l.slice(0, i).trim(), texte: l.slice(i + 1).trim() } : null; })
+    .filter(x => x && x.id && x.texte);
+}
 function faqRelatedLines(id) {
   return faqLines(id)
     .map(l => { const [question = '', accroche = '', slug = ''] = l.split('|').map(s => s.trim()); return { question, accroche, slug: slugify(slug) }; })
     .filter(q => q.question && q.slug);
 }
-// Lit un bloc de textes : 'fr' (ids nus) ou 'en' / 'es' (ids suffixés).
-function faqBloc(lang) {
-  const sfx = lang === 'fr' ? '' : `-${lang}`;
-  const v = id => (document.getElementById(id + sfx)?.value || '').trim();
-  const l = id => faqLines(id + sfx);
-  return {
-    titre: v('faq-title'),
-    categorie: v('faq-category'),
-    sous_categorie: v('faq-subcategory'),
-    reponse_courte: v('faq-short'),
-    reponse_paragraphes: l('faq-paragraphs'),
-    video: { titre: v('faq-video-title'), intro: v('faq-video-intro') },
-    decouvrir: l('faq-discover'),
-    savoir_faire: l('faq-can-do'),
-    retenir: l('faq-takeaway'),
-    questions_associees: faqRelatedLines('faq-related' + sfx),
-  };
+// Un bloc = une question avec sa réponse en FR, EN et ES.
+function faqAddQuestionBlock(data = {}) {
+  const wrap = document.createElement('div');
+  wrap.className = 'faq-q-block';
+  wrap.style.cssText = 'border:1px solid var(--border);border-radius:10px;padding:14px;margin:12px 0;display:grid;gap:6px';
+  const e = faqEsc;
+  wrap.innerHTML = `
+    <strong class="q-num"></strong>
+    <label>Question (FR)</label><input class="q-fr" value="${e(data.question || '')}">
+    <label>Réponse (FR)</label><textarea class="q-fr-rep" rows="4">${e(data.reponse || '')}</textarea>
+    <label>Question (EN)</label><input class="q-en" value="${e(data.en?.question || '')}">
+    <label>Réponse (EN)</label><textarea class="q-en-rep" rows="4">${e(data.en?.reponse || '')}</textarea>
+    <label>Question (ES)</label><input class="q-es" value="${e(data.es?.question || '')}">
+    <label>Réponse (ES)</label><textarea class="q-es-rep" rows="4">${e(data.es?.reponse || '')}</textarea>
+    <button type="button" class="q-remove">Supprimer cette question</button>`;
+  wrap.querySelector('.q-remove').addEventListener('click', () => { wrap.remove(); faqRenumber(); });
+  document.getElementById('faq-questions').appendChild(wrap);
+  faqRenumber();
+}
+function faqRenumber() {
+  document.querySelectorAll('.faq-q-block .q-num').forEach((el, i) => { el.textContent = `Question ${i + 1}`; });
+}
+// Tous les blocs, avec les trois langues.
+function faqBlocksAll() {
+  return [...document.querySelectorAll('.faq-q-block')].map(b => {
+    const val = sel => (b.querySelector(sel)?.value || '').trim();
+    return {
+      fr: { question: val('.q-fr'), reponse: val('.q-fr-rep') },
+      en: { question: val('.q-en'), reponse: val('.q-en-rep') },
+      es: { question: val('.q-es'), reponse: val('.q-es-rep') },
+    };
+  });
 }
 function faqPayload() {
   const v = id => (document.getElementById(id)?.value || '').trim();
-  const fr = faqBloc('fr');
+  const blocks = faqBlocksAll();
+  const filled = blocks.filter(b => b.fr.question || b.fr.reponse);
+  const warnings = [];
   const translations = {};
   for (const lang of ['en', 'es']) {
-    const b = faqBloc(lang);
-    if (b.titre && b.reponse_courte) translations[lang] = b;
+    const titre = v('faq-title-' + lang), short = v('faq-short-' + lang);
+    if (!titre && !short) continue;                       // langue non commencée
+    if (!titre || !short) { warnings.push(`${lang.toUpperCase()} non publiée : titre et réponse courte requis.`); continue; }
+    const missing = filled.filter(b => !b[lang].question || !b[lang].reponse).length;
+    if (missing) { warnings.push(`${lang.toUpperCase()} non publiée : ${missing} question(s) non traduite(s).`); continue; }
+    translations[lang] = {
+      titre, categorie: v('faq-category-' + lang), sous_categorie: v('faq-subcategory-' + lang),
+      reponse_courte: short,
+      questions: filled.map(b => b[lang]),
+      video: { titre: v('faq-video-title-' + lang), intro: v('faq-video-intro-' + lang) },
+      decouvrir: faqLines('faq-discover-' + lang), savoir_faire: faqLines('faq-can-do-' + lang),
+      retenir: faqLines('faq-takeaway-' + lang),
+      questions_associees: faqRelatedLines('faq-related-' + lang),
+      outils_textes: faqToolsTexts('faq-tools-texts-' + lang),
+    };
   }
   return {
-    titre: fr.titre,
-    slug: slugify(v('faq-slug')),
-    categorie: fr.categorie,
-    sous_categorie: fr.sous_categorie,
-    status: v('faq-status') || 'brouillon',
-    reponse_courte: fr.reponse_courte,
-    reponse_paragraphes: fr.reponse_paragraphes,
-    video: {
-      url: v('faq-video-url'),
-      titre: fr.video.titre,
-      createur: v('faq-video-creator'),
-      duree: v('faq-video-duration'),
-      langue: v('faq-video-lang') || 'Français',
-      intro: fr.video.intro,
+    warnings,
+    payload: {
+      titre: v('faq-title'), slug: slugify(v('faq-slug')),
+      categorie: v('faq-category'), sous_categorie: v('faq-subcategory'),
+      status: v('faq-status') || 'brouillon',
+      reponse_courte: v('faq-short'),
+      questions: filled.map(b => b.fr),
+      video: {
+        url: v('faq-video-url'), titre: v('faq-video-title'), createur: v('faq-video-creator'),
+        duree: v('faq-video-duration'), langue: v('faq-video-lang') || 'Français', intro: v('faq-video-intro'),
+      },
+      decouvrir: faqLines('faq-discover'), savoir_faire: faqLines('faq-can-do'),
+      retenir: faqLines('faq-takeaway'),
+      outils: [...faqSelectedToolIds],
+      questions_associees: faqRelatedLines('faq-related'),
+      outils_textes: faqToolsTexts('faq-tools-texts'),
+      translations,
     },
-    decouvrir: fr.decouvrir,
-    savoir_faire: fr.savoir_faire,
-    retenir: fr.retenir,
-    outils: [...faqSelectedToolIds],
-    questions_associees: fr.questions_associees,
-    translations,
   };
 }
 function faqReset() {
   faqEditingId = null;
   document.getElementById('form-faq').reset();
   document.getElementById('faq-existing').value = '';
+  document.getElementById('faq-questions').innerHTML = '';
+  faqAddQuestionBlock();
   faqSelectedToolIds = [];
   faqRenderTools();
 }
@@ -6153,24 +6191,25 @@ function faqLoadDocument(id) {
   const f = faqAdminCache.find(x => x.id === id);
   if (!f) return faqReset();
   faqEditingId = id;
+  const tr = f.translations || {};
   const fill = (lang, b) => {
     const sfx = lang === 'fr' ? '' : `-${lang}`;
     const s = (k, val) => faqSet(k + sfx, val ?? '');
     const lines = a => (a || []).join('\n');
+    const video = b.video || {};
     s('faq-title', b.titre);
     s('faq-category', b.categorie);
     s('faq-subcategory', b.sous_categorie);
     s('faq-short', b.reponse_courte);
-    s('faq-paragraphs', lines(b.reponse_paragraphes));
-    s('faq-video-title', (b.video || {}).titre);
-    s('faq-video-intro', (b.video || {}).intro);
+    s('faq-video-title', video.titre);
+    s('faq-video-intro', video.intro);
     s('faq-discover', lines(b.decouvrir));
     s('faq-can-do', lines(b.savoir_faire));
     s('faq-takeaway', lines(b.retenir));
+    s('faq-tools-texts', (b.outils_textes || []).map(x => `${x.id} | ${x.texte}`).join('\n'));
     s('faq-related', (b.questions_associees || []).map(q => `${q.question} | ${q.accroche || ''} | ${q.slug || ''}`).join('\n'));
   };
   fill('fr', f);
-  const tr = f.translations || {};
   fill('en', tr.en || {});
   fill('es', tr.es || {});
   const video = f.video || {};
@@ -6180,13 +6219,45 @@ function faqLoadDocument(id) {
   faqSet('faq-video-creator', video.createur || '');
   faqSet('faq-video-duration', video.duree || '');
   faqSet('faq-video-lang', video.langue || 'Français');
+  // Questions : un bloc par question, avec ses traductions au même rang.
+  document.getElementById('faq-questions').innerHTML = '';
+  (f.questions || []).forEach((q, i) => faqAddQuestionBlock({
+    question: q.question, reponse: q.reponse,
+    en: (tr.en?.questions || [])[i], es: (tr.es?.questions || [])[i],
+  }));
+  if (!(f.questions || []).length) faqAddQuestionBlock();
   faqSelectedToolIds = [...(f.outils || [])];
   faqRenderTools();
   document.getElementById('faq-existing').value = id;
 }
+// Traduit la page et TOUS les blocs de questions vers la langue cible.
+async function faqTranslateAll(targetLang, btn) {
+  const libelle = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Traduction en cours…';
+  try {
+    for (const [srcId, destId, format] of faqFieldsToTranslate(targetLang)) {
+      const src = document.getElementById(srcId), dest = document.getElementById(destId);
+      if (!src || !dest || !src.value.trim()) continue;
+      dest.value = format === 'lignes' ? await translateLignes(src.value, targetLang) : await translateText(src.value, targetLang, 'text');
+    }
+    for (const block of document.querySelectorAll('.faq-q-block')) {
+      const q = block.querySelector('.q-fr')?.value.trim();
+      const r = block.querySelector('.q-fr-rep')?.value.trim();
+      if (q) block.querySelector(`.q-${targetLang}`).value = await translateText(q, targetLang, 'text');
+      if (r) block.querySelector(`.q-${targetLang}-rep`).value = await translateLignes(r, targetLang);
+    }
+    faqMessage('ok', `Traduction ${targetLang.toUpperCase()} terminée. Relisez les textes avant d'enregistrer.`);
+  } catch (err) {
+    faqMessage('warn', 'Traduction impossible : ' + err.message);
+  } finally {
+    btn.disabled = false; btn.textContent = libelle;
+  }
+}
 
 document.getElementById('faq-existing').addEventListener('change', e => e.target.value ? faqLoadDocument(e.target.value) : faqReset());
 document.getElementById('faq-new-btn').addEventListener('click', faqReset);
+document.getElementById('faq-add-question').addEventListener('click', () => faqAddQuestionBlock());
+document.querySelectorAll('.btn-translate-faq').forEach(btn => btn.addEventListener('click', () => faqTranslateAll(btn.dataset.targetLang, btn)));
 document.getElementById('faq-title').addEventListener('input', () => {
   const slug = document.getElementById('faq-slug');
   if (slug && !slug.value.trim()) slug.value = slugify(document.getElementById('faq-title').value);
@@ -6196,9 +6267,10 @@ document.getElementById('form-faq').addEventListener('submit', async e => {
   const btn = document.getElementById('faq-save-btn');
   btn.disabled = true;
   try {
-    const payload = faqPayload();
-    if (!payload.titre) throw new Error('La question en français est obligatoire.');
+    const { payload, warnings } = faqPayload();
+    if (!payload.titre) throw new Error('Le titre de la page (FR) est obligatoire.');
     if (!payload.slug) throw new Error('Le slug est obligatoire.');
+    if (!payload.questions.length) throw new Error('Ajoutez au moins une question.');
     payload.updatedAt = serverTimestamp();
     if (faqEditingId) {
       await updateDoc(doc(db, 'faq', faqEditingId), payload);
@@ -6207,7 +6279,7 @@ document.getElementById('form-faq').addEventListener('submit', async e => {
       const ref = await addDoc(collection(db, 'faq'), payload);
       faqEditingId = ref.id;
     }
-    faqMessage('ok', 'FAQ enregistrée dans Firestore. Les pages seront générées au prochain lancement de gen-fiches.js.');
+    faqMessage('ok', 'FAQ enregistrée dans Firestore. Les pages seront générées au prochain build.' + (warnings.length ? ' Attention : ' + warnings.join(' ') : ''));
     await loadFaqAdmin();
     document.getElementById('faq-existing').value = faqEditingId;
   } catch (err) {

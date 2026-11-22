@@ -6231,27 +6231,46 @@ function faqLoadDocument(id) {
   document.getElementById('faq-existing').value = id;
 }
 // Traduit la page et TOUS les blocs de questions vers la langue cible.
+// Même comportement que les autres formulaires : un échec n'arrête pas la suite,
+// chaque appel est retenté après une pause (le service peut se réveiller), et un
+// bilan est affiché à la fin.
+async function faqTryTranslate(fn) {
+  for (let essai = 1; essai <= 3; essai++) {
+    try { return await fn(); }
+    catch (err) {
+      if (essai === 3) throw err;
+      await pause(essai * 4000);
+    }
+  }
+}
 async function faqTranslateAll(targetLang, btn) {
   const libelle = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Traduction en cours…';
-  try {
-    for (const [srcId, destId, format] of faqFieldsToTranslate(targetLang)) {
-      const src = document.getElementById(srcId), dest = document.getElementById(destId);
-      if (!src || !dest || !src.value.trim()) continue;
-      dest.value = format === 'lignes' ? await translateLignes(src.value, targetLang) : await translateText(src.value, targetLang, 'text');
-    }
-    for (const block of document.querySelectorAll('.faq-q-block')) {
-      const q = block.querySelector('.q-fr')?.value.trim();
-      const r = block.querySelector('.q-fr-rep')?.value.trim();
-      if (q) block.querySelector(`.q-${targetLang}`).value = await translateText(q, targetLang, 'text');
-      if (r) block.querySelector(`.q-${targetLang}-rep`).value = await translateLignes(r, targetLang);
-    }
-    faqMessage('ok', `Traduction ${targetLang.toUpperCase()} terminée. Relisez les textes avant d'enregistrer.`);
-  } catch (err) {
-    faqMessage('warn', 'Traduction impossible : ' + err.message);
-  } finally {
-    btn.disabled = false; btn.textContent = libelle;
+  btn.disabled = true;
+  btn.textContent = '🌐 Traduction en cours… (peut prendre 1 min si le service se réveille)';
+  let succes = 0, echecs = 0;
+  const champs = faqFieldsToTranslate(targetLang);
+  for (const [srcId, destId, format] of champs) {
+    const srcEl = document.getElementById(srcId), destEl = document.getElementById(destId);
+    if (!srcEl || !destEl || !srcEl.value.trim()) continue;
+    try {
+      destEl.value = await faqTryTranslate(() => format === 'lignes'
+        ? translateLignes(srcEl.value, targetLang)
+        : translateText(srcEl.value, targetLang, 'text'));
+      succes++;
+    } catch (err) { echecs++; console.error('FAQ traduction', srcId, err); }
   }
+  for (const block of document.querySelectorAll('.faq-q-block')) {
+    const q = block.querySelector('.q-fr')?.value.trim();
+    const r = block.querySelector('.q-fr-rep')?.value.trim();
+    try {
+      if (q) { block.querySelector(`.q-${targetLang}`).value = await faqTryTranslate(() => translateText(q, targetLang, 'text')); succes++; }
+      if (r) { block.querySelector(`.q-${targetLang}-rep`).value = await faqTryTranslate(() => translateLignes(r, targetLang)); succes++; }
+    } catch (err) { echecs++; console.error('FAQ traduction bloc', err); }
+  }
+  btn.disabled = false;
+  btn.textContent = libelle;
+  if (echecs === 0) faqMessage('ok', `Traduction ${targetLang.toUpperCase()} terminée (${succes} champ(s)). Relisez avant d'enregistrer.`);
+  else faqMessage('warn', `Traduction ${targetLang.toUpperCase()} : ${succes} réussi(s), ${echecs} échec(s). Relancez le bouton pour les champs en échec.`);
 }
 
 document.getElementById('faq-existing').addEventListener('change', e => e.target.value ? faqLoadDocument(e.target.value) : faqReset());

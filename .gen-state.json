@@ -1703,28 +1703,7 @@
       "updatedAtMs": 1790462872431
     }
   },
-  "faq": {
-    "QDJlokpgmuQDPPMKxFFj:fr": {
-      "hash": "04a675c2dee957571843901759dfa824d0921df7b6cb38dc91c951682db2bc12",
-      "path": "pages/quels-outils-ia-sont-gratuits-sans-limite"
-    },
-    "ZJcWMTjQD0sUy8po5aV1:fr": {
-      "hash": "d87ac28bfd8c30972e2bc2fea85ac20fb0ed6a2e2135337d8d01c37f854bd16e",
-      "path": "pages/quels-outils-ia-sont-gratuits-sans-limite"
-    },
-    "ZJcWMTjQD0sUy8po5aV1:en": {
-      "hash": "c2e352baa4ab72ffaffb458da8ea7103a1794873d46b33b736f6caf6fa60b296",
-      "path": "pages/quels-outils-ia-sont-gratuits-sans-limite/en"
-    },
-    "ZJcWMTjQD0sUy8po5aV1:es": {
-      "hash": "8deddfdc6a56af080d285bdaf8212ef1ed9df5f953c73f8f3b35246173aeae60",
-      "path": "pages/quels-outils-ia-sont-gratuits-sans-limite/es"
-    },
-    "aSz6TyDRk0ezCa34P4R3:fr": {
-      "hash": "1dd2ceda6310f736d74353a8b691071c870818a4db455da1406571dbf0bf2e08",
-      "path": "pages/comment-utiliser-l-intelligence-artificielle-pour-anticiper-les-risques-et-les-decisions-juridiques"
-    }
-  },
+  "faq": {},
   "faqHubHash": "9c391ae9167ee26fdc52cee737490a69065ab3ba0c52e225dd68c01aaa48a3ca",
-  "templateVersion": "layout-v1"
+  "templateVersion": "layout-v13"
 }

@@ -87,6 +87,46 @@ function renderReponse(text) {
   return out.join('');
 }
 
+// ── Données structurées (schema.org) ─────────────────────────────
+// Texte brut d'une réponse (sans balises), identique au texte visible.
+function plainText(reponse) {
+  return String(reponse || '').split('\n')
+    .map(l => l.trim().replace(/^-\s*/, '').replace(/^\d+\.\s+/, '').replace(/\*\*(.+?)\*\*/g, '$1').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1'))
+    .filter(Boolean).join(' ');
+}
+// JSON échappé pour une balise <script> (aucun « </script> » possible).
+function jsonLdScript(obj) {
+  return `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
+}
+// FAQPage (questions visibles sur la page) + fil d'Ariane.
+function faqJsonLd(doc, lang, txt) {
+  const url = `${SITE}${pageUrl(doc.slug, lang)}`;
+  const faqPage = {
+    '@context': 'https://schema.org', '@type': 'FAQPage', '@id': url + '#faq', url, inLanguage: lang,
+    name: txt.titre,
+    mainEntity: (txt.questions || []).map(q => ({ '@type': 'Question', name: q.question,
+      acceptedAnswer: { '@type': 'Answer', text: plainText(q.reponse) } })),
+  };
+  const fil = {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Albexia', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'FAQ', item: `${SITE}/faq/` },
+      { '@type': 'ListItem', position: 3, name: txt.titre, item: url },
+    ],
+  };
+  return jsonLdScript(faqPage) + jsonLdScript(fil);
+}
+// Hub /faq/ : liste des pages publiées (CollectionPage + ItemList).
+function faqHubJsonLd(docs) {
+  const hub = {
+    '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Questions fréquentes sur l’IA', url: `${SITE}/faq/`, inLanguage: 'fr',
+    mainEntity: { '@type': 'ItemList', itemListElement: docs.map((d, i) => ({ '@type': 'ListItem', position: i + 1,
+      url: `${SITE}${pageUrl(d.slug, 'fr')}`, name: d.titre })) },
+  };
+  return jsonLdScript(hub);
+}
+
 // Page de redirection : /pages/<slug>/ → /pages/<slug>/fr/
 function faqRedirectHTML(slug) {
   const u = pageUrl(slug, 'fr');
@@ -105,7 +145,7 @@ function generateFAQPage(doc, { lang = 'fr', toolsById = {}, pagesBySlug = {}, p
   const textesOutils = Object.fromEntries((txt.outils_textes || []).map(x => [x.id, x.texte]));
   const questions = txt.questions || [];
 
-  const videoBlock = hasVideo && `<section class="faq-section faq-video-section"><h2>${esc(L('faq.videoLead'))}</h2>${vt.intro ? `<p>${esc(vt.intro)}</p>` : ''}<p><strong>${esc(vt.titre)}</strong>${v.createur ? ` · ${esc(v.createur)}` : ''}${v.duree ? ` · ${esc(v.duree)}` : ''}</p>${idYt ? `<div class="faq-yt" data-yt="${esc(idYt)}" role="button" tabindex="0" aria-label="${esc(vt.titre)}"><img src="https://img.youtube.com/vi/${esc(idYt)}/hqdefault.jpg" alt="${esc(vt.titre)}" loading="lazy"><span class="faq-yt-play" aria-hidden="true">▶</span></div><a class="faq-text-link" href="https://www.youtube.com/watch?v=${esc(idYt)}" target="_blank" rel="noopener">${esc(L('faq.watchYt'))} →</a>` : ''}${(txt.decouvrir || []).length ? `<div class="faq-learning-card"><span class="faq-learning-num">01</span><h3>${esc(L('faq.discover'))}</h3>${ul(txt.decouvrir)}</div>` : ''}${(txt.savoir_faire || []).length ? `<div class="faq-learning-card"><span class="faq-learning-num">02</span><h3>${esc(L('faq.canDo'))}</h3>${ul(txt.savoir_faire)}</div>` : ''}</section>`;
+  const videoBlock = hasVideo && `<section class="faq-section faq-video-section"><h2>${esc(L('faq.videoLead'))}</h2>${vt.intro ? `<p>${esc(vt.intro)}</p>` : ''}<p><strong>${esc(vt.titre)}</strong>${v.createur ? ` · ${esc(v.createur)}` : ''}${v.duree ? ` · ${esc(v.duree)}` : ''}</p>${idYt ? `<div class="faq-yt" data-yt="${esc(idYt)}" role="button" tabindex="0" aria-label="${esc(vt.titre)}"><img src="https://img.youtube.com/vi/${esc(idYt)}/hqdefault.jpg" alt="${esc(vt.titre)}" loading="lazy"><span class="faq-yt-play" aria-hidden="true">▶</span><span class="faq-yt-bar">${esc(L('faq.watchYt'))}</span></div><a class="faq-text-link" href="https://www.youtube.com/watch?v=${esc(idYt)}" target="_blank" rel="noopener">${esc(L('faq.watchYt'))} →</a>` : ''}${(txt.decouvrir || []).length ? `<div class="faq-learning-card"><span class="faq-learning-num">01</span><h3>${esc(L('faq.discover'))}</h3>${ul(txt.decouvrir)}</div>` : ''}${(txt.savoir_faire || []).length ? `<div class="faq-learning-card"><span class="faq-learning-num">02</span><h3>${esc(L('faq.canDo'))}</h3>${ul(txt.savoir_faire)}</div>` : ''}</section>`;
 
   const sections = [
     `<header class="faq-heading"><h1>${esc(txt.titre)}</h1></header>`,
@@ -127,9 +167,9 @@ function generateFAQPage(doc, { lang = 'fr', toolsById = {}, pagesBySlug = {}, p
 
   const yt = idYt ? `<script>document.querySelectorAll('.faq-yt').forEach(function(el){function go(){var f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+el.dataset.yt+'?autoplay=1';f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;f.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0';el.innerHTML='';el.appendChild(f);el.removeAttribute('role');}el.addEventListener('click',go);el.addEventListener('keydown',function(e){if(e.key==='Enter')go();});});</script>` : '';
 
-  const head = `<!DOCTYPE html><html lang="${lang}" data-static-lang="${lang}"><head><script src="/js/theme.js"></script><script src="/js/i18n.js"></script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${esc(txt.titre)} | Albexia</title><meta name="description" content="${esc(txt.reponse_courte)}"><link rel="canonical" href="${SITE}${pageUrl(doc.slug, lang)}">${hreflang}${favicon ? `<link rel="icon" type="image/png" sizes="512x512" href="${favicon}"><link rel="apple-touch-icon" href="${favicon}">` : ''}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/faq-detail.css"><link rel="stylesheet" href="/css/themes.css"></head><body>`;
+  const head = `<!DOCTYPE html><html lang="${lang}" data-static-lang="${lang}"><head><script src="/js/theme.js"></script><script src="/js/i18n.js"></script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${esc(txt.titre)} | Albexia</title><meta name="description" content="${esc(txt.reponse_courte)}"><link rel="canonical" href="${SITE}${pageUrl(doc.slug, lang)}">${hreflang}${faqJsonLd(doc, lang, txt)}${favicon ? `<link rel="icon" type="image/png" sizes="512x512" href="${favicon}"><link rel="apple-touch-icon" href="${favicon}">` : ''}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/faq-detail.css"><link rel="stylesheet" href="/css/themes.css"></head><body>`;
   const body = `${navHTML(lang)}<main class="faq-page"><div class="faq-layout"><article class="faq-content">${sections.join('\n')}</article></div></main>${yt}${footerHTML(lang)}`;
   return `${head}\n${body}</body></html>`;
 }
 
-module.exports = { generateFAQPage, faqLangueDisponible, faqLanguesPubliees, faqRedirectHTML, faqTextes: textesPour, renderReponse, ytId, t };
+module.exports = { generateFAQPage, faqLangueDisponible, faqLanguesPubliees, faqRedirectHTML, faqTextes: textesPour, renderReponse, ytId, plainText, faqHubJsonLd, t };

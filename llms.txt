@@ -6,6 +6,7 @@ Langue : français.
 
 ## Assistants IA et recherche
 
+- [Fathom](https://albexia.com/tools/standard/fr/fathom/): Fathom est un assistant IA de réunions qui enregistre, transcrit et résume vos appels, puis génère automatiquement les actions à suivre et les points clés.
 - [Grok](https://albexia.com/tools/standard/fr/grok/): Grok est un assistant IA développé par xAI, capable de répondre à des questions complexes, d'analyser des données en temps réel via X et de générer du code avec un ton direct.
 - [Kimi](https://albexia.com/tools/featured/fr/kimi/): Assistant IA conversationnel développé par Moonshot AI, réputé pour sa capacité à traiter de très longs volumes de texte (jusqu'à 2 millions de caractères).
 - [Meta AI](https://albexia.com/tools/standard/fr/meta-ai/): Meta AI est l'assistant gratuit de Meta, accessible sur meta.ai, en app mobile et directement dans WhatsApp, Instagram, Messenger et Facebook. Propulsé par Muse Spark, il discute, génère des images et des vidéos.
@@ -103,6 +104,7 @@ Langue : français.
 - [MarketMuse](https://albexia.com/tools/starter/fr/marketmuse/): MarketMuse analyse l'ensemble d'un site pour identifier les lacunes de contenu par rapport aux concurrents et bâtir l'autorité thématique. Il génère des briefs détaillés basés sur son modélisation de sujets propriétaire.
 - [Outranking](https://albexia.com/tools/standard/fr/outranking/): Outranking est un logiciel d'optimisation SEO guidé par l'IA. Il aide à planifier, rédiger et structurer des contenus hautement positionnés sur les moteurs de recherche.
 - [SE Ranking](https://albexia.com/tools/starter/fr/se-ranking/): SE Ranking est une plateforme SEO tout-en-un pour suivre les positions, auditer un site, analyser les backlinks, rechercher des mots-clés et créer des rapports clients.
+- [Semrush](https://albexia.com/tools/standard/fr/semrush/): Semrush est une plateforme de visibilité en ligne qui aide à analyser le SEO, les mots-clés, les backlinks, la concurrence, le contenu et les campagnes publicitaires.
 - [WordLift](https://albexia.com/tools/standard/fr/wordlift/): WordLift automatise le balisage Schema.org et construit un graphe de connaissances à partir de votre contenu WordPress. L'outil connecte vos entités à des sources externes comme Wikidata pour renforcer la compréhension par les moteurs et les IA.
 - [Yoast AI](https://albexia.com/tools/standard/fr/yoast-ai/): Yoast AI Generate est une fonctionnalité intégrée au plugin Yoast SEO. Elle utilise l'intelligence artificielle pour rédiger automatiquement des titres et méta-descriptions optimisés.
 

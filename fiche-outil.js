@@ -775,4 +775,4 @@ ${footerHTML('fr')}
 // Une FAQ est un document Firestore avec les contenus FR/EN/ES regroupés.
 // Cette fonction ne lit aucune donnée : elle reçoit les données préparées par gen-fiches.js.
 
-module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie, offresJsonLd };
+module.exports = { FAVICON, generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie, offresJsonLd };

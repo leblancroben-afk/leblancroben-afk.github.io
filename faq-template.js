@@ -47,7 +47,7 @@ function faqLangueDisponible(doc, lang) {
 
 const ul = items => `<ul>${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`;
 
-function generateFAQPage(doc, { lang = 'fr', toolsById = {} } = {}) {
+function generateFAQPage(doc, { lang = 'fr', toolsById = {}, navHTML = () => '', footerHTML = () => '', favicon = '' } = {}) {
   if (!faqLangueDisponible(doc, lang)) return null; // pas de traduction → pas de page
   const txt = textesPour(doc, lang);
   const fr = doc;                                    // champs techniques
@@ -60,8 +60,7 @@ function generateFAQPage(doc, { lang = 'fr', toolsById = {} } = {}) {
   const questions = txt.questions_associees || [];
 
   const sections = [
-    `<nav class="faq-breadcrumbs" aria-label="${esc(L('faq.breadcrumbLabel'))}"><a href="/faq/">${esc(L('faq.center'))}</a> → <span>${esc(txt.categorie)}</span>${txt.sous_categorie ? ` → <span aria-current="page">${esc(txt.sous_categorie)}</span>` : ''}</nav>`,
-    `<header class="faq-heading"><p class="faq-category-label">${esc(txt.categorie)}</p><h1>${esc(txt.titre)}</h1></header>`,
+    `<header class="faq-heading"><h1>${esc(txt.titre)}</h1></header>`,
     `<section class="faq-short-answer"><p class="faq-overline">${esc(L('faq.shortAnswer'))}</p><p>${esc(txt.reponse_courte)}</p></section>`,
     paras && `<section class="faq-section"><h2>${esc(L('faq.detailed'))}</h2>${paras}</section>`,
     hasVideo && `<section class="faq-section faq-video-section"><h2>${esc(L('faq.video'))}</h2>${vt.intro ? `<p>${esc(vt.intro)}</p>` : ''}<p><strong>${esc(vt.titre)}</strong>${v.createur ? ` · ${esc(v.createur)}` : ''}${v.duree ? ` · ${esc(v.duree)}` : ''}</p><div class="faq-video"><iframe src="${esc(v.url)}" title="${esc(vt.titre)}" loading="lazy" allowfullscreen></iframe></div></section>`,
@@ -73,7 +72,9 @@ function generateFAQPage(doc, { lang = 'fr', toolsById = {} } = {}) {
     `<section class="faq-more"><h2>${esc(L('faq.continue'))}</h2><p><a href="/faq/">${esc(L('faq.back'))}</a></p></section>`,
   ].filter(Boolean);
 
-  return `<!DOCTYPE html><html lang="${lang}" data-static-lang="${lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(txt.titre)} | Albexia</title><meta name="description" content="${esc(txt.reponse_courte)}"><link rel="canonical" href="https://albexia.com/pages/${esc(fr.slug)}/${lang === 'fr' ? '' : lang + '/'}"><link rel="stylesheet" href="/css/faq-detail.css"></head><body><main class="faq-page"><div class="faq-layout"><article class="faq-content">${sections.join('\n')}</article></div></main></body></html>`;
+  const head = `<!DOCTYPE html><html lang="${lang}" data-static-lang="${lang}"><head><script src="/js/theme.js"></script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${esc(txt.titre)} | Albexia</title><meta name="description" content="${esc(txt.reponse_courte)}"><link rel="canonical" href="https://albexia.com/pages/${esc(fr.slug)}/${lang === 'fr' ? '' : lang + '/'}">${favicon ? `<link rel="icon" type="image/svg+xml" href="${favicon}">` : ''}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/faq-detail.css"><link rel="stylesheet" href="/css/themes.css"></head><body>`;
+  const body = `${navHTML(lang)}<main class="faq-page"><div class="faq-layout"><article class="faq-content">${sections.join('\n')}</article></div></main>${footerHTML(lang)}`;
+  return `${head}\n${body}</body></html>`;
 }
 
 // Langues réellement publiées pour un document (sert aux liens entre langues).

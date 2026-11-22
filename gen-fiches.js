@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v3'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v13'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -145,7 +145,7 @@ function reecrireAnciensDomaines(html) {
 }
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
-const { generateFiche, avisOutilPageHTML, normaliserSousCategorie } = require('./fiche-outil');
+const { generateFiche, avisOutilPageHTML, normaliserSousCategorie, FAVICON } = require('./fiche-outil');
 const { generateFAQPage, faqLangueDisponible } = require('./faq-template'); // gabarit FAQ unique (même règle que les fiches) // template unique de fiche outil + page « tous les avis »
 
 function sharedJS() {
@@ -5147,7 +5147,7 @@ async function main() {
       if (!faqLangueDisponible(faq, lang)) continue;
       const folder = path.join('pages', slug, ...(lang === 'fr' ? [] : [lang]));
       const output = path.join(folder, 'index.html');
-      const html = generateFAQPage({ ...faq, slug }, { lang, toolsById });
+      const html = generateFAQPage({ ...faq, slug }, { lang, toolsById, navHTML, footerHTML, favicon: FAVICON });
       if (!html) continue;
       const hash = crypto.createHash('sha256').update(html).digest('hex');
       const key = `${faq.id}:${lang}`;

@@ -145,7 +145,8 @@ function reecrireAnciensDomaines(html) {
 }
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
-const { generateFiche, generateFAQ, avisOutilPageHTML, normaliserSousCategorie } = require('./fiche-outil'); // template unique de fiche outil + page « tous les avis »
+const { generateFiche, avisOutilPageHTML, normaliserSousCategorie } = require('./fiche-outil');
+const { generateFAQPage, faqLangueDisponible } = require('./faq-template'); // gabarit FAQ unique (même règle que les fiches) // template unique de fiche outil + page « tous les avis »
 
 function sharedJS() {
   return '';
@@ -5132,30 +5133,28 @@ async function main() {
   const hashFaqDoc = data => { const { updatedAt, ...rest } = data || {}; return crypto.createHash('sha256').update(JSON.stringify(rest)).digest('hex'); };
   const faqPublished = faqDocs.filter(f => f.status === 'publie' && f.slug);
   const validFaqPaths = new Set();
+  const planFolder = t => t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard';
+  const toolsById = Object.fromEntries(tools.map(t => [t.id, {
+    nom: t.name, name: t.name, description: t.description || '',
+    url: `/tools/${planFolder(t)}/${t.langue || 'fr'}/${slugify(t.name)}/`,
+  }]));
   let faqChanged = false;
   for (const faq of faqPublished) {
     const slug = slugify(faq.slug);
     if (!slug) continue;
-    const translations = faq.translations || faq.traductions || {};
-    const available = ['fr','en','es'].filter(lang => {
-      const d = translations[lang] || (lang === 'fr' ? faq : null);
-      return !!(d && String(d.title || d.titre || (lang === 'fr' ? faq.titre : '') || '').trim());
-    });
-    const urls = {};
-    for (const lang of available) urls[lang] = `${SITE_ORIGIN}/pages/${slug}/${lang === 'fr' ? '' : lang + '/'}`;
-    for (const lang of available) {
+    for (const lang of ['fr', 'en', 'es']) {
+      // Pas de traduction, pas de page (même règle que les fiches outils).
+      if (!faqLangueDisponible(faq, lang)) continue;
       const folder = path.join('pages', slug, ...(lang === 'fr' ? [] : [lang]));
       const output = path.join(folder, 'index.html');
-      const hash = hashFaqDoc({...faq, _renderLang:lang, _tools: (faq.toolIds || []).map(id => tools.find(t => String(t.id) === String(id))).filter(Boolean).map(t=>({id:t.id,name:t.name,description:t.description,plan:t.plan,langue:t.langue,emoji:t.emoji}))});
+      const html = generateFAQPage({ ...faq, slug }, { lang, toolsById });
+      if (!html) continue;
+      const hash = crypto.createHash('sha256').update(html).digest('hex');
       const key = `${faq.id}:${lang}`;
-      newState.faq[key] = { hash, updatedAtMs: updatedAtMs(faq), path: path.join('pages', slug, ...(lang === 'fr' ? [] : [lang])) };
-      validFaqPaths.add(path.join('pages', slug, ...(lang === 'fr' ? [] : [lang])));
-      const oldHash = state.faq?.[key]?.hash;
-      if (oldHash !== hash || !fs.existsSync(output)) {
-        fs.mkdirSync(folder, {recursive:true});
-        const category = faqCategories.find(c => c && c.slug === faq.categorie) || {};
-        const faqForRender = {...faq, categoryLabels:{fr:category.name || category.nom || faq.categorie || '', en:category.name_en || category.nom_en || category.name || faq.categorie || '', es:category.name_es || category.nom_es || category.name || faq.categorie || ''}};
-        const html = generateFAQ(faqForRender, tools, {...FICHE_DEPS, seoHeadTags}, lang, urls);
+      newState.faq[key] = { hash, path: folder };
+      validFaqPaths.add(folder);
+      if (state.faq?.[key]?.hash !== hash || !fs.existsSync(output)) {
+        fs.mkdirSync(folder, { recursive: true });
         fs.writeFileSync(output, reecrireAnciensDomaines(html), 'utf8');
         faqChanged = true;
         console.log(`  ✓ FAQ ${slug} (${lang}) générée`);

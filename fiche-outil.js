@@ -774,43 +774,5 @@ ${footerHTML('fr')}
 // ── Pages FAQ éditoriales ────────────────────────────────────────────────
 // Une FAQ est un document Firestore avec les contenus FR/EN/ES regroupés.
 // Cette fonction ne lit aucune donnée : elle reçoit les données préparées par gen-fiches.js.
-function generateFAQ(faq, tools = [], deps = {}, langue = 'fr', langueUrls = {}) {
-  const SITE_ORIGIN = 'https://albexia.com';
-  const E = deps.esc || (v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));
-  const { navHTML = () => '', footerHTML = () => '' } = deps;
-  const tr = faq.translations || faq.traductions || {};
-  const data = tr[langue] || (langue === 'fr' ? faq : {});
-  const title = data.title || data.titre || faq.title || faq.titre || '';
-  const slug = faq.slug || (deps.slugify ? deps.slugify(title) : '');
-  const description = data.metaDescription || data.meta_description || data.introduction || '';
-  const canonical = langueUrls[langue] || `${SITE_ORIGIN}/pages/${slug}/${langue === 'fr' ? '' : langue + '/'}`;
-  const seo = deps.seoHeadTags ? deps.seoHeadTags(langue, Object.keys(langueUrls).length ? langueUrls : {[langue]:canonical}) : {canonicalUrl:canonical,hreflangTags:'',ogLocale:'fr_FR',ogLocaleAlternates:''};
-  const sections = Array.isArray(data.sections) ? data.sections : [];
-  const selectedTools = (Array.isArray(faq.toolIds) ? faq.toolIds : Array.isArray(faq.outils) ? faq.outils : []).map(id => { const base = tools.find(t => String(t.id) === String(id)); if (!base || langue === 'fr' || !base.traductions?.[langue]) return base; return tools.find(t => String(t.id) === String(base.traductions[langue])) || base; }).filter(Boolean);
-  const more = Array.isArray(data.more) ? data.more : Array.isArray(data.pourAllerPlusLoin) ? data.pourAllerPlusLoin : [];
-  const video = data.video || faq.video || {};
-  const youtube = String(video.url || '').trim();
-  // La transcription sert uniquement à préparer les cartes dans l’admin ; elle n’est pas publiée ni persistée.
-  const videoId = (() => { try { const u = new URL(youtube); if (u.hostname === 'youtu.be') return u.pathname.slice(1).split('/')[0]; if (u.hostname.endsWith('youtube.com')) return u.searchParams.get('v') || (u.pathname.match(/\/(?:embed|shorts)\/([^/?]+)/)||[])[1] || ''; } catch (_) {} return ''; })();
-  const hasVideo = !!(videoId && (video.discover || video.decouvrir || video.canDo || video.savoirFaire));
-  const ids = sections.map((sec,i) => sec.id || `faq-section-${i+1}`);
-  const sectionHtml = sections.map((sec,i) => {
-    const content = sec.content || sec.contenu || '';
-    return `<section class="faq-section" id="${E(ids[i])}"><h2>${E(sec.title || sec.titre || '')}</h2>${content ? `<div class="faq-rich-content">${content}</div>` : ''}</section>`;
-  }).join('\n');
-  const toolsHtml = selectedTools.length ? `<div class="faq-tool-list">${selectedTools.map(t => {
-    const name = E(t.name || t.nom || ''); const desc = E(t.description || '');
-    const plan = t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard';
-    const lang = t.langue || 'fr'; const toolSlug = (deps.slugify || (x=>x))(t.name || '');
-    return `<a class="faq-tool" href="/tools/${plan}/${lang}/${toolSlug}/"><span class="faq-tool-mark">${E((t.emoji || name.slice(0,2)).toString())}</span><span class="faq-tool-copy"><strong>${name}</strong><small>${desc}</small></span><span class="faq-tool-arrow" aria-hidden="true">↗</span></a>`;
-  }).join('')}</div>` : '';
-  const videoHtml = hasVideo ? `<section class="faq-video-section" id="faq-video-section"><h2>Leçon vidéo</h2><div class="faq-youtube-frame"><iframe src="https://www.youtube-nocookie.com/embed/${E(videoId)}" title="${E(title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>${(video.discover || video.decouvrir || video.canDo || video.savoirFaire) ? `<div class="faq-learning-grid">${(video.discover || video.decouvrir) ? `<div class="faq-learning-card"><span>01</span><h3>Ce que vous allez découvrir</h3><div>${video.discover || video.decouvrir}</div></div>` : ''}${(video.canDo || video.savoirFaire) ? `<div class="faq-learning-card"><span>02</span><h3>Ce que vous saurez faire</h3><div>${video.canDo || video.savoirFaire}</div></div>` : ''}</div>` : ''}</section>` : '';
-  const moreHtml = more.length ? `<section class="faq-more" id="faq-more"><h2>Pour aller plus loin</h2>${more.map(item => `<a href="${E(item.url || (item.slug ? `/pages/${item.slug}/` : '#'))}">${E(item.title || item.titre || item.label || '')}<span aria-hidden="true">↗</span></a>`).join('')}</section>` : '';
-  const toc = [data.shortAnswer || data.reponseRapide ? ['faq-short-answer','Réponse rapide'] : null, ...sections.map((sec,i)=>[ids[i],sec.title || sec.titre || `Section ${i+1}`]), hasVideo ? ['faq-video-section','Leçon vidéo'] : null, more.length ? ['faq-more','Pour aller plus loin'] : null].filter(Boolean);
-  const langUrls = Object.entries(langueUrls).map(([l,url])=>`<link rel="alternate" hreflang="${E(l)}" href="${E(url)}">`).join('\n') + (langueUrls.fr ? `\n<link rel="alternate" hreflang="x-default" href="${E(langueUrls.fr)}">` : '');
-  const head = `<meta charset="UTF-8"><script src="/js/theme.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>${E(data.metaTitle || data.meta_title || title)} | Albexia</title><meta name="description" content="${E(description)}"><meta property="og:type" content="article"><meta property="og:title" content="${E(data.metaTitle || data.meta_title || title)} | Albexia"><meta property="og:description" content="${E(description)}"><meta property="og:url" content="${E(canonical)}"><meta property="og:locale" content="${langue==='en'?'en_US':langue==='es'?'es_ES':'fr_FR'}"><link rel="canonical" href="${E(canonical)}">${langUrls}<link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/themes.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="/css/faq-detail.css">`;
-  const jsonLd = {'@context':'https://schema.org','@type':'Article','headline':title,'description':description,'inLanguage':langue,'mainEntityOfPage':canonical,'publisher':{'@type':'Organization','name':'Albexia','url':SITE_ORIGIN}};
-  return `<!DOCTYPE html><html lang="${E(langue)}" data-static-lang="${E(langue)}"><head>${head}<script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g,'\\u003c')}</script></head><body>${navHTML(langue)}<main class="faq-page container"><div class="faq-layout"><article class="faq-content"><header class="faq-heading"><h1>${E(title)}</h1>${data.introduction ? `<p class="faq-intro">${E(data.introduction)}</p>` : ''}</header>${(data.shortAnswer || data.reponseRapide) ? `<section class="faq-short-answer" id="faq-short-answer"><p class="faq-overline">Réponse rapide</p><div>${data.shortAnswer || data.reponseRapide}</div></section>` : ''}<div class="faq-body">${sectionHtml}${toolsHtml}</div>${data.takeaway ? `<aside class="faq-takeaway"><p class="faq-overline">À retenir</p><div>${data.takeaway}</div></aside>` : ''}${videoHtml}${moreHtml}</article>${toc.length ? `<aside class="faq-aside"><div class="faq-aside-card"><p class="faq-aside-title">Sur cette page</p>${toc.map(([id,label])=>`<a href="#${E(id)}">${E(label)}</a>`).join('')}</div></aside>` : ''}</div></main>${footerHTML(langue)}<script src="/js/i18n.js"></script><script src="/js/header.js" defer></script><script src="/js/footer.js" defer></script></body></html>`;
-}
 
-module.exports = { generateFiche, generateFAQ, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie, offresJsonLd };
+module.exports = { generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie, offresJsonLd };

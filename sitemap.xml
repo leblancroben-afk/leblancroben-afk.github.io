@@ -988,13 +988,25 @@
     <loc>https://albexia.com/pages/comment-utiliser-l-intelligence-artificielle-pour-anticiper-les-risques-et-les-decisions-juridiques/</loc>
   </url>
   <url>
-    <loc>https://albexia.com/pages/qu-est-ce-que-midjourney/</loc>
-  </url>
-  <url>
     <loc>https://albexia.com/pages/qu-est-ce-que-midjourney/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/pages/qu-est-ce-que-midjourney/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/pages/qu-est-ce-que-midjourney/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/pages/qu-est-ce-que-midjourney/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/pages/qu-est-ce-que-midjourney/fr/"/>
   </url>
   <url>
     <loc>https://albexia.com/pages/qu-est-ce-que-midjourney/es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/pages/qu-est-ce-que-midjourney/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/pages/qu-est-ce-que-midjourney/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/pages/qu-est-ce-que-midjourney/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/pages/qu-est-ce-que-midjourney/fr/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/pages/qu-est-ce-que-midjourney/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/pages/qu-est-ce-que-midjourney/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/pages/qu-est-ce-que-midjourney/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/pages/qu-est-ce-que-midjourney/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/pages/qu-est-ce-que-midjourney/fr/"/>
   </url>
   <url>
     <loc>https://albexia.com/pages/quels-outils-ia-sont-gratuits-sans-limite/</loc>

@@ -59,16 +59,23 @@ function faqLangueDisponible(doc, lang) {
 
 // Réponse : paragraphes, et lignes « - » regroupées en liste.
 function renderReponse(text) {
+  // Accepte « - texte », « -texte » et les cellules d'un tableau collé (séparées par des tabulations) :
+  // chaque élément devient une puce ; les autres lignes deviennent des paragraphes.
   const out = [];
   let list = [];
+  const flush = () => { if (list.length) { out.push(ul(list)); list = []; } };
   for (const raw of String(text || '').split('\n')) {
     const line = raw.trim();
-    if (!line) continue;
-    if (line.startsWith('- ')) { list.push(line.slice(2).trim()); continue; }
-    if (list.length) { out.push(ul(list)); list = []; }
+    if (!line) { flush(); continue; }
+    if (line.includes('\t')) {
+      line.split('\t').map(c => c.trim().replace(/^-\s*/, '')).filter(Boolean).forEach(c => list.push(c));
+      continue;
+    }
+    if (/^-/.test(line)) { list.push(line.replace(/^-\s*/, '')); continue; }
+    flush();
     out.push(`<p>${esc(line)}</p>`);
   }
-  if (list.length) out.push(ul(list));
+  flush();
   return out.join('');
 }
 

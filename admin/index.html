@@ -1704,91 +1704,85 @@ Support français|oui|non|bool"></textarea>
   </div>
 
   <div class="tab-panel" id="tab-faq">
-    <div class="msg msg-warn" id="warn-faq"></div><div class="msg msg-ok" id="ok-faq"></div>
-    <div class="form-layout">
-      <div class="form-col">
-        <h2>Pages FAQ</h2>
-        <p class="field-hint">Une question publiée crée une page statique. Les contenus FR, EN et ES sont regroupés dans un seul document Firestore de la collection <code>faq</code>.</p>
-        <label>FAQ existantes</label><select id="faq-existing"><option value="">Créer une nouvelle FAQ…</option></select>
-        <form id="form-faq">
-          <fieldset><legend>Publication</legend>
-            <label>Titre français *</label><input id="faq-title" required>
-            <label>Slug URL *</label><input id="faq-slug" required placeholder="outils-ia-gratuits">
-            <label>Catégorie (slug) *</label><input id="faq-category" required placeholder="outils-ia-et-tarifs">
-            <label>Statut</label><select id="faq-status"><option value="brouillon">Brouillon</option><option value="publie">Publié</option></select>
-            <div class="search-wrap" id="faq-tool-search-wrap">
-              <label for="faq-tool-search">Rechercher un outil existant (nom)</label>
-              <input type="text" id="faq-tool-search" placeholder="Tapez le nom d’un outil…" autocomplete="off">
-              <div id="faq-tool-search-results" class="search-results"></div>
-            </div>
-            <div id="faq-tools-selected" class="faq-selected-tools" aria-live="polite"></div>
-          </fieldset>
-          <fieldset><legend>Contenu FR</legend>
-            <label>Introduction</label><textarea id="faq-intro" rows="3"></textarea>
-            <label>Réponse rapide (HTML autorisé)</label><textarea id="faq-short" rows="4"></textarea>
-            <label>Sections de la page</label>
-            <div id="faq-sections-editor"></div>
-            <button type="button" class="btn-submit" id="faq-add-section" style="background:var(--accent3);margin:8px 0 16px">+ Ajouter une section</button>
-            <label>À retenir (HTML autorisé)</label><textarea id="faq-takeaway" rows="3"></textarea>
-            <label>Pour aller plus loin</label>
-            <div id="faq-more-editor"></div>
-            <button type="button" class="btn-submit" id="faq-add-more" style="background:var(--accent3);margin:8px 0 16px">+ Ajouter un lien FAQ</button>
-          </fieldset>
-          <fieldset><legend>Leçon vidéo (facultatif)</legend>
-            <label>URL YouTube</label><input id="faq-video-url" placeholder="https://youtu.be/xxxxxxxxxxx">
-            <label>Transcription FR</label><textarea id="faq-transcript" rows="5"></textarea>
-            <label>Transcription EN</label><textarea id="faq-transcript-en" rows="5"></textarea>
-            <label>Transcription ES</label><textarea id="faq-transcript-es" rows="5"></textarea>
-            <label>Ce que vous allez découvrir (HTML ou liste)</label><textarea id="faq-discover" rows="3"></textarea>
-            <label>Ce que vous saurez faire (HTML ou liste)</label><textarea id="faq-can-do" rows="3"></textarea>
-            <p class="field-hint">Le bloc vidéo et ses cartes ne seront affichés que si l'URL YouTube et la transcription sont renseignées.</p>
-          </fieldset>
-          <fieldset><legend>SEO FR</legend>
-            <label>Meta title FR</label><input id="faq-meta-title">
-            <label>Meta description FR</label><textarea id="faq-meta-desc" rows="2"></textarea>
-          </fieldset>
-          <fieldset><legend>Contenu EN</legend>
-            <button type="button" class="btn-translate" data-target-lang="en" data-form="faq">🌐 Traduire depuis le FR</button>
-            <label>Titre EN</label><input id="faq-title-en">
-            <label>Introduction EN</label><textarea id="faq-intro-en" rows="3"></textarea>
-            <label>Réponse rapide EN</label><textarea id="faq-short-en" rows="4"></textarea>
-            <div id="faq-sections-editor-en"></div>
-            <label>À retenir EN</label><textarea id="faq-takeaway-en" rows="3"></textarea>
-            <div id="faq-more-editor-en"></div>
-            <label>Meta title EN</label><input id="faq-meta-title-en">
-            <label>Meta description EN</label><textarea id="faq-meta-desc-en" rows="2"></textarea>
-            <label>Découvrir EN</label><textarea id="faq-discover-en" rows="3"></textarea>
-            <label>Savoir faire EN</label><textarea id="faq-can-do-en" rows="3"></textarea>
-          </fieldset>
-          <fieldset><legend>Contenu ES</legend>
-            <button type="button" class="btn-translate" data-target-lang="es" data-form="faq">🌐 Traduire depuis le FR</button>
-            <label>Titre ES</label><input id="faq-title-es">
-            <label>Introduction ES</label><textarea id="faq-intro-es" rows="3"></textarea>
-            <label>Réponse rapide ES</label><textarea id="faq-short-es" rows="4"></textarea>
-            <div id="faq-sections-editor-es"></div>
-            <label>À retenir ES</label><textarea id="faq-takeaway-es" rows="3"></textarea>
-            <div id="faq-more-editor-es"></div>
-            <label>Meta title ES</label><input id="faq-meta-title-es">
-            <label>Meta description ES</label><textarea id="faq-meta-desc-es" rows="2"></textarea>
-            <label>Découvrir ES</label><textarea id="faq-discover-es" rows="3"></textarea>
-            <label>Savoir faire ES</label><textarea id="faq-can-do-es" rows="3"></textarea>
-          </fieldset>
-          <fieldset><legend>Catégories du hub FAQ</legend>
-            <p class="field-hint">Ajoutez, modifiez ou supprimez les catégories sans manipuler de JSON.</p><div id="faq-category-manager"></div><button type="button" class="btn-submit" id="faq-category-add" style="background:var(--bg3);color:var(--text)">+ Ajouter une catégorie</button><textarea id="faq-categories-json" hidden></textarea>
-            <button type="button" class="btn-submit" id="faq-categories-save" style="background:var(--accent3)">Enregistrer les catégories</button>
-            <p id="faq-categories-feedback" class="field-hint" role="status" aria-live="polite" style="display:none;margin-top:8px"></p>
-          </fieldset>
-          <button type="button" class="btn-submit" id="faq-preview-btn" style="background:var(--bg3);color:var(--text)">Aperçu de la page</button>
-          <button type="submit" class="btn-submit" id="faq-save-btn">Enregistrer la FAQ</button>
-          <button type="button" class="btn-danger" id="faq-delete-btn" style="display:none">Supprimer cette FAQ</button>
-          <button type="button" class="btn-submit" id="faq-new-btn" style="background:var(--bg3);color:var(--text)">Nouvelle FAQ</button>
-        </form>
-      </div>
-      <div class="preview-col"><div class="preview-label">Pages générées</div><div class="preview-card"><p>Les pages seront créées au prochain lancement de <code>gen-fiches.js</code>.</p><p id="faq-admin-status">Aucune FAQ sélectionnée.</p></div></div>
-    </div>
-  </div>
-
-  <div class="tab-panel" id="tab-plans">
+  <div class="msg msg-warn" id="warn-faq"></div><div class="msg msg-ok" id="ok-faq"></div>
+  <p class="field-hint">Une FAQ publiée crée une page par langue <strong>traduite</strong>. Sans traduction EN ou ES, aucune page n'est créée dans cette langue.</p>
+  <label>FAQ existantes</label>
+  <select id="faq-existing"><option value="">Créer une nouvelle FAQ…</option></select>
+  <button type="button" id="faq-new-btn">Nouvelle FAQ</button>
+  <p class="field-hint" id="faq-admin-status"></p>
+  <form id="form-faq">
+    <fieldset><legend>Publication</legend>
+      <label>Statut</label>
+      <select id="faq-status"><option value="brouillon">Brouillon</option><option value="publie">Publié</option></select>
+      <label>Slug URL *</label><input id="faq-slug" required>
+    </fieldset>
+    <fieldset><legend>Question et réponse (FR)</legend>
+      <label>Catégorie *</label><input id="faq-category" required>
+      <label>Sous-catégorie</label><input id="faq-subcategory">
+      <label>Question *</label><input id="faq-title" required>
+      <label>Réponse courte *</label><textarea id="faq-short" rows="3" required></textarea>
+      <label>Réponse détaillée (un paragraphe par ligne)</label><textarea id="faq-paragraphs" rows="6"></textarea>
+    </fieldset>
+    <fieldset><legend>Leçon vidéo (FR, facultatif)</legend>
+      <label>URL YouTube</label><input id="faq-video-url">
+      <label>Titre de la vidéo</label><input id="faq-video-title">
+      <label>Créateur</label><input id="faq-video-creator">
+      <label>Durée</label><input id="faq-video-duration" placeholder="12 min 35 s">
+      <label>Langue</label><input id="faq-video-lang" value="Français">
+      <label>Phrase d'introduction</label><textarea id="faq-video-intro" rows="2"></textarea>
+    </fieldset>
+    <fieldset><legend>Points (FR, une ligne par point)</legend>
+      <label>Ce que vous allez découvrir</label><textarea id="faq-discover" rows="3"></textarea>
+      <label>Ce que vous saurez faire après</label><textarea id="faq-can-do" rows="3"></textarea>
+      <label>Points essentiels à retenir</label><textarea id="faq-takeaway" rows="3"></textarea>
+    </fieldset>
+    <fieldset><legend>Outils à découvrir et à comparer</legend>
+      <div id="faq-tool-search-wrap"><input id="faq-tool-search" placeholder="Rechercher un outil…" autocomplete="off"><div id="faq-tool-search-results" class="search-results"></div></div>
+      <div id="faq-tools-selected" class="faq-selected-tools"></div>
+    </fieldset>
+    <fieldset><legend>Questions associées (FR)</legend>
+      <label>Une par ligne : question | accroche | slug</label><textarea id="faq-related" rows="4"></textarea>
+    </fieldset>
+    <fieldset><legend>Traduction EN</legend>
+      <button type="button" class="btn-translate" data-target-lang="en" data-form="faq">🌐 Traduire depuis le FR</button>
+      <label>Catégorie (EN)</label><input id="faq-category-en">
+      <label>Sous-catégorie (EN)</label><input id="faq-subcategory-en">
+      <label>Question (EN)</label><input id="faq-title-en">
+      <label>Réponse courte (EN)</label><textarea id="faq-short-en" rows="3"></textarea>
+      <label>Réponse détaillée (EN)</label><textarea id="faq-paragraphs-en" rows="6"></textarea>
+      <label>Titre vidéo (EN)</label><input id="faq-video-title-en">
+      <label>Phrase d'introduction vidéo (EN)</label><textarea id="faq-video-intro-en" rows="2"></textarea>
+      <label>Découvrir (EN)</label><textarea id="faq-discover-en" rows="3"></textarea>
+      <label>Savoir faire (EN)</label><textarea id="faq-can-do-en" rows="3"></textarea>
+      <label>À retenir (EN)</label><textarea id="faq-takeaway-en" rows="3"></textarea>
+      <label>Questions associées (EN)</label><textarea id="faq-related-en" rows="4"></textarea>
+    </fieldset>
+    <fieldset><legend>Traduction ES</legend>
+      <button type="button" class="btn-translate" data-target-lang="es" data-form="faq">🌐 Traduire depuis le FR</button>
+      <label>Catégorie (ES)</label><input id="faq-category-es">
+      <label>Sous-catégorie (ES)</label><input id="faq-subcategory-es">
+      <label>Question (ES)</label><input id="faq-title-es">
+      <label>Réponse courte (ES)</label><textarea id="faq-short-es" rows="3"></textarea>
+      <label>Réponse détaillée (ES)</label><textarea id="faq-paragraphs-es" rows="6"></textarea>
+      <label>Titre vidéo (ES)</label><input id="faq-video-title-es">
+      <label>Phrase d'introduction vidéo (ES)</label><textarea id="faq-video-intro-es" rows="2"></textarea>
+      <label>Découvrir (ES)</label><textarea id="faq-discover-es" rows="3"></textarea>
+      <label>Savoir faire (ES)</label><textarea id="faq-can-do-es" rows="3"></textarea>
+      <label>À retenir (ES)</label><textarea id="faq-takeaway-es" rows="3"></textarea>
+      <label>Questions associées (ES)</label><textarea id="faq-related-es" rows="4"></textarea>
+    </fieldset>
+    <button type="submit" id="faq-save-btn">Enregistrer la FAQ</button>
+    <button type="button" id="faq-delete-btn">Supprimer cette FAQ</button>
+  </form>
+  <fieldset><legend>Catégories FAQ</legend>
+    <div id="faq-category-manager"></div>
+    <button type="button" id="faq-category-add">+ Catégorie</button>
+    <textarea id="faq-categories-json" rows="4"></textarea>
+    <button type="button" id="faq-categories-save">Enregistrer les catégories</button>
+    <div class="field-hint" id="faq-categories-feedback"></div>
+  </fieldset>
+</div>
+<div class="tab-panel" id="tab-plans">
     <div class="msg msg-warn" id="warn-plans"></div>
     <div class="msg msg-ok"   id="ok-plans"></div>
     <p class="field-hint">
@@ -4072,20 +4066,7 @@ Support français|oui|non|bool"></textarea>
     return resultats.join('\n');
   }
 
-  async function translateFaq(text, targetLang) {
-    const lignes = (text || '').split('\n').filter(l => l.trim());
-    const resultats = [];
-    for (const ligne of lignes) {
-      const [q, ...aParts] = ligne.split('||');
-      const a = aParts.join('||');
-      const qT = await translateText((q || '').trim(), targetLang, 'text');
-      await pause(400);
-      const aT = a.trim() ? await translateText(a.trim(), targetLang, 'text') : '';
-      await pause(400);
-      resultats.push(`${qT}||${aT}`);
-    }
-    return resultats.join('\n');
-  }
+  
 
   function outilFieldsToTranslate(targetLang) {
     return [
@@ -4138,19 +4119,7 @@ Support français|oui|non|bool"></textarea>
     return resultats.join('\n');
   }
 
-  function faqFieldsToTranslate(targetLang) {
-    return [
-      ['faq-title', `faq-title-${targetLang}`, 'text'],
-      ['faq-intro', `faq-intro-${targetLang}`, 'text'],
-      ['faq-short', `faq-short-${targetLang}`, 'html'],
-      ['faq-takeaway', `faq-takeaway-${targetLang}`, 'html'],
-      ['faq-meta-title', `faq-meta-title-${targetLang}`, 'text'],
-      ['faq-meta-desc', `faq-meta-desc-${targetLang}`, 'text'],
-      ['faq-discover', `faq-discover-${targetLang}`, 'html'],
-      ['faq-can-do', `faq-can-do-${targetLang}`, 'html'],
-      ['faq-transcript', `faq-transcript-${targetLang}`, 'text'],
-    ];
-  }
+  
 
   function nicheFieldsToTranslate(targetLang) {
     return [
@@ -4380,8 +4349,6 @@ Support français|oui|non|bool"></textarea>
         try {
           if (format === 'fonctionnalites') {
             destEl.value = await translateFonctionnalites(srcText, targetLang);
-          } else if (format === 'faq') {
-            destEl.value = await translateFaq(srcText, targetLang);
           } else if (format === 'tarifs') {
             destEl.value = await translateTarifsTxt(srcText, targetLang);
           } else if (format === 'lignes') {
@@ -4398,30 +4365,6 @@ Support français|oui|non|bool"></textarea>
           console.error(`Erreur LibreTranslate sur le champ ${srcId}:`, err);
         }
         await pause(400);
-      }
-
-      if (formType === 'faq') {
-        for (const kind of ['sections','more']) {
-          const sourceId = kind === 'sections' ? 'faq-sections-editor' : 'faq-more-editor';
-          const targetId = `${sourceId}-${targetLang}`;
-          const rows = faqReadRows(sourceId, kind);
-          const translated = [];
-          for (const row of rows) {
-            try {
-              const title = await translateText(row.title, targetLang, 'text'); await pause(350);
-              if (kind === 'sections') translated.push({title, content: await translateText(row.content, targetLang, 'html')});
-              else translated.push({title, slug: row.slug});
-              succes++;
-            } catch (err) { echecs++; console.error('Traduction FAQ structurée :', err); }
-            await pause(350);
-          }
-          faqRenderRows(targetId, translated, kind);
-        }
-        const transcript = faqVal('faq-transcript');
-        if (transcript.trim()) {
-          try { faqSet(`faq-transcript-${targetLang}`, await translateText(transcript, targetLang, 'text')); succes++; }
-          catch (err) { echecs++; console.error('Traduction transcription FAQ :', err); }
-        }
       }
 
       if (echecs === 0) {
@@ -5913,84 +5856,13 @@ Support français|oui|non|bool"></textarea>
   document.getElementById('faq-category-add')?.addEventListener('click',()=>{faqCategoryRows.push({name:'',slug:'',description:'',name_en:'',name_es:''});faqRenderCategories();});
   // Éditeur FAQ enrichi, inspiré de l'éditeur d'articles de profil.html.
   // Le textarea historique reste la source de sauvegarde Firestore pour préserver le schéma.
-  function faqSanitizeHtml(html) {
-    const allowed = new Set(['P','BR','H2','H3','H4','STRONG','B','EM','I','S','UL','OL','LI','A','BLOCKQUOTE','PRE','CODE','HR','DIV']);
-    const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
-    const walk = node => [...node.childNodes].forEach(child => {
-      if (child.nodeType === Node.COMMENT_NODE) { child.remove(); return; }
-      if (child.nodeType !== Node.ELEMENT_NODE) return;
-      if (!allowed.has(child.tagName)) { child.replaceWith(...child.childNodes); return; }
-      [...child.attributes].forEach(attr => {
-        const safeHref = child.tagName === 'A' && attr.name === 'href' && /^(https?:|mailto:)/i.test(attr.value);
-        if (!safeHref && !(child.tagName === 'A' && attr.name === 'target' && attr.value === '_blank') && !(child.tagName === 'A' && attr.name === 'rel')) child.removeAttribute(attr.name);
-      });
-      if (child.tagName === 'A') { child.setAttribute('rel','noopener noreferrer'); child.setAttribute('target','_blank'); }
-      walk(child);
-    });
-    walk(doc.body);
-    return doc.body.innerHTML.trim();
-  }
-  function faqRichEditor(textarea) {
-    if (!textarea || textarea.dataset.richReady) return;
-    textarea.dataset.richReady = '1';
-    const wrap = document.createElement('div'); wrap.className = 'faq-rich-editor';
-    const toolbar = document.createElement('div'); toolbar.className = 'faq-rich-toolbar'; toolbar.setAttribute('role','toolbar'); toolbar.setAttribute('aria-label','Mise en forme du contenu FAQ');
-    const area = document.createElement('div'); area.className = 'faq-rich-canvas'; area.contentEditable = 'true'; area.setAttribute('role','textbox'); area.setAttribute('aria-multiline','true'); area.setAttribute('aria-label','Contenu de la section FAQ');
-    area.innerHTML = faqSanitizeHtml(textarea.value || '<p></p>');
-    const controls = [
-      ['Gras','bold','B'],['Italique','italic','I'],['Barré','strikeThrough','S'],['Paragraphe','formatBlock:P','¶'],['Titre 2','formatBlock:H2','H2'],['Titre 3','formatBlock:H3','H3'],['Titre 4','formatBlock:H4','H4'],
-      ['Liste à puces','insertUnorderedList','• Liste'],['Liste numérotée','insertOrderedList','1. Liste'],['Citation','formatBlock:BLOCKQUOTE','Citation'],['Bloc de code','formatBlock:PRE','Code'],['Séparateur','insertHorizontalRule','—'],['Lien','createLink','Lien'],['Annuler','undo','↶'],['Rétablir','redo','↷']
-    ];
-    const sync = () => { textarea.value = faqSanitizeHtml(area.innerHTML); };
-    controls.forEach(([label,cmd,caption]) => {
-      const b = document.createElement('button'); b.type='button'; b.className='faq-rich-tool'; b.textContent=caption; b.title=label; b.setAttribute('aria-label',label);
-      b.addEventListener('mousedown', e => e.preventDefault());
-      b.addEventListener('click', () => {
-        area.focus();
-        if (cmd === 'createLink') {
-          const url = prompt('Adresse du lien (https://…)');
-          if (url && /^(https?:\/\/|mailto:)/i.test(url)) document.execCommand('createLink',false,url);
-        } else if (cmd.startsWith('formatBlock:')) document.execCommand('formatBlock',false,cmd.split(':')[1]);
-        else document.execCommand(cmd,false,null);
-        sync();
-      });
-      toolbar.appendChild(b);
-    });
-    const hint = document.createElement('div'); hint.className='faq-rich-hint'; hint.textContent='Entrée : nouveau paragraphe avec espacement · Maj + Entrée : retour à la ligne';
-    area.addEventListener('focus', () => document.execCommand('defaultParagraphSeparator',false,'p'));
-    area.addEventListener('input',sync);
-    area.addEventListener('blur',sync);
-    area.addEventListener('paste', event => {
-      event.preventDefault();
-      const html = event.clipboardData?.getData('text/html');
-      const plain = event.clipboardData?.getData('text/plain') || '';
-      if (html) {
-        const clean = faqSanitizeHtml(html);
-        document.execCommand('insertHTML',false,clean);
-      } else {
-        const paragraphs = plain.split(/\r?\n/).map(line => `<p>${faqEscapeHtml(line)}</p>`).join('');
-        document.execCommand('insertHTML',false,paragraphs || '<p></p>');
-      }
-      sync();
-    });
-    textarea.hidden = true;
-    textarea.insertAdjacentElement('afterend',wrap);
-    wrap.append(toolbar,area,hint);
-    wrap._faqSync = sync;
-  }
-  function faqEscapeHtml(value) { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-  function faqSyncRichEditors() { document.querySelectorAll('.faq-rich-editor').forEach(editor => editor._faqSync && editor._faqSync()); }
-  function faqEnableRichEditors() {
-    document.querySelectorAll('#faq-sections-editor [data-faq-row-content],#faq-sections-editor-en [data-faq-row-content],#faq-sections-editor-es [data-faq-row-content]').forEach(faqRichEditor);
-  }
-  const faqRowsObserver=new MutationObserver(faqEnableRichEditors);['faq-sections-editor','faq-sections-editor-en','faq-sections-editor-es'].forEach(id=>{const el=document.getElementById(id);if(el)faqRowsObserver.observe(el,{childList:true,subtree:true});});
-  document.getElementById('faq-preview-btn')?.addEventListener('click',()=>{
-    faqSyncRichEditors();
-    const title=faqVal('faq-title').trim()||'Aperçu FAQ';const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const sections=faqReadRows('faq-sections-editor').map((r,i)=>`<section><h2>${esc(r.title)}</h2><div>${r.content}</div></section>`).join('');
-    const html=`<!doctype html><html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${esc(title)} — Aperçu</title><style>body{font:16px/1.7 system-ui;max-width:850px;margin:40px auto;padding:0 20px;color:#252525}h1,h2{line-height:1.25}section{margin:32px 0;padding-bottom:20px;border-bottom:1px solid #ddd}.intro{color:#555}.box{padding:18px;background:#f4f1ea;border-radius:6px;margin:20px 0}</style><body><small>APERÇU NON PUBLIÉ · ALBEXIA</small><h1>${esc(title)}</h1><p class="intro">${esc(faqVal('faq-intro'))}</p>${faqVal('faq-short')?`<div class="box">${faqVal('faq-short')}</div>`:''}${sections}${faqVal('faq-takeaway')?`<aside class="box">${faqVal('faq-takeaway')}</aside>`:''}</body></html>`;
-    const w=window.open('','_blank');if(!w){alert('Autorisez les fenêtres pop-up pour afficher l’aperçu.');return;}w.document.open();w.document.write(html);w.document.close();
-  });
+  
+  
+  
+  
+  
+  
+  
 
   // ── Administration FAQ ────────────────────────────────────────────────
   let faqEditingId = null;
@@ -6103,55 +5975,18 @@ Support français|oui|non|bool"></textarea>
       }
     });
   }
-  function faqRenderRows(containerId, rows, kind='sections') {
-    const box=document.getElementById(containerId); if(!box)return;
-    box.innerHTML='';
-    rows.forEach((row,i)=>{const el=document.createElement('div');el.className='faq-editor-row';
-      if(kind==='sections')el.innerHTML=`<label>Titre de section</label><input data-faq-row-title value="${faqEsc(row.title||'')}"><label>Contenu (HTML autorisé)</label><textarea data-faq-row-content rows="5">${faqEsc(row.content||'')}</textarea><div class="faq-row-actions"><button type="button" class="btn-danger" data-faq-remove>Supprimer cette section</button></div>`;
-      else el.innerHTML=`<label>Titre du lien</label><input data-faq-row-title value="${faqEsc(row.title||'')}"><label>Slug de la FAQ cible</label><input data-faq-row-slug value="${faqEsc(row.slug||'')}"><div class="faq-row-actions"><button type="button" class="btn-danger" data-faq-remove>Supprimer ce lien</button></div>`;
-      el.querySelector('[data-faq-remove]').addEventListener('click',()=>el.remove());box.appendChild(el);
-    });
-  }
-  function faqReadRows(containerId,kind='sections') {faqSyncRichEditors();return [...document.querySelectorAll(`#${containerId} .faq-editor-row`)].map(el=>kind==='sections'?{title:el.querySelector('[data-faq-row-title]').value.trim(),content:el.querySelector('[data-faq-row-content]').value.trim()}:{title:el.querySelector('[data-faq-row-title]').value.trim(),slug:el.querySelector('[data-faq-row-slug]').value.trim()}).filter(x=>x.title&&(kind==='sections'?x.content:x.slug));}
-  function faqReset() {
-    faqEditingId=null;document.getElementById('form-faq').reset();document.getElementById('faq-existing').value='';document.getElementById('faq-delete-btn').style.display='none';
-    faqSelectedToolIds=[];faqRenderTools();['fr','en','es'].forEach(l=>{faqRenderRows(`faq-sections-editor${l==='fr'?'':'-'+l}`,[],'sections');faqRenderRows(`faq-more-editor${l==='fr'?'':'-'+l}`,[],'more');});
-    document.getElementById('faq-admin-status').textContent='Nouvelle FAQ.';
-  }
-  async function loadFaqAdmin() {
-    try {
-      const [snap,catSnap]=await Promise.all([getDocs(collection(db,'faq')),getDoc(doc(db,'config','faq_categories'))]);
-      faqAdminCache=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.titre||'').localeCompare(b.titre||''));
-      await faqLoadTools();
-      const select=document.getElementById('faq-existing');select.innerHTML='<option value="">Créer une nouvelle FAQ…</option>'+faqAdminCache.map(f=>`<option value="${faqEsc(f.id)}">${faqEsc(f.titre||f.slug||f.id)} — ${faqEsc(f.status||'brouillon')}</option>`).join('');
-      faqCategoryRows=(catSnap.exists()?(catSnap.data().categories||[]):[]).map(c=>({...c}));faqRenderCategories();faqSet('faq-categories-json',JSON.stringify(faqCategoryRows,null,2));document.getElementById('faq-admin-status').textContent=`${faqAdminCache.length} FAQ dans Firestore.`;
-    } catch(err){faqMessage('warn','Erreur de chargement FAQ : '+err.message);}
-  }
-  function faqLoadDocument(id) {
-    const f=faqAdminCache.find(x=>x.id===id);if(!f)return faqReset();faqEditingId=id;
-    const tr=f.translations||f.traductions||{},fr=tr.fr||f,video=fr.video||f.video||{};
-    faqSet('faq-title',fr.title||fr.titre||f.titre);faqSet('faq-slug',f.slug);faqSet('faq-category',f.categorie);faqSet('faq-status',f.status||'brouillon');faqSet('faq-intro',fr.introduction);faqSet('faq-short',fr.shortAnswer||fr.reponseRapide);faqSet('faq-takeaway',fr.takeaway);faqSet('faq-meta-title',fr.metaTitle||fr.meta_title);faqSet('faq-meta-desc',fr.metaDescription||fr.meta_description);
-    faqSet('faq-video-url',video.url);faqSet('faq-transcript','');faqSet('faq-transcript-en','');faqSet('faq-transcript-es','');faqSet('faq-discover',video.discover||video.decouvrir);faqSet('faq-can-do',video.canDo||video.savoirFaire);
-    faqRenderRows('faq-sections-editor',fr.sections||[],'sections');faqRenderRows('faq-more-editor',fr.more||fr.pourAllerPlusLoin||[],'more');
-    ['en','es'].forEach(l=>{const d=tr[l]||{};faqSet(`faq-title-${l}`,d.title||d.titre);faqSet(`faq-intro-${l}`,d.introduction);faqSet(`faq-short-${l}`,d.shortAnswer||d.reponseRapide);faqSet(`faq-takeaway-${l}`,d.takeaway);faqSet(`faq-meta-title-${l}`,d.metaTitle);faqSet(`faq-meta-desc-${l}`,d.metaDescription);faqSet(`faq-discover-${l}`,d.video?.discover||'');faqSet(`faq-can-do-${l}`,d.video?.canDo||'');faqRenderRows(`faq-sections-editor-${l}`,d.sections||[],'sections');faqRenderRows(`faq-more-editor-${l}`,d.more||[],'more');});
-    faqSelectedToolIds=(f.toolIds||[]).map(String);faqRenderTools();document.getElementById('faq-delete-btn').style.display='inline-flex';document.getElementById('faq-admin-status').textContent=`Édition : ${f.slug}`;
-  }
-  document.getElementById('faq-existing').addEventListener('change',e=>e.target.value?faqLoadDocument(e.target.value):faqReset());
-  document.getElementById('faq-new-btn').addEventListener('click',faqReset);
-  document.getElementById('faq-add-section').addEventListener('click',()=>{const rows=faqReadRows('faq-sections-editor');rows.push({title:'',content:''});faqRenderRows('faq-sections-editor',rows,'sections');});
-  document.getElementById('faq-add-more').addEventListener('click',()=>{const rows=faqReadRows('faq-more-editor','more');rows.push({title:'',slug:''});faqRenderRows('faq-more-editor',rows,'more');});
-  document.getElementById('faq-title').addEventListener('input',()=>{if(!faqVal('faq-slug'))faqSet('faq-slug',slugify(faqVal('faq-title')));});
-  document.getElementById('form-faq').addEventListener('submit',async e=>{
-    e.preventDefault();const btn=document.getElementById('faq-save-btn');btn.disabled=true;
-    try {
-      const fr={title:faqVal('faq-title').trim(),introduction:faqVal('faq-intro').trim(),shortAnswer:faqVal('faq-short').trim(),sections:faqReadRows('faq-sections-editor'),takeaway:faqVal('faq-takeaway').trim(),more:faqReadRows('faq-more-editor','more'),metaTitle:faqVal('faq-meta-title').trim(),metaDescription:faqVal('faq-meta-desc').trim(),video:{url:faqVal('faq-video-url').trim(),discover:faqVal('faq-discover').trim(),canDo:faqVal('faq-can-do').trim()}};
-      const translations={fr};['en','es'].forEach(l=>{const d={title:faqVal(`faq-title-${l}`).trim(),introduction:faqVal(`faq-intro-${l}`).trim(),shortAnswer:faqVal(`faq-short-${l}`).trim(),sections:faqReadRows(`faq-sections-editor-${l}`),takeaway:faqVal(`faq-takeaway-${l}`).trim(),more:faqReadRows(`faq-more-editor-${l}`,'more'),metaTitle:faqVal(`faq-meta-title-${l}`).trim(),metaDescription:faqVal(`faq-meta-desc-${l}`).trim(),video:{discover:faqVal(`faq-discover-${l}`).trim(),canDo:faqVal(`faq-can-do-${l}`).trim()}};if(d.title||d.introduction||d.shortAnswer||d.sections.length||d.takeaway)translations[l]=d;});
-      const payload={titre:fr.title,slug:slugify(faqVal('faq-slug')),categorie:faqVal('faq-category').trim(),status:faqVal('faq-status'),translations,toolIds:faqSelectedToolIds,updatedAt:serverTimestamp()};if(!payload.slug)throw new Error('Le slug est obligatoire.');
-      if(faqEditingId)await updateDoc(doc(db,'faq',faqEditingId),payload);else{payload.createdAt=serverTimestamp();const ref=await addDoc(collection(db,'faq'),payload);faqEditingId=ref.id;}
-      faqMessage('ok','FAQ enregistrée dans Firestore. Les pages seront générées au prochain lancement de gen-fiches.js.');await loadFaqAdmin();document.getElementById('faq-existing').value=faqEditingId;
-    }catch(err){faqMessage('warn','Enregistrement impossible : '+err.message);}finally{btn.disabled=false;}
-  });
-  document.getElementById('faq-delete-btn').addEventListener('click',async()=>{if(!faqEditingId||!confirm('Supprimer cette FAQ ? Sa page sera supprimée au prochain build.'))return;try{await deleteDoc(doc(db,'faq',faqEditingId));faqMessage('ok','FAQ supprimée.');faqReset();await loadFaqAdmin();}catch(err){faqMessage('warn','Suppression impossible : '+err.message);}});
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   faqRenderToolSearch();
 
   document.getElementById('faq-categories-save').addEventListener('click', async (event) => {
@@ -6214,6 +6049,184 @@ Support français|oui|non|bool"></textarea>
       btn.textContent = originalText;
     }
   });
+
+// ───── FAQ : formulaire à champs fixes (même principe que les fiches outils) ─────
+// Une traduction EN/ES n'est enregistrée que si elle a un titre ET une réponse courte.
+// Sans cela, aucune page dans cette langue n'est générée (gen-fiches.js).
+function faqFieldsToTranslate(targetLang) {
+  const s = targetLang;
+  return [
+    ['faq-title', `faq-title-${s}`, 'text'],
+    ['faq-category', `faq-category-${s}`, 'text'],
+    ['faq-subcategory', `faq-subcategory-${s}`, 'text'],
+    ['faq-short', `faq-short-${s}`, 'text'],
+    ['faq-paragraphs', `faq-paragraphs-${s}`, 'lignes'],
+    ['faq-video-title', `faq-video-title-${s}`, 'text'],
+    ['faq-video-intro', `faq-video-intro-${s}`, 'text'],
+    ['faq-discover', `faq-discover-${s}`, 'lignes'],
+    ['faq-can-do', `faq-can-do-${s}`, 'lignes'],
+    ['faq-takeaway', `faq-takeaway-${s}`, 'lignes'],
+  ];
+}
+function faqLines(id) {
+  return (document.getElementById(id)?.value || '').split('\n').map(s => s.trim()).filter(Boolean);
+}
+function faqRelatedLines(id) {
+  return faqLines(id)
+    .map(l => { const [question = '', accroche = '', slug = ''] = l.split('|').map(s => s.trim()); return { question, accroche, slug: slugify(slug) }; })
+    .filter(q => q.question && q.slug);
+}
+// Lit un bloc de textes : 'fr' (ids nus) ou 'en' / 'es' (ids suffixés).
+function faqBloc(lang) {
+  const sfx = lang === 'fr' ? '' : `-${lang}`;
+  const v = id => (document.getElementById(id + sfx)?.value || '').trim();
+  const l = id => faqLines(id + sfx);
+  return {
+    titre: v('faq-title'),
+    categorie: v('faq-category'),
+    sous_categorie: v('faq-subcategory'),
+    reponse_courte: v('faq-short'),
+    reponse_paragraphes: l('faq-paragraphs'),
+    video: { titre: v('faq-video-title'), intro: v('faq-video-intro') },
+    decouvrir: l('faq-discover'),
+    savoir_faire: l('faq-can-do'),
+    retenir: l('faq-takeaway'),
+    questions_associees: faqRelatedLines('faq-related' + sfx),
+  };
+}
+function faqPayload() {
+  const v = id => (document.getElementById(id)?.value || '').trim();
+  const fr = faqBloc('fr');
+  const translations = {};
+  for (const lang of ['en', 'es']) {
+    const b = faqBloc(lang);
+    if (b.titre && b.reponse_courte) translations[lang] = b;
+  }
+  return {
+    titre: fr.titre,
+    slug: slugify(v('faq-slug')),
+    categorie: fr.categorie,
+    sous_categorie: fr.sous_categorie,
+    status: v('faq-status') || 'brouillon',
+    reponse_courte: fr.reponse_courte,
+    reponse_paragraphes: fr.reponse_paragraphes,
+    video: {
+      url: v('faq-video-url'),
+      titre: fr.video.titre,
+      createur: v('faq-video-creator'),
+      duree: v('faq-video-duration'),
+      langue: v('faq-video-lang') || 'Français',
+      intro: fr.video.intro,
+    },
+    decouvrir: fr.decouvrir,
+    savoir_faire: fr.savoir_faire,
+    retenir: fr.retenir,
+    outils: [...faqSelectedToolIds],
+    questions_associees: fr.questions_associees,
+    translations,
+  };
+}
+function faqReset() {
+  faqEditingId = null;
+  document.getElementById('form-faq').reset();
+  document.getElementById('faq-existing').value = '';
+  faqSelectedToolIds = [];
+  faqRenderTools();
+}
+async function loadFaqAdmin() {
+  try {
+    const [snap, catSnap] = await Promise.all([getDocs(collection(db, 'faq')), getDoc(doc(db, 'config', 'faq_categories'))]);
+    faqAdminCache = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (a.titre || '').localeCompare(b.titre || ''));
+    await faqLoadTools();
+    const select = document.getElementById('faq-existing');
+    select.innerHTML = '<option value="">Créer une nouvelle FAQ…</option>' + faqAdminCache.map(f =>
+      `<option value="${faqEsc(f.id)}">${faqEsc(f.titre || f.slug || f.id)} — ${faqEsc(f.status || 'brouillon')}</option>`).join('');
+    faqCategoryRows = (catSnap.exists() ? (catSnap.data().categories || []) : []).map(c => ({ ...c }));
+    faqRenderCategories();
+    faqSet('faq-categories-json', JSON.stringify(faqCategoryRows, null, 2));
+    document.getElementById('faq-admin-status').textContent = `${faqAdminCache.length} FAQ dans Firestore.`;
+  } catch (err) {
+    faqMessage('warn', 'Erreur de chargement FAQ : ' + err.message);
+  }
+}
+function faqLoadDocument(id) {
+  const f = faqAdminCache.find(x => x.id === id);
+  if (!f) return faqReset();
+  faqEditingId = id;
+  const fill = (lang, b) => {
+    const sfx = lang === 'fr' ? '' : `-${lang}`;
+    const s = (k, val) => faqSet(k + sfx, val ?? '');
+    const lines = a => (a || []).join('\n');
+    s('faq-title', b.titre);
+    s('faq-category', b.categorie);
+    s('faq-subcategory', b.sous_categorie);
+    s('faq-short', b.reponse_courte);
+    s('faq-paragraphs', lines(b.reponse_paragraphes));
+    s('faq-video-title', (b.video || {}).titre);
+    s('faq-video-intro', (b.video || {}).intro);
+    s('faq-discover', lines(b.decouvrir));
+    s('faq-can-do', lines(b.savoir_faire));
+    s('faq-takeaway', lines(b.retenir));
+    s('faq-related', (b.questions_associees || []).map(q => `${q.question} | ${q.accroche || ''} | ${q.slug || ''}`).join('\n'));
+  };
+  fill('fr', f);
+  const tr = f.translations || {};
+  fill('en', tr.en || {});
+  fill('es', tr.es || {});
+  const video = f.video || {};
+  faqSet('faq-slug', f.slug || '');
+  faqSet('faq-status', f.status || 'brouillon');
+  faqSet('faq-video-url', video.url || '');
+  faqSet('faq-video-creator', video.createur || '');
+  faqSet('faq-video-duration', video.duree || '');
+  faqSet('faq-video-lang', video.langue || 'Français');
+  faqSelectedToolIds = [...(f.outils || [])];
+  faqRenderTools();
+  document.getElementById('faq-existing').value = id;
+}
+
+document.getElementById('faq-existing').addEventListener('change', e => e.target.value ? faqLoadDocument(e.target.value) : faqReset());
+document.getElementById('faq-new-btn').addEventListener('click', faqReset);
+document.getElementById('faq-title').addEventListener('input', () => {
+  const slug = document.getElementById('faq-slug');
+  if (slug && !slug.value.trim()) slug.value = slugify(document.getElementById('faq-title').value);
+});
+document.getElementById('form-faq').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('faq-save-btn');
+  btn.disabled = true;
+  try {
+    const payload = faqPayload();
+    if (!payload.titre) throw new Error('La question en français est obligatoire.');
+    if (!payload.slug) throw new Error('Le slug est obligatoire.');
+    payload.updatedAt = serverTimestamp();
+    if (faqEditingId) {
+      await updateDoc(doc(db, 'faq', faqEditingId), payload);
+    } else {
+      payload.createdAt = serverTimestamp();
+      const ref = await addDoc(collection(db, 'faq'), payload);
+      faqEditingId = ref.id;
+    }
+    faqMessage('ok', 'FAQ enregistrée dans Firestore. Les pages seront générées au prochain lancement de gen-fiches.js.');
+    await loadFaqAdmin();
+    document.getElementById('faq-existing').value = faqEditingId;
+  } catch (err) {
+    faqMessage('warn', 'Enregistrement impossible : ' + err.message);
+  } finally {
+    btn.disabled = false;
+  }
+});
+document.getElementById('faq-delete-btn').addEventListener('click', async () => {
+  if (!faqEditingId || !confirm('Supprimer cette FAQ ? Sa page sera supprimée au prochain build.')) return;
+  try {
+    await deleteDoc(doc(db, 'faq', faqEditingId));
+    faqMessage('ok', 'FAQ supprimée.');
+    faqReset();
+    await loadFaqAdmin();
+  } catch (err) {
+    faqMessage('warn', 'Suppression impossible : ' + err.message);
+  }
+});
 </script>
 </body>
 </html>

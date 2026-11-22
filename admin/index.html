@@ -5983,7 +5983,6 @@ Support français|oui|non|bool"></textarea>
   function faqEnableRichEditors() {
     document.querySelectorAll('#faq-sections-editor [data-faq-row-content],#faq-sections-editor-en [data-faq-row-content],#faq-sections-editor-es [data-faq-row-content]').forEach(faqRichEditor);
   }
-  function faqEnableRichEditors(){document.querySelectorAll('#faq-sections-editor [data-faq-row-content],#faq-sections-editor-en [data-faq-row-content],#faq-sections-editor-es [data-faq-row-content]').forEach(faqRichEditor);}
   const faqRowsObserver=new MutationObserver(faqEnableRichEditors);['faq-sections-editor','faq-sections-editor-en','faq-sections-editor-es'].forEach(id=>{const el=document.getElementById(id);if(el)faqRowsObserver.observe(el,{childList:true,subtree:true});});
   document.getElementById('faq-preview-btn')?.addEventListener('click',()=>{
     faqSyncRichEditors();

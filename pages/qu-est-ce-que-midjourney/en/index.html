@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en" data-static-lang="en"><head><script src="/js/theme.js"></script><script src="/js/i18n.js"></script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>What is Midjourney and how to create images with this AI tool? | Albexia</title><meta name="description" content="Midjourney is an AI tool that generates images from text, reference image or combination of both, via its website or Discord."><link rel="canonical" href="https://albexia.com/pages/qu-est-ce-que-midjourney/en/"><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/faq-detail.css"><link rel="stylesheet" href="/css/themes.css"></head><body>
+<nav>
+  <div class="logo"><a href="/index.html" aria-label="Albexia" style="display:flex;text-decoration:none">
+    <svg viewBox="0 0 130 36" xmlns="http://www.w3.org/2000/svg" height="32" aria-label="Albexia">
+      <style>.poly-part{animation:buildIn 1.2s ease-out forwards;opacity:0}.logo-text{animation:fadeIn 1s ease-out 0.8s forwards;opacity:0}@keyframes buildIn{0%{opacity:0;transform:translateY(10px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}@keyframes fadeIn{0%{opacity:0;transform:translateX(-5px)}100%{opacity:1;transform:translateX(0)}}.part-1{animation-delay:.1s}.part-2{animation-delay:.3s}.part-3{animation-delay:.5s}</style>
+      <polygon class="poly-part part-1" points="2,10 14,32 10,32" fill="#ff6b9d"/>
+      <polygon class="poly-part part-2" points="14,2 18,12 10,12" fill="#ff6b9d" opacity="0.6"/>
+      <polygon class="poly-part part-3" points="26,10 14,32 18,32" fill="#ff6b9d"/>
+      <text class="logo-text" x="36" y="26" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#f0f0f5" letter-spacing="-0.5">Albe<tspan fill="#ff6b9d">x</tspan>ia</text>
+    </svg>
+  </a></div>
+  <div class="nav-links">
+    <a class="nav-link" href="/index.html" style="text-decoration:none;display:inline-flex;align-items:center">Home</a>
+    <a class="nav-link" href="/index.html#tools" style="text-decoration:none;display:inline-flex;align-items:center">Tools</a>
+    <a class="nav-link" href="/index.html#blog" style="text-decoration:none;display:inline-flex;align-items:center">Blog</a>
+  </div>
+  <button type="button" class="nav-search-btn" id="search-open" aria-label="Rechercher" data-i18n-aria-label="search.open"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  <div class="nav-profile-slot">
+    <a href="/profil.html" id="nav-profile-btn" class="nav-avatar-link" style="display:none" title="My profile">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+    </a>
+    <a href="/profil.html" id="nav-login-btn" class="nav-link" style="display:none">Log in</a>
+  </div>
+  <a href="/soumettre/" class="nav-cta">Submit a tool +</a>
+</nav>
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input class="search-bar-input" id="search-input" type="search" placeholder="Rechercher un outil, un tutoriel, un article..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>
+<script type="module" src="/js/auth-nav.js"></script>
+<script type="module" src="/js/notifications.js"></script>
+<script src="/js/header.js" defer></script><main class="faq-page"><div class="faq-layout"><article class="faq-content"><header class="faq-heading"><h1>What is Midjourney and how to create images with this AI tool?</h1></header>
+<section class="faq-short-answer"><p class="faq-overline">Short answer</p><p>Midjourney is an AI tool that generates images from text, reference image or combination of both, via its website or Discord.</p></section>
+<section class="faq-question"><p class="faq-overline">Question 1</p><h2>What is Midjourney?</h2><p>Midjourney is an artificial intelligence tool that creates images from a written description called prompt. You can use it on the Midjourney site or in Discord, according to your preference.</p><p>-It generates original visuals from text.</p><p>-He also accepts images as a source of inspiration.</p><p>-It offers options to change style, format and some details.</p><p>-It is particularly used for visual creation, marketing and creative concepts.</p></section>
+<section class="faq-question"><p class="faq-overline">Question 2</p><h2>How to create an image with Midjourney?</h2><p>then write your description and send the message. On the Midjourney site, enter your prompt directly into the creation interface.</p><p>/ imagine a cozy café in Port-au-Prince at sunrise, realistic photography style</p><ul><li>Describe the subject, environment, light and colors.</li></ul><p>-Add a format if necessary, for example --ar 16:9.</p><p>-Generate several variants to compare the results.</p><p>-Use editing tools to frame, move or modify an image area.</p></section>
+<section class="faq-question"><p class="faq-overline">Question 3</p><h2>How to write a good quick Midjourney?</h2><p>A good prompt clearly indicates what you want to see, in what setting, with what atmosphere and visual style. Midjourney recommends specifying the environment, lighting, colors and, if necessary, image format:</p><p>photo of a cup of coffee, natural light soft, minimalist background, warm colors, format 16:9</p><ul><li>Avoid phrases too vague as &quot;a beautiful image&quot;.</li></ul><p>-Test several formulations rather than one version.</p></section>
+<section class="faq-question"><p class="faq-overline">Question 4</p><h2>Can we use a photo as a reference in Midjourney?</h2><p>Both allow to create images with the same subscription, but the site offers a more centralized and simpler editor to adjust the images. Discord remains convenient for fast commands, custom options and certain functions like /blend.</p></section>
+<section class="faq-question"><p class="faq-overline">Question 5</p><h2>Is Midjourney paying?</h2><p>Midjourney works with a subscription; it is not designed as a completely free tool. The choice of the plan determines in particular the generation time, the features available and the conditions of commercial use. Always check the current rates and conditions on the official website before you subscribe.</p><p>-Choose a plan according to your creation volume.</p><p>-Check the rights to use the generated images.</p><ul><li>Avoid generating misleading, illegal or infringing content.</li></ul></section>
+<section class="faq-section"><h2>Key takeaways</h2><ul><li>Midjourney creates images from a text prompt.</li><li>The main command on Discord is / imagine.</li><li>A good prompt specifies the subject, the decor, the light, the colors and the style.</li><li>Reference images can guide style, content or character.</li><li>The Midjourney site facilitates editing, while Discord is convenient for commands and options.</li><li>The tool is paid and requires a subscription.</li></ul></section>
+<section class="faq-section"><h2>Tools to discover and compare</h2><div class="faq-tool-text"><h3>Midjourney</h3><a class="faq-text-link" href="/tools/featured/fr/midjourney/">View the listing for Midjourney →</a></div></section>
+<section class="faq-more"><h2>Want to keep learning?</h2><p><a href="/faq/">Back to the help center</a></p></section></article></div></main><link rel="stylesheet" href="/css/footer.css">
+<footer id="site-footer">
+  <div style="text-align:center;padding:24px;font-size:13px;color:#4a4a6a;border-top:1px solid rgba(255,255,255,0.07)">
+    &copy; 2025-2026 <a href="/index.html" style="color:#a8a3ff;text-decoration:none">Albexia</a> —
+    <a href="/mentions-legales.html" style="color:#7a7a9a;text-decoration:none">Legal notice</a> ·
+    <a href="/politique-confidentialite.html" style="color:#7a7a9a;text-decoration:none">Privacy</a> ·
+    <a href="/contact.html" style="color:#7a7a9a;text-decoration:none">Contact</a>
+  </div>
+</footer>
+<script src="/js/footer.js" defer></script></body></html>

@@ -1705,18 +1705,18 @@
   },
   "faq": {
     "aNGA61R5xsxWQV0rgFPd:fr": {
-      "hash": "d35f4a33f21e4540bd9ef54b169b1713cff02bd7ee2e11898710e98fcc4dc7b3",
+      "hash": "cedf17f549496bd950c9275621a58ad06385d3079ee10c2ab736a200290ba775",
       "path": "pages/qu-est-ce-que-midjourney"
     },
     "aNGA61R5xsxWQV0rgFPd:en": {
-      "hash": "de492da561d8ecf926026bf28cbc12e1944ff638758bf9c6cc1176e5ebf6de7a",
+      "hash": "35ba906f829863031525b7bf0521d6cfe5f7a284595aea54aa1d04ebaebe4180",
       "path": "pages/qu-est-ce-que-midjourney/en"
     },
     "aNGA61R5xsxWQV0rgFPd:es": {
-      "hash": "1b50225850ae6817242e2942713a23a03dfb20b617fad9d28bf78c2370faa44c",
+      "hash": "a039ffbdc5713795aacea28a190fc1701c2b6e80436b4bb7c655ae5ecbf2905c",
       "path": "pages/qu-est-ce-que-midjourney/es"
     }
   },
   "faqHubHash": "4bc5efbd98c852b919d04d23011a522019efe7381a21dd910cbd5a925b77a694",
-  "templateVersion": "layout-v13"
+  "templateVersion": "layout-v1"
 }

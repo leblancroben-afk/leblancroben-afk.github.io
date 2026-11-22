@@ -1775,6 +1775,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/deepseek/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/fathom/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/fathom/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/fathom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/flutterflow-ai/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/flutterflow-ai/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/flutterflow-ai/"/>
@@ -2138,6 +2144,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/runway/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/semrush/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/semrush/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/semrush/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/sourcegraph-cody/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/sourcegraph-cody/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/sourcegraph-cody/"/>
@@ -2431,6 +2443,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/deepseek/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/deepseek/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/deepseek/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/es/fathom/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/fathom/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/fathom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/es/flutterflow-ai/</loc>
@@ -2796,6 +2814,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/runway/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/es/semrush/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/semrush/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/semrush/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/es/sourcegraph-cody/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/sourcegraph-cody/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/sourcegraph-cody/"/>
@@ -3070,6 +3094,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/deepseek/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/deepseek/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/deepseek/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/fathom/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/fathom/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/fathom/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/fathom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/flutterflow-ai/</loc>
@@ -3476,6 +3507,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/runway/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/runway/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/runway/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/semrush/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/semrush/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/semrush/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/semrush/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/sourcegraph-cody/</loc>

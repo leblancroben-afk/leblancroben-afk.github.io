@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v11'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v13'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -146,7 +146,7 @@ function reecrireAnciensDomaines(html) {
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
 const { generateFiche, avisOutilPageHTML, normaliserSousCategorie, FAVICON } = require('./fiche-outil');
-const { generateFAQPage, faqLangueDisponible, faqTextes } = require('./faq-template'); // gabarit FAQ unique (même règle que les fiches) // template unique de fiche outil + page « tous les avis »
+const { generateFAQPage, faqLangueDisponible, faqTextes, faqRedirectHTML } = require('./faq-template'); // gabarit FAQ unique (même règle que les fiches) // template unique de fiche outil + page « tous les avis »
 
 function sharedJS() {
   return '';
@@ -304,7 +304,7 @@ ${hreflangTags}
   <meta property="og:url" content="${canonicalUrl}">
   <meta property="og:locale" content="${ogLocale}">
 ${ogLocaleAlternates}
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" sizes="512x512" href="https://albexia.com/assets/logo-512.png"><link rel="apple-touch-icon" href="https://albexia.com/assets/logo-512.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${R}css/style.css">
@@ -5152,9 +5152,13 @@ async function main() {
     for (const lang of ['fr', 'en', 'es']) {
       // Pas de traduction, pas de page (même règle que les fiches outils).
       if (!faqLangueDisponible(faq, lang)) continue;
-      const folder = path.join('pages', slug, ...(lang === 'fr' ? [] : [lang]));
+      const folder = path.join('pages', slug, lang);
       const output = path.join(folder, 'index.html');
-      const html = generateFAQPage({ ...faq, slug }, { lang, toolsById, pagesBySlug, navHTML, footerHTML, favicon: FAVICON });
+      const plusLoin = faqPublished
+        .filter(f => f.id !== faq.id)
+        .map(f => { const tx = faqTextes(f, lang); return tx && tx.questions && tx.questions[0] ? { question: tx.questions[0].question, slug: slugify(f.slug) } : null; })
+        .filter(Boolean);
+      const html = generateFAQPage({ ...faq, slug }, { lang, toolsById, pagesBySlug, plusLoin, navHTML, footerHTML, favicon: FAVICON });
       if (!html) continue;
       const hash = crypto.createHash('sha256').update(html).digest('hex');
       const key = `${faq.id}:${lang}`;
@@ -5168,12 +5172,27 @@ async function main() {
       }
     }
   }
+  // Redirection de /pages/<slug>/ vers /pages/<slug>/fr/ (si une version FR existe)
+  for (const faq of faqPublished) {
+    const slugR = slugify(faq.slug);
+    if (!slugR || !faqLangueDisponible(faq, 'fr')) continue;
+    const dossier = path.join('pages', slugR);
+    const fichier = path.join(dossier, 'index.html');
+    const contenu = faqRedirectHTML(slugR);
+    validFaqPaths.add(dossier);
+    if (!fs.existsSync(fichier) || fs.readFileSync(fichier, 'utf8') !== contenu) {
+      fs.mkdirSync(dossier, { recursive: true });
+      fs.writeFileSync(fichier, contenu, 'utf8');
+      faqChanged = true;
+    }
+  }
+
   // Nettoyage limité aux chemins précédemment générés par ce module FAQ.
   // Les pages historiques/manuelles présentes dans /pages ne sont jamais supprimées.
   let removedFaq = 0;
   const oldFaqPaths = new Set(Object.values(state.faq || {}).map(x => x && x.path).filter(Boolean));
   for (const oldPath of oldFaqPaths) {
-    if (!validFaqPaths.has(oldPath) && fs.existsSync(oldPath) && path.resolve(oldPath).startsWith(path.resolve('pages') + path.sep) && /^pages[\\/][^\\/]+(?:[\\/](?:en|es))?$/.test(oldPath)) {
+    if (!validFaqPaths.has(oldPath) && fs.existsSync(oldPath) && path.resolve(oldPath).startsWith(path.resolve('pages') + path.sep) && /^pages[\\/][^\\/]+(?:[\\/](?:fr|en|es))?$/.test(oldPath)) {
       fs.rmSync(oldPath, {recursive:true, force:true});
       removedFaq++;
       const parent = path.dirname(oldPath);

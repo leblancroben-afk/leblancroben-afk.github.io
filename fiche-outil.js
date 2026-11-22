@@ -46,7 +46,7 @@ const VIDEO_JOUR_JS = String.raw`
 
 const planOf = (t) => (t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard');
 
-const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpolygon points='16,2 28,30 4,30' fill='none' stroke='%23ff6b9d' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='3' fill='%23ff6b9d'/%3E%3C/svg%3E";
+const FAVICON = 'https://albexia.com/assets/logo-512.png';
 
 // ── Textes (FR / EN / ES) ──
 const L = {
@@ -681,7 +681,7 @@ ${imageSociale
     : `  <meta name="twitter:card" content="summary">`}
   <meta property="og:locale" content="${ogLocale}">
 ${ogLocaleAlternates}
-  <link rel="icon" type="image/svg+xml" href="${FAVICON}">
+  <link rel="icon" type="image/png" sizes="512x512" href="${FAVICON}"><link rel="apple-touch-icon" href="${FAVICON}">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${R}css/style.css">
@@ -745,7 +745,7 @@ function avisOutilPageHTML(deps) {
   <title>Avis utilisateurs — Albexia</title>
   <meta name="description" content="Tous les avis des utilisateurs sur cet outil IA, avec notes, filtres et tri.">
   <meta name="robots" content="noindex, follow">
-  <link rel="icon" type="image/svg+xml" href="${FAVICON}">
+  <link rel="icon" type="image/png" sizes="512x512" href="${FAVICON}"><link rel="apple-touch-icon" href="${FAVICON}">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${R}css/style.css">

@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v1'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v13'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -146,7 +146,7 @@ function reecrireAnciensDomaines(html) {
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
 const { generateFiche, avisOutilPageHTML, normaliserSousCategorie, FAVICON } = require('./fiche-outil');
-const { generateFAQPage, faqLangueDisponible } = require('./faq-template'); // gabarit FAQ unique (même règle que les fiches) // template unique de fiche outil + page « tous les avis »
+const { generateFAQPage, faqLangueDisponible, faqTextes } = require('./faq-template'); // gabarit FAQ unique (même règle que les fiches) // template unique de fiche outil + page « tous les avis »
 
 function sharedJS() {
   return '';
@@ -5133,6 +5133,13 @@ async function main() {
   const hashFaqDoc = data => { const { updatedAt, ...rest } = data || {}; return crypto.createHash('sha256').update(JSON.stringify(rest)).digest('hex'); };
   const faqPublished = faqDocs.filter(f => f.status === 'publie' && f.slug);
   const validFaqPaths = new Set();
+  // Titre et réponse courte de chaque page FAQ publiée, par langue : pour les « questions associées ».
+  const pagesBySlug = Object.fromEntries(faqPublished.map(f => {
+    const slugF = slugify(f.slug);
+    const par = {};
+    for (const lg of ['fr', 'en', 'es']) { const tx = faqTextes(f, lg); if (tx) par[lg] = { titre: tx.titre, reponse_courte: tx.reponse_courte }; }
+    return [slugF, par];
+  }));
   const planFolder = t => t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard';
   const toolsById = Object.fromEntries(tools.map(t => [t.id, {
     nom: t.name, name: t.name, description: t.description || '',
@@ -5147,7 +5154,7 @@ async function main() {
       if (!faqLangueDisponible(faq, lang)) continue;
       const folder = path.join('pages', slug, ...(lang === 'fr' ? [] : [lang]));
       const output = path.join(folder, 'index.html');
-      const html = generateFAQPage({ ...faq, slug }, { lang, toolsById, navHTML, footerHTML, favicon: FAVICON });
+      const html = generateFAQPage({ ...faq, slug }, { lang, toolsById, pagesBySlug, navHTML, footerHTML, favicon: FAVICON });
       if (!html) continue;
       const hash = crypto.createHash('sha256').update(html).digest('hex');
       const key = `${faq.id}:${lang}`;

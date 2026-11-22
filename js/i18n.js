@@ -53,6 +53,8 @@ window.LANGUES_SUPPORTEES = LANGUES_SUPPORTEES;
 // Firestore qui est déjà traduit via le champ "langue" de chaque item).
 const UI_TRANSLATIONS = {
   fr: {
+    'faq.moreLinks': "Pour aller plus loin",
+    'faq.watchYt': "Regarder sur YouTube",
     'faq.seeTool': "Consulter la fiche",
     'faq.readPage': "Lire la réponse",
     'faq.questionN': "Question",
@@ -1307,6 +1309,8 @@ const UI_TRANSLATIONS = {
     "sm.alertCaptcha": "Veuillez valider la vérification anti-spam ci-dessus, puis réessayez.",
   },
   en: {
+    'faq.moreLinks': "Go further",
+    'faq.watchYt': "Watch on YouTube",
     'faq.seeTool': "View the listing for",
     'faq.readPage': "Read the answer",
     'faq.questionN': "Question",
@@ -2562,6 +2566,8 @@ const UI_TRANSLATIONS = {
     "sm.alertCaptcha": "Please complete the anti-spam check above, then try again.",
   },
   es: {
+    'faq.moreLinks': "Para seguir aprendiendo",
+    'faq.watchYt': "Ver en YouTube",
     'faq.seeTool': "Ver la ficha de",
     'faq.readPage': "Leer la respuesta",
     'faq.questionN': "Pregunta",

@@ -1705,26 +1705,26 @@
   },
   "faq": {
     "QDJlokpgmuQDPPMKxFFj:fr": {
-      "hash": "09e9f3a46de6d64c79723a3fbbb0371e50f3c4a0460f0979a2eea6d5a62a9d50",
+      "hash": "b4ffb52b0d373e17cc25f5065c0f6b793fe6face85751b1f626a458f09823695",
       "path": "pages/quels-outils-ia-sont-gratuits-sans-limite"
     },
     "ZJcWMTjQD0sUy8po5aV1:fr": {
-      "hash": "0983af19032387d1410669439912578f014f1e05e9205d2a5344639a18857171",
+      "hash": "107911453c0c48d2116a0b3d266306f52c4724a7188c6038dcb60cf0466846af",
       "path": "pages/quels-outils-ia-sont-gratuits-sans-limite"
     },
     "ZJcWMTjQD0sUy8po5aV1:en": {
-      "hash": "2e15cc62a99ed9fc77298f831a65fd71e3b9662752ced511683c151173b64a2a",
+      "hash": "40ca1d7e38bd0fdcac81938bf2d0ff195e58648deeaa5b601dbfced416ea89d2",
       "path": "pages/quels-outils-ia-sont-gratuits-sans-limite/en"
     },
     "ZJcWMTjQD0sUy8po5aV1:es": {
-      "hash": "ca311f4fd6c116c008cfde8bcf0dec8d37935c53236fc81e679b0f51e743fa85",
+      "hash": "ac88542f579ce985b1b6155b75f5af8a1a5023814a65c948611536e2c944083f",
       "path": "pages/quels-outils-ia-sont-gratuits-sans-limite/es"
     },
     "aSz6TyDRk0ezCa34P4R3:fr": {
-      "hash": "9f0de882db70ef48d60bd8136d77108e508c5691ce00017033f2421f64725154",
+      "hash": "1a9e178fac19c977c00572dc27af208894d55da57dd9a98da0b960e71dd087fe",
       "path": "pages/comment-utiliser-l-intelligence-artificielle-pour-anticiper-les-risques-et-les-decisions-juridiques"
     }
   },
   "faqHubHash": "9c391ae9167ee26fdc52cee737490a69065ab3ba0c52e225dd68c01aaa48a3ca",
-  "templateVersion": "layout-v3"
+  "templateVersion": "layout-v13"
 }

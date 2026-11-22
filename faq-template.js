@@ -95,7 +95,7 @@ function generateFAQPage(doc, { lang = 'fr', toolsById = {}, pagesBySlug = {}, n
     `<header class="faq-heading"><h1>${esc(txt.titre)}</h1></header>`,
     `<section class="faq-short-answer"><p class="faq-overline">${esc(L('faq.shortAnswer'))}</p><p>${esc(txt.reponse_courte)}</p></section>`,
     ...questions.map((q, i) =>
-      `<section class="faq-question"><p class="faq-overline">${esc(L('faq.questionN'))} ${i + 1}</p><h2>${esc(q.question)}</h2>${renderReponse(q.reponse)}</section>`),
+      `<section class="faq-qa"><p class="faq-overline">${esc(L('faq.questionN'))} ${i + 1}</p><h2>${esc(q.question)}</h2>${renderReponse(q.reponse)}</section>`),
     hasVideo && `<section class="faq-section faq-video-section"><h2>${esc(L('faq.videoLead'))}</h2>${vt.intro ? `<p>${esc(vt.intro)}</p>` : ''}<p><strong>${esc(vt.titre)}</strong>${v.createur ? ` · ${esc(v.createur)}` : ''}${v.duree ? ` · ${esc(v.duree)}` : ''}</p><div class="faq-video"><iframe src="${esc(v.url)}" title="${esc(vt.titre)}" loading="lazy" allowfullscreen></iframe></div>${(txt.decouvrir || []).length ? `<h3>${esc(L('faq.discoverVideo'))}</h3>${ul(txt.decouvrir)}` : ''}${(txt.savoir_faire || []).length ? `<h3>${esc(L('faq.canDoVideo'))}</h3>${ul(txt.savoir_faire)}` : ''}</section>`,
     (txt.retenir || []).length && `<section class="faq-section"><h2>${esc(L('faq.takeaway'))}</h2>${ul(txt.retenir)}</section>`,
     outils.length && `<section class="faq-section"><h2>${esc(L('faq.tools'))}</h2>${outils.map(o => `<div class="faq-tool-text"><h3>${esc(o.nom || o.name)}</h3>${textesOutils[o.id] ? `<p>${esc(textesOutils[o.id])}</p>` : ''}<a class="faq-text-link" href="${esc(o.url)}">${esc(L('faq.seeTool'))} ${esc(o.nom || o.name)} →</a></div>`).join('')}</section>`,

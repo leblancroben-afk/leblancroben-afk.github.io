@@ -1719,6 +1719,7 @@ Support français|oui|non|bool"></textarea>
     <fieldset><legend>Page (FR)</legend>
       <label>Catégorie *</label><input id="faq-category" required>
       <label>Sous-catégorie</label><input id="faq-subcategory">
+      <label>Catégorie du hub</label><select id="faq-hub-cat"><option value="">— Aucune —</option></select>
       <label>Titre de la page (H1) *</label><input id="faq-title" required>
       <label>Réponse courte *</label><textarea id="faq-short" rows="3" required></textarea>
     </fieldset>
@@ -1781,12 +1782,26 @@ Support français|oui|non|bool"></textarea>
     <button type="submit" id="faq-save-btn">Enregistrer la FAQ</button>
     <button type="button" id="faq-delete-btn">Supprimer cette FAQ</button>
   </form>
-  <fieldset><legend>Catégories FAQ</legend>
-    <div id="faq-category-manager"></div>
-    <button type="button" id="faq-category-add">+ Catégorie</button>
-    <textarea id="faq-categories-json" rows="4"></textarea>
-    <button type="button" id="faq-categories-save">Enregistrer les catégories</button>
+  <fieldset><legend>Catégories du hub FAQ</legend>
+    <p class="field-hint">Une catégorie = une section du hub, traduite en FR, EN et ES. Une page FAQ appartient à une seule catégorie.</p>
+    <div id="faq-hub-cats-list"></div>
+    <button type="button" id="hc-new">+ Nouvelle catégorie</button>
+    <form id="form-hub-cat" style="display:grid;gap:6px;margin-top:12px">
+      <input type="hidden" id="hc-id">
+      <label>Nom (FR) *</label><input id="hc-nom" required>
+      <label>Nom (EN)</label><input id="hc-nom-en">
+      <label>Nom (ES)</label><input id="hc-nom-es">
+      <label>Description (FR)</label><textarea id="hc-desc" rows="2"></textarea>
+      <label>Description (EN)</label><textarea id="hc-desc-en" rows="2"></textarea>
+      <label>Description (ES)</label><textarea id="hc-desc-es" rows="2"></textarea>
+      <label>Ordre d'affichage</label><input id="hc-ordre" type="number" min="1" value="1">
+      <button type="submit" id="hc-save">Enregistrer la catégorie</button>
+      <button type="button" id="hc-delete">Supprimer la catégorie</button>
+    </form>
     <div class="field-hint" id="faq-categories-feedback"></div>
+    <h4>Pages FAQ sans catégorie</h4>
+    <p class="field-hint">Ces pages n'apparaissent dans aucune catégorie du hub. Cliquez « Ouvrir » pour leur choisir une catégorie.</p>
+    <div id="faq-unassigned"></div>
   </fieldset>
 </div>
 <div class="tab-panel" id="tab-plans">
@@ -5854,13 +5869,9 @@ Support français|oui|non|bool"></textarea>
 })();
 
   // Gestion visuelle des catégories FAQ (structure Firestore conservée).
-  let faqCategoryRows = [];
-  function faqRenderCategories() {
-    const box=document.getElementById('faq-category-manager'); if(!box)return;
-    box.innerHTML=faqCategoryRows.map((c,i)=>`<div class="faq-category-admin-row" data-cat-index="${i}" style="border:1px solid var(--border);padding:12px;margin:10px 0;border-radius:6px"><label>Nom FR</label><input data-cat="name" value="${faqEsc(c.name||c.nom||'')}"><label>Slug</label><input data-cat="slug" value="${faqEsc(c.slug||'')}"><label>Description FR</label><textarea data-cat="description" rows="2">${faqEsc(c.description||'')}</textarea><label>Nom EN</label><input data-cat="name_en" value="${faqEsc(c.name_en||c.nom_en||'')}"><label>Nom ES</label><input data-cat="name_es" value="${faqEsc(c.name_es||c.nom_es||'')}"><button type="button" class="btn-danger" data-cat-remove>Supprimer la catégorie</button></div>`).join('');
-    box.querySelectorAll('.faq-category-admin-row').forEach(row=>{row.querySelectorAll('[data-cat]').forEach(el=>el.addEventListener('input',()=>{const i=+row.dataset.catIndex;faqCategoryRows[i][el.dataset.cat]=el.value;}));row.querySelector('[data-cat-remove]').addEventListener('click',()=>{if(!confirm('Supprimer cette catégorie ? Les FAQ qui y sont associées ne seront pas supprimées.'))return;faqCategoryRows.splice(+row.dataset.catIndex,1);faqRenderCategories();});});
-  }
-  document.getElementById('faq-category-add')?.addEventListener('click',()=>{faqCategoryRows.push({name:'',slug:'',description:'',name_en:'',name_es:''});faqRenderCategories();});
+  
+  
+  
   // Éditeur FAQ enrichi, inspiré de l'éditeur d'articles de profil.html.
   // Le textarea historique reste la source de sauvegarde Firestore pour préserver le schéma.
   
@@ -5996,66 +6007,7 @@ Support français|oui|non|bool"></textarea>
   
   faqRenderToolSearch();
 
-  document.getElementById('faq-categories-save').addEventListener('click', async (event) => {
-    const btn = event.currentTarget;
-    const feedback = document.getElementById('faq-categories-feedback');
-    const showCategoryFeedback = (type, message) => {
-      feedback.textContent = message;
-      feedback.style.display = 'block';
-      feedback.style.color = type === 'ok' ? 'var(--success, #0e9f6e)' : 'var(--danger, #dc2626)';
-      feedback.style.fontWeight = '600';
-    };
-
-    if (btn.disabled) return;
-    btn.disabled = true;
-    const originalText = btn.textContent;
-    btn.textContent = 'Enregistrement…';
-    showCategoryFeedback('info', 'Vérification des catégories…');
-
-    try {
-      const categories = faqCategoryRows.map(c=>({...c,slug:slugify(c.slug||c.name||''),name:String(c.name||'').trim(),description:String(c.description||'').trim(),name_en:String(c.name_en||'').trim(),name_es:String(c.name_es||'').trim()}));
-      if (!Array.isArray(categories)) throw new Error('Un tableau JSON est attendu : [ ... ].');
-
-      const slugs = new Set();
-      categories.forEach((category, index) => {
-        if (!category || typeof category !== 'object' || Array.isArray(category)) {
-          throw new Error(`La catégorie ${index + 1} doit être un objet JSON.`);
-        }
-        if (typeof category.slug !== 'string' || !category.slug.trim()) {
-          throw new Error(`La catégorie ${index + 1} doit avoir un slug.`);
-        }
-        if (typeof category.name !== 'string' || !category.name.trim()) {
-          throw new Error(`La catégorie ${index + 1} doit avoir un nom.`);
-        }
-        const slug = category.slug.trim();
-        if (slugs.has(slug)) throw new Error(`Le slug « ${slug} » est présent plusieurs fois.`);
-        slugs.add(slug);
-      });
-
-      faqSet('faq-categories-json',JSON.stringify(categories));
-      showCategoryFeedback('info', 'Enregistrement dans Firestore…');
-      const categoryRef = doc(db, 'config', 'faq_categories');
-      await setDoc(categoryRef, { categories, updatedAt: serverTimestamp() });
-
-      showCategoryFeedback('info', 'Vérification de l’enregistrement…');
-      const savedSnapshot = await getDoc(categoryRef);
-      if (!savedSnapshot.exists()) throw new Error('Firestore n’a pas confirmé la création du document.');
-      const savedCategories = savedSnapshot.data().categories || [];
-      if (JSON.stringify(savedCategories) !== JSON.stringify(categories)) {
-        throw new Error('Le document existe, mais les catégories relues ne correspondent pas aux données saisies.');
-      }
-
-      showCategoryFeedback('ok', `✓ ${categories.length} catégorie(s) enregistrée(s) et vérifiée(s) dans Firestore. Le hub sera actualisé au prochain build.`);
-      faqMessage('ok', 'Catégories FAQ enregistrées et vérifiées dans Firestore.');
-    } catch (err) {
-      console.error('[FAQ] Échec de l’enregistrement des catégories :', err);
-      showCategoryFeedback('error', '✕ Enregistrement impossible : ' + (err?.message || String(err)));
-      faqMessage('warn', 'Catégories non enregistrées : ' + (err?.message || String(err)));
-    } finally {
-      btn.disabled = false;
-      btn.textContent = originalText;
-    }
-  });
+  
 
 // ───── FAQ : pages à plusieurs questions (blocs répétables) ─────
 // Une page EN/ES n'est enregistrée que si la page ET toutes les questions sont traduites.
@@ -6146,6 +6098,7 @@ function faqPayload() {
     payload: {
       titre: v('faq-title'), slug: slugify(v('faq-slug')),
       categorie: v('faq-category'), sous_categorie: v('faq-subcategory'),
+      categorie_hub: v('faq-hub-cat'),
       status: v('faq-status') || 'brouillon',
       reponse_courte: v('faq-short'),
       questions: filled.map(b => b.fr),
@@ -6173,15 +6126,13 @@ function faqReset() {
 }
 async function loadFaqAdmin() {
   try {
-    const [snap, catSnap] = await Promise.all([getDocs(collection(db, 'faq')), getDoc(doc(db, 'config', 'faq_categories'))]);
+    const snap = await getDocs(collection(db, 'faq'));
     faqAdminCache = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (a.titre || '').localeCompare(b.titre || ''));
     await faqLoadTools();
     const select = document.getElementById('faq-existing');
     select.innerHTML = '<option value="">Créer une nouvelle FAQ…</option>' + faqAdminCache.map(f =>
       `<option value="${faqEsc(f.id)}">${faqEsc(f.titre || f.slug || f.id)} — ${faqEsc(f.status || 'brouillon')}</option>`).join('');
-    faqCategoryRows = (catSnap.exists() ? (catSnap.data().categories || []) : []).map(c => ({ ...c }));
-    faqRenderCategories();
-    faqSet('faq-categories-json', JSON.stringify(faqCategoryRows, null, 2));
+    await loadHubCategories();
     document.getElementById('faq-admin-status').textContent = `${faqAdminCache.length} FAQ dans Firestore.`;
   } catch (err) {
     faqMessage('warn', 'Erreur de chargement FAQ : ' + err.message);
@@ -6214,6 +6165,7 @@ function faqLoadDocument(id) {
   fill('es', tr.es || {});
   const video = f.video || {};
   faqSet('faq-slug', f.slug || '');
+  faqSet('faq-hub-cat', f.categorie_hub || '');
   faqSet('faq-status', f.status || 'brouillon');
   faqSet('faq-video-url', video.url || '');
   faqSet('faq-video-creator', video.createur || '');
@@ -6235,19 +6187,23 @@ function faqLoadDocument(id) {
 // chaque appel est retenté après une pause (le service peut se réveiller), et un
 // bilan est affiché à la fin.
 async function faqTryTranslate(fn) {
+  let derniere = null;
   for (let essai = 1; essai <= 3; essai++) {
+    await pause(800);                       // cadence : pas de rafale vers le service
     try { return await fn(); }
     catch (err) {
-      if (essai === 3) throw err;
-      await pause(essai * 4000);
+      derniere = err;
+      if (essai < 3) await pause(essai * 5000);
     }
   }
+  throw derniere;
 }
 async function faqTranslateAll(targetLang, btn) {
   const libelle = btn.textContent;
   btn.disabled = true;
   btn.textContent = '🌐 Traduction en cours… (peut prendre 1 min si le service se réveille)';
-  let succes = 0, echecs = 0;
+  let succes = 0, echecs = 0, motif = '';
+  const noter = err => { echecs++; if (!motif) motif = err.message || String(err); console.error('FAQ traduction', err); };
   const champs = faqFieldsToTranslate(targetLang);
   for (const [srcId, destId, format] of champs) {
     const srcEl = document.getElementById(srcId), destEl = document.getElementById(destId);
@@ -6257,20 +6213,22 @@ async function faqTranslateAll(targetLang, btn) {
         ? translateLignes(srcEl.value, targetLang)
         : translateText(srcEl.value, targetLang, 'text'));
       succes++;
-    } catch (err) { echecs++; console.error('FAQ traduction', srcId, err); }
+    } catch (err) { noter(err); }
   }
   for (const block of document.querySelectorAll('.faq-q-block')) {
     const q = block.querySelector('.q-fr')?.value.trim();
     const r = block.querySelector('.q-fr-rep')?.value.trim();
     try {
       if (q) { block.querySelector(`.q-${targetLang}`).value = await faqTryTranslate(() => translateText(q, targetLang, 'text')); succes++; }
+    } catch (err) { noter(err); }
+    try {
       if (r) { block.querySelector(`.q-${targetLang}-rep`).value = await faqTryTranslate(() => translateLignes(r, targetLang)); succes++; }
-    } catch (err) { echecs++; console.error('FAQ traduction bloc', err); }
+    } catch (err) { noter(err); }
   }
   btn.disabled = false;
   btn.textContent = libelle;
   if (echecs === 0) faqMessage('ok', `Traduction ${targetLang.toUpperCase()} terminée (${succes} champ(s)). Relisez avant d'enregistrer.`);
-  else faqMessage('warn', `Traduction ${targetLang.toUpperCase()} : ${succes} réussi(s), ${echecs} échec(s). Relancez le bouton pour les champs en échec.`);
+  else faqMessage('warn', `Traduction ${targetLang.toUpperCase()} : ${succes} réussi(s), ${echecs} échec(s). Motif : ${motif}`);
 }
 
 document.getElementById('faq-existing').addEventListener('change', e => e.target.value ? faqLoadDocument(e.target.value) : faqReset());
@@ -6317,6 +6275,115 @@ document.getElementById('faq-delete-btn').addEventListener('click', async () => 
   } catch (err) {
     faqMessage('warn', 'Suppression impossible : ' + err.message);
   }
+});
+
+// ───── Catégories du hub FAQ : collection Firestore « faq_categories » ─────
+// Source unique : Firebase. Une page FAQ porte son champ « categorie_hub » (une seule catégorie).
+const HUB_COL = 'faq_categories';
+let hubCats = [];
+const hubVal = id => (document.getElementById(id)?.value || '').trim();
+function hubMsg(type, texte) {
+  const el = document.getElementById('faq-categories-feedback');
+  if (!el) return;
+  el.textContent = texte;
+  el.style.color = type === 'ok' ? 'var(--success, #0e9f6e)' : 'var(--danger, #dc2626)';
+  el.style.fontWeight = '600';
+}
+function hubPagesDe(id) { return faqAdminCache.filter(f => f.categorie_hub === id); }
+function hubRemplirFormulaire(c) {
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val ?? ''; };
+  set('hc-id', c?.id || '');
+  set('hc-nom', c?.nom || '');
+  set('hc-nom-en', c?.nom_en || '');
+  set('hc-nom-es', c?.nom_es || '');
+  set('hc-desc', c?.description_fr || '');
+  set('hc-desc-en', c?.description_en || '');
+  set('hc-desc-es', c?.description_es || '');
+  set('hc-ordre', c?.ordre ?? (hubCats.length + 1));
+}
+function hubRenderListe() {
+  const box = document.getElementById('faq-hub-cats-list');
+  if (!box) return;
+  if (!hubCats.length) { box.innerHTML = '<p class="field-hint">Aucune catégorie pour le moment.</p>'; return; }
+  box.innerHTML = hubCats.map((c, i) => `
+    <div style="border:1px solid var(--border);border-radius:6px;padding:10px;margin:8px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <strong style="flex:1 1 180px">${faqEsc(c.ordre ?? i + 1)}. ${faqEsc(c.nom || c.slug || c.id)} <small>(${hubPagesDe(c.id).length} page(s))</small></strong>
+      <button type="button" data-hc-edit="${faqEsc(c.id)}">Modifier</button>
+      <button type="button" data-hc-up="${i}" ${i === 0 ? 'disabled' : ''}>▲</button>
+      <button type="button" data-hc-down="${i}" ${i === hubCats.length - 1 ? 'disabled' : ''}>▼</button>
+    </div>`).join('');
+  box.querySelectorAll('[data-hc-edit]').forEach(b => b.addEventListener('click', () => hubRemplirFormulaire(hubCats.find(c => c.id === b.dataset.hcEdit))));
+  box.querySelectorAll('[data-hc-up]').forEach(b => b.addEventListener('click', () => hubDeplacer(+b.dataset.hcUp, -1)));
+  box.querySelectorAll('[data-hc-down]').forEach(b => b.addEventListener('click', () => hubDeplacer(+b.dataset.hcDown, 1)));
+}
+// Échange l'ordre de deux catégories (écrit dans Firebase).
+async function hubDeplacer(i, sens) {
+  const j = i + sens;
+  if (j < 0 || j >= hubCats.length) return;
+  const a = hubCats[i], b = hubCats[j];
+  try {
+    await updateDoc(doc(db, HUB_COL, a.id), { ordre: j + 1 });
+    await updateDoc(doc(db, HUB_COL, b.id), { ordre: i + 1 });
+    await loadHubCategories();
+  } catch (err) { hubMsg('warn', 'Déplacement impossible : ' + err.message); }
+}
+function hubRenderSelectPage() {
+  const sel = document.getElementById('faq-hub-cat');
+  if (!sel) return;
+  const courant = sel.value;
+  sel.innerHTML = '<option value="">— Aucune —</option>' + hubCats.map(c => `<option value="${faqEsc(c.id)}">${faqEsc(c.nom || c.slug || c.id)}</option>`).join('');
+  sel.value = courant;
+}
+function hubRenderNonAssignees() {
+  const box = document.getElementById('faq-unassigned');
+  if (!box) return;
+  const libres = faqAdminCache.filter(f => !f.categorie_hub || !hubCats.some(c => c.id === f.categorie_hub));
+  if (!libres.length) { box.innerHTML = '<p class="field-hint">Toutes les pages sont rangées dans une catégorie.</p>'; return; }
+  box.innerHTML = libres.map(f => `
+    <div style="border:1px solid var(--border);border-radius:6px;padding:8px;margin:6px 0;display:flex;gap:8px;align-items:center">
+      <span style="flex:1">${faqEsc(f.titre || f.slug || f.id)}</span>
+      <button type="button" data-hc-open="${faqEsc(f.id)}">Ouvrir</button>
+    </div>`).join('');
+  box.querySelectorAll('[data-hc-open]').forEach(b => b.addEventListener('click', () => faqLoadDocument(b.dataset.hcOpen)));
+}
+async function loadHubCategories() {
+  const snap = await getDocs(collection(db, HUB_COL));
+  hubCats = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0));
+  hubRenderListe();
+  hubRenderSelectPage();
+  hubRenderNonAssignees();
+}
+document.getElementById('hc-new').addEventListener('click', () => hubRemplirFormulaire(null));
+document.getElementById('form-hub-cat').addEventListener('submit', async e => {
+  e.preventDefault();
+  const nom = hubVal('hc-nom');
+  if (!nom) return hubMsg('warn', 'Le nom FR est obligatoire.');
+  const id = hubVal('hc-id');
+  const donnees = {
+    nom, nom_en: hubVal('hc-nom-en'), nom_es: hubVal('hc-nom-es'),
+    description_fr: hubVal('hc-desc'), description_en: hubVal('hc-desc-en'), description_es: hubVal('hc-desc-es'),
+    ordre: Number(hubVal('hc-ordre')) || 1, slug: slugify(nom), updatedAt: serverTimestamp(),
+  };
+  try {
+    if (id) await setDoc(doc(db, HUB_COL, id), donnees, { merge: true });
+    else await addDoc(collection(db, HUB_COL), donnees);
+    hubMsg('ok', 'Catégorie enregistrée.');
+    hubRemplirFormulaire(null);
+    await loadHubCategories();
+  } catch (err) { hubMsg('warn', 'Enregistrement impossible : ' + err.message); }
+});
+document.getElementById('hc-delete').addEventListener('click', async () => {
+  const id = hubVal('hc-id');
+  if (!id) return hubMsg('warn', 'Sélectionnez une catégorie à supprimer.');
+  const pages = hubPagesDe(id);
+  if (!confirm(`Supprimer cette catégorie ? ${pages.length} page(s) seront détachées (elles ne sont pas supprimées).`)) return;
+  try {
+    await Promise.all(pages.map(p => updateDoc(doc(db, 'faq', p.id), { categorie_hub: '' })));
+    await deleteDoc(doc(db, HUB_COL, id));
+    hubMsg('ok', 'Catégorie supprimée.');
+    hubRemplirFormulaire(null);
+    await loadFaqAdmin();
+  } catch (err) { hubMsg('warn', 'Suppression impossible : ' + err.message); }
 });
 </script>
 </body>

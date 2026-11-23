@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v1'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v13'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -146,7 +146,7 @@ function reecrireAnciensDomaines(html) {
 // Header et footer : voir layout.js (pages statiques traduites + variantes dynamiques i18n.js)
 const { navHTML, footerHTML, navDynamicHTML, footerDynamicHTML } = require('./layout');
 const { generateFiche, avisOutilPageHTML, normaliserSousCategorie, FAVICON } = require('./fiche-outil');
-const { generateFAQPage, faqLangueDisponible, faqTextes, faqRedirectHTML, faqHubJsonLd } = require('./faq-template'); // gabarit FAQ unique (même règle que les fiches) // template unique de fiche outil + page « tous les avis »
+const { generateFAQPage, faqLangueDisponible, faqTextes, faqRedirectHTML, t: tUI } = require('./faq-template'); // gabarit FAQ unique (même règle que les fiches) // template unique de fiche outil + page « tous les avis »
 
 function sharedJS() {
   return '';
@@ -5128,8 +5128,8 @@ async function main() {
   console.log(`\n📚 Lecture de Firestore (FAQ)...`);
   const faqSnap = await db.collection('faq').get();
   const faqDocs = faqSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-  const faqCategoriesSnap = await db.collection('config').doc('faq_categories').get();
-  const faqCategories = faqCategoriesSnap.exists ? (faqCategoriesSnap.data().categories || []) : [];
+  const faqCategoriesSnap = await db.collection('faq_categories').get();
+  const faqCategories = faqCategoriesSnap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0));
   const hashFaqDoc = data => { const { updatedAt, ...rest } = data || {}; return crypto.createHash('sha256').update(JSON.stringify(rest)).digest('hex'); };
   const faqPublished = faqDocs.filter(f => f.status === 'publie' && f.slug);
   const validFaqPaths = new Set();
@@ -5199,19 +5199,64 @@ async function main() {
       if (fs.existsSync(parent) && fs.readdirSync(parent).length === 0) fs.rmSync(parent,{recursive:true,force:true});
     }
   }
-  // Hub FAQ : catégories administrables + questions publiées seulement.
-  const faqHubPath = path.join('faq','index.html');
-  const faqHubHash = hashFaqDoc({faqs:faqPublished,categories:faqCategories});
+  // ─── HUB FAQ : trilingue (FR /faq/, EN /faq/en/, ES /faq/es/), 20 catégories par page ───
+  // Source Firebase : « faq_categories » (nom, description, ordre par langue) et « categorie_hub » des pages.
+  // Une catégorie n'apparaît dans une langue que si elle a un nom dans cette langue et au moins une page traduite.
+  // Une question n'apparaît dans une langue que si sa page est traduite dans cette langue.
+  const faqHubPath = path.join('faq', 'index.html');
+  const faqHubHash = hashFaqDoc({ faqs: faqPublished, categories: faqCategories });
+  const HUB_LANGUES = ['fr', 'en', 'es'];
+  const HUB_PAR_PAGE = 20;
+  const hubRacine = lang => (lang === 'fr' ? '/faq' : `/faq/${lang}`);
+  const hubDossier = (lang, p) => path.join(...(lang === 'fr' ? ['faq'] : ['faq', lang]), ...(p > 1 ? ['page', String(p)] : []));
+  const hubUrl = (lang, p) => `${hubRacine(lang)}${p > 1 ? `/page/${p}` : ''}/`;
+  const nomCat = (c, lang) => (lang === 'fr' ? c.nom : c[`nom_${lang}`]) || '';
+  const descCat = (c, lang) => (lang === 'fr' ? c.description_fr : c[`description_${lang}`]) || '';
+  const pagesCat = (c, lang) => faqPublished.filter(f => f.categorie_hub === c.id && faqLangueDisponible(f, lang));
+  const titrePage = (f, lang) => (faqTextes(f, lang) || {}).titre || f.titre || f.slug;
+  const lienPage = (f, lang) => `/pages/${slugify(f.slug)}/${lang}/`;
+  const cartesHub = lang => faqCategories.filter(c => nomCat(c, lang) && pagesCat(c, lang).length)
+    .map(c => ({ c, pages: pagesCat(c, lang) }));
+  const carteHub = (c, pages, lang, numero) => `<article class="faq-category"><div class="faq-category-top"><span class="faq-number">${String(numero).padStart(2, '0')}</span></div><h3>${escHtml(nomCat(c, lang))}</h3>${descCat(c, lang) ? `<p>${escHtml(descCat(c, lang))}</p>` : ''}<ul class="faq-question-list">${pages.map(f => `<li><a href="${lienPage(f, lang)}">${escHtml(titrePage(f, lang))}</a></li>`).join('')}</ul></article>`;
+  const pagination = (lang, p, total) => {
+    if (total <= 1) return '';
+    const liens = Array.from({ length: total }, (_, i) => i + 1).map(n => n === p ? `<span aria-current="page">${n}</span>` : `<a href="${hubUrl(lang, n)}">${n}</a>`).join(' ');
+    return `<nav class="faq-pager" aria-label="${escHtml(tUI('faq.hubPage', lang))}">${p > 1 ? `<a href="${hubUrl(lang, p - 1)}">← ${escHtml(tUI('faq.hubPrev', lang))}</a>` : ''} ${liens} ${p < total ? `<a href="${hubUrl(lang, p + 1)}">${escHtml(tUI('faq.hubNext', lang))} →</a>` : ''}</nav>`;
+  };
+  const jsonLdHub = (lang, items) => {
+    const ld = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: tUI('faq.hubTitle', lang), inLanguage: lang, url: `${SITE_ORIGIN}${hubUrl(lang, 1)}`,
+      mainEntity: { '@type': 'ItemList', itemListElement: items.map((f, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE_ORIGIN}${lienPage(f, lang)}`, name: titrePage(f, lang) })) } };
+    return `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
+  };
+  const alternatesHub = HUB_LANGUES.map(l => `<link rel="alternate" hreflang="${l}" href="${SITE_ORIGIN}${hubUrl(l, 1)}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE_ORIGIN}${hubUrl('fr', 1)}">`;
+  const coquilleHub = (lang, p, total, corps, items) => `<!DOCTYPE html><html lang="${lang}" data-static-lang="${lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escHtml(tUI('faq.hubTitle', lang))} — Albexia${p > 1 ? ` (${p})` : ''}</title><meta name="description" content="${escHtml(tUI('faq.hubLead', lang))}"><link rel="canonical" href="${SITE_ORIGIN}${hubUrl(lang, p)}">${alternatesHub}<link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/themes.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="/css/faq-hub.css">${jsonLdHub(lang, items)}</head><body>${navHTML(lang)}${corps}${footerHTML(lang)}<script src="/js/i18n.js"></script><script src="/js/header.js" defer></script><script src="/js/footer.js" defer></script></body></html>`;
   if (faqChanged || removedFaq || state.faqHubHash !== faqHubHash || !fs.existsSync(faqHubPath)) {
-    const categories = faqCategories.filter(c => c && c.slug).map(c => {
-      const items = faqPublished.filter(f => f.categorie === c.slug);
-      if (!items.length) return '';
-      return `<section class="faq-category"><div class="faq-category-heading"><h2>${escHtml(c.name || c.nom || c.slug)}</h2></div>${c.description ? `<p>${escHtml(c.description)}</p>` : ''}<ul class="faq-question-list">${items.map(f => { const t=(f.translations||f.traductions||{}).fr || f; return `<li><a href="/pages/${slugify(f.slug)}/">${escHtml(t.title || t.titre || f.slug)}</a></li>`; }).join('')}</ul></section>`;
-    }).join('');
-    const hub = `<!DOCTYPE html><html lang="fr" data-static-lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Centre d’aide — FAQ | Albexia</title><meta name="description" content="Réponses aux questions fréquentes sur les outils d’intelligence artificielle et leur utilisation."><link rel="canonical" href="${SITE_ORIGIN}/faq/"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/themes.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="/css/faq-hub.css">${faqHubJsonLd(faqPublished.filter(f => faqLangueDisponible(f, 'fr')))}</head><body>${navHTML('fr')}<main class="faq-hub container"><header class="faq-hero"><div><h1>Questions fréquentes</h1><p class="faq-lead">Des réponses claires pour mieux comprendre et utiliser les outils d’intelligence artificielle.</p></div></header><div class="faq-categories">${categories || '<p>Aucune question publiée pour le moment.</p>'}</div></main>${footerHTML('fr')}<script src="/js/i18n.js"></script><script src="/js/header.js" defer></script><script src="/js/footer.js" defer></script></body></html>`;
-    fs.mkdirSync('faq',{recursive:true}); fs.writeFileSync(faqHubPath,hub,'utf8');
+    // Nettoyage : anciens dossiers du hub (pages de catégorie supprimées, anciens paliers de pagination)
+    if (fs.existsSync('faq')) {
+      for (const entree of fs.readdirSync('faq')) {
+        if (entree === 'en' || entree === 'es') continue;
+        const chemin = path.join('faq', entree);
+        if (fs.statSync(chemin).isDirectory()) fs.rmSync(chemin, { recursive: true, force: true });
+      }
+      for (const l of ['en', 'es']) { const pg = path.join('faq', l, 'page'); if (fs.existsSync(pg)) fs.rmSync(pg, { recursive: true, force: true }); }
+    }
+    for (const lang of HUB_LANGUES) {
+      const cartes = cartesHub(lang);
+      const total = Math.max(1, Math.ceil(cartes.length / HUB_PAR_PAGE));
+      for (let p = 1; p <= total; p++) {
+        const tranche = cartes.slice((p - 1) * HUB_PAR_PAGE, p * HUB_PAR_PAGE);
+        const items = tranche.flatMap(x => x.pages);
+        const contenu = tranche.length
+          ? tranche.map((x, i) => carteHub(x.c, x.pages, lang, (p - 1) * HUB_PAR_PAGE + i + 1)).join('')
+          : `<p>${escHtml(tUI('faq.hubEmpty', lang))}</p>`;
+        const corps = `<main class="faq-hub container"><header class="faq-hero"><div class="faq-hero-copy"><p class="faq-eyebrow">ALBEXIA · ${escHtml(tUI('faq.hubEyebrow', lang))}</p><h1>${escHtml(tUI('faq.hubTitle', lang))} <span>Albexia</span></h1><p class="faq-lead">${escHtml(tUI('faq.hubLead', lang))}</p></div></header><section class="faq-section"><div class="faq-section-heading"><div><h2>${escHtml(tUI('faq.hubSection', lang))}</h2></div><p>${escHtml(tUI('faq.hubSectionLead', lang))}</p></div><div class="faq-categories">${contenu}</div>${pagination(lang, p, total)}</section></main>`;
+        const dossier = hubDossier(lang, p);
+        fs.mkdirSync(dossier, { recursive: true });
+        fs.writeFileSync(path.join(dossier, 'index.html'), coquilleHub(lang, p, total, corps, items), 'utf8');
+      }
+    }
     newState.faqHubHash = faqHubHash;
-    console.log(`✓ Hub FAQ régénéré (${faqPublished.length} FAQ publiée(s), ${removedFaq} dossier(s) supprimé(s)).`);
+    console.log(`✓ Hub FAQ régénéré : ${HUB_LANGUES.map(l => `${l} ${cartesHub(l).length} catégorie(s)`).join(', ')}.`);
   } else newState.faqHubHash = faqHubHash;
 
   // ─── PAGES CATÉGORIE (une par langue avec du contenu réel) ───

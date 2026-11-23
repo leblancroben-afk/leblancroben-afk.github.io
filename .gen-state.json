@@ -1751,7 +1751,20 @@
       "updatedAtMs": 1790462872431
     }
   },
-  "faq": {},
-  "faqHubHash": "8fd70e61090911f6bf3f0ac67a8a830a84e2d6f300ac6e662c555c60a6d36014",
+  "faq": {
+    "n1yQeQfdqWICSSxsfUyE:fr": {
+      "hash": "b102292a040f3e056a2804bc754143fefe814e48fed7f1fbcf7637a78f837b18",
+      "path": "pages/qu-est-ce-que-l-api-openai/fr"
+    },
+    "n1yQeQfdqWICSSxsfUyE:en": {
+      "hash": "6e5e3121dca5285feae1e3662462d2174030b945a86000662e32d8f8f1edd0b9",
+      "path": "pages/qu-est-ce-que-l-api-openai/en"
+    },
+    "n1yQeQfdqWICSSxsfUyE:es": {
+      "hash": "1d4ec2df55af2f66f9ea27d443f40bb794d95438742c55022b3ade65eefd8481",
+      "path": "pages/qu-est-ce-que-l-api-openai/es"
+    }
+  },
+  "faqHubHash": "4131a09f27d4123b2958ba5758b149ec250d5dccd69bff5d0ad8a581bb54298e",
   "templateVersion": "layout-v13"
 }

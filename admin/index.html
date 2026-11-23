@@ -1717,8 +1717,6 @@ Support français|oui|non|bool"></textarea>
       <label>Slug URL *</label><input id="faq-slug" required>
     </fieldset>
     <fieldset><legend>Page (FR)</legend>
-      <label>Catégorie *</label><input id="faq-category" required>
-      <label>Sous-catégorie</label><input id="faq-subcategory">
       <label>Catégorie du hub</label><select id="faq-hub-cat"><option value="">— Aucune —</option></select>
       <label>Titre de la page (H1) *</label><input id="faq-title" required>
       <label>Réponse courte *</label><textarea id="faq-short" rows="3" required></textarea>
@@ -1753,8 +1751,6 @@ Support français|oui|non|bool"></textarea>
     </fieldset>
     <fieldset><legend>Traduction EN</legend>
       <button type="button" class="btn-translate-faq" data-target-lang="en">🌐 Traduire depuis le FR (page et toutes les questions)</button>
-      <label>Catégorie (EN)</label><input id="faq-category-en">
-      <label>Sous-catégorie (EN)</label><input id="faq-subcategory-en">
       <label>Titre de la page (EN)</label><input id="faq-title-en">
       <label>Réponse courte (EN)</label><textarea id="faq-short-en" rows="3"></textarea>
       <label>Titre vidéo (EN)</label><input id="faq-video-title-en">
@@ -1767,8 +1763,6 @@ Support français|oui|non|bool"></textarea>
     </fieldset>
     <fieldset><legend>Traduction ES</legend>
       <button type="button" class="btn-translate-faq" data-target-lang="es">🌐 Traduire depuis le FR (page et toutes les questions)</button>
-      <label>Catégorie (ES)</label><input id="faq-category-es">
-      <label>Sous-catégorie (ES)</label><input id="faq-subcategory-es">
       <label>Titre de la page (ES)</label><input id="faq-title-es">
       <label>Réponse courte (ES)</label><textarea id="faq-short-es" rows="3"></textarea>
       <label>Titre vidéo (ES)</label><input id="faq-video-title-es">
@@ -1795,6 +1789,7 @@ Support français|oui|non|bool"></textarea>
       <label>Description (EN)</label><textarea id="hc-desc-en" rows="2"></textarea>
       <label>Description (ES)</label><textarea id="hc-desc-es" rows="2"></textarea>
       <label>Ordre d'affichage</label><input id="hc-ordre" type="number" min="1" value="1">
+      <button type="button" id="hc-translate">🌐 Traduire depuis le FR (nom et description)</button>
       <button type="submit" id="hc-save">Enregistrer la catégorie</button>
       <button type="button" id="hc-delete">Supprimer la catégorie</button>
     </form>
@@ -6014,8 +6009,6 @@ Support français|oui|non|bool"></textarea>
 function faqFieldsToTranslate(s) {
   return [
     ['faq-title', `faq-title-${s}`, 'text'],
-    ['faq-category', `faq-category-${s}`, 'text'],
-    ['faq-subcategory', `faq-subcategory-${s}`, 'text'],
     ['faq-short', `faq-short-${s}`, 'text'],
     ['faq-video-title', `faq-video-title-${s}`, 'text'],
     ['faq-video-intro', `faq-video-intro-${s}`, 'text'],
@@ -6083,7 +6076,7 @@ function faqPayload() {
     const missing = filled.filter(b => !b[lang].question || !b[lang].reponse).length;
     if (missing) { warnings.push(`${lang.toUpperCase()} non publiée : ${missing} question(s) non traduite(s).`); continue; }
     translations[lang] = {
-      titre, categorie: v('faq-category-' + lang), sous_categorie: v('faq-subcategory-' + lang),
+      titre,
       reponse_courte: short,
       questions: filled.map(b => b[lang]),
       video: { titre: v('faq-video-title-' + lang), intro: v('faq-video-intro-' + lang) },
@@ -6097,7 +6090,6 @@ function faqPayload() {
     warnings,
     payload: {
       titre: v('faq-title'), slug: slugify(v('faq-slug')),
-      categorie: v('faq-category'), sous_categorie: v('faq-subcategory'),
       categorie_hub: v('faq-hub-cat'),
       status: v('faq-status') || 'brouillon',
       reponse_courte: v('faq-short'),
@@ -6149,8 +6141,6 @@ function faqLoadDocument(id) {
     const lines = a => (a || []).join('\n');
     const video = b.video || {};
     s('faq-title', b.titre);
-    s('faq-category', b.categorie);
-    s('faq-subcategory', b.sous_categorie);
     s('faq-short', b.reponse_courte);
     s('faq-video-title', video.titre);
     s('faq-video-intro', video.intro);
@@ -6384,6 +6374,31 @@ document.getElementById('hc-delete').addEventListener('click', async () => {
     hubRemplirFormulaire(null);
     await loadFaqAdmin();
   } catch (err) { hubMsg('warn', 'Suppression impossible : ' + err.message); }
+});
+
+// Traduction du nom et de la description d'une catégorie du hub (FR → EN et ES).
+document.getElementById('hc-translate').addEventListener('click', async e => {
+  const btn = e.currentTarget;
+  const libelle = btn.textContent;
+  const nom = hubVal('hc-nom'), desc = hubVal('hc-desc');
+  if (!nom) return hubMsg('warn', 'Renseignez le nom FR avant de traduire.');
+  btn.disabled = true;
+  btn.textContent = 'Traduction en cours…';
+  let succes = 0, echecs = 0, motif = '';
+  for (const lg of ['en', 'es']) {
+    for (const [srcId, dstId, texte] of [['hc-nom', `hc-nom-${lg}`, nom], ['hc-desc', `hc-desc-${lg}`, desc]]) {
+      if (!texte) continue;
+      try {
+        const traduit = await faqTryTranslate(() => translateText(texte, lg, 'text'));
+        document.getElementById(dstId).value = traduit;
+        succes++;
+      } catch (err) { echecs++; if (!motif) motif = err.message || String(err); }
+    }
+  }
+  btn.disabled = false;
+  btn.textContent = libelle;
+  if (echecs === 0) hubMsg('ok', `Traduction terminée (${succes} champ(s)). Relisez avant d'enregistrer.`);
+  else hubMsg('warn', `Traduction : ${succes} réussi(s), ${echecs} échec(s). Motif : ${motif}`);
 });
 </script>
 </body>

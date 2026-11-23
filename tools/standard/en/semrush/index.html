@@ -128,7 +128,42 @@
   <div class="fo-prompt-list"><div class="fo-prompt"><pre>Find 20 long track keywords related to [subject] with good SEO potential.</pre><button type="button" class="fo-copy" data-copy="Find 20 long track keywords related to [subject] with good SEO potential." data-label="Copy" data-done="Copied">Copy</button></div><div class="fo-prompt"><pre>Analyses the main competitors of [site] and identifies their content opportunities.</pre><button type="button" class="fo-copy" data-copy="Analyses the main competitors of [site] and identifies their content opportunities." data-label="Copy" data-done="Copied">Copy</button></div><div class="fo-prompt"><pre>Proposes a SEO item plan for the keyword [keyword], with titles H2 and H3.</pre><button type="button" class="fo-copy" data-copy="Proposes a SEO item plan for the keyword [keyword], with titles H2 and H3." data-label="Copy" data-done="Copied">Copy</button></div></div>
 </section><script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.fo-copy');if(!b)return;var t=b.getAttribute('data-copy')||'';var label=b.getAttribute('data-label')||'';var done=b.getAttribute('data-done')||'';if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent=done;setTimeout(function(){b.textContent=label;},1500);});}});</script>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/q1lTuX0i-68/mqdefault.jpg" alt="The Only Semrush Tutorial You'll Ever Need: How to Use Semrush for Beginners" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>The Only Semrush Tutorial You'll Ever Need: How to Use Semrush for Beginners</div><div class="tutorial-duration" data-vid-dur>42:11</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/q1lTuX0i-68" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"q1lTuX0i-68","titre":"The Only Semrush Tutorial You'll Ever Need: How to Use Semrush for Beginners","duree":"42:11"},{"id":"reLjsDPOOLQ","titre":"Learn Full Semrush Course in 1.5 Hours | Semrush Tutorials in Hindi | Umar Tazkeer","duree":"1:23:39"},{"id":"cgxhKmMd6Ec","titre":"Semrush Tutorial for Beginners","duree":"20:46"},{"id":"FqOIYEO8zUQ","titre":"Semrush Tutorial for Beginners 2026 (Complete SEO Guide)","duree":"50:58"},{"id":"HWRCYcfq8Q4","titre":"The ULTIMATE Semrush Keyword Research Tutorial","duree":"13:03"},{"id":"MEjE7saSN-Q","titre":"Semrush Tutorial 2026 - Master SEO & AEO with Semrush One","duree":"43:28"},{"id":"BFkQDNAnOW8","titre":"Comment utiliser Semrush et bien se lancer avec ses outils ?","duree":"12:27"},{"id":"Bu9axliIe9k","titre":"Semrush Tutorial for Beginners 2025 | Step by Step Guide (Under 20 Minutes)","duree":"19:58"},{"id":"EPeGTWc0Nlk","titre":"How To Use SEMrush For SEO And Google Ads In 2025 | SEMrush Tutorial","duree":"17:55"},{"id":"ji2BnSa9Gzs","titre":"Tutoriel Semrush: Guide SEO Complet pour Débutants (2026)","duree":"55:04"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Is Semrush free?</button><div class="faq-a">Yes. Semrush offers a free account with no credit card required, limited to 1 demo project and 10 reports per day.</div></div><div class="faq-item"><button class="faq-q">Does Semrush offer a free trial?</button><div class="faq-a">Yes. Most Semrush toolkits include a 7-day free trial that can be canceled at any time.</div></div><div class="faq-item"><button class="faq-q">Does Semrush support French?</button><div class="faq-a">Yes. Semrush’s interface and resources are available in French, among other languages.</div></div><div class="faq-item"><button class="faq-q">Does Semrush offer an API?</button><div class="faq-a">Yes. The API provides access to keyword, traffic, ranking, and AI visibility data; it is available on paid plans.</div></div></div></section>
       
       

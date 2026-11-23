@@ -128,7 +128,42 @@
   <div class="fo-prompt-list"><div class="fo-prompt"><pre>Analyses the keywords of my competitor [site name] and proposes 10 topics of articles with high SEO potential.</pre><button type="button" class="fo-copy" data-copy="Analyses the keywords of my competitor [site name] and proposes 10 topics of articles with high SEO potential." data-label="Copy" data-done="Copied">Copy</button></div><div class="fo-prompt"><pre>Creates a SEO article plan of 1,200 words on [subject], targeting the keyword [keyword] and associated search intentions.</pre><button type="button" class="fo-copy" data-copy="Creates a SEO article plan of 1,200 words on [subject], targeting the keyword [keyword] and associated search intentions." data-label="Copy" data-done="Copied">Copy</button></div><div class="fo-prompt"><pre>Compare the destination pages of [my site] and [competitor] and then propose 5 priority improvements for the SEO.</pre><button type="button" class="fo-copy" data-copy="Compare the destination pages of [my site] and [competitor] and then propose 5 priority improvements for the SEO." data-label="Copy" data-done="Copied">Copy</button></div></div>
 </section><script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.fo-copy');if(!b)return;var t=b.getAttribute('data-copy')||'';var label=b.getAttribute('data-label')||'';var done=b.getAttribute('data-done')||'';if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent=done;setTimeout(function(){b.textContent=label;},1500);});}});</script>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/i8DJt8BEF-E/mqdefault.jpg" alt="#opinly #smallbusinesstips" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>#opinly #smallbusinesstips</div><div class="tutorial-duration" data-vid-dur>2:26</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/i8DJt8BEF-E" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"i8DJt8BEF-E","titre":"#opinly #smallbusinesstips","duree":"2:26"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">What data types does Opinly follow?</button><div class="faq-a">Opinly follows keywords, backlinks, traffic trends, destination pages, organic and pay performance as well as competitor activities.</div></div><div class="faq-item"><button class="faq-q">How often are the data updated?</button><div class="faq-a">The platform updates competitive tracking information, but the exact frequency depends on the supply and the data followed.</div></div><div class="faq-item"><button class="faq-q">Does it take technical skills to use Opinly?</button><div class="faq-a">No, the platform is designed to be used without technical expertise, with integrations for common CMS and frameworks.</div></div><div class="faq-item"><button class="faq-q">What tools does Opinly integrate with?</button><div class="faq-a">Opinly connects to WordPress, Webflow, Shopify, Next.js, Nuxt and Svelte.</div></div><div class="faq-item"><button class="faq-q">Can Opinly help improve SEO on ChatGPT?</button><div class="faq-a">Yes, the platform focuses on visibility both in Google and in generating engines like ChatGPT.</div></div><div class="faq-item"><button class="faq-q">How to terminate an Opinly subscription?</button><div class="faq-a">The cancellation is done from the account management settings, according to the conditions indicated by Opinly.</div></div></div></section>
       
       

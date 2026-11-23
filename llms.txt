@@ -18,6 +18,7 @@ Langue : français.
 - [AIVA](https://albexia.com/tools/featured/fr/aiva/): AIVA est un assistant de composition musicale basé sur l'IA, spécialisé dans la création de bandes sonores originales pour films, jeux vidéo et contenus web.
 - [Cleanvoice](https://albexia.com/tools/standard/fr/cleanvoice/): Cleanvoice est un outil basé sur l'IA qui élimine automatiquement les hésitations, bruits de fond et tics de langage dans vos enregistrements audio.
 - [ElevenLabs](https://albexia.com/tools/featured/fr/elevenlabs/): Plateforme IA de synthèse vocale, clonage de voix, doublage automatique, transcription et agents conversationnels. Idéal pour créateurs, développeurs et entreprises.
+- [FineVoice AI](https://albexia.com/tools/standard/fr/finevoice-ai/): FineVoice est une plateforme IA tout-en-un pour créer des voix réalistes, voiceovers, effets sonores, musique et contenus audio à partir de texte.
 - [iZotope RX](https://albexia.com/tools/standard/fr/izotope-rx/): iZotope RX est la référence logicielle pour la restauration et le nettoyage audio, combinant traitement du signal et algorithmes IA avancés.
 - [LANDR](https://albexia.com/tools/standard/fr/landr/): LANDR est une plateforme de création musicale offrant un mastering automatisé par IA, la distribution en ligne et des outils de collaboration.
 - [Moises](https://albexia.com/tools/featured/fr/moises/): Moises est une application audio IA permettant de séparer les pistes vocales et instrumentales, de détecter la tonalité et d'ajuster le tempo facilement.

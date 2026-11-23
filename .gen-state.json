@@ -336,6 +336,10 @@
       "hash": "85c77c1d9ce21f5096f0ab62d676f09e72f44584adc6c6e1c5afe706a28d934a",
       "updatedAtMs": 1795404093360
     },
+    "113": {
+      "hash": "9dfb2dc875664eaf9f79a30aaaeb4cc0e93bf247366e65112ab06b85b54806cb",
+      "updatedAtMs": 1795436006888
+    },
     "1-en": {
       "hash": "d3a71647716f2161135e0b095be15e2b285ec04061280b377d9a6c462581ce4e",
       "updatedAtMs": 1783958620103
@@ -423,6 +427,14 @@
     "111-es": {
       "hash": "4a0dd10b6892d169762af1c68bbea008c998f9239f03d466d9a055bb4558af67",
       "updatedAtMs": 1795389140106
+    },
+    "113-en": {
+      "hash": "362f3912b376a83873c632a6e5aaca9f35b74a6089d2e2dece0ec96ee1732c26",
+      "updatedAtMs": 1795436007186
+    },
+    "113-es": {
+      "hash": "714e6441dc80e4a25fb965f17ed10efb931c23465741fb0c37eab152a8726df8",
+      "updatedAtMs": 1795436007522
     },
     "12-en": {
       "hash": "316a388d3a5d2c660764604b5d911ba66b2eb55e0de35447330023c094acd188",
@@ -1739,20 +1751,7 @@
       "updatedAtMs": 1790462872431
     }
   },
-  "faq": {
-    "aNGA61R5xsxWQV0rgFPd:fr": {
-      "hash": "f33a4ea051a2a83baa441db53ce37baeaaec098d9cef5637243623a8e5b82fd6",
-      "path": "pages/qu-est-ce-que-midjourney/fr"
-    },
-    "aNGA61R5xsxWQV0rgFPd:en": {
-      "hash": "b07a909c864787db026093d824e3ae07641be23a6404a764c0d7a335a01bbd23",
-      "path": "pages/qu-est-ce-que-midjourney/en"
-    },
-    "aNGA61R5xsxWQV0rgFPd:es": {
-      "hash": "bcdee699bb47db411b94c26f7cb3c8c9b2e5f142f29977690fca00b41db510c6",
-      "path": "pages/qu-est-ce-que-midjourney/es"
-    }
-  },
-  "faqHubHash": "bc18336381e23b436d7b84952b500cde923684064c0a45b0c86874ff05da9948",
-  "templateVersion": "layout-v1"
+  "faq": {},
+  "faqHubHash": "00ff73f7897857ce415f459aa87ab16b407eaa49ee57cc120467859afaae0fae",
+  "templateVersion": "layout-v13"
 }

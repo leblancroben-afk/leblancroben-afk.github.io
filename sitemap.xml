@@ -659,6 +659,24 @@
   </url>
   <url>
     <loc>https://albexia.com/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/faq/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/faq/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/faq/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/faq/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/faq/en/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/faq/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/faq/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/faq/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/faq/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/faq/es/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/faq/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/faq/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/faq/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/faq/"/>
   </url>
   <url>
     <loc>https://albexia.com/glossaire/</loc>
@@ -1781,6 +1799,19 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/fathom/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/en/finevoice-ai/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/finevoice-ai/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/flutterflow-ai/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/flutterflow-ai/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/flutterflow-ai/"/>
@@ -2150,6 +2181,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/semrush/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/sourcegraph-cody/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/sourcegraph-cody/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/sourcegraph-cody/"/>
@@ -2449,6 +2487,19 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/fathom/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/fathom/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/es/fathom/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/es/finevoice-ai/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/finevoice-ai/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/es/flutterflow-ai/</loc>
@@ -2820,6 +2871,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/es/semrush/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/es/sourcegraph-cody/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/sourcegraph-cody/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/sourcegraph-cody/"/>
@@ -3101,6 +3159,20 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/fathom/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/fathom/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/fathom/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/fathom/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/fathom/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/finevoice-ai/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/finevoice-ai/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/finevoice-ai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/flutterflow-ai/</loc>
@@ -3516,6 +3588,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/fr/semrush/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/semrush/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/fr/sourcegraph-cody/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/sourcegraph-cody/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/sourcegraph-cody/"/>
@@ -3821,6 +3900,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/opinly/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/starter/en/opinly/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/starter/fr/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/starter/en/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/starter/es/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/opinly/tutoriels/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/starter/en/se-ranking/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/starter/en/se-ranking/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/starter/fr/se-ranking/"/>
@@ -3941,6 +4027,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/starter/es/opinly/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/starter/fr/opinly/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/opinly/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/starter/es/opinly/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/starter/fr/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/starter/en/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/starter/es/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/opinly/tutoriels/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/starter/es/se-ranking/</loc>
@@ -4073,6 +4166,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/starter/en/opinly/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/starter/es/opinly/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/opinly/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/starter/fr/opinly/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/starter/fr/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/starter/en/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/starter/es/opinly/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/starter/fr/opinly/tutoriels/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/starter/fr/se-ranking/</loc>

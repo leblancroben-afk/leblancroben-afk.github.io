@@ -1,0 +1,778 @@
+'use strict';
+
+/* =========================================================
+   fiche-outil.js — générateur UNIQUE de fiche outil (Albexia)
+
+   1 outil → 1 fiche → 1 remplissage.
+   Remplace generateStandard / generateStarter / generateFeatured.
+   Les données sont communes ; PLAN_RULES (ci-dessous) est le SEUL
+   endroit qui dit ce que chaque offre affiche en plus ou en moins.
+
+   Header et footer : navHTML() / footerHTML() de layout.js (inchangés).
+   Les URLs restent tools/{plan}/{langue}/{slug}/ (calculées dans gen-fiches.js).
+   Même structure d'informations pour les 3 plans (voir PLAN_RULES / LIMITES).
+   ========================================================= */
+
+// ── Les 3 offres (Standard / Starter / Featured) ──
+// Toutes les fiches ont EXACTEMENT les mêmes sections et les mêmes informations.
+// Le plan ne règle plus ni la quantité d'informations ni le nombre d'articles liés :
+// il ne pilote ici que le badge du bandeau (la mise en avant se gère ailleurs).
+const PLAN_RULES = {
+  standard: { badge: null },
+  starter:  { badge: 'partner' },
+  featured: { badge: 'recommended' },
+};
+// Plafonds d'affichage, IDENTIQUES pour tous les plans.
+const LIMITES = { features: 6, faq: 6, gallery: 5, videotheque: 10 };
+
+// Vidéo du jour : choisie dans le navigateur (fuseau Paris), sans régénérer les pages.
+// Index = jour (depuis 1970) % nombre de vidéos. Le HTML affiche déjà la vidéo n°1 en secours.
+const VIDEO_JOUR_JS = String.raw`
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();`;
+
+const planOf = (t) => (t.plan === 'featured' ? 'featured' : t.plan === 'starter' ? 'starter' : 'standard');
+
+const FAVICON = 'https://albexia.com/assets/logo-512.png';
+
+// ── Textes (FR / EN / ES) ──
+const L = {
+  fr: {
+    home: 'Accueil', share: 'Partager', fav: 'Ajouter aux favoris', favOn: 'Dans vos favoris', copied: 'Lien copié',
+    verified: 'Vérifié', partner: 'Partenaire Albexia', recommended: 'Recommandé', newTool: 'Nouveau',
+    visit: 'Visiter le site', compare: 'Comparer', seePricing: 'Voir tous les tarifs',
+    tabs: { presentation: 'Présentation', features: 'Fonctionnalités', pricing: 'Tarifs', reviews: 'Avis', alternatives: 'Alternatives', integrations: 'Intégrations', api: 'API', updates: 'Mises à jour' },
+    about: (n) => `À propos de ${n}`, site: 'Site officiel', language: 'Langue', created: 'Créé en', type: 'Type',
+    mainFeatures: 'Fonctionnalités principales', shots: "Captures d'écran",
+    tutorials: 'Tutoriels vidéo', faq: 'Questions fréquentes', integrations: 'Intégrations', apiT: 'API', apiDoc: "Documentation de l'API", updates: 'Mises à jour',
+    reviews: 'Avis des utilisateurs', keyInfo: 'Informations clés', dev: 'Développeur', cat: 'Catégorie', sub: 'Sous-catégorie', model: 'Modèle',
+    pricing: 'Tarification', ideal: 'Idéal pour', trial: 'Essai gratuit', from: 'À partir de', platforms: 'Plateformes', api: 'API', mobile: 'App mobile',
+    ifr: 'Interface FR', support: 'Support', social: 'Réseaux sociaux', yes: 'Oui', pricingT: 'Tarification', start: 'Commencer', tryFree: 'Essayer gratuitement', seeOffer: "Voir l'offre",
+    alts: 'Alternatives populaires', seeMore: 'Voir plus', altsMore: 'Comparer les alternatives', altsFor: (n) => `Alternative à ${n}`, articles: 'Articles liés',
+    helpful: 'Cet outil vous a été utile ?', no: 'Non', thanks: 'Merci pour votre retour', know: 'Vous connaissez un autre outil ?', knowSub: 'Soumettez-le pour aider la communauté', submit: 'Soumettre un outil',
+    price: { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' }, models: { proprietaire: 'Propriétaire', open_source: 'Open source' },
+    interfaceBadge: 'Interface en français', title: 'Avis, Prix & Alternatives 2026',
+    previewHint: "Aperçu de l'outil", shotsAlt: 'Capture',
+  },
+  en: {
+    home: 'Home', share: 'Share', fav: 'Add to favorites', favOn: 'In your favorites', copied: 'Link copied',
+    verified: 'Verified', partner: 'Albexia Partner', recommended: 'Recommended', newTool: 'New',
+    visit: 'Visit website', compare: 'Compare', seePricing: 'See all pricing',
+    tabs: { presentation: 'Overview', features: 'Features', pricing: 'Pricing', reviews: 'Reviews', alternatives: 'Alternatives', integrations: 'Integrations', api: 'API', updates: 'Updates' },
+    about: (n) => `About ${n}`, site: 'Official website', language: 'Language', created: 'Created in', type: 'Type',
+    mainFeatures: 'Key features', shots: 'Screenshots',
+    tutorials: 'Video tutorials', faq: 'FAQ', integrations: 'Integrations', apiT: 'API', apiDoc: 'API documentation', updates: 'Updates',
+    reviews: 'User reviews', keyInfo: 'Key information', dev: 'Developer', cat: 'Category', sub: 'Subcategory', model: 'Model',
+    pricing: 'Pricing', ideal: 'Ideal for', trial: 'Free trial', from: 'Starting at', platforms: 'Platforms', api: 'API', mobile: 'Mobile app',
+    ifr: 'FR interface', support: 'Support', social: 'Social media', yes: 'Yes', pricingT: 'Pricing', start: 'Get started', tryFree: 'Try for free', seeOffer: 'View plan',
+    alts: 'Popular alternatives', seeMore: 'See more', altsMore: 'Compare alternatives', altsFor: (n) => `Alternative to ${n}`, articles: 'Related articles',
+    helpful: 'Was this tool useful?', no: 'No', thanks: 'Thanks for your feedback', know: 'Know another tool?', knowSub: 'Submit it to help the community', submit: 'Submit a tool',
+    price: { free: 'Free', freemium: 'Freemium', paid: 'Paid' }, models: { proprietaire: 'Proprietary', open_source: 'Open source' },
+    interfaceBadge: 'French interface', title: 'Review, Pricing & Alternatives 2026',
+    previewHint: 'Tool preview', shotsAlt: 'Screenshot',
+  },
+  es: {
+    home: 'Inicio', share: 'Compartir', fav: 'Añadir a favoritos', favOn: 'En tus favoritos', copied: 'Enlace copiado',
+    verified: 'Verificado', partner: 'Socio Albexia', recommended: 'Recomendado', newTool: 'Nuevo',
+    visit: 'Visitar el sitio', compare: 'Comparar', seePricing: 'Ver todos los precios',
+    tabs: { presentation: 'Presentación', features: 'Funcionalidades', pricing: 'Precios', reviews: 'Reseñas', alternatives: 'Alternativas', integrations: 'Integraciones', api: 'API', updates: 'Novedades' },
+    about: (n) => `Acerca de ${n}`, site: 'Sitio oficial', language: 'Idioma', created: 'Creado en', type: 'Tipo',
+    mainFeatures: 'Funcionalidades principales', shots: 'Capturas de pantalla',
+    tutorials: 'Tutoriales en vídeo', faq: 'Preguntas frecuentes', integrations: 'Integraciones', apiT: 'API', apiDoc: 'Documentación de la API', updates: 'Novedades',
+    reviews: 'Reseñas de usuarios', keyInfo: 'Información clave', dev: 'Desarrollador', cat: 'Categoría', sub: 'Subcategoría', model: 'Modelo',
+    pricing: 'Precios', ideal: 'Ideal para', trial: 'Prueba gratis', from: 'Desde', platforms: 'Plataformas', api: 'API', mobile: 'App móvil',
+    ifr: 'Interfaz FR', support: 'Soporte', social: 'Redes sociales', yes: 'Sí', pricingT: 'Precios', start: 'Empezar', tryFree: 'Probar gratis', seeOffer: 'Ver plan',
+    alts: 'Alternativas populares', seeMore: 'Ver más', altsMore: 'Comparar alternativas', altsFor: (n) => `Alternativa a ${n}`, articles: 'Artículos relacionados',
+    helpful: '¿Te ha sido útil esta herramienta?', no: 'No', thanks: 'Gracias por tu opinión', know: '¿Conoces otra herramienta?', knowSub: 'Envíala para ayudar a la comunidad', submit: 'Enviar una herramienta',
+    price: { free: 'Gratis', freemium: 'Freemium', paid: 'De pago' }, models: { proprietaire: 'Propietario', open_source: 'Código abierto' },
+    interfaceBadge: 'Interfaz en francés', title: 'Reseña, Precios & Alternativas 2026',
+    previewHint: 'Vista de la herramienta', shotsAlt: 'Captura',
+  },
+};
+
+// ── Icônes SVG : bibliothèque partagée avec l'admin (js/fiche-icons.js) — aucun emoji ──
+const FI = require('./js/fiche-icons.js');
+const { categoryName } = require('./categorie-template.js'); // nom de catégorie traduit (affichage uniquement)
+const ic = (n, cls = '') => FI.svg(n, cls);
+const STAR = '<svg class="fo-ico fo-ico-fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
+
+// Thème de la fiche : 'template' = couleurs exactes de la maquette (page claire, bandeau bleu nuit)
+//                     'albexia'  = couleurs sombres du site. Un seul mot à changer.
+const FICHE_THEME = 'template';
+
+// Accepte un lien https://… ou un chemin du site (/medias/images/…) ; refuse le reste (javascript:, data:…).
+const safeUrl = (u) => { const v = String(u || '').trim(); return /^https?:\/\//i.test(v) || /^\/(?!\/)[^\s"'<>]*$/.test(v) ? v : ''; };
+// Sources successives d'un logo : favicon enregistré → Google → DuckDuckGo. Si aucune ne charge
+// (ou si l'image est une icône générique minuscule), la fiche garde l'initiale de l'outil.
+const logoSources = (favicon, domain, size = 64) => [
+  safeUrl(favicon),
+  domain ? `https://www.google.com/s2/favicons?sz=${size}&domain=${domain}` : '',
+  domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : '',
+].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
+const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
+const nonEmpty = (v) => !(v == null || v === '' || (Array.isArray(v) && !v.length));
+
+// Champs qui doivent être saisis dans CHAQUE langue (pas de repli sur le FR :
+// on ne veut pas de texte français sur une page EN/ES). Tous les autres
+// champs sont communs et repris du document FR si la langue n'a pas le sien.
+// Une entrée de FAQ est gardée seulement si elle est lisible : question et réponse courtes,
+// sans répétition de mots ni de groupes de mots (les réponses qui tournent en boucle sont rejetées).
+function faqEntreeValide(f) {
+  const q = String(f?.q || '').trim();
+  const a = String(f?.a || '').trim();
+  if (!q || !a) return false;
+  if (q.length > 160 || a.length > 600) return false;
+  const mots = a.toLowerCase().split(/\s+/).filter(Boolean);
+  if (mots.length < 8) return false;
+  if (new Set(mots).size / mots.length < 0.5) return false;
+  const vus = new Map();
+  for (let i = 0; i + 5 <= mots.length; i++) {
+    const k = mots.slice(i, i + 5).join(' ');
+    const n = (vus.get(k) || 0) + 1;
+    if (n > 2) return false;
+    vus.set(k, n);
+  }
+  return true;
+}
+
+/** Convertit les formules saisies (prix en texte libre) en offres JSON-LD. Ignore ce qui n'est pas sûr. */
+function offresJsonLd(formules) {
+  const sortie = [];
+  for (const p of formules) {
+    const texte = String(p && p.prix || '').trim();
+    if (!texte) continue;
+    let price;
+    if (/gratuit|free|gratis/i.test(texte)) price = 0;
+    else {
+      const m = texte.replace(/\s/g, '').match(/(\d+(?:[.,]\d{1,2})?)/);
+      if (!m) continue;
+      price = parseFloat(m[1].replace(',', '.'));
+      if (!isFinite(price)) continue;
+    }
+    const devise = /€|eur/i.test(texte) ? 'EUR' : /£|gbp/i.test(texte) ? 'GBP' : /\$|usd/i.test(texte) ? 'USD' : (price === 0 ? 'USD' : null);
+    if (!devise) continue;
+    const o = { '@type': 'Offer', name: String(p.nom), price: String(price), priceCurrency: devise };
+    if (p.periode) o.description = String(p.periode);
+    sortie.push(o);
+  }
+  return sortie;
+}
+
+const TRADUISIBLES = new Set(['description', 'ideal_pour', 'presentation', 'meta_description',
+  'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts', 'alternatives']);
+
+// ── Sous-catégories : liste fermée (11 valeurs) et correspondance des libellés existants ──
+const SOUS_CATEGORIES = [
+  'Assistant IA généraliste',
+  'Assistant de rédaction',
+  'Rédaction SEO et référencement',
+  'Assistant de code',
+  'Développement No-Code',
+  "Génération d'images",
+  'Création graphique et design',
+  'Génération de vidéo',
+  'Génération de musique et audio',
+  'Automatisation et productivité',
+  'Backend et base de données',
+];
+const SOUS_CATEGORIE_ALIAS = {
+  'llm / assistant ia': 'Assistant IA généraliste', 'assistant ia': 'Assistant IA généraliste', "agrégateur d'ia": 'Assistant IA généraliste',
+  'assistant de rédaction': 'Assistant de rédaction',
+  'rédaction seo': 'Rédaction SEO et référencement', 'optimisation de référencement': 'Rédaction SEO et référencement',
+  'assistant de code': 'Assistant de code', 'assistant de développement': 'Assistant de code', 'éditeur de code / ide': 'Assistant de code',
+  'développement no-code': 'Développement No-Code', 'low-code / no-code': 'Développement No-Code',
+  "générateur d'applications web": 'Développement No-Code', "génération d'interfaces web": 'Développement No-Code',
+  "génération d'images": "Génération d'images", "générateur d'images ia": "Génération d'images", "générateur d'images vectorielles": "Génération d'images",
+  'création graphique': 'Création graphique et design', 'création de logo': 'Création graphique et design',
+  'design graphique ia': 'Création graphique et design', 'prototypage & ui': 'Création graphique et design',
+  "traduction d'images et de mangas": 'Création graphique et design',
+  'générateur de vidéo ia': 'Génération de vidéo',
+  'générateur de musique ia': 'Génération de musique et audio', 'générateur de musique': 'Génération de musique et audio',
+  'mastering & production musique': 'Génération de musique et audio', 'restauration audio': 'Génération de musique et audio',
+  'édition audio & podcast': 'Génération de musique et audio',
+  'automatisation de workflows': 'Automatisation et productivité', 'assistant de réunion': 'Automatisation et productivité',
+  'assistant de recherche': 'Automatisation et productivité',
+  'backend et base de données': 'Backend et base de données',
+};
+/** Ramène une valeur saisie à la liste fermée. Inconnue → '' (la fiche retombe sur la catégorie). */
+function normaliserSousCategorie(valeur) {
+  if (!valeur) return '';
+  const cle = String(valeur).replace(/’/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim().toLowerCase();
+  if (SOUS_CATEGORIES.some(s => s.toLowerCase() === cle)) return SOUS_CATEGORIES.find(s => s.toLowerCase() === cle);
+  return SOUS_CATEGORIE_ALIAS[cle] || '';
+}
+
+function generateFiche(tool, allTools = [], deps) {
+  const { esc, slugify, seoHeadTags, toolLangueUrls, toolFicheUrl, navHTML, footerHTML, faqJS, tutorialJS, sharedJS, R } = deps;
+  const langue = ['fr', 'en', 'es'].includes(tool.langue) ? tool.langue : 'fr';
+  const T = L[langue];
+  const plan = planOf(tool);
+  const rules = PLAN_RULES[plan];
+
+  const frDoc = (langue !== 'fr' && tool.traductions && tool.traductions.fr != null)
+    ? allTools.find((t) => String(t.id) === String(tool.traductions.fr)) : null;
+  const g = (k) => {
+    const v = tool[k];
+    if (nonEmpty(v) || typeof v === 'boolean' || typeof v === 'number') return v;
+    if (!frDoc || TRADUISIBLES.has(k)) return v;
+    return frDoc[k];
+  };
+  const E = (s) => esc(s == null ? '' : s);
+
+  const name = tool.name || '';
+  const description = tool.description || '';
+  const url = safeUrl(tool.url) || '#';
+  const category = categoryName(tool.category || '', langue);
+  const slug = tool.slug_articles || slugify(name);
+  const logoBox = (cls, letter, srcs, alt, eager) => (srcs.length
+    ? `<div class="${cls}" data-fo-logo data-srcs="${srcs.map(E).join(' ')}"><span class="fo-letter" aria-hidden="true">${E(letter)}</span><img src="${E(srcs[0])}" alt="${E(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} referrerpolicy="no-referrer"></div>`
+    : `<div class="${cls}" aria-hidden="true"><span class="fo-letter">${E(letter)}</span></div>`);
+  const note = Number(tool.note || tool.rating || 0) || 0;
+  const pk = { free: 'free', gratuit: 'free', freemium: 'freemium', paid: 'paid', payant: 'paid' }[String(tool.price || 'freemium').toLowerCase()] || 'freemium';
+  const tarifsUrl = safeUrl(g('url_tarifs'));
+
+  // ── Données normalisées ──
+  const tags = (tool.tags || g('tags') || []).slice(0, 4);
+  const maker = g('maker');
+  const plateformes = g('plateformes');
+  const reseaux = g('reseaux') || {};
+  const alternatives = (g('alternatives') || []).slice(0, 6);
+  const features = (g('fonctionnalites') || []).slice(0, LIMITES.features);
+  const faq = (g('faq') || []).filter(faqEntreeValide).slice(0, LIMITES.faq);
+  // ── Avantages, limites, idées d'utilisation, prompts (champs saisis dans l'admin) ──
+  const pointsForts = (g('points_forts') || []).map((x) => String(x).trim()).filter(Boolean).slice(0, 8);
+  const limiteRaw = g('limite');
+  const limitesList = (Array.isArray(limiteRaw) ? limiteRaw : String(limiteRaw || '').split('\n'))
+    .map((x) => String(x).trim()).filter(Boolean).slice(0, 8);
+  // Une entrée peut contenir plusieurs idées séparées par un saut de ligne réel ou littéral (\n) : on découpe.
+  const lignesDe = (arr) => (arr || []).flatMap((x) => String(x).split(/\\n|\r?\n/)).map((s) => s.trim()).filter(Boolean);
+  const usages = lignesDe(g('idees_utilisation')).slice(0, 6);
+  const prompts = lignesDe(g('prompts')).slice(0, 5);
+  const TX_ALL = {
+    fr: { strengths: 'Avantages et limites', pros: 'Points forts', cons: 'Limites', usages: "Idées d'utilisation", prompts: 'Prompts utiles', copy: 'Copier', copied: 'Copié' },
+    en: { strengths: 'Strengths and limitations', pros: 'Strengths', cons: 'Limitations', usages: 'Use ideas', prompts: 'Useful prompts', copy: 'Copy', copied: 'Copied' },
+    es: { strengths: 'Ventajas y límites', pros: 'Puntos fuertes', cons: 'Límites', usages: 'Ideas de uso', prompts: 'Prompts útiles', copy: 'Copiar', copied: 'Copiado' },
+  };
+  const TX = TX_ALL[langue] || TX_ALL.fr;
+  const videotheque = (g('videotheque') || []).filter((v) => v && v.youtube_id).slice(0, LIMITES.videotheque);
+  const changelog = (g('changelog') || []).filter((c) => c && (c.titre || c.desc));
+  const apiUrl = safeUrl(g('api_url'));
+  const tarifsRaw = Array.isArray(g('tarifs')) ? g('tarifs').filter((p) => p && p.nom) : [];
+  // Tarifs remplis par l'IA : affichés seulement après vérification par l'admin.
+  const tarifsOk = tarifsRaw.length && tool.tarifs_verifie !== false;
+
+  let galerie = (g('galerie') || []).map((x) => (typeof x === 'string' ? { url: x } : x)).filter((x) => x && safeUrl(x.url));
+  // L'image principale (screenshot_url) est toujours la première : elle sert d'aperçu et apparaît dans les captures.
+  const principale = safeUrl(g('screenshot_url'));
+  if (principale && !galerie.some((x) => x.url === principale)) galerie.unshift({ url: principale, legende: '' });
+  galerie = galerie.slice(0, LIMITES.gallery);
+
+  // ── Hero ──
+  // Note globale : une par outil (utilisateurs uniques, toutes langues), écrite dans le HTML. Sans avis : pas d'étoiles.
+  const ng = tool.note_globale && tool.note_globale.count > 0 ? tool.note_globale : null;
+  const noteAff = ng ? Math.round(ng.avg * 10) / 10 : (note || null);
+  const nbAff = ng ? ng.count : 0;
+  const starsHTML = Array.from({ length: 5 }, (_, i) => `<span class="${i < Math.round(noteAff || 0) ? 'on' : ''}">${STAR}</span>`).join('');
+  // Étoiles + note + nombre d'avis : mis à jour par js/reviews-widget.js dès que les avis sont chargés.
+  const ratingHTML = `<span class="fo-stars" data-fo-stars data-fo-static aria-hidden="true"${noteAff ? '' : ' hidden'}>${starsHTML}</span>`
+    + `<span class="fo-score" data-fo-score data-fo-static${noteAff ? '' : ' hidden'}>${noteAff ? noteAff.toFixed(1) + ` <small>(${nbAff})</small>` : ''}</span>`
+    + (note ? '' : `<span class="fo-badge fo-badge-new" data-fo-new>${E(T.newTool)}</span>`);
+  const planBadge = rules.badge ? `<span class="fo-badge fo-badge-plan">${E(T[rules.badge])}</span>` : '';
+  const verifBadge = tool.verifie === true || (frDoc && frDoc.verifie === true)
+    ? `<span class="fo-badge fo-badge-ok">${ic('check')} ${E(T.verified)}</span>` : '';
+
+  const previewImg = galerie[0];
+  // Image de partage (X, Facebook, WhatsApp) : la même que l'aperçu de la fiche.
+  const imageSociale = previewImg ? safeUrl(previewImg.url) : '';
+  const previewBlock = previewImg
+    ? `<div class="fo-preview has-img"><div class="fo-preview-bar"><span class="fo-preview-mono" id="fo-preview-cap">${E(previewImg.legende || name)}</span></div>
+        <img id="fo-preview-img" src="${E(safeUrl(previewImg.url))}" alt="${E(name)} — interface" fetchpriority="high"></div>`
+    : '';
+  const thumbsBlock = galerie.length > 1
+    ? `<div class="fo-thumbs">${galerie.map((x, i) => `<button type="button" class="fo-thumb${i === 0 ? ' active' : ''}" data-fo-thumb data-src="${E(safeUrl(x.url))}" data-cap="${E(x.legende || name)}" aria-label="${E(T.shotsAlt)} ${i + 1}"><img src="${E(safeUrl(x.url))}" alt="" loading="lazy"></button>`).join('')}</div>` : '';
+
+  const hero = `
+<header class="fo-hero">
+  <div class="fo-wrap">
+    <div class="fo-topbar">
+      <div class="fo-actions-top">
+        <button type="button" class="fo-pill" data-fo-share data-copied="${E(T.copied)}">${ic('share')}<span>${E(T.share)}</span></button>
+        <button type="button" class="fo-pill" data-fo-fav aria-pressed="false" data-on="${E(T.favOn)}" data-off="${E(T.fav)}">${ic('heart')}<span>${E(T.fav)}</span></button>
+      </div>
+    </div>
+    <div class="fo-hero-grid">
+      <div class="fo-hero-left">
+        <div class="fo-id">
+          ${logoBox('fo-logo', name.charAt(0).toUpperCase(), logoSources(tool.favicon, hostOf(url), 128), `${name} logo`, true)}
+          <div class="fo-id-info">
+            <h1 class="fo-title">${E(name)}</h1>
+            <p class="fo-short">${E(description)}</p>
+            <div class="fo-rating">${ratingHTML}${verifBadge}${planBadge}</div>
+          </div>
+        </div>
+        ${tags.length ? `<div class="fo-tags">${tags.map((t) => `<span class="fo-tag">${E(t)}</span>`).join('')}</div>` : ''}
+        <div class="fo-hero-btns">
+          <a href="${E(url)}" target="_blank" rel="noopener" class="fo-btn fo-btn-primary"><span>${E(T.visit)}</span>${ic('ext')}</a>
+          <a href="${R}comparateur/index.html" class="fo-btn fo-btn-ghost">${ic('scale')}<span>${E(T.compare)}</span></a>
+        </div>
+      </div>
+      <div class="fo-hero-right">${previewBlock}${thumbsBlock}</div>
+    </div>
+  </div>
+</header>`;
+
+  // ── À propos ──
+  const aboutParas = (g('presentation'))
+    ? String(g('presentation')).split('\n').filter(Boolean).map((p) => `<p>${E(p)}</p>`).join('')
+    : `<p>${E(description)}</p>`;
+  const typeOutil = g('type_outil') || g('sous_categorie');
+  const dash = '<span>—</span>';
+  const metaCards = [
+    ['globe', T.site, hostOf(url) ? `<a href="${E(url)}" target="_blank" rel="noopener">${E(hostOf(url))}</a>` : dash],
+    ['lang', T.language, g('langues_disponibles') ? `<span>${E(g('langues_disponibles'))}</span>` : dash],
+    ['cal', T.created, g('annee_creation') ? `<span>${E(g('annee_creation'))}</span>` : dash],
+    ['user', T.type, typeOutil ? `<span>${E(typeOutil)}</span>` : dash],
+  ].map(([i, l, v]) => `<div class="fo-meta-item"><div class="fo-meta-ico">${ic(i)}</div><div><small>${E(l)}</small>${v}</div></div>`).join('');
+
+  const aboutSection = `
+<section class="fo-card" id="fo-presentation">
+  <h2>${E(T.about(name))}</h2>
+  <div class="fo-text">${aboutParas}</div>
+  <div class="fo-meta">${metaCards}</div>
+</section>`;
+
+  // ── Fonctionnalités ──
+  const featuresSection = features.length ? `
+<section class="fo-card" id="fo-fonctionnalites">
+  <h2>${E(T.mainFeatures)}</h2>
+  <div class="fo-feat-grid">${features.map((f) => `<div class="fo-feat"><div class="fo-feat-ico">${ic(FI.featureKey(f.icon))}</div><div><h3>${E(f.titre)}</h3><p>${E(f.desc || '')}</p></div></div>`).join('')}</div>
+</section>` : '';
+
+  // ── Avantages et limites ──
+  const avantagesSection = (pointsForts.length || limitesList.length) ? `
+<section class="fo-card" id="fo-avantages">
+  <h2>${E(TX.strengths)}</h2>
+  <div class="fo-pl-grid">
+    ${pointsForts.length ? `<div><h3>${E(TX.pros)}</h3><ul class="fo-pros">${pointsForts.map((p) => `<li>${E(p)}</li>`).join('')}</ul></div>` : ''}
+    ${limitesList.length ? `<div><h3>${E(TX.cons)}</h3><ul class="fo-cons">${limitesList.map((p) => `<li>${E(p)}</li>`).join('')}</ul></div>` : ''}
+  </div>
+</section>` : '';
+
+  // ── Idées d'utilisation ──
+  const usagesSection = usages.length ? `
+<section class="fo-card" id="fo-usages">
+  <h2>${E(TX.usages)}</h2>
+  <ul class="fo-usages">${usages.map((u) => `<li>${E(u)}</li>`).join('')}</ul>
+</section>` : '';
+
+  // ── Prompts utiles (copie au clic, sans stockage navigateur) ──
+  const promptsScript = prompts.length ? `<script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.fo-copy');if(!b)return;var t=b.getAttribute('data-copy')||'';var label=b.getAttribute('data-label')||'';var done=b.getAttribute('data-done')||'';if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent=done;setTimeout(function(){b.textContent=label;},1500);});}});</script>` : '';
+  const promptsSection = prompts.length ? `
+<section class="fo-card" id="fo-prompts">
+  <h2>${E(TX.prompts)}</h2>
+  <div class="fo-prompt-list">${prompts.map((p) => `<div class="fo-prompt"><pre>${E(p)}</pre><button type="button" class="fo-copy" data-copy="${E(p)}" data-label="${E(TX.copy)}" data-done="${E(TX.copied)}">${E(TX.copy)}</button></div>`).join('')}</div>
+</section>${promptsScript}` : '';
+
+  // ── Captures (Featured) ──
+  const shotsSection = galerie.length > 1 ? `
+<section class="fo-card" id="fo-captures">
+  <div class="fo-card-head"><h2>${E(T.shots)}</h2></div>
+  <div class="fo-car" data-fo-car>
+    ${galerie.length > 3 ? `<button type="button" class="fo-car-arrow fo-car-prev" data-fo-prev aria-label="‹">${ic('left')}</button>` : ''}
+    <div class="fo-car-track" data-fo-track>${galerie.map((x, i) => `<figure class="fo-shot"><img src="${E(safeUrl(x.url))}" alt="${E(x.legende || name)} — ${i + 1}" loading="lazy">${x.legende ? `<figcaption>${E(x.legende)}</figcaption>` : ''}</figure>`).join('')}</div>
+    ${galerie.length > 3 ? `<button type="button" class="fo-car-arrow fo-car-next" data-fo-next aria-label="›">${ic('right')}</button>` : ''}
+  </div>
+  ${galerie.length > 3 ? `<div class="fo-car-dots" data-fo-dots>${galerie.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('')}</div>` : ''}
+</section>` : '';
+
+  // ── Tutoriel du jour (vidéothèque, tous les plans) ──
+  // Même rendu et même accordéon que l'ancien tutoriel Featured.
+  // La vidéo affichée change chaque jour : le navigateur choisit (VIDEO_JOUR_JS).
+  const vidList = videotheque.map((v) => ({ id: String(v.youtube_id), titre: String(v.titre || ''), duree: String(v.duree || '') }));
+  const v0 = vidList[0];
+  // '<' échappé : aucun texte ne peut fermer la balise <script> de la liste JSON
+  const vidJson = JSON.stringify(vidList).replace(/</g, '\\u003c');
+  const tutoHTML = v0 ? `<div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/${E(v0.id)}/mqdefault.jpg" alt="${E(v0.titre)}" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>${E(v0.titre)}</div><div class="tutorial-duration" data-vid-dur>${E(v0.duree)}</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/${E(v0.id)}" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div>` : '';
+  const tutoSection = v0 ? `<section class="fo-card" id="fo-tutoriels"><h2>${E(T.tutorials)}</h2><div class="tutorials-list">${tutoHTML}</div><script type="application/json" id="fo-videos">${vidJson}</script>${tutorialJS()}<script>${VIDEO_JOUR_JS}</script></section>` : '';
+
+  // ── FAQ ──
+  const faqHTML = faq.map((f) => `<div class="faq-item"><button class="faq-q">${E(f.q)}</button><div class="faq-a">${E(f.a)}</div></div>`).join('');
+  const faqSection = faqHTML ? `<section class="fo-card" id="fo-faq"><h2>${E(T.faq)}</h2><div class="faq-list">${faqHTML}</div></section>` : '';
+
+  // ── API / Mises à jour ──
+  const apiSection = g('api') === true && apiUrl ? `
+<section class="fo-card" id="fo-api"><h2>${E(T.apiT)}</h2>
+  <a href="${E(apiUrl)}" target="_blank" rel="noopener" class="fo-btn fo-btn-soft">${E(T.apiDoc)} ${ic('ext')}</a></section>` : '';
+  const updatesSection = changelog.length ? `
+<section class="fo-card" id="fo-maj"><h2>${E(T.updates)}</h2><ul class="fo-log">${changelog.slice(0, 6).map((c) =>
+    `<li>${c.date ? `<time>${E(c.date)}</time>` : ''}<h3>${E(c.titre || '')}</h3>${c.desc ? `<p>${E(c.desc)}</p>` : ''}</li>`).join('')}</ul></section>` : '';
+
+  // Avis écrits dans le HTML (5 derniers, toutes langues, un par utilisateur). Le widget les remplace au chargement.
+  const LOCALE_DATE = { fr: 'fr-FR', en: 'en-GB', es: 'es-ES' }[langue] || 'fr-FR';
+  const avisRecents = Array.isArray(tool.avis_recents) ? tool.avis_recents.slice(0, 5) : [];
+  const avisStatiqueHTML = avisRecents.length
+    ? `<div class="fo-avis-statique" data-fo-avis-static>${avisRecents.map(a => {
+        const d = a.date ? new Date(a.date) : null;
+        const iso = d && !isNaN(d) ? d.toISOString().slice(0, 10) : '';
+        const label = d && !isNaN(d) ? d.toLocaleDateString(LOCALE_DATE, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+        return `<article class="fo-avis-item"><div class="fo-avis-top"><b>${E(a.nom)}</b><span class="fo-avis-note">${E(String(a.note))}/5</span>${iso ? `<time datetime="${E(iso)}">${E(label)}</time>` : ''}</div><p>${E(a.texte)}</p></article>`;
+      }).join('')}</div>`
+    : '';
+  const slugsFamille = (Array.isArray(tool.slugs_famille) && tool.slugs_famille.length ? tool.slugs_famille : [slug]).join(' ');
+  const reviewsSection = `<section class="fo-card" id="fo-avis"><div id="reviews-section" data-fo-slugs="${E(slugsFamille)}"><div class="fo-card-head"><h2>${E(T.reviews)}</h2></div>${avisStatiqueHTML}</div></section>`;
+
+  // ── Sidebar : informations clés ──
+  const PLAT_KEYS = ['web', 'windows', 'apple', 'android'];
+  let platIcons = Array.isArray(g('plateformes_icones')) ? g('plateformes_icones').filter((k) => PLAT_KEYS.includes(k)) : [];
+  if (!platIcons.length && plateformes) {   // anciennes fiches : on déduit les icônes du texte saisi
+    const t = String(plateformes).toLowerCase();
+    platIcons = [[/web|navigateur|browser/, 'web'], [/windows/, 'windows'], [/mac|ios|iphone|ipad|apple/, 'apple'], [/android/, 'android']].filter(([re]) => re.test(t)).map(([, k]) => k);
+  }
+  const platChips = platIcons.length
+    ? platIcons.map((k) => `<span class="fo-plat" title="${E(FI.BRAND[k][0])}" role="img" aria-label="${E(FI.BRAND[k][0])}">${ic(k)}</span>`).join('')
+    : (plateformes ? `<span class="fo-chip">${E(plateformes)}</span>` : '');
+  const soc = ['x', 'linkedin', 'youtube'].filter((k) => safeUrl(reseaux[k]))
+    .map((k) => `<a href="${E(safeUrl(reseaux[k]))}" target="_blank" rel="noopener nofollow" aria-label="${E(FI.BRAND[k][0])}" title="${E(FI.BRAND[k][0])}">${ic(k)}</a>`).join('');
+  const modelKey = g('modele');
+  const row = (label, val, cls = '') => (val ? `<div><dt>${E(label)}</dt><dd class="${cls}">${val}</dd></div>` : '');
+  // Informations clés : uniquement ces champs, dans cet ordre (une ligne sans donnée n'est pas affichée).
+  const yn = (v) => (v === true ? E(T.yes) : v === false ? E(T.no) : '');
+  const infoRows = [
+    row(T.cat, E(category)),
+    row(T.sub, E(g('sous_categorie'))),
+    row(T.model, modelKey && T.models[modelKey] ? E(T.models[modelKey]) : ''),
+    row(T.pricing, E(T.price[pk])),
+    row(T.trial, yn(g('essai_gratuit'))),
+    row(T.from, E(g('a_partir_de')), 'is-strong'),
+    row(T.platforms, platChips ? `<div class="fo-plats">${platChips}</div>` : ''),
+    row(T.api, yn(g('api'))),
+    row(T.support, E(g('support'))),
+    row(({ fr: 'Informations vérifiées le', en: 'Information verified on', es: 'Información verificada el' })[langue] || 'Informations vérifiées le', g('verifie_le') ? E(String(g('verifie_le'))) : ''),
+    row(T.social, soc ? `<div class="fo-socials">${soc}</div>` : ''),
+  ].join('');
+  const infoCard = `<section class="fo-card" id="fo-infos"><h3 class="fo-h3">${E(T.keyInfo)}</h3><dl class="fo-info">${infoRows}</dl></section>`;
+
+  // ── Sidebar : tarifs de l'outil ──
+  const isFree = (p) => /^\s*[$€£]?\s*(0([.,]0+)?(?![\d])|gratuit|free|gratis)/i.test(String(p.prix || ''));
+  const planBtn = (p) => (isFree(p) ? T.start : (g('essai_gratuit') === true ? T.tryFree : T.seeOffer));
+  const tarifsCard = tarifsOk ? `
+<section class="fo-card" id="fo-tarifs">
+  <div class="fo-card-head"><h3 class="fo-h3">${E(T.pricingT)}</h3>${tarifsUrl ? `<a class="fo-link" href="${E(tarifsUrl)}" target="_blank" rel="noopener">${E(T.seePricing)}</a>` : ''}</div>
+  <div class="fo-plans">${tarifsRaw.slice(0, 4).map((p) => `<div class="fo-plan"><div><b>${E(p.nom)}</b>
+    ${p.prix ? `<strong>${E(p.prix)}${p.periode ? ` <small>${E(p.periode)}</small>` : ''}</strong>` : ''}${p.desc ? `<em>${E(p.desc)}</em>` : ''}</div>
+    <a class="fo-btn ${isFree(p) ? 'fo-btn-outline' : 'fo-btn-softsm'}" href="${E(tarifsUrl || url)}" target="_blank" rel="noopener">${E(planBtn(p))}</a></div>`).join('')}</div>
+</section>` : '';
+  const pricingBtnOnly = !tarifsCard && tarifsUrl
+    ? `<section class="fo-card"><a class="fo-btn fo-btn-soft" style="width:100%" href="${E(tarifsUrl)}" target="_blank" rel="noopener">${E(T.seePricing)} ${ic('ext')}</a></section>` : '';
+
+  // ── Sidebar : alternatives (données Albexia : note et catégorie lues dans la base si l'outil y figure) ──
+  // ── Sidebar : alternatives en cartes (calculées par gen-fiches.js, déjà dans la langue de la fiche) ──
+  const ALT_TX = {
+    fr: { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant', none: 'Pas encore noté', reviews: 'avis' },
+    en: { free: 'Free', freemium: 'Freemium', paid: 'Paid', none: 'Not rated yet', reviews: 'reviews' },
+    es: { free: 'Gratis', freemium: 'Freemium', paid: 'De pago', none: 'Sin valorar', reviews: 'opiniones' },
+  }[langue] || { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant', none: 'Pas encore noté', reviews: 'avis' };
+  const altItems = alternatives.map((a) => {
+    if (!a || !a.nom || !a.href) return '';
+    const pk = { free: 'free', gratuit: 'free', freemium: 'freemium', paid: 'paid', payant: 'paid' }[String(a.prix || '').toLowerCase()] || '';
+    // Même système que le logo de la fiche principale (logoBox + repli en cascade géré par le script de la fiche)
+    const logo = logoBox('fo-logo fo-logo-mini', String(a.nom).trim().charAt(0).toUpperCase(), logoSources(a.logo, a.domaine, 128), a.nom);
+    const note = (typeof a.note === 'number' && a.avis > 0)
+      ? `<span class="fo-alt-rating">${STAR} ${a.note.toFixed(1)} <small>(${a.avis} ${E(ALT_TX.reviews)})</small></span>`
+      : `<span class="fo-alt-rating fo-alt-none">${E(ALT_TX.none)}</span>`;
+    return `<a class="fo-alt-card" href="${E(a.href)}">
+      ${logo}
+      <span class="fo-alt-body">
+        <b>${E(a.nom)}</b>
+        ${a.desc ? `<span class="fo-alt-desc">${E(a.desc)}</span>` : ''}
+        <span class="fo-alt-meta">${note}${pk ? `<span class="fo-alt-price">${E(ALT_TX[pk])}</span>` : ''}</span>
+      </span></a>`;
+  }).join('');
+  const altsCard = altItems ? `
+<section class="fo-card" id="fo-alternatives"><div class="fo-card-head"><h3 class="fo-h3">${E(T.alts)}</h3><a class="fo-link" href="${R}index.html#tools">${E(T.seeMore)}</a></div>
+  <div class="fo-alt-grid">${altItems}</div><a class="fo-btn fo-btn-block" href="${R}comparateur/index.html">${E(T.altsMore)}</a></section>` : '';
+
+  // ── Sidebar : articles liés — pour TOUS les plans (FR : articles.json est en français).
+  // Le nombre affiché dépend uniquement des articles disponibles pour l'outil ; js/articles-loader.js
+  // masque la carte s'il n'y en a aucun.
+  // Articles créateurs publiés et rattachés à l'outil (limite selon le plan, voir gen-fiches.js)
+  const artsLies = (tool.articles_lies || []);
+  const articlesCard = (langue === 'fr' && artsLies.length) ? `
+<section class="fo-card fo-articles"><h3 class="fo-h3">${E(T.articles)}</h3><div>${artsLies.map(a => `
+  <a href="${R}articles/fr/${E(a.slug)}/" class="article-link-card">
+    <div class="article-link-thumb">${a.banniere_url ? `<img src="${E(a.banniere_url)}" alt="${E(a.titre)}" loading="lazy">` : ''}</div>
+    <div><div class="article-link-title">${E(a.titre)}</div><div class="article-link-sub">${E(a.categorie)}</div></div>
+  </a>`).join('')}</div></section>` : '';
+  // Plus de chargement de data/articles.json dans le navigateur
+  const articlesScript = '';
+
+  // ── Onglets ──
+  const tabs = [
+    ['fo-presentation', T.tabs.presentation, true],
+    ['fo-fonctionnalites', T.tabs.features, !!featuresSection],
+    ['fo-avantages', TX.strengths, !!avantagesSection],
+    ['fo-usages', TX.usages, !!usagesSection],
+    ['fo-prompts', TX.prompts, !!promptsSection],
+    ['fo-tarifs', T.tabs.pricing, !!tarifsCard],
+    ['fo-avis', T.tabs.reviews, true],
+    ['fo-alternatives', T.tabs.alternatives, !!altsCard],
+    ['fo-api', T.tabs.api, !!apiSection],
+    ['fo-maj', T.tabs.updates, !!updatesSection],
+  ].filter((t) => t[2]);
+  const tabsNav = `<div class="fo-tabs"><div class="fo-wrap"><nav aria-label="${E(name)}">${tabs.map(([id, l], i) => `<a href="#${id}" class="fo-tab${i === 0 ? ' active' : ''}" data-label="${E(l)}">${E(l)}</a>`).join('')}</nav></div></div>`;
+
+  // ── Pied de fiche ──
+  const foot = `
+<div class="fo-foot">
+  <div class="fo-foot-l"><span class="t">${E(T.helpful)}</span>
+    <button type="button" class="fo-vote" data-fo-vote="up" aria-pressed="false">${ic('up')}<span>${E(T.yes)}</span></button>
+    <button type="button" class="fo-vote down" data-fo-vote="down" aria-pressed="false">${ic('up')}<span>${E(T.no)}</span></button>
+    <span class="t" data-fo-thanks hidden>${E(T.thanks)}</span></div>
+</div>`;
+
+  // ── SEO ──
+  const titre = `${name} — ${T.title} | Albexia`;
+  const metaDesc = E(((tool.meta_description || description) || '').slice(0, 155));
+  const { canonicalUrl, hreflangTags, ogLocale, ogLocaleAlternates } = seoHeadTags(langue, toolLangueUrls(tool, allTools));
+
+  // ── Données structurées JSON-LD (SoftwareApplication + FAQPage), uniquement à partir des champs de la fiche ──
+  const ldItems = [];
+  const ldSoft = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: tool.name || '',
+    description: tool.description || '',
+    url: canonicalUrl,
+    inLanguage: langue,
+  };
+  if (category) ldSoft.applicationCategory = category;
+  // Offres : une par formule affichée sur la page (mêmes règles de visibilité). Seul un prix lisible et une devise
+  // certaine sont déclarés ; « Sur devis » ou un montant ambigu est ignoré. Pas de tarif = pas d'offers.
+  const offres = tarifsOk ? offresJsonLd(tarifsRaw.slice(0, 4)) : [];
+  if (ng && ng.count >= 5) ldSoft.aggregateRating = { '@type': 'AggregateRating', ratingValue: Math.round(ng.avg * 10) / 10, ratingCount: ng.count, reviewCount: ng.count, bestRating: 5, worstRating: 1 };
+  if (offres.length) ldSoft.offers = offres;
+  else if (pk === 'free') ldSoft.offers = { '@type': 'Offer', price: '0', priceCurrency: 'USD' };
+  if (g('verifie_le')) ldSoft.dateModified = String(g('verifie_le'));
+  ldItems.push(ldSoft);
+  const ldFaq = (faq || []).filter((f) => f && f.q && f.a);
+  if (ldFaq.length) {
+    ldItems.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: ldFaq.map((f) => ({ '@type': 'Question', name: String(f.q), acceptedAnswer: { '@type': 'Answer', text: String(f.a) } })),
+    });
+  }
+  // « < » échappé pour ne jamais fermer la balise script depuis le contenu
+  const jsonLdBlock = ldItems.map((o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`).join('\n  ');
+
+  const INLINE_JS = String.raw`
+(function(){
+  var d=document, root=d.documentElement;
+  function setH(){var n=d.querySelector('nav:not(.fo-tabs nav)'); if(n) root.style.setProperty('--fo-nav-h', n.offsetHeight+'px');}
+  setH(); addEventListener('resize', setH);
+  var page=d.querySelector('[data-fo-id]'); var id=page?page.getAttribute('data-fo-id'):'';
+  function ls(k,v){try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){return null;}}
+
+  // Aperçu : miniatures
+  d.querySelectorAll('[data-fo-thumb]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var im=d.getElementById('fo-preview-img'), cap=d.getElementById('fo-preview-cap');
+      if(im) im.src=b.getAttribute('data-src'); if(cap) cap.textContent=b.getAttribute('data-cap');
+      d.querySelectorAll('[data-fo-thumb]').forEach(function(x){x.classList.remove('active');}); b.classList.add('active');
+    });
+  });
+
+  // Onglets : surbrillance selon la section visible
+  var links=[].slice.call(d.querySelectorAll('.fo-tab'));
+  if('IntersectionObserver' in window && links.length){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(l){ l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id); }); } });
+    },{rootMargin:'-140px 0px -60% 0px'});
+    links.forEach(function(l){var s=d.getElementById(l.getAttribute('href').slice(1)); if(s) io.observe(s);});
+  }
+
+  // Logos : on essaie chaque source ; si aucune ne convient, l'initiale reste affichée
+  d.querySelectorAll('[data-fo-logo]').forEach(function(box){
+    var img=box.querySelector('img'); if(!img) return;
+    var srcs=(box.getAttribute('data-srcs')||'').split(' ').filter(Boolean), i=0;
+    function fail(){ i++; if(i<srcs.length){ img.src=srcs[i]; } else { img.remove(); } }
+    function check(){ if(img.naturalWidth>=24){ box.classList.add('has-logo'); } else { fail(); } }
+    img.addEventListener('load',check); img.addEventListener('error',fail);
+    if(img.complete){ if(img.naturalWidth){ check(); } else { fail(); } }
+  });
+
+  // Partager
+  var sh=d.querySelector('[data-fo-share]');
+  if(sh) sh.addEventListener('click',function(){
+    var u=location.href, t=d.title;
+    if(navigator.share){ navigator.share({title:t,url:u}).catch(function(){}); return; }
+    var lab=sh.querySelector('span'), old=lab.textContent;
+    (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){ lab.textContent=sh.getAttribute('data-copied'); setTimeout(function(){lab.textContent=old;},2000); }).catch(function(){});
+  });
+
+  // Favoris (stockage local, par navigateur)
+  var fv=d.querySelector('[data-fo-fav]');
+  if(fv){
+    var list=[]; try{list=JSON.parse(ls('albexia_fiche_favoris')||'[]');}catch(e){}
+    function paint(on){ fv.setAttribute('aria-pressed',on); fv.querySelector('span').textContent=fv.getAttribute(on?'data-on':'data-off'); }
+    paint(list.indexOf(id)>-1);
+    fv.addEventListener('click',function(){
+      var i=list.indexOf(id); if(i>-1) list.splice(i,1); else list.push(id);
+      ls('albexia_fiche_favoris', JSON.stringify(list)); paint(i===-1);
+    });
+  }
+
+  // Carrousel de captures
+  d.querySelectorAll('[data-fo-car]').forEach(function(c){
+    var tr=c.querySelector('[data-fo-track]'), dots=c.parentNode.querySelectorAll('[data-fo-dots] i');
+    function by(dir){ tr.scrollBy({left:dir*tr.clientWidth*0.9, behavior:'smooth'}); }
+    var p=c.querySelector('[data-fo-prev]'), n=c.querySelector('[data-fo-next]');
+    if(p) p.addEventListener('click',function(){by(-1);}); if(n) n.addEventListener('click',function(){by(1);});
+    tr.addEventListener('scroll',function(){
+      if(!dots.length) return; var i=Math.round(tr.scrollLeft/(tr.scrollWidth/dots.length));
+      dots.forEach(function(x,k){x.classList.toggle('on',k===Math.min(i,dots.length-1));});
+    },{passive:true});
+  });
+
+  // Masque la carte « Articles liés » si le chargeur n'a rien injecté
+  setTimeout(function(){ d.querySelectorAll('.fo-articles').forEach(function(c){ var b=c.querySelector('[id^="articles-sidebar"]'); if(b && !b.children.length) c.style.display='none'; }); }, 2500);
+
+})();`;
+
+  return `<!DOCTYPE html>
+<html lang="${langue}" data-static-lang>
+<head>
+  <meta charset="UTF-8">
+  <script src="${R}js/theme.js"></script><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${E(titre)}</title>
+  <meta name="description" content="${metaDesc}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="${canonicalUrl}">
+${hreflangTags}
+  <meta property="og:title" content="${E(titre)}">
+  <meta property="og:description" content="${metaDesc}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${canonicalUrl}">
+${imageSociale
+    ? `  <meta property="og:image" content="${E(imageSociale)}">\n  <meta name="twitter:card" content="summary_large_image">\n  <meta name="twitter:image" content="${E(imageSociale)}">`
+    : `  <meta name="twitter:card" content="summary">`}
+  <meta property="og:locale" content="${ogLocale}">
+${ogLocaleAlternates}
+  <link rel="icon" type="image/png" sizes="512x512" href="${FAVICON}"><link rel="apple-touch-icon" href="${FAVICON}">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="${R}css/style.css">
+  <link rel="stylesheet" href="${R}css/tool-detail.css">
+  <link rel="stylesheet" href="${R}css/fiche-outil.css">
+  <link rel="stylesheet" href="${R}css/themes.css">
+  ${jsonLdBlock}
+</head>
+<body>
+${navHTML(langue)}
+<main class="fo-page fo-theme-${FICHE_THEME}" data-fo-id="${E(tool.id)}">
+${hero}
+${tabsNav}
+<div class="fo-body"><div class="fo-wrap">
+  <div class="fo-grid">
+    <div class="fo-col-main">
+      ${aboutSection}
+      ${featuresSection}
+      ${avantagesSection}
+      ${usagesSection}
+      ${promptsSection}
+      ${shotsSection}
+      ${tutoSection}
+      ${faqSection}
+      ${apiSection}
+      ${updatesSection}
+      ${reviewsSection}
+    </div>
+    <aside class="fo-col-side">
+      ${infoCard}
+      ${tarifsCard}${pricingBtnOnly}
+      ${articlesCard}
+      ${altsCard}
+    </aside>
+  </div>
+  ${foot}
+</div></div>
+</main>
+${footerHTML(langue)}
+${faqHTML ? faqJS() : ''}
+${sharedJS()}
+${articlesScript}
+<script type="module" src="${R}js/reviews-widget.js"></script>
+<script type="module" src="${R}js/fiche-utile.js"></script>
+<script src="${R}js/i18n.js"></script>
+<script>${INLINE_JS}</script>
+</body>
+</html>`;
+}
+
+// Page « Voir tous les avis » : /tools/avis-outil.html?tool=<slug>
+// (le script js/avis-outil.js la remplit ; header et footer = ceux des fiches)
+function avisOutilPageHTML(deps) {
+  const { navDynamicHTML, footerHTML, R } = deps;
+  // Page dynamique : header avec sélecteur de langue (js/header.js) et textes via js/i18n.js
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <script src="${R}js/theme.js"></script><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avis utilisateurs — Albexia</title>
+  <meta name="description" content="Tous les avis des utilisateurs sur cet outil IA, avec notes, filtres et tri.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/png" sizes="512x512" href="${FAVICON}"><link rel="apple-touch-icon" href="${FAVICON}">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="${R}css/style.css">
+  <link rel="stylesheet" href="${R}css/tool-detail.css">
+  <script src="${R}js/i18n.js"></script>
+  <link rel="stylesheet" href="${R}css/themes.css">
+</head>
+<body>
+${navDynamicHTML()}
+<main style="max-width:860px;margin:0 auto;padding:40px 24px 64px;">
+  <div id="avo-header" class="avo-header"></div>
+  <div id="avo-summary"></div>
+  <h2 class="avo-section-title" id="avo-title" data-i18n="avo.title">Avis utilisateur</h2>
+  <div id="avo-controls"></div>
+  <div id="avo-list"><p data-i18n="avo.loading" style="color:var(--text-muted);padding:40px 0;text-align:center;">Chargement des avis…</p></div>
+  <div id="avo-load-more"></div>
+  <div id="rv-toast" class="rv-toast"></div>
+</main>
+${footerHTML('fr')}
+<script type="module" src="${R}js/avis-outil.js"></script>
+</body>
+</html>`;
+}
+
+
+// ── Pages FAQ éditoriales ────────────────────────────────────────────────
+// Une FAQ est un document Firestore avec les contenus FR/EN/ES regroupés.
+// Cette fonction ne lit aucune donnée : elle reçoit les données préparées par gen-fiches.js.
+
+module.exports = { FAVICON, generateFiche, avisOutilPageHTML, PLAN_RULES, LIMITES, faqEntreeValide, SOUS_CATEGORIES, normaliserSousCategorie, offresJsonLd };

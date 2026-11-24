@@ -5204,8 +5204,11 @@ async function main() {
   // Une catégorie n'apparaît dans une langue que si elle a un nom dans cette langue et au moins une page traduite.
   // Une question n'apparaît dans une langue que si sa page est traduite dans cette langue.
   const faqHubPath = path.join('faq', 'index.html');
-  const faqHubHash = hashFaqDoc({ faqs: faqPublished, categories: faqCategories });
   const HUB_LANGUES = ['fr', 'en', 'es'];
+  // Les libellés du hub (i18n.js) font partie de l'empreinte : une mise à jour des textes régénère le hub.
+  const hubLibelles = ['faq.hubTitle', 'faq.hubEyebrow', 'faq.hubLead', 'faq.hubSection', 'faq.hubSectionLead', 'faq.hubPrev', 'faq.hubNext', 'faq.hubPage', 'faq.hubEmpty']
+    .map(k => HUB_LANGUES.map(l => tUI(k, l)));
+  const faqHubHash = hashFaqDoc({ faqs: faqPublished, categories: faqCategories, libelles: hubLibelles, version: 2 });
   const HUB_PAR_PAGE = 20;
   const hubRacine = lang => (lang === 'fr' ? '/faq' : `/faq/${lang}`);
   const hubDossier = (lang, p) => path.join(...(lang === 'fr' ? ['faq'] : ['faq', lang]), ...(p > 1 ? ['page', String(p)] : []));
@@ -5229,7 +5232,7 @@ async function main() {
     return `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
   };
   const alternatesHub = HUB_LANGUES.map(l => `<link rel="alternate" hreflang="${l}" href="${SITE_ORIGIN}${hubUrl(l, 1)}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE_ORIGIN}${hubUrl('fr', 1)}">`;
-  const coquilleHub = (lang, p, total, corps, items) => `<!DOCTYPE html><html lang="${lang}" data-static-lang="${lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escHtml(tUI('faq.hubTitle', lang))} — Albexia${p > 1 ? ` (${p})` : ''}</title><meta name="description" content="${escHtml(tUI('faq.hubLead', lang))}"><link rel="canonical" href="${SITE_ORIGIN}${hubUrl(lang, p)}">${alternatesHub}<link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/themes.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="/css/faq-hub.css">${jsonLdHub(lang, items)}</head><body>${navHTML(lang)}${corps}${footerHTML(lang)}<script src="/js/i18n.js"></script><script src="/js/header.js" defer></script><script src="/js/footer.js" defer></script></body></html>`;
+  const coquilleHub = (lang, p, total, corps, items) => `<!DOCTYPE html><html lang="${lang}" data-static-lang="${lang}"><head><script src="/js/theme.js"></script><script>window.onLangueChange=function(code){var r={fr:"/faq/",en:"/faq/en/",es:"/faq/es/"};if(r[code]&&location.pathname.indexOf(r[code])!==0)location.href=r[code];};</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escHtml(tUI('faq.hubTitle', lang))} — Albexia${p > 1 ? ` (${p})` : ''}</title><meta name="description" content="${escHtml(tUI('faq.hubLead', lang))}"><link rel="canonical" href="${SITE_ORIGIN}${hubUrl(lang, p)}">${alternatesHub}<link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/themes.css"><link rel="stylesheet" href="/css/footer.css"><link rel="stylesheet" href="/css/faq-hub.css">${jsonLdHub(lang, items)}</head><body>${navHTML(lang)}${corps}${footerHTML(lang)}<script src="/js/i18n.js"></script><script src="/js/header.js" defer></script><script src="/js/footer.js" defer></script></body></html>`;
   if (faqChanged || removedFaq || state.faqHubHash !== faqHubHash || !fs.existsSync(faqHubPath)) {
     // Nettoyage : anciens dossiers du hub (pages de catégorie supprimées, anciens paliers de pagination)
     if (fs.existsSync('faq')) {

@@ -1477,7 +1477,7 @@ function buildToolsDataJSON(tools, langue = 'fr') {
     const rel = relId != null ? byId.get(String(relId)) : null;
     const t = rel || fr;
     return {
-      id: fr.id, // toujours l'id FR, stable entre les 3 langues
+      id: String(fr.id), // toujours l'id FR en chaîne, stable entre les 3 langues
       name: t.name,
       emoji: t.emoji || fr.emoji || '🤖',
       favicon: t.favicon || fr.favicon || '',
@@ -1817,7 +1817,7 @@ function resetFilters(){
 function renderPicker(){
   document.getElementById('tools-picker').innerHTML = filteredTools.map(t=>{
     const isSel = selected.includes(t.id), isDisabled = !isSel && selected.length>=MAX_SELECTION;
-    return \`<div class="picker-card\${isSel?' selected':''}\${isDisabled?' disabled':''}" onclick="toggleTool(\${t.id})">
+    return \`<div class="picker-card\${isSel?' selected':''}\${isDisabled?' disabled':''}" onclick="toggleTool('\${t.id}')">
       \${logoOrFallback(t,'picker-logo','picker-logo-fallback')}<span class="picker-name">\${t.name}</span><span class="picker-check">✓</span>
     </div>\`;
   }).join('');
@@ -1841,7 +1841,7 @@ function renderChips(){
       const t=TOOLS_DATA.find(x=>x.id===id); if(!t) return;
       const chip=document.createElement('div'); chip.className='selected-chip';
       const logoEl = t.favicon ? \`<img src="\${t.favicon}" alt="" style="width:14px;height:14px;border-radius:3px;object-fit:contain" onerror="this.style.display='none'">\` : t.emoji;
-      chip.innerHTML=\`\${logoEl} \${t.name} <span class="chip-remove" onclick="toggleTool(\${id})">×</span>\`;
+      chip.innerHTML=\`\${logoEl} \${t.name} <span class="chip-remove" onclick="toggleTool('\${id}')">×</span>\`;
       chips.appendChild(chip);
     });
   }

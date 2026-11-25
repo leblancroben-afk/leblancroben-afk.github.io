@@ -92,9 +92,12 @@ function syncHeader() {
 }
 
 // ── Chargement données ────────────────────────
+let avisStatiqueHTML = '';
+
 async function refreshWidget() {
   const container = document.getElementById('reviews-section');
   if (!container) return;
+  avisStatiqueHTML = container.querySelector('[data-fo-avis-static]')?.outerHTML || '';
 
   // Les avis écrits dans le HTML restent affichés pendant le chargement (pas de vide, pas de clignotement).
   const statiqueVisible = !!container.querySelector('[data-fo-avis-static]');
@@ -123,12 +126,11 @@ async function refreshWidget() {
     }
   } catch (err) {
     console.error('reviews-widget: échec chargement avis', err);
-    if (!statiqueVisible) container.innerHTML = '';
+    allReviews = [];
+    userReview = null;
+    render();
     return;
   }
-
-  // Aucun avis côté Firestore : on garde les avis écrits dans le HTML au lieu de les effacer
-  if (!allReviews.length && statiqueVisible) return;
 
   render();
 }
@@ -180,7 +182,7 @@ function buildWidgetHTML() {
 
     ${total
       ? `<div class="rv-list">${visible.map(r => buildCardHTML(r)).join('')}</div>`
-      : `<div class="rv-empty">${tr('reviews.empty')}</div>`}
+      : (avisStatiqueHTML || `<div class="rv-empty">${tr('reviews.empty')}</div>`)}
 
     <div class="rv-form-zone">${buildFormHTML()}</div>
   </div>

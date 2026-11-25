@@ -350,6 +350,9 @@ html[data-theme="light"] a:focus .blog-title,
 html[data-theme="light"] a:active .blog-title { color: var(--text); }
 html[data-theme="light"] .search-bar-go { color: var(--accent-ink); }
 html[data-theme="light"] .fo-copy { color: var(--accent-ink); }
+@media (max-width: 900px) {
+html[data-theme="light"] .nav-drawer.is-open { box-shadow: 0 12px 24px rgba(25,23,18,0.05); }
+}
 
 /* ── css/tool-detail.css ── */
 html[data-theme="light"] nav { background: rgba(244,241,234,0.88); }

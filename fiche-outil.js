@@ -172,7 +172,7 @@ function offresJsonLd(formules) {
 }
 
 const TRADUISIBLES = new Set(['description', 'ideal_pour', 'presentation', 'meta_description',
-  'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts', 'alternatives']);
+  'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts', 'alternatives', 'changelog']);
 
 // ── Sous-catégories : liste fermée (11 valeurs) et correspondance des libellés existants ──
 const SOUS_CATEGORIES = [

@@ -2034,6 +2034,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/n8n/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/nano-image-ai-camera-angle/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/nano-image-ai-camera-angle/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/nano-image-ai-camera-angle/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/nano-image-ai-camera-angle/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/notebooklm/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/notebooklm/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/notebooklm/"/>
@@ -2757,6 +2763,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/n8n/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/es/nano-image-ai-camera-angle/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/nano-image-ai-camera-angle/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/nano-image-ai-camera-angle/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/nano-image-ai-camera-angle/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/es/notebooklm/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/notebooklm/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/notebooklm/"/>
@@ -3467,6 +3479,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/n8n/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/n8n/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/n8n/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/nano-image-ai-camera-angle/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/nano-image-ai-camera-angle/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/nano-image-ai-camera-angle/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/nano-image-ai-camera-angle/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/nano-image-ai-camera-angle/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/notebooklm/</loc>

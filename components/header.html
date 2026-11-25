@@ -1,0 +1,222 @@
+<nav>
+
+  <div class="logo">
+    <svg viewBox="0 0 130 36"
+         xmlns="http://www.w3.org/2000/svg"
+         height="32"
+         aria-label="Albexia">
+
+      <polygon class="poly-part part-1"
+               points="2,10 14,32 10,32"
+               fill="#ff6b9d"/>
+
+      <polygon class="poly-part part-2"
+               points="14,2 18,12 10,12"
+               fill="#ff6b9d"
+               opacity="0.6"/>
+
+      <polygon class="poly-part part-3"
+               points="26,10 14,32 18,32"
+               fill="#ff6b9d"/>
+
+      <text class="logo-text"
+            x="36"
+            y="26"
+            font-family="Georgia, serif"
+            font-size="20"
+            font-weight="700"
+            fill="#f0f0f5"
+            letter-spacing="-0.5">
+        Albe<tspan fill="#ff6b9d">x</tspan>ia
+      </text>
+
+    </svg>
+  </div>
+
+
+  <!-- NAVIGATION PRINCIPALE -->
+
+  <div class="nav-links">
+
+    <a
+      href="/index.html"
+      class="nav-link"
+      data-nav-page="home"
+      data-i18n="nav.home">
+      Accueil
+    </a>
+
+    <a
+      href="/index.html#tools"
+      class="nav-link"
+      data-nav-page="tools"
+      data-i18n="nav.tools">
+      Outils
+    </a>
+
+    <a
+      href="/index.html#blog"
+      class="nav-link"
+      data-nav-page="blog"
+      data-i18n="nav.blog">
+      Blog
+    </a>
+
+    <a
+      href="/index.html#gallery"
+      class="nav-link"
+      data-nav-page="gallery"
+      data-i18n="nav.gallery">
+      Galerie
+    </a>
+
+  </div>
+
+
+  <!-- RECHERCHE -->
+
+  <button
+    type="button"
+    class="nav-search-btn"
+    id="search-open"
+    aria-label="Rechercher"
+    data-i18n-aria-label="search.open">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
+
+  <!-- LANGUE -->
+
+  <div class="lang-selector" id="lang-selector">
+
+    <button
+      class="lang-current"
+      id="lang-current"
+      type="button"
+      aria-expanded="false">
+
+      <span>🌐</span>
+      <span id="lang-current-label">FR</span>
+      <span class="lang-arrow">⌄</span>
+
+    </button>
+
+    <div
+      class="lang-menu"
+      id="lang-menu">
+
+      <button
+        class="lang-btn active"
+        data-lang="fr">
+        🇫🇷 Français
+      </button>
+
+      <button
+        class="lang-btn"
+        data-lang="en">
+        🇬🇧 English
+      </button>
+
+      <button
+        class="lang-btn"
+        data-lang="es">
+        🇪🇸 Español
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROFIL -->
+
+  <div class="nav-profile-slot">
+
+    <a
+      href="/profil.html"
+      id="nav-profile-btn"
+      class="nav-avatar-link"
+      style="display:none"
+      title="Mon profil">
+
+      <div
+        class="nav-avatar"
+        id="nav-avatar">
+        ?
+      </div>
+
+    </a>
+
+    <a
+      href="/profil.html"
+      id="nav-login-btn"
+      class="nav-link"
+      style="display:none"
+      data-i18n="nav.login">
+      Connexion
+    </a>
+
+  </div>
+
+
+  <!-- SOUMETTRE -->
+
+  <a
+    href="/soumettre/"
+    class="nav-cta"
+    data-i18n="nav.submit">
+    Soumettre un outil +
+  </a>
+
+  <!-- MENU MOBILE (un seul bouton après le profil) -->
+
+  <button
+    type="button"
+    class="nav-menu-btn"
+    id="nav-menu-btn"
+    aria-label="Menu"
+    data-i18n-aria-label="nav.menu"
+    aria-expanded="false"
+    aria-controls="nav-drawer">
+    <svg class="ic-open" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <svg class="ic-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="/index.html" class="nav-drawer-link" data-nav-page="home" data-i18n="nav.home">Accueil</a>
+    <a href="/index.html#tools" class="nav-drawer-link" data-nav-page="tools" data-i18n="nav.tools">Outils</a>
+    <a href="/index.html#blog" class="nav-drawer-link" data-nav-page="blog" data-i18n="nav.blog">Blog</a>
+    <a href="/index.html#gallery" class="nav-drawer-link" data-nav-page="gallery" data-i18n="nav.gallery">Galerie</a>
+    <a href="/soumettre/" class="nav-drawer-link nav-drawer-cta" data-i18n="nav.submit">Soumettre un outil +</a>
+
+    <div class="nav-drawer-row">
+      <span class="nav-drawer-label" data-i18n="nav.notifications">Notifications</span>
+      <span class="nav-drawer-slot" data-slot="notif"></span>
+    </div>
+    <div class="nav-drawer-row">
+      <span class="nav-drawer-label" data-i18n="nav.theme">Thème clair / sombre</span>
+      <span class="nav-drawer-slot" data-slot="theme"></span>
+    </div>
+
+    <a href="/profil.html" class="nav-drawer-link" id="nav-drawer-login" data-i18n="nav.login">Connexion</a>
+    <a href="/profil.html" class="nav-drawer-link" id="nav-drawer-profile" data-i18n="nav.profile">Mon profil</a>
+    <button type="button" class="nav-drawer-link" id="nav-drawer-logout" data-i18n="nav.logout">Déconnexion</button>
+  </div>
+
+</nav>
+
+<div class="search-overlay" id="search-overlay" hidden role="dialog" aria-modal="true" aria-label="Recherche">
+  <form class="search-bar" id="search-form" autocomplete="off">
+    <span class="search-bar-icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+    <input
+      class="search-bar-input"
+      id="search-input"
+      type="search"
+      placeholder="Rechercher un outil, une vidéo, un article..."
+      data-i18n-placeholder="search.placeholder"
+      autocomplete="off">
+    <button type="submit" class="search-bar-go" aria-label="Rechercher" data-i18n-aria-label="search.submit"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button type="button" class="search-bar-close" id="search-close" aria-label="Fermer" data-i18n-aria-label="search.close"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </form>
+  <div class="search-results" id="search-results"></div>
+</div>

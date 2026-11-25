@@ -3928,3 +3928,66 @@ body.search-open { overflow: hidden; }
 .fo-prompt pre { margin: 0; flex: 1; white-space: pre-wrap; word-break: break-word; font-family: inherit; font-size: 14px; line-height: 1.5; color: inherit; }
 .fo-copy { flex-shrink: 0; border: 1px solid var(--accent); background: none; color: var(--accent); border-radius: 8px; padding: 6px 10px; font-size: 13px; cursor: pointer; }
 .fo-pros, .fo-cons { list-style: none; margin: 0; padding: 0; }
+
+
+/* ─── MENU MOBILE : un seul bouton après le profil ─── */
+.nav-menu-btn { display: none; }
+.nav-drawer { display: none; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none !important; }
+  .notif-wrap, .theme-toggle { display: none !important; }
+
+  .nav-menu-btn {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    margin-left: 8px;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .nav-menu-btn span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    margin: 0 auto;
+    background: var(--text);
+    border-radius: 2px;
+  }
+
+  .nav-drawer.is-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 6px 20px 16px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+    z-index: 1000;
+  }
+  .nav-drawer-link {
+    display: block;
+    width: 100%;
+    padding: 14px 4px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--text);
+    text-align: left;
+    text-decoration: none;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .nav-drawer-cta { font-weight: 600; }
+}

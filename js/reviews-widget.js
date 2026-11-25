@@ -92,6 +92,14 @@ function syncHeader() {
 }
 
 // ── Chargement données ────────────────────────
+function debugAffiche(msg) {
+  const d = document.createElement('div');
+  d.textContent = msg;
+  d.style.cssText = 'background:#fff3cd;color:#000;font:12px monospace;padding:8px;margin:8px 0;border:1px solid #d4a017;word-break:break-all;';
+  const c = document.getElementById('reviews-section');
+  if (c) c.parentElement.insertBefore(d, c);
+}
+
 async function refreshWidget() {
   const container = document.getElementById('reviews-section');
   if (!container) return;
@@ -123,12 +131,14 @@ async function refreshWidget() {
     }
   } catch (err) {
     console.error('reviews-widget: échec chargement avis', err);
+    debugAffiche('DIAG ERREUR : ' + (err && err.message ? err.message : err));
     allReviews = [];
     userReview = null;
     render();
     return;
   }
   console.info(`reviews-widget: ${allReviews.length} avis Firestore pour ${slugs.join(', ')}`);
+  debugAffiche(`DIAG : ${allReviews.length} avis Firestore pour [${slugs.join(', ')}]`);
 
   render();
 }

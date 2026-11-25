@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* Le <nav> est sticky : le conteneur ne doit pas créer de boîte. */
     container.style.display = 'contents';
     container.innerHTML = html;
+    initHeaderMenu();
 
     const i18nActif =
       typeof window.detecterLangue === 'function' ||
@@ -528,5 +529,41 @@ function initHeaderSearch() {
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && !overlay.hidden) fermer();
+  });
+}
+
+
+/* Menu mobile : ouvre/ferme le panneau et relaie Notifications / Thème vers les boutons existants */
+function initHeaderMenu() {
+  const btn = document.getElementById('nav-menu-btn');
+  const drawer = document.getElementById('nav-drawer');
+  if (!btn || !drawer) return;
+
+  const fermer = () => {
+    drawer.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+  };
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const ouvert = drawer.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', String(ouvert));
+  });
+
+  drawer.querySelectorAll('[data-proxy]').forEach((b) => {
+    b.addEventListener('click', () => {
+      const cible = document.querySelector(b.dataset.proxy);
+      if (cible) cible.click();
+      fermer();
+    });
+  });
+
+  drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', fermer));
+
+  document.addEventListener('click', (e) => {
+    if (!drawer.contains(e.target) && !btn.contains(e.target)) fermer();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') fermer();
   });
 }

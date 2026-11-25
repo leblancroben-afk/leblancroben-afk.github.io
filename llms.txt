@@ -98,6 +98,7 @@ Langue : français.
 - [Mutiny](https://albexia.com/tools/standard/fr/mutiny/): Mutiny personnalise en temps réel les pages de votre site B2B selon l'industrie, la taille ou la source du visiteur, sans intervention de développeurs. Utilisé par Notion, Snowflake et Dropbox.
 - [Opinly](https://albexia.com/tools/starter/fr/opinly/): Opinly est une plateforme d’automatisation SEO et de veille concurrentielle assistée par IA. Elle aide à suivre les mots-clés, backlinks, pages et performances des concurrents, puis à générer et programmer du contenu optimisé pour Google et les moteurs génératifs comme ChatGPT
 - [Phrasee](https://albexia.com/tools/standard/fr/phrasee/): Phrasee génère et optimise la micro-copie marketing (objets d'e-mails, notifications push) en s'appuyant sur les neurosciences cognitives. L'IA respecte la voix de marque tout en boostant l'engagement.
+- [SocialEcho](https://albexia.com/tools/standard/fr/socialecho/): SocialEcho est un espace de travail IA pour gérer plusieurs comptes sociaux : création de contenu, publication, messagerie unifiée, veille et analytics.
 
 ## SEO
 

@@ -115,6 +115,7 @@ async function refreshWidget() {
       if (!prev || t >= tp) parUid.set(r.uid, r);
     });
     allReviews = [...parUid.values()];
+    console.info(`reviews-widget: ${allReviews.length} avis Firestore pour ${slugs.join(', ')}`);
     userReview = currentUser ? await getUserReview(currentUser.uid, TOOL_SLUG) : null;
 
     if (currentUser && allReviews.length) {
@@ -138,9 +139,13 @@ async function refreshWidget() {
 function render() {
   const container = document.getElementById('reviews-section');
   if (!container) return;
-  container.innerHTML = buildWidgetHTML();
-  attachEvents();
-  syncHeader();
+  try {
+    container.innerHTML = buildWidgetHTML();
+    attachEvents();
+    syncHeader();
+  } catch (err) {
+    console.error('reviews-widget: erreur de rendu', err);
+  }
 }
 
 // ── HTML principal ────────────────────────────
@@ -175,7 +180,7 @@ function buildWidgetHTML() {
   <div class="rv-section" id="avis-utilisateurs">
     <div class="fo-card-head">
       <h2>${lbl('title')}</h2>
-      ${total ? `<a class="fo-link" href="/tools/avis-outil.html?tool=${TOOL_SLUG}">${lbl('seeAll')}</a>` : ''}
+      ${(total || avisStatiqueHTML) ? `<a class="fo-link" href="/tools/avis-outil.html?tool=${TOOL_SLUG}">${lbl('seeAll')}</a>` : ''}
     </div>
 
     ${total ? buildSummaryHTML() : ''}

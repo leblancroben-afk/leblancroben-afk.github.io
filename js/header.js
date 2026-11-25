@@ -576,6 +576,7 @@ function initHeaderMenu() {
 
   const fermer = () => {
     drawer.classList.remove('is-open');
+    btn.classList.remove('is-open');
     btn.setAttribute('aria-expanded', 'false');
     placerControles(false);
   };
@@ -583,6 +584,7 @@ function initHeaderMenu() {
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     const ouvert = drawer.classList.toggle('is-open');
+    btn.classList.toggle('is-open', ouvert);
     btn.setAttribute('aria-expanded', String(ouvert));
     if (ouvert) {
       placerControles(true);

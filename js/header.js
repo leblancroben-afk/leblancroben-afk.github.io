@@ -533,47 +533,78 @@ function initHeaderSearch() {
 }
 
 
-/* Menu mobile : panneau, icônes reprises des boutons d'origine, relais vers Notifications / Thème */
+/* Menu mobile : déplace les vrais contrôles (cloche, thème) dans le panneau,
+   donc mêmes icônes, mêmes couleurs et mêmes fonctionnements qu'en desktop. */
 function initHeaderMenu() {
   const btn = document.getElementById('nav-menu-btn');
   const drawer = document.getElementById('nav-drawer');
   if (!btn || !drawer) return;
 
+  const nav = btn.closest('nav');
+  const mobile = window.matchMedia('(max-width: 900px)');
+
+  const placerControles = (dansMenu) => {
+    const theme = document.querySelector('[data-theme-toggle]');
+    const notif = document.querySelector('.notif-wrap');
+    const profil = nav && nav.querySelector('.nav-profile-slot');
+    if (dansMenu) {
+      const slotTheme = drawer.querySelector('[data-slot="theme"]');
+      const slotNotif = drawer.querySelector('[data-slot="notif"]');
+      if (theme && slotTheme) slotTheme.appendChild(theme);
+      if (notif && slotNotif) slotNotif.appendChild(notif);
+    } else if (nav) {
+      if (theme) nav.insertBefore(theme, profil || null);
+      if (notif) nav.insertBefore(notif, theme || profil || null);
+    }
+  };
+
+  const loginBtn = document.getElementById('nav-login-btn');
+  const profileBtn = document.getElementById('nav-profile-btn');
+  const lienConnexion = document.getElementById('nav-drawer-login');
+  const lienProfil = document.getElementById('nav-drawer-profile');
+  const boutonDeconnexion = document.getElementById('nav-drawer-logout');
+
+  const majAuth = () => {
+    const connecte = !!profileBtn && profileBtn.style.display === 'inline-flex';
+    if (lienConnexion) lienConnexion.hidden = connecte;
+    if (lienProfil) lienProfil.hidden = !connecte;
+    if (boutonDeconnexion) boutonDeconnexion.hidden = !connecte;
+  };
+  if (profileBtn) {
+    new MutationObserver(majAuth).observe(profileBtn, { attributes: true, attributeFilter: ['style'] });
+  }
+
   const fermer = () => {
     drawer.classList.remove('is-open');
     btn.setAttribute('aria-expanded', 'false');
-  };
-
-  const ajouterIcones = () => {
-    drawer.querySelectorAll('[data-proxy]').forEach((b) => {
-      if (b.querySelector('.drawer-icon')) return;
-      const cible = document.querySelector(b.dataset.proxy);
-      const svg = cible && cible.querySelector('svg');
-      if (!svg) return;
-      const copie = svg.cloneNode(true);
-      copie.setAttribute('class', 'drawer-icon');
-      copie.setAttribute('width', '20');
-      copie.setAttribute('height', '20');
-      b.prepend(copie);
-    });
+    placerControles(false);
   };
 
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     const ouvert = drawer.classList.toggle('is-open');
     btn.setAttribute('aria-expanded', String(ouvert));
-    if (ouvert) ajouterIcones();
-  });
-
-  drawer.querySelectorAll('[data-proxy]').forEach((b) => {
-    b.addEventListener('click', () => {
-      const cible = document.querySelector(b.dataset.proxy);
-      if (cible) cible.click();
-      fermer();
-    });
+    if (ouvert) {
+      placerControles(true);
+      majAuth();
+    } else {
+      placerControles(false);
+    }
   });
 
   drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', fermer));
+
+  if (boutonDeconnexion) {
+    boutonDeconnexion.addEventListener('click', async () => {
+      fermer();
+      try {
+        const auth = await import('/js/auth.js');
+        await auth.logout();
+      } catch (err) {
+        console.error('[Albexia] déconnexion impossible :', err);
+      }
+    });
+  }
 
   document.addEventListener('click', (e) => {
     if (!drawer.contains(e.target) && !btn.contains(e.target)) fermer();
@@ -581,4 +612,5 @@ function initHeaderMenu() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') fermer();
   });
+  mobile.addEventListener('change', () => { if (!mobile.matches) fermer(); });
 }

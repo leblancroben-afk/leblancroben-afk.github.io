@@ -92,12 +92,9 @@ function syncHeader() {
 }
 
 // ── Chargement données ────────────────────────
-let avisStatiqueHTML = '';
-
 async function refreshWidget() {
   const container = document.getElementById('reviews-section');
   if (!container) return;
-  avisStatiqueHTML = container.querySelector('[data-fo-avis-static]')?.outerHTML || '';
 
   // Les avis écrits dans le HTML restent affichés pendant le chargement (pas de vide, pas de clignotement).
   const statiqueVisible = !!container.querySelector('[data-fo-avis-static]');
@@ -115,7 +112,6 @@ async function refreshWidget() {
       if (!prev || t >= tp) parUid.set(r.uid, r);
     });
     allReviews = [...parUid.values()];
-    console.info(`reviews-widget: ${allReviews.length} avis Firestore pour ${slugs.join(', ')}`);
     userReview = currentUser ? await getUserReview(currentUser.uid, TOOL_SLUG) : null;
 
     if (currentUser && allReviews.length) {
@@ -132,6 +128,7 @@ async function refreshWidget() {
     render();
     return;
   }
+  console.info(`reviews-widget: ${allReviews.length} avis Firestore pour ${slugs.join(', ')}`);
 
   render();
 }
@@ -180,14 +177,14 @@ function buildWidgetHTML() {
   <div class="rv-section" id="avis-utilisateurs">
     <div class="fo-card-head">
       <h2>${lbl('title')}</h2>
-      ${(total || avisStatiqueHTML) ? `<a class="fo-link" href="/tools/avis-outil.html?tool=${TOOL_SLUG}">${lbl('seeAll')}</a>` : ''}
+      ${total ? `<a class="fo-link" href="/tools/avis-outil.html?tool=${TOOL_SLUG}">${lbl('seeAll')}</a>` : ''}
     </div>
 
     ${total ? buildSummaryHTML() : ''}
 
     ${total
       ? `<div class="rv-list">${visible.map(r => buildCardHTML(r)).join('')}</div>`
-      : (avisStatiqueHTML || `<div class="rv-empty">${tr('reviews.empty')}</div>`)}
+      : `<div class="rv-empty">${tr('reviews.empty')}</div>`}
 
     <div class="rv-form-zone">${buildFormHTML()}</div>
   </div>

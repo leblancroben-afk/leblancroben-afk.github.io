@@ -671,6 +671,10 @@
             <input type="text" id="o-alt-validees" placeholder="Claude, Gemini, Mistral">
             <label>Mises à jour (format : date|titre|description, une par ligne)</label>
             <textarea id="o-changelog" style="min-height:70px;" placeholder="2026-09|Nouveau modèle|Qualité de rédaction accrue"></textarea>
+            <label>Mises à jour EN (format : date|titre|description, une par ligne — rempli par le bouton Traduire)</label>
+            <textarea id="o-changelog-en" style="min-height:70px;"></textarea>
+            <label>Mises à jour ES (format : date|titre|description, une par ligne — rempli par le bouton Traduire)</label>
+            <textarea id="o-changelog-es" style="min-height:70px;"></textarea>
           </fieldset>
           <button type="submit" class="btn-submit" id="o-submit-btn">Créer l'outil</button>
           <button type="button" class="btn-danger" id="o-delete-btn" style="display:none;">🗑 Supprimer cet outil</button>
@@ -3352,6 +3356,8 @@ Support français|oui|non|bool"></textarea>
     setVal('o-tarifs-verifie', tool.tarifs_verifie === false ? 'false' : 'true');
     setVal('o-galerie', joinLines((tool.galerie||[]).map(x=>`${x.url}|${x.legende||''}`), '\n'));
     setVal('o-changelog', joinLines((tool.changelog||[]).map(c=>`${c.date||''}|${c.titre||''}|${c.desc||''}`), '\n'));
+    setVal('o-changelog-en', joinLines(((en&&en.changelog)||[]).map(c=>`${c.date||''}|${c.titre||''}|${c.desc||''}`), '\n'));
+    setVal('o-changelog-es', joinLines(((es&&es.changelog)||[]).map(c=>`${c.date||''}|${c.titre||''}|${c.desc||''}`), '\n'));
     setVal('o-interface-fr', tool.interface_fr === true ? 'true' : tool.interface_fr === false ? 'false' : '');
     setVal('o-api', tool.api === true ? 'true' : tool.api === false ? 'false' : '');
     setVal('o-mobile', tool.mobile === true ? 'true' : tool.mobile === false ? 'false' : '');
@@ -3676,6 +3682,9 @@ Support français|oui|non|bool"></textarea>
       // Statut : on garde celui de l'outil existant (ex. « a_enrichir », « offline ») ;
       // un outil sans statut est publié par défaut. Sans ce champ, setDoc l'effaçait à chaque sauvegarde.
       const statutOutil = (editingTool && editingTool.status) || 'active';
+      const parseChangelog = id => lignes(id).map(l=>{const[date,titre,desc]=l.split('|');return titre&&titre.trim()?{date:(date||'').trim(),titre:titre.trim(),desc:(desc||'').trim()}:null;}).filter(Boolean);
+      const changelogEn = parseChangelog('o-changelog-en');
+      const changelogEs = parseChangelog('o-changelog-es');
       const communsNouveaux = {
         status: statutOutil,
         type_outil: gv('o-type-outil'), sous_categorie: gv('o-sous-cat'), modele: gv('o-modele') || undefined,
@@ -3683,7 +3692,7 @@ Support français|oui|non|bool"></textarea>
         api_url: gv('o-api-url'), a_partir_de: gv('o-a-partir-de'),
         reseaux: Object.keys(reseaux).length ? reseaux : undefined,
         verifie: gv('o-verifie') === 'true', tarifs_verifie: gv('o-tarifs-verifie') !== 'false',
-        galerie, changelog,
+        galerie,
         plateformes_icones: [...document.querySelectorAll('#o-plat-ico input:checked')].map(c=>c.value),
       };
 
@@ -3717,7 +3726,7 @@ Support français|oui|non|bool"></textarea>
           fonctionnalites:fonctionnalitesEn,faq:faqEn,presentation:presentationEn,
           meta_description:metaDescEn,maker,plateformes,url_tarifs:urlTarifs,
           interface_fr:interfaceFr,api,mobile,stats:(statsEn.length?statsEn:stats),tutoriels,screenshot_url:screenshot,
-          points_forts:pointsFortsEn,limite:limiteEn,idees_utilisation:ideesEn,prompts:promptsEn,tarifs:tarifsEn,...communsNouveaux,
+          points_forts:pointsFortsEn,limite:limiteEn,idees_utilisation:ideesEn,prompts:promptsEn,tarifs:tarifsEn,changelog:changelogEn,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
       const nameEs=document.getElementById('o-name-es').value.trim();
@@ -3731,7 +3740,7 @@ Support français|oui|non|bool"></textarea>
           fonctionnalites:fonctionnalitesEs,faq:faqEs,presentation:presentationEs,
           meta_description:metaDescEs,maker,plateformes,url_tarifs:urlTarifs,
           interface_fr:interfaceFr,api,mobile,stats:(statsEs.length?statsEs:stats),tutoriels,screenshot_url:screenshot,
-          points_forts:pointsFortsEs,limite:limiteEs,idees_utilisation:ideesEs,prompts:promptsEs,tarifs:tarifsEs,...communsNouveaux,
+          points_forts:pointsFortsEs,limite:limiteEs,idees_utilisation:ideesEs,prompts:promptsEs,tarifs:tarifsEs,changelog:changelogEs,...communsNouveaux,
           generer_fiche:genererFiche,slug_articles:slugArticles||null});
       }
 
@@ -4085,6 +4094,38 @@ Support français|oui|non|bool"></textarea>
 
   
 
+  async function translateFaq(text, targetLang) {
+    const lignes = (text || '').split('\n').filter(l => l.trim());
+    const resultats = [];
+    for (const ligne of lignes) {
+      const idx = ligne.indexOf('||');
+      if (idx < 0) continue;
+      const q = ligne.slice(0, idx).trim();
+      const a = ligne.slice(idx + 2).trim();
+      const qT = q ? await translateText(q, targetLang, 'text') : '';
+      await pause(400);
+      const aT = a ? await translateText(a, targetLang, 'text') : '';
+      await pause(400);
+      resultats.push(`${qT}||${aT}`);
+    }
+    return resultats.join('\n');
+  }
+
+  async function translateChangelog(text, targetLang) {
+    const lignes = (text || '').split('\n').filter(l => l.trim());
+    const resultats = [];
+    for (const ligne of lignes) {
+      const [date, titre, ...descParts] = ligne.split('|');
+      const desc = descParts.join('|');
+      const titreT = (titre || '').trim() ? await translateText(titre.trim(), targetLang, 'text') : '';
+      await pause(400);
+      const descT = desc.trim() ? await translateText(desc.trim(), targetLang, 'text') : '';
+      await pause(400);
+      resultats.push(`${(date||'').trim()}|${titreT}|${descT}`);
+    }
+    return resultats.join('\n');
+  }
+
   function outilFieldsToTranslate(targetLang) {
     return [
       ['o-name-fr',         `o-name-${targetLang}`,         'text'],
@@ -4099,6 +4140,7 @@ Support français|oui|non|bool"></textarea>
       ['o-prompts', `o-prompts-${targetLang}`, 'lignes'],
       ['o-meta-desc',       `o-meta-desc-${targetLang}`,    'text'],
       ['o-tarifs',          `o-tarifs-${targetLang}`,       'tarifs'],
+      ['o-changelog',       `o-changelog-${targetLang}`,    'changelog'],
     ];
   }
   function categorieFieldsToTranslate(targetLang) {
@@ -4364,7 +4406,11 @@ Support français|oui|non|bool"></textarea>
         if (!srcText || !srcText.trim()) continue;
 
         try {
-          if (format === 'fonctionnalites') {
+          if (format === 'faq') {
+            destEl.value = await translateFaq(srcText, targetLang);
+          } else if (format === 'changelog') {
+            destEl.value = await translateChangelog(srcText, targetLang);
+          } else if (format === 'fonctionnalites') {
             destEl.value = await translateFonctionnalites(srcText, targetLang);
           } else if (format === 'tarifs') {
             destEl.value = await translateTarifsTxt(srcText, targetLang);

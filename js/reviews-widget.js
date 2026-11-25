@@ -112,11 +112,11 @@ async function refreshWidget() {
       if (!prev || t >= tp) parUid.set(r.uid, r);
     });
     allReviews = [...parUid.values()];
-    userReview = currentUser ? await getUserReview(currentUser.uid, TOOL_SLUG).catch(err => { console.warn('reviews-widget: avis utilisateur illisible', err); return null; }) : null;
+    userReview = currentUser ? await getUserReview(currentUser.uid, TOOL_SLUG) : null;
 
     if (currentUser && allReviews.length) {
       const results = await Promise.all(
-        allReviews.map(r => getUserVote(r.id, currentUser.uid).catch(err => { console.warn('reviews-widget: vote illisible', err); return null; }).then(v => ({ id: r.id, vote: v })))
+        allReviews.map(r => getUserVote(r.id, currentUser.uid).then(v => ({ id: r.id, vote: v })))
       );
       userVotes = {};
       results.forEach(({ id, vote }) => { userVotes[id] = vote; });
@@ -128,7 +128,6 @@ async function refreshWidget() {
     render();
     return;
   }
-  console.info(`reviews-widget: ${allReviews.length} avis Firestore pour ${slugs.join(', ')}`);
 
   render();
 }
@@ -136,13 +135,9 @@ async function refreshWidget() {
 function render() {
   const container = document.getElementById('reviews-section');
   if (!container) return;
-  try {
-    container.innerHTML = buildWidgetHTML();
-    attachEvents();
-    syncHeader();
-  } catch (err) {
-    console.error('reviews-widget: erreur de rendu', err);
-  }
+  container.innerHTML = buildWidgetHTML();
+  attachEvents();
+  syncHeader();
 }
 
 // ── HTML principal ────────────────────────────

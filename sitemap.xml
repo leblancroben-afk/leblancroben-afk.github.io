@@ -1800,6 +1800,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/finevoice-ai/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/tutoriels/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/flutterflow-ai/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/flutterflow-ai/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/flutterflow-ai/"/>
@@ -2182,6 +2189,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/socialecho/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/tutoriels/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/sourcegraph-cody/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/sourcegraph-cody/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/sourcegraph-cody/"/>
@@ -2494,6 +2508,13 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/finevoice-ai/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/es/finevoice-ai/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/tutoriels/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/es/flutterflow-ai/</loc>
@@ -2878,6 +2899,13 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/es/socialecho/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/tutoriels/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/es/sourcegraph-cody/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/sourcegraph-cody/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/sourcegraph-cody/"/>
@@ -3173,6 +3201,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/finevoice-ai/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/finevoice-ai/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/finevoice-ai/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/finevoice-ai/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/finevoice-ai/tutoriels/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/flutterflow-ai/</loc>
@@ -3600,6 +3635,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/socialecho/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/socialecho/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/socialecho/tutoriels/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/socialecho/tutoriels/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/tutoriels/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/sourcegraph-cody/</loc>

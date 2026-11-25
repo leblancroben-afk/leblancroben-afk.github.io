@@ -172,7 +172,7 @@ function offresJsonLd(formules) {
 }
 
 const TRADUISIBLES = new Set(['description', 'ideal_pour', 'presentation', 'meta_description',
-  'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts', 'alternatives', 'changelog']);
+  'fonctionnalites', 'faq', 'stats', 'tarifs', 'points_forts', 'limite', 'idees_utilisation', 'prompts', 'alternatives']);
 
 // ── Sous-catégories : liste fermée (11 valeurs) et correspondance des libellés existants ──
 const SOUS_CATEGORIES = [
@@ -442,7 +442,7 @@ function generateFiche(tool, allTools = [], deps) {
       }).join('')}</div>`
     : '';
   const slugsFamille = (Array.isArray(tool.slugs_famille) && tool.slugs_famille.length ? tool.slugs_famille : [slug]).join(' ');
-  const reviewsSection = `<section class="fo-card" id="fo-avis"><div id="reviews-section" data-fo-slugs="${E(slugsFamille)}"><div class="fo-card-head"><h2>${E(T.reviews)}</h2></div>${avisStatiqueHTML}</div></section>`;
+  const reviewsSection = `<section class="fo-card" id="fo-avis"><div id="reviews-section" data-fo-slugs="${E(slugsFamille)}"><div class="fo-card-head"><h2>${E(T.reviews)}</h2></div></div></section>`;
 
   // ── Sidebar : informations clés ──
   const PLAT_KEYS = ['web', 'windows', 'apple', 'android'];
@@ -573,6 +573,16 @@ function generateFiche(tool, allTools = [], deps) {
   // certaine sont déclarés ; « Sur devis » ou un montant ambigu est ignoré. Pas de tarif = pas d'offers.
   const offres = tarifsOk ? offresJsonLd(tarifsRaw.slice(0, 4)) : [];
   if (ng && ng.count >= 5) ldSoft.aggregateRating = { '@type': 'AggregateRating', ratingValue: Math.round(ng.avg * 10) / 10, ratingCount: ng.count, reviewCount: ng.count, bestRating: 5, worstRating: 1 };
+  // Avis individuels pour le référencement (mêmes avis que ceux affichés via Firestore)
+  const ldAvis = avisRecents.filter(a => a && a.nom && Number(a.note) >= 1).map(a => {
+    const d = a.date ? new Date(a.date) : null;
+    const rv = { '@type': 'Review', author: { '@type': 'Person', name: String(a.nom) },
+      reviewRating: { '@type': 'Rating', ratingValue: Number(a.note), bestRating: 5, worstRating: 1 } };
+    if (a.texte) rv.reviewBody = String(a.texte);
+    if (d && !isNaN(d)) rv.datePublished = d.toISOString().slice(0, 10);
+    return rv;
+  });
+  if (ldAvis.length) ldSoft.review = ldAvis;
   if (offres.length) ldSoft.offers = offres;
   else if (pk === 'free') ldSoft.offers = { '@type': 'Offer', price: '0', priceCurrency: 'USD' };
   if (g('verifie_le')) ldSoft.dateModified = String(g('verifie_le'));

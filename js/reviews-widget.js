@@ -127,6 +127,9 @@ async function refreshWidget() {
     return;
   }
 
+  // Aucun avis côté Firestore : on garde les avis écrits dans le HTML au lieu de les effacer
+  if (!allReviews.length && statiqueVisible) return;
+
   render();
 }
 

@@ -2176,6 +2176,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
   </url>
   <url>
+    <loc>https://albexia.com/tools/standard/en/socialecho/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/socialecho/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/socialecho/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/"/>
+  </url>
+  <url>
     <loc>https://albexia.com/tools/standard/en/sourcegraph-cody/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/sourcegraph-cody/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/sourcegraph-cody/"/>
@@ -2864,6 +2870,12 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/semrush/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/semrush/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/es/socialecho/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/socialecho/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/socialecho/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/es/sourcegraph-cody/</loc>
@@ -3581,6 +3593,13 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/semrush/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/semrush/tutoriels/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/semrush/tutoriels/"/>
+  </url>
+  <url>
+    <loc>https://albexia.com/tools/standard/fr/socialecho/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://albexia.com/tools/standard/fr/socialecho/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://albexia.com/tools/standard/en/socialecho/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://albexia.com/tools/standard/es/socialecho/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://albexia.com/tools/standard/fr/socialecho/"/>
   </url>
   <url>
     <loc>https://albexia.com/tools/standard/fr/sourcegraph-cody/</loc>

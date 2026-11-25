@@ -4012,7 +4012,14 @@ body.search-open { overflow: hidden; }
 
 
 /* Bouton menu : trois barres -> croix quand le panneau est ouvert */
-.nav-menu-btn { color: var(--text); }
+.nav-menu-btn {
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.nav-menu-btn svg { display: block; }
 .nav-menu-btn .ic-close { display: none; }
 .nav-menu-btn.is-open .ic-open { display: none; }
 .nav-menu-btn.is-open .ic-close { display: block; }

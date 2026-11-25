@@ -236,6 +236,14 @@ function generateFiche(tool, allTools = [], deps) {
   const description = tool.description || '';
   const url = safeUrl(tool.url) || '#';
   const category = categoryName(tool.category || '', langue);
+
+  // ── Fil d'Ariane : libellés figés dans la langue de la fiche (comme le reste de la page statique) ──
+  const BC = { fr: { home: 'Accueil', label: 'Fil d’Ariane' }, en: { home: 'Home', label: 'Breadcrumb' }, es: { home: 'Inicio', label: 'Migas de pan' } }[langue];
+  const catSlug = tool.category ? slugify(tool.category) : '';
+  const crumbHTML = `<nav class="fo-crumbs" aria-label="${E(BC.label)}"><ol>` +
+    `<li><a href="/index.html">${E(BC.home)}</a></li>` +
+    (catSlug ? `<li><a href="/categorie/${langue}/${catSlug}/">${E(category)}</a></li>` : '') +
+    `<li aria-current="page">${E(name)}</li></ol></nav>`;
   const slug = tool.slug_articles || slugify(name);
   const logoBox = (cls, letter, srcs, alt, eager) => (srcs.length
     ? `<div class="${cls}" data-fo-logo data-srcs="${srcs.map(E).join(' ')}"><span class="fo-letter" aria-hidden="true">${E(letter)}</span><img src="${E(srcs[0])}" alt="${E(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} referrerpolicy="no-referrer"></div>`
@@ -307,6 +315,7 @@ function generateFiche(tool, allTools = [], deps) {
   const hero = `
 <header class="fo-hero">
   <div class="fo-wrap">
+    ${crumbHTML}
     <div class="fo-topbar">
       <div class="fo-actions-top">
         <button type="button" class="fo-pill" data-fo-share data-copied="${E(T.copied)}">${ic('share')}<span>${E(T.share)}</span></button>
@@ -579,6 +588,15 @@ function generateFiche(tool, allTools = [], deps) {
   else if (pk === 'free') ldSoft.offers = { '@type': 'Offer', price: '0', priceCurrency: 'USD' };
   if (g('verifie_le')) ldSoft.dateModified = String(g('verifie_le'));
   ldItems.push(ldSoft);
+  const crumbOrigin = new URL(canonicalUrl).origin;
+  const ldCrumbs = [{ name: BC.home, item: `${crumbOrigin}/index.html` }];
+  if (catSlug) ldCrumbs.push({ name: category, item: `${crumbOrigin}/categorie/${langue}/${catSlug}/` });
+  ldCrumbs.push({ name: name, item: canonicalUrl });
+  ldItems.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: ldCrumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: String(c.name), item: c.item })),
+  });
   const ldFaq = (faq || []).filter((f) => f && f.q && f.a);
   if (ldFaq.length) {
     ldItems.push({

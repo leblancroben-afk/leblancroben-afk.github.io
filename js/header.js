@@ -320,7 +320,7 @@ window.addEventListener('storage', event => {
 document.addEventListener('click', event => {
 
   const link = event.target.closest(
-    '.nav-link[data-nav-page]'
+    '.nav-link[data-nav-page], .nav-drawer-link[data-nav-page]'
   );
 
   if (!link) return;
@@ -533,7 +533,7 @@ function initHeaderSearch() {
 }
 
 
-/* Menu mobile : ouvre/ferme le panneau et relaie Notifications / Thème vers les boutons existants */
+/* Menu mobile : panneau, icônes reprises des boutons d'origine, relais vers Notifications / Thème */
 function initHeaderMenu() {
   const btn = document.getElementById('nav-menu-btn');
   const drawer = document.getElementById('nav-drawer');
@@ -544,10 +544,25 @@ function initHeaderMenu() {
     btn.setAttribute('aria-expanded', 'false');
   };
 
+  const ajouterIcones = () => {
+    drawer.querySelectorAll('[data-proxy]').forEach((b) => {
+      if (b.querySelector('.drawer-icon')) return;
+      const cible = document.querySelector(b.dataset.proxy);
+      const svg = cible && cible.querySelector('svg');
+      if (!svg) return;
+      const copie = svg.cloneNode(true);
+      copie.setAttribute('class', 'drawer-icon');
+      copie.setAttribute('width', '20');
+      copie.setAttribute('height', '20');
+      b.prepend(copie);
+    });
+  };
+
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     const ouvert = drawer.classList.toggle('is-open');
     btn.setAttribute('aria-expanded', String(ouvert));
+    if (ouvert) ajouterIcones();
   });
 
   drawer.querySelectorAll('[data-proxy]').forEach((b) => {

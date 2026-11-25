@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="/css/fiche-outil.css">
   <link rel="stylesheet" href="/css/themes.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SocialEcho","description":"SocialEcho is an IA workspace for managing several social accounts: content creation, publication, unified messaging, monitoring and analytics.","url":"https://albexia.com/tools/standard/en/socialecho/","inLanguage":"en","applicationCategory":"Writing & marketing","offers":[{"@type":"Offer","name":"Free","price":"0","priceCurrency":"USD","description":"/ month"},{"@type":"Offer","name":"Basic","price":"15","priceCurrency":"USD","description":"/ month"},{"@type":"Offer","name":"Team","price":"20","priceCurrency":"USD","description":"/ month"}],"dateModified":"2026-11-24"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://albexia.com/index.html"},{"@type":"ListItem","position":2,"name":"Writing & marketing","item":"https://albexia.com/categorie/en/redaction-et-marketing/"},{"@type":"ListItem","position":3,"name":"SocialEcho","item":"https://albexia.com/tools/standard/en/socialecho/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which platforms are supported?","acceptedAnswer":{"@type":"Answer","text":"SocialEcho supports Facebook, Instagram, TikTok, TikTok Shop, X, YouTube, LinkedIn, Telegram, Pinterest, Threads and VK."}},{"@type":"Question","name":"Is there a free trial?","acceptedAnswer":{"@type":"Answer","text":"Yes, paid offers benefit from a free 7-day trial, without credit card. A free offer is also available."}},{"@type":"Question","name":"How does pricing work?","acceptedAnswer":{"@type":"Answer","text":"Pricing is calculated by connected social account, from 5 accounts. In annual billing, Basic costs $3 and Team $4 per account per month."}},{"@type":"Question","name":"Can the accounts be linked?","acceptedAnswer":{"@type":"Answer","text":"No. Each account is authorized separately via the platform's official APIs."}},{"@type":"Question","name":"Is there a mobile application?","acceptedAnswer":{"@type":"Answer","text":"Yes, an Android app is available. The iOS app is being developed."}},{"@type":"Question","name":"Can several people use the tool?","acceptedAnswer":{"@type":"Answer","text":"Yes. Team offer includes unlimited members with permissions by role; Free and Basic include a member."}}]}</script>
 </head>
 <body>
@@ -70,6 +71,7 @@
 
 <header class="fo-hero">
   <div class="fo-wrap">
+    <nav class="fo-crumbs" aria-label="Breadcrumb"><ol><li><a href="/index.html">Home</a></li><li><a href="/categorie/en/redaction-et-marketing/">Writing &amp; marketing</a></li><li aria-current="page">SocialEcho</li></ol></nav>
     <div class="fo-topbar">
       <div class="fo-actions-top">
         <button type="button" class="fo-pill" data-fo-share data-copied="Link copied"><svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Share</span></button>
@@ -131,7 +133,42 @@
   <div class="fo-prompt-list"><div class="fo-prompt"><pre>Creates a calendar of 7 Instagram publications for a clothing brand, with legends, hashtags and publishing schedules.</pre><button type="button" class="fo-copy" data-copy="Creates a calendar of 7 Instagram publications for a clothing brand, with legends, hashtags and publishing schedules." data-label="Copy" data-done="Copied">Copy</button></div><div class="fo-prompt"><pre>Generates 5 TikTok video ideas of 15 seconds to promote a new product, with script and legend.</pre><button type="button" class="fo-copy" data-copy="Generates 5 TikTok video ideas of 15 seconds to promote a new product, with script and legend." data-label="Copy" data-done="Copied">Copy</button></div><div class="fo-prompt"><pre>Analyses the performance of my weekly publications and proposes 3 concrete improvements.</pre><button type="button" class="fo-copy" data-copy="Analyses the performance of my weekly publications and proposes 3 concrete improvements." data-label="Copy" data-done="Copied">Copy</button></div><div class="fo-prompt"><pre>Writes professional responses to customer reviews on delivery, prices and returns.</pre><button type="button" class="fo-copy" data-copy="Writes professional responses to customer reviews on delivery, prices and returns." data-label="Copy" data-done="Copied">Copy</button></div></div>
 </section><script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.fo-copy');if(!b)return;var t=b.getAttribute('data-copy')||'';var label=b.getAttribute('data-label')||'';var done=b.getAttribute('data-done')||'';if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent=done;setTimeout(function(){b.textContent=label;},1500);});}});</script>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Video tutorials</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/vpI3VMI0eNg/mqdefault.jpg" alt="Boost Your Content Strategy with SocialEcho AI Analytics" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>Boost Your Content Strategy with SocialEcho AI Analytics</div><div class="tutorial-duration" data-vid-dur>1:49</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/vpI3VMI0eNg" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"vpI3VMI0eNg","titre":"Boost Your Content Strategy with SocialEcho AI Analytics","duree":"1:49"},{"id":"bujKk6i71nA","titre":"SocialEcho插件功能介绍：如何帮你实现内容高效增长","duree":"1:50"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>FAQ</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Which platforms are supported?</button><div class="faq-a">SocialEcho supports Facebook, Instagram, TikTok, TikTok Shop, X, YouTube, LinkedIn, Telegram, Pinterest, Threads and VK.</div></div><div class="faq-item"><button class="faq-q">Is there a free trial?</button><div class="faq-a">Yes, paid offers benefit from a free 7-day trial, without credit card. A free offer is also available.</div></div><div class="faq-item"><button class="faq-q">How does pricing work?</button><div class="faq-a">Pricing is calculated by connected social account, from 5 accounts. In annual billing, Basic costs $3 and Team $4 per account per month.</div></div><div class="faq-item"><button class="faq-q">Can the accounts be linked?</button><div class="faq-a">No. Each account is authorized separately via the platform's official APIs.</div></div><div class="faq-item"><button class="faq-q">Is there a mobile application?</button><div class="faq-a">Yes, an Android app is available. The iOS app is being developed.</div></div><div class="faq-item"><button class="faq-q">Can several people use the tool?</button><div class="faq-a">Yes. Team offer includes unlimited members with permissions by role; Free and Basic include a member.</div></div></div></section>
       
       

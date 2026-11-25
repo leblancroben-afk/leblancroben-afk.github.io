@@ -92,6 +92,20 @@ function syncHeader() {
 }
 
 // ── Chargement données ────────────────────────
+function etape(nom, promesse) {
+  return Promise.resolve(promesse).catch(err => {
+    throw new Error(`[${nom}] ${err && err.message ? err.message : err}`);
+  });
+}
+
+function debugAffiche(msg) {
+  const d = document.createElement('div');
+  d.textContent = msg;
+  d.style.cssText = 'background:#fff3cd;color:#000;font:12px monospace;padding:8px;margin:8px 0;border:1px solid #d4a017;word-break:break-all;';
+  const c = document.getElementById('reviews-section');
+  if (c) c.parentElement.insertBefore(d, c);
+}
+
 async function refreshWidget() {
   const container = document.getElementById('reviews-section');
   if (!container) return;
@@ -112,23 +126,25 @@ async function refreshWidget() {
       if (!prev || t >= tp) parUid.set(r.uid, r);
     });
     allReviews = [...parUid.values()];
-    userReview = currentUser ? await getUserReview(currentUser.uid, TOOL_SLUG) : null;
+    userReview = currentUser ? await etape('getUserReview', getUserReview(currentUser.uid, TOOL_SLUG)) : null;
 
     if (currentUser && allReviews.length) {
       const results = await Promise.all(
-        allReviews.map(r => getUserVote(r.id, currentUser.uid).then(v => ({ id: r.id, vote: v })))
+        allReviews.map(r => etape('getUserVote ' + r.id, getUserVote(r.id, currentUser.uid)).then(v => ({ id: r.id, vote: v })))
       );
       userVotes = {};
       results.forEach(({ id, vote }) => { userVotes[id] = vote; });
     }
   } catch (err) {
     console.error('reviews-widget: échec chargement avis', err);
+    debugAffiche('DIAG ERREUR : ' + (err && err.message ? err.message : err));
     allReviews = [];
     userReview = null;
     render();
     return;
   }
   console.info(`reviews-widget: ${allReviews.length} avis Firestore pour ${slugs.join(', ')}`);
+  debugAffiche(`DIAG : ${allReviews.length} avis Firestore pour [${slugs.join(', ')}]`);
 
   render();
 }

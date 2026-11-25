@@ -3936,7 +3936,8 @@ body.search-open { overflow: hidden; }
 
 @media (max-width: 900px) {
   .nav-links { display: none !important; }
-  .notif-wrap, .theme-toggle { display: none !important; }
+  .notif-bell, .theme-toggle { display: none !important; }
+  .notif-wrap { margin-left: 0; position: static; }
 
   .nav-menu-btn {
     display: inline-flex;
@@ -3976,7 +3977,9 @@ body.search-open { overflow: hidden; }
     z-index: 1000;
   }
   .nav-drawer-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     width: 100%;
     padding: 14px 4px;
     font: inherit;
@@ -3990,4 +3993,5 @@ body.search-open { overflow: hidden; }
     cursor: pointer;
   }
   .nav-drawer-cta { font-weight: 600; }
+  .drawer-icon { flex-shrink: 0; color: var(--text); }
 }

@@ -47,6 +47,7 @@ Langue : français.
 - [Looka](https://albexia.com/tools/standard/fr/looka/): Looka est un générateur de logos et de chartes graphiques propulsé par l'IA. Il crée des identités visuelles complètes à partir de vos préférences de style et de couleurs.
 - [Microsoft Designer](https://albexia.com/tools/standard/fr/microsoft-designer/): Microsoft Designer est une application de conception graphique assistée par l'intelligence artificielle. Elle permet de créer des visuels, des invitations et des publications à partir de descriptions textuelles.
 - [Midjourney](https://albexia.com/tools/featured/fr/midjourney/)
+- [Nano Image AI Camera Angle](https://albexia.com/tools/standard/fr/nano-image-ai-camera-angle/): Nano Image est une suite IA pour créer de nouveaux angles photo, convertir une image en modèle 3D GLB ou générer un objet 3D à partir d’un texte.
 - [Uizard](https://albexia.com/tools/standard/fr/uizard/): Uizard est une plateforme de conception basée sur l'IA permettant de créer rapidement des maquettes, prototypes d'applications et interfaces web à partir de croquis ou de textes.
 - [VistaCreate](https://albexia.com/tools/standard/fr/vistacreate/): VistaCreate est un outil de conception graphique en ligne proposant des milliers de modèles, visuels et outils IA pour créer rapidement du contenu marketing et réseaux sociaux.
 

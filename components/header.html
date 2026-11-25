@@ -186,8 +186,19 @@
     <a href="/index.html#blog" class="nav-drawer-link" data-nav-page="blog" data-i18n="nav.blog">Blog</a>
     <a href="/index.html#gallery" class="nav-drawer-link" data-nav-page="gallery" data-i18n="nav.gallery">Galerie</a>
     <a href="/soumettre/" class="nav-drawer-link nav-drawer-cta" data-i18n="nav.submit">Soumettre un outil +</a>
-    <button type="button" class="nav-drawer-link" data-proxy=".notif-bell">Notifications</button>
-    <button type="button" class="nav-drawer-link" data-proxy="[data-theme-toggle]">Thème clair / sombre</button>
+
+    <div class="nav-drawer-row">
+      <span class="nav-drawer-label">Notifications</span>
+      <span class="nav-drawer-slot" data-slot="notif"></span>
+    </div>
+    <div class="nav-drawer-row">
+      <span class="nav-drawer-label">Thème clair / sombre</span>
+      <span class="nav-drawer-slot" data-slot="theme"></span>
+    </div>
+
+    <a href="/profil.html" class="nav-drawer-link" id="nav-drawer-login" data-i18n="nav.login">Connexion</a>
+    <a href="/profil.html" class="nav-drawer-link" id="nav-drawer-profile">Mon profil</a>
+    <button type="button" class="nav-drawer-link" id="nav-drawer-logout">Déconnexion</button>
   </div>
 
 </nav>

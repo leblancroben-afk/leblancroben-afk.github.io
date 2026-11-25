@@ -433,14 +433,6 @@ function generateFiche(tool, allTools = [], deps) {
   // Avis écrits dans le HTML (5 derniers, toutes langues, un par utilisateur). Le widget les remplace au chargement.
   const LOCALE_DATE = { fr: 'fr-FR', en: 'en-GB', es: 'es-ES' }[langue] || 'fr-FR';
   const avisRecents = Array.isArray(tool.avis_recents) ? tool.avis_recents.slice(0, 5) : [];
-  const avisStatiqueHTML = avisRecents.length
-    ? `<div class="fo-avis-statique" data-fo-avis-static>${avisRecents.map(a => {
-        const d = a.date ? new Date(a.date) : null;
-        const iso = d && !isNaN(d) ? d.toISOString().slice(0, 10) : '';
-        const label = d && !isNaN(d) ? d.toLocaleDateString(LOCALE_DATE, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
-        return `<article class="fo-avis-item"><div class="fo-avis-top"><b>${E(a.nom)}</b><span class="fo-avis-note">${E(String(a.note))}/5</span>${iso ? `<time datetime="${E(iso)}">${E(label)}</time>` : ''}</div><p>${E(a.texte)}</p></article>`;
-      }).join('')}</div>`
-    : '';
   const slugsFamille = (Array.isArray(tool.slugs_famille) && tool.slugs_famille.length ? tool.slugs_famille : [slug]).join(' ');
   const reviewsSection = `<section class="fo-card" id="fo-avis"><div id="reviews-section" data-fo-slugs="${E(slugsFamille)}"><div class="fo-card-head"><h2>${E(T.reviews)}</h2></div></div></section>`;
 

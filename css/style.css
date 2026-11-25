@@ -3933,6 +3933,7 @@ body.search-open { overflow: hidden; }
 /* ─── MENU MOBILE : un seul bouton après le profil ─── */
 .nav-menu-btn { display: none; }
 .nav-drawer { display: none; }
+.nav-drawer-link[hidden] { display: none !important; }
 
 @media (max-width: 900px) {
   .nav-links { display: none !important; }
@@ -3977,9 +3978,7 @@ body.search-open { overflow: hidden; }
     z-index: 1000;
   }
   .nav-drawer-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: block;
     width: 100%;
     padding: 14px 4px;
     font: inherit;
@@ -3993,5 +3992,28 @@ body.search-open { overflow: hidden; }
     cursor: pointer;
   }
   .nav-drawer-cta { font-weight: 600; }
-  .drawer-icon { flex-shrink: 0; color: var(--text); }
+
+  .nav-drawer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 52px;
+    padding: 6px 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-drawer-label { font-size: 16px; color: var(--text); }
+  .nav-drawer-slot { display: inline-flex; align-items: center; }
+
+  /* Les vrais contrôles, déplacés dans le panneau, redeviennent visibles */
+  .nav-drawer .notif-bell,
+  .nav-drawer .theme-toggle { display: inline-flex !important; }
+  .nav-drawer .notif-wrap { display: inline-flex; position: relative; margin-left: 0; }
+  .nav-drawer .notif-panel {
+    position: fixed;
+    top: 72px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+  }
 }

@@ -13,7 +13,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
 
   /* Pages générées (layout.js) : la nav est déjà en HTML, on initialise seulement la recherche. */
-  if (document.getElementById('search-open') && !document.getElementById('site-header') && document.querySelector('body > nav')) {
+  /* La nav générée n'est gardée telle quelle que si elle contient déjà le menu mobile.
+     Sinon (pages générées anciennes : pas de bouton #nav-menu-btn), on la remplace par le
+     composant components/header.html, comme sur l'accueil. */
+  if (document.getElementById('search-open') && !document.getElementById('site-header') && document.getElementById('nav-menu-btn') && document.querySelector('body > nav')) {
     initHeaderSearch();
     return;
   }
@@ -44,6 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* Le <nav> est sticky : le conteneur ne doit pas créer de boîte. */
     container.style.display = 'contents';
     container.innerHTML = html;
+    /* Pages statiques (fiches, catégories, articles générés) : le sélecteur de langue
+       ne doit pas apparaître, car il ne change pas la langue d'une page générée.
+       Il reste affiché sur l'accueil et les pages dynamiques. */
+    if (legacyNav) {
+      const selecteurLangue = container.querySelector('#lang-selector');
+      if (selecteurLangue) selecteurLangue.remove();
+    }
     initHeaderMenu();
 
     const i18nActif =

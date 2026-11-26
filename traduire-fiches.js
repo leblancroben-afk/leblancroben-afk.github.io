@@ -149,7 +149,8 @@ function construireDocTraduit(outil, mainId, langue, traduit, folder) {
     name: outil.name, // nom français pour toutes les versions
     category: outil.category,
     emoji: outil.emoji,
-    status: outil.status ?? null,
+    // Une traduction n'est créée que pour un outil déjà enrichi (voir filtre plus bas) : elle est publiée.
+    status: 'active',
     favicon: outil.favicon,
     description: traduit.description || outil.description,
     price: outil.price,

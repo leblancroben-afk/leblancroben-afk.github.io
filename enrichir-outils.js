@@ -337,7 +337,7 @@ async function main() {
     process.exit(1);
   }
 
-  const snap = await db.collection('outils').where('status', '==', 'a_enrichir').get();
+  const snap = await db.collection('outils').where('langue', '==', 'fr').where('status', '==', 'a_enrichir').get();
   // Les outils déjà marqués en échec sortent de la file : ils ne consomment plus de requête.
   // Les outils sans catégorie ont un horodatage « dernier_essai_le » : ils passent
   // après les autres, pour ne pas bloquer la file à chaque run.

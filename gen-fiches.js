@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v11'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -4253,8 +4253,17 @@ async function main() {
   // Normalisation défensive : un outil « a_enrichir » (pas encore passé par l'IA)
   // peut n'avoir ni emoji, ni catégorie, ni description. Sans valeur par défaut,
   // les templates écrivaient littéralement « undefined ».
+  // Statut de la version française de chaque outil (clé = id sans suffixe -en/-es).
+  // Une version EN/ES sans statut prend celui de sa version FR, au lieu d'être masquée.
+  const statutFrParId = new Map();
+  for (const d of docsOutils) {
+    const t = d.data();
+    if ((t.langue || 'fr') === 'fr' && t.status) statutFrParId.set(d.id, t.status);
+  }
   const tools = docsOutils.map(d => {
     const t = d.data();
+    const idFr = d.id.replace(/-(en|es)$/, '');
+    const statutHerite = (t.langue && t.langue !== 'fr') ? statutFrParId.get(idFr) : undefined;
     return {
       ...t,
       sous_categorie: normaliserSousCategorie(t.sous_categorie),
@@ -4265,7 +4274,7 @@ async function main() {
       description: t.description || '',
       tags:        Array.isArray(t.tags) ? t.tags : [],
       price:       t.price || 'freemium',
-      status:      t.status || 'a_enrichir',
+      status:      t.status || statutHerite || 'a_enrichir',
     };
   }).filter(t => t.name);
   console.log(`✓ ${tools.length} documents trouvés`);

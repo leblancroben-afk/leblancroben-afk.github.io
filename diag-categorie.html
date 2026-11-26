@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Diagnostic catégorie</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;margin:0;padding:12px;background:#111;color:#eee}iframe{width:100%;height:320px;border:1px solid #444;border-radius:8px;margin-bottom:12px}pre{white-space:pre-wrap;word-break:break-word;background:#1b1b1b;padding:10px;border-radius:8px;font-size:12px}.err{color:#ff7b7b}.ok{color:#8ff0a4}button{padding:10px 14px;border-radius:8px;border:0;background:#2563eb;color:#fff;font-size:14px}</style>
+</head><body>
+<h3>Diagnostic : page catégorie</h3>
+<p>Choisissez la page à tester :</p>
+<select id="sel" style="width:100%;padding:10px;font-size:14px">
+  <option value="/categorie/en/contenu/">EN – Content</option>
+  <option value="/categorie/es/contenu/">ES – Contenido</option>
+  <option value="/categorie/fr/contenu/">FR – Contenu</option>
+</select>
+<p><button id="go">Analyser</button></p>
+<iframe id="f" src="/categorie/en/contenu/"></iframe>
+<pre id="out">Appuyez sur « Analyser » (attendre 4 secondes après le chargement).</pre>
+<script>
+var errs=[];
+function rapport(){
+  var f=document.getElementById('f'), w=f.contentWindow, d=f.contentDocument, out=[];
+  try{
+    out.push('URL : '+w.location.pathname);
+    out.push('CATEGORY_META : '+JSON.stringify(w.CATEGORY_META));
+    var ct=w.CATEGORY_TOOLS||[];
+    out.push('CATEGORY_TOOLS reçus : '+ct.length);
+    var lang={}, cat={}, st={};
+    ct.forEach(function(t){lang[t.langue]=(lang[t.langue]||0)+1; cat[t.category]=(cat[t.category]||0)+1; st[t.status]=(st[t.status]||0)+1;});
+    out.push('  par langue : '+JSON.stringify(lang));
+    out.push('  par catégorie : '+JSON.stringify(cat));
+    out.push('  par statut : '+JSON.stringify(st));
+    out.push('  plan : '+JSON.stringify(ct.reduce(function(a,t){a[t.plan]=(a[t.plan]||0)+1;return a;},{})));
+    out.push('html lang : '+d.documentElement.lang);
+    var g=d.getElementById('tools-grid');
+    out.push('Grille #tools-grid : '+(g?g.children.length+' enfant(s)':'ABSENTE'));
+    out.push('Contenu grille : '+(g?g.textContent.trim().slice(0,160):'-'));
+    var h=d.querySelector('.tools-page-count');
+    out.push('Compteur : '+(h?h.textContent:'-'));
+    out.push('Texte vide affiché : '+(d.querySelector('.empty')?'OUI':'non'));
+  }catch(e){out.push('<span class="err">Erreur lecture : '+e.message+'</span>');}
+  out.push('Erreurs JS capturées : '+(errs.length?'':'aucune'));
+  errs.forEach(function(e){out.push('<span class="err">'+e+'</span>');});
+  document.getElementById('out').innerHTML=out.join('\n');
+}
+window.addEventListener('message',function(){});
+document.getElementById('go').onclick=function(){
+  errs=[]; var f=document.getElementById('f');
+  f.src=document.getElementById('sel').value;
+  f.onload=function(){
+    try{ f.contentWindow.addEventListener('error',function(ev){errs.push(String(ev.message)+' ('+(ev.filename||'')+':'+ev.lineno+')');}); }catch(e){}
+    setTimeout(rapport,4000);
+  };
+};
+</script></body></html>

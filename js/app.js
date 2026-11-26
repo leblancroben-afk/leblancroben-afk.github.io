@@ -366,7 +366,9 @@ async function rafraichirOutilsCategorie() {
     const snap = await getDocs(collection(db, 'outils'));
     const outils = snap.docs.map(d => d.data())
       .filter(t => t.status !== 'a_enrichir' && t.fiche_generee === true);
-    if (!outils.length) return; // rien de lisible : on garde les données embarquées
+    // Garde-fou : si la liste en direct ne contient aucun outil de cette langue, on ne remplace
+    // pas les données embarquées (sinon la grille se vide après l'affichage initial).
+    if (!outils.some(t => t.langue === state.langue)) return;
     state.tools = normaliserCategories(outils);
     renderTools();
   } catch (err) {

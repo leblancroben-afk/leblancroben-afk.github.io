@@ -359,6 +359,21 @@ async function loadJSON(path) {
   return res.json();
 }
 
+// Pages catégorie : relit la collection « outils » en direct (mêmes règles que l'accueil).
+async function rafraichirOutilsCategorie() {
+  try {
+    const { db, collection, getDocs } = await import('./firebase-config.js');
+    const snap = await getDocs(collection(db, 'outils'));
+    const outils = snap.docs.map(d => d.data())
+      .filter(t => t.status !== 'a_enrichir' && t.fiche_generee === true);
+    if (!outils.length) return; // rien de lisible : on garde les données embarquées
+    state.tools = normaliserCategories(outils);
+    renderTools();
+  } catch (err) {
+    console.warn('Rafraîchissement Firestore indisponible, données embarquées conservées :', err && err.message);
+  }
+}
+
 async function loadAllData() {
   // Pages catégorie statiques générées par gen-fiches.js : les outils de la
   // catégorie (une seule langue par page désormais — vraies URLs par langue,
@@ -381,6 +396,11 @@ async function loadAllData() {
     }
     state.activeToolCat = (window.CATEGORY_TOOLS[0] && window.CATEGORY_TOOLS[0].category) || 'Tous';
     renderTools();
+    // Les données embarquées servent à l'affichage immédiat (et au SEO). On les remplace
+    // ensuite par la liste en direct de Firestore, comme sur l'accueil : une modification
+    // de statut ou de contenu apparaît sans relancer gen-fiches. En cas d'échec, on garde
+    // les données embarquées.
+    rafraichirOutilsCategorie();
     return;
   }
 

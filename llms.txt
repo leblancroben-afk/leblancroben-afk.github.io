@@ -64,17 +64,14 @@ Langue : français.
 
 - [Gamma](https://albexia.com/tools/featured/fr/gamma/): Gamma est un outil en ligne utilisant l'intelligence artificielle pour générer rapidement des présentations, des documents et des pages web à partir de descriptions textuelles.
 
-## Productivité et travail
-
-- [n8n](https://albexia.com/tools/standard/fr/n8n/): n8n est une plateforme d'automatisation de workflows flexible et extensible, permettant de connecter des applications et d'intégrer des agents IA facilement.
-- [Otter.ai](https://albexia.com/tools/standard/fr/otter-ai/): Otter.ai est un assistant de transcription automatique basé sur l'IA. Il enregistre, transcrit et résume vos réunions et notes vocales en temps réel pour optimiser votre productivité.
-
 ## Productivité, études et traduction
 
 - [Magnus](https://albexia.com/tools/starter/fr/magnus/): Magnus est un chef de cabinet IA pour les fondateurs, les startups et les PME. Il garde les objectifs de l'entreprise en vue et propose les prochaines étapes, rédige des documents (PDF, Word, Excel), s'appuie sur les notes de l'entreprise pour des réponses précises, se connecte à Google, Slack,…
 - [Make](https://albexia.com/tools/featured/fr/make/)
 - [MangaTranslate](https://albexia.com/tools/standard/fr/mangatranslate/): MangaTranslate traduit des mangas en français à partir d’images ou de PDF, avec reconnaissance des dialogues, effacement du texte et réinsertion dans les bulles.
+- [n8n](https://albexia.com/tools/standard/fr/n8n/): n8n est une plateforme d'automatisation de workflows flexible et extensible, permettant de connecter des applications et d'intégrer des agents IA facilement.
 - [NotebookLM](https://albexia.com/tools/standard/fr/notebooklm/): NotebookLM est un assistant de recherche et de prise de notes propulsé par l'IA de Google. Il analyse vos propres documents pour générer des synthèses, des réponses et des résumés audio.
+- [Otter.ai](https://albexia.com/tools/standard/fr/otter-ai/): Otter.ai est un assistant de transcription automatique basé sur l'IA. Il enregistre, transcrit et résume vos réunions et notes vocales en temps réel pour optimiser votre productivité.
 - [Todoist AI](https://albexia.com/tools/featured/fr/todoist-ai/): Todoist AI est une extension intégrée à Todoist qui utilise l'intelligence artificielle pour reformuler, découper et planifier vos tâches quotidiennes efficacement.
 
 ## Programmation et création d'applications

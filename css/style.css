@@ -4014,7 +4014,7 @@ body.search-open { overflow: hidden; }
 /* Bouton menu : trois barres -> croix quand le panneau est ouvert */
 .nav-menu-btn {
   color: var(--text);
-  display: inline-flex;
+  /* display géré par la règle « max-width: 900px » plus haut : caché sur ordinateur */
   align-items: center;
   justify-content: center;
   padding: 0;

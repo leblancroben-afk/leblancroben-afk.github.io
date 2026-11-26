@@ -28,7 +28,8 @@ async function main() {
       const snap = await ref.get();
       if (!snap.exists) continue;
       const d = snap.data();
-      if (d.status !== 'a_enrichir') continue;
+      // Statut absent (ancien document traduit) ou resté « a_enrichir » : les deux cas sont à corriger.
+      if (d.status && d.status !== 'a_enrichir') continue;
       const complet = !!(d.description && String(d.description).trim() && d.url && d.fiche_generee === true);
       (complet ? aCorriger : aVerifier).push({ ref, id: ref.id, nom: d.name || '(sans nom)' });
     }

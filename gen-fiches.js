@@ -45,7 +45,7 @@ const STATE_PATH = '.gen-state.json';
 
 // Change cette valeur quand le gabarit des pages change (header, footer, nav…)
 // pour forcer la régénération de toutes les pages.
-const TEMPLATE_VERSION = 'layout-v12'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
+const TEMPLATE_VERSION = 'layout-v'; // v19 : vidéo du jour depuis la vidéothèque, tous les plans (fiche-outil.js)
 
 function loadState() {
   try {
@@ -5282,7 +5282,7 @@ async function main() {
   for (const d of categoriesSnap.docs) {
     const c = d.data();
     if (!c.nom) continue;
-    libellesCategories[c.nom] = {
+    libellesCategories[slugify(c.nom)] = {
       fr: { name: c.nom, desc: c.description_fr || '' },
       en: { name: c.nom_en || '', desc: c.description_en || '' },
       es: { name: c.nom_es || '', desc: c.description_es || '' },

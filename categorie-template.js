@@ -226,14 +226,26 @@ function categoryName(cat, langue) {
 }
 
 // Nom + description d'une catégorie dans la langue de la page.
-// Ordre : libellés saisis dans l'admin → table en dur CATEGORY_I18N → nom seul.
+// Source unique : la collection Firestore « categories » (champs nom_en/nom_es,
+// description_fr/en/es). Indexée par slug, donc insensible aux apostrophes.
+// Si la langue demandée n'est pas renseignée, on affiche le nom français.
 function libelleCategorie(nom, langue) {
-  const saisi = LIBELLES_FIRESTORE[nom] && LIBELLES_FIRESTORE[nom][langue];
-  const dur = CATEGORY_I18N[nom] && (CATEGORY_I18N[nom][langue] || CATEGORY_I18N[nom].fr);
-  if (saisi && saisi.name) return { name: saisi.name, desc: saisi.desc || (dur && dur.desc) || saisi.name };
-  if (dur) return dur;
-  const n = categoryName(nom, langue);
-  return { name: n, desc: n };
+  const cle = slugifyFallback(nom);
+  const saisi = LIBELLES_FIRESTORE[cle] && LIBELLES_FIRESTORE[cle][langue];
+  if (saisi && saisi.name) return { name: saisi.name, desc: saisi.desc || '' };
+  if (langue === 'fr') {
+    const fr = LIBELLES_FIRESTORE[cle] && LIBELLES_FIRESTORE[cle].fr;
+    return { name: (fr && fr.name) || nom, desc: (fr && fr.desc) || '' };
+  }
+  return { name: '', desc: '' };
+}
+
+// Une catégorie n'a une page dans une langue que si son nom y est saisi dans Firestore.
+// Sans traduction, pas de page : aucun texte français n'apparaît sur une page EN ou ES.
+function categorieTraduite(nom, langue) {
+  if (langue === 'fr') return true;
+  const s = LIBELLES_FIRESTORE[slugifyFallback(nom)] && LIBELLES_FIRESTORE[slugifyFallback(nom)][langue];
+  return !!(s && s.name);
 }
 
 // Petites chaines d'interface propres a cette page (hors nav/footer, deja
@@ -284,6 +296,7 @@ function genererPagesCategories(tousLesOutils, helpers) {
   const parLangueGlobal = new Map(); // langue -> [{ name, slug, count }]
   for (const [cat, parLangue] of parCategorie) {
     for (const [langue, outils] of parLangue) {
+      if (!categorieTraduite(cat, langue)) continue;
       if (!parLangueGlobal.has(langue)) parLangueGlobal.set(langue, []);
       const notesCat = outils.map(t => (typeof t.note === 'number' ? t.note : (typeof t.rating === 'number' ? t.rating : null))).filter(n => n !== null);
       const noteMoyenneCat = notesCat.length ? notesCat.reduce((a, b) => a + b, 0) / notesCat.length : null;
@@ -296,7 +309,7 @@ function genererPagesCategories(tousLesOutils, helpers) {
 
   for (const [cat, parLangue] of parCategorie) {
     const slug = slugParCat.get(cat);
-    const languesDisponibles = [...parLangue.keys()];
+    const languesDisponibles = [...parLangue.keys()].filter(l => categorieTraduite(cat, l));
     if (!languesDisponibles.length) continue;
 
     const langueUrls = {};
@@ -340,7 +353,7 @@ function genererPagesCategories(tousLesOutils, helpers) {
     if (ancienSlug === nouveauSlug || slugsVivants.has(ancienSlug)) continue;
     const parLangue = parCategorie.get(canon);
     if (!parLangue) continue;
-    for (const langue of parLangue.keys()) {
+    for (const langue of [...parLangue.keys()].filter(l => categorieTraduite(canon, l))) {
       const url = `${helpers.SITE_ORIGIN}/categorie/${langue}/${nouveauSlug}/`;
       const html = `<!DOCTYPE html>
 <html lang="${langue}"><head><meta charset="UTF-8"><title>${helpers.escHtml(categoryName(canon, langue))}</title>

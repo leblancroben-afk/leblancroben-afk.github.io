@@ -132,7 +132,42 @@
   <div class="fo-prompt-list"><div class="fo-prompt"><pre>Génère une vue de trois quarts avant de ce produit, avec un cadrage moyen et une lumière studio douce.</pre><button type="button" class="fo-copy" data-copy="Génère une vue de trois quarts avant de ce produit, avec un cadrage moyen et une lumière studio douce." data-label="Copier" data-done="Copié">Copier</button></div><div class="fo-prompt"><pre>Crée une vue arrière réaliste de cette sneaker, en conservant les couleurs, matériaux et logo visibles.</pre><button type="button" class="fo-copy" data-copy="Crée une vue arrière réaliste de cette sneaker, en conservant les couleurs, matériaux et logo visibles." data-label="Copier" data-done="Copié">Copier</button></div><div class="fo-prompt"><pre>Convertis cette photo de lampe en modèle 3D GLB, avec une géométrie propre et des matériaux réalistes.</pre><button type="button" class="fo-copy" data-copy="Convertis cette photo de lampe en modèle 3D GLB, avec une géométrie propre et des matériaux réalistes." data-label="Copier" data-done="Copié">Copier</button></div><div class="fo-prompt"><pre>Crée une figurine de renard explorateur stylisée, debout, avec un sac à dos en toile et une queue épaisse, sans socle ni décor.</pre><button type="button" class="fo-copy" data-copy="Crée une figurine de renard explorateur stylisée, debout, avec un sac à dos en toile et une queue épaisse, sans socle ni décor." data-label="Copier" data-done="Copié">Copier</button></div></div>
 </section><script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.fo-copy');if(!b)return;var t=b.getAttribute('data-copy')||'';var label=b.getAttribute('data-label')||'';var done=b.getAttribute('data-done')||'';if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){b.textContent=done;setTimeout(function(){b.textContent=label;},1500);});}});</script>
       
-      
+      <section class="fo-card" id="fo-tutoriels"><h2>Tutoriels vidéo</h2><div class="tutorials-list"><div class="tutorial-item" id="fo-video-jour">
+      <div class="tutorial-header" onclick="toggleTutorial('fo-video-jour')">
+        <div class="tutorial-thumb"><img data-vid-img src="https://img.youtube.com/vi/keT_ywKa_lM/mqdefault.jpg" alt="How to Turn One Image into Multiple Camera Angles with AI (FREE TOOLS)" loading="lazy">
+          <div class="tutorial-thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="tutorial-meta"><div class="tutorial-title" data-vid-title>How to Turn One Image into Multiple Camera Angles with AI (FREE TOOLS)</div><div class="tutorial-duration" data-vid-dur>29:13</div></div>
+        <button class="tutorial-toggle">▾</button>
+      </div>
+      <div class="tutorial-video"><div class="tutorial-video-inner">
+        <iframe data-vid-frame data-src="https://www.youtube.com/embed/keT_ywKa_lM" frameborder="0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:8px;display:block;"></iframe>
+      </div></div>
+    </div></div><script type="application/json" id="fo-videos">[{"id":"keT_ywKa_lM","titre":"How to Turn One Image into Multiple Camera Angles with AI (FREE TOOLS)","duree":"29:13"},{"id":"ptlxA2Pjj08","titre":"I Tried Every Camera Angle with Nano Banana (AI Filmmaking Course)","duree":"11:06"},{"id":"rZtjmaLef1U","titre":"The NEW Way to Create Every Camera Angle in Nano Banana PRO","duree":"22:04"},{"id":"rWzIiSnkuEE","titre":"Create Multiple Camera Angles In Nano Banana Pro For AI Filmmaking","duree":"10:59"},{"id":"MOw_4QjbHuU","titre":"How to Turn One Image into Multiple Camera Angles with Nano Banana Pro for AI Filmmakers","duree":"7:25"},{"id":"7RIN1pLJjH4","titre":"Nano Banana Pro Camera Control: One Image, Infinite Angles (Complete Guide)","duree":"12:17"},{"id":"9P0ChGhaNJk","titre":"Generate Multiple Camera Angles from ONE Image | Nano Banana Pro Workflow","duree":"8:19"},{"id":"gdExuNliO5U","titre":"How to Turn One Image into Multiple Camera Angles with Nano Banana Pro","duree":"7:20"},{"id":"SeuI2zIWQJ0","titre":"How to Turn One Image into Multiple Camera Angles with Nano Banana Pro (Full Guide)","duree":"18:30"}]</script><script>
+  function toggleTutorial(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.tutorial-item.open').forEach(el => {
+      if (el.id !== id) { el.classList.remove('open'); const f = el.querySelector('iframe'); if (f) f.src=''; }
+    });
+    if (isOpen) { item.classList.remove('open'); const f = item.querySelector('iframe'); if (f) f.src=''; }
+    else { item.classList.add('open'); const f = item.querySelector('iframe[data-src]'); if (f && !f.src) f.src=f.dataset.src; }
+  }
+</script><script>
+(function(){
+  var box=document.getElementById('fo-video-jour'), src=document.getElementById('fo-videos');
+  if(!box||!src) return;
+  var list=[]; try{ list=JSON.parse(src.textContent)||[]; }catch(e){ return; }
+  if(!list.length) return;
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  var get=function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return +parts[i].value; } return 0; };
+  var jour=Math.floor(Date.UTC(get('year'),get('month')-1,get('day'))/86400000);
+  var v=list[((jour%list.length)+list.length)%list.length];
+  var img=box.querySelector('[data-vid-img]');
+  img.src='https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg'; img.alt=v.titre;
+  box.querySelector('[data-vid-title]').textContent=v.titre;
+  box.querySelector('[data-vid-dur]').textContent=v.duree;
+  box.querySelector('[data-vid-frame]').setAttribute('data-src','https://www.youtube.com/embed/'+v.id);
+})();</script></section>
       <section class="fo-card" id="fo-faq"><h2>Questions fréquentes</h2><div class="faq-list"><div class="faq-item"><button class="faq-q">Quels outils sont inclus dans Nano Image ?</button><div class="faq-a">La plateforme inclut notamment AI Camera Angle, Image to 3D, Text to 3D, ainsi que des outils d’édition, de découpe et de nettoyage d’images.</div></div><div class="faq-item"><button class="faq-q">Quelle est la différence entre AI Camera Angle et Image to 3D ?</button><div class="faq-a">AI Camera Angle crée une nouvelle image 2D sous un autre angle ; Image to 3D génère un modèle 3D GLB à partir d’une photo.</div></div><div class="faq-item"><button class="faq-q">Quels formats sont acceptés en entrée ?</button><div class="faq-a">PNG, JPG, WebP, HEIC et HEIF, jusqu’à 12 Mo et avec une résolution minimale de 256 × 256 pixels.</div></div><div class="faq-item"><button class="faq-q">Quel format 3D est généré ?</button><div class="faq-a">Un fichier GLB, la version binaire de glTF 2.0, contenant le maillage et les textures PBR.</div></div><div class="faq-item"><button class="faq-q">Combien coûte une génération ?</button><div class="faq-a">Une vue Standard coûte 1 crédit, une vue HD 2 crédits et une vue Ultra HD 3 crédits. Un modèle 3D coûte de 15 à 18 crédits selon le niveau de texture.</div></div><div class="faq-item"><button class="faq-q">Les images peuvent-elles être utilisées commercialement ?</button><div class="faq-a">Oui, avec une offre Starter ou Pro active, ou avec un pack de crédits acheté tant que le solde reste disponible. Les crédits gratuits ou promotionnels sont réservés à une évaluation personnelle.</div></div></div></section>
       
       
@@ -150,11 +185,11 @@
         <b>GetAIPhotoEditor</b>
         <span class="fo-alt-desc">Éditez vos photos avec l'IA grâce à des instructions simples. Changez de fond, modifiez des vêtements et améliorez vos images avec crédits gratuits pour…</span>
         <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Freemium</span></span>
-      </span></a><a class="fo-alt-card" href="/tools/standard/fr/vistacreate/">
-      <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=create.vista.com https://www.google.com/s2/favicons?sz=128&amp;domain=create.vista.com https://icons.duckduckgo.com/ip3/create.vista.com.ico"><span class="fo-letter" aria-hidden="true">V</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=create.vista.com" alt="VistaCreate" loading="lazy" referrerpolicy="no-referrer"></div>
+      </span></a><a class="fo-alt-card" href="/tools/standard/fr/looka/">
+      <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=looka.com https://www.google.com/s2/favicons?sz=128&amp;domain=looka.com https://icons.duckduckgo.com/ip3/looka.com.ico"><span class="fo-letter" aria-hidden="true">L</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=looka.com" alt="Looka" loading="lazy" referrerpolicy="no-referrer"></div>
       <span class="fo-alt-body">
-        <b>VistaCreate</b>
-        <span class="fo-alt-desc">VistaCreate est un outil de conception graphique en ligne proposant des milliers de modèles, visuels et outils IA pour créer rapidement du contenu marketing et…</span>
+        <b>Looka</b>
+        <span class="fo-alt-desc">Looka est un générateur de logos et de chartes graphiques propulsé par l'IA. Il crée des identités visuelles complètes à partir de vos préférences de style et…</span>
         <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Freemium</span></span>
       </span></a><a class="fo-alt-card" href="/tools/standard/fr/uizard/">
       <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=uizard.io https://www.google.com/s2/favicons?sz=128&amp;domain=uizard.io https://icons.duckduckgo.com/ip3/uizard.io.ico"><span class="fo-letter" aria-hidden="true">U</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=uizard.io" alt="Uizard" loading="lazy" referrerpolicy="no-referrer"></div>
@@ -168,18 +203,18 @@
         <b>Microsoft Designer</b>
         <span class="fo-alt-desc">Microsoft Designer est une application de conception graphique assistée par l'intelligence artificielle. Elle permet de créer des visuels, des invitations et…</span>
         <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Freemium</span></span>
+      </span></a><a class="fo-alt-card" href="/tools/standard/fr/vistacreate/">
+      <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=create.vista.com https://www.google.com/s2/favicons?sz=128&amp;domain=create.vista.com https://icons.duckduckgo.com/ip3/create.vista.com.ico"><span class="fo-letter" aria-hidden="true">V</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=create.vista.com" alt="VistaCreate" loading="lazy" referrerpolicy="no-referrer"></div>
+      <span class="fo-alt-body">
+        <b>VistaCreate</b>
+        <span class="fo-alt-desc">VistaCreate est un outil de conception graphique en ligne proposant des milliers de modèles, visuels et outils IA pour créer rapidement du contenu marketing et…</span>
+        <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Freemium</span></span>
       </span></a><a class="fo-alt-card" href="/tools/featured/fr/midjourney/">
       <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=midjourney.com https://www.google.com/s2/favicons?sz=128&amp;domain=midjourney.com https://icons.duckduckgo.com/ip3/midjourney.com.ico"><span class="fo-letter" aria-hidden="true">M</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=midjourney.com" alt="Midjourney" loading="lazy" referrerpolicy="no-referrer"></div>
       <span class="fo-alt-body">
         <b>Midjourney</b>
         <span class="fo-alt-desc">Le leader incontesté de la génération d'images par IA. Créez des visuels ultra-réalistes, des illustrations artistiques et des designs professionnels à partir…</span>
         <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Payant</span></span>
-      </span></a><a class="fo-alt-card" href="/tools/standard/fr/looka/">
-      <div class="fo-logo fo-logo-mini" data-fo-logo data-srcs="https://www.google.com/s2/favicons?sz=64&amp;domain=looka.com https://www.google.com/s2/favicons?sz=128&amp;domain=looka.com https://icons.duckduckgo.com/ip3/looka.com.ico"><span class="fo-letter" aria-hidden="true">L</span><img src="https://www.google.com/s2/favicons?sz=64&amp;domain=looka.com" alt="Looka" loading="lazy" referrerpolicy="no-referrer"></div>
-      <span class="fo-alt-body">
-        <b>Looka</b>
-        <span class="fo-alt-desc">Looka est un générateur de logos et de chartes graphiques propulsé par l'IA. Il crée des identités visuelles complètes à partir de vos préférences de style et…</span>
-        <span class="fo-alt-meta"><span class="fo-alt-rating fo-alt-none">Pas encore noté</span><span class="fo-alt-price">Freemium</span></span>
       </span></a></div><a class="fo-btn fo-btn-block" href="/comparateur/index.html">Comparer les alternatives</a></section>
     </aside>
   </div>

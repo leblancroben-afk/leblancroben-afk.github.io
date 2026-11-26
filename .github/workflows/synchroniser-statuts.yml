@@ -1,0 +1,27 @@
+name: Synchroniser statuts EN/ES (manuel)
+
+on:
+  workflow_dispatch:
+    inputs:
+      appliquer:
+        description: "Appliquer les changements ? (non = simulation seulement)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  synchroniser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install firebase-admin
+      - name: Synchroniser les statuts
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          DRY_RUN: ${{ inputs.appliquer && '0' || '1' }}
+        run: node synchroniser-statuts.js

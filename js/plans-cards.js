@@ -43,7 +43,7 @@ const PLANS_DEFAUT = {
 };
 
 // Textes fixes de l'interface (pas du contenu éditable par l'admin)
-const TEXTES_UI = {
+export const TEXTES_UI = {
   fr: {
     plansNote: 'Starter et Featured sont temporairement indisponibles. Les outils déjà publiés conservent leur mise en avant active.',
     unavailable: 'Temporairement indisponible',

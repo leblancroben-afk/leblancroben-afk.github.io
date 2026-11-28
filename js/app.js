@@ -123,6 +123,7 @@ window.onLangueChange = function (code) {
   renderBlog();
   renderGallery();
   renderHome();
+  renderNiches(code);
 
   // Si un panneau spotlight est affiché, on le reconstruit
   // avec la variante Firestore correspondant à la nouvelle langue.
@@ -359,23 +360,6 @@ async function loadJSON(path) {
   return res.json();
 }
 
-// Pages catégorie : relit la collection « outils » en direct (mêmes règles que l'accueil).
-async function rafraichirOutilsCategorie() {
-  try {
-    const { db, collection, getDocs } = await import('./firebase-config.js');
-    const snap = await getDocs(collection(db, 'outils'));
-    const outils = snap.docs.map(d => d.data())
-      .filter(t => t.status !== 'a_enrichir' && t.fiche_generee === true);
-    // Garde-fou : si la liste en direct ne contient aucun outil de cette langue, on ne remplace
-    // pas les données embarquées (sinon la grille se vide après l'affichage initial).
-    if (!outils.some(t => t.langue === state.langue)) return;
-    state.tools = normaliserCategories(outils);
-    renderTools();
-  } catch (err) {
-    console.warn('Rafraîchissement Firestore indisponible, données embarquées conservées :', err && err.message);
-  }
-}
-
 async function loadAllData() {
   // Pages catégorie statiques générées par gen-fiches.js : les outils de la
   // catégorie (une seule langue par page désormais — vraies URLs par langue,
@@ -398,11 +382,6 @@ async function loadAllData() {
     }
     state.activeToolCat = (window.CATEGORY_TOOLS[0] && window.CATEGORY_TOOLS[0].category) || 'Tous';
     renderTools();
-    // Les données embarquées servent à l'affichage immédiat (et au SEO). On les remplace
-    // ensuite par la liste en direct de Firestore, comme sur l'accueil : une modification
-    // de statut ou de contenu apparaît sans relancer gen-fiches. En cas d'échec, on garde
-    // les données embarquées.
-    rafraichirOutilsCategorie();
     return;
   }
 
@@ -1117,6 +1096,71 @@ async function renderTopRated(topEl, tools, lang, empty) {
   }).join('') : empty;
 }
 
+// ─────────────────────────────────────────
+// NICHE / MÉTIERS — carrousel de l'accueil
+// (section placée après « Derniers articles »)
+//
+// Structure évolutive : pour activer la fiche d'un métier, passer
+// simplement `ready: true` + `url` sur son entrée — le bouton bascule de
+// « Bientôt disponible » (is-soon, sans lien) à « Découvrir les outils »
+// (is-ready, lien vers la fiche métier). Aucune autre modification nécessaire.
+// ─────────────────────────────────────────
+const HOME_NICHES = [
+  { key: 'avocats',    img: 'assets/niches/juridique.jpg',     ready: false, url: '' },
+  { key: 'marketing',  img: 'assets/niches/marketing.jpg',     ready: false, url: '' },
+  { key: 'multimedia', img: 'assets/niches/multimedia.jpg',    ready: false, url: '' },
+  { key: 'dev',        img: 'assets/niches/programmation.jpg', ready: false, url: '' },
+  { key: 'sante',      img: 'assets/niches/sante.jpg',         ready: false, url: '' },
+];
+
+function renderNiches(lang) {
+  const track = document.getElementById('home-niches-track');
+  if (!track) return; // page sans section niches (pages statiques)
+  track.innerHTML = HOME_NICHES.map(n => {
+    const title = t('niche.' + n.key + '.title', lang);
+    const desc  = t('niche.' + n.key + '.desc',  lang);
+    const cta   = (n.ready && n.url)
+      ? `<a class="home-niche-cta is-ready" href="${escHtmlBlog(n.url)}">${escHtmlBlog(t('home.nichesDiscover', lang))}</a>`
+      : `<span class="home-niche-cta is-soon" aria-disabled="true">${escHtmlBlog(t('home.nichesSoon', lang))}</span>`;
+    return `
+      <article class="home-niche-card" data-niche="${escHtmlBlog(n.key)}">
+        <div class="home-niche-media">
+          <img src="${escHtmlBlog(n.img)}" alt="${escHtmlBlog(title)}" loading="lazy">
+        </div>
+        <div class="home-niche-content">
+          <h3 class="home-niche-title">${escHtmlBlog(title)}</h3>
+          <p class="home-niche-desc">${escHtmlBlog(desc)}</p>
+          ${cta}
+        </div>
+      </article>`;
+  }).join('');
+}
+window.renderNiches = renderNiches;
+
+function initNicheCarousel() {
+  const carousel = document.getElementById('home-niches-carousel');
+  if (!carousel) return;
+  const prev = document.getElementById('home-niches-prev');
+  const next = document.getElementById('home-niches-next');
+
+  // Pas = largeur d'une carte + gap, recalculé à chaque clic (responsive)
+  const step = () => {
+    const card = carousel.querySelector('.home-niche-card');
+    return card ? card.getBoundingClientRect().width + 12 : 320;
+  };
+  prev?.addEventListener('click', () => carousel.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next?.addEventListener('click', () => carousel.scrollBy({ left:  step(), behavior: 'smooth' }));
+
+  // Défilement à la molette sur desktop (delta Y -> horizontal)
+  carousel.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      carousel.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+  // Le swipe tactile est natif (overflow-x: auto + -webkit-overflow-scrolling)
+}
+
 function renderHome() {
   const catRow = document.getElementById('home-cat-row');
   const topEl  = document.getElementById('home-top-tools');
@@ -1438,6 +1482,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeModal();
   });
 
+  renderNiches(state.langue);
+  initNicheCarousel();
   initNewsletter();
   readSearchFromURL();
   loadAllData();
@@ -1913,3 +1959,294 @@ if (typeof window.openCollectionPicker === 'undefined') {
     window.location.href = 'profil.html';
   };
 }
+
+/* ═══ Hero showcase (fusionné depuis js/hero-showcase.js) ═══ */
+/* ═══════════════════════════════════════════════════════════
+   HERO SHOWCASE — Albexia  (à coller dans js/app.js,
+   par ex. juste après renderHome())
+   Construit les compositions du hero avec les VRAIES données
+   Firestore (state.tools) : sélection, comparateur, fiche.
+   ═══════════════════════════════════════════════════════════ */
+
+(function () {
+  const MAX_COMPS   = 3;   // nombre de compositions dans le carrousel
+  const ROTATE_MS   = 9000;
+  let   _scTimer    = null;
+  let   _scIndex    = 0;
+
+  const PRICE_LABEL = {
+    fr: { free: 'Gratuit', freemium: 'Freemium', paid: 'Payant' },
+    en: { free: 'Free',    freemium: 'Freemium', paid: 'Paid'    },
+    es: { free: 'Gratis',  freemium: 'Freemium', paid: 'De pago' },
+  };
+
+  function scLogo(t) {
+    if (t.favicon) {
+      return `<span class="sc-logo"><img src="${t.favicon}" alt="" loading="lazy"
+        onerror="this.parentNode.textContent='${(t.emoji || '✨').replace(/'/g, '')}'"></span>`;
+    }
+    return `<span class="sc-logo">${t.emoji || '✨'}</span>`;
+  }
+
+  function scPrice(t, lang) {
+    const labels = PRICE_LABEL[lang] || PRICE_LABEL.fr;
+    return `<span class="price-tag price-${t.price || 'freemium'}">${labels[t.price] || labels.freemium}</span>`;
+  }
+
+  // Carte arrière : 4 outils (logo, nom, catégorie, prix)
+  function scBackCard(tools, lang) {
+    return `
+      <div class="showcase-card sc-back">
+        <div class="sc-head">
+          <span class="sc-title">${t('home.showcaseSelection', lang)}</span>
+          <span class="sc-count">${tools.length} ${t('idx.toolsCountSuffix', lang)}</span>
+        </div>
+        ${tools.map(t => `
+          <div class="sc-row">
+            ${scLogo(t)}
+            <div class="sc-row-txt"><b>${t.name}</b><small>${catLabel(t.category, lang)}</small></div>
+            ${scPrice(t, lang)}
+          </div>`).join('')}
+      </div>`;
+  }
+
+  // Carte centrale : comparateur 2 outils (VS + prix + note + barres)
+  function scCenterCard(a, b, ratings, lang) {
+    const ra = ratings.get(slugify(a.name)) || {};
+    const rb = ratings.get(slugify(b.name)) || {};
+    const fmt = r => (r.ratingCount
+      ? `★ ${r.ratingAverage.toFixed(1)}`
+      : `<span style="color:var(--sh-muted);font-weight:400">—</span>`);
+    return `
+      <div class="showcase-card sc-center">
+        <div class="sc-head">
+          <span class="sc-title">${t('home.showcaseCompare', lang)}</span>
+          <span class="sc-vs">VS</span>
+        </div>
+        <div class="sc-duel">
+          <div class="sc-duel-side">${scLogo(a)}<b>${a.name}</b>${scPrice(a, lang)}<span class="sc-note">${fmt(ra)}</span></div>
+          <span class="sc-duel-vs">⚖</span>
+          <div class="sc-duel-side">${scLogo(b)}<b>${b.name}</b>${scPrice(b, lang)}<span class="sc-note">${fmt(rb)}</span></div>
+        </div>
+        <div class="sc-bar"><i style="width:${ra.ratingCount ? 40 + ra.ratingAverage * 12 : 45}%"></i></div>
+        <div class="sc-bar"><i class="alt" style="width:${rb.ratingCount ? 40 + rb.ratingAverage * 12 : 55}%"></i></div>
+        <small class="sc-foot-note">${t('home.showcaseCompareSub', lang)}</small>
+      </div>`;
+  }
+
+  // Carte avant : fiche détaillée (cliquable → vraie page de l'outil)
+  function scFrontCard(tool, ratings, lang) {
+    const r    = ratings.get(slugify(tool.name)) || {};
+    const href = buildToolPageUrl(tool) || tool.url || '#';
+    const ext  = !buildToolPageUrl(tool) && tool.url ? ' target="_blank" rel="noopener"' : '';
+    const desc = (tool.description || '').slice(0, 140);
+    const note = r.ratingCount
+      ? `<span class="sc-note">★ ${r.ratingAverage.toFixed(1)} (${r.ratingCount} ${t('idx.ratingReviewsSuffix', lang) || 'avis'})</span>`
+      : '';
+    return `
+      <div class="showcase-card sc-front">
+        <div class="sc-front-head">
+          ${scLogo(tool)}
+          <div><b>${tool.name}</b><small>${catLabel(tool.category, lang)}</small></div>
+        </div>
+        <p class="sc-front-desc">${desc}${(tool.description || '').length > 140 ? '…' : ''}</p>
+        <div class="sc-front-foot">${scPrice(tool, lang)}${note}</div>
+        <div class="sc-front-cta">${buildToolPageUrl(tool)
+          ? (t('quiz.viewSheet', lang) || 'Guide complet →')
+          : (t('home.showcaseOfficial', lang) || 'Site officiel →')}</div>
+      </div>`;
+  }
+
+  async function renderHeroShowcase() {
+    const zone = document.getElementById('hero-showcase');
+    if (!zone) return;
+
+    const lang  = window.detecterLangue ? window.detecterLangue() : 'fr';
+    const pool  = filtrerParLangue(state.tools)
+      .filter(x => x.status !== 'offline' && x.status !== 'a_enrichir');
+    if (pool.length < 3) return; // données insuffisantes : skeleton conservé
+
+    // Notes Firestore (même source que les badges des cartes outils)
+    const ratings = new Map();
+    if (typeof window._getRatingSummaries === 'function') {
+      try {
+        const sums = await window._getRatingSummaries(pool.map(x => slugify(x.name)));
+        if (sums) sums.forEach((v, k) => ratings.set(k, v));
+      } catch (e) { /* notes indisponibles : badges "—" */ }
+    }
+    const noteOf = x => (ratings.get(slugify(x.name)) || {}).ratingCount || 0;
+
+    // Outils à la une en premier, puis les mieux notés
+    const ordered = [...pool].sort((a, b) =>
+      ((b.plan === 'featured') - (a.plan === 'featured')) || (noteOf(b) - noteOf(a)));
+
+    // Construit MAX_COMPS compositions décalées d'un cran dans la liste
+    const comps = [];
+    for (let i = 0; i < Math.min(MAX_COMPS, ordered.length); i++) {
+      const picks = [0, 1, 2, 3].map(k => ordered[(i + k) % ordered.length]);
+      comps.push(`
+        <div class="showcase-comp${i === 0 ? ' active' : ''}" data-comp="${i}">
+          ${scBackCard(picks, lang)}
+          ${scCenterCard(picks[0], picks[1], ratings, lang)}
+          ${scFrontCard(picks[2], ratings, lang)}
+        </div>`);
+    }
+
+    const stage = zone.querySelector('.showcase-stage');
+    stage.classList.remove('is-loading');
+    stage.innerHTML = comps.join('');
+    try { localStorage.setItem('albexia_hero_v1', stage.innerHTML); } catch (e) {}
+
+    // Pastilles
+    const dots = document.getElementById('showcase-dots');
+    dots.innerHTML = comps.map((_, i) =>
+      `<button type="button" role="tab" aria-label="Composition ${i + 1}"${i === 0 ? ' class="active"' : ''}></button>`
+    ).join('');
+    const dotEls = [...dots.children];
+
+    function go(i) {
+      _scIndex = i;
+      stage.querySelectorAll('.showcase-comp').forEach((c, k) => c.classList.toggle('active', k === i));
+      dotEls.forEach((d, k) => d.classList.toggle('active', k === i));
+    }
+    dotEls.forEach((d, i) => d.addEventListener('click', () => { go(i); restart(); }));
+
+    function restart() {
+      clearInterval(_scTimer);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      _scTimer = setInterval(() => go((_scIndex + 1) % comps.length), ROTATE_MS);
+    }
+    zone.addEventListener('mouseenter', () => clearInterval(_scTimer));
+    zone.addEventListener('mouseleave', restart);
+    window._scSwipeGo = dir => { go((_scIndex + dir + comps.length) % comps.length); restart(); };
+    if (!zone._swipeBound) {
+      zone._swipeBound = true;
+      let x0 = null, y0 = null;
+      zone.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      zone.addEventListener('touchend', e => {
+        if (x0 === null || !window._scSwipeGo) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        const dy = e.changedTouches[0].clientY - y0;
+        x0 = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) window._scSwipeGo(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    }
+    // Pause quand le hero sort de l'écran (perf)
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        entries[0].isIntersecting ? restart() : clearInterval(_scTimer);
+      }, { threshold: .2 }).observe(zone);
+    }
+    restart();
+  }
+
+  window.renderHeroShowcase = renderHeroShowcase;
+
+  // Re-rendu après changement de langue (hook existant onLangueChange)
+  const prevOnLangueChange = window.onLangueChange;
+  window.onLangueChange = function (code) {
+    if (typeof prevOnLangueChange === 'function') prevOnLangueChange(code);
+    renderHeroShowcase();
+  };
+})();
+
+/* Appel : ajouter dans le DOMContentLoaded existant,
+   juste après loadAllData(); — ou à la fin de renderHome(). */
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('hero-showcase')) {
+    // Affichage immédiat : dernier rendu mis en cache (puis remplacé par les données fraîches)
+    try {
+      const cached = localStorage.getItem('albexia_hero_v1');
+      const st = document.querySelector('#hero-showcase .showcase-stage');
+      if (cached && st) { st.innerHTML = cached; st.classList.remove('is-loading'); }
+    } catch (e) {}
+    // différé : attendre que loadAllData() ait rempli state.tools
+    const tryRender = setInterval(() => {
+      if (state.tools && state.tools.length) {
+        clearInterval(tryRender);
+        renderHeroShowcase();
+      }
+    }, 100);
+    setTimeout(() => clearInterval(tryRender), 15000); // garde-fou
+  }
+});
+
+/* ═══ FAQ accueil (fusionné depuis js/faq-home.js) ═══ */
+/* FAQ de l'accueil : questions dépliables, liens vers les fiches des outils
+   et vers la page de soumission. Les textes viennent de i18n.js (clés home.faq.*). */
+(function () {
+  const OUTILS_CITES = ['ChatGPT', 'Midjourney', 'FineVoice', 'SE Ranking'];
+  let langue = null;
+  let timer = null;
+
+  const lang = () => langue || (window.detecterLangue ? window.detecterLangue() : 'fr');
+  const tr = k => (window.t ? window.t(k, lang()) : k);
+  const esc = s => String(s).replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const norm = s => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+  // Texte → HTML : liens sur les noms d'outils et sur « {soumettre} »
+  function formater(texte) {
+    let h = esc(texte);
+    h = h.replace('{soumettre}',
+      `<a class="faq-link" href="/soumettre/">${esc(tr('home.faq.submitLink'))}</a>`);
+    OUTILS_CITES.forEach(nom => {
+      const re = new RegExp(nom.replace(/ /g, '\\s?'), 'g');
+      h = h.replace(re, m => `<a class="faq-tool" data-tool="${esc(nom)}">${m}</a>`);
+    });
+    return h;
+  }
+
+  function rendre() {
+    const liste = document.getElementById('faq-list');
+    if (!liste) return;
+    liste.innerHTML = [1, 2, 3, 4, 5, 6, 7].map(i => `
+      <details class="faq-item">
+        <summary>${i}. ${esc(tr('home.faq.q' + i))}</summary>
+        <div class="faq-a">${formater(tr('home.faq.a' + i))}</div>
+      </details>`).join('');
+  }
+
+  // Les liens n'ont pas d'adresse tant que les outils ne sont pas chargés :
+  // ils ne sont donc pas cliquables avant d'être résolus.
+  function resoudreLiens() {
+    const outils = (window.state && state.tools) || [];
+    if (!outils.length) return false;
+    document.querySelectorAll('#faq-list a.faq-tool').forEach(a => {
+      const cible = norm(a.dataset.tool);
+      const outil = outils.find(o => norm(o.name) === cible);
+      const url = outil && window.buildToolPageUrl ? window.buildToolPageUrl(outil) : null;
+      if (url) {
+        a.href = url;
+      } else {
+        const span = document.createElement('span');
+        span.className = 'faq-tool-plain';
+        span.textContent = a.textContent;
+        a.replaceWith(span);
+      }
+    });
+    return true;
+  }
+
+  function attendreOutils() {
+    clearInterval(timer);
+    let essais = 0;
+    timer = setInterval(() => {
+      essais++;
+      if (resoudreLiens() || essais > 150) clearInterval(timer);
+    }, 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    rendre();
+    attendreOutils();
+  });
+
+  const precedent = window.onLangueChange;
+  window.onLangueChange = function (code) {
+    if (typeof precedent === 'function') precedent(code);
+    langue = code;
+    rendre();
+    attendreOutils();
+  };
+})();

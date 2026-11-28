@@ -69,6 +69,71 @@
     }
   }
   </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "fr-FR",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Qu'est-ce qu'un outil d'Intelligence Artificielle (IA) ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Un outil d'IA est un logiciel ou une application qui utilise des algorithmes avancés pour accomplir des tâches qui nécessitaient auparavant l'intelligence humaine. Cela inclut la génération de texte (comme ChatGPT), la création d'images (Midjourney), la production audio (FineVoice) ou l'analyse de données. Sur Albexia, nous référençons ces outils pour vous aider à automatiser votre travail et booster votre productivité."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Les outils présentés sur Albexia sont-ils gratuits ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cela dépend de chaque outil. Nous classons les outils en trois catégories claires : 100% Gratuit, Freemium (gratuit avec des fonctionnalités limitées, puis payant pour les options avancées) et Payant. Sur chaque fiche, nous détaillons les tarifs exacts et nous vous indiquons souvent s'il existe un essai gratuit pour tester l'outil avant de payer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment choisir le meilleur outil d'IA pour mon activité ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pour faire le bon choix, commencez par identifier votre besoin principal (rédaction, design, SEO, gestion de réseau social). Utilisez ensuite notre section « Niches » pour filtrer les outils adaptés à votre métier. Lisez nos avis détaillés, comparez les fonctionnalités et vérifiez les avis d'autres utilisateurs avant de prendre un abonnement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Les outils d'IA référencés sont-ils sûrs et fiables ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui. Nous vérifions manuellement chaque soumission avant de publier une fiche. Nous nous assurons que l'outil est actif, que son site web est sécurisé (HTTPS) et qu'il propose un service légitime. Cependant, comme pour tout service en ligne, nous vous conseillons de toujours lire les conditions d'utilisation et la politique de confidentialité de l'outil avant d'y partager des données sensibles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment Albexia gagne-t-il de l'argent ? (Transparence)",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L'accès à notre annuaire est 100% gratuit pour vous. Pour financer le site et continuer à tester de nouveaux outils, nous utilisons des liens d'affiliation. Cela signifie que si vous cliquez sur un lien vers un outil (comme SE Ranking) et que vous décidez de vous abonner, nous pouvons percevoir une petite commission. Cela ne change absolument rien au prix que vous payez, mais cela nous aide énormément à faire vivre le projet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Je suis créateur, comment ajouter mon outil sur Albexia ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si vous avez développé un outil d'IA, la soumission est gratuite. Vous pouvez remplir le formulaire directement depuis cette page d'accueil, ou en vous rendant sur la page dédiée « Soumettre un outil ». Notre équipe examinera votre demande pour créer une fiche complète et présenter votre solution à notre audience."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "À quelle fréquence les fiches des outils sont-elles mises à jour ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Le monde de l'IA évolue très vite. Nous mettons à jour nos fiches régulièrement pour refléter les nouveaux tarifs, les nouvelles fonctionnalités ou les changements d'interface des outils. Si vous repérez une erreur sur une fiche (un prix qui a changé, un lien cassé), n'hésitez pas à nous contacter pour que nous la corrigions immédiatement."
+      }
+    }
+  ]
+}
+</script>
 
   <!-- ═══ POLICES ═══ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,6 +162,8 @@
   </style>
   <link rel="stylesheet" href="/css/themes.css">
   <link rel="icon" type="image/png" sizes="512x512" href="https://albexia.com/assets/logo-512.png">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script>window.onTurnstileOk = function(t) { window.__turnstileTok = t; };</script>
 </head>
 <body>
 
@@ -117,41 +184,26 @@
         <p data-i18n="home.heroSub">Des outils IA classés par besoin, évalués par la communauté et présentés avec leurs tarifs.</p>
         <button class="btn-main" onclick="showPage('tools')" data-i18n="hero.ctaTools">Explorer les outils</button>
       </div>
-      <div class="home-hero-visual" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%" focusable="false">
-          <defs>
-            <filter id="hv-shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.35"/>
-            </filter>
-            <clipPath id="hv-win-chatgpt"><rect x="0" y="0" width="480" height="340" rx="12"/></clipPath>
-            <clipPath id="hv-win-midjourney"><rect x="0" y="0" width="440" height="380" rx="12"/></clipPath>
-            <clipPath id="hv-win-runway"><rect x="0" y="0" width="440" height="260" rx="12"/></clipPath>
-          </defs>
-
-          <!-- 1. ChatGPT -->
-          <g transform="translate(40 50)" filter="url(#hv-shadow)">
-            <rect x="0" y="0" width="480" height="340" rx="12" fill="#FFFFFF"/>
-            <g clip-path="url(#hv-win-chatgpt)">
-              <image href="https://albexia.com/medias/blog/1791903968770_1_11zon_11zon_11zon.webp" x="0" y="0" width="480" height="340" preserveAspectRatio="xMidYMin slice"/>
-            </g>
-          </g>
-
-          <!-- 2. Midjourney -->
-          <g transform="translate(320 80)" filter="url(#hv-shadow)">
-            <rect x="0" y="0" width="440" height="380" rx="12" fill="#FFFFFF"/>
-            <g clip-path="url(#hv-win-midjourney)">
-              <image href="https://albexia.com/medias/blog/Screenshot_20261013-112810_Gallery_11zon.webp" x="0" y="0" width="440" height="380" preserveAspectRatio="xMidYMid slice"/>
-            </g>
-          </g>
-
-          <!-- 3. Runway -->
-          <g transform="translate(180 330)" filter="url(#hv-shadow)">
-            <rect x="0" y="0" width="440" height="260" rx="12" fill="#FFFFFF"/>
-            <g clip-path="url(#hv-win-runway)">
-              <image href="https://albexia.com/medias/blog/Screenshot_20261013-112726_Gallery_11zon.webp" x="0" y="0" width="440" height="260" preserveAspectRatio="xMidYMid slice"/>
-            </g>
-          </g>
-        </svg>
+      <div class="home-hero-visual showcase" id="hero-showcase">
+        <div class="showcase-halo" aria-hidden="true"></div>
+      
+        <!-- Les compositions sont injectées par renderHeroShowcase() (js/app.js).
+             Contenu de secours statique si Firebase n'a pas encore répondu : -->
+        <div class="showcase-stage is-loading">
+          <div class="showcase-card sc-back">
+            <div class="sc-head"><span class="sc-title">Sélection IA</span></div>
+            <div class="sc-skel"></div><div class="sc-skel"></div><div class="sc-skel"></div>
+          </div>
+          <div class="showcase-card sc-center">
+            <div class="sc-head"><span class="sc-title">Comparer</span><span class="sc-vs">VS</span></div>
+            <div class="sc-skel"></div><div class="sc-skel"></div>
+          </div>
+          <div class="showcase-card sc-front">
+            <div class="sc-skel tall"></div>
+          </div>
+        </div>
+      
+        <div class="showcase-dots" id="showcase-dots" role="tablist" aria-label="Compositions"></div>
       </div>
     </div>
 
@@ -176,6 +228,57 @@
       </div>
     </div>
 
+    <!-- ═══ SECTION ÉCOSYSTÈME ALBEXIA — 8 piliers en cartes enfondues ═══ -->
+    <section class="ecosystem-section" aria-label="Écosystème Albexia">
+      <div class="ecosystem-header">
+        <h2 data-i18n-html="eco.title">Découvrez, comparez et <span class="text-accent">maîtrisez</span> l'IA</h2>
+        <p data-i18n="eco.subtitle">Albexia vous accompagne à chaque étape de votre transition vers l'intelligence artificielle.</p>
+      </div>
+
+      <div class="fading-cards-container" id="fading-cards-container">
+        <div class="fading-card active">
+          <span class="fading-card-num">01 / 08</span>
+          <h3 data-i18n="eco.c1t">Outils IA</h3>
+          <p data-i18n="eco.c1x">Un annuaire dédié uniquement aux outils d'intelligence artificielle. Explorez notre sélection rigoureuse, testée et mise à jour régulièrement, pour trouver la solution parfaite qui répond à tous vos besoins technologiques et propulse vos projets.</p>
+        </div>
+        <div class="fading-card">
+          <span class="fading-card-num">02 / 08</span>
+          <h3 data-i18n="eco.c2t">Catégories</h3>
+          <p data-i18n="eco.c2x">Chaque outil est classé par catégorie claire et précise (rédaction, image, audio, code...), pour le trouver en un coup d'œil. Naviguez facilement dans notre base de données structurée et gagnez un temps précieux dans votre recherche quotidienne.</p>
+        </div>
+        <div class="fading-card">
+          <span class="fading-card-num">03 / 08</span>
+          <h3 data-i18n="eco.c3t">Galerie</h3>
+          <p data-i18n="eco.c3x">Des réalisations concrètes montrent ce que l'outil produit, quand c'est possible. Visualisez le potentiel réel de chaque intelligence artificielle grâce à des exemples inspirants, des rendus visuels captivants et des démonstrations qui parlent d'elles-mêmes.</p>
+        </div>
+        <div class="fading-card">
+          <span class="fading-card-num">04 / 08</span>
+          <h3 data-i18n="eco.c4t">Blog</h3>
+          <p data-i18n="eco.c4x">Des articles de fond sur les usages et les stratégies, pour donner plus de visibilité à votre outil. Découvrez les dernières tendances de l'IA, des guides pratiques et des conseils d'experts pour maîtriser la technologie et rester à la pointe.</p>
+        </div>
+        <div class="fading-card">
+          <span class="fading-card-num">05 / 08</span>
+          <h3 data-i18n="eco.c5t">Comparateur</h3>
+          <p data-i18n="eco.c5x">Un face-à-face clair et objectif entre plusieurs outils, pour choisir en toute connaissance de cause. Comparez les fonctionnalités, les tarifs et les avantages de chaque solution côte à côte avant de prendre votre décision finale en toute sérénité.</p>
+        </div>
+        <div class="fading-card">
+          <span class="fading-card-num">06 / 08</span>
+          <h3 data-i18n="eco.c6t">Niches</h3>
+          <p data-i18n="eco.c6x">Des outils spécifiquement regroupés par métier (avocats, marketeurs, développeurs...), pour trouver la solution la plus adaptée à votre activité. Optimisez votre flux de travail avec des intelligences artificielles conçues et pensées pour votre secteur.</p>
+        </div>
+        <div class="fading-card">
+          <span class="fading-card-num">07 / 08</span>
+          <h3 data-i18n="eco.c7t">Glossaire</h3>
+          <p data-i18n="eco.c7x">Des définitions claires et accessibles des grands thèmes de l'intelligence artificielle, pour mieux apprendre. Maîtrisez le jargon technique, comprenez les concepts clés et devenez un expert de l'IA pas à pas grâce à nos explications simples.</p>
+        </div>
+        <div class="fading-card">
+          <span class="fading-card-num">08 / 08</span>
+          <h3 data-i18n="eco.c8t">Tutoriels</h3>
+          <p data-i18n="eco.c8x">Chaque outil est accompagné de tutoriels vidéo détaillés, pour mieux le comprendre et l'utiliser au quotidien. Suivez nos guides pas à pas, apprenez les bonnes pratiques et tirez le maximum de chaque fonctionnalité pour booster votre productivité.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Outils les mieux notés -->
     <div class="container home-block">
       <div class="home-block-head">
@@ -195,6 +298,96 @@
       </div>
       <div class="home-art-grid" id="home-latest-articles">
         <div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div><div class="home-skel tall"></div>
+      </div>
+    </div>
+    <!-- Niches professionnelles -->
+    <div class="container home-block home-niches-block">
+      <div class="home-block-head">
+        <h2 data-i18n="home.nichesTitle">Les niches professionnelles</h2>
+      </div>
+      <p class="home-block-sub" data-i18n="home.nichesSub">Des sélections d'outils IA pensées pour chaque métier.</p>
+      <div class="home-niches-wrap">
+        <button class="home-niches-arrow prev" id="home-niches-prev" type="button" data-i18n-aria-label="idx.lbPrev" aria-label="Précédent">&#8249;</button>
+        <div class="home-niches-carousel" id="home-niches-carousel">
+          <div class="home-niches-track" id="home-niches-track"><!-- Cartes rendues par renderNiches() --></div>
+        </div>
+        <button class="home-niches-arrow next" id="home-niches-next" type="button" data-i18n-aria-label="idx.lbNext" aria-label="Suivant">&#8250;</button>
+      </div>
+    </div>
+    <!-- Soumission : formules d'abord, formulaire ensuite (même logique que soumettre/) -->
+    <div class="container home-block home-plans-block">
+      <div class="home-block-head"><h2 data-i18n="home.plansTitle">Choisissez votre visibilité</h2></div>
+      <p class="home-block-sub" data-i18n="home.plansSub">Sélectionnez le plan qui correspond le mieux à vos objectifs.</p>
+      <div id="plans-cards-container"></div>
+    </div>
+
+    <!-- FAQ (accueil) -->
+    <section class="container home-block home-faq" id="faq">
+      <div class="home-block-head"><h2 data-i18n="home.faq.title">Foire Aux Questions (FAQ)</h2></div>
+      <p class="home-block-sub" data-i18n="home.faq.sub">Les réponses essentielles pour naviguer sereinement sur Albexia.</p>
+      <div class="faq-list" id="faq-list"></div>
+    </section>
+
+    <div id="modal-soumission" class="modal-soum" role="dialog" aria-modal="true">
+      <div class="modal-soum-inner">
+        <div class="modal-soum-top">
+          <div>
+            <div class="modal-soum-title" data-i18n="home.form.title">Soumettre un outil</div>
+            <div class="modal-soum-tier" id="modal-tier"></div>
+          </div>
+          <button type="button" class="modal-soum-close" id="modal-close" aria-label="Fermer">✕</button>
+        </div>
+        <div id="modal-body">
+          <form id="form-step1" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label><span data-i18n="home.form.url">URL de l'outil</span> <span class="req">*</span></label>
+                <input type="url" id="tool-url" data-ph="home.form.placeUrl" required>
+                <div class="hint" data-i18n="home.form.urlHint">Entrez l'URL officielle de l'outil</div>
+              </div>
+              <div class="field">
+                <label><span data-i18n="home.form.name">Nom de l'outil</span> <span class="req">*</span></label>
+                <input type="text" id="tool-name" data-ph="home.form.placeName" required>
+                <div class="hint" data-i18n="home.form.nameHint">Le nom officiel de votre outil</div>
+              </div>
+              <div class="field">
+                <label><span data-i18n="home.form.cat">Catégorie</span> <span class="req">*</span></label>
+                <select id="tool-cat" required><option value="" disabled selected data-i18n="home.form.choose">— Choisir —</option></select>
+              </div>
+              <div class="field">
+                <label for="tool-prix"><span data-i18n="home.form.prix">Modèle de tarification</span> <span class="req">*</span></label>
+                <select id="tool-prix" required>
+                  <option value="" disabled selected data-i18n="home.form.choose">— Choisir —</option>
+                  <option value="gratuit" data-i18n="home.form.free">Gratuit</option>
+                  <option value="freemium" data-i18n="home.form.freemium">Freemium</option>
+                  <option value="payant" data-i18n="home.form.paid">Payant</option>
+                </select>
+              </div>
+              <div class="field">
+                <label><span data-i18n="home.form.desc">Description</span> <span class="req">*</span></label>
+                <textarea id="tool-desc" minlength="30" maxlength="900" data-ph="home.form.placeDesc" required></textarea>
+                <div class="hint" data-i18n="home.form.descHint">Soyez clair et précis (minimum 30 caractères)</div>
+              </div>
+              <div class="field full">
+                <label><span data-i18n="home.form.email">Votre email</span> <span class="req">*</span></label>
+                <input type="email" id="tool-email" data-ph="home.form.placeEmail" required>
+                <div class="hint" data-i18n="home.form.emailHint">Utilisé uniquement pour vous contacter au sujet de votre soumission</div>
+              </div>
+            </div>
+          </form>
+          <div id="zone-login-requis" class="modal-login" style="display:none">
+            <p data-i18n="home.form.loginText">Connectez-vous pour continuer vers le paiement.</p>
+            <button type="button" class="btn btn-primary" id="btnGoogleLogin" data-i18n="home.form.login">Continuer avec Google</button>
+            <p id="zone-login-erreur" style="display:none;color:#c2392b"></p>
+          </div>
+          <div id="zone-turnstile" style="display:none;justify-content:center;margin:12px 0">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAGFvyQqT8dICX8zc" data-callback="onTurnstileOk" data-theme="light"></div>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-ghost" id="btnCancel" data-i18n="home.form.cancel">Annuler</button>
+          <button type="button" class="btn btn-primary" id="btnContinue" data-i18n="home.form.send">Envoyer et continuer</button>
+        </div>
       </div>
     </div>
   </section>
@@ -499,5 +692,297 @@ function handleFooterNewsletter(e) {
 </script>
 
 
+<script type="module">
+  import { db, collection, addDoc, getDocs, serverTimestamp } from './js/firebase-config.js';
+  import { loginWithGoogle } from './js/auth.js';
+  import { afficherCartesPlans, PLANS_PAYANTS_OUVERTS } from './js/plans-cards.js';
+
+  const WORKER_SOUMISSION_URL = 'https://albexia-paiement.leblancroben.workers.dev/soumettre-payant';
+  const modal = document.getElementById('modal-soumission');
+  const modalBody = document.getElementById('modal-body');
+  const form1 = document.getElementById('form-step1');
+  const zoneLogin = document.getElementById('zone-login-requis');
+  const zoneErr = document.getElementById('zone-login-erreur');
+  const zoneTurnstile = document.getElementById('zone-turnstile');
+  const btnSend = document.getElementById('btnContinue');
+  const lang = () => (window.detecterLangue ? window.detecterLangue() : 'fr');
+  const tt = k => (window.t ? window.t(k, lang()) : k);
+
+  let tierChoisi = null;
+  let tierEnAttente = null;
+  let turnstileToken = window.__turnstileTok || null;
+  window.onTurnstileOk = function (token) { turnstileToken = token; window.__turnstileTok = token; };
+
+  function ouvrirModal(tier) {
+    tierChoisi = tier;
+    const payant = tier === 'starter' || tier === 'featured';
+    document.getElementById('modal-tier').textContent = { starter: 'Starter', featured: 'Featured' }[tier] || tt('home.form.free');
+    zoneLogin.style.display = payant && !window._firebaseUser ? 'block' : 'none';
+    zoneTurnstile.style.display = payant ? 'flex' : 'none';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function fermerModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('modal-close').addEventListener('click', fermerModal);
+  document.getElementById('btnCancel').addEventListener('click', fermerModal);
+  modal.addEventListener('click', e => { if (e.target === modal) fermerModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) fermerModal(); });
+
+  document.getElementById('btnGoogleLogin').addEventListener('click', async () => {
+    zoneErr.style.display = 'none';
+    const res = await loginWithGoogle();
+    if (!res.ok) {
+      zoneErr.textContent = res.error || tt('soum.loginError');
+      zoneErr.style.display = 'block';
+      return;
+    }
+    zoneLogin.style.display = 'none';
+    if (tierEnAttente) {
+      const repris = tierEnAttente;
+      tierEnAttente = null;
+      payer(repris);
+    }
+  });
+
+  async function chargerCategoriesFormulaire() {
+    const select = document.getElementById('tool-cat');
+    const valeurChoisie = select.value;
+    try {
+      const snap = await getDocs(collection(db, 'categories'));
+      const categories = snap.docs.map(d => d.data()).filter(c => c.id && c.nom)
+        .sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+      const libelle = c => (window.translateCategory ? window.translateCategory(c.id, lang()) : c.nom) || c.nom;
+      select.innerHTML = '<option value="" disabled selected>' + tt('home.form.choose') + '</option>' +
+        categories.map(c => `<option value="${c.id}">${libelle(c)}</option>`).join('');
+      if (valeurChoisie) select.value = valeurChoisie;
+    } catch (err) {
+      console.error('[soumettre] Chargement des catégories impossible :', err);
+      select.innerHTML = '<option value="" disabled selected>Catégories indisponibles, réessayez</option>';
+    }
+  }
+  chargerCategoriesFormulaire();
+  document.addEventListener('langchange', chargerCategoriesFormulaire);
+
+  function ramasserDonnees(tier) {
+    return {
+      nom_outil:     document.getElementById('tool-name').value.trim(),
+      url_outil:     document.getElementById('tool-url').value.trim(),
+      categorie:     document.getElementById('tool-cat').value,
+      description:   document.getElementById('tool-desc').value.trim(),
+      email_contact: document.getElementById('tool-email').value.trim(),
+      modele_prix:   document.getElementById('tool-prix').value,
+      tier_demande:  tier,
+      uid: window._firebaseUser?.uid || null,
+      status: 'pending',
+      created_at: serverTimestamp()
+    };
+  }
+
+  async function soumettre(tier) {
+    btnSend.disabled = true;
+    try {
+      await addDoc(collection(db, 'soumissions'), ramasserDonnees(tier));
+      modalBody.innerHTML = `
+        <div class="modal-success">
+          <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+          <h3 style="color:var(--accent2);margin-bottom:.5rem;">${tt('soum.successTitle')}</h3>
+          <p style="color:var(--text-muted);">${tt('soum.successText')}</p>
+          <button type="button" class="btn btn-primary" id="btnDoneClose">OK</button>
+        </div>`;
+      document.getElementById('btnDoneClose').addEventListener('click', fermerModal);
+      btnSend.style.display = 'none';
+      document.getElementById('btnCancel').style.display = 'none';
+    } catch (err) {
+      alert(tt('soum.submitError') + ' (' + err.message + ')');
+    } finally {
+      btnSend.disabled = false;
+    }
+  }
+
+  async function payer(tier) {
+    if (!window._firebaseUser) {
+      tierEnAttente = tier;
+      zoneLogin.style.display = 'block';
+      zoneLogin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    if (!turnstileToken && window.turnstile) turnstileToken = window.turnstile.getResponse() || null;
+    if (!turnstileToken) { alert(tt('sm.alertCaptcha')); return; }
+    btnSend.disabled = true;
+    try {
+      const idToken = await window._firebaseUser.getIdToken();
+      const res = await fetch(WORKER_SOUMISSION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+        body: JSON.stringify({ ...ramasserDonnees(tier), turnstile_token: turnstileToken,
+          return_url: window.location.origin + window.location.pathname }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.checkout_url) {
+        alert(data.error || "Le paiement n'a pas pu démarrer. Réessayez dans un instant.");
+        return;
+      }
+      window.location.href = data.checkout_url;
+    } catch (err) {
+      console.error('[soumettre] Paiement impossible :', err);
+      alert(tt('sm.alertConn'));
+    } finally {
+      btnSend.disabled = false;
+    }
+  }
+
+  btnSend.addEventListener('click', () => {
+    if (!form1.reportValidity()) return;
+    if (tierChoisi === 'starter' || tierChoisi === 'featured') payer(tierChoisi);
+    else soumettre(tierChoisi);
+  });
+
+  window.choisirFormuleSoumission = function (tier, evt) {
+    if (!PLANS_PAYANTS_OUVERTS && (tier === 'starter' || tier === 'featured')) {
+      alert(tt('home.form.closed'));
+      return;
+    }
+    ouvrirModal(tier);
+  };
+
+  if (new URLSearchParams(location.search).get('paiement') === 'succes') {
+    alert(tt('sm.alertPaid'));
+  }
+
+  function traduireFormulaire() {
+    document.querySelectorAll('#modal-soumission [data-ph]').forEach(el => { el.placeholder = tt(el.dataset.ph); });
+  }
+  traduireFormulaire();
+  afficherCartesPlans('plans-cards-container', 'choisirFormuleSoumission', lang());
+  const precedentOnLangueChange = window.onLangueChange;
+  window.onLangueChange = function (code) {
+    if (typeof precedentOnLangueChange === 'function') precedentOnLangueChange(code);
+    afficherCartesPlans('plans-cards-container', 'choisirFormuleSoumission', code);
+    traduireFormulaire();
+    chargerCategoriesFormulaire();
+  };
+</script>
+  <!-- Section Écosystème Albexia : fond fibres de neurones -->
+  <script>
+/* Fond « fibres de neurones » de la section Écosystème : mouvement lent,
+   dessiné sur canvas, mis en pause hors écran et figé si l'utilisateur
+   préfère moins d'animations. Remplace l'aurore CSS. */
+(function () {
+  const hote = document.querySelector('.ecosystem-section');
+  if (!hote) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.className = 'eco-neurons';
+  canvas.setAttribute('aria-hidden', 'true');
+  hote.insertBefore(canvas, hote.firstChild);
+  const ctx = canvas.getContext('2d');
+
+  const reduire = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let W = 0, H = 0, noeuds = [], visible = true, derniere = 0, raf = null;
+
+  function creer() {
+    const n = Math.round(Math.min(46, Math.max(26, (W * H) / 20000)));
+    noeuds = Array.from({ length: n }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.12, vy: (Math.random() - 0.5) * 0.12,
+      p: Math.random() * Math.PI * 2
+    }));
+  }
+
+  function dimensionner() {
+    const r = hote.getBoundingClientRect();
+    W = r.width; H = r.height;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    creer();
+    if (reduire) dessiner();
+  }
+
+  function dessiner() {
+    ctx.clearRect(0, 0, W, H);
+    for (const n of noeuds) {
+      n.x += n.vx; n.y += n.vy; n.p += 0.006;
+      if (n.x < -20) n.x = W + 20; if (n.x > W + 20) n.x = -20;
+      if (n.y < -20) n.y = H + 20; if (n.y > H + 20) n.y = -20;
+    }
+    for (let i = 0; i < noeuds.length; i++) {
+      for (let j = i + 1; j < noeuds.length; j++) {
+        const a = noeuds[i], b = noeuds[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d > 210) continue;
+        const alpha = (1 - d / 210) * 0.6;
+        const mx = (a.x + b.x) / 2 + Math.sin(a.p + b.p) * 18;
+        const my = (a.y + b.y) / 2 + Math.cos(a.p - b.p) * 18;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.quadraticCurveTo(mx, my, b.x, b.y);
+        ctx.strokeStyle = `rgba(255,107,157,${alpha.toFixed(3)})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    }
+    for (const n of noeuds) {
+      const pulse = 0.5 + 0.5 * Math.sin(n.p);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 1.6 + pulse * 1.2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(52,211,153,${(0.35 + pulse * 0.35).toFixed(3)})`;
+      ctx.fill();
+    }
+  }
+
+  function boucle(t) {
+    raf = requestAnimationFrame(boucle);
+    if (!visible || t - derniere < 40) return; // ~25 images/s : fluide et léger
+    derniere = t;
+    dessiner();
+  }
+
+  dimensionner();
+  if (!reduire) raf = requestAnimationFrame(boucle);
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(e => { visible = e[0].isIntersecting; }).observe(hote);
+  }
+  let t = null;
+  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(dimensionner, 200); });
+})();
+  </script>
+  <!-- Section Écosystème Albexia : rotation des cartes en fondu -->
+  <script>
+  (function () {
+    var cards = document.querySelectorAll('#fading-cards-container .fading-card');
+    if (!cards.length) return;
+    var index = 0, timer = null;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(i) {
+      cards.forEach(function (c, k) { c.classList.toggle('active', k === i); });
+    }
+    function next() {
+      index = (index + 1) % cards.length;
+      show(index);
+    }
+    function start() {
+      if (reduceMotion || timer) return;
+      timer = setInterval(next, 8000); // changement toutes les 4 s
+    }
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+    // Pause au survol (accessibilité), reprise au départ
+    var wrap = document.getElementById('fading-cards-container');
+    wrap.addEventListener('mouseenter', stop);
+    wrap.addEventListener('mouseleave', start);
+    document.addEventListener('visibilitychange', function () {
+      document.hidden ? stop() : start();
+    });
+    start();
+  })();
+  </script>
 </body>
 </html>

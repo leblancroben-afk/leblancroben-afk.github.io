@@ -4014,7 +4014,6 @@ body.search-open { overflow: hidden; }
 /* Bouton menu : trois barres -> croix quand le panneau est ouvert */
 .nav-menu-btn {
   color: var(--text);
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -5298,3 +5297,6 @@ html, body { overflow-x: clip; }
 .plans-grid .plan-card:not(.featured) .plan-price-sub,
 .plans-grid .plan-card:not(.featured) .plan-features li { color: #4a463d; }
 .plans-grid .plan-card-closed:not(.featured) { opacity: .6; }
+
+/* Bouton du menu (restauré depuis main) */
+.nav-menu-btn { color: var(--text); align-items: center; justify-content: center; padding: 0; }
